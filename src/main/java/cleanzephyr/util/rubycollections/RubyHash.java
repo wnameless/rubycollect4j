@@ -64,36 +64,36 @@ public final class RubyHash<K, V> implements Map<K, V> {
     }
   }
 
-  public RubyHash<K, V> deleteIf(RubyEnumerable.EntryBooleanVisitor<K, V> visitor) {
+  public RubyHash<K, V> deleteIf(RubyEnumerable.EntryBooleanBlock<K, V> block) {
     for (Entry<K, V> item : map.entrySet()) {
-      if (visitor.visit(item.getKey(), item.getValue())) {
+      if (block.yield(item.getKey(), item.getValue())) {
         map.remove(item.getKey());
       }
     }
     return this;
   }
 
-  public RubyHash<K, V> each(RubyEnumerable.EntryVisitor<K, V> visitor) {
+  public RubyHash<K, V> each(RubyEnumerable.EntryBlock<K, V> block) {
     for (Entry<K, V> item : map.entrySet()) {
-      visitor.visit(item.getKey(), item.getValue());
+      block.yield(item.getKey(), item.getValue());
     }
     return this;
   }
 
-  public RubyHash<K, V> eachPair(RubyEnumerable.EntryVisitor<K, V> visitor) {
-    return each(visitor);
+  public RubyHash<K, V> eachPair(RubyEnumerable.EntryBlock<K, V> block) {
+    return each(block);
   }
 
-  public RubyHash<K, V> eachKey(RubyEnumerable.ItemVisitor<K> visitor) {
+  public RubyHash<K, V> eachKey(RubyEnumerable.ItemBlock<K> block) {
     for (K item : map.keySet()) {
-      visitor.visit(item);
+      block.yield(item);
     }
     return this;
   }
 
-  public RubyHash<K, V> eachValue(RubyEnumerable.ItemVisitor<V> visitor) {
+  public RubyHash<K, V> eachValue(RubyEnumerable.ItemBlock<V> block) {
     for (V item : map.values()) {
-      visitor.visit(item);
+      block.yield(item);
     }
     return this;
   }
@@ -160,9 +160,9 @@ public final class RubyHash<K, V> implements Map<K, V> {
     return invertHash;
   }
 
-  public RubyHash<K, V> keepIf(RubyEnumerable.EntryBooleanVisitor<K, V> visitor) {
+  public RubyHash<K, V> keepIf(RubyEnumerable.EntryBooleanBlock<K, V> block) {
     for (Entry<K, V> item : map.entrySet()) {
-      if (!visitor.visit(item.getKey(), item.getValue())) {
+      if (!block.yield(item.getKey(), item.getValue())) {
         map.remove(item.getKey());
       }
     }
@@ -208,11 +208,11 @@ public final class RubyHash<K, V> implements Map<K, V> {
     return mergeEx(otherHash);
   }
 
-  public RubyHash<K, V> merge(Map<K, V> otherHash, RubyEnumerable.EntryMergeVisitor<K, V> visitor) {
+  public RubyHash<K, V> merge(Map<K, V> otherHash, RubyEnumerable.EntryMergeBlock<K, V> block) {
     RubyHash<K, V> newHash = new RubyHash<>();
     for (Entry<K, V> item : map.entrySet()) {
       if (map.containsKey(item.getKey()) && otherHash.containsKey(item.getKey())) {
-        newHash.put(item.getKey(), visitor.visit(item.getKey(), item.getValue(), otherHash.get(item.getKey())));
+        newHash.put(item.getKey(), block.yield(item.getKey(), item.getValue(), otherHash.get(item.getKey())));
       } else {
         newHash.put(item);
       }
@@ -225,10 +225,10 @@ public final class RubyHash<K, V> implements Map<K, V> {
     return newHash;
   }
 
-  public RubyHash<K, V> mergeEx(Map<K, V> otherHash, RubyEnumerable.EntryMergeVisitor<K, V> visitor) {
+  public RubyHash<K, V> mergeEx(Map<K, V> otherHash, RubyEnumerable.EntryMergeBlock<K, V> block) {
     for (Entry<K, V> item : map.entrySet()) {
       if (map.containsKey(item.getKey()) && otherHash.containsKey(item.getKey())) {
-        map.put(item.getKey(), visitor.visit(item.getKey(), item.getValue(), otherHash.get(item.getKey())));
+        map.put(item.getKey(), block.yield(item.getKey(), item.getValue(), otherHash.get(item.getKey())));
       } else {
         map.put(item.getKey(), item.getValue());
       }
@@ -241,8 +241,8 @@ public final class RubyHash<K, V> implements Map<K, V> {
     return this;
   }
 
-  public RubyHash<K, V> update(Map<K, V> otherHash, RubyEnumerable.EntryMergeVisitor<K, V> visitor) {
-    return mergeEx(otherHash, visitor);
+  public RubyHash<K, V> update(Map<K, V> otherHash, RubyEnumerable.EntryMergeBlock<K, V> block) {
+    return mergeEx(otherHash, block);
   }
 
   public Entry<K, V> rassoc(V value) {
@@ -254,9 +254,9 @@ public final class RubyHash<K, V> implements Map<K, V> {
     return null;
   }
 
-  public RubyHash<K, V> rejectEx(RubyEnumerable.EntryBooleanVisitor<K, V> visitor) {
+  public RubyHash<K, V> rejectEx(RubyEnumerable.EntryBooleanBlock<K, V> block) {
     int beforeSize = map.size();
-    deleteIf(visitor);
+    deleteIf(block);
     if (map.size() == beforeSize) {
       return null;
     } else {
@@ -301,10 +301,10 @@ public final class RubyHash<K, V> implements Map<K, V> {
     return true;
   }
 
-  public boolean hasAll(RubyEnumerable.EntryBooleanVisitor<K, V> visitor) {
+  public boolean hasAll(RubyEnumerable.EntryBooleanBlock<K, V> block) {
     boolean bool = true;
     for (Entry<K, V> item : map.entrySet()) {
-      if (visitor.visit(item.getKey(), item.getValue()) == false) {
+      if (block.yield(item.getKey(), item.getValue()) == false) {
         bool = false;
       }
     }
@@ -315,20 +315,20 @@ public final class RubyHash<K, V> implements Map<K, V> {
     return RubyEnumerable.hasAny(map.entrySet());
   }
 
-  public boolean hasAny(RubyEnumerable.EntryBooleanVisitor<K, V> visitor) {
+  public boolean hasAny(RubyEnumerable.EntryBooleanBlock<K, V> block) {
     boolean bool = false;
     for (Entry<K, V> item : map.entrySet()) {
-      if (visitor.visit(item.getKey(), item.getValue())) {
+      if (block.yield(item.getKey(), item.getValue())) {
         bool = true;
       }
     }
     return bool;
   }
 
-  public <S> RubyArray<Entry<S, RubyArray<Entry<K, V>>>> chunk(RubyEnumerable.EntryTransformVisitor<K, V, S> visitor) {
+  public <S> RubyArray<Entry<S, RubyArray<Entry<K, V>>>> chunk(RubyEnumerable.EntryTransformBlock<K, V, S> block) {
     Multimap<S, Entry<K, V>> multimap = ArrayListMultimap.create();
     for (Entry<K, V> item : map.entrySet()) {
-      S key = visitor.visit(item.getKey(), item.getValue());
+      S key = block.yield(item.getKey(), item.getValue());
       multimap.put(key, item);
     }
     RubyArray<Entry<S, RubyArray<Entry<K, V>>>> list = new RubyArray();
@@ -338,18 +338,18 @@ public final class RubyHash<K, V> implements Map<K, V> {
     return list;
   }
 
-  public <S> RubyArray<S> collect(RubyEnumerable.EntryTransformVisitor<K, V, S> visitor) {
+  public <S> RubyArray<S> collect(RubyEnumerable.EntryTransformBlock<K, V, S> block) {
     List<S> list = newArrayList();
     for (Entry<K, V> item : map.entrySet()) {
-      list.add(visitor.visit(item.getKey(), item.getValue()));
+      list.add(block.yield(item.getKey(), item.getValue()));
     }
     return new RubyArray(list);
   }
 
-  public <S> RubyArray<S> collectConcat(RubyEnumerable.EntryListVisitor<K, V, S> visitor) {
+  public <S> RubyArray<S> collectConcat(RubyEnumerable.EntryToListBlock<K, V, S> block) {
     List<S> list = newArrayList();
     for (Entry<K, V> item : map.entrySet()) {
-      list.addAll(visitor.visit(item.getKey(), item.getValue()));
+      list.addAll(block.yield(item.getKey(), item.getValue()));
     }
     return new RubyArray(list);
   }
@@ -358,35 +358,35 @@ public final class RubyHash<K, V> implements Map<K, V> {
     return RubyEnumerable.count(map.entrySet());
   }
 
-  public int count(RubyEnumerable.EntryBooleanVisitor<K, V> visitor) {
+  public int count(RubyEnumerable.EntryBooleanBlock<K, V> block) {
     int count = 0;
     for (Entry<K, V> item : map.entrySet()) {
-      if (visitor.visit(item.getKey(), item.getValue())) {
+      if (block.yield(item.getKey(), item.getValue())) {
         count++;
       }
     }
     return count;
   }
 
-  public void cycle(RubyEnumerable.EntryVisitor<K, V> visitor) {
+  public void cycle(RubyEnumerable.EntryBlock<K, V> block) {
     while (true) {
       for (Entry<K, V> item : map.entrySet()) {
-        visitor.visit(item.getKey(), item.getValue());
+        block.yield(item.getKey(), item.getValue());
       }
     }
   }
 
-  public void cycle(int cycles, RubyEnumerable.EntryVisitor<K, V> visitor) {
+  public void cycle(int cycles, RubyEnumerable.EntryBlock<K, V> block) {
     for (int i = 0; i < cycles; i++) {
       for (Entry<K, V> item : map.entrySet()) {
-        visitor.visit(item.getKey(), item.getValue());
+        block.yield(item.getKey(), item.getValue());
       }
     }
   }
 
-  public Entry<K, V> detect(RubyEnumerable.EntryBooleanVisitor<K, V> visitor) {
+  public Entry<K, V> detect(RubyEnumerable.EntryBooleanBlock<K, V> block) {
     for (Entry<K, V> item : map.entrySet()) {
-      if (visitor.visit(item.getKey(), item.getValue())) {
+      if (block.yield(item.getKey(), item.getValue())) {
         return item;
       }
     }
@@ -408,11 +408,11 @@ public final class RubyHash<K, V> implements Map<K, V> {
     return new RubyArray(list);
   }
 
-  public RubyArray<Entry<K, V>> dropWhile(RubyEnumerable.EntryBooleanVisitor<K, V> visitor) {
+  public RubyArray<Entry<K, V>> dropWhile(RubyEnumerable.EntryBooleanBlock<K, V> block) {
     List<Entry<K, V>> list = newArrayList();
     boolean cutPoint = false;
     for (Entry<K, V> item : map.entrySet()) {
-      if (visitor.visit(item.getKey(), item.getValue()) || cutPoint) {
+      if (block.yield(item.getKey(), item.getValue()) || cutPoint) {
         cutPoint = true;
         list.add(item);
       }
@@ -420,34 +420,34 @@ public final class RubyHash<K, V> implements Map<K, V> {
     return new RubyArray(list);
   }
 
-  public void eachCons(int n, RubyEnumerable.ItemBlockVisitor<Entry<K, V>> visitor) {
-    RubyEnumerable.eachCons(map.entrySet(), n, visitor);
+  public void eachCons(int n, RubyEnumerable.ItemFromListBlock<Entry<K, V>> block) {
+    RubyEnumerable.eachCons(map.entrySet(), n, block);
   }
 
-  public void eachSlice(int n, RubyEnumerable.ItemBlockVisitor<Entry<K, V>> visitor) {
-    RubyEnumerable.eachSlice(map.entrySet(), n, visitor);
+  public void eachSlice(int n, RubyEnumerable.ItemFromListBlock<Entry<K, V>> block) {
+    RubyEnumerable.eachSlice(map.entrySet(), n, block);
   }
 
-  public void eachWithIndex(RubyEnumerable.ItemWithIndexVisitor<Entry<K, V>> visitor) {
-    RubyEnumerable.eachWithIndex(map.entrySet(), visitor);
+  public void eachWithIndex(RubyEnumerable.ItemWithIndexBlock<Entry<K, V>> block) {
+    RubyEnumerable.eachWithIndex(map.entrySet(), block);
   }
 
-  public void eachWithObject(Object o, RubyEnumerable.ItemWithObject<Entry<K, V>> visitor) {
-    RubyEnumerable.eachWithObject(map.entrySet(), o, visitor);
+  public void eachWithObject(Object o, RubyEnumerable.ItemWithObjectBlock<Entry<K, V>> block) {
+    RubyEnumerable.eachWithObject(map.entrySet(), o, block);
   }
 
   public RubyArray<Entry<K, V>> entries() {
     return new RubyArray(RubyEnumerable.entries(map.entrySet()));
   }
 
-  public Entry<K, V> find(RubyEnumerable.EntryBooleanVisitor<K, V> visitor) {
-    return detect(visitor);
+  public Entry<K, V> find(RubyEnumerable.EntryBooleanBlock<K, V> block) {
+    return detect(block);
   }
 
-  public RubyArray<Entry<K, V>> findAll(RubyEnumerable.EntryBooleanVisitor<K, V> visitor) {
+  public RubyArray<Entry<K, V>> findAll(RubyEnumerable.EntryBooleanBlock<K, V> block) {
     List<Entry<K, V>> list = newArrayList();
     for (Entry<K, V> item : map.entrySet()) {
-      if (visitor.visit(item.getKey(), item.getValue())) {
+      if (block.yield(item.getKey(), item.getValue())) {
         list.add(item);
       }
     }
@@ -466,10 +466,10 @@ public final class RubyHash<K, V> implements Map<K, V> {
     return RubyEnumerable.findIndex(map.entrySet(), target);
   }
 
-  public Integer findIndex(RubyEnumerable.EntryBooleanVisitor<K, V> visitor) {
+  public Integer findIndex(RubyEnumerable.EntryBooleanBlock<K, V> block) {
     int index = 0;
     for (Entry<K, V> item : map.entrySet()) {
-      if (visitor.visit(item.getKey(), item.getValue())) {
+      if (block.yield(item.getKey(), item.getValue())) {
         return index;
       }
       index++;
@@ -477,14 +477,14 @@ public final class RubyHash<K, V> implements Map<K, V> {
     return null;
   }
 
-  public <S> RubyArray<S> flatMap(RubyEnumerable.EntryListVisitor<K, V, S> visitor) {
-    return collectConcat(visitor);
+  public <S> RubyArray<S> flatMap(RubyEnumerable.EntryToListBlock<K, V, S> block) {
+    return collectConcat(block);
   }
 
-  public <S> RubyHash<S, RubyArray<Entry<K, V>>> groupBy(RubyEnumerable.EntryTransformVisitor<K, V, S> visitor) {
+  public <S> RubyHash<S, RubyArray<Entry<K, V>>> groupBy(RubyEnumerable.EntryTransformBlock<K, V, S> block) {
     Multimap<S, Entry<K, V>> multimap = ArrayListMultimap.create();
     for (Entry<K, V> item : map.entrySet()) {
-      S key = visitor.visit(item.getKey(), item.getValue());
+      S key = block.yield(item.getKey(), item.getValue());
       multimap.put(key, item);
     }
     RubyHash<S, RubyArray<Entry<K, V>>> hash = new RubyHash();
@@ -502,19 +502,19 @@ public final class RubyHash<K, V> implements Map<K, V> {
     return map.containsKey(key);
   }
 
-  public Entry<K, V> inject(RubyEnumerable.InjectVisitor<Entry<K, V>> visitor) {
-    return RubyEnumerable.inject(map.entrySet(), visitor);
+  public Entry<K, V> inject(RubyEnumerable.InjectBlock<Entry<K, V>> block) {
+    return RubyEnumerable.inject(map.entrySet(), block);
   }
 
-  public <S> S inject(S init, RubyEnumerable.EntryInjectWithInitVisitor<K, V, S> visitor) {
+  public <S> S inject(S init, RubyEnumerable.EntryInjectWithInitBlock<K, V, S> block) {
     for (Entry<K, V> item : map.entrySet()) {
-      init = visitor.visit(init, item);
+      init = block.yield(init, item);
     }
     return init;
   }
 
-  public <S> RubyArray<S> map(RubyEnumerable.EntryTransformVisitor<K, V, S> visitor) {
-    return collect(visitor);
+  public <S> RubyArray<S> map(RubyEnumerable.EntryTransformBlock<K, V, S> block) {
+    return collect(block);
   }
 
   public Entry<K, V> max(Comparator<? super K> comp) {
@@ -524,12 +524,12 @@ public final class RubyHash<K, V> implements Map<K, V> {
     });
   }
 
-  public <S> Entry<K, V> maxBy(Comparator<? super S> comp, RubyEnumerable.EntryTransformVisitor<K, V, S> visitor) {
+  public <S> Entry<K, V> maxBy(Comparator<? super S> comp, RubyEnumerable.EntryTransformBlock<K, V, S> block) {
     List<Entry<K, V>> src = newArrayList();
     List<S> dst = newArrayList();
     for (Entry<K, V> item : map.entrySet()) {
       src.add(item);
-      dst.add(visitor.visit(item.getKey(), item.getValue()));
+      dst.add(block.yield(item.getKey(), item.getValue()));
     }
     S maxDst = Collections.max(dst, comp);
     return src.get(dst.indexOf(maxDst));
@@ -542,12 +542,12 @@ public final class RubyHash<K, V> implements Map<K, V> {
     });
   }
 
-  public <S> Entry<K, V> minBy(Comparator<? super S> comp, RubyEnumerable.EntryTransformVisitor<K, V, S> visitor) {
+  public <S> Entry<K, V> minBy(Comparator<? super S> comp, RubyEnumerable.EntryTransformBlock<K, V, S> block) {
     List<Entry<K, V>> src = newArrayList();
     List<S> dst = newArrayList();
     for (Entry<K, V> item : map.entrySet()) {
       src.add(item);
-      dst.add(visitor.visit(item.getKey(), item.getValue()));
+      dst.add(block.yield(item.getKey(), item.getValue()));
     }
     S minDst = Collections.min(dst, comp);
     return src.get(dst.indexOf(minDst));
@@ -561,23 +561,23 @@ public final class RubyHash<K, V> implements Map<K, V> {
     return new RubyArray(min, max);
   }
 
-  public <S> RubyArray<Entry<K, V>> minmaxBy(Comparator<? super S> comp, RubyEnumerable.EntryTransformVisitor<K, V, S> visitor) {
+  public <S> RubyArray<Entry<K, V>> minmaxBy(Comparator<? super S> comp, RubyEnumerable.EntryTransformBlock<K, V, S> block) {
     List<Entry<K, V>> src = newArrayList();
     List<S> dst = newArrayList();
     for (Entry<K, V> item : map.entrySet()) {
       src.add(item);
-      dst.add(visitor.visit(item.getKey(), item.getValue()));
+      dst.add(block.yield(item.getKey(), item.getValue()));
     }
     S minDst = Collections.min(dst, comp);
     S maxDst = Collections.max(dst, comp);
     return new RubyArray(src.get(dst.indexOf(minDst)), src.get(dst.indexOf(maxDst)));
   }
 
-  public RubyArray<RubyArray<Entry<K, V>>> partition(RubyEnumerable.EntryBooleanVisitor<K, V> visitor) {
+  public RubyArray<RubyArray<Entry<K, V>>> partition(RubyEnumerable.EntryBooleanBlock<K, V> block) {
     RubyArray<Entry<K, V>> trueList = new RubyArray();
     RubyArray<Entry<K, V>> falseList = new RubyArray();
     for (Entry<K, V> item : map.entrySet()) {
-      if (visitor.visit(item.getKey(), item.getValue())) {
+      if (block.yield(item.getKey(), item.getValue())) {
         trueList.add(item);
       } else {
         falseList.add(item);
@@ -590,10 +590,10 @@ public final class RubyHash<K, V> implements Map<K, V> {
     return RubyEnumerable.hasNone(map.entrySet());
   }
 
-  public boolean hasNone(RubyEnumerable.EntryBooleanVisitor<K, V> visitor) {
+  public boolean hasNone(RubyEnumerable.EntryBooleanBlock<K, V> block) {
     boolean bool = true;
     for (Entry<K, V> item : map.entrySet()) {
-      if (visitor.visit(item.getKey(), item.getValue())) {
+      if (block.yield(item.getKey(), item.getValue())) {
         bool = false;
       }
     }
@@ -604,10 +604,10 @@ public final class RubyHash<K, V> implements Map<K, V> {
     return RubyEnumerable.hasOne(map.entrySet());
   }
 
-  public boolean hasOne(RubyEnumerable.EntryBooleanVisitor<K, V> visitor) {
+  public boolean hasOne(RubyEnumerable.EntryBooleanBlock<K, V> block) {
     int count = 0;
     for (Entry<K, V> item : map.entrySet()) {
-      if (visitor.visit(item.getKey(), item.getValue())) {
+      if (block.yield(item.getKey(), item.getValue())) {
         count++;
         if (count > 1) {
           return false;
@@ -617,36 +617,36 @@ public final class RubyHash<K, V> implements Map<K, V> {
     return count == 1;
   }
 
-  public Entry<K, V> reduce(RubyEnumerable.InjectVisitor<Entry<K, V>> visitor) {
-    return inject(visitor);
+  public Entry<K, V> reduce(RubyEnumerable.InjectBlock<Entry<K, V>> block) {
+    return inject(block);
   }
 
-  public <S> S reduce(S init, RubyEnumerable.EntryInjectWithInitVisitor<K, V, S> visitor) {
-    return inject(init, visitor);
+  public <S> S reduce(S init, RubyEnumerable.EntryInjectWithInitBlock<K, V, S> block) {
+    return inject(init, block);
   }
 
-  public RubyHash<K, V> reject(RubyEnumerable.EntryBooleanVisitor<K, V> visitor) {
+  public RubyHash<K, V> reject(RubyEnumerable.EntryBooleanBlock<K, V> block) {
     RubyHash<K, V> hash = new RubyHash();
     for (Entry<K, V> item : map.entrySet()) {
-      if (visitor.visit(item.getKey(), item.getValue())) {
+      if (block.yield(item.getKey(), item.getValue())) {
         hash.put(item);
       }
     }
     return hash;
   }
 
-  public void reverseEach(RubyEnumerable.EntryVisitor visitor) {
+  public void reverseEach(RubyEnumerable.EntryBlock block) {
     List<Entry<K, V>> reversedEntries = newArrayList();
     for (Entry<K, V> entry : map.entrySet()) {
       reversedEntries.add(0, entry);
     }
     for (Entry<K, V> entry : reversedEntries) {
-      visitor.visit(entry.getKey(), entry.getValue());
+      block.yield(entry.getKey(), entry.getValue());
     }
   }
 
-  public RubyArray<Entry<K, V>> select(RubyEnumerable.EntryBooleanVisitor<K, V> visitor) {
-    return findAll(visitor);
+  public RubyArray<Entry<K, V>> select(RubyEnumerable.EntryBooleanBlock<K, V> block) {
+    return findAll(block);
   }
 
   public RubyArray<RubyArray<Entry<K, V>>> sliceBefore(String regex) {
@@ -671,14 +671,14 @@ public final class RubyHash<K, V> implements Map<K, V> {
     return list;
   }
 
-  public RubyArray<RubyArray<Entry<K, V>>> sliceBefore(RubyEnumerable.EntryBooleanVisitor<K, V> visitor) {
+  public RubyArray<RubyArray<Entry<K, V>>> sliceBefore(RubyEnumerable.EntryBooleanBlock<K, V> block) {
     RubyArray<RubyArray<Entry<K, V>>> list = new RubyArray();
     RubyArray<Entry<K, V>> group = null;
     for (Entry<K, V> item : map.entrySet()) {
       if (group == null) {
         group = new RubyArray();
         group.add(item);
-      } else if (visitor.visit(item.getKey(), item.getValue())) {
+      } else if (block.yield(item.getKey(), item.getValue())) {
         list.add(group);
         group = new RubyArray();
         group.add(item);
@@ -701,10 +701,10 @@ public final class RubyHash<K, V> implements Map<K, V> {
     return new RubyHash(sortedMap);
   }
 
-  public <S> RubyHash<K, V> sortBy(Comparator<? super S> comp, RubyEnumerable.EntryTransformVisitor<K, V, S> visitor) {
+  public <S> RubyHash<K, V> sortBy(Comparator<? super S> comp, RubyEnumerable.EntryTransformBlock<K, V, S> block) {
     List<Entry<S, K>> references = newArrayList();
     for (Entry<K, V> item : map.entrySet()) {
-      Entry<S, K> ref = new SimpleEntry<S, K>(visitor.visit(item.getKey(), item.getValue()), item.getKey());
+      Entry<S, K> ref = new SimpleEntry<>(block.yield(item.getKey(), item.getValue()), item.getKey());
       references.add(ref);
     }
     references = RubyEnumerable.sortBy(references, comp, (e) -> {
@@ -722,10 +722,10 @@ public final class RubyHash<K, V> implements Map<K, V> {
     return new RubyArray(RubyEnumerable.take(map.entrySet(), n));
   }
 
-  public RubyArray<Entry<K, V>> takeWhile(RubyEnumerable.EntryBooleanVisitor visitor) {
+  public RubyArray<Entry<K, V>> takeWhile(RubyEnumerable.EntryBooleanBlock block) {
     List<Entry<K, V>> list = newArrayList();
     for (Entry<K, V> item : map.entrySet()) {
-      if (visitor.visit(item.getKey(), item.getValue())) {
+      if (block.yield(item.getKey(), item.getValue())) {
         list.add(item);
       } else {
         return new RubyArray(list);
