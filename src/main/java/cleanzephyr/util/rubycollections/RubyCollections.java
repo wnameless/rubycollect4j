@@ -158,9 +158,9 @@ public final class RubyCollections {
     //System.out.println(rubyAry.rotateEx(-1));
     System.out.println(ra(1, 2, 3).permutation());
 
-    System.out.println(rh("a", 1, "b", 2).chunk((k, v) -> {
-      return k + k;
-    }));
+    ra(1,2,3,4,5,6,7,8).eachSlice(3, (l)-> {
+      System.out.println(l);
+    });
 
     rh("a", 1, "b", 2, "c", 3).map((k, v) -> {
       return v * 2;

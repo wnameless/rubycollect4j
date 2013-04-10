@@ -1,15 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cleanzephyr.util.rubycollections;
 
+import static com.google.common.collect.Lists.newArrayList;
+import java.util.List;
+import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.assertFalse;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -32,28 +29,38 @@ import static org.junit.Assert.*;
  *
  */
 public class RubyEnumerableTest {
-  
+
+  private List<String> list;
+
   public RubyEnumerableTest() {
   }
-  
-  @BeforeClass
-  public static void setUpClass() {
-  }
-  
-  @AfterClass
-  public static void tearDownClass() {
-  }
-  
+
   @Before
   public void setUp() {
+    list = newArrayList();
   }
-  
+
   @After
   public void tearDown() {
   }
-  // TODO add test methods here.
-  // The methods must be annotated with annotation @Test. For example:
-  //
-  // @Test
-  // public void hello() {}
+
+  @Test
+  public void hasAllTest() {
+    assertTrue(RubyEnumerable.hasAll(list));
+    list.add("item1");
+    assertTrue(RubyEnumerable.hasAll(list));
+    list.add(null);
+    assertFalse(RubyEnumerable.hasAll(list));
+  }
+
+  @Test
+  public void hasAllWithBlockTest() {
+    list.add("item1");
+    assertTrue(RubyEnumerable.hasAll(list, (i) -> {
+      return i instanceof String;
+    }));
+    assertFalse(RubyEnumerable.hasAll(list, (i) -> {
+      return i.equals("");
+    }));
+  }
 }

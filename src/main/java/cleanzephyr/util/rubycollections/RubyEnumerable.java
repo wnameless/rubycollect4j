@@ -1,5 +1,14 @@
 package cleanzephyr.util.rubycollections;
 
+import cleanzephyr.util.rubycollections.blocks.BooleanBlock;
+import cleanzephyr.util.rubycollections.blocks.InjectBlock;
+import cleanzephyr.util.rubycollections.blocks.InjectWithInitBlock;
+import cleanzephyr.util.rubycollections.blocks.ItemBlock;
+import cleanzephyr.util.rubycollections.blocks.ItemFromListBlock;
+import cleanzephyr.util.rubycollections.blocks.ItemWithIndexBlock;
+import cleanzephyr.util.rubycollections.blocks.ItemWithObjectBlock;
+import cleanzephyr.util.rubycollections.blocks.ToListBlock;
+import cleanzephyr.util.rubycollections.blocks.TransformBlock;
 import com.google.common.collect.ArrayListMultimap;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Lists.reverse;
@@ -42,96 +51,13 @@ import java.util.Comparator;
  */
 public final class RubyEnumerable {
 
-  public static interface EntryBlock<K, V> {
-
-    public void yield(K key, V value);
-  }
-
-  public static interface EntryBooleanBlock<K, V> {
-
-    public boolean yield(K key, V value);
-  }
-
-  public static interface EntryTransformBlock<K, V, S> {
-
-    public S yield(K key, V value);
-  }
-
-  public static interface EntryToListBlock<K, V, S> {
-
-    public List<S> yield(K key, V value);
-  }
-
-  public static interface EntryInjectWithInitBlock<K, V, S> {
-
-    public S yield(S memo, Entry<K, V> item);
-  }
-
-  public static interface EntryMergeBlock<K, V> {
-
-    public V yield(K key, V oldval, V newval);
-  }
-
-  public static interface ItemBlock<E> {
-
-    public void yield(E item);
-  }
-
-  public static interface ItemWithReturnBlock<E> {
-
-    public E yield(E item);
-  }
-
-  public static interface ItemWithIndexBlock<E> {
-
-    public void yield(E item, int index);
-  }
-
-  public static interface IndexBlock<E> {
-
-    public void yield(int index);
-  }
-
-  public static interface BooleanBlock<E> {
-
-    public boolean yield(E item);
-  }
-
-  public static interface TransformBlock<E, S> {
-
-    public S yield(E item);
-  }
-
-  public static interface ToListBlock<E, S> {
-
-    public List<S> yield(E item);
-  }
-
-  public static interface ItemFromListBlock<E> {
-
-    public void yield(List<E> block);
-  }
-
-  public static interface ItemWithObjectBlock<E> {
-
-    public void yield(E item, Object o);
-  }
-
-  public static interface InjectBlock<E> {
-
-    public E yield(E memo, E item);
-  }
-
-  public static interface InjectWithInitBlock<E, S> {
-
-    public S yield(S memo, E item);
-  }
-
-  public static interface Block<S> {
-
-    public S yield();
-  }
-
+  /**
+   * To determinate if all elements are not null.
+   *
+   * @param <E> element
+   * @param iter iterator of element <E>
+   * @return true if all elements are not null, otherwise false
+   */
   public static <E> boolean hasAll(Iterable<E> iter) {
     boolean bool = true;
     for (E item : iter) {

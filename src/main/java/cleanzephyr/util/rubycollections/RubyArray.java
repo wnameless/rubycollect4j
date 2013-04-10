@@ -1,5 +1,17 @@
 package cleanzephyr.util.rubycollections;
 
+import cleanzephyr.util.rubycollections.blocks.Block;
+import cleanzephyr.util.rubycollections.blocks.BooleanBlock;
+import cleanzephyr.util.rubycollections.blocks.IndexBlock;
+import cleanzephyr.util.rubycollections.blocks.InjectBlock;
+import cleanzephyr.util.rubycollections.blocks.InjectWithInitBlock;
+import cleanzephyr.util.rubycollections.blocks.ItemBlock;
+import cleanzephyr.util.rubycollections.blocks.ItemFromListBlock;
+import cleanzephyr.util.rubycollections.blocks.ItemWithIndexBlock;
+import cleanzephyr.util.rubycollections.blocks.ItemWithObjectBlock;
+import cleanzephyr.util.rubycollections.blocks.ItemWithReturnBlock;
+import cleanzephyr.util.rubycollections.blocks.ToListBlock;
+import cleanzephyr.util.rubycollections.blocks.TransformBlock;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
 import static com.google.common.collect.Lists.newArrayList;
@@ -168,7 +180,7 @@ public final class RubyArray<E> implements List<E> {
     return comb;
   }
 
-  public RubyArray<RubyArray<E>> combination(int n, RubyEnumerable.ItemBlock<RubyArray<E>> block) {
+  public RubyArray<RubyArray<E>> combination(int n, ItemBlock<RubyArray<E>> block) {
     RubyArray<RubyArray<E>> comb = combination(n);
     for (RubyArray<E> item : comb) {
       block.yield(item);
@@ -180,7 +192,7 @@ public final class RubyArray<E> implements List<E> {
     return combination(n);
   }
 
-  public RubyArray<RubyArray<E>> repeatedCombination(int n, RubyEnumerable.ItemBlock<RubyArray<E>> block) {
+  public RubyArray<RubyArray<E>> repeatedCombination(int n, ItemBlock<RubyArray<E>> block) {
     return combination(n, block);
   }
 
@@ -235,7 +247,7 @@ public final class RubyArray<E> implements List<E> {
     return isDeleted ? target : null;
   }
 
-  public E delete(E target, RubyEnumerable.Block<E> block) {
+  public E delete(E target, Block<E> block) {
     boolean isDeleted = false;
     ListIterator<E> li = list.listIterator();
     while (li.hasNext()) {
@@ -260,7 +272,7 @@ public final class RubyArray<E> implements List<E> {
     }
   }
 
-  public RubyArray<E> deleteIf(RubyEnumerable.BooleanBlock<E> block) {
+  public RubyArray<E> deleteIf(BooleanBlock<E> block) {
     ListIterator<E> li = list.listIterator();
     while (li.hasNext()) {
       E item = li.next();
@@ -271,13 +283,13 @@ public final class RubyArray<E> implements List<E> {
     return this;
   }
 
-  public void each(RubyEnumerable.ItemBlock<E> block) {
+  public void each(ItemBlock<E> block) {
     for (E item : list) {
       block.yield(item);
     }
   }
 
-  public void eachIndex(RubyEnumerable.IndexBlock<E> block) {
+  public void eachIndex(IndexBlock<E> block) {
     for (int i = 0; i < list.size(); i++) {
       block.yield(i);
     }
@@ -300,7 +312,7 @@ public final class RubyArray<E> implements List<E> {
     }
   }
 
-  public E fetch(int index, RubyEnumerable.ItemBlock<E> block) {
+  public E fetch(int index, ItemBlock<E> block) {
     E target = at(index);
     if (target == null) {
       block.yield(target);
@@ -331,21 +343,21 @@ public final class RubyArray<E> implements List<E> {
     return this;
   }
 
-  public RubyArray<E> fill(RubyEnumerable.ItemWithReturnBlock<E> block) {
+  public RubyArray<E> fill(ItemWithReturnBlock<E> block) {
     for (int i = 0; i < list.size(); i++) {
       list.set(i, block.yield(list.get(i)));
     }
     return this;
   }
 
-  public RubyArray<E> fill(int start, RubyEnumerable.ItemWithReturnBlock<E> block) {
+  public RubyArray<E> fill(int start, ItemWithReturnBlock<E> block) {
     for (int i = start; i < list.size(); i++) {
       list.set(i, block.yield(list.get(i)));
     }
     return this;
   }
 
-  public RubyArray<E> fill(int start, int length, RubyEnumerable.ItemWithReturnBlock<E> block) {
+  public RubyArray<E> fill(int start, int length, ItemWithReturnBlock<E> block) {
     for (int i = start; i < start + length && i < list.size(); i++) {
       list.set(i, block.yield(list.get(i)));
     }
@@ -362,7 +374,7 @@ public final class RubyArray<E> implements List<E> {
     return index;
   }
 
-  public Integer index(RubyEnumerable.BooleanBlock<E> block) {
+  public Integer index(BooleanBlock<E> block) {
     Integer index = null;
     for (int i = 0; i < list.size(); i++) {
       if (block.yield(list.get(i))) {
@@ -452,7 +464,7 @@ public final class RubyArray<E> implements List<E> {
     return sb.toString();
   }
 
-  public RubyArray<E> keepIf(RubyEnumerable.BooleanBlock<E> block) {
+  public RubyArray<E> keepIf(BooleanBlock<E> block) {
     ListIterator<E> li = list.listIterator();
     while (li.hasNext()) {
       E item = li.next();
@@ -540,7 +552,7 @@ public final class RubyArray<E> implements List<E> {
     return Arrays.binarySearch(counters, -1) == -1;
   }
 
-  public void product(RubyArray<RubyArray<E>> arys, RubyEnumerable.ItemBlock<RubyArray<E>> block) {
+  public void product(RubyArray<RubyArray<E>> arys, ItemBlock<RubyArray<E>> block) {
     RubyArray<RubyArray<E>> combinations = product(arys.toArray(new RubyArray[arys.length()]));
     for (RubyArray<E> comb : combinations) {
       block.yield(comb);
@@ -564,7 +576,7 @@ public final class RubyArray<E> implements List<E> {
     return null;
   }
 
-  public RubyArray<E> rejectEx(RubyEnumerable.BooleanBlock<E> block) {
+  public RubyArray<E> rejectEx(BooleanBlock<E> block) {
     int beforeLength = list.size();
     RubyArray<E> rubyArray = deleteIf(block);
     if (rubyArray.size() != beforeLength) {
@@ -601,7 +613,7 @@ public final class RubyArray<E> implements List<E> {
     return index;
   }
 
-  public Integer rindex(RubyEnumerable.BooleanBlock<E> block) {
+  public Integer rindex(BooleanBlock<E> block) {
     Integer index = null;
     for (int i = list.size() - 1; i >= 0; i--) {
       if (block.yield(list.get(i))) {
@@ -677,7 +689,7 @@ public final class RubyArray<E> implements List<E> {
     return new RubyArray(samples);
   }
 
-  public RubyArray<E> selectEx(RubyEnumerable.BooleanBlock block) {
+  public RubyArray<E> selectEx(BooleanBlock block) {
     RubyArray<E> rubyArray = select(block);
     if (rubyArray.size() == list.size()) {
       return null;
@@ -790,7 +802,7 @@ public final class RubyArray<E> implements List<E> {
     return this;
   }
 
-  public <S> RubyArray<E> uniq(RubyEnumerable.TransformBlock<E, S> block) {
+  public <S> RubyArray<E> uniq(TransformBlock<E, S> block) {
     List<E> uniqList = newArrayList();
     List<S> uniqByList = newArrayList();
     for (E item : list) {
@@ -844,7 +856,7 @@ public final class RubyArray<E> implements List<E> {
     return zippedRubyArray;
   }
 
-  public void zip(RubyArray<RubyArray<E>> others, RubyEnumerable.ItemBlock<RubyArray<E>> block) {
+  public void zip(RubyArray<RubyArray<E>> others, ItemBlock<RubyArray<E>> block) {
     RubyArray<RubyArray<E>> zippedRubyArray = zip(others.toArray(new RubyArray[others.length()]));
     for (RubyArray<E> item : zippedRubyArray) {
       block.yield(item);
@@ -856,11 +868,11 @@ public final class RubyArray<E> implements List<E> {
     return RubyEnumerable.hasAll(list);
   }
 
-  public boolean hasAll(RubyEnumerable.BooleanBlock block) {
+  public boolean hasAll(BooleanBlock block) {
     return RubyEnumerable.hasAll(list, block);
   }
 
-  public <K> RubyArray<Entry<K, RubyArray<E>>> chunk(RubyEnumerable.TransformBlock<E, K> block) {
+  public <K> RubyArray<Entry<K, RubyArray<E>>> chunk(TransformBlock<E, K> block) {
     Multimap<K, E> multimap = ArrayListMultimap.create();
     for (E item : list) {
       K key = block.yield(item);
@@ -873,11 +885,11 @@ public final class RubyArray<E> implements List<E> {
     return rubyArray;
   }
 
-  public <S> RubyArray<E> collect(RubyEnumerable.TransformBlock<E, S> block) {
+  public <S> RubyArray<E> collect(TransformBlock<E, S> block) {
     return new RubyArray(RubyEnumerable.collect(list, block));
   }
 
-  public <S> RubyArray<S> collectConcat(RubyEnumerable.ToListBlock<E, S> block) {
+  public <S> RubyArray<S> collectConcat(ToListBlock<E, S> block) {
     return new RubyArray(RubyEnumerable.collectConcat(list, block));
   }
 
@@ -885,15 +897,15 @@ public final class RubyArray<E> implements List<E> {
     return RubyEnumerable.count(list);
   }
 
-  public int count(RubyEnumerable.BooleanBlock<E> block) {
+  public int count(BooleanBlock<E> block) {
     return RubyEnumerable.count(list, block);
   }
 
-  public void cycle(RubyEnumerable.ItemBlock<E> block) {
+  public void cycle(ItemBlock<E> block) {
     RubyEnumerable.cycle(list, block);
   }
 
-  public void cycle(int cycles, RubyEnumerable.ItemBlock<E> block) {
+  public void cycle(int cycles, ItemBlock<E> block) {
     RubyEnumerable.cycle(list, cycles, block);
   }
 
@@ -901,7 +913,7 @@ public final class RubyArray<E> implements List<E> {
     return RubyEnumerable.detect(list, target);
   }
 
-  public E detect(RubyEnumerable.BooleanBlock<E> block) {
+  public E detect(BooleanBlock<E> block) {
     return RubyEnumerable.detect(list, block);
   }
 
@@ -909,23 +921,23 @@ public final class RubyArray<E> implements List<E> {
     return new RubyArray(RubyEnumerable.drop(list, n));
   }
 
-  public RubyArray<E> dropWhile(RubyEnumerable.BooleanBlock block) {
+  public RubyArray<E> dropWhile(BooleanBlock block) {
     return new RubyArray(RubyEnumerable.dropWhile(list, block));
   }
 
-  public void eachCons(int n, RubyEnumerable.ItemFromListBlock<E> block) {
+  public void eachCons(int n, ItemFromListBlock<E> block) {
     RubyEnumerable.eachCons(list, n, block);
   }
 
-  public void eachSlice(int n, RubyEnumerable.ItemFromListBlock<E> block) {
+  public void eachSlice(int n, ItemFromListBlock<E> block) {
     RubyEnumerable.eachSlice(list, n, block);
   }
 
-  public void eachWithIndex(RubyEnumerable.ItemWithIndexBlock<E> vistor) {
+  public void eachWithIndex(ItemWithIndexBlock<E> vistor) {
     RubyEnumerable.eachWithIndex(list, vistor);
   }
 
-  public void eachWithObject(Object o, RubyEnumerable.ItemWithObjectBlock<E> block) {
+  public void eachWithObject(Object o, ItemWithObjectBlock<E> block) {
     RubyEnumerable.eachWithObject(list, o, block);
   }
 
@@ -937,7 +949,7 @@ public final class RubyArray<E> implements List<E> {
     return RubyEnumerable.find(list, target);
   }
 
-  public E find(RubyEnumerable.BooleanBlock<E> block) {
+  public E find(BooleanBlock<E> block) {
     return RubyEnumerable.find(list, block);
   }
 
@@ -953,15 +965,15 @@ public final class RubyArray<E> implements List<E> {
     return RubyEnumerable.findIndex(list, target);
   }
 
-  public Integer findIndex(RubyEnumerable.BooleanBlock<E> block) {
+  public Integer findIndex(BooleanBlock<E> block) {
     return RubyEnumerable.findIndex(list, block);
   }
 
-  public RubyArray<E> findAll(RubyEnumerable.BooleanBlock<E> block) {
+  public RubyArray<E> findAll(BooleanBlock<E> block) {
     return new RubyArray(RubyEnumerable.findAll(list, block));
   }
 
-  public <S> RubyArray<S> flatMap(RubyEnumerable.ToListBlock<E, S> block) {
+  public <S> RubyArray<S> flatMap(ToListBlock<E, S> block) {
     return new RubyArray(RubyEnumerable.flatMap(list, block));
   }
 
@@ -969,11 +981,11 @@ public final class RubyArray<E> implements List<E> {
     return new RubyArray(RubyEnumerable.grep(list, regex));
   }
 
-  public <S> RubyArray<S> grep(String regex, RubyEnumerable.TransformBlock<E, S> block) {
+  public <S> RubyArray<S> grep(String regex, TransformBlock<E, S> block) {
     return new RubyArray(RubyEnumerable.grep(list, regex, block));
   }
 
-  public <K> RubyHash<K, RubyArray<E>> groupBy(RubyEnumerable.TransformBlock<E, K> block) {
+  public <K> RubyHash<K, RubyArray<E>> groupBy(TransformBlock<E, K> block) {
     Multimap<K, E> multimap = ArrayListMultimap.create();
     for (E item : list) {
       K key = block.yield(item);
@@ -1002,15 +1014,15 @@ public final class RubyArray<E> implements List<E> {
     return RubyEnumerable.inject(list, init, methodName);
   }
 
-  public E inject(RubyEnumerable.InjectBlock<E> block) {
+  public E inject(InjectBlock<E> block) {
     return RubyEnumerable.inject(list, block);
   }
 
-  public <S> S inject(S init, RubyEnumerable.InjectWithInitBlock<E, S> block) {
+  public <S> S inject(S init, InjectWithInitBlock<E, S> block) {
     return RubyEnumerable.inject(this, init, block);
   }
 
-  public <S> RubyArray<S> map(RubyEnumerable.TransformBlock<E, S> block) {
+  public <S> RubyArray<S> map(TransformBlock<E, S> block) {
     return new RubyArray(RubyEnumerable.map(list, block));
   }
 
@@ -1018,7 +1030,7 @@ public final class RubyArray<E> implements List<E> {
     return RubyEnumerable.max(list, comp);
   }
 
-  public <S> E maxBy(Comparator<? super S> comp, RubyEnumerable.TransformBlock<E, S> block) {
+  public <S> E maxBy(Comparator<? super S> comp, TransformBlock<E, S> block) {
     return RubyEnumerable.maxBy(list, comp, block);
   }
 
@@ -1026,7 +1038,7 @@ public final class RubyArray<E> implements List<E> {
     return RubyEnumerable.min(list, comp);
   }
 
-  public <S> E minBy(Comparator<? super S> comp, RubyEnumerable.TransformBlock<E, S> block) {
+  public <S> E minBy(Comparator<? super S> comp, TransformBlock<E, S> block) {
     return RubyEnumerable.minBy(list, comp, block);
   }
 
@@ -1034,11 +1046,11 @@ public final class RubyArray<E> implements List<E> {
     return new RubyArray(RubyEnumerable.minmax(list, comp));
   }
 
-  public <S> RubyArray<E> minmaxBy(Comparator<? super S> comp, RubyEnumerable.TransformBlock<E, S> block) {
+  public <S> RubyArray<E> minmaxBy(Comparator<? super S> comp, TransformBlock<E, S> block) {
     return new RubyArray(RubyEnumerable.minmaxBy(list, comp, block));
   }
 
-  public RubyArray<RubyArray<E>> partition(RubyEnumerable.BooleanBlock<E> block) {
+  public RubyArray<RubyArray<E>> partition(BooleanBlock<E> block) {
     RubyArray<E> trueList = new RubyArray();
     RubyArray<E> falseList = new RubyArray();
     for (E item : list) {
@@ -1084,7 +1096,7 @@ public final class RubyArray<E> implements List<E> {
     return perms.uniq();
   }
 
-  public RubyArray<RubyArray<E>> permutation(int n, RubyEnumerable.ItemBlock<RubyArray<E>> block) {
+  public RubyArray<RubyArray<E>> permutation(int n, ItemBlock<RubyArray<E>> block) {
     RubyArray<RubyArray<E>> perms = permutation(n);
     for (RubyArray<E> item : perms) {
       block.yield(item);
@@ -1096,7 +1108,7 @@ public final class RubyArray<E> implements List<E> {
     return permutation(n);
   }
 
-  public RubyArray<RubyArray<E>> repeatedPermutation(int n, RubyEnumerable.ItemBlock<RubyArray<E>> block) {
+  public RubyArray<RubyArray<E>> repeatedPermutation(int n, ItemBlock<RubyArray<E>> block) {
     return permutation(n, block);
   }
 
@@ -1104,7 +1116,7 @@ public final class RubyArray<E> implements List<E> {
     return RubyEnumerable.hasNone(list);
   }
 
-  public boolean hasNone(RubyEnumerable.BooleanBlock<E> block) {
+  public boolean hasNone(BooleanBlock<E> block) {
     return RubyEnumerable.hasNone(list, block);
   }
 
@@ -1112,7 +1124,7 @@ public final class RubyArray<E> implements List<E> {
     return RubyEnumerable.hasOne(list);
   }
 
-  public boolean hasOne(RubyEnumerable.BooleanBlock<E> block) {
+  public boolean hasOne(BooleanBlock<E> block) {
     return RubyEnumerable.hasOne(list, block);
   }
 
@@ -1124,23 +1136,23 @@ public final class RubyArray<E> implements List<E> {
     return inject(init, methodName);
   }
 
-  public E reduce(RubyEnumerable.InjectBlock<E> block) {
+  public E reduce(InjectBlock<E> block) {
     return inject(block);
   }
 
-  public <S> S reduce(S init, RubyEnumerable.InjectWithInitBlock<E, S> block) {
+  public <S> S reduce(S init, InjectWithInitBlock<E, S> block) {
     return inject(init, block);
   }
 
-  public RubyArray<E> reject(RubyEnumerable.BooleanBlock block) {
+  public RubyArray<E> reject(BooleanBlock block) {
     return new RubyArray(RubyEnumerable.reject(list, block));
   }
 
-  public void reverseEach(RubyEnumerable.ItemBlock block) {
+  public void reverseEach(ItemBlock block) {
     RubyEnumerable.reverseEach(list, block);
   }
 
-  public RubyArray<E> select(RubyEnumerable.BooleanBlock block) {
+  public RubyArray<E> select(BooleanBlock block) {
     return findAll(block);
   }
 
@@ -1148,7 +1160,7 @@ public final class RubyArray<E> implements List<E> {
     return new RubyArray(RubyEnumerable.sort(list, comp));
   }
 
-  public <S> RubyArray<E> sortBy(Comparator<? super S> comp, RubyEnumerable.TransformBlock<E, S> block) {
+  public <S> RubyArray<E> sortBy(Comparator<? super S> comp, TransformBlock<E, S> block) {
     return new RubyArray(RubyEnumerable.sortBy(list, comp, block));
   }
 
@@ -1174,7 +1186,7 @@ public final class RubyArray<E> implements List<E> {
     return rubyArray;
   }
 
-  public RubyArray<RubyArray<E>> sliceBefore(RubyEnumerable.BooleanBlock block) {
+  public RubyArray<RubyArray<E>> sliceBefore(BooleanBlock block) {
     RubyArray<RubyArray<E>> rubyArray = new RubyArray();
     RubyArray<E> group = null;
     for (E item : list) {
@@ -1199,7 +1211,7 @@ public final class RubyArray<E> implements List<E> {
     return new RubyArray(RubyEnumerable.take(list, n));
   }
 
-  public RubyArray<E> takeWhile(RubyEnumerable.BooleanBlock block) {
+  public RubyArray<E> takeWhile(BooleanBlock block) {
     return new RubyArray(RubyEnumerable.takeWhile(list, block));
   }
 
