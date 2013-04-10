@@ -43,7 +43,7 @@ import java.util.regex.Pattern;
  * the License.
  *
  */
-public final class RubyHash<K, V> implements Map<K, V> {
+public final class RubyHash<K, V> implements RubyHashInterface<K, V> {
 
   private final Map<K, V> map;
   private V defaultValue;

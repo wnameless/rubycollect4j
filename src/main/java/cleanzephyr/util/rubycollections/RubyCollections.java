@@ -27,7 +27,7 @@ import java.util.Collection;
 public final class RubyCollections {
 
   public static <E> RubyArray<E> newRubyArray() {
-    return new RubyArray();
+    return new RubyArray<E>();
   }
 
   public static <E> RubyArray<E> newRubyArray(Collection<E> coll) {
@@ -148,17 +148,10 @@ public final class RubyCollections {
   }
 
   public static void main(String[] args) {
-    RubyArray<Integer> rubyAry = newRubyArray();
-    rubyAry.add(1);
-    rubyAry.add(2);
-    rubyAry.add(3);
-    rubyAry.add(4);
-    rubyAry.add(5);
-    rubyAry.add(6);
-    //System.out.println(rubyAry.rotateEx(-1));
+    RubyArray<String> rubyAry = newRubyArray();
     System.out.println(ra(1, 2, 3).permutation());
 
-    ra(1,2,3,4,5,6,7,8).eachSlice(3, (l)-> {
+    ra(1, 2, 3, 4, 5, 6, 7, 8).eachSlice(3, (l) -> {
       System.out.println(l);
     });
 

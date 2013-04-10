@@ -16,6 +16,7 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
 import static com.google.common.collect.Lists.newArrayList;
 import com.google.common.collect.Multimap;
+import com.google.common.reflect.TypeToken;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Arrays;
 import java.util.Collection;
@@ -50,7 +51,7 @@ import org.uncommons.maths.combinatorics.PermutationGenerator;
  * the License.
  *
  */
-public final class RubyArray<E> implements List<E> {
+public final class RubyArray<E> implements RubyArrayInterface<E> {
 
   private final List<E> list;
   private final Random rand = new Random();
