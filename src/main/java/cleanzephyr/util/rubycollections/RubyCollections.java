@@ -191,17 +191,9 @@ public final class RubyCollections {
   }
 
   public static void main(String[] args) {
-    RubyArray<String> rubyAry = newRubyArray();
-    System.out.println(ra(5,2,6,23,7,7).min());
 
-    ra(1, 2, 3, 4, 5, 6, 7, 8).eachSlice(3, (l) -> {
-      System.out.println(l);
-    });
-
-    rh("a", 1, "b", 2, "c", 3).map((k, v) -> {
-      return v * 2;
-    }).each((v) -> {
-      System.out.println(v);
-    });
+    System.out.println(rh("c", 1, "b", 2, "aa", 3).sortBy((k, v) -> {
+      return k.length();
+    }));
   }
 }

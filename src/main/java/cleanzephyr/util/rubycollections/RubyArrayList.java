@@ -37,7 +37,9 @@ import com.google.common.collect.Lists;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Multimaps;
 import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -1342,17 +1344,20 @@ public final class RubyArrayList<E> implements RubyArray<E> {
 
   @Override
   public <S> RubyArray<E> sortBy(TransformBlock<E, S> block) {
-    Map<S, E> map = newHashMap();
-    List<E> sertedList = newArrayList();
+    Multimap<S, E> multimap = ArrayListMultimap.create();
+    List<E> sortedList = newArrayList();
     for (E item : list) {
-      map.put(block.yield(item), item);
+      multimap.put(block.yield(item), item);
     }
-    Object[] keys = newArrayList(map.keySet()).toArray();
+    Object[] keys = newArrayList(multimap.keySet()).toArray();
     Arrays.sort(keys);
     for (Object key : keys) {
-      sertedList.add(map.get((S) key));
+      List<E> al = (List) multimap.get((S) key);
+      while (al.size() > 0) {
+        sortedList.add(al.remove(0));
+      }
     }
-    return new RubyArrayList(sertedList);
+    return new RubyArrayList(sortedList);
   }
 
   @Override

@@ -222,8 +222,12 @@ public interface RubyHash<K, V> extends Map<K, V> {
   public RubyArray<RubyArrayList<Entry<K, V>>> sliceBefore(String regex);
 
   public RubyArray<RubyArrayList<Entry<K, V>>> sliceBefore(EntryBooleanBlock<K, V> block);
-  
+
   public RubyHash<K, V> sort(Comparator<? super K> comp);
+
+  public RubyHash<K, V> sort();
+
+  public <S> RubyHash<K, V> sortBy(EntryTransformBlock<K, V, S> block);
 
   public <S> RubyHash<K, V> sortBy(Comparator<? super S> comp, EntryTransformBlock<K, V, S> block);
 

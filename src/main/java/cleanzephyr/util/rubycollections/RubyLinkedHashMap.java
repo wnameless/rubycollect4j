@@ -20,6 +20,7 @@
  */
 package cleanzephyr.util.rubycollections;
 
+import static cleanzephyr.util.rubycollections.RubyCollections.newRubyArray;
 import cleanzephyr.util.rubycollections.blocks.EntryBlock;
 import cleanzephyr.util.rubycollections.blocks.EntryBooleanBlock;
 import cleanzephyr.util.rubycollections.blocks.EntryInjectWithInitBlock;
@@ -36,6 +37,7 @@ import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newLinkedHashMap;
 import com.google.common.collect.Multimap;
 import static java.util.AbstractMap.SimpleEntry;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
@@ -843,6 +845,35 @@ public final class RubyLinkedHashMap<K, V> implements RubyHash<K, V> {
   }
 
   @Override
+  public RubyLinkedHashMap<K, V> sort() {
+    Object[] keys = newArrayList(keySet()).toArray();
+    Arrays.sort(keys);
+    Map<K, V> sortedMap = newLinkedHashMap();
+    for (Object key : keys) {
+      sortedMap.put((K) key, map.get(key));
+    }
+    return new RubyLinkedHashMap(sortedMap);
+  }
+
+  @Override
+  public <S> RubyLinkedHashMap<K, V> sortBy(EntryTransformBlock<K, V, S> block) {
+    RubyArray<Entry<S, K>> references = newRubyArray();
+    for (Entry<K, V> item : map.entrySet()) {
+      Entry<S, K> ref = new SimpleEntry<>(block.yield(item.getKey(), item.getValue()), item.getKey());
+      references.add(ref);
+    }
+    references = references.sortBy((entry) -> {
+      return entry.getKey();
+    });
+
+    Map<K, V> sortedMap = newLinkedHashMap();
+    for (Entry<S, K> ref : references) {
+      sortedMap.put(ref.getValue(), map.get(ref.getValue()));
+    }
+    return new RubyLinkedHashMap(sortedMap);
+  }
+
+  @Override
   public <S> RubyLinkedHashMap<K, V> sortBy(Comparator<? super S> comp, EntryTransformBlock<K, V, S> block) {
     List<Entry<S, K>> references = newArrayList();
     for (Entry<K, V> item : map.entrySet()) {
@@ -934,5 +965,10 @@ public final class RubyLinkedHashMap<K, V> implements RubyHash<K, V> {
   @Override
   public Set<Entry<K, V>> entrySet() {
     return map.entrySet();
+  }
+
+  @Override
+  public String toString() {
+    return map.toString();
   }
 }

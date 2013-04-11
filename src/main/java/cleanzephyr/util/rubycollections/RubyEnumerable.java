@@ -688,31 +688,37 @@ public final class RubyEnumerable {
   }
 
   public static <E, S extends Comparable<S>> List<E> sortBy(Iterable<E> iter, TransformBlock<E, S> block) {
-    Map<S, E> map = newHashMap();
-    List<E> list = newArrayList();
+    Multimap<S, E> multimap = ArrayListMultimap.create();
+    List<E> sortedList = newArrayList();
     for (E item : iter) {
-      map.put(block.yield(item), item);
+      multimap.put(block.yield(item), item);
     }
-    List<S> keys = newArrayList(map.keySet());
+    List<S> keys = newArrayList(multimap.keySet());
     Collections.sort(keys);
     for (S key : keys) {
-      list.add(map.get(key));
+      List<E> al = (List<E>) multimap.get(key);
+      while (al.size() > 0) {
+        sortedList.add(al.remove(0));
+      }
     }
-    return list;
+    return sortedList;
   }
 
   public static <E, S> List<E> sortBy(Iterable<E> iter, Comparator<? super S> comp, TransformBlock<E, S> block) {
-    Map<S, E> map = newHashMap();
-    List<E> list = newArrayList();
+    Multimap<S, E> multimap = ArrayListMultimap.create();
+    List<E> sortedList = newArrayList();
     for (E item : iter) {
-      map.put(block.yield(item), item);
+      multimap.put(block.yield(item), item);
     }
-    List<S> keys = newArrayList(map.keySet());
+    List<S> keys = newArrayList(multimap.keySet());
     Collections.sort(keys, comp);
     for (S key : keys) {
-      list.add(map.get(key));
+      List<E> al = (List<E>) multimap.get(key);
+      while (al.size() > 0) {
+        sortedList.add(al.remove(0));
+      }
     }
-    return list;
+    return sortedList;
   }
 
   public static <E> List<E> take(Iterable<E> iter, int n) {
