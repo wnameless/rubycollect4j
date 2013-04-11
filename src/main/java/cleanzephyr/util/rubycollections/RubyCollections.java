@@ -192,7 +192,7 @@ public final class RubyCollections {
 
   public static void main(String[] args) {
     RubyArray<String> rubyAry = newRubyArray();
-    System.out.println(ra(1, 2, 3).permutation());
+    System.out.println(ra(5,2,6,23,7,7).min());
 
     ra(1, 2, 3, 4, 5, 6, 7, 8).eachSlice(3, (l) -> {
       System.out.println(l);

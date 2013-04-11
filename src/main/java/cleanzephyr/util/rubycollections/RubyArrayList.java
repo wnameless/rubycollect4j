@@ -35,6 +35,7 @@ import cleanzephyr.util.rubycollections.blocks.TransformBlock;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
 import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Maps.newHashMap;
 import com.google.common.collect.Multimap;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Arrays;
@@ -44,6 +45,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.regex.Pattern;
@@ -1141,6 +1143,11 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
+  public E max() {
+    return sort().last();
+  }
+
+  @Override
   public E max(Comparator<? super E> comp) {
     return RubyEnumerable.max(list, comp);
   }
@@ -1151,6 +1158,11 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
+  public E min() {
+    return sort().first();
+  }
+
+  @Override
   public E min(Comparator<? super E> comp) {
     return RubyEnumerable.min(list, comp);
   }
@@ -1158,6 +1170,12 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   @Override
   public <S> E minBy(Comparator<? super S> comp, TransformBlock<E, S> block) {
     return RubyEnumerable.minBy(list, comp, block);
+  }
+
+  @Override
+  public RubyArray<E> minmax() {
+    RubyArray<E> sorted = sort();
+    return new RubyArrayList(sorted.first(), sorted.last());
   }
 
   @Override
@@ -1295,8 +1313,30 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
+  public RubyArray<E> sort() {
+    Object[] array = list.toArray();
+    Arrays.sort(array);
+    return new RubyArrayList(array);
+  }
+
+  @Override
   public RubyArray<E> sort(Comparator<? super E> comp) {
     return new RubyArrayList(RubyEnumerable.sort(list, comp));
+  }
+
+  @Override
+  public <S> RubyArray<E> sortBy(TransformBlock<E, S> block) {
+    Map<S, E> map = newHashMap();
+    List<E> sertedList = newArrayList();
+    for (E item : list) {
+      map.put(block.yield(item), item);
+    }
+    Object[] keys = newArrayList(map.keySet()).toArray();
+    Arrays.sort(keys);
+    for (Object key : keys) {
+      sertedList.add(map.get((S) key));
+    }
+    return new RubyArrayList(sertedList);
   }
 
   @Override
