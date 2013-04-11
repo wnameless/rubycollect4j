@@ -1,4 +1,4 @@
-package cleanzephyr.util.rubycollections.blocks;
+package cleanzephyr.ruby.collections.blocks;
 
 /**
  * An interface for lambda expression to yield the key and the value of a map

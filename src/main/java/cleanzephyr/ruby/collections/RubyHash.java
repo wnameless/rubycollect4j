@@ -18,19 +18,19 @@
  * the License.
  *
  */
-package cleanzephyr.util.rubycollections;
+package cleanzephyr.ruby.collections;
 
-import cleanzephyr.util.rubycollections.blocks.EntryBlock;
-import cleanzephyr.util.rubycollections.blocks.EntryBooleanBlock;
-import cleanzephyr.util.rubycollections.blocks.EntryInjectWithInitBlock;
-import cleanzephyr.util.rubycollections.blocks.EntryMergeBlock;
-import cleanzephyr.util.rubycollections.blocks.EntryToListBlock;
-import cleanzephyr.util.rubycollections.blocks.EntryTransformBlock;
-import cleanzephyr.util.rubycollections.blocks.InjectBlock;
-import cleanzephyr.util.rubycollections.blocks.ItemBlock;
-import cleanzephyr.util.rubycollections.blocks.ItemFromListBlock;
-import cleanzephyr.util.rubycollections.blocks.ItemWithIndexBlock;
-import cleanzephyr.util.rubycollections.blocks.ItemWithObjectBlock;
+import cleanzephyr.ruby.collections.blocks.EntryBlock;
+import cleanzephyr.ruby.collections.blocks.EntryBooleanBlock;
+import cleanzephyr.ruby.collections.blocks.EntryInjectWithInitBlock;
+import cleanzephyr.ruby.collections.blocks.EntryMergeBlock;
+import cleanzephyr.ruby.collections.blocks.EntryToListBlock;
+import cleanzephyr.ruby.collections.blocks.EntryTransformBlock;
+import cleanzephyr.ruby.collections.blocks.InjectBlock;
+import cleanzephyr.ruby.collections.blocks.ItemBlock;
+import cleanzephyr.ruby.collections.blocks.ItemFromListBlock;
+import cleanzephyr.ruby.collections.blocks.ItemWithIndexBlock;
+import cleanzephyr.ruby.collections.blocks.ItemWithObjectBlock;
 import java.util.Comparator;
 import java.util.Map;
 

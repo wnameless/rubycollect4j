@@ -18,20 +18,20 @@
  * the License.
  *
  */
-package cleanzephyr.util.rubycollections;
+package cleanzephyr.ruby.collections;
 
-import cleanzephyr.util.rubycollections.blocks.Block;
-import cleanzephyr.util.rubycollections.blocks.BooleanBlock;
-import cleanzephyr.util.rubycollections.blocks.IndexBlock;
-import cleanzephyr.util.rubycollections.blocks.InjectBlock;
-import cleanzephyr.util.rubycollections.blocks.InjectWithInitBlock;
-import cleanzephyr.util.rubycollections.blocks.ItemBlock;
-import cleanzephyr.util.rubycollections.blocks.ItemFromListBlock;
-import cleanzephyr.util.rubycollections.blocks.ItemWithIndexBlock;
-import cleanzephyr.util.rubycollections.blocks.ItemWithObjectBlock;
-import cleanzephyr.util.rubycollections.blocks.ItemWithReturnBlock;
-import cleanzephyr.util.rubycollections.blocks.ToListBlock;
-import cleanzephyr.util.rubycollections.blocks.TransformBlock;
+import cleanzephyr.ruby.collections.blocks.Block;
+import cleanzephyr.ruby.collections.blocks.BooleanBlock;
+import cleanzephyr.ruby.collections.blocks.IndexBlock;
+import cleanzephyr.ruby.collections.blocks.InjectBlock;
+import cleanzephyr.ruby.collections.blocks.InjectWithInitBlock;
+import cleanzephyr.ruby.collections.blocks.ItemBlock;
+import cleanzephyr.ruby.collections.blocks.ItemFromListBlock;
+import cleanzephyr.ruby.collections.blocks.ItemWithIndexBlock;
+import cleanzephyr.ruby.collections.blocks.ItemWithObjectBlock;
+import cleanzephyr.ruby.collections.blocks.ItemWithReturnBlock;
+import cleanzephyr.ruby.collections.blocks.ToListBlock;
+import cleanzephyr.ruby.collections.blocks.TransformBlock;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
 import static com.google.common.collect.Lists.newArrayList;

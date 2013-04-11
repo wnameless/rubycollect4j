@@ -18,7 +18,7 @@
  * the License.
  *
  */
-package cleanzephyr.util.rubycollections;
+package cleanzephyr.ruby.collections;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,5 +1,6 @@
-package cleanzephyr.util.rubycollections;
+package cleanzephyr.ruby.collections;
 
+import cleanzephyr.ruby.collections.RubyEnumerable;
 import static com.google.common.collect.Lists.newArrayList;
 import java.util.List;
 import static junit.framework.Assert.assertTrue;

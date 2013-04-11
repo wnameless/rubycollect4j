@@ -1,4 +1,4 @@
-package cleanzephyr.util.rubycollections.blocks;
+package cleanzephyr.ruby.collections.blocks;
 
 public interface ItemWithObjectBlock<E> {
 
