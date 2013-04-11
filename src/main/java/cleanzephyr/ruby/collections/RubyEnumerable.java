@@ -27,8 +27,8 @@ import cleanzephyr.ruby.collections.blocks.ItemBlock;
 import cleanzephyr.ruby.collections.blocks.ItemFromListBlock;
 import cleanzephyr.ruby.collections.blocks.ItemWithIndexBlock;
 import cleanzephyr.ruby.collections.blocks.ItemWithObjectBlock;
-import cleanzephyr.ruby.collections.blocks.ToListBlock;
-import cleanzephyr.ruby.collections.blocks.TransformBlock;
+import cleanzephyr.ruby.collections.blocks.ItemToListBlock;
+import cleanzephyr.ruby.collections.blocks.ItemTransformBlock;
 import com.google.common.collect.ArrayListMultimap;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Lists.reverse;
@@ -98,7 +98,7 @@ public final class RubyEnumerable {
     return bool;
   }
 
-  public static <E, K> List<Entry<K, List<E>>> chunk(Iterable<E> iter, TransformBlock<E, K> block) {
+  public static <E, K> List<Entry<K, List<E>>> chunk(Iterable<E> iter, ItemTransformBlock<E, K> block) {
     Multimap<K, E> multimap = ArrayListMultimap.create();
     for (E item : iter) {
       K key = block.yield(item);
@@ -111,7 +111,7 @@ public final class RubyEnumerable {
     return list;
   }
 
-  public static <E, S> List<S> collect(Iterable<E> iter, TransformBlock<E, S> block) {
+  public static <E, S> List<S> collect(Iterable<E> iter, ItemTransformBlock<E, S> block) {
     List<S> list = newArrayList();
     for (E item : iter) {
       list.add(block.yield(item));
@@ -119,7 +119,7 @@ public final class RubyEnumerable {
     return list;
   }
 
-  public static <E, S> List<S> collectConcat(Iterable<E> iter, ToListBlock<E, S> block) {
+  public static <E, S> List<S> collectConcat(Iterable<E> iter, ItemToListBlock<E, S> block) {
     List<S> list = newArrayList();
     for (E item : iter) {
       list.addAll(block.yield(item));
@@ -322,7 +322,7 @@ public final class RubyEnumerable {
     return null;
   }
 
-  public static <E, S> List<S> flatMap(Iterable<E> iter, ToListBlock<E, S> block) {
+  public static <E, S> List<S> flatMap(Iterable<E> iter, ItemToListBlock<E, S> block) {
     return collectConcat(iter, block);
   }
 
@@ -338,7 +338,7 @@ public final class RubyEnumerable {
     return list;
   }
 
-  public static <E, S> List<S> grep(Iterable<E> iter, String regex, TransformBlock<E, S> block) {
+  public static <E, S> List<S> grep(Iterable<E> iter, String regex, ItemTransformBlock<E, S> block) {
     Pattern pattern = Pattern.compile(regex);
     List<S> list = newArrayList();
     for (E item : iter) {
@@ -350,7 +350,7 @@ public final class RubyEnumerable {
     return list;
   }
 
-  public static <E, K> Map<K, List<E>> groupBy(Iterable<E> iter, TransformBlock<E, K> block) {
+  public static <E, K> Map<K, List<E>> groupBy(Iterable<E> iter, ItemTransformBlock<E, K> block) {
     Multimap<K, E> multimap = ArrayListMultimap.create();
     for (E item : iter) {
       K key = block.yield(item);
@@ -433,7 +433,7 @@ public final class RubyEnumerable {
     return init;
   }
 
-  public static <E, S> List<S> map(Iterable<E> iter, TransformBlock<E, S> block) {
+  public static <E, S> List<S> map(Iterable<E> iter, ItemTransformBlock<E, S> block) {
     return collect(iter, block);
   }
 
@@ -447,7 +447,7 @@ public final class RubyEnumerable {
     return Collections.max(list, comp);
   }
 
-  public static <E, S extends Comparable<S>> E maxBy(Iterable<E> iter, TransformBlock<E, S> block) {
+  public static <E, S extends Comparable<S>> E maxBy(Iterable<E> iter, ItemTransformBlock<E, S> block) {
     List<E> src = newArrayList();
     List<S> dst = newArrayList();
     for (E item : iter) {
@@ -458,7 +458,7 @@ public final class RubyEnumerable {
     return src.get(dst.indexOf(maxDst));
   }
 
-  public static <E, S> E maxBy(Iterable<E> iter, Comparator<? super S> comp, TransformBlock<E, S> block) {
+  public static <E, S> E maxBy(Iterable<E> iter, Comparator<? super S> comp, ItemTransformBlock<E, S> block) {
     List<E> src = newArrayList();
     List<S> dst = newArrayList();
     for (E item : iter) {
@@ -479,7 +479,7 @@ public final class RubyEnumerable {
     return Collections.min(list, comp);
   }
 
-  public static <E, S extends Comparable<S>> E minBy(Iterable<E> iter, TransformBlock<E, S> block) {
+  public static <E, S extends Comparable<S>> E minBy(Iterable<E> iter, ItemTransformBlock<E, S> block) {
     List<E> src = newArrayList();
     List<S> dst = newArrayList();
     for (E item : iter) {
@@ -490,7 +490,7 @@ public final class RubyEnumerable {
     return src.get(dst.indexOf(minDst));
   }
 
-  public static <E, S> E minBy(Iterable<E> iter, Comparator<? super S> comp, TransformBlock<E, S> block) {
+  public static <E, S> E minBy(Iterable<E> iter, Comparator<? super S> comp, ItemTransformBlock<E, S> block) {
     List<E> src = newArrayList();
     List<S> dst = newArrayList();
     for (E item : iter) {
@@ -511,7 +511,7 @@ public final class RubyEnumerable {
     return newArrayList(Collections.min(list, comp), Collections.max(list, comp));
   }
 
-  public static <E, S extends Comparable<S>> List<E> minmaxBy(Iterable<E> iter, TransformBlock<E, S> block) {
+  public static <E, S extends Comparable<S>> List<E> minmaxBy(Iterable<E> iter, ItemTransformBlock<E, S> block) {
     List<E> src = newArrayList();
     List<S> dst = newArrayList();
     for (E item : iter) {
@@ -523,7 +523,7 @@ public final class RubyEnumerable {
     return newArrayList(src.get(dst.indexOf(minDst)), src.get(dst.indexOf(maxDst)));
   }
 
-  public static <E, S> List<E> minmaxBy(Iterable<E> iter, Comparator<? super S> comp, TransformBlock<E, S> block) {
+  public static <E, S> List<E> minmaxBy(Iterable<E> iter, Comparator<? super S> comp, ItemTransformBlock<E, S> block) {
     List<E> src = newArrayList();
     List<S> dst = newArrayList();
     for (E item : iter) {
@@ -686,7 +686,7 @@ public final class RubyEnumerable {
     return list;
   }
 
-  public static <E, S extends Comparable<S>> List<E> sortBy(Iterable<E> iter, TransformBlock<E, S> block) {
+  public static <E, S extends Comparable<S>> List<E> sortBy(Iterable<E> iter, ItemTransformBlock<E, S> block) {
     Multimap<S, E> multimap = ArrayListMultimap.create();
     List<E> sortedList = newArrayList();
     for (E item : iter) {
@@ -704,7 +704,7 @@ public final class RubyEnumerable {
     return sortedList;
   }
 
-  public static <E, S> List<E> sortBy(Iterable<E> iter, Comparator<? super S> comp, TransformBlock<E, S> block) {
+  public static <E, S> List<E> sortBy(Iterable<E> iter, Comparator<? super S> comp, ItemTransformBlock<E, S> block) {
     Multimap<S, E> multimap = ArrayListMultimap.create();
     List<E> sortedList = newArrayList();
     for (E item : iter) {

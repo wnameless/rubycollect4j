@@ -2,7 +2,7 @@ package cleanzephyr.ruby.collections.blocks;
 
 import java.util.List;
 
-public interface ToListBlock<E, S> {
+public interface ItemToListBlock<E, S> {
 
   public List<S> yield(E item);
 }

@@ -30,8 +30,8 @@ import cleanzephyr.ruby.collections.blocks.ItemFromListBlock;
 import cleanzephyr.ruby.collections.blocks.ItemWithIndexBlock;
 import cleanzephyr.ruby.collections.blocks.ItemWithObjectBlock;
 import cleanzephyr.ruby.collections.blocks.ItemWithReturnBlock;
-import cleanzephyr.ruby.collections.blocks.ToListBlock;
-import cleanzephyr.ruby.collections.blocks.TransformBlock;
+import cleanzephyr.ruby.collections.blocks.ItemToListBlock;
+import cleanzephyr.ruby.collections.blocks.ItemTransformBlock;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
 import static com.google.common.collect.Lists.newArrayList;
@@ -875,7 +875,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public <S> RubyArray<E> uniq(TransformBlock<E, S> block) {
+  public <S> RubyArray<E> uniq(ItemTransformBlock<E, S> block) {
     List<E> uniqList = newArrayList();
     List<S> uniqByList = newArrayList();
     for (E item : list) {
@@ -953,7 +953,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public <K> RubyArray<Entry<K, RubyArray<E>>> chunk(TransformBlock<E, K> block) {
+  public <K> RubyArray<Entry<K, RubyArray<E>>> chunk(ItemTransformBlock<E, K> block) {
     Multimap<K, E> multimap = ArrayListMultimap.create();
     for (E item : list) {
       K key = block.yield(item);
@@ -967,12 +967,12 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public <S> RubyArray<E> collect(TransformBlock<E, S> block) {
+  public <S> RubyArray<E> collect(ItemTransformBlock<E, S> block) {
     return new RubyArrayList(RubyEnumerable.collect(list, block));
   }
 
   @Override
-  public <S> RubyArray<S> collectConcat(ToListBlock<E, S> block) {
+  public <S> RubyArray<S> collectConcat(ItemToListBlock<E, S> block) {
     return new RubyArrayList(RubyEnumerable.collectConcat(list, block));
   }
 
@@ -1077,7 +1077,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public <S> RubyArray<S> flatMap(ToListBlock<E, S> block) {
+  public <S> RubyArray<S> flatMap(ItemToListBlock<E, S> block) {
     return new RubyArrayList(RubyEnumerable.flatMap(list, block));
   }
 
@@ -1087,12 +1087,12 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public <S> RubyArrayList<S> grep(String regex, TransformBlock<E, S> block) {
+  public <S> RubyArrayList<S> grep(String regex, ItemTransformBlock<E, S> block) {
     return new RubyArrayList(RubyEnumerable.grep(list, regex, block));
   }
 
   @Override
-  public <K> RubyHash<K, RubyArray<E>> groupBy(TransformBlock<E, K> block) {
+  public <K> RubyHash<K, RubyArray<E>> groupBy(ItemTransformBlock<E, K> block) {
     Multimap<K, E> multimap = ArrayListMultimap.create();
     for (E item : list) {
       K key = block.yield(item);
@@ -1136,7 +1136,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public <S> RubyArray<S> map(TransformBlock<E, S> block) {
+  public <S> RubyArray<S> map(ItemTransformBlock<E, S> block) {
     return new RubyArrayList(RubyEnumerable.map(list, block));
   }
 
@@ -1151,12 +1151,12 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public <S> E maxBy(TransformBlock<E, S> block) {
+  public <S> E maxBy(ItemTransformBlock<E, S> block) {
     return sortBy(block).last();
   }
 
   @Override
-  public <S> E maxBy(Comparator<? super S> comp, TransformBlock<E, S> block) {
+  public <S> E maxBy(Comparator<? super S> comp, ItemTransformBlock<E, S> block) {
     return RubyEnumerable.maxBy(list, comp, block);
   }
 
@@ -1171,12 +1171,12 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public <S> E minBy(TransformBlock<E, S> block) {
+  public <S> E minBy(ItemTransformBlock<E, S> block) {
     return sortBy(block).first();
   }
 
   @Override
-  public <S> E minBy(Comparator<? super S> comp, TransformBlock<E, S> block) {
+  public <S> E minBy(Comparator<? super S> comp, ItemTransformBlock<E, S> block) {
     return RubyEnumerable.minBy(list, comp, block);
   }
 
@@ -1192,13 +1192,13 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public <S> RubyArray<E> minmaxBy(TransformBlock<E, S> block) {
+  public <S> RubyArray<E> minmaxBy(ItemTransformBlock<E, S> block) {
     RubyArray<E> sorted = sortBy(block);
     return new RubyArrayList(sorted.first(), sorted.last());
   }
 
   @Override
-  public <S> RubyArray<E> minmaxBy(Comparator<? super S> comp, TransformBlock<E, S> block) {
+  public <S> RubyArray<E> minmaxBy(Comparator<? super S> comp, ItemTransformBlock<E, S> block) {
     return new RubyArrayList(RubyEnumerable.minmaxBy(list, comp, block));
   }
 
@@ -1339,7 +1339,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public <S> RubyArray<E> sortBy(TransformBlock<E, S> block) {
+  public <S> RubyArray<E> sortBy(ItemTransformBlock<E, S> block) {
     Multimap<S, E> multimap = ArrayListMultimap.create();
     List<E> sortedList = newArrayList();
     for (E item : list) {
@@ -1358,7 +1358,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public <S> RubyArray<E> sortBy(Comparator<? super S> comp, TransformBlock<E, S> block) {
+  public <S> RubyArray<E> sortBy(Comparator<? super S> comp, ItemTransformBlock<E, S> block) {
     return new RubyArrayList(RubyEnumerable.sortBy(list, comp, block));
   }
 

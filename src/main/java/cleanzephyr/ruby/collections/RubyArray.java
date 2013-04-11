@@ -30,8 +30,8 @@ import cleanzephyr.ruby.collections.blocks.ItemFromListBlock;
 import cleanzephyr.ruby.collections.blocks.ItemWithIndexBlock;
 import cleanzephyr.ruby.collections.blocks.ItemWithObjectBlock;
 import cleanzephyr.ruby.collections.blocks.ItemWithReturnBlock;
-import cleanzephyr.ruby.collections.blocks.ToListBlock;
-import cleanzephyr.ruby.collections.blocks.TransformBlock;
+import cleanzephyr.ruby.collections.blocks.ItemToListBlock;
+import cleanzephyr.ruby.collections.blocks.ItemTransformBlock;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map.Entry;
@@ -184,7 +184,7 @@ public interface RubyArray<E> extends List<E> {
 
   public RubyArray<E> uniqEx();
 
-  public <S> RubyArray<E> uniq(TransformBlock<E, S> block);
+  public <S> RubyArray<E> uniq(ItemTransformBlock<E, S> block);
 
   public RubyArray<E> union(RubyArray<E> other);
 
@@ -200,11 +200,11 @@ public interface RubyArray<E> extends List<E> {
 
   public boolean hasAll(BooleanBlock block);
 
-  public <K> RubyArray<Entry<K, RubyArray<E>>> chunk(TransformBlock<E, K> block);
+  public <K> RubyArray<Entry<K, RubyArray<E>>> chunk(ItemTransformBlock<E, K> block);
 
-  public <S> RubyArray<E> collect(TransformBlock<E, S> block);
+  public <S> RubyArray<E> collect(ItemTransformBlock<E, S> block);
 
-  public <S> RubyArray<S> collectConcat(ToListBlock<E, S> block);
+  public <S> RubyArray<S> collectConcat(ItemToListBlock<E, S> block);
 
   public int count();
 
@@ -246,13 +246,13 @@ public interface RubyArray<E> extends List<E> {
 
   public RubyArray<E> findAll(BooleanBlock<E> block);
 
-  public <S> RubyArray<S> flatMap(ToListBlock<E, S> block);
+  public <S> RubyArray<S> flatMap(ItemToListBlock<E, S> block);
 
   public RubyArray<E> grep(String regex);
 
-  public <S> RubyArray<S> grep(String regex, TransformBlock<E, S> block);
+  public <S> RubyArray<S> grep(String regex, ItemTransformBlock<E, S> block);
 
-  public <K> RubyHash<K, RubyArray<E>> groupBy(TransformBlock<E, K> block);
+  public <K> RubyHash<K, RubyArray<E>> groupBy(ItemTransformBlock<E, K> block);
 
   public boolean include(E target);
 
@@ -266,31 +266,31 @@ public interface RubyArray<E> extends List<E> {
 
   public <S> S inject(S init, InjectWithInitBlock<E, S> block);
 
-  public <S> RubyArray<S> map(TransformBlock<E, S> block);
+  public <S> RubyArray<S> map(ItemTransformBlock<E, S> block);
 
   public E max();
 
   public E max(Comparator<? super E> comp);
 
-  public <S> E maxBy(TransformBlock<E, S> block);
+  public <S> E maxBy(ItemTransformBlock<E, S> block);
 
-  public <S> E maxBy(Comparator<? super S> comp, TransformBlock<E, S> block);
+  public <S> E maxBy(Comparator<? super S> comp, ItemTransformBlock<E, S> block);
 
   public E min();
 
   public E min(Comparator<? super E> comp);
 
-  public <S> E minBy(TransformBlock<E, S> block);
+  public <S> E minBy(ItemTransformBlock<E, S> block);
 
-  public <S> E minBy(Comparator<? super S> comp, TransformBlock<E, S> block);
+  public <S> E minBy(Comparator<? super S> comp, ItemTransformBlock<E, S> block);
 
   public RubyArray<E> minmax();
 
   public RubyArray<E> minmax(Comparator<? super E> comp);
 
-  public <S> RubyArray<E> minmaxBy(TransformBlock<E, S> block);
+  public <S> RubyArray<E> minmaxBy(ItemTransformBlock<E, S> block);
 
-  public <S> RubyArray<E> minmaxBy(Comparator<? super S> comp, TransformBlock<E, S> block);
+  public <S> RubyArray<E> minmaxBy(Comparator<? super S> comp, ItemTransformBlock<E, S> block);
 
   public RubyArray<RubyArray<E>> partition(BooleanBlock<E> block);
 
@@ -330,9 +330,9 @@ public interface RubyArray<E> extends List<E> {
 
   public RubyArray<E> sort(Comparator<? super E> comp);
 
-  public <S> RubyArray<E> sortBy(TransformBlock<E, S> block);
+  public <S> RubyArray<E> sortBy(ItemTransformBlock<E, S> block);
 
-  public <S> RubyArray<E> sortBy(Comparator<? super S> comp, TransformBlock<E, S> block);
+  public <S> RubyArray<E> sortBy(Comparator<? super S> comp, ItemTransformBlock<E, S> block);
 
   public RubyArray<RubyArray<E>> sliceBefore(String regex);
 
