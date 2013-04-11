@@ -45,29 +45,35 @@ import java.util.Map.Entry;
 public interface RubyArray<E> extends List<E> {
 
   /**
-   * Return a RubyArray which contains a union set of two Lists.
+   * Create a RubyArray which contains a union set of two Lists.
    *
-   * @param other RubyArray or any List
-   * @return RubyArray
+   * @param other other List
+   * @return new RubyArray
    */
   public RubyArray<E> and(List<E> other);
 
   /**
-   * Return a RubyArray which contains n copies of current RubyArray.
+   * Create a RubyArray which contains n copies of current RubyArray.
    *
    * @param n number of copies
-   * @return n copies of current RubyArray
+   * @return new RubyArray
    */
   public RubyArray<E> multiply(int n);
 
   /**
-   * Return a String which is all elements are joined by separator.
+   * Create a String which all elements are joined by separator.
    *
    * @param separator to join elements
-   * @return string joined by separator
+   * @return String
    */
   public String multiply(String separator);
 
+  /**
+   * Create a RubyArray which contains elements in both Lists
+   *
+   * @param other other List
+   * @return new RubyArray
+   */
   public RubyArray<E> add(List<E> other);
 
   public RubyArray<E> minus(List<E> other);

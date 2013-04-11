@@ -54,10 +54,7 @@ public class RubyArrayListTests {
    */
   @Test
   public void testAnd() {
-    RubyArray<Integer> ra1 = ra(1, 2, 3);
-    RubyArray<Integer> ra2 = ra(3, 4, 5);
-    RubyArray<Integer> ra = ra(3);
-    assertEquals(ra1.and(ra2), ra);
+    assertEquals(ra(1, 2, 3).and(ra(3, 4, 5)), ra(3));
   }
 
   /**
@@ -69,5 +66,13 @@ public class RubyArrayListTests {
     assertEquals(ra(1, 2).multiply(", "), "1, 2");
     assertEquals(ra(1, 2).multiply(0), ra());
     ra(1, 2).multiply(-1);
+  }
+
+  /**
+   * Test of add method, of class RubyArrayList.
+   */
+  @Test
+  public void testAdd() {
+    assertEquals(ra(1).and(ra(2, 3)), ra(1, 2, 3));
   }
 }
