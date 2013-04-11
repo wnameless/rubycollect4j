@@ -968,6 +968,16 @@ public final class RubyLinkedHashMap<K, V> implements RubyHash<K, V> {
   }
 
   @Override
+  public boolean equals(Object o) {
+    return map.equals(o);
+  }
+
+  @Override
+  public int hashCode() {
+    return map.hashCode();
+  }
+
+  @Override
   public String toString() {
     return map.toString();
   }

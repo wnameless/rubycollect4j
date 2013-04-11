@@ -84,7 +84,8 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   // Ruby Array methods
-  public RubyArray<E> and(RubyArray<E> other) {
+  @Override
+  public RubyArray<E> and(List<E> other) {
     List<E> andList = newArrayList();
     for (E item : this) {
       if (!andList.contains(item) && list.contains(item) && other.contains(item)) {
@@ -114,7 +115,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public RubyArray<E> add(RubyArray<E> other) {
+  public RubyArray<E> add(List<E> other) {
     List<E> addList = newArrayList();
     for (E item : list) {
       addList.add(item);
@@ -126,7 +127,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public RubyArray<E> minus(RubyArray<E> other) {
+  public RubyArray<E> minus(List<E> other) {
     List<E> minusList = newArrayList();
     for (E item : list) {
       minusList.add(item);
@@ -1545,6 +1546,16 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   @Override
   public List<E> subList(int fromIndex, int toIndex) {
     return list.subList(fromIndex, toIndex);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    return list.equals(o);
+  }
+
+  @Override
+  public int hashCode() {
+    return list.hashCode();
   }
 
   @Override

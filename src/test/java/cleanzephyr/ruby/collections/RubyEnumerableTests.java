@@ -1,14 +1,3 @@
-package cleanzephyr.ruby.collections;
-
-import cleanzephyr.ruby.collections.RubyEnumerable;
-import static com.google.common.collect.Lists.newArrayList;
-import java.util.List;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.assertFalse;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 /**
  *
  * @author Wei-Ming Wu
@@ -29,11 +18,21 @@ import org.junit.Test;
  * the License.
  *
  */
-public class RubyEnumerableTest {
+package cleanzephyr.ruby.collections;
+
+import static com.google.common.collect.Lists.newArrayList;
+import java.util.List;
+import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.assertFalse;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+public class RubyEnumerableTests {
 
   private List<String> list;
 
-  public RubyEnumerableTest() {
+  public RubyEnumerableTests() {
   }
 
   @Before
@@ -46,7 +45,7 @@ public class RubyEnumerableTest {
   }
 
   @Test
-  public void hasAllTest() {
+  public void testHasAll() {
     assertTrue(RubyEnumerable.hasAll(list));
     list.add("item1");
     assertTrue(RubyEnumerable.hasAll(list));
@@ -55,7 +54,7 @@ public class RubyEnumerableTest {
   }
 
   @Test
-  public void hasAllWithBlockTest() {
+  public void testHasAllWithBlock() {
     list.add("item1");
     assertTrue(RubyEnumerable.hasAll(list, (i) -> {
       return i instanceof String;

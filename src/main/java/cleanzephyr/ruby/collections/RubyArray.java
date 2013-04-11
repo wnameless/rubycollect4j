@@ -36,17 +36,41 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map.Entry;
 
+/**
+ * An interface which contains all methods a Ruby Array should have. A RubyArray
+ * is also a Java List.
+ *
+ * @param <E> element
+ */
 public interface RubyArray<E> extends List<E> {
 
-  public RubyArray<E> and(RubyArray<E> other);
+  /**
+   * Return a RubyArray which contains a union set of two Lists.
+   *
+   * @param other RubyArray or any List
+   * @return RubyArray
+   */
+  public RubyArray<E> and(List<E> other);
 
+  /**
+   * Return a RubyArray which contains n copies of current RubyArray.
+   *
+   * @param n number of copies
+   * @return n copies of current RubyArray
+   */
   public RubyArray<E> multiply(int n);
 
+  /**
+   * Return a String which is all elements are joined by separator.
+   *
+   * @param separator to join elements
+   * @return string joined by separator
+   */
   public String multiply(String separator);
 
-  public RubyArray<E> add(RubyArray<E> other);
+  public RubyArray<E> add(List<E> other);
 
-  public RubyArray<E> minus(RubyArray<E> other);
+  public RubyArray<E> minus(List<E> other);
 
   public <S> RubyArray<S> assoc(S target);
 
