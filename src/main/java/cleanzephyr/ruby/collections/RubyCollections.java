@@ -20,6 +20,7 @@
  */
 package cleanzephyr.ruby.collections;
 
+import static cleanzephyr.ruby.IO.puts;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -191,8 +192,8 @@ public final class RubyCollections {
   }
 
   public static void main(String[] args) {
-
-    System.out.println(rh("aa", 3, "ccc", 1, "b", 2).sortBy((k, v) -> {
+    puts(ra(1,74,3,9).sort().map((k)->{ return k.toString() + "h";}));
+    puts(rh("aa", 3, "ccc", 1, "b", 2).sortBy((k, v) -> {
       return k.length();
     }));
   }
