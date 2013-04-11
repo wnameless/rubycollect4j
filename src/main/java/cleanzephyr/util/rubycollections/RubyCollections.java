@@ -192,7 +192,7 @@ public final class RubyCollections {
 
   public static void main(String[] args) {
 
-    System.out.println(rh("c", 1, "b", 2, "aa", 3).sortBy((k, v) -> {
+    System.out.println(rh("aa", 3, "ccc", 1, "b", 2).sortBy((k, v) -> {
       return k.length();
     }));
   }

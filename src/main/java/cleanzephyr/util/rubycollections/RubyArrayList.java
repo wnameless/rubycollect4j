@@ -35,11 +35,8 @@ import cleanzephyr.util.rubycollections.blocks.TransformBlock;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
 import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Maps.newHashMap;
 import com.google.common.collect.Multimap;
-import com.google.common.collect.Multimaps;
 import java.util.AbstractMap.SimpleEntry;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -47,7 +44,6 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.regex.Pattern;
@@ -1352,9 +1348,10 @@ public final class RubyArrayList<E> implements RubyArray<E> {
     Object[] keys = newArrayList(multimap.keySet()).toArray();
     Arrays.sort(keys);
     for (Object key : keys) {
-      List<E> al = (List) multimap.get((S) key);
-      while (al.size() > 0) {
-        sortedList.add(al.remove(0));
+      Collection<E> coll = multimap.get((S) key);
+      Iterator<E> iter = coll.iterator();
+      while (iter.hasNext()) {
+        sortedList.add(iter.next());
       }
     }
     return new RubyArrayList(sortedList);

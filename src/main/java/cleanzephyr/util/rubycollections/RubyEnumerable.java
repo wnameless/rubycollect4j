@@ -40,8 +40,7 @@ import static java.util.AbstractMap.SimpleEntry;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import static com.google.common.collect.Maps.newHashMap;
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -696,9 +695,10 @@ public final class RubyEnumerable {
     List<S> keys = newArrayList(multimap.keySet());
     Collections.sort(keys);
     for (S key : keys) {
-      List<E> al = (List<E>) multimap.get(key);
-      while (al.size() > 0) {
-        sortedList.add(al.remove(0));
+      Collection<E> coll = multimap.get(key);
+      Iterator<E> iterator = coll.iterator();
+      while (iterator.hasNext()) {
+        sortedList.add(iterator.next());
       }
     }
     return sortedList;
@@ -713,9 +713,10 @@ public final class RubyEnumerable {
     List<S> keys = newArrayList(multimap.keySet());
     Collections.sort(keys, comp);
     for (S key : keys) {
-      List<E> al = (List<E>) multimap.get(key);
-      while (al.size() > 0) {
-        sortedList.add(al.remove(0));
+      Collection<E> coll = multimap.get(key);
+      Iterator<E> iterator = coll.iterator();
+      while (iterator.hasNext()) {
+        sortedList.add(iterator.next());
       }
     }
     return sortedList;
