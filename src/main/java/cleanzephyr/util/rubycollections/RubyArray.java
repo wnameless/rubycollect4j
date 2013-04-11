@@ -272,17 +272,23 @@ public interface RubyArray<E> extends List<E> {
 
   public E max(Comparator<? super E> comp);
 
+  public <S> E maxBy(TransformBlock<E, S> block);
+
   public <S> E maxBy(Comparator<? super S> comp, TransformBlock<E, S> block);
 
   public E min();
 
   public E min(Comparator<? super E> comp);
 
+  public <S> E minBy(TransformBlock<E, S> block);
+
   public <S> E minBy(Comparator<? super S> comp, TransformBlock<E, S> block);
 
   public RubyArray<E> minmax();
 
   public RubyArray<E> minmax(Comparator<? super E> comp);
+
+  public <S> RubyArray<E> minmaxBy(TransformBlock<E, S> block);
 
   public <S> RubyArray<E> minmaxBy(Comparator<? super S> comp, TransformBlock<E, S> block);
 

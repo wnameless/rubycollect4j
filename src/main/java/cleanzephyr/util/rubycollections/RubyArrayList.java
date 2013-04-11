@@ -1153,6 +1153,11 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
+  public <S> E maxBy(TransformBlock<E, S> block) {
+    return sortBy(block).last();
+  }
+
+  @Override
   public <S> E maxBy(Comparator<? super S> comp, TransformBlock<E, S> block) {
     return RubyEnumerable.maxBy(list, comp, block);
   }
@@ -1165,6 +1170,11 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   @Override
   public E min(Comparator<? super E> comp) {
     return RubyEnumerable.min(list, comp);
+  }
+
+  @Override
+  public <S> E minBy(TransformBlock<E, S> block) {
+    return sortBy(block).first();
   }
 
   @Override
@@ -1181,6 +1191,12 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   @Override
   public RubyArray<E> minmax(Comparator<? super E> comp) {
     return new RubyArrayList(RubyEnumerable.minmax(list, comp));
+  }
+
+  @Override
+  public <S> RubyArray<E> minmaxBy(TransformBlock<E, S> block) {
+    RubyArray<E> sorted = sortBy(block);
+    return new RubyArrayList(sorted.first(), sorted.last());
   }
 
   @Override
