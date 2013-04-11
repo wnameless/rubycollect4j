@@ -59,4 +59,15 @@ public class RubyArrayListTests {
     RubyArray<Integer> ra = ra(3);
     assertEquals(ra1.and(ra2), ra);
   }
+
+  /**
+   * Test of multiply method, of class RubyArrayList.
+   */
+  @Test(expected = IllegalArgumentException.class)
+  public void testMultiply() {
+    assertEquals(ra(1, 2).multiply(2), ra(1, 2, 1, 2));
+    assertEquals(ra(1, 2).multiply(", "), "1, 2");
+    assertEquals(ra(1, 2).multiply(0), ra());
+    ra(1, 2).multiply(-1);
+  }
 }
