@@ -76,6 +76,12 @@ public interface RubyArray<E> extends List<E> {
    */
   public RubyArray<E> add(List<E> other);
 
+  /**
+   * Create a RubyArray which eliminates all elements from other List.
+   *
+   * @param other other List
+   * @return new RubyArray
+   */
   public RubyArray<E> minus(List<E> other);
 
   public <S> RubyArray<S> assoc(S target);

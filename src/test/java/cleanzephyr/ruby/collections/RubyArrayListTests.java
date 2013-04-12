@@ -73,6 +73,16 @@ public class RubyArrayListTests {
    */
   @Test
   public void testAdd() {
-    assertEquals(ra(1).and(ra(2, 3)), ra(1, 2, 3));
+    assertEquals(ra(1).add(ra(2, 3)), ra(1, 2, 3));
+  }
+
+  /**
+   * Test of minus method, of class RubyArrayList.
+   */
+  @Test
+  public void testMinus() {
+    assertEquals(ra(1).minus(ra(2, 3)), ra(1));
+    assertEquals(ra(1, 2, 3).minus(ra(2, 3)), ra(1));
+    assertEquals(ra(1).minus(ra(1, 2, 3)), ra());
   }
 }
