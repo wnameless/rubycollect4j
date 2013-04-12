@@ -96,4 +96,15 @@ public class RubyArrayListTests {
     assertNull(ra(ra(2, 3)).assoc(1));
     assertEquals(ra(ra(1, 2, 3), ra(4, 5, 6)).assoc(4), ra(ra(4, 5, 6)));
   }
+
+  /**
+   * Test of at method, of class RubyArrayList.
+   */
+  @Test
+  public void testAt() {
+    assertNull(ra("a", "b", "c").at(3));
+    assertNull(ra("a", "b", "c").at(-4));
+    assertEquals(ra("a", "b", "c").at(2), "c");
+    assertEquals(ra("a", "b", "c").at(-3), "a");
+  }
 }

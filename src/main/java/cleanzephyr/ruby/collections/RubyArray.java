@@ -90,10 +90,17 @@ public interface RubyArray<E> extends List<E> {
    *
    * @param <S> generic type of other kind of List
    * @param target the first element of List to find
-   * @return new RubyList or null
+   * @return new RubyArray or null
    */
   public <S> RubyArray<S> assoc(S target);
 
+  /**
+   * Find the element of specific position. Index is started from 0. -1 is
+   * treated as the last element.
+   *
+   * @param index position of element
+   * @return element
+   */
   public E at(int index);
 
   public E bsearch(E target, Comparator<? super E> comp);
