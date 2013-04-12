@@ -165,6 +165,13 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
+  public E bsearch(E target) {
+    Object[] array = list.toArray();
+    int index = Arrays.binarySearch(array, target);
+    return index < 0 ? null : list.get(index);
+  }
+
+  @Override
   public E bsearch(E target, Comparator<? super E> comp) {
     int index = Collections.binarySearch(list, target, comp);
     return index < 0 ? null : list.get(index);

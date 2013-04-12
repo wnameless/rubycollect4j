@@ -103,6 +103,20 @@ public interface RubyArray<E> extends List<E> {
    */
   public E at(int index);
 
+  /**
+   * Find a element by binary search. Return null if element can't be found.
+   *
+   * @param target element to find
+   * @return element or null
+   */
+  public E bsearch(E target);
+
+  /**
+   * Find a element by binary search. Return null if element can't be found.
+   *
+   * @param target element to find
+   * @return element or null
+   */
   public E bsearch(E target, Comparator<? super E> comp);
 
   public RubyArray<RubyArray<E>> combination(int n);

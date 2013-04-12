@@ -107,4 +107,26 @@ public class RubyArrayListTests {
     assertEquals(ra("a", "b", "c").at(2), "c");
     assertEquals(ra("a", "b", "c").at(-3), "a");
   }
+
+  /**
+   * Test of at bsearch, of class RubyArrayList.
+   */
+  @Test
+  public void testBsearch() {
+    assertEquals(ra(45, 2, 15, 8, 3).bsearch(new Integer(15)), new Integer(15));
+    assertNull(ra(45, 2, 15, 8, 3).bsearch(new Integer(16)));
+  }
+
+  /**
+   * Test of at bsearch, of class RubyArrayList.
+   */
+  @Test
+  public void testBsearchWithBlock() {
+    assertEquals(ra(45, 2, 15, 8, 3).bsearch(new Integer(15), (i1, i2) -> {
+      return i1.compareTo(i2);
+    }), new Integer(15));
+    assertNull(ra(45, 2, 15, 8, 3).bsearch(new Integer(16), (i1, i2) -> {
+      return i1.compareTo(i2);
+    }));
+  }
 }
