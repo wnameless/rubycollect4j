@@ -55,7 +55,7 @@ public class RubyArrayListTests {
    */
   @Test
   public void testAnd() {
-    assertEquals(ra(1, 2, 3).and(ra(3, 4, 5)), ra(3));
+    assertEquals(ra(3), ra(1, 2, 3).and(ra(3, 4, 5)));
   }
 
   /**
@@ -63,9 +63,9 @@ public class RubyArrayListTests {
    */
   @Test(expected = IllegalArgumentException.class)
   public void testMultiply() {
-    assertEquals(ra(1, 2).multiply(2), ra(1, 2, 1, 2));
-    assertEquals(ra(1, 2).multiply(", "), "1, 2");
-    assertEquals(ra(1, 2).multiply(0), ra());
+    assertEquals(ra(1, 2, 1, 2), ra(1, 2).multiply(2));
+    assertEquals("1, 2", ra(1, 2).multiply(", "));
+    assertEquals(ra(), ra(1, 2).multiply(0));
     ra(1, 2).multiply(-1);
   }
 
@@ -74,7 +74,7 @@ public class RubyArrayListTests {
    */
   @Test
   public void testAdd() {
-    assertEquals(ra(1).add(ra(2, 3)), ra(1, 2, 3));
+    assertEquals(ra(1, 2, 3), ra(1).add(ra(2, 3)));
   }
 
   /**
@@ -82,9 +82,9 @@ public class RubyArrayListTests {
    */
   @Test
   public void testMinus() {
-    assertEquals(ra(1).minus(ra(2, 3)), ra(1));
-    assertEquals(ra(1, 2, 3).minus(ra(2, 3)), ra(1));
-    assertEquals(ra(1).minus(ra(1, 2, 3)), ra());
+    assertEquals(ra(1), ra(1).minus(ra(2, 3)));
+    assertEquals(ra(1), ra(1, 2, 3).minus(ra(2, 3)));
+    assertEquals(ra(), ra(1).minus(ra(1, 2, 3)));
   }
 
   /**
@@ -94,7 +94,7 @@ public class RubyArrayListTests {
   public void testAssoc() {
     assertNull(ra(1, 2, 3).assoc(1));
     assertNull(ra(ra(2, 3)).assoc(1));
-    assertEquals(ra(ra(1, 2, 3), ra(4, 5, 6)).assoc(4), ra(ra(4, 5, 6)));
+    assertEquals(ra(4, 5, 6), ra(ra(1, 2, 3), ra(4, 5, 6)).assoc(4));
   }
 
   /**
@@ -104,29 +104,62 @@ public class RubyArrayListTests {
   public void testAt() {
     assertNull(ra("a", "b", "c").at(3));
     assertNull(ra("a", "b", "c").at(-4));
-    assertEquals(ra("a", "b", "c").at(2), "c");
-    assertEquals(ra("a", "b", "c").at(-3), "a");
+    assertEquals("c", ra("a", "b", "c").at(2));
+    assertEquals("a", ra("a", "b", "c").at(-3));
   }
 
   /**
-   * Test of at bsearch, of class RubyArrayList.
+   * Test of bsearch method, of class RubyArrayList.
    */
   @Test
   public void testBsearch() {
-    assertEquals(ra(45, 2, 15, 8, 3).bsearch(new Integer(15)), new Integer(15));
+    assertEquals(new Integer(15), ra(45, 2, 15, 8, 3).bsearch(new Integer(15)));
     assertNull(ra(45, 2, 15, 8, 3).bsearch(new Integer(16)));
   }
 
   /**
-   * Test of at bsearch, of class RubyArrayList.
+   * Test of bsearch method, of class RubyArrayList.
    */
   @Test
-  public void testBsearchWithBlock() {
-    assertEquals(ra(45, 2, 15, 8, 3).bsearch(new Integer(15), (i1, i2) -> {
+  public void testBsearchWithComparator() {
+    assertEquals(new Integer(15), ra(45, 2, 15, 8, 3).bsearch(new Integer(15), (i1, i2) -> {
       return i1.compareTo(i2);
-    }), new Integer(15));
+    }));
     assertNull(ra(45, 2, 15, 8, 3).bsearch(new Integer(16), (i1, i2) -> {
       return i1.compareTo(i2);
     }));
+  }
+
+  /**
+   * Test of combination method, of class RubyArrayList.
+   */
+  @Test
+  public void testCombination() {
+    assertEquals(ra(), ra(1, 2, 3).combination(-1));
+    assertEquals(ra(), ra(1, 2, 3).combination(4));
+    assertEquals(ra(ra()), ra(1, 2, 3).combination(0));
+    assertEquals(ra(ra(1), ra(2), ra(3)), ra(1, 2, 3).combination(1));
+    assertEquals(ra(ra(1, 2), ra(1, 3), ra(2, 3)), ra(1, 2, 3).combination(2));
+    assertEquals(ra(ra(1, 2, 3)), ra(1, 2, 3).combination(3));
+  }
+
+  /**
+   * Test of combination method, of class RubyArrayList.
+   */
+  @Test
+  public void testCombinationWithBlock() {
+    final int[] i = new int[1];
+    ra(1, 2, 3).combination(2, (c) -> {
+      if (i[0] == 0) {
+        assertEquals(ra(1, 2), c);
+      }
+      if (i[0] == 1) {
+        assertEquals(ra(1, 3), c);
+      }
+      if (i[0] == 2) {
+        assertEquals(ra(2, 3), c);
+      }
+      i[0]++;
+    });
   }
 }

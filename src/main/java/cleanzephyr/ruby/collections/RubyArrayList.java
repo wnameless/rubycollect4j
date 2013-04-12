@@ -207,12 +207,70 @@ public final class RubyArrayList<E> implements RubyArray<E> {
 
   @Override
   public RubyArray<RubyArray<E>> repeatedCombination(int n) {
-    return combination(n);
+    RubyArray<RubyArray<E>> rp = new RubyArrayList();
+    if (n < 0) {
+      return rp;
+    }
+    if (n == 0) {
+      return rp.push(new RubyArrayList());
+    }
+    int[] counter = new int[n];
+    repeatedCombinationLoop(counter, 0, list.size() - 1, (count) -> {
+      RubyArray<E> c = new RubyArrayList();
+      for (int i = 0; i < count.length; i++) {
+        c.push(list.get(count[i]));
+      }
+      rp.add(c);
+    });
+    return rp;
   }
 
-  @Override
+  private void repeatedCombinationLoop(int[] counter, int start, int end, ItemBlock<int[]> block) {
+    int[] endStatus = new int[counter.length];
+    Arrays.fill(endStatus, end);
+    do {
+      block.yield(counter);
+      increaseCombinationLoopCounter(counter, start, end);
+    } while (!Arrays.equals(counter, endStatus));
+    block.yield(counter);
+  }
+
+  private void increaseCombinationLoopCounter(int[] counter, int start, int end) {
+    for (int i = counter.length - 1; i >= 0; i--) {
+      if (counter[i] < end) {
+        counter[i]++;
+        return;
+      } else if (i != 0
+              && counter[i - 1] != end) {
+        counter[i - 1]++;
+        for (int j = i; j < counter.length; j++) {
+          counter[j] = counter[ i - 1];
+        }
+        return;
+      }
+    }
+  }
+
   public RubyArray<RubyArray<E>> repeatedCombination(int n, ItemBlock<RubyArray<E>> block) {
-    return combination(n, block);
+    RubyArray<RubyArray<E>> rp = new RubyArrayList();
+    if (n < 0) {
+      return rp;
+    }
+    if (n == 0) {
+      rp.push(new RubyArrayList());
+      block.yield(rp.first());
+      return rp;
+    }
+    int[] counter = new int[n];
+    repeatedCombinationLoop(counter, 0, list.size() - 1, (count) -> {
+      RubyArray<E> c = new RubyArrayList();
+      for (int i = 0; i < count.length; i++) {
+        c.push(list.get(count[i]));
+      }
+      block.yield(c);
+      rp.add(c);
+    });
+    return rp;
   }
 
   @Override
@@ -1270,12 +1328,70 @@ public final class RubyArrayList<E> implements RubyArray<E> {
 
   @Override
   public RubyArray<RubyArray<E>> repeatedPermutation(int n) {
-    return permutation(n);
+    RubyArray<RubyArray<E>> rp = new RubyArrayList();
+    if (n < 0) {
+      return rp;
+    }
+    if (n == 0) {
+      return rp.push(new RubyArrayList());
+    }
+    int[] counter = new int[n];
+    repeatedPermutationLoop(counter, 0, list.size() - 1, (count) -> {
+      RubyArray<E> c = new RubyArrayList();
+      for (int i = 0; i < count.length; i++) {
+        c.push(list.get(count[i]));
+      }
+      rp.add(c);
+    });
+    return rp;
   }
 
-  @Override
+  private void repeatedPermutationLoop(int[] counter, int start, int end, ItemBlock<int[]> block) {
+    int[] endStatus = new int[counter.length];
+    Arrays.fill(endStatus, end);
+    do {
+      block.yield(counter);
+      increasePermutationLoopCounter(counter, start, end);
+    } while (!Arrays.equals(counter, endStatus));
+    block.yield(counter);
+  }
+
+  private void increasePermutationLoopCounter(int[] counter, int start, int end) {
+    for (int i = counter.length - 1; i >= 0; i--) {
+      if (counter[i] < end) {
+        counter[i]++;
+        return;
+      } else if (i != 0
+              && counter[i - 1] != end) {
+        counter[i - 1]++;
+        for (int j = i; j < counter.length; j++) {
+          counter[j] = start;
+        }
+        return;
+      }
+    }
+  }
+
   public RubyArray<RubyArray<E>> repeatedPermutation(int n, ItemBlock<RubyArray<E>> block) {
-    return permutation(n, block);
+    RubyArray<RubyArray<E>> rp = new RubyArrayList();
+    if (n < 0) {
+      return rp;
+    }
+    if (n == 0) {
+      rp.push(new RubyArrayList());
+      block.yield(rp.first());
+      return rp;
+    }
+    int[] counter = new int[n];
+    repeatedCombinationLoop(counter, 0, list.size() - 1, (count) -> {
+      RubyArray<E> c = new RubyArrayList();
+      for (int i = 0; i < count.length; i++) {
+        c.push(list.get(count[i]));
+      }
+      block.yield(c);
+      rp.add(c);
+    });
+    return rp;
   }
 
   @Override

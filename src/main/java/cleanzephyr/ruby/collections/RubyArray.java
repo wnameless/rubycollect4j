@@ -119,6 +119,12 @@ public interface RubyArray<E> extends List<E> {
    */
   public E bsearch(E target, Comparator<? super E> comp);
 
+  /**
+   * Generate all combinations with certain length and put them in a RubyArray.
+   *
+   * @param n length of each combination
+   * @return new RubyArray
+   */
   public RubyArray<RubyArray<E>> combination(int n);
 
   public RubyArray<RubyArray<E>> combination(int n, ItemBlock<RubyArray<E>> block);
