@@ -139,7 +139,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public <S> RubyArrayList<S> assoc(S target) {
+  public <S> RubyArray<S> assoc(S target) {
     for (E item : list) {
       if (item instanceof List) {
         List itemList = (List) item;

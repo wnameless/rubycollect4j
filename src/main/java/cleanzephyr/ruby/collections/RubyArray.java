@@ -84,6 +84,14 @@ public interface RubyArray<E> extends List<E> {
    */
   public RubyArray<E> minus(List<E> other);
 
+  /**
+   * Create a RubyArray starts from a List which contains the target as the
+   * first element. Return null if target can't be found.
+   *
+   * @param <S> generic type of other kind of List
+   * @param target the first element of List to find
+   * @return new RubyList or null
+   */
   public <S> RubyArray<S> assoc(S target);
 
   public E at(int index);

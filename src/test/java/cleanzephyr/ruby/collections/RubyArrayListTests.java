@@ -22,6 +22,7 @@ package cleanzephyr.ruby.collections;
 
 import static cleanzephyr.ruby.collections.RubyCollections.ra;
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNull;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -84,5 +85,15 @@ public class RubyArrayListTests {
     assertEquals(ra(1).minus(ra(2, 3)), ra(1));
     assertEquals(ra(1, 2, 3).minus(ra(2, 3)), ra(1));
     assertEquals(ra(1).minus(ra(1, 2, 3)), ra());
+  }
+
+  /**
+   * Test of assoc method, of class RubyArrayList.
+   */
+  @Test
+  public void testAssoc() {
+    assertNull(ra(1, 2, 3).assoc(1));
+    assertNull(ra(ra(2, 3)).assoc(1));
+    assertEquals(ra(ra(1, 2, 3), ra(4, 5, 6)).assoc(4), ra(ra(4, 5, 6)));
   }
 }
