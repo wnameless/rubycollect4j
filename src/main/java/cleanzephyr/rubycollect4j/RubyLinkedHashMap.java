@@ -18,20 +18,22 @@
  * the License.
  *
  */
-package cleanzephyr.ruby.collections;
+package cleanzephyr.rubycollect4j;
 
-import static cleanzephyr.ruby.collections.RubyCollections.newRubyArray;
-import cleanzephyr.ruby.collections.blocks.EntryBlock;
-import cleanzephyr.ruby.collections.blocks.EntryBooleanBlock;
-import cleanzephyr.ruby.collections.blocks.EntryInjectWithInitBlock;
-import cleanzephyr.ruby.collections.blocks.EntryMergeBlock;
-import cleanzephyr.ruby.collections.blocks.EntryToListBlock;
-import cleanzephyr.ruby.collections.blocks.EntryTransformBlock;
-import cleanzephyr.ruby.collections.blocks.InjectBlock;
-import cleanzephyr.ruby.collections.blocks.ItemBlock;
-import cleanzephyr.ruby.collections.blocks.ItemFromListBlock;
-import cleanzephyr.ruby.collections.blocks.ItemWithIndexBlock;
-import cleanzephyr.ruby.collections.blocks.ItemWithObjectBlock;
+import cleanzephyr.rubycollect4j.RubyArrayList;
+import cleanzephyr.rubycollect4j.RubyArray;
+import static cleanzephyr.rubycollect4j.RubyCollections.newRubyArray;
+import cleanzephyr.rubycollect4j.blocks.EntryBlock;
+import cleanzephyr.rubycollect4j.blocks.EntryBooleanBlock;
+import cleanzephyr.rubycollect4j.blocks.EntryInjectWithInitBlock;
+import cleanzephyr.rubycollect4j.blocks.EntryMergeBlock;
+import cleanzephyr.rubycollect4j.blocks.EntryToListBlock;
+import cleanzephyr.rubycollect4j.blocks.EntryTransformBlock;
+import cleanzephyr.rubycollect4j.blocks.InjectBlock;
+import cleanzephyr.rubycollect4j.blocks.ItemBlock;
+import cleanzephyr.rubycollect4j.blocks.ItemFromListBlock;
+import cleanzephyr.rubycollect4j.blocks.ItemWithIndexBlock;
+import cleanzephyr.rubycollect4j.blocks.ItemWithObjectBlock;
 import com.google.common.collect.ArrayListMultimap;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newLinkedHashMap;

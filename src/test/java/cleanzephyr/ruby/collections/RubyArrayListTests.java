@@ -20,7 +20,7 @@
  */
 package cleanzephyr.ruby.collections;
 
-import static cleanzephyr.ruby.collections.RubyCollections.ra;
+import static cleanzephyr.rubycollect4j.RubyCollections.ra;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
 import org.junit.After;

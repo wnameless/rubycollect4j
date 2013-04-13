@@ -18,7 +18,7 @@
  * the License.
  *
  */
-package cleanzephyr.ruby;
+package cleanzephyr.rubycollect4j;
 
 import static java.lang.System.out;
 

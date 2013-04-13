@@ -18,17 +18,17 @@
  * the License.
  *
  */
-package cleanzephyr.ruby.collections;
+package cleanzephyr.rubycollect4j;
 
-import cleanzephyr.ruby.collections.blocks.BooleanBlock;
-import cleanzephyr.ruby.collections.blocks.InjectBlock;
-import cleanzephyr.ruby.collections.blocks.InjectWithInitBlock;
-import cleanzephyr.ruby.collections.blocks.ItemBlock;
-import cleanzephyr.ruby.collections.blocks.ItemFromListBlock;
-import cleanzephyr.ruby.collections.blocks.ItemToListBlock;
-import cleanzephyr.ruby.collections.blocks.ItemTransformBlock;
-import cleanzephyr.ruby.collections.blocks.ItemWithIndexBlock;
-import cleanzephyr.ruby.collections.blocks.ItemWithObjectBlock;
+import cleanzephyr.rubycollect4j.blocks.BooleanBlock;
+import cleanzephyr.rubycollect4j.blocks.InjectBlock;
+import cleanzephyr.rubycollect4j.blocks.InjectWithInitBlock;
+import cleanzephyr.rubycollect4j.blocks.ItemBlock;
+import cleanzephyr.rubycollect4j.blocks.ItemFromListBlock;
+import cleanzephyr.rubycollect4j.blocks.ItemToListBlock;
+import cleanzephyr.rubycollect4j.blocks.ItemTransformBlock;
+import cleanzephyr.rubycollect4j.blocks.ItemWithIndexBlock;
+import cleanzephyr.rubycollect4j.blocks.ItemWithObjectBlock;
 import com.google.common.collect.ArrayListMultimap;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Lists.reverse;

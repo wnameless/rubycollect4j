@@ -20,6 +20,7 @@
  */
 package cleanzephyr.ruby.collections;
 
+import cleanzephyr.rubycollect4j.RubyEnumerable;
 import static com.google.common.collect.Lists.newArrayList;
 import java.util.List;
 import static junit.framework.Assert.assertTrue;

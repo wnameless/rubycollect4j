@@ -18,9 +18,11 @@
  * the License.
  *
  */
-package cleanzephyr.ruby.collections;
+package cleanzephyr.rubycollect4j;
 
-import static cleanzephyr.ruby.IO.puts;
+import cleanzephyr.rubycollect4j.RubyArrayList;
+import cleanzephyr.rubycollect4j.RubyArray;
+import static cleanzephyr.rubycollect4j.IO.puts;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;

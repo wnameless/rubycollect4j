@@ -1,4 +1,4 @@
-package cleanzephyr.ruby.collections.blocks;
+package cleanzephyr.rubycollect4j.blocks;
 
 public interface ItemWithIndexBlock<E> {
 
