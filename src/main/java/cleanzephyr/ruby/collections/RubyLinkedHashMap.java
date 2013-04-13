@@ -97,7 +97,7 @@ public final class RubyLinkedHashMap<K, V> implements RubyHash<K, V> {
   }
 
   @Override
-  public boolean isComparedByIdentity() {
+  public boolean comparedByIdentityʔ() {
     return false;
   }
 
@@ -162,7 +162,12 @@ public final class RubyLinkedHashMap<K, V> implements RubyHash<K, V> {
   }
 
   @Override
-  public boolean eql(RubyHash other) {
+  public boolean emptyʔ() {
+    return map.isEmpty();
+  }
+
+  @Override
+  public boolean eqlʔ(RubyHash other) {
     return this.equals(other);
   }
 
@@ -188,12 +193,12 @@ public final class RubyLinkedHashMap<K, V> implements RubyHash<K, V> {
   }
 
   @Override
-  public boolean hasKey(K key) {
+  public boolean keyʔ(K key) {
     return map.containsKey(key);
   }
 
   @Override
-  public boolean hasValue(V value) {
+  public boolean valueʔ(V value) {
     return map.containsValue(value);
   }
 
@@ -310,7 +315,7 @@ public final class RubyLinkedHashMap<K, V> implements RubyHash<K, V> {
   }
 
   @Override
-  public RubyLinkedHashMap<K, V> mergeEx(Map<K, V> otherHash, EntryMergeBlock<K, V> block) {
+  public RubyLinkedHashMap<K, V> mergeǃ(Map<K, V> otherHash, EntryMergeBlock<K, V> block) {
     for (Entry<K, V> item : map.entrySet()) {
       if (map.containsKey(item.getKey()) && otherHash.containsKey(item.getKey())) {
         map.put(item.getKey(), block.yield(item.getKey(), item.getValue(), otherHash.get(item.getKey())));
@@ -328,7 +333,7 @@ public final class RubyLinkedHashMap<K, V> implements RubyHash<K, V> {
 
   @Override
   public RubyLinkedHashMap<K, V> update(Map<K, V> otherHash, EntryMergeBlock<K, V> block) {
-    return mergeEx(otherHash, block);
+    return mergeǃ(otherHash, block);
   }
 
   @Override
@@ -342,7 +347,7 @@ public final class RubyLinkedHashMap<K, V> implements RubyHash<K, V> {
   }
 
   @Override
-  public RubyLinkedHashMap<K, V> rejectEx(EntryBooleanBlock<K, V> block) {
+  public RubyLinkedHashMap<K, V> rejectǃ(EntryBooleanBlock<K, V> block) {
     int beforeSize = map.size();
     deleteIf(block);
     if (map.size() == beforeSize) {
@@ -390,12 +395,12 @@ public final class RubyLinkedHashMap<K, V> implements RubyHash<K, V> {
 
   // Ruby Enumerable methods
   @Override
-  public boolean hasAll() {
+  public boolean allʔ() {
     return true;
   }
 
   @Override
-  public boolean hasAll(EntryBooleanBlock<K, V> block) {
+  public boolean allʔ(EntryBooleanBlock<K, V> block) {
     boolean bool = true;
     for (Entry<K, V> item : map.entrySet()) {
       if (block.yield(item.getKey(), item.getValue()) == false) {
@@ -406,12 +411,12 @@ public final class RubyLinkedHashMap<K, V> implements RubyHash<K, V> {
   }
 
   @Override
-  public boolean hasAny() {
-    return RubyEnumerable.hasAny(map.entrySet());
+  public boolean anyʔ() {
+    return RubyEnumerable.anyʔ(map.entrySet());
   }
 
   @Override
-  public boolean hasAny(EntryBooleanBlock<K, V> block) {
+  public boolean anyʔ(EntryBooleanBlock<K, V> block) {
     boolean bool = false;
     for (Entry<K, V> item : map.entrySet()) {
       if (block.yield(item.getKey(), item.getValue())) {
@@ -614,12 +619,12 @@ public final class RubyLinkedHashMap<K, V> implements RubyHash<K, V> {
   }
 
   @Override
-  public boolean include(K key) {
+  public boolean includeʔ(K key) {
     return map.containsKey(key);
   }
 
   @Override
-  public boolean hasMember(K key) {
+  public boolean memberʔ(K key) {
     return map.containsKey(key);
   }
 
@@ -718,12 +723,12 @@ public final class RubyLinkedHashMap<K, V> implements RubyHash<K, V> {
   }
 
   @Override
-  public boolean hasNone() {
-    return RubyEnumerable.hasNone(map.entrySet());
+  public boolean noneʔ() {
+    return RubyEnumerable.noneʔ(map.entrySet());
   }
 
   @Override
-  public boolean hasNone(EntryBooleanBlock<K, V> block) {
+  public boolean noneʔ(EntryBooleanBlock<K, V> block) {
     boolean bool = true;
     for (Entry<K, V> item : map.entrySet()) {
       if (block.yield(item.getKey(), item.getValue())) {
@@ -734,12 +739,12 @@ public final class RubyLinkedHashMap<K, V> implements RubyHash<K, V> {
   }
 
   @Override
-  public boolean hasOne() {
-    return RubyEnumerable.hasOne(map.entrySet());
+  public boolean oneʔ() {
+    return RubyEnumerable.oneʔ(map.entrySet());
   }
 
   @Override
-  public boolean hasOne(EntryBooleanBlock<K, V> block) {
+  public boolean oneʔ(EntryBooleanBlock<K, V> block) {
     int count = 0;
     for (Entry<K, V> item : map.entrySet()) {
       if (block.yield(item.getKey(), item.getValue())) {

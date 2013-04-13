@@ -44,7 +44,7 @@ public interface RubyHash<K, V> extends Map<K, V> {
 
   public RubyHash<K, V> compareByIdentity();
 
-  public boolean isComparedByIdentity();
+  public boolean comparedByIdentityʔ();
 
   public V setDefault(V defaultValue);
 
@@ -62,7 +62,9 @@ public interface RubyHash<K, V> extends Map<K, V> {
 
   public RubyHash<K, V> eachValue(ItemBlock<V> block);
 
-  public boolean eql(RubyHash other);
+  public boolean emptyʔ();
+
+  public boolean eqlʔ(RubyHash other);
 
   public V fetch(K key);
 
@@ -70,9 +72,9 @@ public interface RubyHash<K, V> extends Map<K, V> {
 
   public RubyArray<Entry<K, V>> flatten();
 
-  public boolean hasKey(K key);
+  public boolean keyʔ(K key);
 
-  public boolean hasValue(V value);
+  public boolean valueʔ(V value);
 
   public int hash();
 
@@ -104,13 +106,13 @@ public interface RubyHash<K, V> extends Map<K, V> {
 
   public RubyHash<K, V> merge(Map<K, V> otherHash, EntryMergeBlock<K, V> block);
 
-  public RubyHash<K, V> mergeEx(Map<K, V> otherHash, EntryMergeBlock<K, V> block);
+  public RubyHash<K, V> mergeǃ(Map<K, V> otherHash, EntryMergeBlock<K, V> block);
 
   public RubyHash<K, V> update(Map<K, V> otherHash, EntryMergeBlock<K, V> block);
 
   public Entry<K, V> rassoc(V value);
 
-  public RubyHash<K, V> rejectEx(EntryBooleanBlock<K, V> block);
+  public RubyHash<K, V> rejectǃ(EntryBooleanBlock<K, V> block);
 
   public RubyHash<K, V> replace(Map<K, V> otherHash);
 
@@ -123,13 +125,13 @@ public interface RubyHash<K, V> extends Map<K, V> {
 
   public RubyArray<V> valuesAt(K... keys);
 
-  public boolean hasAll();
+  public boolean allʔ();
 
-  public boolean hasAll(EntryBooleanBlock<K, V> block);
+  public boolean allʔ(EntryBooleanBlock<K, V> block);
 
-  public boolean hasAny();
+  public boolean anyʔ();
 
-  public boolean hasAny(EntryBooleanBlock<K, V> block);
+  public boolean anyʔ(EntryBooleanBlock<K, V> block);
 
   public <S> RubyArray<Entry<S, RubyArrayList<Entry<K, V>>>> chunk(EntryTransformBlock<K, V, S> block);
 
@@ -177,9 +179,9 @@ public interface RubyHash<K, V> extends Map<K, V> {
 
   public <S> RubyHash<S, RubyArrayList<Entry<K, V>>> groupBy(EntryTransformBlock<K, V, S> block);
 
-  public boolean include(K key);
+  public boolean includeʔ(K key);
 
-  public boolean hasMember(K key);
+  public boolean memberʔ(K key);
 
   public Entry<K, V> inject(InjectBlock<Entry<K, V>> block);
 
@@ -201,13 +203,13 @@ public interface RubyHash<K, V> extends Map<K, V> {
 
   public RubyArray<RubyArray<Entry<K, V>>> partition(EntryBooleanBlock<K, V> block);
 
-  public boolean hasNone();
+  public boolean noneʔ();
 
-  public boolean hasNone(EntryBooleanBlock<K, V> block);
+  public boolean noneʔ(EntryBooleanBlock<K, V> block);
 
-  public boolean hasOne();
+  public boolean oneʔ();
 
-  public boolean hasOne(EntryBooleanBlock<K, V> block);
+  public boolean oneʔ(EntryBooleanBlock<K, V> block);
 
   public Entry<K, V> reduce(InjectBlock<Entry<K, V>> block);
 

@@ -85,7 +85,12 @@ public final class RubyArrayList<E> implements RubyArray<E> {
 
   // Ruby Array methods
   @Override
-  public RubyArray<E> and(List<E> other) {
+  public RubyArray<E> ㄍ(E item) {
+    return push(item);
+  }
+
+  @Override
+  public RubyArray<E> intersect(List<E> other) {
     List<E> andList = newArrayList();
     for (E item : this) {
       if (!andList.contains(item) && list.contains(item) && other.contains(item)) {
@@ -93,6 +98,11 @@ public final class RubyArrayList<E> implements RubyArray<E> {
       }
     }
     return new RubyArrayList(andList);
+  }
+
+  @Override
+  public RubyArray<E> Ⴖ(List<E> other) {
+    return intersect(other);
   }
 
   @Override
@@ -110,7 +120,17 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
+  public RubyArray<E> X(int n) {
+    return multiply(n);
+  }
+
+  @Override
   public String multiply(String separator) {
+    return this.join(separator);
+  }
+
+  @Override
+  public String X(String separator) {
     return this.join(separator);
   }
 
@@ -127,6 +147,11 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
+  public RubyArray<E> 十(List<E> other) {
+    return add(other);
+  }
+
+  @Override
   public RubyArray<E> minus(List<E> other) {
     List<E> minusList = newArrayList();
     for (E item : list) {
@@ -136,6 +161,11 @@ public final class RubyArrayList<E> implements RubyArray<E> {
       minusList.remove(item);
     }
     return new RubyArrayList(minusList);
+  }
+
+  @Override
+  public RubyArray<E> ㄧ(List<E> other) {
+    return minus(other);
   }
 
   @Override
@@ -251,6 +281,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
     }
   }
 
+  @Override
   public RubyArray<RubyArray<E>> repeatedCombination(int n, ItemBlock<RubyArray<E>> block) {
     RubyArray<RubyArray<E>> rp = new RubyArrayList();
     if (n < 0) {
@@ -285,7 +316,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public RubyArrayList<E> compactEx() {
+  public RubyArrayList<E> compactǃ() {
     boolean isCompacted = false;
     ListIterator<E> li = list.listIterator();
     while (li.hasNext()) {
@@ -383,7 +414,12 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public boolean eql(RubyArray<E> other) {
+  public boolean emptyʔ() {
+    return list.isEmpty();
+  }
+
+  @Override
+  public boolean eqlʔ(RubyArray<E> other) {
     return this.equals(other);
   }
 
@@ -691,7 +727,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public RubyArray<E> rejectEx(BooleanBlock<E> block) {
+  public RubyArray<E> rejectǃ(BooleanBlock<E> block) {
     int beforeLength = list.size();
     RubyArray<E> rubyArray = deleteIf(block);
     if (rubyArray.size() != beforeLength) {
@@ -714,7 +750,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public RubyArray<E> reverseEx() {
+  public RubyArray<E> reverseǃ() {
     List<E> reversedList = Lists.reverse(list);
     list.clear();
     list.addAll(reversedList);
@@ -753,7 +789,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public RubyArray<E> rotateEx() {
+  public RubyArray<E> rotateǃ() {
     if (list.size() > 0) {
       list.add(list.remove(0));
     }
@@ -778,7 +814,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public RubyArray<E> rotateEx(int count) {
+  public RubyArray<E> rotateǃ(int count) {
     if (list.size() > 0) {
       while (count != 0) {
         if (count > 0) {
@@ -816,7 +852,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public RubyArray<E> selectEx(BooleanBlock block) {
+  public RubyArray<E> selectǃ(BooleanBlock block) {
     RubyArray<E> rubyArray = select(block);
     if (rubyArray.size() == list.size()) {
       return null;
@@ -856,7 +892,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public RubyArray<E> shuffleEx() {
+  public RubyArray<E> shuffleǃ() {
     Collections.shuffle(list);
     return this;
   }
@@ -885,7 +921,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public E sliceEx(int index) {
+  public E sliceǃ(int index) {
     if (list.isEmpty()) {
       return null;
     } else if (index >= 0 && index < list.size()) {
@@ -898,7 +934,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public RubyArray<E> sliceEx(int index, int length) {
+  public RubyArray<E> sliceǃ(int index, int length) {
     List<E> slicedList = newArrayList();
     if (index < -list.size()) {
       return null;
@@ -933,7 +969,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public RubyArray<E> uniqEx() {
+  public RubyArray<E> uniqǃ() {
     RubyArray<E> uniqList = uniq();
     list.clear();
     list.addAll(uniqList);
@@ -968,6 +1004,16 @@ public final class RubyArrayList<E> implements RubyArray<E> {
       }
     }
     return new RubyArrayList(unionList);
+  }
+
+  @Override
+  public RubyArray<E> U(RubyArray<E> other) {
+    return union(other);
+  }
+
+  @Override
+  public RubyArray<E> ǀ(RubyArray<E> other) {
+    return union(other);
   }
 
   @Override
@@ -1009,13 +1055,23 @@ public final class RubyArrayList<E> implements RubyArray<E> {
 
   // Ruby Enumerable methods
   @Override
-  public boolean hasAll() {
-    return RubyEnumerable.hasAll(list);
+  public boolean allʔ() {
+    return RubyEnumerable.allʔ(list);
   }
 
   @Override
-  public boolean hasAll(BooleanBlock block) {
-    return RubyEnumerable.hasAll(list, block);
+  public boolean allʔ(BooleanBlock block) {
+    return RubyEnumerable.allʔ(list, block);
+  }
+
+  @Override
+  public boolean anyʔ() {
+    return RubyEnumerable.anyʔ(list);
+  }
+
+  @Override
+  public boolean anyʔ(BooleanBlock block) {
+    return RubyEnumerable.anyʔ(list, block);
   }
 
   @Override
@@ -1172,13 +1228,13 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public boolean include(E target) {
-    return RubyEnumerable.include(list, target);
+  public boolean includeʔ(E target) {
+    return RubyEnumerable.includeʔ(list, target);
   }
 
   @Override
-  public boolean hasMember(E target) {
-    return RubyEnumerable.hasMember(list, target);
+  public boolean memberʔ(E target) {
+    return RubyEnumerable.memberʔ(list, target);
   }
 
   @Override
@@ -1395,23 +1451,23 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public boolean hasNone() {
-    return RubyEnumerable.hasNone(list);
+  public boolean noneʔ() {
+    return RubyEnumerable.noneʔ(list);
   }
 
   @Override
-  public boolean hasNone(BooleanBlock<E> block) {
-    return RubyEnumerable.hasNone(list, block);
+  public boolean noneʔ(BooleanBlock<E> block) {
+    return RubyEnumerable.noneʔ(list, block);
   }
 
   @Override
-  public boolean hasOne() {
-    return RubyEnumerable.hasOne(list);
+  public boolean oneʔ() {
+    return RubyEnumerable.oneʔ(list);
   }
 
   @Override
-  public boolean hasOne(BooleanBlock<E> block) {
-    return RubyEnumerable.hasOne(list, block);
+  public boolean oneʔ(BooleanBlock<E> block) {
+    return RubyEnumerable.oneʔ(list, block);
   }
 
   @Override

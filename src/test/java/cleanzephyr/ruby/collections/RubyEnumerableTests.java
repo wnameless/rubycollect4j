@@ -46,20 +46,20 @@ public class RubyEnumerableTests {
 
   @Test
   public void testHasAll() {
-    assertTrue(RubyEnumerable.hasAll(list));
+    assertTrue(RubyEnumerable.allʔ(list));
     list.add("item1");
-    assertTrue(RubyEnumerable.hasAll(list));
+    assertTrue(RubyEnumerable.allʔ(list));
     list.add(null);
-    assertFalse(RubyEnumerable.hasAll(list));
+    assertFalse(RubyEnumerable.allʔ(list));
   }
 
   @Test
   public void testHasAllWithBlock() {
     list.add("item1");
-    assertTrue(RubyEnumerable.hasAll(list, (i) -> {
+    assertTrue(RubyEnumerable.allʔ(list, (i) -> {
       return i instanceof String;
     }));
-    assertFalse(RubyEnumerable.hasAll(list, (i) -> {
+    assertFalse(RubyEnumerable.allʔ(list, (i) -> {
       return i.equals("");
     }));
   }

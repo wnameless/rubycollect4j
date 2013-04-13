@@ -58,7 +58,7 @@ public final class RubyEnumerable {
    * @param iter iterator of element <E>
    * @return true if all elements are not null, otherwise false
    */
-  public static <E> boolean hasAll(Iterable<E> iter) {
+  public static <E> boolean allʔ(Iterable<E> iter) {
     boolean bool = true;
     for (E item : iter) {
       if (item == null) {
@@ -68,7 +68,7 @@ public final class RubyEnumerable {
     return bool;
   }
 
-  public static <E> boolean hasAll(Iterable<E> iter, BooleanBlock<E> block) {
+  public static <E> boolean allʔ(Iterable<E> iter, BooleanBlock<E> block) {
     boolean bool = true;
     for (E item : iter) {
       if (block.yield(item) == false) {
@@ -78,7 +78,7 @@ public final class RubyEnumerable {
     return bool;
   }
 
-  public static <E> boolean hasAny(Iterable<E> iter) {
+  public static <E> boolean anyʔ(Iterable<E> iter) {
     boolean bool = false;
     for (E item : iter) {
       if (item != null) {
@@ -88,7 +88,7 @@ public final class RubyEnumerable {
     return bool;
   }
 
-  public static <E> boolean hasAny(Iterable<E> iter, BooleanBlock<E> block) {
+  public static <E> boolean anyʔ(Iterable<E> iter, BooleanBlock<E> block) {
     boolean bool = false;
     for (E item : iter) {
       if (block.yield(item)) {
@@ -363,7 +363,7 @@ public final class RubyEnumerable {
     return map;
   }
 
-  public static <E> boolean include(Iterable<E> iter, E target) {
+  public static <E> boolean includeʔ(Iterable<E> iter, E target) {
     for (E item : iter) {
       if (item.equals(target)) {
         return true;
@@ -372,8 +372,8 @@ public final class RubyEnumerable {
     return false;
   }
 
-  public static <E> boolean hasMember(Iterable<E> iter, E target) {
-    return include(iter, target);
+  public static <E> boolean memberʔ(Iterable<E> iter, E target) {
+    return includeʔ(iter, target);
   }
 
   public static <E> E inject(Iterable<E> iter, String methodName) {
@@ -548,7 +548,7 @@ public final class RubyEnumerable {
     return newArrayList(trueList, falseList);
   }
 
-  public static <E> boolean hasNone(Iterable<E> iter) {
+  public static <E> boolean noneʔ(Iterable<E> iter) {
     boolean bool = true;
     for (E item : iter) {
       if (item != null) {
@@ -558,7 +558,7 @@ public final class RubyEnumerable {
     return bool;
   }
 
-  public static <E> boolean hasNone(Iterable<E> iter, BooleanBlock<E> block) {
+  public static <E> boolean noneʔ(Iterable<E> iter, BooleanBlock<E> block) {
     boolean bool = true;
     for (E item : iter) {
       if (block.yield(item)) {
@@ -568,7 +568,7 @@ public final class RubyEnumerable {
     return bool;
   }
 
-  public static <E> boolean hasOne(Iterable<E> iter) {
+  public static <E> boolean oneʔ(Iterable<E> iter) {
     int count = 0;
     for (E item : iter) {
       if (item != null) {
@@ -581,7 +581,7 @@ public final class RubyEnumerable {
     return count == 1;
   }
 
-  public static <E> boolean hasOne(Iterable<E> iter, BooleanBlock<E> block) {
+  public static <E> boolean oneʔ(Iterable<E> iter, BooleanBlock<E> block) {
     int count = 0;
     for (E item : iter) {
       if (block.yield(item)) {

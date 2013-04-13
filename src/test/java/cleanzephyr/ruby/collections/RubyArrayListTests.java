@@ -54,8 +54,8 @@ public class RubyArrayListTests {
    * Test of and method, of class RubyArrayList.
    */
   @Test
-  public void testAnd() {
-    assertEquals(ra(3), ra(1, 2, 3).and(ra(3, 4, 5)));
+  public void testIntersect() {
+    assertEquals(ra(3), ra(1, 2, 3).intersect(ra(3, 4, 5)));
   }
 
   /**

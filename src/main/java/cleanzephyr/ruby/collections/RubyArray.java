@@ -44,13 +44,17 @@ import java.util.Map.Entry;
  */
 public interface RubyArray<E> extends List<E> {
 
+  public RubyArray<E> ㄍ(E item);
+
   /**
-   * Create a RubyArray which contains a union set of two Lists.
+   * Create a RubyArray which contains a intersection set of two Lists.
    *
    * @param other other List
    * @return new RubyArray
    */
-  public RubyArray<E> and(List<E> other);
+  public RubyArray<E> intersect(List<E> other);
+
+  public RubyArray<E> Ⴖ(List<E> other);
 
   /**
    * Create a RubyArray which contains n copies of current RubyArray.
@@ -60,6 +64,8 @@ public interface RubyArray<E> extends List<E> {
    */
   public RubyArray<E> multiply(int n);
 
+  public RubyArray<E> X(int n);
+
   /**
    * Create a String which all elements are joined by separator.
    *
@@ -67,6 +73,8 @@ public interface RubyArray<E> extends List<E> {
    * @return String
    */
   public String multiply(String separator);
+
+  public String X(String separator);
 
   /**
    * Create a RubyArray which contains elements in both Lists
@@ -76,6 +84,8 @@ public interface RubyArray<E> extends List<E> {
    */
   public RubyArray<E> add(List<E> other);
 
+  public RubyArray<E> 十(List<E> other);
+
   /**
    * Create a RubyArray which eliminates all elements from other List.
    *
@@ -83,6 +93,8 @@ public interface RubyArray<E> extends List<E> {
    * @return new RubyArray
    */
   public RubyArray<E> minus(List<E> other);
+
+  public RubyArray<E> ㄧ(List<E> other);
 
   /**
    * Create a RubyArray starts from a List which contains the target as the
@@ -135,7 +147,7 @@ public interface RubyArray<E> extends List<E> {
 
   public RubyArray<E> compact();
 
-  public RubyArray<E> compactEx();
+  public RubyArray<E> compactǃ();
 
   public RubyArray<E> concat(RubyArray<E> other);
 
@@ -153,7 +165,9 @@ public interface RubyArray<E> extends List<E> {
 
   public void eachIndex(IndexBlock<E> block);
 
-  public boolean eql(RubyArray<E> other);
+  public boolean emptyʔ();
+
+  public boolean eqlʔ(RubyArray<E> other);
 
   public E fetch(int index);
 
@@ -207,13 +221,13 @@ public interface RubyArray<E> extends List<E> {
 
   public <S> RubyArray<S> rassoc(S target);
 
-  public RubyArray<E> rejectEx(BooleanBlock<E> block);
+  public RubyArray<E> rejectǃ(BooleanBlock<E> block);
 
   public RubyArray<E> replace(RubyArray<E> other);
 
   public RubyArray<E> reverse();
 
-  public RubyArray<E> reverseEx();
+  public RubyArray<E> reverseǃ();
 
   public Integer rindex(E target);
 
@@ -221,17 +235,17 @@ public interface RubyArray<E> extends List<E> {
 
   public RubyArray<E> rotate();
 
-  public RubyArray<E> rotateEx();
+  public RubyArray<E> rotateǃ();
 
   public RubyArray<E> rotate(int count);
 
-  public RubyArray<E> rotateEx(int count);
+  public RubyArray<E> rotateǃ(int count);
 
   public E sample();
 
   public RubyArray<E> sample(int n);
 
-  public RubyArray<E> selectEx(BooleanBlock block);
+  public RubyArray<E> selectǃ(BooleanBlock block);
 
   public E shift();
 
@@ -239,25 +253,29 @@ public interface RubyArray<E> extends List<E> {
 
   public RubyArray<E> shuffle();
 
-  public RubyArray<E> shuffleEx();
+  public RubyArray<E> shuffleǃ();
 
   public E slice(int index);
 
   public RubyArray<E> slice(int index, int length);
 
-  public E sliceEx(int index);
+  public E sliceǃ(int index);
 
-  public RubyArray<E> sliceEx(int index, int length);
+  public RubyArray<E> sliceǃ(int index, int length);
 
   public int length();
 
   public RubyArray<E> uniq();
 
-  public RubyArray<E> uniqEx();
+  public RubyArray<E> uniqǃ();
 
   public <S> RubyArray<E> uniq(ItemTransformBlock<E, S> block);
 
   public RubyArray<E> union(RubyArray<E> other);
+
+  public RubyArray<E> U(RubyArray<E> other);
+
+  public RubyArray<E> ǀ(RubyArray<E> other);
 
   public RubyArray<E> unshift(E item);
 
@@ -267,9 +285,13 @@ public interface RubyArray<E> extends List<E> {
 
   public void zip(RubyArray<RubyArray<E>> others, ItemBlock<RubyArray<E>> block);
 
-  public boolean hasAll();
+  public boolean allʔ();
 
-  public boolean hasAll(BooleanBlock block);
+  public boolean allʔ(BooleanBlock block);
+
+  public boolean anyʔ();
+
+  public boolean anyʔ(BooleanBlock block);
 
   public <K> RubyArray<Entry<K, RubyArray<E>>> chunk(ItemTransformBlock<E, K> block);
 
@@ -325,9 +347,9 @@ public interface RubyArray<E> extends List<E> {
 
   public <K> RubyHash<K, RubyArray<E>> groupBy(ItemTransformBlock<E, K> block);
 
-  public boolean include(E target);
+  public boolean includeʔ(E target);
 
-  public boolean hasMember(E target);
+  public boolean memberʔ(E target);
 
   public E inject(String methodName);
 
@@ -375,13 +397,13 @@ public interface RubyArray<E> extends List<E> {
 
   public RubyArray<RubyArray<E>> repeatedPermutation(int n, ItemBlock<RubyArray<E>> block);
 
-  public boolean hasNone();
+  public boolean noneʔ();
 
-  public boolean hasNone(BooleanBlock<E> block);
+  public boolean noneʔ(BooleanBlock<E> block);
 
-  public boolean hasOne();
+  public boolean oneʔ();
 
-  public boolean hasOne(BooleanBlock<E> block);
+  public boolean oneʔ(BooleanBlock<E> block);
 
   public E reduce(String methodName);
 

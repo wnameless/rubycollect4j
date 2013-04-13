@@ -200,6 +200,6 @@ public final class RubyCollections {
   }
 
   public static void main(String[] args) {
-    puts(ra(1, 2, 3).repeatedPermutation(3));
+    puts(ra(1, 2, 3).combination(1));
   }
 }
