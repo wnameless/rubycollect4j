@@ -162,4 +162,37 @@ public class RubyArrayListTests {
       i[0]++;
     });
   }
+
+  /**
+   * Test of repeatedCombination method, of class RubyArrayList.
+   */
+  @Test
+  public void testRepeatedCombination() {
+    assertEquals(ra(), ra(1, 2).repeatedCombination(-1));
+    assertEquals(ra(ra(1, 1, 1), ra(1, 1, 2), ra(1, 2, 2), ra(2, 2, 2)), ra(1, 2).repeatedCombination(3));
+    assertEquals(ra(ra()), ra(1, 2, 3).repeatedCombination(0));
+    assertEquals(ra(ra(1), ra(2), ra(3)), ra(1, 2, 3).repeatedCombination(1));
+    assertEquals(ra(ra(1, 1), ra(1, 2), ra(1, 3), ra(2, 2), ra(2, 3), ra(3, 3)), ra(1, 2, 3).repeatedCombination(2));
+    assertEquals(ra(ra(1, 1), ra(1, 2), ra(2, 2)), ra(1, 2).repeatedCombination(2));
+  }
+
+  /**
+   * Test of repeatedCombination method, of class RubyArrayList.
+   */
+  @Test
+  public void testRepeatedCombinationWithBlock() {
+    final int[] i = new int[1];
+    ra(1, 2).repeatedCombination(2, (c) -> {
+      if (i[0] == 0) {
+        assertEquals(ra(1, 1), c);
+      }
+      if (i[0] == 1) {
+        assertEquals(ra(1, 2), c);
+      }
+      if (i[0] == 2) {
+        assertEquals(ra(2, 2), c);
+      }
+      i[0]++;
+    });
+  }
 }

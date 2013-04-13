@@ -21,7 +21,6 @@
 package cleanzephyr.ruby.collections;
 
 import static cleanzephyr.ruby.IO.puts;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;

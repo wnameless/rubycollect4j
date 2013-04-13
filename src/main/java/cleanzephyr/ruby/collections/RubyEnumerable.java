@@ -25,10 +25,10 @@ import cleanzephyr.ruby.collections.blocks.InjectBlock;
 import cleanzephyr.ruby.collections.blocks.InjectWithInitBlock;
 import cleanzephyr.ruby.collections.blocks.ItemBlock;
 import cleanzephyr.ruby.collections.blocks.ItemFromListBlock;
-import cleanzephyr.ruby.collections.blocks.ItemWithIndexBlock;
-import cleanzephyr.ruby.collections.blocks.ItemWithObjectBlock;
 import cleanzephyr.ruby.collections.blocks.ItemToListBlock;
 import cleanzephyr.ruby.collections.blocks.ItemTransformBlock;
+import cleanzephyr.ruby.collections.blocks.ItemWithIndexBlock;
+import cleanzephyr.ruby.collections.blocks.ItemWithObjectBlock;
 import com.google.common.collect.ArrayListMultimap;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Lists.reverse;
@@ -36,18 +36,17 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import static java.util.AbstractMap.SimpleEntry;
+import java.util.AbstractMap;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Collection;
-import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.Collections;
-import java.util.Comparator;
 
 public final class RubyEnumerable {
 
@@ -98,15 +97,15 @@ public final class RubyEnumerable {
     return bool;
   }
 
-  public static <E, K> List<Entry<K, List<E>>> chunk(Iterable<E> iter, ItemTransformBlock<E, K> block) {
+  public static <E, K> List<Map.Entry<K, List<E>>> chunk(Iterable<E> iter, ItemTransformBlock<E, K> block) {
     Multimap<K, E> multimap = ArrayListMultimap.create();
     for (E item : iter) {
       K key = block.yield(item);
       multimap.put(key, item);
     }
-    List<Entry<K, List<E>>> list = newArrayList();
+    List<Map.Entry<K, List<E>>> list = newArrayList();
     for (K key : multimap.keySet()) {
-      list.add(new SimpleEntry<>(key, newArrayList(multimap.get(key))));
+      list.add(new AbstractMap.SimpleEntry<>(key, newArrayList(multimap.get(key))));
     }
     return list;
   }
