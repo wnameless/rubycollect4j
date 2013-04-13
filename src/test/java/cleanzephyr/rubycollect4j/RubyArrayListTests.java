@@ -18,7 +18,7 @@
  * the License.
  *
  */
-package cleanzephyr.ruby.collections;
+package cleanzephyr.rubycollect4j;
 
 import static cleanzephyr.rubycollect4j.RubyCollections.ra;
 import static junit.framework.Assert.assertEquals;

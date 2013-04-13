@@ -18,7 +18,7 @@
  * the License.
  *
  */
-package cleanzephyr.ruby.collections;
+package cleanzephyr.rubycollect4j;
 
 import cleanzephyr.rubycollect4j.RubyEnumerable;
 import static com.google.common.collect.Lists.newArrayList;
