@@ -57,6 +57,8 @@ public interface RubyHash<K, V> extends Map<K, V> {
   public RubyHash<K, V> deleteIf(EntryBooleanBlock<K, V> block);
 
   public RubyHash<K, V> each(EntryBlock<K, V> block);
+  
+  public void eachEntry(ItemBlock<Entry<K,V>> block);
 
   public RubyHash<K, V> eachPair(EntryBlock<K, V> block);
 

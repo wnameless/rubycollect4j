@@ -316,6 +316,8 @@ public interface RubyArray<E> extends List<E> {
   public RubyArray<E> dropWhile(BooleanBlock block);
 
   public void eachCons(int n, ItemFromListBlock<E> block);
+  
+  public void eachEntry(ItemBlock<E> block);
 
   public void eachSlice(int n, ItemFromListBlock<E> block);
 
