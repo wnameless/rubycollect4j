@@ -7,7 +7,7 @@
   <version>1.0</version>
   <packaging>jar</packaging>
 
-  <name>RubyCollections</name>
+  <name>rubycollect4j</name>
   <url>http://maven.apache.org</url>
     <build>
         <plugins>

@@ -201,6 +201,6 @@ public final class RubyCollections {
   }
 
   public static void main(String[] args) {
-    puts(ra(1, 2, 3).combination(1));
+    puts(ra(1, 2, 3).fetch(-4));
   }
 }

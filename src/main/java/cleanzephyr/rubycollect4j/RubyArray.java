@@ -143,7 +143,7 @@ public interface RubyArray<E> extends List<E> {
 
   public RubyArray<RubyArray<E>> repeatedCombination(int n);
 
-  public RubyArray<RubyArray<E>> repeatedCombination(int n, ItemBlock<RubyArray<E>> block);
+  public RubyArray<E> repeatedCombination(int n, ItemBlock<RubyArray<E>> block);
 
   public RubyArray<E> compact();
 
@@ -161,9 +161,9 @@ public interface RubyArray<E> extends List<E> {
 
   public RubyArray<E> deleteIf(BooleanBlock<E> block);
 
-  public void each(ItemBlock<E> block);
+  public RubyArray<E> each(ItemBlock<E> block);
 
-  public void eachIndex(IndexBlock<E> block);
+  public RubyArray<E> eachIndex(IndexBlock<E> block);
 
   public boolean emptyʔ();
 
@@ -173,7 +173,7 @@ public interface RubyArray<E> extends List<E> {
 
   public E fetch(int index, E defaultValue);
 
-  public E fetch(int index, ItemBlock<E> block);
+  public E fetch(int index, ItemBlock<Integer> block);
 
   public RubyArray<E> fill(E item);
 
@@ -215,7 +215,7 @@ public interface RubyArray<E> extends List<E> {
 
   public RubyArray<RubyArray<E>> product(RubyArray<E>... arys);
 
-  public void product(RubyArray<RubyArray<E>> arys, ItemBlock<RubyArray<E>> block);
+  public RubyArray<E> product(RubyArray<RubyArray<E>> arys, ItemBlock<RubyArray<E>> block);
 
   public RubyArray<E> push(E item);
 
@@ -395,7 +395,7 @@ public interface RubyArray<E> extends List<E> {
 
   public RubyArray<RubyArray<E>> repeatedPermutation(int n);
 
-  public RubyArray<RubyArray<E>> repeatedPermutation(int n, ItemBlock<RubyArray<E>> block);
+  public RubyArray<E> repeatedPermutation(int n, ItemBlock<RubyArray<E>> block);
 
   public boolean noneʔ();
 

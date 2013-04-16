@@ -283,15 +283,15 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public RubyArray<RubyArray<E>> repeatedCombination(int n, ItemBlock<RubyArray<E>> block) {
+  public RubyArray<E> repeatedCombination(int n, ItemBlock<RubyArray<E>> block) {
     RubyArray<RubyArray<E>> rp = new RubyArrayList();
     if (n < 0) {
-      return rp;
+      return this;
     }
     if (n == 0) {
       rp.push(new RubyArrayList());
       block.yield(rp.first());
-      return rp;
+      return this;
     }
     int[] counter = new int[n];
     repeatedCombinationLoop(counter, 0, list.size() - 1, (count) -> {
@@ -302,7 +302,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
       block.yield(c);
       rp.add(c);
     });
-    return rp;
+    return this;
   }
 
   @Override
@@ -389,7 +389,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public RubyArrayList<E> deleteIf(BooleanBlock<E> block) {
+  public RubyArray<E> deleteIf(BooleanBlock<E> block) {
     ListIterator<E> li = list.listIterator();
     while (li.hasNext()) {
       E item = li.next();
@@ -401,17 +401,19 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public void each(ItemBlock<E> block) {
+  public RubyArray<E> each(ItemBlock<E> block) {
     for (E item : list) {
       block.yield(item);
     }
+    return this;
   }
 
   @Override
-  public void eachIndex(IndexBlock<E> block) {
+  public RubyArray<E> eachIndex(IndexBlock<E> block) {
     for (int i = 0; i < list.size(); i++) {
       block.yield(i);
     }
+    return this;
   }
 
   @Override
@@ -426,28 +428,27 @@ public final class RubyArrayList<E> implements RubyArray<E> {
 
   @Override
   public E fetch(int index) {
+    if (index >= list.size() || index < -list.size()) {
+      throw new IllegalArgumentException("index " + index + " outside of array bounds: " + -list.size() + "..." + list.size());
+    }
     return at(index);
   }
 
   @Override
   public E fetch(int index, E defaultValue) {
-    E target = at(index);
-    if (target == null) {
+    if (index >= list.size() || index < -list.size()) {
       return defaultValue;
-    } else {
-      return target;
     }
+    return at(index);
   }
 
   @Override
-  public E fetch(int index, ItemBlock<E> block) {
-    E target = at(index);
-    if (target == null) {
-      block.yield(target);
+  public E fetch(int index, ItemBlock<Integer> block) {
+    if (index >= list.size() || index < -list.size()) {
+      block.yield(index);
       return null;
-    } else {
-      return target;
     }
+    return at(index);
   }
 
   @Override
@@ -557,8 +558,8 @@ public final class RubyArrayList<E> implements RubyArray<E> {
 
   @Override
   public RubyArrayList<E> insert(int index, E... args) {
-    if (index < -(list.size() + 1)) {
-      return null;
+    if (index < -list.size()) {
+      throw new IllegalArgumentException("IndexError: index " + index + " too small for array; minimum: " + -list.size());
     } else if (index < 0) {
       int relIndex = list.size() + index + 1;
       for (int i = args.length - 1; i >= 0; i--) {
@@ -572,7 +573,6 @@ public final class RubyArrayList<E> implements RubyArray<E> {
       while (index > list.size()) {
         list.add(null);
       }
-      System.out.println(list);
       for (int i = args.length - 1; i >= 0; i--) {
         list.add(index - args.length + 2, args[i]);
       }
@@ -701,11 +701,12 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public void product(RubyArray<RubyArray<E>> arys, ItemBlock<RubyArray<E>> block) {
+  public RubyArray<E> product(RubyArray<RubyArray<E>> arys, ItemBlock<RubyArray<E>> block) {
     RubyArray<RubyArray<E>> combinations = product(arys.toArray(new RubyArrayList[arys.length()]));
     for (RubyArray<E> comb : combinations) {
       block.yield(comb);
     }
+    return this;
   }
 
   @Override
@@ -1429,15 +1430,15 @@ public final class RubyArrayList<E> implements RubyArray<E> {
     }
   }
 
-  public RubyArray<RubyArray<E>> repeatedPermutation(int n, ItemBlock<RubyArray<E>> block) {
+  public RubyArray<E> repeatedPermutation(int n, ItemBlock<RubyArray<E>> block) {
     RubyArray<RubyArray<E>> rp = new RubyArrayList();
     if (n < 0) {
-      return rp;
+      return this;
     }
     if (n == 0) {
       rp.push(new RubyArrayList());
       block.yield(rp.first());
-      return rp;
+      return this;
     }
     int[] counter = new int[n];
     repeatedCombinationLoop(counter, 0, list.size() - 1, (count) -> {
@@ -1448,7 +1449,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
       block.yield(c);
       rp.add(c);
     });
-    return rp;
+    return this;
   }
 
   @Override
@@ -1492,7 +1493,6 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-
   public RubyArray<E> reject(BooleanBlock block) {
     return new RubyArrayList(RubyEnumerable.reject(list, block));
   }
