@@ -264,10 +264,11 @@ public final class RubyEnumerable {
     }
   }
 
-  public static <E> void eachWithObject(Iterable<E> iter, Object o, ItemWithObjectBlock<E> block) {
+  public static <E, S> S eachWithObject(Iterable<E> iter, S o, ItemWithObjectBlock<E, S> block) {
     for (E item : iter) {
       block.yield(item, o);
     }
+    return o;
   }
 
   public static <E> List<E> entries(Iterable<E> iter) {
