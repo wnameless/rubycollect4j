@@ -1078,14 +1078,26 @@ public final class RubyArrayList<E> implements RubyArray<E> {
 
   @Override
   public <K> RubyArray<Entry<K, RubyArray<E>>> chunk(ItemTransformBlock<E, K> block) {
-    Multimap<K, E> multimap = ArrayListMultimap.create();
+    RubyArray<Entry<K, RubyArray<E>>> rubyArray = new RubyArrayList();
+    K prev = null;
+    RubyArray<E> chunk = new RubyArrayList();
+    int count = 0;
     for (E item : list) {
       K key = block.yield(item);
-      multimap.put(key, item);
+      if (key.equals(prev)) {
+        chunk.add(item);
+      } else {
+        if (count != 0) {
+          rubyArray.add(new SimpleEntry(prev, chunk));
+        }
+        prev = key;
+        chunk = new RubyArrayList();
+        chunk.add(item);
+      }
+      count++;
     }
-    RubyArray<Entry<K, RubyArray<E>>> rubyArray = new RubyArrayList();
-    for (K key : multimap.keySet()) {
-      rubyArray.add(new SimpleEntry<>(key, new RubyArrayList(multimap.get(key))));
+    if (!chunk.isEmpty()) {
+      rubyArray.add(new SimpleEntry(prev, chunk));
     }
     return rubyArray;
   }
@@ -1430,6 +1442,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
     }
   }
 
+  @Override
   public RubyArray<E> repeatedPermutation(int n, ItemBlock<RubyArray<E>> block) {
     RubyArray<RubyArray<E>> rp = new RubyArrayList();
     if (n < 0) {

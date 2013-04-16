@@ -37,12 +37,14 @@ import com.google.common.collect.Multimap;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.AbstractMap;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -98,14 +100,26 @@ public final class RubyEnumerable {
   }
 
   public static <E, K> List<Map.Entry<K, List<E>>> chunk(Iterable<E> iter, ItemTransformBlock<E, K> block) {
-    Multimap<K, E> multimap = ArrayListMultimap.create();
+    List<Entry<K, List<E>>> list = newArrayList();
+    K prev = null;
+    List<E> chunk = newArrayList();
+    int count = 0;
     for (E item : iter) {
       K key = block.yield(item);
-      multimap.put(key, item);
+      if (key.equals(prev)) {
+        chunk.add(item);
+      } else {
+        if (count != 0) {
+          list.add(new SimpleEntry(prev, chunk));
+        }
+        prev = key;
+        chunk = newArrayList();
+        chunk.add(item);
+      }
+      count++;
     }
-    List<Map.Entry<K, List<E>>> list = newArrayList();
-    for (K key : multimap.keySet()) {
-      list.add(new AbstractMap.SimpleEntry<>(key, newArrayList(multimap.get(key))));
+    if (!chunk.isEmpty()) {
+      list.add(new SimpleEntry(prev, chunk));
     }
     return list;
   }

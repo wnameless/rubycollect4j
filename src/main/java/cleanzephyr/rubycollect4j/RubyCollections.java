@@ -201,6 +201,8 @@ public final class RubyCollections {
   }
 
   public static void main(String[] args) {
-    puts(ra(1, 2, 3).fetch(-4));
+    puts(ra(1).chunk((i) -> {
+      return i % 2;
+    }));
   }
 }
