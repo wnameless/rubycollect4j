@@ -20,7 +20,6 @@
  */
 package cleanzephyr.rubycollect4j;
 
-import cleanzephyr.rubycollect4j.RubyArray;
 import cleanzephyr.rubycollect4j.blocks.Block;
 import cleanzephyr.rubycollect4j.blocks.BooleanBlock;
 import cleanzephyr.rubycollect4j.blocks.IndexBlock;
@@ -47,7 +46,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map.Entry;
 import java.util.Random;
-import java.util.regex.Pattern;
 import org.uncommons.maths.combinatorics.CombinationGenerator;
 import org.uncommons.maths.combinatorics.PermutationGenerator;
 
@@ -91,7 +89,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public RubyArray<E> intersect(List<E> other) {
+  public RubyArray<E> intersection(List<E> other) {
     List<E> andList = newArrayList();
     for (E item : this) {
       if (!andList.contains(item) && list.contains(item) && other.contains(item)) {
@@ -103,7 +101,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
 
   @Override
   public RubyArray<E> Ⴖ(List<E> other) {
-    return intersect(other);
+    return intersection(other);
   }
 
   @Override
@@ -1077,7 +1075,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public <K> RubyArray<Entry<K, RubyArray<E>>> chunk(ItemTransformBlock<E, K> block) {
+  public <K> RubyEnumerator<Entry<K, RubyArray<E>>> chunk(ItemTransformBlock<E, K> block) {
     RubyArray<Entry<K, RubyArray<E>>> rubyArray = new RubyArrayList();
     K prev = null;
     RubyArray<E> chunk = new RubyArrayList();
@@ -1099,17 +1097,27 @@ public final class RubyArrayList<E> implements RubyArray<E> {
     if (!chunk.isEmpty()) {
       rubyArray.add(new SimpleEntry(prev, chunk));
     }
-    return rubyArray;
+    return new RubyEnumerator<>(rubyArray);
   }
 
   @Override
-  public <S> RubyArray<E> collect(ItemTransformBlock<E, S> block) {
-    return new RubyArrayList(RubyEnumerable.collect(list, block));
+  public <S> RubyArray<S> collect(ItemTransformBlock<E, S> block) {
+    return RubyEnumerable.collect(list, block);
+  }
+
+  @Override
+  public RubyEnumerator<E> collect() {
+    return new RubyEnumerator<>(this);
   }
 
   @Override
   public <S> RubyArray<S> collectConcat(ItemToListBlock<E, S> block) {
-    return new RubyArrayList(RubyEnumerable.collectConcat(list, block));
+    return RubyEnumerable.collectConcat(list, block);
+  }
+
+  @Override
+  public RubyEnumerator<E> collectConcat() {
+    return RubyEnumerable.collectConcat(list);
   }
 
   @Override
@@ -1128,13 +1136,18 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
+  public RubyEnumerator<E> cycle() {
+    return RubyEnumerable.cycle(list);
+  }
+
+  @Override
   public void cycle(int cycles, ItemBlock<E> block) {
     RubyEnumerable.cycle(list, cycles, block);
   }
 
   @Override
-  public E detect(E target) {
-    return RubyEnumerable.detect(list, target);
+  public RubyEnumerator<E> cycle(int cycles) {
+    return RubyEnumerable.cycle(list, cycles);
   }
 
   @Override
@@ -1143,13 +1156,18 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
+  public RubyEnumerator<E> detect() {
+    return RubyEnumerable.detect(list);
+  }
+
+  @Override
   public RubyArray<E> drop(int n) {
-    return new RubyArrayList(RubyEnumerable.drop(list, n));
+    return RubyEnumerable.drop(list, n);
   }
 
   @Override
   public RubyArray<E> dropWhile(BooleanBlock block) {
-    return new RubyArrayList(RubyEnumerable.dropWhile(list, block));
+    return RubyEnumerable.dropWhile(list, block);
   }
 
   @Override
@@ -1158,8 +1176,18 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public void eachEntry(ItemBlock<E> block) {
-    RubyEnumerable.eachEntry(list, block);
+  public RubyEnumerator<RubyArray<E>> eachCons(int n) {
+    return RubyEnumerable.eachCons(list, n);
+  }
+
+  @Override
+  public RubyArray<E> eachEntry(ItemBlock<E> block) {
+    return RubyEnumerable.eachEntry(list, block);
+  }
+
+  @Override
+  public RubyEnumerator<E> eachEntry() {
+    return RubyEnumerable.eachEntry(list);
   }
 
   @Override
@@ -1168,8 +1196,18 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public void eachWithIndex(ItemWithIndexBlock<E> vistor) {
-    RubyEnumerable.eachWithIndex(list, vistor);
+  public RubyEnumerator<RubyArray<E>> eachSlice(int n) {
+    return RubyEnumerable.eachSlice(list, n);
+  }
+
+  @Override
+  public RubyArray<E> eachWithIndex(ItemWithIndexBlock<E> block) {
+    return RubyEnumerable.eachWithIndex(list, block);
+  }
+
+  @Override
+  public RubyEnumerator<Entry<E, Integer>> eachWithIndex() {
+    return RubyEnumerable.eachWithIndex(list);
   }
 
   @Override
@@ -1178,18 +1216,23 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
+  public <S> RubyEnumerator<Entry<E, S>> eachWithObject(S o) {
+    return RubyEnumerable.eachWithObject(list, o);
+  }
+
+  @Override
   public RubyArray<E> entries() {
     return new RubyArrayList(RubyEnumerable.entries(list));
   }
 
   @Override
-  public E find(E target) {
-    return RubyEnumerable.find(list, target);
+  public E find(BooleanBlock<E> block) {
+    return RubyEnumerable.find(list, block);
   }
 
   @Override
-  public E find(BooleanBlock<E> block) {
-    return RubyEnumerable.find(list, block);
+  public RubyEnumerator<E> find() {
+    return RubyEnumerable.detect(list);
   }
 
   @Override
@@ -1213,13 +1256,28 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
+  public RubyEnumerator<E> findIndex() {
+    return RubyEnumerable.findIndex(list);
+  }
+
+  @Override
   public RubyArray<E> findAll(BooleanBlock<E> block) {
-    return new RubyArrayList(RubyEnumerable.findAll(list, block));
+    return RubyEnumerable.findAll(list, block);
+  }
+
+  @Override
+  public RubyEnumerator<E> findAll() {
+    return RubyEnumerable.findAll(list);
   }
 
   @Override
   public <S> RubyArray<S> flatMap(ItemToListBlock<E, S> block) {
-    return new RubyArrayList(RubyEnumerable.flatMap(list, block));
+    return RubyEnumerable.flatMap(list, block);
+  }
+
+  @Override
+  public RubyEnumerator<E> flatMap() {
+    return RubyEnumerable.flatMap(list);
   }
 
   @Override
@@ -1244,6 +1302,11 @@ public final class RubyArrayList<E> implements RubyArray<E> {
       hash.put(key, new RubyArrayList(multimap.get(key)));
     }
     return hash;
+  }
+
+  @Override
+  public RubyEnumerator<E> groupBy() {
+    return RubyEnumerable.groupBy(list);
   }
 
   @Override
@@ -1278,7 +1341,12 @@ public final class RubyArrayList<E> implements RubyArray<E> {
 
   @Override
   public <S> RubyArray<S> map(ItemTransformBlock<E, S> block) {
-    return new RubyArrayList(RubyEnumerable.map(list, block));
+    return RubyEnumerable.map(list, block);
+  }
+
+  @Override
+  public RubyEnumerator<E> map() {
+    return RubyEnumerable.map(list);
   }
 
   @Override
@@ -1302,6 +1370,11 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
+  public RubyEnumerator<E> maxBy() {
+    return RubyEnumerable.maxBy(list);
+  }
+
+  @Override
   public E min() {
     return sort().first();
   }
@@ -1314,6 +1387,11 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   @Override
   public <S> E minBy(ItemTransformBlock<E, S> block) {
     return sortBy(block).first();
+  }
+
+  @Override
+  public RubyEnumerator<E> minBy() {
+    return RubyEnumerable.minBy(list);
   }
 
   @Override
@@ -1344,6 +1422,11 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
+  public RubyEnumerator<E> minmaxBy() {
+    return RubyEnumerable.minmaxBy(list);
+  }
+
+  @Override
   public RubyArray<RubyArray<E>> partition(BooleanBlock<E> block) {
     RubyArray<E> trueList = new RubyArrayList();
     RubyArray<E> falseList = new RubyArrayList();
@@ -1358,6 +1441,11 @@ public final class RubyArrayList<E> implements RubyArray<E> {
     rubyArray.add(trueList);
     rubyArray.add(falseList);
     return rubyArray;
+  }
+
+  @Override
+  public RubyEnumerator<E> partition() {
+    return RubyEnumerable.partition(list);
   }
 
   @Override
@@ -1516,13 +1604,28 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
+  public RubyEnumerator<E> reject() {
+    return RubyEnumerable.reject(list);
+  }
+
+  @Override
   public void reverseEach(ItemBlock block) {
     RubyEnumerable.reverseEach(list, block);
   }
 
   @Override
+  public RubyEnumerator<E> reverseEach() {
+    return RubyEnumerable.reverseEach(list);
+  }
+
+  @Override
   public RubyArray<E> select(BooleanBlock block) {
     return findAll(block);
+  }
+
+  @Override
+  public RubyEnumerator<E> select() {
+    return findAll();
   }
 
   @Override
@@ -1562,48 +1665,18 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public RubyArray<RubyArray<E>> sliceBefore(String regex) {
-    RubyArray<RubyArray<E>> rubyArray = new RubyArrayList();
-    Pattern pattern = Pattern.compile(regex);
-    RubyArrayList<E> group = null;
-    for (E item : list) {
-      if (group == null) {
-        group = new RubyArrayList();
-        group.add(item);
-      } else if (pattern.matcher(item.toString()).find()) {
-        rubyArray.add(group);
-        group = new RubyArrayList();
-        group.add(item);
-      } else {
-        group.add(item);
-      }
-    }
-    if (group != null && !group.isEmpty()) {
-      rubyArray.add(group);
-    }
-    return rubyArray;
+  public RubyEnumerator<E> sortBy() {
+    return RubyEnumerable.sortBy(list);
   }
 
   @Override
-  public RubyArray<RubyArray<E>> sliceBefore(BooleanBlock block) {
-    RubyArray<RubyArray<E>> rubyArray = new RubyArrayList();
-    RubyArray<E> group = null;
-    for (E item : list) {
-      if (group == null) {
-        group = new RubyArrayList();
-        group.add(item);
-      } else if (block.yield(item)) {
-        rubyArray.add(group);
-        group = new RubyArrayList();
-        group.add(item);
-      } else {
-        group.add(item);
-      }
-    }
-    if (group != null && !group.isEmpty()) {
-      rubyArray.add(group);
-    }
-    return rubyArray;
+  public RubyEnumerator<RubyArray<E>> sliceBefore(String regex) {
+    return RubyEnumerable.sliceBefore(list, regex);
+  }
+
+  @Override
+  public RubyEnumerator<RubyArray<E>> sliceBefore(BooleanBlock block) {
+    return RubyEnumerable.sliceBefore(list, block);
   }
 
   @Override
@@ -1614,6 +1687,11 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   @Override
   public RubyArray<E> takeWhile(BooleanBlock block) {
     return new RubyArrayList(RubyEnumerable.takeWhile(list, block));
+  }
+
+  @Override
+  public RubyEnumerator<E> takeWhile() {
+    return RubyEnumerable.takeWhile(list);
   }
 
   @Override

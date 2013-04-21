@@ -20,8 +20,6 @@
  */
 package cleanzephyr.rubycollect4j;
 
-import cleanzephyr.rubycollect4j.RubyArrayList;
-import cleanzephyr.rubycollect4j.RubyArray;
 import cleanzephyr.rubycollect4j.blocks.EntryBlock;
 import cleanzephyr.rubycollect4j.blocks.EntryBooleanBlock;
 import cleanzephyr.rubycollect4j.blocks.EntryInjectWithInitBlock;
@@ -58,7 +56,9 @@ public interface RubyHash<K, V> extends Map<K, V> {
 
   public RubyHash<K, V> each(EntryBlock<K, V> block);
 
-  public void eachEntry(ItemBlock<Entry<K, V>> block);
+  public RubyArray<Entry<K, V>> eachEntry(ItemBlock<Entry<K, V>> block);
+
+  public RubyEnumerator<Entry<K, V>> eachEntry();
 
   public RubyHash<K, V> eachPair(EntryBlock<K, V> block);
 
@@ -137,11 +137,15 @@ public interface RubyHash<K, V> extends Map<K, V> {
 
   public boolean anyʔ(EntryBooleanBlock<K, V> block);
 
-  public <S> RubyArray<Entry<S, RubyArrayList<Entry<K, V>>>> chunk(EntryTransformBlock<K, V, S> block);
+  public <S> RubyEnumerator<Entry<S, RubyArrayList<Entry<K, V>>>> chunk(EntryTransformBlock<K, V, S> block);
 
   public <S> RubyArray<S> collect(EntryTransformBlock<K, V, S> block);
 
+  public RubyEnumerator<Entry<K, V>> collect();
+
   public <S> RubyArray<S> collectConcat(EntryToListBlock<K, V, S> block);
+
+  public RubyEnumerator<Entry<K, V>> collectConcat();
 
   public int count();
 
@@ -153,23 +157,39 @@ public interface RubyHash<K, V> extends Map<K, V> {
 
   public Entry<K, V> detect(EntryBooleanBlock<K, V> block);
 
+  public RubyEnumerator<Entry<K, V>> detect();
+
   public RubyArray<Entry<K, V>> drop(int n);
 
   public RubyArray<Entry<K, V>> dropWhile(EntryBooleanBlock<K, V> block);
 
+  public RubyEnumerator<Entry<K, V>> dropWhile();
+
   public void eachCons(int n, ItemFromListBlock<Entry<K, V>> block);
+
+  public RubyEnumerator<RubyArray<Entry<K, V>>> eachCons(int n);
 
   public void eachSlice(int n, ItemFromListBlock<Entry<K, V>> block);
 
-  public void eachWithIndex(ItemWithIndexBlock<Entry<K, V>> block);
+  public RubyEnumerator<RubyArray<Entry<K, V>>> eachSlice(int n);
+
+  public RubyArray<Entry<K, V>> eachWithIndex(ItemWithIndexBlock<Entry<K, V>> block);
+
+  public RubyEnumerator<Entry<Entry<K, V>, Integer>> eachWithIndex();
 
   public <S> S eachWithObject(S o, ItemWithObjectBlock<Entry<K, V>, S> block);
+
+  public <S> RubyEnumerator<Entry<Entry<K, V>, S>> eachWithObject(S o);
 
   public RubyArray<Entry<K, V>> entries();
 
   public Entry<K, V> find(EntryBooleanBlock<K, V> block);
 
+  public RubyEnumerator<Entry<K, V>> find();
+
   public RubyArray<Entry<K, V>> findAll(EntryBooleanBlock<K, V> block);
+
+  public RubyEnumerator<Entry<K, V>> findAll();
 
   public Entry<K, V> first();
 
@@ -179,9 +199,15 @@ public interface RubyHash<K, V> extends Map<K, V> {
 
   public Integer findIndex(EntryBooleanBlock<K, V> block);
 
+  public RubyEnumerator<Entry<K, V>> findIndex();
+
   public <S> RubyArray<S> flatMap(EntryToListBlock<K, V, S> block);
 
+  public RubyEnumerator<Entry<K, V>> flatMap();
+
   public <S> RubyHash<S, RubyArrayList<Entry<K, V>>> groupBy(EntryTransformBlock<K, V, S> block);
+
+  public RubyEnumerator<Entry<K, V>> groupBy();
 
   public boolean includeʔ(K key);
 
@@ -193,19 +219,29 @@ public interface RubyHash<K, V> extends Map<K, V> {
 
   public <S> RubyArray<S> map(EntryTransformBlock<K, V, S> block);
 
+  public RubyEnumerator<Entry<K, V>> map();
+
   public Entry<K, V> max(Comparator<? super K> comp);
 
   public <S> Entry<K, V> maxBy(Comparator<? super S> comp, EntryTransformBlock<K, V, S> block);
+
+  public RubyEnumerator<Entry<K, V>> maxBy();
 
   public Entry<K, V> min(Comparator<? super K> comp);
 
   public <S> Entry<K, V> minBy(Comparator<? super S> comp, EntryTransformBlock<K, V, S> block);
 
+  public RubyEnumerator<Entry<K, V>> minBy();
+
   public RubyArray<Entry<K, V>> minmax(Comparator<? super K> comp);
 
   public <S> RubyArray<Entry<K, V>> minmaxBy(Comparator<? super S> comp, EntryTransformBlock<K, V, S> block);
 
+  public RubyEnumerator<Entry<K, V>> minmaxBy();
+
   public RubyArray<RubyArray<Entry<K, V>>> partition(EntryBooleanBlock<K, V> block);
+
+  public RubyEnumerator<Entry<K, V>> partition();
 
   public boolean noneʔ();
 
@@ -221,13 +257,19 @@ public interface RubyHash<K, V> extends Map<K, V> {
 
   public RubyHash<K, V> reject(EntryBooleanBlock<K, V> block);
 
+  public RubyEnumerator<Entry<K, V>> reject();
+
   public void reverseEach(EntryBlock block);
+
+  public RubyEnumerator<Entry<K, V>> reverseEach();
 
   public RubyArray<Entry<K, V>> select(EntryBooleanBlock<K, V> block);
 
-  public RubyArray<RubyArrayList<Entry<K, V>>> sliceBefore(String regex);
+  public RubyEnumerator<Entry<K, V>> select();
 
-  public RubyArray<RubyArrayList<Entry<K, V>>> sliceBefore(EntryBooleanBlock<K, V> block);
+  public RubyEnumerator<RubyArray<Entry<K, V>>> sliceBefore(String regex);
+
+  public RubyEnumerator<RubyArray<Entry<K, V>>> sliceBefore(EntryBooleanBlock<K, V> block);
 
   public RubyHash<K, V> sort(Comparator<? super K> comp);
 
@@ -237,7 +279,11 @@ public interface RubyHash<K, V> extends Map<K, V> {
 
   public <S> RubyHash<K, V> sortBy(Comparator<? super S> comp, EntryTransformBlock<K, V, S> block);
 
+  public RubyEnumerator<Entry<K, V>> sortBy();
+
   public RubyArray<Entry<K, V>> take(int n);
 
   public RubyArray<Entry<K, V>> takeWhile(EntryBooleanBlock block);
+
+  public RubyEnumerator<Entry<K, V>> takeWhile();
 }

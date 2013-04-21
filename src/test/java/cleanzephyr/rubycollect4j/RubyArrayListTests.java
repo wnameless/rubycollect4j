@@ -35,7 +35,7 @@ public class RubyArrayListTests {
    */
   @Test
   public void testIntersect() {
-    assertEquals(ra(3), ra(1, 2, 3).intersect(ra(3, 4, 5)));
+    assertEquals(ra(3), ra(1, 2, 3).intersection(ra(3, 4, 5)));
   }
 
   /**

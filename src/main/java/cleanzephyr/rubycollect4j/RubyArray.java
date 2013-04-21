@@ -52,7 +52,7 @@ public interface RubyArray<E> extends List<E> {
    * @param other other List
    * @return new RubyArray
    */
-  public RubyArray<E> intersect(List<E> other);
+  public RubyArray<E> intersection(List<E> other);
 
   public RubyArray<E> Ⴖ(List<E> other);
 
@@ -337,11 +337,15 @@ public interface RubyArray<E> extends List<E> {
 
   public boolean anyʔ(BooleanBlock block);
 
-  public <K> RubyArray<Entry<K, RubyArray<E>>> chunk(ItemTransformBlock<E, K> block);
+  public <K> RubyEnumerator<Entry<K, RubyArray<E>>> chunk(ItemTransformBlock<E, K> block);
 
-  public <S> RubyArray<E> collect(ItemTransformBlock<E, S> block);
+  public <S> RubyArray<S> collect(ItemTransformBlock<E, S> block);
+
+  public RubyEnumerator<E> collect();
 
   public <S> RubyArray<S> collectConcat(ItemToListBlock<E, S> block);
+
+  public RubyEnumerator<E> collectConcat();
 
   public int count();
 
@@ -349,11 +353,15 @@ public interface RubyArray<E> extends List<E> {
 
   public void cycle(ItemBlock<E> block);
 
+  public RubyEnumerator<E> cycle();
+
   public void cycle(int cycles, ItemBlock<E> block);
 
-  public E detect(E target);
+  public RubyEnumerator<E> cycle(int cycles);
 
   public E detect(BooleanBlock<E> block);
+
+  public RubyEnumerator<E> detect();
 
   public RubyArray<E> drop(int n);
 
@@ -361,19 +369,29 @@ public interface RubyArray<E> extends List<E> {
 
   public void eachCons(int n, ItemFromListBlock<E> block);
 
-  public void eachEntry(ItemBlock<E> block);
+  public RubyEnumerator<RubyArray<E>> eachCons(int n);
+
+  public RubyArray<E> eachEntry(ItemBlock<E> block);
+
+  public RubyEnumerator<E> eachEntry();
 
   public void eachSlice(int n, ItemFromListBlock<E> block);
 
-  public void eachWithIndex(ItemWithIndexBlock<E> vistor);
+  public RubyEnumerator<RubyArray<E>> eachSlice(int n);
+
+  public RubyArray<E> eachWithIndex(ItemWithIndexBlock<E> vistor);
+
+  public RubyEnumerator<Entry<E, Integer>> eachWithIndex();
 
   public <S> S eachWithObject(S o, ItemWithObjectBlock<E, S> block);
 
+  public <S> RubyEnumerator<Entry<E, S>> eachWithObject(S o);
+
   public RubyArray<E> entries();
 
-  public E find(E target);
-
   public E find(BooleanBlock<E> block);
+
+  public RubyEnumerator<E> find();
 
   public E first();
 
@@ -383,15 +401,23 @@ public interface RubyArray<E> extends List<E> {
 
   public Integer findIndex(BooleanBlock<E> block);
 
+  public RubyEnumerator<E> findIndex();
+
   public RubyArray<E> findAll(BooleanBlock<E> block);
 
+  public RubyEnumerator<E> findAll();
+
   public <S> RubyArray<S> flatMap(ItemToListBlock<E, S> block);
+
+  public RubyEnumerator<E> flatMap();
 
   public RubyArray<E> grep(String regex);
 
   public <S> RubyArray<S> grep(String regex, ItemTransformBlock<E, S> block);
 
   public <K> RubyHash<K, RubyArray<E>> groupBy(ItemTransformBlock<E, K> block);
+
+  public RubyEnumerator<E> groupBy();
 
   public boolean includeʔ(E target);
 
@@ -407,6 +433,8 @@ public interface RubyArray<E> extends List<E> {
 
   public <S> RubyArray<S> map(ItemTransformBlock<E, S> block);
 
+  public RubyEnumerator<E> map();
+
   public E max();
 
   public E max(Comparator<? super E> comp);
@@ -414,6 +442,8 @@ public interface RubyArray<E> extends List<E> {
   public <S> E maxBy(ItemTransformBlock<E, S> block);
 
   public <S> E maxBy(Comparator<? super S> comp, ItemTransformBlock<E, S> block);
+
+  public RubyEnumerator<E> maxBy();
 
   public E min();
 
@@ -423,6 +453,8 @@ public interface RubyArray<E> extends List<E> {
 
   public <S> E minBy(Comparator<? super S> comp, ItemTransformBlock<E, S> block);
 
+  public RubyEnumerator<E> minBy();
+
   public RubyArray<E> minmax();
 
   public RubyArray<E> minmax(Comparator<? super E> comp);
@@ -431,7 +463,11 @@ public interface RubyArray<E> extends List<E> {
 
   public <S> RubyArray<E> minmaxBy(Comparator<? super S> comp, ItemTransformBlock<E, S> block);
 
+  public RubyEnumerator<E> minmaxBy();
+
   public RubyArray<RubyArray<E>> partition(BooleanBlock<E> block);
+
+  public RubyEnumerator<E> partition();
 
   public RubyArray<RubyArray<E>> permutation();
 
@@ -457,9 +493,15 @@ public interface RubyArray<E> extends List<E> {
 
   public RubyArray<E> reject(BooleanBlock block);
 
+  public RubyEnumerator<E> reject();
+
   public void reverseEach(ItemBlock block);
 
+  public RubyEnumerator<E> reverseEach();
+
   public RubyArray<E> select(BooleanBlock block);
+
+  public RubyEnumerator<E> select();
 
   public RubyArray<E> sort();
 
@@ -469,13 +511,17 @@ public interface RubyArray<E> extends List<E> {
 
   public <S> RubyArray<E> sortBy(Comparator<? super S> comp, ItemTransformBlock<E, S> block);
 
-  public RubyArray<RubyArray<E>> sliceBefore(String regex);
+  public RubyEnumerator<E> sortBy();
 
-  public RubyArray<RubyArray<E>> sliceBefore(BooleanBlock block);
+  public RubyEnumerator<RubyArray<E>> sliceBefore(String regex);
+
+  public RubyEnumerator<RubyArray<E>> sliceBefore(BooleanBlock block);
 
   public RubyArray<E> take(int n);
 
   public RubyArray<E> takeWhile(BooleanBlock block);
+
+  public RubyEnumerator<E> takeWhile();
 
   public RubyArray<E> toA();
 
