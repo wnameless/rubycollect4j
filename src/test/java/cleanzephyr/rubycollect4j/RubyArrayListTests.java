@@ -23,31 +23,11 @@ package cleanzephyr.rubycollect4j;
 import static cleanzephyr.rubycollect4j.RubyCollections.ra;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class RubyArrayListTests {
 
   public RubyArrayListTests() {
-  }
-
-  @BeforeClass
-  public static void setUpClass() throws Exception {
-  }
-
-  @AfterClass
-  public static void tearDownClass() throws Exception {
-  }
-
-  @Before
-  public void setUp() throws Exception {
-  }
-
-  @After
-  public void tearDown() throws Exception {
   }
 
   /**
@@ -161,6 +141,24 @@ public class RubyArrayListTests {
       }
       i[0]++;
     });
+  }
+
+  /**
+   * Test of compact method, of class RubyArrayList.
+   */
+  @Test
+  public void testCompact() {
+    assertEquals(ra(1, 3), ra(1, null, 3, null).compact());
+  }
+
+  /**
+   * Test of Compactǃ method, of class RubyArrayList.
+   */
+  @Test
+  public void testCompactǃ() {
+    RubyArray<Integer> rubyArray = ra(1, null, 3, null);
+    rubyArray.compactǃ();
+    assertEquals(ra(1, 3), rubyArray);
   }
 
   /**

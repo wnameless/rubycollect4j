@@ -139,12 +139,22 @@ public interface RubyArray<E> extends List<E> {
    */
   public RubyArray<RubyArray<E>> combination(int n);
 
+  /**
+   * Generate all combinations with certain length and yield each combination to
+   * the block.
+   *
+   * @param n length of each combination
+   * @param block thing to do with each combination
+   * @return new RubyArray contains all combinations
+   */
   public RubyArray<RubyArray<E>> combination(int n, ItemBlock<RubyArray<E>> block);
 
-  public RubyArray<RubyArray<E>> repeatedCombination(int n);
-
-  public RubyArray<E> repeatedCombination(int n, ItemBlock<RubyArray<E>> block);
-
+  /**
+   * Remove all null objects within self and store the rest of elements in a new
+   * RubyArray.
+   *
+   * @return new RubyArray
+   */
   public RubyArray<E> compact();
 
   public RubyArray<E> compactǃ();
@@ -192,6 +202,29 @@ public interface RubyArray<E> extends List<E> {
   public Integer index(BooleanBlock<E> block);
 
   public <S> RubyArray<S> flatten();
+
+  /**
+   * Generate all repeated combinations with certain length and put them in a
+   * RubyArray.
+   *
+   * @param n length of each combination
+   * @return new RubyArray
+   */
+  public RubyArray<RubyArray<E>> repeatedCombination(int n);
+
+  /**
+   * Generate all repeated combinations with certain length and yield each
+   * combination to the block.
+   *
+   * @param n length of each combination
+   * @param block thing to do with each combination
+   * @return RubyArray
+   */
+  public RubyArray<E> repeatedCombination(int n, ItemBlock<RubyArray<E>> block);
+
+  public RubyArray<RubyArray<E>> repeatedPermutation(int n);
+
+  public RubyArray<E> repeatedPermutation(int n, ItemBlock<RubyArray<E>> block);
 
   public RubyArray<E> replace(List<E> other);
 
@@ -394,10 +427,6 @@ public interface RubyArray<E> extends List<E> {
   public RubyArray<RubyArray<E>> permutation(int n);
 
   public RubyArray<RubyArray<E>> permutation(int n, ItemBlock<RubyArray<E>> block);
-
-  public RubyArray<RubyArray<E>> repeatedPermutation(int n);
-
-  public RubyArray<E> repeatedPermutation(int n, ItemBlock<RubyArray<E>> block);
 
   public boolean noneʔ();
 
