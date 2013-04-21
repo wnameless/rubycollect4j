@@ -115,12 +115,12 @@ public class RubyArrayListTests {
    */
   @Test
   public void testCombination() {
-    assertEquals(ra(), ra(1, 2, 3).combination(-1));
-    assertEquals(ra(), ra(1, 2, 3).combination(4));
-    assertEquals(ra(ra()), ra(1, 2, 3).combination(0));
-    assertEquals(ra(ra(1), ra(2), ra(3)), ra(1, 2, 3).combination(1));
-    assertEquals(ra(ra(1, 2), ra(1, 3), ra(2, 3)), ra(1, 2, 3).combination(2));
-    assertEquals(ra(ra(1, 2, 3)), ra(1, 2, 3).combination(3));
+    assertEquals(ra(), ra(1, 2, 3).combination(-1).toA());
+    assertEquals(ra(), ra(1, 2, 3).combination(4).toA());
+    assertEquals(ra(ra()), ra(1, 2, 3).combination(0).toA());
+    assertEquals(ra(ra(1), ra(2), ra(3)), ra(1, 2, 3).combination(1).toA());
+    assertEquals(ra(ra(1, 2), ra(1, 3), ra(2, 3)), ra(1, 2, 3).combination(2).toA());
+    assertEquals(ra(ra(1, 2, 3)), ra(1, 2, 3).combination(3).toA());
   }
 
   /**
@@ -174,12 +174,12 @@ public class RubyArrayListTests {
    */
   @Test
   public void testRepeatedCombination() {
-    assertEquals(ra(), ra(1, 2).repeatedCombination(-1));
-    assertEquals(ra(ra(1, 1, 1), ra(1, 1, 2), ra(1, 2, 2), ra(2, 2, 2)), ra(1, 2).repeatedCombination(3));
-    assertEquals(ra(ra()), ra(1, 2, 3).repeatedCombination(0));
-    assertEquals(ra(ra(1), ra(2), ra(3)), ra(1, 2, 3).repeatedCombination(1));
-    assertEquals(ra(ra(1, 1), ra(1, 2), ra(1, 3), ra(2, 2), ra(2, 3), ra(3, 3)), ra(1, 2, 3).repeatedCombination(2));
-    assertEquals(ra(ra(1, 1), ra(1, 2), ra(2, 2)), ra(1, 2).repeatedCombination(2));
+    assertEquals(ra(), ra(1, 2).repeatedCombination(-1).toA());
+    assertEquals(ra(ra(1, 1, 1), ra(1, 1, 2), ra(1, 2, 2), ra(2, 2, 2)), ra(1, 2).repeatedCombination(3).toA());
+    assertEquals(ra(ra()), ra(1, 2, 3).repeatedCombination(0).toA());
+    assertEquals(ra(ra(1), ra(2), ra(3)), ra(1, 2, 3).repeatedCombination(1).toA());
+    assertEquals(ra(ra(1, 1), ra(1, 2), ra(1, 3), ra(2, 2), ra(2, 3), ra(3, 3)), ra(1, 2, 3).repeatedCombination(2).toA());
+    assertEquals(ra(ra(1, 1), ra(1, 2), ra(2, 2)), ra(1, 2).repeatedCombination(2).toA());
   }
 
   /**

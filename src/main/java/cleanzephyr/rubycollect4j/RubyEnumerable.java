@@ -914,7 +914,7 @@ public final class RubyEnumerable {
   }
 
   public static <E> RubyArray<E> toA(Iterable<E> iter) {
-    return new RubyArrayList(iter);
+    return new RubyArrayList(newArrayList(iter));
   }
 
   public static <E> RubyArray<RubyArray<E>> zip(Iterable<E> iter, RubyArray<E>... others) {
