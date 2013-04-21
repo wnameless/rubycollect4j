@@ -207,27 +207,27 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public RubyArray<RubyArray<E>> combination(int n) {
+  public RubyEnumerator<RubyArray<E>> combination(int n) {
     RubyArray<RubyArray<E>> comb = new RubyArrayList();
     if (n < 0) {
-      return comb;
+      return new RubyEnumerator(comb);
     } else if (n == 0) {
       comb.add(new RubyArrayList<E>());
-      return comb;
+      return new RubyEnumerator(comb);
     } else if (n > list.size()) {
-      return comb;
+      return new RubyEnumerator(comb);
     } else {
       CombinationGenerator<E> cg = new CombinationGenerator<>(list, n);
       for (List<E> combination : cg) {
         comb.add(new RubyArrayList<E>(combination));
       }
     }
-    return comb;
+    return new RubyEnumerator(comb);
   }
 
   @Override
   public RubyArray<RubyArray<E>> combination(int n, ItemBlock<RubyArray<E>> block) {
-    RubyArray<RubyArray<E>> comb = combination(n);
+    RubyArray<RubyArray<E>> comb = combination(n).toA();
     for (RubyArray<E> item : comb) {
       block.yield(item);
     }
@@ -235,13 +235,13 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public RubyArray<RubyArray<E>> repeatedCombination(int n) {
+  public RubyEnumerator<RubyArray<E>> repeatedCombination(int n) {
     RubyArray<RubyArray<E>> rp = new RubyArrayList();
     if (n < 0) {
-      return rp;
+      return new RubyEnumerator(rp);
     }
     if (n == 0) {
-      return rp.push(new RubyArrayList());
+      return new RubyEnumerator(rp.push(new RubyArrayList()));
     }
     int[] counter = new int[n];
     repeatedCombinationLoop(counter, 0, list.size() - 1, (count) -> {
@@ -251,7 +251,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
       }
       rp.add(c);
     });
-    return rp;
+    return new RubyEnumerator(rp);
   }
 
   private void repeatedCombinationLoop(int[] counter, int start, int end, ItemBlock<int[]> block) {
@@ -1076,28 +1076,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
 
   @Override
   public <K> RubyEnumerator<Entry<K, RubyArray<E>>> chunk(ItemTransformBlock<E, K> block) {
-    RubyArray<Entry<K, RubyArray<E>>> rubyArray = new RubyArrayList();
-    K prev = null;
-    RubyArray<E> chunk = new RubyArrayList();
-    int count = 0;
-    for (E item : list) {
-      K key = block.yield(item);
-      if (key.equals(prev)) {
-        chunk.add(item);
-      } else {
-        if (count != 0) {
-          rubyArray.add(new SimpleEntry(prev, chunk));
-        }
-        prev = key;
-        chunk = new RubyArrayList();
-        chunk.add(item);
-      }
-      count++;
-    }
-    if (!chunk.isEmpty()) {
-      rubyArray.add(new SimpleEntry(prev, chunk));
-    }
-    return new RubyEnumerator<>(rubyArray);
+    return RubyEnumerable.chunk(list, block);
   }
 
   @Override
@@ -1222,7 +1201,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
 
   @Override
   public RubyArray<E> entries() {
-    return new RubyArrayList(RubyEnumerable.entries(list));
+    return RubyEnumerable.entries(list);
   }
 
   @Override
@@ -1242,7 +1221,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
 
   @Override
   public RubyArray<E> first(int n) {
-    return new RubyArrayList(RubyEnumerable.first(list, n));
+    return RubyEnumerable.first(list, n);
   }
 
   @Override
@@ -1282,26 +1261,17 @@ public final class RubyArrayList<E> implements RubyArray<E> {
 
   @Override
   public RubyArray<E> grep(String regex) {
-    return new RubyArrayList(RubyEnumerable.grep(list, regex));
+    return RubyEnumerable.grep(list, regex);
   }
 
   @Override
-  public <S> RubyArrayList<S> grep(String regex, ItemTransformBlock<E, S> block) {
-    return new RubyArrayList(RubyEnumerable.grep(list, regex, block));
+  public <S> RubyArray<S> grep(String regex, ItemTransformBlock<E, S> block) {
+    return RubyEnumerable.grep(list, regex, block);
   }
 
   @Override
   public <K> RubyHash<K, RubyArray<E>> groupBy(ItemTransformBlock<E, K> block) {
-    Multimap<K, E> multimap = ArrayListMultimap.create();
-    for (E item : list) {
-      K key = block.yield(item);
-      multimap.put(key, item);
-    }
-    RubyHash<K, RubyArray<E>> hash = new RubyLinkedHashMap();
-    for (K key : multimap.keySet()) {
-      hash.put(key, new RubyArrayList(multimap.get(key)));
-    }
-    return hash;
+    return RubyEnumerable.groupBy(list, block);
   }
 
   @Override
@@ -1407,7 +1377,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
 
   @Override
   public RubyArray<E> minmax(Comparator<? super E> comp) {
-    return new RubyArrayList(RubyEnumerable.minmax(list, comp));
+    return RubyEnumerable.minmax(list, comp);
   }
 
   @Override
@@ -1418,7 +1388,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
 
   @Override
   public <S> RubyArray<E> minmaxBy(Comparator<? super S> comp, ItemTransformBlock<E, S> block) {
-    return new RubyArrayList(RubyEnumerable.minmaxBy(list, comp, block));
+    return RubyEnumerable.minmaxBy(list, comp, block);
   }
 
   @Override
@@ -1428,19 +1398,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
 
   @Override
   public RubyArray<RubyArray<E>> partition(BooleanBlock<E> block) {
-    RubyArray<E> trueList = new RubyArrayList();
-    RubyArray<E> falseList = new RubyArrayList();
-    for (E item : list) {
-      if (block.yield(item)) {
-        trueList.add(item);
-      } else {
-        falseList.add(item);
-      }
-    }
-    RubyArray<RubyArray<E>> rubyArray = new RubyArrayList();
-    rubyArray.add(trueList);
-    rubyArray.add(falseList);
-    return rubyArray;
+    return RubyEnumerable.partition(list, block);
   }
 
   @Override
@@ -1449,40 +1407,39 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public RubyArray<RubyArray<E>> permutation() {
+  public RubyEnumerator<RubyArray<E>> permutation() {
     RubyArray<RubyArray<E>> perms = new RubyArrayList();
     PermutationGenerator<E> pg = new PermutationGenerator<>(list);
     while (pg.hasMore()) {
       perms.add(new RubyArrayList<>(pg.nextPermutationAsList()));
     }
-    return perms;
+    return new RubyEnumerator(perms);
   }
 
   @Override
-  public RubyArray<RubyArray<E>> permutation(int n) {
+  public RubyEnumerator<RubyArray<E>> permutation(int n) {
     RubyArray<RubyArray<E>> perms = new RubyArrayList();
     if (n < 0) {
-      return perms;
+      return new RubyEnumerator(perms);
     } else if (n == 0) {
       perms.add(new RubyArrayList<E>());
-      return perms;
+      return new RubyEnumerator(perms);
     } else if (n > list.size()) {
-      return perms;
+      return new RubyEnumerator(perms);
     } else {
-      RubyArray<RubyArray<E>> combs = combination(n);
-      for (RubyArray<E> comb : combs) {
+      for (RubyArray<E> comb : combination(n)) {
         PermutationGenerator<E> pg = new PermutationGenerator<>(comb);
         while (pg.hasMore()) {
           perms.add(new RubyArrayList<E>(pg.nextPermutationAsList()));
         }
       }
     }
-    return perms.uniq();
+    return new RubyEnumerator(perms.uniq());
   }
 
   @Override
   public RubyArray<RubyArray<E>> permutation(int n, ItemBlock<RubyArray<E>> block) {
-    RubyArray<RubyArray<E>> perms = permutation(n);
+    RubyArray<RubyArray<E>> perms = permutation(n).toA();
     for (RubyArray<E> item : perms) {
       block.yield(item);
     }
@@ -1490,13 +1447,13 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public RubyArray<RubyArray<E>> repeatedPermutation(int n) {
+  public RubyEnumerator<RubyArray<E>> repeatedPermutation(int n) {
     RubyArray<RubyArray<E>> rp = new RubyArrayList();
     if (n < 0) {
-      return rp;
+      return new RubyEnumerator(rp);
     }
     if (n == 0) {
-      return rp.push(new RubyArrayList());
+      return new RubyEnumerator(rp.push(new RubyArrayList()));
     }
     int[] counter = new int[n];
     repeatedPermutationLoop(counter, 0, list.size() - 1, (count) -> {
@@ -1506,7 +1463,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
       }
       rp.add(c);
     });
-    return rp;
+    return new RubyEnumerator(rp);
   }
 
   private void repeatedPermutationLoop(int[] counter, int start, int end, ItemBlock<int[]> block) {

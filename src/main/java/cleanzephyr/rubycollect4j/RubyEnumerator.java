@@ -2,56 +2,62 @@ package cleanzephyr.rubycollect4j;
 
 import cleanzephyr.rubycollect4j.blocks.BooleanBlock;
 import cleanzephyr.rubycollect4j.blocks.ItemBlock;
+import cleanzephyr.rubycollect4j.blocks.ItemToListBlock;
 import cleanzephyr.rubycollect4j.blocks.ItemTransformBlock;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
-public class RubyEnumerator<E> implements Iterator<E> {
+public class RubyEnumerator<E> implements Iterable<E> {
 
-  private final Iterable<E> iterable;
-  private Iterator<E> iterator;
+  private final Iterable<E> iter;
 
-  public RubyEnumerator(Iterable<E> iterable) {
-    this.iterable = iterable;
-    iterator = iterable.iterator();
+  public RubyEnumerator(Iterable<E> iter) {
+    this.iter = iter;
   }
 
   public Iterator<E> rewind() {
-    iterator = iterable.iterator();
-    return this;
+    return iter.iterator();
   }
 
   public boolean allʔ() {
-    return RubyEnumerable.allʔ(iterable);
+    return RubyEnumerable.allʔ(iter);
   }
 
   public boolean allʔ(BooleanBlock<E> block) {
-    return RubyEnumerable.allʔ(iterable, block);
+    return RubyEnumerable.allʔ(iter, block);
   }
 
   public boolean anyʔ() {
-    return RubyEnumerable.allʔ(iterable);
+    return RubyEnumerable.allʔ(iter);
   }
 
   public boolean anyʔ(BooleanBlock<E> block) {
-    return RubyEnumerable.allʔ(iterable, block);
+    return RubyEnumerable.allʔ(iter, block);
   }
 
   public <K> RubyEnumerator<Entry<K, RubyArray<E>>> chunk(ItemTransformBlock<E, K> block) {
-    return RubyEnumerable.chunk(iterable, block);
+    return RubyEnumerable.chunk(iter, block);
   }
 
   public <S> RubyArray<S> collect(ItemTransformBlock<E, S> block) {
-    return RubyEnumerable.collect(iterable, block);
+    return RubyEnumerable.collect(iter, block);
   }
 
-  public static <E> RubyEnumerator<E> collect(Iterable<E> iter) {
-    return new RubyEnumerator<>(iter);
+  public RubyEnumerator<E> collect() {
+    return RubyEnumerable.collect(iter);
+  }
+
+  public <S> RubyArray<S> collectConcat(ItemToListBlock<E, S> block) {
+    return RubyEnumerable.collectConcat(iter, block);
+  }
+
+  public RubyEnumerator<E> collectConcat() {
+    return RubyEnumerable.collectConcat(iter);
   }
 
   public RubyArray<E> each(ItemBlock<E> block) {
     RubyArray<E> rubyArray = new RubyArrayList<>();
-    for (E item : iterable) {
+    for (E item : iter) {
       block.yield(item);
       rubyArray.add(item);
     }
@@ -63,21 +69,11 @@ public class RubyEnumerator<E> implements Iterator<E> {
   }
 
   public RubyArray<E> toA() {
-    return new RubyArrayList(RubyEnumerable.toA(iterable));
+    return RubyEnumerable.toA(iter);
   }
 
   @Override
-  public boolean hasNext() {
-    return iterator.hasNext();
-  }
-
-  @Override
-  public E next() {
-    return iterator.next();
-  }
-
-  @Override
-  public void remove() {
-    iterator.remove();
+  public Iterator<E> iterator() {
+    return iter.iterator();
   }
 }

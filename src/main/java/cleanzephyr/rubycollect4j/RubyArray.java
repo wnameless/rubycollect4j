@@ -137,7 +137,7 @@ public interface RubyArray<E> extends List<E> {
    * @param n length of each combination
    * @return new RubyArray
    */
-  public RubyArray<RubyArray<E>> combination(int n);
+  public RubyEnumerator<RubyArray<E>> combination(int n);
 
   /**
    * Generate all combinations with certain length and yield each combination to
@@ -221,7 +221,7 @@ public interface RubyArray<E> extends List<E> {
    * @param n length of each combination
    * @return new RubyArray
    */
-  public RubyArray<RubyArray<E>> repeatedCombination(int n);
+  public RubyEnumerator<RubyArray<E>> repeatedCombination(int n);
 
   /**
    * Generate all repeated combinations with certain length and yield each
@@ -233,7 +233,7 @@ public interface RubyArray<E> extends List<E> {
    */
   public RubyArray<E> repeatedCombination(int n, ItemBlock<RubyArray<E>> block);
 
-  public RubyArray<RubyArray<E>> repeatedPermutation(int n);
+  public RubyEnumerator<RubyArray<E>> repeatedPermutation(int n);
 
   public RubyArray<E> repeatedPermutation(int n, ItemBlock<RubyArray<E>> block);
 
@@ -469,9 +469,9 @@ public interface RubyArray<E> extends List<E> {
 
   public RubyEnumerator<E> partition();
 
-  public RubyArray<RubyArray<E>> permutation();
+  public RubyEnumerator<RubyArray<E>> permutation();
 
-  public RubyArray<RubyArray<E>> permutation(int n);
+  public RubyEnumerator<RubyArray<E>> permutation(int n);
 
   public RubyArray<RubyArray<E>> permutation(int n, ItemBlock<RubyArray<E>> block);
 
