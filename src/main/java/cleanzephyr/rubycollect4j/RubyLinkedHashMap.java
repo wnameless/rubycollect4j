@@ -232,6 +232,16 @@ public final class RubyLinkedHashMap<K, V> implements RubyHash<K, V> {
   }
 
   @Override
+  public RubyArray<RubyArray<Entry<K, V>>> zip(RubyArray<Entry<K, V>>... others) {
+    return RubyEnumerable.zip(map.entrySet(), others);
+  }
+
+  @Override
+  public void zip(RubyArray<RubyArray<Entry<K, V>>> others, ItemBlock<RubyArray<Entry<K, V>>> block) {
+    RubyEnumerable.zip(map.entrySet(), others, block);
+  }
+
+  @Override
   public String toS() {
     return map.toString();
   }

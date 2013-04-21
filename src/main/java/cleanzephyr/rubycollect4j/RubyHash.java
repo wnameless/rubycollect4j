@@ -88,6 +88,10 @@ public interface RubyHash<K, V> extends Map<K, V> {
 
   public RubyArray<Entry<K, V>> toA();
 
+  public RubyArray<RubyArray<Entry<K, V>>> zip(RubyArray<Entry<K, V>>... others);
+
+  public void zip(RubyArray<RubyArray<Entry<K, V>>> others, ItemBlock<RubyArray<Entry<K, V>>> block);
+
   public String toS();
 
   public String inspect();

@@ -829,10 +829,10 @@ public final class RubyEnumerable {
     return rubyArray;
   }
 
-  public static <E> List<E> sort(Iterable<E> iter, Comparator<? super E> comp) {
-    List<E> list = newArrayList(iter);
-    Collections.sort(list, comp);
-    return list;
+  public static <E> RubyArray<E> sort(Iterable<E> iter, Comparator<? super E> comp) {
+    RubyArray<E> rubyArray = new RubyArrayList(iter);
+    Collections.sort(rubyArray, comp);
+    return rubyArray;
   }
 
   public static <E, S extends Comparable<S>> RubyArray<E> sortBy(Iterable<E> iter, ItemTransformBlock<E, S> block) {
@@ -915,5 +915,26 @@ public final class RubyEnumerable {
 
   public static <E> RubyArray<E> toA(Iterable<E> iter) {
     return new RubyArrayList(iter);
+  }
+
+  public static <E> RubyArray<RubyArray<E>> zip(Iterable<E> iter, RubyArray<E>... others) {
+    RubyArray<E> rubyArray = new RubyArrayList(iter);
+    RubyArray<RubyArray<E>> zippedRubyArray = new RubyArrayList<>();
+    for (int i = 0; i < rubyArray.size(); i++) {
+      RubyArray<E> zip = new RubyArrayList();
+      zip.add(rubyArray.at(i));
+      for (int j = 0; j < others.length; j++) {
+        zip.add(others[j].at(i));
+      }
+      zippedRubyArray.add(zip);
+    }
+    return zippedRubyArray;
+  }
+
+  public static <E> void zip(Iterable<E> iter, RubyArray<RubyArray<E>> others, ItemBlock<RubyArray<E>> block) {
+    RubyArray<RubyArray<E>> zippedRubyArray = zip(iter, others.toArray(new RubyArrayList[others.length()]));
+    for (RubyArray<E> item : zippedRubyArray) {
+      block.yield(item);
+    }
   }
 }

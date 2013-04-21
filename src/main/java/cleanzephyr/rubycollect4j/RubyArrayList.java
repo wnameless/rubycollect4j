@@ -1031,28 +1031,6 @@ public final class RubyArrayList<E> implements RubyArray<E> {
     return new RubyArrayList(values);
   }
 
-  @Override
-  public RubyArray<RubyArray<E>> zip(RubyArray<E>... others) {
-    RubyArray<RubyArray<E>> zippedRubyArray = new RubyArrayList<>();
-    for (int i = 0; i < list.size(); i++) {
-      RubyArray<E> zip = new RubyArrayList();
-      zip.add(this.at(i));
-      for (int j = 0; j < others.length; j++) {
-        zip.add(others[j].at(i));
-      }
-      zippedRubyArray.add(zip);
-    }
-    return zippedRubyArray;
-  }
-
-  @Override
-  public void zip(RubyArray<RubyArray<E>> others, ItemBlock<RubyArray<E>> block) {
-    RubyArray<RubyArray<E>> zippedRubyArray = zip(others.toArray(new RubyArrayList[others.length()]));
-    for (RubyArray<E> item : zippedRubyArray) {
-      block.yield(item);
-    }
-  }
-
   // Ruby Enumerable methods
   @Override
   public boolean allʔ() {
@@ -1586,6 +1564,16 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
+  public RubyEnumerator<RubyArray<E>> sliceBefore(String regex) {
+    return RubyEnumerable.sliceBefore(list, regex);
+  }
+
+  @Override
+  public RubyEnumerator<RubyArray<E>> sliceBefore(BooleanBlock block) {
+    return RubyEnumerable.sliceBefore(list, block);
+  }
+
+  @Override
   public RubyArray<E> sort() {
     Object[] array = list.toArray();
     Arrays.sort(array);
@@ -1627,16 +1615,6 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public RubyEnumerator<RubyArray<E>> sliceBefore(String regex) {
-    return RubyEnumerable.sliceBefore(list, regex);
-  }
-
-  @Override
-  public RubyEnumerator<RubyArray<E>> sliceBefore(BooleanBlock block) {
-    return RubyEnumerable.sliceBefore(list, block);
-  }
-
-  @Override
   public RubyArray<E> take(int n) {
     return new RubyArrayList(RubyEnumerable.take(list, n));
   }
@@ -1654,6 +1632,16 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   @Override
   public RubyArray<E> toA() {
     return this;
+  }
+
+  @Override
+  public RubyArray<RubyArray<E>> zip(RubyArray<E>... others) {
+    return RubyEnumerable.zip(list, others);
+  }
+
+  @Override
+  public void zip(RubyArray<RubyArray<E>> others, ItemBlock<RubyArray<E>> block) {
+    RubyEnumerable.zip(list, others, block);
   }
 
   @Override
