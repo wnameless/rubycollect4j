@@ -331,7 +331,7 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   }
 
   @Override
-  public RubyArray<E> concat(RubyArray<E> other) {
+  public RubyArray<E> concat(List<E> other) {
     list.addAll(other);
     return this;
   }

@@ -152,13 +152,21 @@ public class RubyArrayListTests {
   }
 
   /**
-   * Test of Compactǃ method, of class RubyArrayList.
+   * Test of compactǃ method, of class RubyArrayList.
    */
   @Test
   public void testCompactǃ() {
     RubyArray<Integer> rubyArray = ra(1, null, 3, null);
     rubyArray.compactǃ();
     assertEquals(ra(1, 3), rubyArray);
+  }
+
+  /**
+   * Test of concat method, of class RubyArrayList.
+   */
+  @Test
+  public void testConcat() {
+    assertEquals(ra(1, 2, 3, 4, 5, 6), ra(1, 2, 3).concat(ra(4, 5, 6)));
   }
 
   /**

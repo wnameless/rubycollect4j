@@ -157,9 +157,20 @@ public interface RubyArray<E> extends List<E> {
    */
   public RubyArray<E> compact();
 
+  /**
+   * Remove all null objects in self.
+   *
+   * @return RubyArray
+   */
   public RubyArray<E> compactǃ();
 
-  public RubyArray<E> concat(RubyArray<E> other);
+  /**
+   * Append any List in the end of self.
+   *
+   * @param other any List
+   * @return RubyArray
+   */
+  public RubyArray<E> concat(List<E> other);
 
   public int count(E target);
 
