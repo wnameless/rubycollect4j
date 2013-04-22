@@ -48,20 +48,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
+public final class RubyHashImpl<K, V> extends RubyHash<K, V> {
 
   private final Map<K, V> map;
   private V defaultValue;
 
-  public RubyLinkedHashMap() {
+  public RubyHashImpl() {
     map = newLinkedHashMap();
   }
 
-  public RubyLinkedHashMap(Map<K, V> map) {
+  public RubyHashImpl(Map<K, V> map) {
     this.map = newLinkedHashMap(map);
   }
 
-  public RubyLinkedHashMap(LinkedHashMap<K, V> map, boolean defensiveCopy) {
+  public RubyHashImpl(LinkedHashMap<K, V> map, boolean defensiveCopy) {
     if (defensiveCopy) {
       this.map = newLinkedHashMap(map);
     } else {
@@ -70,13 +70,13 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
   }
 
   @Override
-  public RubyLinkedHashMap<K, V> put(Entry<K, V> entry) {
+  public RubyHashImpl<K, V> put(Entry<K, V> entry) {
     map.put(entry.getKey(), entry.getValue());
     return this;
   }
 
   @Override
-  public RubyLinkedHashMap<K, V> put(Entry<K, V>... entries) {
+  public RubyHashImpl<K, V> put(Entry<K, V>... entries) {
     for (Entry<K, V> entry : entries) {
       map.put(entry.getKey(), entry.getValue());
     }
@@ -94,7 +94,7 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
   }
 
   @Override
-  public RubyLinkedHashMap<K, V> compareByIdentity() {
+  public RubyHashImpl<K, V> compareByIdentity() {
     throw new UnsupportedOperationException("Not supported yet.");
   }
 
@@ -125,7 +125,7 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
   }
 
   @Override
-  public RubyLinkedHashMap<K, V> deleteIf(EntryBooleanBlock<K, V> block) {
+  public RubyHashImpl<K, V> deleteIf(EntryBooleanBlock<K, V> block) {
     for (Entry<K, V> item : map.entrySet()) {
       if (block.yield(item.getKey(), item.getValue())) {
         map.remove(item.getKey());
@@ -135,7 +135,7 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
   }
 
   @Override
-  public RubyLinkedHashMap<K, V> each(EntryBlock<K, V> block) {
+  public RubyHashImpl<K, V> each(EntryBlock<K, V> block) {
     for (Entry<K, V> item : map.entrySet()) {
       block.yield(item.getKey(), item.getValue());
     }
@@ -153,12 +153,12 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
   }
 
   @Override
-  public RubyLinkedHashMap<K, V> eachPair(EntryBlock<K, V> block) {
+  public RubyHashImpl<K, V> eachPair(EntryBlock<K, V> block) {
     return each(block);
   }
 
   @Override
-  public RubyLinkedHashMap<K, V> eachKey(ItemBlock<K> block) {
+  public RubyHashImpl<K, V> eachKey(ItemBlock<K> block) {
     for (K item : map.keySet()) {
       block.yield(item);
     }
@@ -166,7 +166,7 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
   }
 
   @Override
-  public RubyLinkedHashMap<K, V> eachValue(ItemBlock<V> block) {
+  public RubyHashImpl<K, V> eachValue(ItemBlock<V> block) {
     for (V item : map.values()) {
       block.yield(item);
     }
@@ -200,8 +200,8 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
   }
 
   @Override
-  public RubyArrayList<Entry<K, V>> flatten() {
-    return new RubyArrayList(RubyEnumerable.toA(map.entrySet()));
+  public RubyArrayImpl<Entry<K, V>> flatten() {
+    return new RubyArrayImpl(RubyEnumerable.toA(map.entrySet()));
   }
 
   @Override
@@ -220,18 +220,18 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
   }
 
   @Override
-  public RubyLinkedHashMap<K, V> toH() {
+  public RubyHashImpl<K, V> toH() {
     return this;
   }
 
   @Override
-  public RubyLinkedHashMap<K, V> toHash() {
+  public RubyHashImpl<K, V> toHash() {
     return this;
   }
 
   @Override
-  public RubyArrayList<Entry<K, V>> toA() {
-    return new RubyArrayList(RubyEnumerable.toA(map.entrySet()));
+  public RubyArrayImpl<Entry<K, V>> toA() {
+    return new RubyArrayImpl(RubyEnumerable.toA(map.entrySet()));
   }
 
   @Override
@@ -255,8 +255,8 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
   }
 
   @Override
-  public RubyLinkedHashMap<V, K> invert() {
-    RubyLinkedHashMap<V, K> invertHash = new RubyLinkedHashMap();
+  public RubyHashImpl<V, K> invert() {
+    RubyHashImpl<V, K> invertHash = new RubyHashImpl();
     for (Entry<K, V> item : map.entrySet()) {
       invertHash.put(item.getValue(), item.getKey());
     }
@@ -264,7 +264,7 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
   }
 
   @Override
-  public RubyLinkedHashMap<K, V> keepIf(EntryBooleanBlock<K, V> block) {
+  public RubyHashImpl<K, V> keepIf(EntryBooleanBlock<K, V> block) {
     for (Entry<K, V> item : map.entrySet()) {
       if (!block.yield(item.getKey(), item.getValue())) {
         map.remove(item.getKey());
@@ -284,8 +284,8 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
   }
 
   @Override
-  public RubyArrayList<K> keys() {
-    return new RubyArrayList(map.keySet());
+  public RubyArrayImpl<K> keys() {
+    return new RubyArrayImpl(map.keySet());
   }
 
   @Override
@@ -294,8 +294,8 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
   }
 
   @Override
-  public RubyLinkedHashMap<K, V> merge(Map<K, V> otherHash) {
-    RubyLinkedHashMap<K, V> newHash = new RubyLinkedHashMap<>();
+  public RubyHashImpl<K, V> merge(Map<K, V> otherHash) {
+    RubyHashImpl<K, V> newHash = new RubyHashImpl<>();
     for (Entry<K, V> item : map.entrySet()) {
       newHash.put(item);
     }
@@ -306,7 +306,7 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
   }
 
   @Override
-  public RubyLinkedHashMap<K, V> mergeEx(Map<K, V> otherHash) {
+  public RubyHashImpl<K, V> mergeEx(Map<K, V> otherHash) {
     for (Entry<K, V> item : otherHash.entrySet()) {
       map.put(item.getKey(), item.getValue());
     }
@@ -314,13 +314,13 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
   }
 
   @Override
-  public RubyLinkedHashMap<K, V> update(Map<K, V> otherHash) {
+  public RubyHashImpl<K, V> update(Map<K, V> otherHash) {
     return mergeEx(otherHash);
   }
 
   @Override
-  public RubyLinkedHashMap<K, V> merge(Map<K, V> otherHash, EntryMergeBlock<K, V> block) {
-    RubyLinkedHashMap<K, V> newHash = new RubyLinkedHashMap<>();
+  public RubyHashImpl<K, V> merge(Map<K, V> otherHash, EntryMergeBlock<K, V> block) {
+    RubyHashImpl<K, V> newHash = new RubyHashImpl<>();
     for (Entry<K, V> item : map.entrySet()) {
       if (map.containsKey(item.getKey()) && otherHash.containsKey(item.getKey())) {
         newHash.put(item.getKey(), block.yield(item.getKey(), item.getValue(), otherHash.get(item.getKey())));
@@ -337,7 +337,7 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
   }
 
   @Override
-  public RubyLinkedHashMap<K, V> mergeǃ(Map<K, V> otherHash, EntryMergeBlock<K, V> block) {
+  public RubyHashImpl<K, V> mergeǃ(Map<K, V> otherHash, EntryMergeBlock<K, V> block) {
     for (Entry<K, V> item : map.entrySet()) {
       if (map.containsKey(item.getKey()) && otherHash.containsKey(item.getKey())) {
         map.put(item.getKey(), block.yield(item.getKey(), item.getValue(), otherHash.get(item.getKey())));
@@ -354,7 +354,7 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
   }
 
   @Override
-  public RubyLinkedHashMap<K, V> update(Map<K, V> otherHash, EntryMergeBlock<K, V> block) {
+  public RubyHashImpl<K, V> update(Map<K, V> otherHash, EntryMergeBlock<K, V> block) {
     return mergeǃ(otherHash, block);
   }
 
@@ -369,7 +369,7 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
   }
 
   @Override
-  public RubyLinkedHashMap<K, V> rejectǃ(EntryBooleanBlock<K, V> block) {
+  public RubyHashImpl<K, V> rejectǃ(EntryBooleanBlock<K, V> block) {
     int beforeSize = map.size();
     deleteIf(block);
     if (map.size() == beforeSize) {
@@ -380,7 +380,7 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
   }
 
   @Override
-  public RubyLinkedHashMap<K, V> replace(Map<K, V> otherHash) {
+  public RubyHashImpl<K, V> replace(Map<K, V> otherHash) {
     map.clear();
     map.putAll(otherHash);
     return this;
@@ -402,17 +402,17 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
   }
 
   @Override
-  public RubyArrayList<V> values() {
-    return new RubyArrayList(map.values());
+  public RubyArrayImpl<V> values() {
+    return new RubyArrayImpl(map.values());
   }
 
   @Override
-  public RubyArrayList<V> valuesAt(K... keys) {
+  public RubyArrayImpl<V> valuesAt(K... keys) {
     List<V> values = newArrayList();
     for (K key : keys) {
       values.add(map.get(key));
     }
-    return new RubyArrayList(values);
+    return new RubyArrayImpl(values);
   }
 
   // Ruby Enumerable methods
@@ -449,26 +449,26 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
   }
 
   @Override
-  public <S> RubyEnumerator<Entry<S, RubyArrayList<Entry<K, V>>>> chunk(EntryTransformBlock<K, V, S> block) {
+  public <S> RubyEnumerator<Entry<S, RubyArrayImpl<Entry<K, V>>>> chunk(EntryTransformBlock<K, V, S> block) {
     Multimap<S, Entry<K, V>> multimap = ArrayListMultimap.create();
     for (Entry<K, V> item : map.entrySet()) {
       S key = block.yield(item.getKey(), item.getValue());
       multimap.put(key, item);
     }
-    RubyArrayList<Entry<S, RubyArrayList<Entry<K, V>>>> list = new RubyArrayList();
+    RubyArrayImpl<Entry<S, RubyArrayImpl<Entry<K, V>>>> list = new RubyArrayImpl();
     for (S key : multimap.keySet()) {
-      list.add(new SimpleEntry<>(key, new RubyArrayList(multimap.get(key))));
+      list.add(new SimpleEntry<>(key, new RubyArrayImpl(multimap.get(key))));
     }
     return new RubyEnumerator<>(list);
   }
 
   @Override
-  public <S> RubyArrayList<S> collect(EntryTransformBlock<K, V, S> block) {
+  public <S> RubyArrayImpl<S> collect(EntryTransformBlock<K, V, S> block) {
     List<S> list = newArrayList();
     for (Entry<K, V> item : map.entrySet()) {
       list.add(block.yield(item.getKey(), item.getValue()));
     }
-    return new RubyArrayList(list);
+    return new RubyArrayImpl(list);
   }
 
   @Override
@@ -477,12 +477,12 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
   }
 
   @Override
-  public <S> RubyArrayList<S> collectConcat(EntryToListBlock<K, V, S> block) {
+  public <S> RubyArrayImpl<S> collectConcat(EntryToListBlock<K, V, S> block) {
     List<S> list = newArrayList();
     for (Entry<K, V> item : map.entrySet()) {
       list.addAll(block.yield(item.getKey(), item.getValue()));
     }
-    return new RubyArrayList(list);
+    return new RubyArrayImpl(list);
   }
 
   @Override
@@ -545,7 +545,7 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
   }
 
   @Override
-  public RubyArrayList<Entry<K, V>> dropWhile(EntryBooleanBlock<K, V> block) {
+  public RubyArrayImpl<Entry<K, V>> dropWhile(EntryBooleanBlock<K, V> block) {
     List<Entry<K, V>> list = newArrayList();
     boolean cutPoint = false;
     for (Entry<K, V> item : map.entrySet()) {
@@ -554,7 +554,7 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
         list.add(item);
       }
     }
-    return new RubyArrayList(list);
+    return new RubyArrayImpl(list);
   }
 
   @Override
@@ -618,14 +618,14 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
   }
 
   @Override
-  public RubyArrayList<Entry<K, V>> findAll(EntryBooleanBlock<K, V> block) {
+  public RubyArrayImpl<Entry<K, V>> findAll(EntryBooleanBlock<K, V> block) {
     List<Entry<K, V>> list = newArrayList();
     for (Entry<K, V> item : map.entrySet()) {
       if (block.yield(item.getKey(), item.getValue())) {
         list.add(item);
       }
     }
-    return new RubyArrayList(list);
+    return new RubyArrayImpl(list);
   }
 
   @Override
@@ -639,8 +639,8 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
   }
 
   @Override
-  public RubyArrayList<Entry<K, V>> first(int n) {
-    return new RubyArrayList(RubyEnumerable.first(map.entrySet(), n));
+  public RubyArrayImpl<Entry<K, V>> first(int n) {
+    return new RubyArrayImpl(RubyEnumerable.first(map.entrySet(), n));
   }
 
   @Override
@@ -666,7 +666,7 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
   }
 
   @Override
-  public <S> RubyArrayList<S> flatMap(EntryToListBlock<K, V, S> block) {
+  public <S> RubyArrayImpl<S> flatMap(EntryToListBlock<K, V, S> block) {
     return collectConcat(block);
   }
 
@@ -676,15 +676,15 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
   }
 
   @Override
-  public <S> RubyLinkedHashMap<S, RubyArrayList<Entry<K, V>>> groupBy(EntryTransformBlock<K, V, S> block) {
+  public <S> RubyHashImpl<S, RubyArrayImpl<Entry<K, V>>> groupBy(EntryTransformBlock<K, V, S> block) {
     Multimap<S, Entry<K, V>> multimap = ArrayListMultimap.create();
     for (Entry<K, V> item : map.entrySet()) {
       S key = block.yield(item.getKey(), item.getValue());
       multimap.put(key, item);
     }
-    RubyLinkedHashMap<S, RubyArrayList<Entry<K, V>>> hash = new RubyLinkedHashMap();
+    RubyHashImpl<S, RubyArrayImpl<Entry<K, V>>> hash = new RubyHashImpl();
     for (S key : multimap.keySet()) {
-      hash.put(key, new RubyArrayList(multimap.get(key)));
+      hash.put(key, new RubyArrayImpl(multimap.get(key)));
     }
     return hash;
   }
@@ -694,10 +694,12 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
     return RubyEnumerable.groupBy(map.entrySet());
   }
 
+  @Override
   public boolean includeʔ(K key) {
     return map.containsKey(key);
   }
 
+  @Override
   public boolean memberʔ(K key) {
     return map.containsKey(key);
   }
@@ -716,7 +718,7 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
   }
 
   @Override
-  public <S> RubyArrayList<S> map(EntryTransformBlock<K, V, S> block) {
+  public <S> RubyArrayImpl<S> map(EntryTransformBlock<K, V, S> block) {
     return collect(block);
   }
 
@@ -760,7 +762,7 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
   }
 
   @Override
-  public <S> RubyArrayList<Entry<K, V>> minmaxBy(Comparator<? super S> comp, EntryTransformBlock<K, V, S> block) {
+  public <S> RubyArrayImpl<Entry<K, V>> minmaxBy(Comparator<? super S> comp, EntryTransformBlock<K, V, S> block) {
     List<Entry<K, V>> src = newArrayList();
     List<S> dst = newArrayList();
     for (Entry<K, V> item : map.entrySet()) {
@@ -769,7 +771,7 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
     }
     S minDst = Collections.min(dst, comp);
     S maxDst = Collections.max(dst, comp);
-    return new RubyArrayList(src.get(dst.indexOf(minDst)), src.get(dst.indexOf(maxDst)));
+    return new RubyArrayImpl(src.get(dst.indexOf(minDst)), src.get(dst.indexOf(maxDst)));
   }
 
   @Override
@@ -779,8 +781,8 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
 
   @Override
   public RubyArray<RubyArray<Entry<K, V>>> partition(EntryBooleanBlock<K, V> block) {
-    RubyArray<Entry<K, V>> trueList = new RubyArrayList();
-    RubyArray<Entry<K, V>> falseList = new RubyArrayList();
+    RubyArray<Entry<K, V>> trueList = new RubyArrayImpl();
+    RubyArray<Entry<K, V>> falseList = new RubyArrayImpl();
     for (Entry<K, V> item : map.entrySet()) {
       if (block.yield(item.getKey(), item.getValue())) {
         trueList.add(item);
@@ -788,7 +790,7 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
         falseList.add(item);
       }
     }
-    return new RubyArrayList(trueList, falseList);
+    return new RubyArrayImpl(trueList, falseList);
   }
 
   @Override
@@ -842,8 +844,8 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
   }
 
   @Override
-  public RubyLinkedHashMap<K, V> reject(EntryBooleanBlock<K, V> block) {
-    RubyLinkedHashMap<K, V> hash = new RubyLinkedHashMap();
+  public RubyHashImpl<K, V> reject(EntryBooleanBlock<K, V> block) {
+    RubyHashImpl<K, V> hash = new RubyHashImpl();
     for (Entry<K, V> item : map.entrySet()) {
       if (block.yield(item.getKey(), item.getValue())) {
         hash.put(item);
@@ -874,7 +876,7 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
   }
 
   @Override
-  public RubyArrayList<Entry<K, V>> select(EntryBooleanBlock<K, V> block) {
+  public RubyArrayImpl<Entry<K, V>> select(EntryBooleanBlock<K, V> block) {
     return findAll(block);
   }
 
@@ -890,15 +892,15 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
 
   @Override
   public RubyEnumerator<RubyArray<Entry<K, V>>> sliceBefore(EntryBooleanBlock<K, V> block) {
-    RubyArray<RubyArray<Entry<K, V>>> rubyArray = new RubyArrayList();
+    RubyArray<RubyArray<Entry<K, V>>> rubyArray = new RubyArrayImpl();
     RubyArray<Entry<K, V>> group = null;
     for (Entry<K, V> item : map.entrySet()) {
       if (group == null) {
-        group = new RubyArrayList();
+        group = new RubyArrayImpl();
         group.add(item);
       } else if (block.yield(item.getKey(), item.getValue())) {
         rubyArray.add(group);
-        group = new RubyArrayList();
+        group = new RubyArrayImpl();
         group.add(item);
       } else {
         group.add(item);
@@ -925,7 +927,7 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
     for (Entry<S, K> ref : references) {
       sortedMap.put(ref.getValue(), map.get(ref.getValue()));
     }
-    return new RubyLinkedHashMap(sortedMap);
+    return new RubyHashImpl(sortedMap);
   }
 
   @Override
@@ -943,7 +945,7 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
     for (Entry<S, K> ref : references) {
       sortedMap.put(ref.getValue(), map.get(ref.getValue()));
     }
-    return new RubyLinkedHashMap(sortedMap);
+    return new RubyHashImpl(sortedMap);
   }
 
   @Override
@@ -953,7 +955,7 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
 
   @Override
   public RubyArray<Entry<K, V>> take(int n) {
-    return new RubyArrayList(RubyEnumerable.take(map.entrySet(), n));
+    return new RubyArrayImpl(RubyEnumerable.take(map.entrySet(), n));
   }
 
   @Override
@@ -963,15 +965,25 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
       if (block.yield(item.getKey(), item.getValue())) {
         list.add(item);
       } else {
-        return new RubyArrayList(list);
+        return new RubyArrayImpl(list);
       }
     }
-    return new RubyArrayList(list);
+    return new RubyArrayImpl(list);
   }
 
   @Override
   public RubyEnumerator<Entry<K, V>> takeWhile() {
     return RubyEnumerable.takeWhile(map.entrySet());
+  }
+
+  @Override
+  public V put(K key, V value) {
+    return map.put(key, value);
+  }
+
+  @Override
+  public void putAll(Map<? extends K, ? extends V> m) {
+    map.putAll(m);
   }
 
   @Override
@@ -1295,15 +1307,5 @@ public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
   @Override
   public RubyArray<Entry<K, V>> takeWhile(BooleanBlock block) {
     return RubyEnumerable.takeWhile(map.entrySet(), block);
-  }
-
-  @Override
-  public Object put(Object key, Object value) {
-    return map.put((K) key, (V) value);
-  }
-
-  @Override
-  public void putAll(Map m) {
-    map.putAll(m);
   }
 }

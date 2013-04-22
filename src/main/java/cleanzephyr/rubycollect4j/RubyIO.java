@@ -22,7 +22,7 @@ package cleanzephyr.rubycollect4j;
 
 import static java.lang.System.out;
 
-public final class IO {
+public final class RubyIO {
 
   public static void puts() {
     out.println();

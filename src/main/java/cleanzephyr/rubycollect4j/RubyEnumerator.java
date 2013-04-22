@@ -28,7 +28,7 @@ public class RubyEnumerator<E> implements RubyArrayEnumerable<E>, Iterable<E> {
   }
 
   public RubyArray<E> each(ItemBlock<E> block) {
-    RubyArray<E> rubyArray = new RubyArrayList<>();
+    RubyArray<E> rubyArray = new RubyArrayImpl<>();
     for (E item : iter) {
       block.yield(item);
       rubyArray.add(item);
@@ -374,7 +374,7 @@ public class RubyEnumerator<E> implements RubyArrayEnumerable<E>, Iterable<E> {
   @Override
   public RubyArray<E> minmax() {
     RubyArray<E> sorted = sort();
-    return new RubyArrayList(sorted.first(), sorted.last());
+    return new RubyArrayImpl(sorted.first(), sorted.last());
   }
 
   @Override
@@ -385,7 +385,7 @@ public class RubyEnumerator<E> implements RubyArrayEnumerable<E>, Iterable<E> {
   @Override
   public <S> RubyArray<E> minmaxBy(ItemTransformBlock<E, S> block) {
     RubyArray<E> sorted = sortBy(block);
-    return new RubyArrayList(sorted.first(), sorted.last());
+    return new RubyArrayImpl(sorted.first(), sorted.last());
   }
 
   @Override
@@ -450,7 +450,7 @@ public class RubyEnumerator<E> implements RubyArrayEnumerable<E>, Iterable<E> {
 
   @Override
   public RubyArray<E> reject(BooleanBlock block) {
-    return new RubyArrayList(RubyEnumerable.reject(iter, block));
+    return new RubyArrayImpl(RubyEnumerable.reject(iter, block));
   }
 
   @Override
@@ -492,12 +492,12 @@ public class RubyEnumerator<E> implements RubyArrayEnumerable<E>, Iterable<E> {
   public RubyArray<E> sort() {
     Object[] array = newArrayList(iter).toArray();
     Arrays.sort(array);
-    return new RubyArrayList(array);
+    return new RubyArrayImpl(array);
   }
 
   @Override
   public RubyArray<E> sort(Comparator<? super E> comp) {
-    return new RubyArrayList(RubyEnumerable.sort(iter, comp));
+    return new RubyArrayImpl(RubyEnumerable.sort(iter, comp));
   }
 
   @Override
@@ -516,12 +516,12 @@ public class RubyEnumerator<E> implements RubyArrayEnumerable<E>, Iterable<E> {
         sortedList.add(it.next());
       }
     }
-    return new RubyArrayList(sortedList);
+    return new RubyArrayImpl(sortedList);
   }
 
   @Override
   public <S> RubyArray<E> sortBy(Comparator<? super S> comp, ItemTransformBlock<E, S> block) {
-    return new RubyArrayList(RubyEnumerable.sortBy(iter, comp, block));
+    return new RubyArrayImpl(RubyEnumerable.sortBy(iter, comp, block));
   }
 
   @Override
@@ -531,12 +531,12 @@ public class RubyEnumerator<E> implements RubyArrayEnumerable<E>, Iterable<E> {
 
   @Override
   public RubyArray<E> take(int n) {
-    return new RubyArrayList(RubyEnumerable.take(iter, n));
+    return new RubyArrayImpl(RubyEnumerable.take(iter, n));
   }
 
   @Override
   public RubyArray<E> takeWhile(BooleanBlock block) {
-    return new RubyArrayList(RubyEnumerable.takeWhile(iter, block));
+    return new RubyArrayImpl(RubyEnumerable.takeWhile(iter, block));
   }
 
   @Override

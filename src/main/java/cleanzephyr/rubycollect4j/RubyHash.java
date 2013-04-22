@@ -125,7 +125,7 @@ public abstract class RubyHash<K, V> implements RubyHashEnumerable<K, V>, Map<K,
 
   abstract boolean anyʔ(EntryBooleanBlock<K, V> block);
 
-  abstract <S> RubyEnumerator<Entry<S, RubyArrayList<Entry<K, V>>>> chunk(EntryTransformBlock<K, V, S> block);
+  abstract <S> RubyEnumerator<Entry<S, RubyArrayImpl<Entry<K, V>>>> chunk(EntryTransformBlock<K, V, S> block);
 
   abstract <S> RubyArray<S> collect(EntryTransformBlock<K, V, S> block);
 
@@ -149,7 +149,7 @@ public abstract class RubyHash<K, V> implements RubyHashEnumerable<K, V>, Map<K,
 
   abstract <S> RubyArray<S> flatMap(EntryToListBlock<K, V, S> block);
 
-  abstract <S> RubyHash<S, RubyArrayList<Entry<K, V>>> groupBy(EntryTransformBlock<K, V, S> block);
+  abstract <S> RubyHash<S, RubyArrayImpl<Entry<K, V>>> groupBy(EntryTransformBlock<K, V, S> block);
 
   abstract boolean includeʔ(K key);
 

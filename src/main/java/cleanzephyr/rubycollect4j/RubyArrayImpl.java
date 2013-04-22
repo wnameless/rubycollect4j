@@ -48,24 +48,24 @@ import java.util.Random;
 import org.uncommons.maths.combinatorics.CombinationGenerator;
 import org.uncommons.maths.combinatorics.PermutationGenerator;
 
-public final class RubyArrayList<E> extends RubyArray<E> {
+public final class RubyArrayImpl<E> extends RubyArray<E> {
 
   private final List<E> list;
   private final Random rand = new Random();
 
-  public RubyArrayList() {
+  public RubyArrayImpl() {
     list = newArrayList();
   }
 
-  public RubyArrayList(E... args) {
+  public RubyArrayImpl(E... args) {
     list = newArrayList(args);
   }
 
-  public RubyArrayList(List<E> list) {
+  public RubyArrayImpl(List<E> list) {
     this.list = list;
   }
 
-  public RubyArrayList(List<E> list, boolean defensiveCopy) {
+  public RubyArrayImpl(List<E> list, boolean defensiveCopy) {
     if (defensiveCopy) {
       this.list = newArrayList(list);
     } else {
@@ -73,11 +73,11 @@ public final class RubyArrayList<E> extends RubyArray<E> {
     }
   }
 
-  public RubyArrayList(Collection<E> coll) {
+  public RubyArrayImpl(Collection<E> coll) {
     list = newArrayList(coll);
   }
 
-  public RubyArrayList(Iterator<E> iter) {
+  public RubyArrayImpl(Iterator<E> iter) {
     list = newArrayList(iter);
   }
 
@@ -95,7 +95,7 @@ public final class RubyArrayList<E> extends RubyArray<E> {
         andList.add(item);
       }
     }
-    return new RubyArrayList(andList);
+    return new RubyArrayImpl(andList);
   }
 
   @Override
@@ -114,7 +114,7 @@ public final class RubyArrayList<E> extends RubyArray<E> {
         multiplyList.add(item);
       }
     }
-    return new RubyArrayList(multiplyList);
+    return new RubyArrayImpl(multiplyList);
   }
 
   @Override
@@ -141,7 +141,7 @@ public final class RubyArrayList<E> extends RubyArray<E> {
     for (E item : other) {
       addList.add(item);
     }
-    return new RubyArrayList(addList);
+    return new RubyArrayImpl(addList);
   }
 
   @Override
@@ -158,7 +158,7 @@ public final class RubyArrayList<E> extends RubyArray<E> {
     for (E item : other) {
       minusList.remove(item);
     }
-    return new RubyArrayList(minusList);
+    return new RubyArrayImpl(minusList);
   }
 
   @Override
@@ -172,7 +172,7 @@ public final class RubyArrayList<E> extends RubyArray<E> {
       if (item instanceof List) {
         List itemList = (List) item;
         if (itemList.size() > 0 && itemList.get(0).equals(target)) {
-          return new RubyArrayList(itemList, true);
+          return new RubyArrayImpl(itemList, true);
         }
       }
     }
@@ -207,18 +207,18 @@ public final class RubyArrayList<E> extends RubyArray<E> {
 
   @Override
   public RubyEnumerator<RubyArray<E>> combination(int n) {
-    RubyArray<RubyArray<E>> comb = new RubyArrayList();
+    RubyArray<RubyArray<E>> comb = new RubyArrayImpl();
     if (n < 0) {
       return new RubyEnumerator(comb);
     } else if (n == 0) {
-      comb.add(new RubyArrayList<E>());
+      comb.add(new RubyArrayImpl<E>());
       return new RubyEnumerator(comb);
     } else if (n > list.size()) {
       return new RubyEnumerator(comb);
     } else {
       CombinationGenerator<E> cg = new CombinationGenerator<>(list, n);
       for (List<E> combination : cg) {
-        comb.add(new RubyArrayList<E>(combination));
+        comb.add(new RubyArrayImpl<E>(combination));
       }
     }
     return new RubyEnumerator(comb);
@@ -235,16 +235,16 @@ public final class RubyArrayList<E> extends RubyArray<E> {
 
   @Override
   public RubyEnumerator<RubyArray<E>> repeatedCombination(int n) {
-    RubyArray<RubyArray<E>> rp = new RubyArrayList();
+    RubyArray<RubyArray<E>> rp = new RubyArrayImpl();
     if (n < 0) {
       return new RubyEnumerator(rp);
     }
     if (n == 0) {
-      return new RubyEnumerator(rp.push(new RubyArrayList()));
+      return new RubyEnumerator(rp.push(new RubyArrayImpl()));
     }
     int[] counter = new int[n];
     repeatedCombinationLoop(counter, 0, list.size() - 1, (count) -> {
-      RubyArray<E> c = new RubyArrayList();
+      RubyArray<E> c = new RubyArrayImpl();
       for (int i = 0; i < count.length; i++) {
         c.push(list.get(count[i]));
       }
@@ -281,18 +281,18 @@ public final class RubyArrayList<E> extends RubyArray<E> {
 
   @Override
   public RubyArray<E> repeatedCombination(int n, ItemBlock<RubyArray<E>> block) {
-    RubyArray<RubyArray<E>> rp = new RubyArrayList();
+    RubyArray<RubyArray<E>> rp = new RubyArrayImpl();
     if (n < 0) {
       return this;
     }
     if (n == 0) {
-      rp.push(new RubyArrayList());
+      rp.push(new RubyArrayImpl());
       block.yield(rp.first());
       return this;
     }
     int[] counter = new int[n];
     repeatedCombinationLoop(counter, 0, list.size() - 1, (count) -> {
-      RubyArray<E> c = new RubyArrayList();
+      RubyArray<E> c = new RubyArrayImpl();
       for (int i = 0; i < count.length; i++) {
         c.push(list.get(count[i]));
       }
@@ -304,7 +304,7 @@ public final class RubyArrayList<E> extends RubyArray<E> {
 
   @Override
   public RubyArray<E> compact() {
-    RubyArray<E> rubyArray = new RubyArrayList();
+    RubyArray<E> rubyArray = new RubyArrayImpl();
     for (E item : list) {
       if (item != null) {
         rubyArray.add(item);
@@ -314,7 +314,7 @@ public final class RubyArrayList<E> extends RubyArray<E> {
   }
 
   @Override
-  public RubyArrayList<E> compactǃ() {
+  public RubyArrayImpl<E> compactǃ() {
     boolean isCompacted = false;
     ListIterator<E> li = list.listIterator();
     while (li.hasNext()) {
@@ -449,7 +449,7 @@ public final class RubyArrayList<E> extends RubyArray<E> {
   }
 
   @Override
-  public RubyArrayList<E> fill(E item) {
+  public RubyArrayImpl<E> fill(E item) {
     for (int i = 0; i < list.size(); i++) {
       list.set(i, item);
     }
@@ -457,7 +457,7 @@ public final class RubyArrayList<E> extends RubyArray<E> {
   }
 
   @Override
-  public RubyArrayList<E> fill(E item, int start) {
+  public RubyArrayImpl<E> fill(E item, int start) {
     for (int i = start; i < list.size(); i++) {
       list.set(i, item);
     }
@@ -465,7 +465,7 @@ public final class RubyArrayList<E> extends RubyArray<E> {
   }
 
   @Override
-  public RubyArrayList<E> fill(E item, int start, int length) {
+  public RubyArrayImpl<E> fill(E item, int start, int length) {
     for (int i = start; i < start + length && i < list.size(); i++) {
       list.set(i, item);
     }
@@ -473,7 +473,7 @@ public final class RubyArrayList<E> extends RubyArray<E> {
   }
 
   @Override
-  public RubyArrayList<E> fill(ItemWithReturnBlock<E> block) {
+  public RubyArrayImpl<E> fill(ItemWithReturnBlock<E> block) {
     for (int i = 0; i < list.size(); i++) {
       list.set(i, block.yield(list.get(i)));
     }
@@ -481,7 +481,7 @@ public final class RubyArrayList<E> extends RubyArray<E> {
   }
 
   @Override
-  public RubyArrayList<E> fill(int start, ItemWithReturnBlock<E> block) {
+  public RubyArrayImpl<E> fill(int start, ItemWithReturnBlock<E> block) {
     for (int i = start; i < list.size(); i++) {
       list.set(i, block.yield(list.get(i)));
     }
@@ -489,7 +489,7 @@ public final class RubyArrayList<E> extends RubyArray<E> {
   }
 
   @Override
-  public RubyArrayList<E> fill(int start, int length, ItemWithReturnBlock<E> block) {
+  public RubyArrayImpl<E> fill(int start, int length, ItemWithReturnBlock<E> block) {
     for (int i = start; i < start + length && i < list.size(); i++) {
       list.set(i, block.yield(list.get(i)));
     }
@@ -519,8 +519,8 @@ public final class RubyArrayList<E> extends RubyArray<E> {
   }
 
   @Override
-  public <S> RubyArrayList<S> flatten() {
-    RubyArrayList<S> rubyArray = new RubyArrayList();
+  public <S> RubyArrayImpl<S> flatten() {
+    RubyArrayImpl<S> rubyArray = new RubyArrayImpl();
     List subLists = newArrayList();
     for (E item : list) {
       if (item instanceof List) {
@@ -547,14 +547,14 @@ public final class RubyArrayList<E> extends RubyArray<E> {
   }
 
   @Override
-  public RubyArrayList<E> replace(List<E> other) {
+  public RubyArrayImpl<E> replace(List<E> other) {
     list.clear();
     list.addAll(other);
     return this;
   }
 
   @Override
-  public RubyArrayList<E> insert(int index, E... args) {
+  public RubyArrayImpl<E> insert(int index, E... args) {
     if (index < -list.size()) {
       throw new IllegalArgumentException("IndexError: index " + index + " too small for array; minimum: " + -list.size());
     } else if (index < 0) {
@@ -604,7 +604,7 @@ public final class RubyArrayList<E> extends RubyArray<E> {
   }
 
   @Override
-  public RubyArrayList<E> keepIf(BooleanBlock<E> block) {
+  public RubyArrayImpl<E> keepIf(BooleanBlock<E> block) {
     ListIterator<E> li = list.listIterator();
     while (li.hasNext()) {
       E item = li.next();
@@ -626,9 +626,9 @@ public final class RubyArrayList<E> extends RubyArray<E> {
   }
 
   @Override
-  public RubyArrayList<E> last(int n) {
+  public RubyArrayImpl<E> last(int n) {
     List<E> reverseList = Lists.reverse(list);
-    RubyArrayList<E> rubyArray = new RubyArrayList();
+    RubyArrayImpl<E> rubyArray = new RubyArrayImpl();
     for (int i = 0; i < n && i < reverseList.size(); i++) {
       rubyArray.add(reverseList.get(i));
     }
@@ -645,8 +645,8 @@ public final class RubyArrayList<E> extends RubyArray<E> {
   }
 
   @Override
-  public RubyArrayList<E> pop(int n) {
-    RubyArrayList<E> rubyArray = new RubyArrayList();
+  public RubyArrayImpl<E> pop(int n) {
+    RubyArrayImpl<E> rubyArray = new RubyArrayImpl();
     for (int i = 0; i < n; i++) {
       rubyArray.add(0, pop());
     }
@@ -658,13 +658,13 @@ public final class RubyArrayList<E> extends RubyArray<E> {
 
   @Override
   public RubyArray<RubyArray<E>> product(RubyArray<E>... arys) {
-    RubyArray<RubyArray<E>> rubyArray = new RubyArrayList();
-    RubyArray<E>[] others = new RubyArrayList[arys.length + 1];
+    RubyArray<RubyArray<E>> rubyArray = new RubyArrayImpl();
+    RubyArray<E>[] others = new RubyArrayImpl[arys.length + 1];
     others[0] = this;
     System.arraycopy(arys, 0, others, 1, arys.length);
     int[] counters = new int[others.length];
     while (isLooping(counters, others)) {
-      RubyArrayList<E> combination = new RubyArrayList();
+      RubyArrayImpl<E> combination = new RubyArrayImpl();
       for (int i = 0; i < counters.length; i++) {
         combination.add(others[i].get(counters[i]));
       }
@@ -699,7 +699,7 @@ public final class RubyArrayList<E> extends RubyArray<E> {
 
   @Override
   public RubyArray<E> product(RubyArray<RubyArray<E>> arys, ItemBlock<RubyArray<E>> block) {
-    RubyArray<RubyArray<E>> combinations = product(arys.toArray(new RubyArrayList[arys.length()]));
+    RubyArray<RubyArray<E>> combinations = product(arys.toArray(new RubyArrayImpl[arys.length()]));
     for (RubyArray<E> comb : combinations) {
       block.yield(comb);
     }
@@ -718,7 +718,7 @@ public final class RubyArrayList<E> extends RubyArray<E> {
       if (item instanceof List) {
         List itemList = (List) item;
         if (itemList.size() > 0 && itemList.get(itemList.size() - 1).equals(target)) {
-          return new RubyArrayList(itemList, true);
+          return new RubyArrayImpl(itemList, true);
         }
       }
     }
@@ -745,7 +745,7 @@ public final class RubyArrayList<E> extends RubyArray<E> {
 
   @Override
   public RubyArray<E> reverse() {
-    return new RubyArrayList(Lists.reverse(list));
+    return new RubyArrayImpl(Lists.reverse(list));
   }
 
   @Override
@@ -780,7 +780,7 @@ public final class RubyArrayList<E> extends RubyArray<E> {
 
   @Override
   public RubyArray<E> rotate() {
-    RubyArray<E> rubyArray = new RubyArrayList<>(list, true);
+    RubyArray<E> rubyArray = new RubyArrayImpl<>(list, true);
     if (rubyArray.size() > 0) {
       rubyArray.add(rubyArray.remove(0));
     }
@@ -809,7 +809,7 @@ public final class RubyArrayList<E> extends RubyArray<E> {
         }
       }
     }
-    return new RubyArrayList<>(rotatedList);
+    return new RubyArrayImpl<>(rotatedList);
   }
 
   @Override
@@ -847,7 +847,7 @@ public final class RubyArrayList<E> extends RubyArray<E> {
     while (samples.size() < list.size() && samples.size() < n) {
       samples.add(copyList.remove(rand.nextInt(copyList.size())));
     }
-    return new RubyArrayList(samples);
+    return new RubyArrayImpl(samples);
   }
 
   @Override
@@ -880,14 +880,14 @@ public final class RubyArrayList<E> extends RubyArray<E> {
     while (!list.isEmpty() && shiftedList.size() < n) {
       shiftedList.add(list.remove(0));
     }
-    return new RubyArrayList(shiftedList);
+    return new RubyArrayImpl(shiftedList);
   }
 
   @Override
   public RubyArray<E> shuffle() {
     List<E> shuffledList = newArrayList(list);
     Collections.shuffle(shuffledList);
-    return new RubyArrayList(shuffledList);
+    return new RubyArrayImpl(shuffledList);
   }
 
   @Override
@@ -916,7 +916,7 @@ public final class RubyArrayList<E> extends RubyArray<E> {
         slicedList.add(list.get(i));
       }
     }
-    return new RubyArrayList(slicedList);
+    return new RubyArrayImpl(slicedList);
   }
 
   @Override
@@ -948,7 +948,7 @@ public final class RubyArrayList<E> extends RubyArray<E> {
         length--;
       }
     }
-    return new RubyArrayList(slicedList);
+    return new RubyArrayImpl(slicedList);
   }
 
   @Override
@@ -964,7 +964,7 @@ public final class RubyArrayList<E> extends RubyArray<E> {
         uniqList.add(item);
       }
     }
-    return new RubyArrayList(uniqList);
+    return new RubyArrayImpl(uniqList);
   }
 
   @Override
@@ -986,7 +986,7 @@ public final class RubyArrayList<E> extends RubyArray<E> {
         uniqList.add(item);
       }
     }
-    return new RubyArrayList(uniqList);
+    return new RubyArrayImpl(uniqList);
   }
 
   @Override
@@ -1002,7 +1002,7 @@ public final class RubyArrayList<E> extends RubyArray<E> {
         unionList.add(item);
       }
     }
-    return new RubyArrayList(unionList);
+    return new RubyArrayImpl(unionList);
   }
 
   @Override
@@ -1027,7 +1027,7 @@ public final class RubyArrayList<E> extends RubyArray<E> {
     for (int index : indice) {
       values.add(this.at(index));
     }
-    return new RubyArrayList(values);
+    return new RubyArrayImpl(values);
   }
 
   // Ruby Enumerable methods
@@ -1354,7 +1354,7 @@ public final class RubyArrayList<E> extends RubyArray<E> {
   @Override
   public RubyArray<E> minmax() {
     RubyArray<E> sorted = sort();
-    return new RubyArrayList(sorted.first(), sorted.last());
+    return new RubyArrayImpl(sorted.first(), sorted.last());
   }
 
   @Override
@@ -1365,7 +1365,7 @@ public final class RubyArrayList<E> extends RubyArray<E> {
   @Override
   public <S> RubyArray<E> minmaxBy(ItemTransformBlock<E, S> block) {
     RubyArray<E> sorted = sortBy(block);
-    return new RubyArrayList(sorted.first(), sorted.last());
+    return new RubyArrayImpl(sorted.first(), sorted.last());
   }
 
   @Override
@@ -1390,21 +1390,21 @@ public final class RubyArrayList<E> extends RubyArray<E> {
 
   @Override
   public RubyEnumerator<RubyArray<E>> permutation() {
-    RubyArray<RubyArray<E>> perms = new RubyArrayList();
+    RubyArray<RubyArray<E>> perms = new RubyArrayImpl();
     PermutationGenerator<E> pg = new PermutationGenerator<>(list);
     while (pg.hasMore()) {
-      perms.add(new RubyArrayList<>(pg.nextPermutationAsList()));
+      perms.add(new RubyArrayImpl<>(pg.nextPermutationAsList()));
     }
     return new RubyEnumerator(perms);
   }
 
   @Override
   public RubyEnumerator<RubyArray<E>> permutation(int n) {
-    RubyArray<RubyArray<E>> perms = new RubyArrayList();
+    RubyArray<RubyArray<E>> perms = new RubyArrayImpl();
     if (n < 0) {
       return new RubyEnumerator(perms);
     } else if (n == 0) {
-      perms.add(new RubyArrayList<E>());
+      perms.add(new RubyArrayImpl<E>());
       return new RubyEnumerator(perms);
     } else if (n > list.size()) {
       return new RubyEnumerator(perms);
@@ -1412,7 +1412,7 @@ public final class RubyArrayList<E> extends RubyArray<E> {
       for (RubyArray<E> comb : combination(n)) {
         PermutationGenerator<E> pg = new PermutationGenerator<>(comb);
         while (pg.hasMore()) {
-          perms.add(new RubyArrayList<E>(pg.nextPermutationAsList()));
+          perms.add(new RubyArrayImpl<E>(pg.nextPermutationAsList()));
         }
       }
     }
@@ -1430,16 +1430,16 @@ public final class RubyArrayList<E> extends RubyArray<E> {
 
   @Override
   public RubyEnumerator<RubyArray<E>> repeatedPermutation(int n) {
-    RubyArray<RubyArray<E>> rp = new RubyArrayList();
+    RubyArray<RubyArray<E>> rp = new RubyArrayImpl();
     if (n < 0) {
       return new RubyEnumerator(rp);
     }
     if (n == 0) {
-      return new RubyEnumerator(rp.push(new RubyArrayList()));
+      return new RubyEnumerator(rp.push(new RubyArrayImpl()));
     }
     int[] counter = new int[n];
     repeatedPermutationLoop(counter, 0, list.size() - 1, (count) -> {
-      RubyArray<E> c = new RubyArrayList();
+      RubyArray<E> c = new RubyArrayImpl();
       for (int i = 0; i < count.length; i++) {
         c.push(list.get(count[i]));
       }
@@ -1476,18 +1476,18 @@ public final class RubyArrayList<E> extends RubyArray<E> {
 
   @Override
   public RubyArray<E> repeatedPermutation(int n, ItemBlock<RubyArray<E>> block) {
-    RubyArray<RubyArray<E>> rp = new RubyArrayList();
+    RubyArray<RubyArray<E>> rp = new RubyArrayImpl();
     if (n < 0) {
       return this;
     }
     if (n == 0) {
-      rp.push(new RubyArrayList());
+      rp.push(new RubyArrayImpl());
       block.yield(rp.first());
       return this;
     }
     int[] counter = new int[n];
     repeatedCombinationLoop(counter, 0, list.size() - 1, (count) -> {
-      RubyArray<E> c = new RubyArrayList();
+      RubyArray<E> c = new RubyArrayImpl();
       for (int i = 0; i < count.length; i++) {
         c.push(list.get(count[i]));
       }
@@ -1539,7 +1539,7 @@ public final class RubyArrayList<E> extends RubyArray<E> {
 
   @Override
   public RubyArray<E> reject(BooleanBlock block) {
-    return new RubyArrayList(RubyEnumerable.reject(list, block));
+    return new RubyArrayImpl(RubyEnumerable.reject(list, block));
   }
 
   @Override
@@ -1581,12 +1581,12 @@ public final class RubyArrayList<E> extends RubyArray<E> {
   public RubyArray<E> sort() {
     Object[] array = list.toArray();
     Arrays.sort(array);
-    return new RubyArrayList(array);
+    return new RubyArrayImpl(array);
   }
 
   @Override
   public RubyArray<E> sort(Comparator<? super E> comp) {
-    return new RubyArrayList(RubyEnumerable.sort(list, comp));
+    return new RubyArrayImpl(RubyEnumerable.sort(list, comp));
   }
 
   @Override
@@ -1605,12 +1605,12 @@ public final class RubyArrayList<E> extends RubyArray<E> {
         sortedList.add(iter.next());
       }
     }
-    return new RubyArrayList(sortedList);
+    return new RubyArrayImpl(sortedList);
   }
 
   @Override
   public <S> RubyArray<E> sortBy(Comparator<? super S> comp, ItemTransformBlock<E, S> block) {
-    return new RubyArrayList(RubyEnumerable.sortBy(list, comp, block));
+    return new RubyArrayImpl(RubyEnumerable.sortBy(list, comp, block));
   }
 
   @Override
@@ -1620,12 +1620,12 @@ public final class RubyArrayList<E> extends RubyArray<E> {
 
   @Override
   public RubyArray<E> take(int n) {
-    return new RubyArrayList(RubyEnumerable.take(list, n));
+    return new RubyArrayImpl(RubyEnumerable.take(list, n));
   }
 
   @Override
   public RubyArray<E> takeWhile(BooleanBlock block) {
-    return new RubyArrayList(RubyEnumerable.takeWhile(list, block));
+    return new RubyArrayImpl(RubyEnumerable.takeWhile(list, block));
   }
 
   @Override
