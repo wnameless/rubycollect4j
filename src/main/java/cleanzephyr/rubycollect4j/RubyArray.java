@@ -35,9 +35,9 @@ import java.util.List;
  *
  * @param <E> element
  */
-public interface RubyArray<E> extends RubyArrayEnumerable<E> {
+public abstract class RubyArray<E> implements RubyArrayEnumerable<E>, List<E> {
 
-  public RubyArray<E> ㄍ(E item);
+  abstract RubyArray<E> ㄍ(E item);
 
   /**
    * Create a RubyArray which contains a intersection set of two Lists.
@@ -45,9 +45,9 @@ public interface RubyArray<E> extends RubyArrayEnumerable<E> {
    * @param other other List
    * @return new RubyArray
    */
-  public RubyArray<E> intersection(List<E> other);
+  abstract RubyArray<E> intersection(List<E> other);
 
-  public RubyArray<E> Ⴖ(List<E> other);
+  abstract RubyArray<E> Ⴖ(List<E> other);
 
   /**
    * Create a RubyArray which contains n copies of current RubyArray.
@@ -55,9 +55,9 @@ public interface RubyArray<E> extends RubyArrayEnumerable<E> {
    * @param n number of copies
    * @return new RubyArray
    */
-  public RubyArray<E> multiply(int n);
+  abstract RubyArray<E> multiply(int n);
 
-  public RubyArray<E> X(int n);
+  abstract RubyArray<E> X(int n);
 
   /**
    * Create a String which all elements are joined by separator.
@@ -65,9 +65,9 @@ public interface RubyArray<E> extends RubyArrayEnumerable<E> {
    * @param separator to join elements
    * @return String
    */
-  public String multiply(String separator);
+  abstract String multiply(String separator);
 
-  public String X(String separator);
+  abstract String X(String separator);
 
   /**
    * Create a RubyArray which contains elements in both Lists
@@ -75,9 +75,9 @@ public interface RubyArray<E> extends RubyArrayEnumerable<E> {
    * @param other other List
    * @return new RubyArray
    */
-  public RubyArray<E> add(List<E> other);
+  abstract RubyArray<E> add(List<E> other);
 
-  public RubyArray<E> 十(List<E> other);
+  abstract RubyArray<E> 十(List<E> other);
 
   /**
    * Create a RubyArray which eliminates all elements from other List.
@@ -85,9 +85,9 @@ public interface RubyArray<E> extends RubyArrayEnumerable<E> {
    * @param other other List
    * @return new RubyArray
    */
-  public RubyArray<E> minus(List<E> other);
+  abstract RubyArray<E> minus(List<E> other);
 
-  public RubyArray<E> ㄧ(List<E> other);
+  abstract RubyArray<E> ㄧ(List<E> other);
 
   /**
    * Create a RubyArray starts from a List which contains the target as the
@@ -97,7 +97,7 @@ public interface RubyArray<E> extends RubyArrayEnumerable<E> {
    * @param target the first element of List to find
    * @return new RubyArray or null
    */
-  public <S> RubyArray<S> assoc(S target);
+  abstract <S> RubyArray<S> assoc(S target);
 
   /**
    * Find the element of specific position. Index is started from 0. -1 is
@@ -106,7 +106,7 @@ public interface RubyArray<E> extends RubyArrayEnumerable<E> {
    * @param index position of element
    * @return element
    */
-  public E at(int index);
+  abstract E at(int index);
 
   /**
    * Find a element by binary search. Return null if element can't be found.
@@ -114,7 +114,7 @@ public interface RubyArray<E> extends RubyArrayEnumerable<E> {
    * @param target element to find
    * @return element or null
    */
-  public E bsearch(E target);
+  abstract E bsearch(E target);
 
   /**
    * Find a element by binary search. Return null if element can't be found.
@@ -122,7 +122,7 @@ public interface RubyArray<E> extends RubyArrayEnumerable<E> {
    * @param target element to find
    * @return element or null
    */
-  public E bsearch(E target, Comparator<? super E> comp);
+  abstract E bsearch(E target, Comparator<? super E> comp);
 
   /**
    * Generate all combinations with certain length and put them in a RubyArray.
@@ -130,7 +130,7 @@ public interface RubyArray<E> extends RubyArrayEnumerable<E> {
    * @param n length of each combination
    * @return new RubyArray
    */
-  public RubyEnumerator<RubyArray<E>> combination(int n);
+  abstract RubyEnumerator<RubyArray<E>> combination(int n);
 
   /**
    * Generate all combinations with certain length and yield each combination to
@@ -140,7 +140,7 @@ public interface RubyArray<E> extends RubyArrayEnumerable<E> {
    * @param block thing to do with each combination
    * @return new RubyArray contains all combinations
    */
-  public RubyArray<RubyArray<E>> combination(int n, ItemBlock<RubyArray<E>> block);
+  abstract RubyArray<RubyArray<E>> combination(int n, ItemBlock<RubyArray<E>> block);
 
   /**
    * Remove all null objects within self and store the rest of elements in a new
@@ -148,14 +148,14 @@ public interface RubyArray<E> extends RubyArrayEnumerable<E> {
    *
    * @return new RubyArray
    */
-  public RubyArray<E> compact();
+  abstract RubyArray<E> compact();
 
   /**
    * Remove all null objects in self.
    *
    * @return RubyArray
    */
-  public RubyArray<E> compactǃ();
+  abstract RubyArray<E> compactǃ();
 
   /**
    * Append any List in the end of self.
@@ -163,49 +163,49 @@ public interface RubyArray<E> extends RubyArrayEnumerable<E> {
    * @param other any List
    * @return RubyArray
    */
-  public RubyArray<E> concat(List<E> other);
+  abstract RubyArray<E> concat(List<E> other);
 
-  public int count(E target);
+  abstract int count(E target);
 
-  public E delete(E target);
+  abstract E delete(E target);
 
-  public E delete(E target, Block<E> block);
+  abstract E delete(E target, Block<E> block);
 
-  public E deleteAt(int index);
+  abstract E deleteAt(int index);
 
-  public RubyArray<E> deleteIf(BooleanBlock<E> block);
+  abstract RubyArray<E> deleteIf(BooleanBlock<E> block);
 
-  public RubyArray<E> each(ItemBlock<E> block);
+  abstract RubyArray<E> each(ItemBlock<E> block);
 
-  public RubyArray<E> eachIndex(IndexBlock<E> block);
+  abstract RubyArray<E> eachIndex(IndexBlock<E> block);
 
-  public boolean emptyʔ();
+  abstract boolean emptyʔ();
 
-  public boolean eqlʔ(RubyArray<E> other);
+  abstract boolean eqlʔ(RubyArray<E> other);
 
-  public E fetch(int index);
+  abstract E fetch(int index);
 
-  public E fetch(int index, E defaultValue);
+  abstract E fetch(int index, E defaultValue);
 
-  public E fetch(int index, ItemBlock<Integer> block);
+  abstract E fetch(int index, ItemBlock<Integer> block);
 
-  public RubyArray<E> fill(E item);
+  abstract RubyArray<E> fill(E item);
 
-  public RubyArray<E> fill(E item, int start);
+  abstract RubyArray<E> fill(E item, int start);
 
-  public RubyArray<E> fill(E item, int start, int length);
+  abstract RubyArray<E> fill(E item, int start, int length);
 
-  public RubyArray<E> fill(ItemWithReturnBlock<E> block);
+  abstract RubyArray<E> fill(ItemWithReturnBlock<E> block);
 
-  public RubyArray<E> fill(int start, ItemWithReturnBlock<E> block);
+  abstract RubyArray<E> fill(int start, ItemWithReturnBlock<E> block);
 
-  public RubyArray<E> fill(int start, int length, ItemWithReturnBlock<E> block);
+  abstract RubyArray<E> fill(int start, int length, ItemWithReturnBlock<E> block);
 
-  public Integer index(E target);
+  abstract Integer index(E target);
 
-  public Integer index(BooleanBlock<E> block);
+  abstract Integer index(BooleanBlock<E> block);
 
-  public <S> RubyArray<S> flatten();
+  abstract <S> RubyArray<S> flatten();
 
   /**
    * Generate all repeated combinations with certain length and put them in a
@@ -214,7 +214,7 @@ public interface RubyArray<E> extends RubyArrayEnumerable<E> {
    * @param n length of each combination
    * @return new RubyArray
    */
-  public RubyEnumerator<RubyArray<E>> repeatedCombination(int n);
+  abstract RubyEnumerator<RubyArray<E>> repeatedCombination(int n);
 
   /**
    * Generate all repeated combinations with certain length and yield each
@@ -224,107 +224,107 @@ public interface RubyArray<E> extends RubyArrayEnumerable<E> {
    * @param block thing to do with each combination
    * @return RubyArray
    */
-  public RubyArray<E> repeatedCombination(int n, ItemBlock<RubyArray<E>> block);
+  abstract RubyArray<E> repeatedCombination(int n, ItemBlock<RubyArray<E>> block);
 
-  public RubyEnumerator<RubyArray<E>> repeatedPermutation(int n);
+  abstract RubyEnumerator<RubyArray<E>> repeatedPermutation(int n);
 
-  public RubyArray<E> repeatedPermutation(int n, ItemBlock<RubyArray<E>> block);
+  abstract RubyArray<E> repeatedPermutation(int n, ItemBlock<RubyArray<E>> block);
 
-  public RubyArray<E> replace(List<E> other);
+  abstract RubyArray<E> replace(List<E> other);
 
-  public RubyArray<E> insert(int index, E... args);
+  abstract RubyArray<E> insert(int index, E... args);
 
-  public String inspect();
+  abstract String inspect();
 
-  public String join();
+  abstract String join();
 
-  public String join(String separator);
+  abstract String join(String separator);
 
-  public RubyArray<E> keepIf(BooleanBlock<E> block);
+  abstract RubyArray<E> keepIf(BooleanBlock<E> block);
 
-  public E last();
+  abstract E last();
 
-  public RubyArray<E> last(int n);
+  abstract RubyArray<E> last(int n);
 
-  public E pop();
+  abstract E pop();
 
-  public RubyArray<E> pop(int n);
+  abstract RubyArray<E> pop(int n);
 
-  public RubyArray<RubyArray<E>> product(RubyArray<E>... arys);
+  abstract RubyArray<RubyArray<E>> product(RubyArray<E>... arys);
 
-  public RubyArray<E> product(RubyArray<RubyArray<E>> arys, ItemBlock<RubyArray<E>> block);
+  abstract RubyArray<E> product(RubyArray<RubyArray<E>> arys, ItemBlock<RubyArray<E>> block);
 
-  public RubyArray<E> push(E item);
+  abstract RubyArray<E> push(E item);
 
-  public <S> RubyArray<S> rassoc(S target);
+  abstract <S> RubyArray<S> rassoc(S target);
 
-  public RubyArray<E> rejectǃ(BooleanBlock<E> block);
+  abstract RubyArray<E> rejectǃ(BooleanBlock<E> block);
 
-  public RubyArray<E> replace(RubyArray<E> other);
+  abstract RubyArray<E> replace(RubyArray<E> other);
 
-  public RubyArray<E> reverse();
+  abstract RubyArray<E> reverse();
 
-  public RubyArray<E> reverseǃ();
+  abstract RubyArray<E> reverseǃ();
 
-  public Integer rindex(E target);
+  abstract Integer rindex(E target);
 
-  public Integer rindex(BooleanBlock<E> block);
+  abstract Integer rindex(BooleanBlock<E> block);
 
-  public RubyArray<E> rotate();
+  abstract RubyArray<E> rotate();
 
-  public RubyArray<E> rotateǃ();
+  abstract RubyArray<E> rotateǃ();
 
-  public RubyArray<E> rotate(int count);
+  abstract RubyArray<E> rotate(int count);
 
-  public RubyArray<E> rotateǃ(int count);
+  abstract RubyArray<E> rotateǃ(int count);
 
-  public E sample();
+  abstract E sample();
 
-  public RubyArray<E> sample(int n);
+  abstract RubyArray<E> sample(int n);
 
-  public RubyArray<E> selectǃ(BooleanBlock block);
+  abstract RubyArray<E> selectǃ(BooleanBlock block);
 
-  public E shift();
+  abstract E shift();
 
-  public RubyArray<E> shift(int n);
+  abstract RubyArray<E> shift(int n);
 
-  public RubyArray<E> shuffle();
+  abstract RubyArray<E> shuffle();
 
-  public RubyArray<E> shuffleǃ();
+  abstract RubyArray<E> shuffleǃ();
 
-  public E slice(int index);
+  abstract E slice(int index);
 
-  public RubyArray<E> slice(int index, int length);
+  abstract RubyArray<E> slice(int index, int length);
 
-  public E sliceǃ(int index);
+  abstract E sliceǃ(int index);
 
-  public RubyArray<E> sliceǃ(int index, int length);
+  abstract RubyArray<E> sliceǃ(int index, int length);
 
-  public int length();
+  abstract int length();
 
-  public RubyArray<E> uniq();
+  abstract RubyArray<E> uniq();
 
-  public RubyArray<E> uniqǃ();
+  abstract RubyArray<E> uniqǃ();
 
-  public <S> RubyArray<E> uniq(ItemTransformBlock<E, S> block);
+  abstract <S> RubyArray<E> uniq(ItemTransformBlock<E, S> block);
 
-  public RubyArray<E> union(RubyArray<E> other);
+  abstract RubyArray<E> union(RubyArray<E> other);
 
-  public RubyArray<E> U(RubyArray<E> other);
+  abstract RubyArray<E> U(RubyArray<E> other);
 
-  public RubyArray<E> ǀ(RubyArray<E> other);
+  abstract RubyArray<E> ǀ(RubyArray<E> other);
 
-  public RubyArray<E> unshift(E item);
+  abstract RubyArray<E> unshift(E item);
 
-  public RubyArray<E> valuesAt(int... indice);
+  abstract RubyArray<E> valuesAt(int... indice);
 
-  public RubyEnumerator<RubyArray<E>> permutation();
+  abstract RubyEnumerator<RubyArray<E>> permutation();
 
-  public RubyEnumerator<RubyArray<E>> permutation(int n);
+  abstract RubyEnumerator<RubyArray<E>> permutation(int n);
 
-  public RubyArray<RubyArray<E>> permutation(int n, ItemBlock<RubyArray<E>> block);
+  abstract RubyArray<RubyArray<E>> permutation(int n, ItemBlock<RubyArray<E>> block);
 
-  public RubyArray<E> toAry();
+  abstract RubyArray<E> toAry();
 
-  public String toS();
+  abstract String toS();
 }

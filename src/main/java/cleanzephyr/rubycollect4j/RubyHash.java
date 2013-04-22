@@ -31,163 +31,159 @@ import java.util.Comparator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public interface RubyHash<K, V> extends RubyHashEnumerable<Entry<K, V>> {
+public abstract class RubyHash<K, V> implements RubyHashEnumerable<K, V>, Map<K, V> {
 
-  public RubyHash<K, V> put(Entry<K, V> entry);
+  abstract RubyHash<K, V> put(Entry<K, V> entry);
 
-  public RubyHash<K, V> put(Entry<K, V>... entries);
+  abstract RubyHash<K, V> put(Entry<K, V>... entries);
 
-  public Entry<K, V> assoc(K key);
+  abstract Entry<K, V> assoc(K key);
 
-  public RubyHash<K, V> compareByIdentity();
+  abstract RubyHash<K, V> compareByIdentity();
 
-  public boolean comparedByIdentityʔ();
+  abstract boolean comparedByIdentityʔ();
 
-  public V setDefault(V defaultValue);
+  abstract V setDefault(V defaultValue);
 
-  public V getDefault();
+  abstract V getDefault();
 
-  public V delete(K key);
+  abstract V delete(K key);
 
-  public RubyHash<K, V> deleteIf(EntryBooleanBlock<K, V> block);
+  abstract RubyHash<K, V> deleteIf(EntryBooleanBlock<K, V> block);
 
-  public RubyHash<K, V> each(EntryBlock<K, V> block);
+  abstract RubyHash<K, V> each(EntryBlock<K, V> block);
 
-  public RubyArray<Entry<K, V>> eachEntry(ItemBlock<Entry<K, V>> block);
+  abstract RubyHash<K, V> eachPair(EntryBlock<K, V> block);
 
-  public RubyEnumerator<Entry<K, V>> eachEntry();
+  abstract RubyHash<K, V> eachKey(ItemBlock<K> block);
 
-  public RubyHash<K, V> eachPair(EntryBlock<K, V> block);
+  abstract RubyHash<K, V> eachValue(ItemBlock<V> block);
 
-  public RubyHash<K, V> eachKey(ItemBlock<K> block);
+  abstract boolean emptyʔ();
 
-  public RubyHash<K, V> eachValue(ItemBlock<V> block);
+  abstract boolean eqlʔ(RubyHash other);
 
-  public boolean emptyʔ();
+  abstract V fetch(K key);
 
-  public boolean eqlʔ(RubyHash other);
+  abstract V fetch(K key, V defaultValue);
 
-  public V fetch(K key);
+  abstract RubyArray<Entry<K, V>> flatten();
 
-  public V fetch(K key, V defaultValue);
+  abstract boolean keyʔ(K key);
 
-  public RubyArray<Entry<K, V>> flatten();
+  abstract boolean valueʔ(V value);
 
-  public boolean keyʔ(K key);
+  abstract int hash();
 
-  public boolean valueʔ(V value);
+  abstract RubyHash<K, V> toH();
 
-  public int hash();
+  abstract RubyHash<K, V> toHash();
 
-  public RubyHash<K, V> toH();
+  abstract String toS();
 
-  public RubyHash<K, V> toHash();
+  abstract String inspect();
 
-  public String toS();
+  abstract RubyHash<V, K> invert();
 
-  public String inspect();
+  abstract RubyHash<K, V> keepIf(EntryBooleanBlock<K, V> block);
 
-  public RubyHash<V, K> invert();
+  abstract K key(V value);
 
-  public RubyHash<K, V> keepIf(EntryBooleanBlock<K, V> block);
+  abstract RubyArray<K> keys();
 
-  public K key(V value);
+  abstract int length();
 
-  public RubyArray<K> keys();
+  abstract RubyHash<K, V> merge(Map<K, V> otherHash);
 
-  public int length();
+  abstract RubyHash<K, V> mergeEx(Map<K, V> otherHash);
 
-  public RubyHash<K, V> merge(Map<K, V> otherHash);
+  abstract RubyHash<K, V> update(Map<K, V> otherHash);
 
-  public RubyHash<K, V> mergeEx(Map<K, V> otherHash);
+  abstract RubyHash<K, V> merge(Map<K, V> otherHash, EntryMergeBlock<K, V> block);
 
-  public RubyHash<K, V> update(Map<K, V> otherHash);
+  abstract RubyHash<K, V> mergeǃ(Map<K, V> otherHash, EntryMergeBlock<K, V> block);
 
-  public RubyHash<K, V> merge(Map<K, V> otherHash, EntryMergeBlock<K, V> block);
+  abstract RubyHash<K, V> update(Map<K, V> otherHash, EntryMergeBlock<K, V> block);
 
-  public RubyHash<K, V> mergeǃ(Map<K, V> otherHash, EntryMergeBlock<K, V> block);
+  abstract Entry<K, V> rassoc(V value);
 
-  public RubyHash<K, V> update(Map<K, V> otherHash, EntryMergeBlock<K, V> block);
+  abstract RubyHash<K, V> rejectǃ(EntryBooleanBlock<K, V> block);
 
-  public Entry<K, V> rassoc(V value);
+  abstract RubyHash<K, V> replace(Map<K, V> otherHash);
 
-  public RubyHash<K, V> rejectǃ(EntryBooleanBlock<K, V> block);
+  abstract Entry<K, V> shift();
 
-  public RubyHash<K, V> replace(Map<K, V> otherHash);
-
-  public Entry<K, V> shift();
-
-  public V store(K key, V value);
+  abstract V store(K key, V value);
 
   @Override
-  public RubyArray<V> values();
+  public abstract RubyArray<V> values();
 
-  public RubyArray<V> valuesAt(K... keys);
+  abstract RubyArray<V> valuesAt(K... keys);
 
   // RubyEnumerable for Hash
-  public boolean allʔ(EntryBooleanBlock<K, V> block);
+  abstract boolean allʔ(EntryBooleanBlock<K, V> block);
 
-  public boolean anyʔ(EntryBooleanBlock<K, V> block);
+  abstract boolean anyʔ(EntryBooleanBlock<K, V> block);
 
-  public <S> RubyEnumerator<Entry<S, RubyArrayList<Entry<K, V>>>> chunk(EntryTransformBlock<K, V, S> block);
+  abstract <S> RubyEnumerator<Entry<S, RubyArrayList<Entry<K, V>>>> chunk(EntryTransformBlock<K, V, S> block);
 
-  public <S> RubyArray<S> collect(EntryTransformBlock<K, V, S> block);
+  abstract <S> RubyArray<S> collect(EntryTransformBlock<K, V, S> block);
 
-  public <S> RubyArray<S> collectConcat(EntryToListBlock<K, V, S> block);
+  abstract <S> RubyArray<S> collectConcat(EntryToListBlock<K, V, S> block);
 
-  public int count(EntryBooleanBlock<K, V> block);
+  abstract int count(EntryBooleanBlock<K, V> block);
 
-  public void cycle(EntryBlock<K, V> block);
+  abstract void cycle(EntryBlock<K, V> block);
 
-  public void cycle(int cycles, EntryBlock<K, V> block);
+  abstract void cycle(int cycles, EntryBlock<K, V> block);
 
-  public Entry<K, V> detect(EntryBooleanBlock<K, V> block);
+  abstract Entry<K, V> detect(EntryBooleanBlock<K, V> block);
 
-  public RubyArray<Entry<K, V>> dropWhile(EntryBooleanBlock<K, V> block);
+  abstract RubyArray<Entry<K, V>> dropWhile(EntryBooleanBlock<K, V> block);
 
-  public Entry<K, V> find(EntryBooleanBlock<K, V> block);
+  abstract Entry<K, V> find(EntryBooleanBlock<K, V> block);
 
-  public RubyArray<Entry<K, V>> findAll(EntryBooleanBlock<K, V> block);
+  abstract RubyArray<Entry<K, V>> findAll(EntryBooleanBlock<K, V> block);
 
-  public Integer findIndex(EntryBooleanBlock<K, V> block);
+  abstract Integer findIndex(EntryBooleanBlock<K, V> block);
 
-  public <S> RubyArray<S> flatMap(EntryToListBlock<K, V, S> block);
+  abstract <S> RubyArray<S> flatMap(EntryToListBlock<K, V, S> block);
 
-  public <S> RubyHash<S, RubyArrayList<Entry<K, V>>> groupBy(EntryTransformBlock<K, V, S> block);
+  abstract <S> RubyHash<S, RubyArrayList<Entry<K, V>>> groupBy(EntryTransformBlock<K, V, S> block);
 
-  public boolean includeʔ(K key);
+  abstract boolean includeʔ(K key);
 
-  public boolean memberʔ(K key);
+  abstract boolean memberʔ(K key);
 
-  public <S> S inject(S init, EntryInjectWithInitBlock<K, V, S> block);
+  abstract <S> S inject(S init, EntryInjectWithInitBlock<K, V, S> block);
 
-  public <S> RubyArray<S> map(EntryTransformBlock<K, V, S> block);
+  abstract <S> RubyArray<S> map(EntryTransformBlock<K, V, S> block);
 
-  public <S> Entry<K, V> maxBy(Comparator<? super S> comp, EntryTransformBlock<K, V, S> block);
+  abstract <S> Entry<K, V> maxBy(Comparator<? super S> comp, EntryTransformBlock<K, V, S> block);
 
-  public <S> Entry<K, V> minBy(Comparator<? super S> comp, EntryTransformBlock<K, V, S> block);
+  abstract <S> Entry<K, V> minBy(Comparator<? super S> comp, EntryTransformBlock<K, V, S> block);
 
-  public <S> RubyArray<Entry<K, V>> minmaxBy(Comparator<? super S> comp, EntryTransformBlock<K, V, S> block);
+  abstract <S> RubyArray<Entry<K, V>> minmaxBy(Comparator<? super S> comp, EntryTransformBlock<K, V, S> block);
 
-  public RubyArray<RubyArray<Entry<K, V>>> partition(EntryBooleanBlock<K, V> block);
+  abstract RubyArray<RubyArray<Entry<K, V>>> partition(EntryBooleanBlock<K, V> block);
 
-  public boolean noneʔ(EntryBooleanBlock<K, V> block);
+  abstract boolean noneʔ(EntryBooleanBlock<K, V> block);
 
-  public boolean oneʔ(EntryBooleanBlock<K, V> block);
+  abstract boolean oneʔ(EntryBooleanBlock<K, V> block);
 
-  public <S> S reduce(S init, EntryInjectWithInitBlock<K, V, S> block);
+  abstract <S> S reduce(S init, EntryInjectWithInitBlock<K, V, S> block);
 
-  public RubyHash<K, V> reject(EntryBooleanBlock<K, V> block);
+  abstract RubyHash<K, V> reject(EntryBooleanBlock<K, V> block);
 
-  public void reverseEach(EntryBlock block);
+  abstract void reverseEach(EntryBlock block);
 
-  public RubyArray<Entry<K, V>> select(EntryBooleanBlock<K, V> block);
+  abstract RubyArray<Entry<K, V>> select(EntryBooleanBlock<K, V> block);
 
-  public RubyEnumerator<RubyArray<Entry<K, V>>> sliceBefore(EntryBooleanBlock<K, V> block);
+  abstract RubyEnumerator<RubyArray<Entry<K, V>>> sliceBefore(EntryBooleanBlock<K, V> block);
 
-  public <S> RubyHash<K, V> sortBy(EntryTransformBlock<K, V, S> block);
+  abstract <S> RubyHash<K, V> sortBy(EntryTransformBlock<K, V, S> block);
 
-  public <S> RubyHash<K, V> sortBy(Comparator<? super S> comp, EntryTransformBlock<K, V, S> block);
+  abstract <S> RubyHash<K, V> sortBy(Comparator<? super S> comp, EntryTransformBlock<K, V, S> block);
 
-  public RubyArray<Entry<K, V>> takeWhile(EntryBooleanBlock block);
+  abstract RubyArray<Entry<K, V>> takeWhile(EntryBooleanBlock block);
 }

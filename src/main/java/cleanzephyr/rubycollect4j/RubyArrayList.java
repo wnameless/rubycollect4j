@@ -48,7 +48,7 @@ import java.util.Random;
 import org.uncommons.maths.combinatorics.CombinationGenerator;
 import org.uncommons.maths.combinatorics.PermutationGenerator;
 
-public final class RubyArrayList<E> implements RubyArray<E> {
+public final class RubyArrayList<E> extends RubyArray<E> {
 
   private final List<E> list;
   private final Random rand = new Random();

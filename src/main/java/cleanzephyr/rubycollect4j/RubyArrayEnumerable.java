@@ -13,7 +13,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map.Entry;
 
-public interface RubyArrayEnumerable<E> extends List<E> {
+public interface RubyArrayEnumerable<E> {
 
   public boolean allʔ();
 

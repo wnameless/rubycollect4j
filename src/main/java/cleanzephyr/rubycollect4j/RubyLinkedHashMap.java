@@ -48,7 +48,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public final class RubyLinkedHashMap<K, V> implements RubyHash<K, V> {
+public final class RubyLinkedHashMap<K, V> extends RubyHash<K, V> {
 
   private final Map<K, V> map;
   private V defaultValue;
@@ -694,12 +694,10 @@ public final class RubyLinkedHashMap<K, V> implements RubyHash<K, V> {
     return RubyEnumerable.groupBy(map.entrySet());
   }
 
-  @Override
   public boolean includeʔ(K key) {
     return map.containsKey(key);
   }
 
-  @Override
   public boolean memberʔ(K key) {
     return map.containsKey(key);
   }

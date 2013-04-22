@@ -10,204 +10,203 @@ import cleanzephyr.rubycollect4j.blocks.ItemTransformBlock;
 import cleanzephyr.rubycollect4j.blocks.ItemWithIndexBlock;
 import cleanzephyr.rubycollect4j.blocks.ItemWithObjectBlock;
 import java.util.Comparator;
-import java.util.Map;
 import java.util.Map.Entry;
 
-public interface RubyHashEnumerable<E extends Entry> extends Map {
+public interface RubyHashEnumerable<K, V> {
 
   public boolean allʔ();
 
-  public boolean allʔ(BooleanBlock<E> block);
+  public boolean allʔ(BooleanBlock<Entry<K, V>> block);
 
   public boolean anyʔ();
 
-  public boolean anyʔ(BooleanBlock<E> block);
+  public boolean anyʔ(BooleanBlock<Entry<K, V>> block);
 
-  public <K> RubyEnumerator<Entry<K, RubyArray<E>>> chunk(ItemTransformBlock<E, K> block);
+  public <S> RubyEnumerator<Entry<S, RubyArray<Entry<K, V>>>> chunk(ItemTransformBlock<Entry<K, V>, S> block);
 
-  public <S> RubyArray<S> collect(ItemTransformBlock<E, S> block);
+  public <S> RubyArray<S> collect(ItemTransformBlock<Entry<K, V>, S> block);
 
-  public RubyEnumerator<E> collect();
+  public RubyEnumerator<Entry<K, V>> collect();
 
-  public <S> RubyArray<S> collectConcat(ItemToListBlock<E, S> block);
+  public <S> RubyArray<S> collectConcat(ItemToListBlock<Entry<K, V>, S> block);
 
-  public RubyEnumerator<E> collectConcat();
+  public RubyEnumerator<Entry<K, V>> collectConcat();
 
   public int count();
 
-  public int count(BooleanBlock<E> block);
+  public int count(BooleanBlock<Entry<K, V>> block);
 
-  public void cycle(ItemBlock<E> block);
+  public void cycle(ItemBlock<Entry<K, V>> block);
 
-  public RubyEnumerator<E> cycle();
+  public RubyEnumerator<Entry<K, V>> cycle();
 
-  public void cycle(int n, ItemBlock<E> block);
+  public void cycle(int n, ItemBlock<Entry<K, V>> block);
 
-  public RubyEnumerator<E> cycle(int n);
+  public RubyEnumerator<Entry<K, V>> cycle(int n);
 
-  public E detect(BooleanBlock<E> block);
+  public Entry<K, V> detect(BooleanBlock<Entry<K, V>> block);
 
-  public RubyEnumerator<E> detect();
+  public RubyEnumerator<Entry<K, V>> detect();
 
-  public RubyArray<E> drop(int n);
+  public RubyArray<Entry<K, V>> drop(int n);
 
-  public RubyArray<E> dropWhile(BooleanBlock block);
+  public RubyArray<Entry<K, V>> dropWhile(BooleanBlock block);
 
-  public RubyEnumerator<E> dropWhile();
+  public RubyEnumerator<Entry<K, V>> dropWhile();
 
-  public void eachCons(int n, ItemFromListBlock<E> block);
+  public void eachCons(int n, ItemFromListBlock<Entry<K, V>> block);
 
-  public RubyEnumerator<RubyArray<E>> eachCons(int n);
+  public RubyEnumerator<RubyArray<Entry<K, V>>> eachCons(int n);
 
-  public RubyArray<E> eachEntry(ItemBlock<E> block);
+  public RubyArray<Entry<K, V>> eachEntry(ItemBlock<Entry<K, V>> block);
 
-  public RubyEnumerator<E> eachEntry();
+  public RubyEnumerator<Entry<K, V>> eachEntry();
 
-  public void eachSlice(int n, ItemFromListBlock<E> block);
+  public void eachSlice(int n, ItemFromListBlock<Entry<K, V>> block);
 
-  public RubyEnumerator<RubyArray<E>> eachSlice(int n);
+  public RubyEnumerator<RubyArray<Entry<K, V>>> eachSlice(int n);
 
-  public RubyArray<E> eachWithIndex(ItemWithIndexBlock<E> block);
+  public RubyArray<Entry<K, V>> eachWithIndex(ItemWithIndexBlock<Entry<K, V>> block);
 
-  public RubyEnumerator<Entry<E, Integer>> eachWithIndex();
+  public RubyEnumerator<Entry<Entry<K, V>, Integer>> eachWithIndex();
 
-  public <S> S eachWithObject(S o, ItemWithObjectBlock<E, S> block);
+  public <S> S eachWithObject(S o, ItemWithObjectBlock<Entry<K, V>, S> block);
 
-  public <S> RubyEnumerator<Entry<E, S>> eachWithObject(S o);
+  public <S> RubyEnumerator<Entry<Entry<K, V>, S>> eachWithObject(S o);
 
-  public RubyArray<E> entries();
+  public RubyArray<Entry<K, V>> entries();
 
-  public E find(BooleanBlock<E> block);
+  public Entry<K, V> find(BooleanBlock<Entry<K, V>> block);
 
-  public RubyEnumerator<E> find();
+  public RubyEnumerator<Entry<K, V>> find();
 
-  public RubyArray<E> findAll(BooleanBlock<E> block);
+  public RubyArray<Entry<K, V>> findAll(BooleanBlock<Entry<K, V>> block);
 
-  public RubyEnumerator<E> findAll();
+  public RubyEnumerator<Entry<K, V>> findAll();
 
-  public E first();
+  public Entry<K, V> first();
 
-  public RubyArray<E> first(int n);
+  public RubyArray<Entry<K, V>> first(int n);
 
-  public Integer findIndex(E target);
+  public Integer findIndex(Entry<K, V> target);
 
-  public Integer findIndex(BooleanBlock<E> block);
+  public Integer findIndex(BooleanBlock<Entry<K, V>> block);
 
-  public RubyEnumerator<E> findIndex();
+  public RubyEnumerator<Entry<K, V>> findIndex();
 
-  public <S> RubyArray<S> flatMap(ItemToListBlock<E, S> block);
+  public <S> RubyArray<S> flatMap(ItemToListBlock<Entry<K, V>, S> block);
 
-  public RubyEnumerator<E> flatMap();
+  public RubyEnumerator<Entry<K, V>> flatMap();
 
-  public RubyArray<E> grep(String regex);
+  public RubyArray<Entry<K, V>> grep(String regex);
 
-  public <S> RubyArray<S> grep(String regex, ItemTransformBlock<E, S> block);
+  public <S> RubyArray<S> grep(String regex, ItemTransformBlock<Entry<K, V>, S> block);
 
-  public <K> RubyHash<K, RubyArray<E>> groupBy(ItemTransformBlock<E, K> block);
+  public <S> RubyHash<S, RubyArray<Entry<K, V>>> groupBy(ItemTransformBlock<Entry<K, V>, S> block);
 
-  public RubyEnumerator<E> groupBy();
+  public RubyEnumerator<Entry<K, V>> groupBy();
 
-  public boolean includeʔ(E target);
+  public boolean includeʔ(Entry<K, V> target);
 
-  public boolean memberʔ(E target);
+  public boolean memberʔ(Entry<K, V> target);
 
-  public E inject(String methodName);
+  public Entry<K, V> inject(String methodName);
 
-  public E inject(E init, String methodName);
+  public Entry<K, V> inject(Entry<K, V> init, String methodName);
 
-  public E inject(InjectBlock<E> block);
+  public Entry<K, V> inject(InjectBlock<Entry<K, V>> block);
 
-  public <S> S inject(S init, InjectWithInitBlock<E, S> block);
+  public <S> S inject(S init, InjectWithInitBlock<Entry<K, V>, S> block);
 
-  public <S> RubyArray<S> map(ItemTransformBlock<E, S> block);
+  public <S> RubyArray<S> map(ItemTransformBlock<Entry<K, V>, S> block);
 
-  public RubyEnumerator<E> map();
+  public RubyEnumerator<Entry<K, V>> map();
 
-  public E max();
+  public Entry<K, V> max();
 
-  public E max(Comparator<? super E> comp);
+  public Entry<K, V> max(Comparator<? super Entry<K, V>> comp);
 
-  public <S> E maxBy(ItemTransformBlock<E, S> block);
+  public <S> Entry<K, V> maxBy(ItemTransformBlock<Entry<K, V>, S> block);
 
-  public <S> E maxBy(Comparator<? super S> comp, ItemTransformBlock<E, S> block);
+  public <S> Entry<K, V> maxBy(Comparator<? super S> comp, ItemTransformBlock<Entry<K, V>, S> block);
 
-  public RubyEnumerator<E> maxBy();
+  public RubyEnumerator<Entry<K, V>> maxBy();
 
-  public <E> E min();
+  public Entry<K, V> min();
 
-  public E min(Comparator<? super E> comp);
+  public Entry<K, V> min(Comparator<? super Entry<K, V>> comp);
 
-  public <S> E minBy(ItemTransformBlock<E, S> block);
+  public <S> Entry<K, V> minBy(ItemTransformBlock<Entry<K, V>, S> block);
 
-  public <S> E minBy(Comparator<? super S> comp, ItemTransformBlock<E, S> block);
+  public <S> Entry<K, V> minBy(Comparator<? super S> comp, ItemTransformBlock<Entry<K, V>, S> block);
 
-  public RubyEnumerator<E> minBy();
+  public RubyEnumerator<Entry<K, V>> minBy();
 
-  public RubyArray<E> minmax();
+  public RubyArray<Entry<K, V>> minmax();
 
-  public RubyArray<E> minmax(Comparator<? super E> comp);
+  public RubyArray<Entry<K, V>> minmax(Comparator<? super Entry<K, V>> comp);
 
-  public RubyEnumerator<E> minmaxBy();
+  public RubyEnumerator<Entry<K, V>> minmaxBy();
 
-  public < S> RubyArray<E> minmaxBy(ItemTransformBlock<E, S> block);
+  public <S> RubyArray<Entry<K, V>> minmaxBy(ItemTransformBlock<Entry<K, V>, S> block);
 
-  public < S> RubyArray<E> minmaxBy(Comparator<? super S> comp, ItemTransformBlock<E, S> block);
+  public <S> RubyArray<Entry<K, V>> minmaxBy(Comparator<? super S> comp, ItemTransformBlock<Entry<K, V>, S> block);
 
   public boolean noneʔ();
 
-  public boolean noneʔ(BooleanBlock<E> block);
+  public boolean noneʔ(BooleanBlock<Entry<K, V>> block);
 
   public boolean oneʔ();
 
-  public boolean oneʔ(BooleanBlock<E> block);
+  public boolean oneʔ(BooleanBlock<Entry<K, V>> block);
 
-  public RubyArray<RubyArray<E>> partition(BooleanBlock<E> block);
+  public RubyArray<RubyArray<Entry<K, V>>> partition(BooleanBlock<Entry<K, V>> block);
 
-  public RubyEnumerator<E> partition();
+  public RubyEnumerator<Entry<K, V>> partition();
 
-  public E reduce(String methodName);
+  public Entry<K, V> reduce(String methodName);
 
-  public E reduce(E init, String methodName);
+  public Entry<K, V> reduce(Entry<K, V> init, String methodName);
 
-  public E reduce(InjectBlock<E> block);
+  public Entry<K, V> reduce(InjectBlock<Entry<K, V>> block);
 
-  public <S> S reduce(S init, InjectWithInitBlock<E, S> block);
+  public <S> S reduce(S init, InjectWithInitBlock<Entry<K, V>, S> block);
 
-  public RubyArray<E> reject(BooleanBlock<E> block);
+  public RubyArray<Entry<K, V>> reject(BooleanBlock<Entry<K, V>> block);
 
-  public RubyEnumerator<E> reject();
+  public RubyEnumerator<Entry<K, V>> reject();
 
   public void reverseEach(ItemBlock block);
 
-  public RubyEnumerator<E> reverseEach();
+  public RubyEnumerator<Entry<K, V>> reverseEach();
 
-  public RubyArray<E> select(BooleanBlock block);
+  public RubyArray<Entry<K, V>> select(BooleanBlock block);
 
-  public RubyEnumerator<E> select();
+  public RubyEnumerator<Entry<K, V>> select();
 
-  public RubyEnumerator<RubyArray<E>> sliceBefore(String regex);
+  public RubyEnumerator<RubyArray<Entry<K, V>>> sliceBefore(String regex);
 
-  public RubyEnumerator<RubyArray<E>> sliceBefore(BooleanBlock block);
+  public RubyEnumerator<RubyArray<Entry<K, V>>> sliceBefore(BooleanBlock block);
 
-  public RubyArray<E> sort();
+  public RubyArray<Entry<K, V>> sort();
 
-  public RubyArray<E> sort(Comparator<? super E> comp);
+  public RubyArray<Entry<K, V>> sort(Comparator<? super Entry<K, V>> comp);
 
-  public <S> RubyArray<E> sortBy(ItemTransformBlock<E, S> block);
+  public <S> RubyArray<Entry<K, V>> sortBy(ItemTransformBlock<Entry<K, V>, S> block);
 
-  public <S> RubyArray<E> sortBy(Comparator<? super S> comp, ItemTransformBlock<E, S> block);
+  public <S> RubyArray<Entry<K, V>> sortBy(Comparator<? super S> comp, ItemTransformBlock<Entry<K, V>, S> block);
 
-  public RubyEnumerator<E> sortBy();
+  public RubyEnumerator<Entry<K, V>> sortBy();
 
-  public RubyArray<E> take(int n);
+  public RubyArray<Entry<K, V>> take(int n);
 
-  public RubyArray<E> takeWhile(BooleanBlock block);
+  public RubyArray<Entry<K, V>> takeWhile(BooleanBlock block);
 
-  public RubyEnumerator<E> takeWhile();
+  public RubyEnumerator<Entry<K, V>> takeWhile();
 
-  public RubyArray<E> toA();
+  public RubyArray<Entry<K, V>> toA();
 
-  public RubyArray<RubyArray<E>> zip(RubyArray<E>... others);
+  public RubyArray<RubyArray<Entry<K, V>>> zip(RubyArray<Entry<K, V>>... others);
 
-  public void zip(RubyArray<RubyArray<E>> others, ItemBlock<RubyArray<E>> block);
+  public void zip(RubyArray<RubyArray<Entry<K, V>>> others, ItemBlock<RubyArray<Entry<K, V>>> block);
 }
