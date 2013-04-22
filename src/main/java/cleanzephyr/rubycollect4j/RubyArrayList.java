@@ -36,7 +36,6 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
 import static com.google.common.collect.Lists.newArrayList;
 import com.google.common.collect.Multimap;
-import java.util.AbstractMap.SimpleEntry;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -1125,6 +1124,11 @@ public final class RubyArrayList<E> implements RubyArray<E> {
   @Override
   public RubyArray<E> dropWhile(BooleanBlock block) {
     return RubyEnumerable.dropWhile(list, block);
+  }
+
+  @Override
+  public RubyEnumerator<E> dropWhile() {
+    return RubyEnumerable.dropWhile(list);
   }
 
   @Override
