@@ -21,6 +21,7 @@
 package cleanzephyr.rubycollect4j;
 
 import static cleanzephyr.rubycollect4j.RubyCollections.newRubyArray;
+import cleanzephyr.rubycollect4j.blocks.BooleanBlock;
 import cleanzephyr.rubycollect4j.blocks.EntryBlock;
 import cleanzephyr.rubycollect4j.blocks.EntryBooleanBlock;
 import cleanzephyr.rubycollect4j.blocks.EntryInjectWithInitBlock;
@@ -28,8 +29,11 @@ import cleanzephyr.rubycollect4j.blocks.EntryMergeBlock;
 import cleanzephyr.rubycollect4j.blocks.EntryToListBlock;
 import cleanzephyr.rubycollect4j.blocks.EntryTransformBlock;
 import cleanzephyr.rubycollect4j.blocks.InjectBlock;
+import cleanzephyr.rubycollect4j.blocks.InjectWithInitBlock;
 import cleanzephyr.rubycollect4j.blocks.ItemBlock;
 import cleanzephyr.rubycollect4j.blocks.ItemFromListBlock;
+import cleanzephyr.rubycollect4j.blocks.ItemToListBlock;
+import cleanzephyr.rubycollect4j.blocks.ItemTransformBlock;
 import cleanzephyr.rubycollect4j.blocks.ItemWithIndexBlock;
 import cleanzephyr.rubycollect4j.blocks.ItemWithObjectBlock;
 import com.google.common.collect.ArrayListMultimap;
@@ -37,7 +41,6 @@ import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newLinkedHashMap;
 import com.google.common.collect.Multimap;
 import static java.util.AbstractMap.SimpleEntry;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
@@ -725,14 +728,6 @@ public final class RubyLinkedHashMap<K, V> implements RubyHash<K, V> {
   }
 
   @Override
-  public Entry<K, V> max(Comparator<? super K> comp) {
-    K maxKey = RubyEnumerable.max(map.keySet(), comp);
-    return find((k, v) -> {
-      return k.equals(maxKey);
-    });
-  }
-
-  @Override
   public <S> Entry<K, V> maxBy(Comparator<? super S> comp, EntryTransformBlock<K, V, S> block) {
     List<Entry<K, V>> src = newArrayList();
     List<S> dst = newArrayList();
@@ -750,14 +745,6 @@ public final class RubyLinkedHashMap<K, V> implements RubyHash<K, V> {
   }
 
   @Override
-  public Entry<K, V> min(Comparator<? super K> comp) {
-    K minKey = RubyEnumerable.min(map.keySet(), comp);
-    return find((k, v) -> {
-      return k.equals(minKey);
-    });
-  }
-
-  @Override
   public <S> Entry<K, V> minBy(Comparator<? super S> comp, EntryTransformBlock<K, V, S> block) {
     List<Entry<K, V>> src = newArrayList();
     List<S> dst = newArrayList();
@@ -772,15 +759,6 @@ public final class RubyLinkedHashMap<K, V> implements RubyHash<K, V> {
   @Override
   public RubyEnumerator<Entry<K, V>> minBy() {
     return RubyEnumerable.minBy(map.entrySet());
-  }
-
-  @Override
-  public RubyArrayList<Entry<K, V>> minmax(Comparator<? super K> comp) {
-    K minKey = RubyEnumerable.min(map.keySet(), comp);
-    K maxKey = RubyEnumerable.max(map.keySet(), comp);
-    Entry<K, V> min = new SimpleEntry(minKey, map.get(minKey));
-    Entry<K, V> max = new SimpleEntry(maxKey, map.get(maxKey));
-    return new RubyArrayList(min, max);
   }
 
   @Override
@@ -935,27 +913,6 @@ public final class RubyLinkedHashMap<K, V> implements RubyHash<K, V> {
   }
 
   @Override
-  public RubyHash<K, V> sort(Comparator<? super K> comp) {
-    List<K> sortedKeys = RubyEnumerable.sort(map.keySet(), comp);
-    Map<K, V> sortedMap = newLinkedHashMap();
-    for (K key : sortedKeys) {
-      sortedMap.put(key, map.get(key));
-    }
-    return new RubyLinkedHashMap(sortedMap);
-  }
-
-  @Override
-  public RubyHash<K, V> sort() {
-    Object[] keys = newArrayList(keySet()).toArray();
-    Arrays.sort(keys);
-    Map<K, V> sortedMap = newLinkedHashMap();
-    for (Object key : keys) {
-      sortedMap.put((K) key, map.get(key));
-    }
-    return new RubyLinkedHashMap(sortedMap);
-  }
-
-  @Override
   public <S> RubyHash<K, V> sortBy(EntryTransformBlock<K, V, S> block) {
     RubyArray<Entry<S, K>> references = newRubyArray();
     for (Entry<K, V> item : map.entrySet()) {
@@ -1048,18 +1005,8 @@ public final class RubyLinkedHashMap<K, V> implements RubyHash<K, V> {
   }
 
   @Override
-  public V put(K key, V value) {
-    return map.put(key, value);
-  }
-
-  @Override
   public V remove(Object key) {
     return map.remove(key);
-  }
-
-  @Override
-  public void putAll(Map<? extends K, ? extends V> m) {
-    map.putAll(m);
   }
 
   @Override
@@ -1090,5 +1037,275 @@ public final class RubyLinkedHashMap<K, V> implements RubyHash<K, V> {
   @Override
   public String toString() {
     return map.toString();
+  }
+
+  @Override
+  public boolean allʔ(BooleanBlock<Entry<K, V>> block) {
+    return RubyEnumerable.allʔ(map.entrySet(), block);
+  }
+
+  @Override
+  public boolean anyʔ(BooleanBlock<Entry<K, V>> block) {
+    return RubyEnumerable.anyʔ(map.entrySet(), block);
+  }
+
+  @Override
+  public <S> RubyEnumerator<Entry<S, RubyArray<Entry<K, V>>>> chunk(ItemTransformBlock<Entry<K, V>, S> block) {
+    return RubyEnumerable.chunk(map.entrySet(), block);
+  }
+
+  @Override
+  public <S> RubyArray<S> collect(ItemTransformBlock<Entry<K, V>, S> block) {
+    return RubyEnumerable.collect(map.entrySet(), block);
+  }
+
+  @Override
+  public <S> RubyArray<S> collectConcat(ItemToListBlock<Entry<K, V>, S> block) {
+    return RubyEnumerable.collectConcat(map.entrySet(), block);
+  }
+
+  @Override
+  public int count(BooleanBlock<Entry<K, V>> block) {
+    return RubyEnumerable.count(map.entrySet(), block);
+  }
+
+  @Override
+  public void cycle(ItemBlock<Entry<K, V>> block) {
+    RubyEnumerable.cycle(map.entrySet(), block);
+  }
+
+  @Override
+  public RubyEnumerator<Entry<K, V>> cycle() {
+    return RubyEnumerable.cycle(map.entrySet());
+  }
+
+  @Override
+  public void cycle(int n, ItemBlock<Entry<K, V>> block) {
+    RubyEnumerable.cycle(map.entrySet(), n, block);
+  }
+
+  @Override
+  public RubyEnumerator<Entry<K, V>> cycle(int n) {
+    return RubyEnumerable.cycle(map.entrySet(), n);
+  }
+
+  @Override
+  public Entry<K, V> detect(BooleanBlock<Entry<K, V>> block) {
+    return RubyEnumerable.detect(map.entrySet(), block);
+  }
+
+  @Override
+  public RubyArray<Entry<K, V>> dropWhile(BooleanBlock block) {
+    return RubyEnumerable.dropWhile(map.entrySet(), block);
+  }
+
+  @Override
+  public Entry<K, V> find(BooleanBlock<Entry<K, V>> block) {
+    return RubyEnumerable.find(map.entrySet(), block);
+  }
+
+  @Override
+  public RubyArray<Entry<K, V>> findAll(BooleanBlock<Entry<K, V>> block) {
+    return RubyEnumerable.findAll(map.entrySet(), block);
+  }
+
+  @Override
+  public Integer findIndex(BooleanBlock<Entry<K, V>> block) {
+    return RubyEnumerable.findIndex(map.entrySet(), block);
+  }
+
+  @Override
+  public <S> RubyArray<S> flatMap(ItemToListBlock<Entry<K, V>, S> block) {
+    return RubyEnumerable.flatMap(map.entrySet(), block);
+  }
+
+  @Override
+  public RubyArray<Entry<K, V>> grep(String regex) {
+    return RubyEnumerable.grep(map.entrySet(), regex);
+  }
+
+  @Override
+  public <S> RubyArray<S> grep(String regex, ItemTransformBlock<Entry<K, V>, S> block) {
+    return RubyEnumerable.grep(map.entrySet(), regex, block);
+  }
+
+  @Override
+  public <S> RubyHash<S, RubyArray<Entry<K, V>>> groupBy(ItemTransformBlock<Entry<K, V>, S> block) {
+    return RubyEnumerable.groupBy(map.entrySet(), block);
+  }
+
+  @Override
+  public boolean includeʔ(Entry<K, V> target) {
+    return RubyEnumerable.includeʔ(map.entrySet(), target);
+  }
+
+  @Override
+  public boolean memberʔ(Entry<K, V> target) {
+    return RubyEnumerable.memberʔ(map.entrySet(), target);
+  }
+
+  @Override
+  public Entry<K, V> inject(String methodName) {
+    return RubyEnumerable.inject(map.entrySet(), methodName);
+  }
+
+  @Override
+  public Entry<K, V> inject(Entry<K, V> init, String methodName) {
+    return RubyEnumerable.inject(map.entrySet(), init, methodName);
+  }
+
+  @Override
+  public <S> S inject(S init, InjectWithInitBlock<Entry<K, V>, S> block) {
+    return RubyEnumerable.inject(map.entrySet(), init, block);
+  }
+
+  @Override
+  public <S> RubyArray<S> map(ItemTransformBlock<Entry<K, V>, S> block) {
+    return RubyEnumerable.map(map.entrySet(), block);
+  }
+
+  @Override
+  public Entry<K, V> max() {
+    return RubyEnumerable.max(map.entrySet());
+  }
+
+  @Override
+  public Entry<K, V> max(Comparator<? super Entry<K, V>> comp) {
+    return RubyEnumerable.max(map.entrySet(), comp);
+  }
+
+  @Override
+  public <S> Entry<K, V> maxBy(ItemTransformBlock<Entry<K, V>, S> block) {
+    return RubyEnumerable.maxBy(map.entrySet(), block);
+  }
+
+  @Override
+  public <S> Entry<K, V> maxBy(Comparator<? super S> comp, ItemTransformBlock<Entry<K, V>, S> block) {
+    return RubyEnumerable.maxBy(map.entrySet(), comp, block);
+  }
+
+  @Override
+  public Entry<K, V> min() {
+    return RubyEnumerable.min(map.entrySet());
+  }
+
+  @Override
+  public Entry<K, V> min(Comparator<? super Entry<K, V>> comp) {
+    return RubyEnumerable.min(map.entrySet(), comp);
+  }
+
+  @Override
+  public <S> Entry<K, V> minBy(ItemTransformBlock<Entry<K, V>, S> block) {
+    return RubyEnumerable.minBy(map.entrySet(), block);
+  }
+
+  @Override
+  public <S> Entry<K, V> minBy(Comparator<? super S> comp, ItemTransformBlock<Entry<K, V>, S> block) {
+    return RubyEnumerable.minBy(map.entrySet(), comp, block);
+  }
+
+  @Override
+  public RubyArray<Entry<K, V>> minmax() {
+    return RubyEnumerable.minmax(map.entrySet());
+  }
+
+  @Override
+  public RubyArray<Entry<K, V>> minmax(Comparator<? super Entry<K, V>> comp) {
+    return RubyEnumerable.minmax(map.entrySet(), comp);
+  }
+
+  @Override
+  public <S> RubyArray<Entry<K, V>> minmaxBy(ItemTransformBlock<Entry<K, V>, S> block) {
+    return RubyEnumerable.minmaxBy(map.entrySet(), block);
+  }
+
+  @Override
+  public <S> RubyArray<Entry<K, V>> minmaxBy(Comparator<? super S> comp, ItemTransformBlock<Entry<K, V>, S> block) {
+    return RubyEnumerable.minmaxBy(map.entrySet(), comp, block);
+  }
+
+  @Override
+  public boolean noneʔ(BooleanBlock<Entry<K, V>> block) {
+    return RubyEnumerable.noneʔ(map.entrySet(), block);
+  }
+
+  @Override
+  public boolean oneʔ(BooleanBlock<Entry<K, V>> block) {
+    return RubyEnumerable.oneʔ(map.entrySet(), block);
+  }
+
+  @Override
+  public RubyArray<RubyArray<Entry<K, V>>> partition(BooleanBlock<Entry<K, V>> block) {
+    return RubyEnumerable.partition(map.entrySet(), block);
+  }
+
+  @Override
+  public Entry<K, V> reduce(String methodName) {
+    return RubyEnumerable.reduce(map.entrySet(), methodName);
+  }
+
+  @Override
+  public Entry<K, V> reduce(Entry<K, V> init, String methodName) {
+    return RubyEnumerable.reduce(map.entrySet(), init, methodName);
+  }
+
+  @Override
+  public <S> S reduce(S init, InjectWithInitBlock<Entry<K, V>, S> block) {
+    return RubyEnumerable.reduce(map.entrySet(), init, block);
+  }
+
+  @Override
+  public RubyArray<Entry<K, V>> reject(BooleanBlock<Entry<K, V>> block) {
+    return RubyEnumerable.reject(map.entrySet(), block);
+  }
+
+  @Override
+  public void reverseEach(ItemBlock block) {
+    RubyEnumerable.reverseEach(map.entrySet(), block);
+  }
+
+  @Override
+  public RubyArray<Entry<K, V>> select(BooleanBlock block) {
+    return RubyEnumerable.select(map.entrySet(), block);
+  }
+
+  @Override
+  public RubyEnumerator<RubyArray<Entry<K, V>>> sliceBefore(BooleanBlock block) {
+    return RubyEnumerable.sliceBefore(map.entrySet(), block);
+  }
+
+  @Override
+  public RubyArray<Entry<K, V>> sort() {
+    return RubyEnumerable.sort(map.entrySet());
+  }
+
+  @Override
+  public RubyArray<Entry<K, V>> sort(Comparator<? super Entry<K, V>> comp) {
+    return RubyEnumerable.sort(map.entrySet(), comp);
+  }
+
+  @Override
+  public <S> RubyArray<Entry<K, V>> sortBy(ItemTransformBlock<Entry<K, V>, S> block) {
+    return RubyEnumerable.sortBy(map.entrySet(), block);
+  }
+
+  @Override
+  public <S> RubyArray<Entry<K, V>> sortBy(Comparator<? super S> comp, ItemTransformBlock<Entry<K, V>, S> block) {
+    return RubyEnumerable.sortBy(map.entrySet(), block);
+  }
+
+  @Override
+  public RubyArray<Entry<K, V>> takeWhile(BooleanBlock block) {
+    return RubyEnumerable.takeWhile(map.entrySet(), block);
+  }
+
+  @Override
+  public Object put(Object key, Object value) {
+    return map.put((K) key, (V) value);
+  }
+
+  @Override
+  public void putAll(Map m) {
+    map.putAll(m);
   }
 }

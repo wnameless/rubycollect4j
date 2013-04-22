@@ -26,15 +26,12 @@ import cleanzephyr.rubycollect4j.blocks.EntryInjectWithInitBlock;
 import cleanzephyr.rubycollect4j.blocks.EntryMergeBlock;
 import cleanzephyr.rubycollect4j.blocks.EntryToListBlock;
 import cleanzephyr.rubycollect4j.blocks.EntryTransformBlock;
-import cleanzephyr.rubycollect4j.blocks.InjectBlock;
 import cleanzephyr.rubycollect4j.blocks.ItemBlock;
-import cleanzephyr.rubycollect4j.blocks.ItemFromListBlock;
-import cleanzephyr.rubycollect4j.blocks.ItemWithIndexBlock;
-import cleanzephyr.rubycollect4j.blocks.ItemWithObjectBlock;
 import java.util.Comparator;
 import java.util.Map;
+import java.util.Map.Entry;
 
-public interface RubyHash<K, V> extends Map<K, V> {
+public interface RubyHash<K, V> extends RubyHashEnumerable<Entry<K, V>> {
 
   public RubyHash<K, V> put(Entry<K, V> entry);
 
@@ -86,12 +83,6 @@ public interface RubyHash<K, V> extends Map<K, V> {
 
   public RubyHash<K, V> toHash();
 
-  public RubyArray<Entry<K, V>> toA();
-
-  public RubyArray<RubyArray<Entry<K, V>>> zip(RubyArray<Entry<K, V>>... others);
-
-  public void zip(RubyArray<RubyArray<Entry<K, V>>> others, ItemBlock<RubyArray<Entry<K, V>>> block);
-
   public String toS();
 
   public String inspect();
@@ -133,11 +124,8 @@ public interface RubyHash<K, V> extends Map<K, V> {
 
   public RubyArray<V> valuesAt(K... keys);
 
-  public boolean allʔ();
-
+  // RubyEnumerable for Hash
   public boolean allʔ(EntryBooleanBlock<K, V> block);
-
-  public boolean anyʔ();
 
   public boolean anyʔ(EntryBooleanBlock<K, V> block);
 
@@ -145,13 +133,7 @@ public interface RubyHash<K, V> extends Map<K, V> {
 
   public <S> RubyArray<S> collect(EntryTransformBlock<K, V, S> block);
 
-  public RubyEnumerator<Entry<K, V>> collect();
-
   public <S> RubyArray<S> collectConcat(EntryToListBlock<K, V, S> block);
-
-  public RubyEnumerator<Entry<K, V>> collectConcat();
-
-  public int count();
 
   public int count(EntryBooleanBlock<K, V> block);
 
@@ -161,133 +143,51 @@ public interface RubyHash<K, V> extends Map<K, V> {
 
   public Entry<K, V> detect(EntryBooleanBlock<K, V> block);
 
-  public RubyEnumerator<Entry<K, V>> detect();
-
-  public RubyArray<Entry<K, V>> drop(int n);
-
   public RubyArray<Entry<K, V>> dropWhile(EntryBooleanBlock<K, V> block);
-
-  public RubyEnumerator<Entry<K, V>> dropWhile();
-
-  public void eachCons(int n, ItemFromListBlock<Entry<K, V>> block);
-
-  public RubyEnumerator<RubyArray<Entry<K, V>>> eachCons(int n);
-
-  public void eachSlice(int n, ItemFromListBlock<Entry<K, V>> block);
-
-  public RubyEnumerator<RubyArray<Entry<K, V>>> eachSlice(int n);
-
-  public RubyArray<Entry<K, V>> eachWithIndex(ItemWithIndexBlock<Entry<K, V>> block);
-
-  public RubyEnumerator<Entry<Entry<K, V>, Integer>> eachWithIndex();
-
-  public <S> S eachWithObject(S o, ItemWithObjectBlock<Entry<K, V>, S> block);
-
-  public <S> RubyEnumerator<Entry<Entry<K, V>, S>> eachWithObject(S o);
-
-  public RubyArray<Entry<K, V>> entries();
 
   public Entry<K, V> find(EntryBooleanBlock<K, V> block);
 
-  public RubyEnumerator<Entry<K, V>> find();
-
   public RubyArray<Entry<K, V>> findAll(EntryBooleanBlock<K, V> block);
-
-  public RubyEnumerator<Entry<K, V>> findAll();
-
-  public Entry<K, V> first();
-
-  public RubyArray<Entry<K, V>> first(int n);
-
-  public Integer findIndex(Entry<K, V> target);
 
   public Integer findIndex(EntryBooleanBlock<K, V> block);
 
-  public RubyEnumerator<Entry<K, V>> findIndex();
-
   public <S> RubyArray<S> flatMap(EntryToListBlock<K, V, S> block);
 
-  public RubyEnumerator<Entry<K, V>> flatMap();
-
   public <S> RubyHash<S, RubyArrayList<Entry<K, V>>> groupBy(EntryTransformBlock<K, V, S> block);
-
-  public RubyEnumerator<Entry<K, V>> groupBy();
 
   public boolean includeʔ(K key);
 
   public boolean memberʔ(K key);
 
-  public Entry<K, V> inject(InjectBlock<Entry<K, V>> block);
-
   public <S> S inject(S init, EntryInjectWithInitBlock<K, V, S> block);
 
   public <S> RubyArray<S> map(EntryTransformBlock<K, V, S> block);
 
-  public RubyEnumerator<Entry<K, V>> map();
-
-  public Entry<K, V> max(Comparator<? super K> comp);
-
   public <S> Entry<K, V> maxBy(Comparator<? super S> comp, EntryTransformBlock<K, V, S> block);
-
-  public RubyEnumerator<Entry<K, V>> maxBy();
-
-  public Entry<K, V> min(Comparator<? super K> comp);
 
   public <S> Entry<K, V> minBy(Comparator<? super S> comp, EntryTransformBlock<K, V, S> block);
 
-  public RubyEnumerator<Entry<K, V>> minBy();
-
-  public RubyArray<Entry<K, V>> minmax(Comparator<? super K> comp);
-
   public <S> RubyArray<Entry<K, V>> minmaxBy(Comparator<? super S> comp, EntryTransformBlock<K, V, S> block);
-
-  public RubyEnumerator<Entry<K, V>> minmaxBy();
 
   public RubyArray<RubyArray<Entry<K, V>>> partition(EntryBooleanBlock<K, V> block);
 
-  public RubyEnumerator<Entry<K, V>> partition();
-
-  public boolean noneʔ();
-
   public boolean noneʔ(EntryBooleanBlock<K, V> block);
 
-  public boolean oneʔ();
-
   public boolean oneʔ(EntryBooleanBlock<K, V> block);
-
-  public Entry<K, V> reduce(InjectBlock<Entry<K, V>> block);
 
   public <S> S reduce(S init, EntryInjectWithInitBlock<K, V, S> block);
 
   public RubyHash<K, V> reject(EntryBooleanBlock<K, V> block);
 
-  public RubyEnumerator<Entry<K, V>> reject();
-
   public void reverseEach(EntryBlock block);
-
-  public RubyEnumerator<Entry<K, V>> reverseEach();
 
   public RubyArray<Entry<K, V>> select(EntryBooleanBlock<K, V> block);
 
-  public RubyEnumerator<Entry<K, V>> select();
-
-  public RubyEnumerator<RubyArray<Entry<K, V>>> sliceBefore(String regex);
-
   public RubyEnumerator<RubyArray<Entry<K, V>>> sliceBefore(EntryBooleanBlock<K, V> block);
-
-  public RubyHash<K, V> sort(Comparator<? super K> comp);
-
-  public RubyHash<K, V> sort();
 
   public <S> RubyHash<K, V> sortBy(EntryTransformBlock<K, V, S> block);
 
   public <S> RubyHash<K, V> sortBy(Comparator<? super S> comp, EntryTransformBlock<K, V, S> block);
 
-  public RubyEnumerator<Entry<K, V>> sortBy();
-
-  public RubyArray<Entry<K, V>> take(int n);
-
   public RubyArray<Entry<K, V>> takeWhile(EntryBooleanBlock block);
-
-  public RubyEnumerator<Entry<K, V>> takeWhile();
 }
