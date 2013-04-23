@@ -19,19 +19,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
-public class RubyEnumerator<E> implements RubyArrayEnumerable<E>, Iterable<E>, Iterator<E> {
+public class RubyEnumerator<E> implements RubyArrayEnumerable<E>, Iterable<E> {
 
   private final Iterable<E> iter;
-  private Iterator<E> it;
 
   public RubyEnumerator(Iterable<E> iter) {
     this.iter = iter;
-    it = iter.iterator();
   }
 
   public RubyEnumerator(Iterator<E> it) {
     iter = newArrayList(it);
-    this.it = iter.iterator();
   }
 
   public RubyArray<E> each(ItemBlock<E> block) {
@@ -45,11 +42,6 @@ public class RubyEnumerator<E> implements RubyArrayEnumerable<E>, Iterable<E>, I
 
   public RubyEnumerator<E> each() {
     return this;
-  }
-
-  public Iterator<E> rewind() {
-    it = iter.iterator();
-    return it;
   }
 
   @Override
@@ -570,20 +562,5 @@ public class RubyEnumerator<E> implements RubyArrayEnumerable<E>, Iterable<E>, I
   @Override
   public Iterator<E> iterator() {
     return iter.iterator();
-  }
-
-  @Override
-  public boolean hasNext() {
-    return it.hasNext();
-  }
-
-  @Override
-  public E next() {
-    return it.next();
-  }
-
-  @Override
-  public void remove() {
-    it.remove();
   }
 }
