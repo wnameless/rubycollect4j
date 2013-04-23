@@ -217,11 +217,8 @@ public final class RubyArrayImpl<E> extends RubyArray<E> {
       return new RubyEnumerator(comb);
     } else {
       CombinationGenerator<E> cg = new CombinationGenerator<>(list, n);
-      for (List<E> combination : cg) {
-        comb.add(new RubyArrayImpl<E>(combination));
-      }
+      return new RubyEnumerator(cg);
     }
-    return new RubyEnumerator(comb);
   }
 
   @Override
