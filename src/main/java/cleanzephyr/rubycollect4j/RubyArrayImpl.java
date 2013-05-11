@@ -207,11 +207,12 @@ public final class RubyArrayImpl<E> extends RubyArray<E> {
 
   @Override
   public RubyEnumerator<RubyArray<E>> combination(int n) {
-    RubyArray<RubyArray<E>> comb = new RubyArrayImpl();
+    RubyArray<RubyArray<E>> comb = new RubyArrayImpl<>();
     if (n < 0) {
       return new RubyEnumerator(comb);
     } else if (n == 0) {
-      comb.add(new RubyArrayImpl<E>());
+      RubyArray<E> ra = new RubyArrayImpl<>();
+      comb.add(ra);
       return new RubyEnumerator(comb);
     } else if (n > list.size()) {
       return new RubyEnumerator(comb);
@@ -224,9 +225,9 @@ public final class RubyArrayImpl<E> extends RubyArray<E> {
   @Override
   public RubyArray<RubyArray<E>> combination(int n, ItemBlock<RubyArray<E>> block) {
     RubyArray<RubyArray<E>> comb = combination(n).toA();
-    for (RubyArray<E> item : comb) {
+    comb.stream().forEach((item) -> {
       block.yield(item);
-    }
+    });
     return comb;
   }
 
@@ -1582,8 +1583,9 @@ public final class RubyArrayImpl<E> extends RubyArray<E> {
   }
 
   @Override
-  public RubyArray<E> sort(Comparator<? super E> comp) {
-    return new RubyArrayImpl(RubyEnumerable.sort(list, comp));
+  public void sort(Comparator<? super E> comp) {
+    Collections.sort(list, comp);
+    //return new RubyArrayImpl(RubyEnumerable.sort(list, comp));
   }
 
   @Override

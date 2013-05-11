@@ -191,7 +191,7 @@ public interface RubyArrayEnumerable<E> {
 
   public RubyArray<E> sort();
 
-  public RubyArray<E> sort(Comparator<? super E> comp);
+  //public RubyArray<E> sort(Comparator<? super E> comp);
 
   public <S> RubyArray<E> sortBy(ItemTransformBlock<E, S> block);
 

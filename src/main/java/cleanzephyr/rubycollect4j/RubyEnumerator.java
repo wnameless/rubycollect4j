@@ -495,10 +495,10 @@ public class RubyEnumerator<E> implements RubyArrayEnumerable<E>, Iterable<E> {
     return new RubyArrayImpl(array);
   }
 
-  @Override
-  public RubyArray<E> sort(Comparator<? super E> comp) {
-    return new RubyArrayImpl(RubyEnumerable.sort(iter, comp));
-  }
+  //@Override
+  //public RubyArray<E> sort(Comparator<? super E> comp) {
+  //  return new RubyArrayImpl(RubyEnumerable.sort(iter, comp));
+  //}
 
   @Override
   public <S> RubyArray<E> sortBy(ItemTransformBlock<E, S> block) {
