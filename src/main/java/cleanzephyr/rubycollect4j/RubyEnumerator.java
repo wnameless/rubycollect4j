@@ -4,7 +4,7 @@ import cleanzephyr.rubycollect4j.blocks.BooleanBlock;
 import cleanzephyr.rubycollect4j.blocks.InjectBlock;
 import cleanzephyr.rubycollect4j.blocks.InjectWithInitBlock;
 import cleanzephyr.rubycollect4j.blocks.ItemBlock;
-import cleanzephyr.rubycollect4j.blocks.ItemFromListBlock;
+import cleanzephyr.rubycollect4j.blocks.ListBlock;
 import cleanzephyr.rubycollect4j.blocks.ItemToListBlock;
 import cleanzephyr.rubycollect4j.blocks.ItemTransformBlock;
 import cleanzephyr.rubycollect4j.blocks.ItemWithIndexBlock;
@@ -32,7 +32,7 @@ public class RubyEnumerator<E> implements RubyArrayEnumerable<E>, Iterable<E> {
   }
 
   public RubyArray<E> each(ItemBlock<E> block) {
-    RubyArray<E> rubyArray = new RubyArrayImpl<>();
+    RubyArray<E> rubyArray = new RubyArray<>();
     for (E item : iter) {
       block.yield(item);
       rubyArray.add(item);
@@ -145,7 +145,7 @@ public class RubyEnumerator<E> implements RubyArrayEnumerable<E>, Iterable<E> {
   }
 
   @Override
-  public void eachCons(int n, ItemFromListBlock<E> block) {
+  public void eachCons(int n, ListBlock<E> block) {
     RubyEnumerable.eachCons(iter, n, block);
   }
 
@@ -165,7 +165,7 @@ public class RubyEnumerator<E> implements RubyArrayEnumerable<E>, Iterable<E> {
   }
 
   @Override
-  public void eachSlice(int n, ItemFromListBlock<E> block) {
+  public void eachSlice(int n, ListBlock<E> block) {
     RubyEnumerable.eachSlice(iter, n, block);
   }
 
@@ -272,7 +272,7 @@ public class RubyEnumerator<E> implements RubyArrayEnumerable<E>, Iterable<E> {
   }
 
   @Override
-  public < K> RubyHash<K, RubyArray<E>> groupBy(ItemTransformBlock<E, K> block) {
+  public < K> RubyHashBase<K, RubyArray<E>> groupBy(ItemTransformBlock<E, K> block) {
     return RubyEnumerable.groupBy(iter, block);
   }
 
@@ -374,7 +374,7 @@ public class RubyEnumerator<E> implements RubyArrayEnumerable<E>, Iterable<E> {
   @Override
   public RubyArray<E> minmax() {
     RubyArray<E> sorted = sort();
-    return new RubyArrayImpl(sorted.first(), sorted.last());
+    return new RubyArray(sorted.first(), sorted.last());
   }
 
   @Override
@@ -385,7 +385,7 @@ public class RubyEnumerator<E> implements RubyArrayEnumerable<E>, Iterable<E> {
   @Override
   public <S> RubyArray<E> minmaxBy(ItemTransformBlock<E, S> block) {
     RubyArray<E> sorted = sortBy(block);
-    return new RubyArrayImpl(sorted.first(), sorted.last());
+    return new RubyArray(sorted.first(), sorted.last());
   }
 
   @Override
@@ -450,7 +450,7 @@ public class RubyEnumerator<E> implements RubyArrayEnumerable<E>, Iterable<E> {
 
   @Override
   public RubyArray<E> reject(BooleanBlock block) {
-    return new RubyArrayImpl(RubyEnumerable.reject(iter, block));
+    return new RubyArray(RubyEnumerable.reject(iter, block));
   }
 
   @Override
@@ -492,7 +492,7 @@ public class RubyEnumerator<E> implements RubyArrayEnumerable<E>, Iterable<E> {
   public RubyArray<E> sort() {
     Object[] array = newArrayList(iter).toArray();
     Arrays.sort(array);
-    return new RubyArrayImpl(array);
+    return new RubyArray(array);
   }
 
   //@Override
@@ -516,12 +516,12 @@ public class RubyEnumerator<E> implements RubyArrayEnumerable<E>, Iterable<E> {
         sortedList.add(it.next());
       }
     }
-    return new RubyArrayImpl(sortedList);
+    return new RubyArray(sortedList);
   }
 
   @Override
   public <S> RubyArray<E> sortBy(Comparator<? super S> comp, ItemTransformBlock<E, S> block) {
-    return new RubyArrayImpl(RubyEnumerable.sortBy(iter, comp, block));
+    return new RubyArray(RubyEnumerable.sortBy(iter, comp, block));
   }
 
   @Override
@@ -531,12 +531,12 @@ public class RubyEnumerator<E> implements RubyArrayEnumerable<E>, Iterable<E> {
 
   @Override
   public RubyArray<E> take(int n) {
-    return new RubyArrayImpl(RubyEnumerable.take(iter, n));
+    return new RubyArray(RubyEnumerable.take(iter, n));
   }
 
   @Override
   public RubyArray<E> takeWhile(BooleanBlock block) {
-    return new RubyArrayImpl(RubyEnumerable.takeWhile(iter, block));
+    return new RubyArray(RubyEnumerable.takeWhile(iter, block));
   }
 
   @Override

@@ -4,7 +4,7 @@ import cleanzephyr.rubycollect4j.blocks.BooleanBlock;
 import cleanzephyr.rubycollect4j.blocks.InjectBlock;
 import cleanzephyr.rubycollect4j.blocks.InjectWithInitBlock;
 import cleanzephyr.rubycollect4j.blocks.ItemBlock;
-import cleanzephyr.rubycollect4j.blocks.ItemFromListBlock;
+import cleanzephyr.rubycollect4j.blocks.ListBlock;
 import cleanzephyr.rubycollect4j.blocks.ItemToListBlock;
 import cleanzephyr.rubycollect4j.blocks.ItemTransformBlock;
 import cleanzephyr.rubycollect4j.blocks.ItemWithIndexBlock;
@@ -54,7 +54,7 @@ public interface RubyHashEnumerable<K, V> {
 
   public RubyEnumerator<Entry<K, V>> dropWhile();
 
-  public void eachCons(int n, ItemFromListBlock<Entry<K, V>> block);
+  public void eachCons(int n, ListBlock<Entry<K, V>> block);
 
   public RubyEnumerator<RubyArray<Entry<K, V>>> eachCons(int n);
 
@@ -62,7 +62,7 @@ public interface RubyHashEnumerable<K, V> {
 
   public RubyEnumerator<Entry<K, V>> eachEntry();
 
-  public void eachSlice(int n, ItemFromListBlock<Entry<K, V>> block);
+  public void eachSlice(int n, ListBlock<Entry<K, V>> block);
 
   public RubyEnumerator<RubyArray<Entry<K, V>>> eachSlice(int n);
 
@@ -102,7 +102,7 @@ public interface RubyHashEnumerable<K, V> {
 
   public <S> RubyArray<S> grep(String regex, ItemTransformBlock<Entry<K, V>, S> block);
 
-  public <S> RubyHash<S, RubyArray<Entry<K, V>>> groupBy(ItemTransformBlock<Entry<K, V>, S> block);
+  public <S> RubyHashBase<S, RubyArray<Entry<K, V>>> groupBy(ItemTransformBlock<Entry<K, V>, S> block);
 
   public RubyEnumerator<Entry<K, V>> groupBy();
 

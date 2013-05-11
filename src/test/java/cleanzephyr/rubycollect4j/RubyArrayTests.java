@@ -25,9 +25,9 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
 import org.junit.Test;
 
-public class RubyArrayListTests {
+public class RubyArrayTests {
 
-  public RubyArrayListTests() {
+  public RubyArrayTests() {
   }
 
   /**
@@ -156,7 +156,7 @@ public class RubyArrayListTests {
    */
   @Test
   public void testCompactǃ() {
-    RubyArray<Integer> rubyArray = ra(1, null, 3, null);
+    RubyArrayBase<Integer> rubyArray = ra(1, null, 3, null);
     rubyArray.compactǃ();
     assertEquals(ra(1, 3), rubyArray);
   }

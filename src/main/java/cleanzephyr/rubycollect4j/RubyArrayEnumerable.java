@@ -4,7 +4,7 @@ import cleanzephyr.rubycollect4j.blocks.BooleanBlock;
 import cleanzephyr.rubycollect4j.blocks.InjectBlock;
 import cleanzephyr.rubycollect4j.blocks.InjectWithInitBlock;
 import cleanzephyr.rubycollect4j.blocks.ItemBlock;
-import cleanzephyr.rubycollect4j.blocks.ItemFromListBlock;
+import cleanzephyr.rubycollect4j.blocks.ListBlock;
 import cleanzephyr.rubycollect4j.blocks.ItemToListBlock;
 import cleanzephyr.rubycollect4j.blocks.ItemTransformBlock;
 import cleanzephyr.rubycollect4j.blocks.ItemWithIndexBlock;
@@ -55,7 +55,7 @@ public interface RubyArrayEnumerable<E> {
 
   public RubyEnumerator<E> dropWhile();
 
-  public void eachCons(int n, ItemFromListBlock<E> block);
+  public void eachCons(int n, ListBlock<E> block);
 
   public RubyEnumerator<RubyArray<E>> eachCons(int n);
 
@@ -63,7 +63,7 @@ public interface RubyArrayEnumerable<E> {
 
   public RubyEnumerator<E> eachEntry();
 
-  public void eachSlice(int n, ItemFromListBlock<E> block);
+  public void eachSlice(int n, ListBlock<E> block);
 
   public RubyEnumerator<RubyArray<E>> eachSlice(int n);
 
@@ -103,7 +103,7 @@ public interface RubyArrayEnumerable<E> {
 
   public <S> RubyArray<S> grep(String regex, ItemTransformBlock<E, S> block);
 
-  public <K> RubyHash<K, RubyArray<E>> groupBy(ItemTransformBlock<E, K> block);
+  public <K> RubyHashBase<K, RubyArray<E>> groupBy(ItemTransformBlock<E, K> block);
 
   public RubyEnumerator<E> groupBy();
 
