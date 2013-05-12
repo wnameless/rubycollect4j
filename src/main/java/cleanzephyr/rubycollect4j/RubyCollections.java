@@ -21,16 +21,50 @@
 package cleanzephyr.rubycollect4j;
 
 import static cleanzephyr.rubycollect4j.RubyIO.puts;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 public final class RubyCollections {
 
-  public static RubyArray<String> w(String str) {
+  public static RubyArray<String> qw(String str) {
     return new RubyArray<>(str.trim().split("\\s+"));
+  }
+
+  public static Pattern qr(String regex) {
+    return Pattern.compile(regex);
+  }
+
+  public static String qx(String cmd) {
+    StringBuilder sb = new StringBuilder();
+
+    try {
+      Process proc = Runtime.getRuntime().exec(cmd);
+      BufferedReader stdInput = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+      BufferedReader stdError = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
+
+      String s;
+      while ((s = stdInput.readLine()) != null) {
+        sb.append(s).append("\n");
+      }
+
+      while ((s = stdError.readLine()) != null) {
+        sb.append(s).append("\n");
+      }
+    } catch (IOException ex) {
+      Logger.getLogger(RubyCollections.class.getName()).log(Level.SEVERE, null, ex);
+      sb.append(ex.getMessage());
+    }
+
+    return sb.toString();
   }
 
   public static <E> RubyArray<E> newRubyArray() {
@@ -205,5 +239,6 @@ public final class RubyCollections {
       puts(e.getKey());
     });
     puts(ra(1, 2, 3).add(ra(2, 3, 4)));
+    puts(qr("ssss").matcher("sssss").find());
   }
 }
