@@ -20,41 +20,41 @@
  */
 package cleanzephyr.rubycollect4j.iter;
 
-import cleanzephyr.rubycollect4j.RubyArray;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
 
-public final class EachSliceIterator<E> implements Iterator<RubyArray<E>> {
+/**
+ *
+ * @author WMW
+ */
+public final class CycleIterator<E> implements Iterator<E> {
 
-  private final Iterator<E> iterator;
-  private final int size;
+  private final Iterable<E> iter;
+  private Integer n;
+  private Iterator<E> it;
 
-  public EachSliceIterator(Iterator<E> iterator, int size) {
-    this.iterator = iterator;
-    this.size = size;
-  }
-
-  private RubyArray<E> nextElement() {
-    RubyArray<E> bucket = newRubyArray();
-    while (iterator.hasNext() && bucket.size() < size) {
-      bucket.add(iterator.next());
-    }
-    return bucket;
+  public CycleIterator(Iterable<E> iter, int n) {
+    this.iter = iter;
+    this.n = n;
+    it = iter.iterator();
   }
 
   @Override
   public boolean hasNext() {
-    return iterator.hasNext();
+    return n > 0 && it.hasNext();
   }
 
   @Override
-  public RubyArray<E> next() {
-    if (!hasNext()) {
+  public E next() {
+    if (hasNext()) {
+      return it.next();
+    } else if (n > 1) {
+      n--;
+      it = iter.iterator();
+      return next();
+    } else {
       throw new NoSuchElementException();
     }
-
-    return nextElement();
   }
 
 }

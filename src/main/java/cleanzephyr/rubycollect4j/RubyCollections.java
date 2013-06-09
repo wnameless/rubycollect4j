@@ -211,11 +211,8 @@ public final class RubyCollections {
   }
 
   public static void main(String[] args) {
-    ra(1, 3, 4, 5, 7).chunk((i) -> {
-      return i / 5;
-    }).each((e) -> {
-      puts(e.getKey());
+    ra(1, 3, 4, 5, 7).cycle(1, (i) -> {
+      puts(i);
     });
-    puts(ra(1, 2, 3).add(ra(2, 3, 4)));
   }
 }

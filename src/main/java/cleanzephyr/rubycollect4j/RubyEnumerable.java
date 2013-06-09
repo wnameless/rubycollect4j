@@ -39,6 +39,7 @@ import com.google.common.collect.Lists;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Lists.reverse;
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
+import cleanzephyr.rubycollect4j.iter.CycleIterable;
 import com.google.common.collect.Multimap;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -133,7 +134,7 @@ public class RubyEnumerable<E> {
   }
 
   public RubyEnumerator<E> collectConcat() {
-    return new RubyEnumerator(iter);
+    return new RubyEnumerator<>(iter);
   }
 
   public int count() {
@@ -175,13 +176,7 @@ public class RubyEnumerable<E> {
   }
 
   public RubyEnumerator<E> cycle(int n) {
-    List<E> items = newArrayList();
-    for (int i = 0; i < n; i++) {
-      for (E item : iter) {
-        items.add(item);
-      }
-    }
-    return new RubyEnumerator(items);
+    return new RubyEnumerator<>(new CycleIterable<E>(iter, n));
   }
 
   public E detect(BooleanBlock block) {

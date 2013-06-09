@@ -22,7 +22,7 @@ package cleanzephyr.rubycollect4j.iter;
 
 import cleanzephyr.rubycollect4j.RubyArray;
 
-import  static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
+import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -34,6 +34,7 @@ import static com.google.common.collect.Iterators.peekingIterator;
 import com.google.common.collect.PeekingIterator;
 
 public final class ChunkIterator<E, K> implements Iterator<Entry<K, RubyArray<E>>> {
+
   private final PeekingIterator<E> pIterator;
   private final ItemTransformBlock<E, K> block;
 
@@ -58,15 +59,11 @@ public final class ChunkIterator<E, K> implements Iterator<Entry<K, RubyArray<E>
 
   @Override
   public Entry<K, RubyArray<E>> next() {
-    if (!pIterator.hasNext())
+    if (!pIterator.hasNext()) {
       throw new NoSuchElementException();
+    }
 
     return nextElement();
-  }
-
-  @Override
-  public void remove() {
-    throw new UnsupportedOperationException();
   }
 
 }
