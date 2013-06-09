@@ -10,7 +10,6 @@ import cleanzephyr.rubycollect4j.blocks.ItemTransformBlock;
 import cleanzephyr.rubycollect4j.blocks.ItemWithIndexBlock;
 import cleanzephyr.rubycollect4j.blocks.ItemWithObjectBlock;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Map.Entry;
 
 public interface RubyArrayEnumerable<E> {
