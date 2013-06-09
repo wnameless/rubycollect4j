@@ -21,13 +21,14 @@
 package cleanzephyr.rubycollect4j;
 
 import static cleanzephyr.rubycollect4j.RubyIO.puts;
+import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
+import static cleanzephyr.rubycollect4j.RubyHash.newRubyHash;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,7 +37,7 @@ import java.util.regex.Pattern;
 public final class RubyCollections {
 
   public static RubyArray<String> qw(String str) {
-    return new RubyArray<>(str.trim().split("\\s+"));
+    return newRubyArray(str.trim().split("\\s+"));
   }
 
   public static Pattern qr(String regex) {
@@ -67,81 +68,58 @@ public final class RubyCollections {
     return sb.toString();
   }
 
-  public static <E> RubyArray<E> newRubyArray() {
-    return new RubyArray<>();
-  }
-
-  public static <E> RubyArray<E> newRubyArray(Collection<E> coll) {
-    return new RubyArray(coll);
-  }
-
-  public static <E> RubyArray<E> newRubyArray(Iterator<E> iter) {
-    return new RubyArray(iter);
-  }
-
-  public static <E> RubyArray<E> newRubyArray(E... args) {
-    return new RubyArray(Arrays.asList(args), true);
-  }
-
   public static <E> RubyArray<E> ra() {
     return newRubyArray();
   }
 
-  public static <E> RubyArray<E> ra(Collection<E> coll) {
-    if (coll instanceof RubyArray) {
-      return new RubyArray(Arrays.asList(coll), false);
-    } else {
-      return newRubyArray(coll);
-    }
+  public static <E> RubyArray<E> ra(Iterable<E> iter) {
+    return newRubyArray(iter);
   }
 
   public static <E> RubyArray<E> ra(Iterator<E> iter) {
     return newRubyArray(iter);
   }
 
+  public static <E> RubyArray<E> ra(List<E> list) {
+    return newRubyArray(list);
+  }
+
+  public static <E> RubyArray<RubyArray<E>> ra(RubyArray<E> list) {
+    RubyArray<RubyArray<E>> ra = newRubyArray();
+    return ra.push(list);
+  }
+
   public static <E> RubyArray<E> ra(E... args) {
     return newRubyArray(args);
   }
 
-  public static <K, V> RubyHash<K, V> newRubyHash() {
-    return new RubyHash();
-  }
-
-  public static <K, V> RubyHash<K, V> newRubyHash(Map<K, V> map) {
-    return new RubyHash(map);
-  }
-
-  public static <K, V> RubyHash<K, V> newRubyHash(LinkedHashMap<K, V> map, boolean defensiveCopy) {
-    return new RubyHash(map, defensiveCopy);
-  }
-
   public static <K, V> RubyHash<K, V> rh() {
-    return new RubyHash();
+    return newRubyHash();
   }
 
   public static <K, V> RubyHash<K, V> rh(Map<K, V> map) {
-    return new RubyHash(map);
+    return newRubyHash(map);
   }
 
   public static <K, V> RubyHash<K, V> rh(LinkedHashMap<K, V> map, boolean defensiveCopy) {
-    return new RubyHash(map, defensiveCopy);
+    return newRubyHash(map, defensiveCopy);
   }
 
   public static <K, V> RubyHash<K, V> rh(K key, V value) {
-    RubyHash<K, V> rh = new RubyHash();
+    RubyHash<K, V> rh = newRubyHash();
     rh.put(key, value);
     return rh;
   }
 
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2) {
-    RubyHash<K, V> rh = new RubyHash();
+    RubyHash<K, V> rh = newRubyHash();
     rh.put(key1, value1);
     rh.put(key2, value2);
     return rh;
   }
 
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2, K key3, V value3) {
-    RubyHash<K, V> rh = new RubyHash();
+    RubyHash<K, V> rh = newRubyHash();
     rh.put(key1, value1);
     rh.put(key2, value2);
     rh.put(key3, value3);
@@ -149,7 +127,7 @@ public final class RubyCollections {
   }
 
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2, K key3, V value3, K key4, V value4) {
-    RubyHash<K, V> rh = new RubyHash();
+    RubyHash<K, V> rh = newRubyHash();
     rh.put(key1, value1);
     rh.put(key2, value2);
     rh.put(key3, value3);
@@ -158,7 +136,7 @@ public final class RubyCollections {
   }
 
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2, K key3, V value3, K key4, V value4, K key5, V value5) {
-    RubyHash<K, V> rh = new RubyHash();
+    RubyHash<K, V> rh = newRubyHash();
     rh.put(key1, value1);
     rh.put(key2, value2);
     rh.put(key3, value3);
@@ -168,7 +146,7 @@ public final class RubyCollections {
   }
 
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2, K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6) {
-    RubyHash<K, V> rh = new RubyHash();
+    RubyHash<K, V> rh = newRubyHash();
     rh.put(key1, value1);
     rh.put(key2, value2);
     rh.put(key3, value3);
@@ -179,7 +157,7 @@ public final class RubyCollections {
   }
 
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2, K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6, K key7, V value7) {
-    RubyHash<K, V> rh = new RubyHash();
+    RubyHash<K, V> rh = newRubyHash();
     rh.put(key1, value1);
     rh.put(key2, value2);
     rh.put(key3, value3);
@@ -191,7 +169,7 @@ public final class RubyCollections {
   }
 
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2, K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6, K key7, V value7, K key8, V value8) {
-    RubyHash<K, V> rh = new RubyHash();
+    RubyHash<K, V> rh = newRubyHash();
     rh.put(key1, value1);
     rh.put(key2, value2);
     rh.put(key3, value3);
@@ -204,7 +182,7 @@ public final class RubyCollections {
   }
 
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2, K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6, K key7, V value7, K key8, V value8, K key9, V value9) {
-    RubyHash<K, V> rh = new RubyHash();
+    RubyHash<K, V> rh = newRubyHash();
     rh.put(key1, value1);
     rh.put(key2, value2);
     rh.put(key3, value3);
@@ -218,7 +196,7 @@ public final class RubyCollections {
   }
 
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2, K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6, K key7, V value7, K key8, V value8, K key9, V value9, K key10, V value10) {
-    RubyHash<K, V> rh = new RubyHash();
+    RubyHash<K, V> rh = newRubyHash();
     rh.put(key1, value1);
     rh.put(key2, value2);
     rh.put(key3, value3);
@@ -239,6 +217,5 @@ public final class RubyCollections {
       puts(e.getKey());
     });
     puts(ra(1, 2, 3).add(ra(2, 3, 4)));
-    puts(qr("ssss").matcher("sssss").find());
   }
 }
