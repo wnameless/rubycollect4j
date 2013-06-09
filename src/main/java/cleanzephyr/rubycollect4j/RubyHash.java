@@ -20,10 +20,10 @@
  */
 package cleanzephyr.rubycollect4j;
 
-import cleanzephyr.rubycollect4j.blocks.EntryBlock;
-import cleanzephyr.rubycollect4j.blocks.EntryBooleanBlock;
-import cleanzephyr.rubycollect4j.blocks.EntryMergeBlock;
-import cleanzephyr.rubycollect4j.blocks.ItemBlock;
+import cleanzephyr.rubycollect4j.block.EntryBlock;
+import cleanzephyr.rubycollect4j.block.EntryBooleanBlock;
+import cleanzephyr.rubycollect4j.block.EntryMergeBlock;
+import cleanzephyr.rubycollect4j.block.ItemBlock;
 import static com.google.common.collect.Lists.newArrayList;
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
 import static com.google.common.collect.Maps.newLinkedHashMap;

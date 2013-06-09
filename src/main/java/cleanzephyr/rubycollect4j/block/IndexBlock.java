@@ -18,9 +18,9 @@
  * the License.
  *
  */
-package cleanzephyr.rubycollect4j.blocks;
+package cleanzephyr.rubycollect4j.block;
 
-public interface ItemTransformBlock<E, S> {
+public interface IndexBlock<E> {
 
-  public S yield(E item);
+  public void yield(int index);
 }

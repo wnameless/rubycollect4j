@@ -18,9 +18,11 @@
  * the License.
  *
  */
-package cleanzephyr.rubycollect4j.blocks;
+package cleanzephyr.rubycollect4j.block;
 
-public interface InjectBlock<E> {
+import java.util.List;
 
-  public E yield(E memo, E item);
+public interface EntryToListBlock<K, V, S> {
+
+  public List<S> yield(K key, V value);
 }

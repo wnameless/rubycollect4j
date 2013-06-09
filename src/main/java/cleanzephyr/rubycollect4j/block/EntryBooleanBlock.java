@@ -18,9 +18,9 @@
  * the License.
  *
  */
-package cleanzephyr.rubycollect4j.blocks;
+package cleanzephyr.rubycollect4j.block;
 
-public interface ItemWithObjectBlock<E, S> {
+public interface EntryBooleanBlock<K, V> {
 
-  public void yield(E item, S o);
+  public boolean yield(K key, V value);
 }

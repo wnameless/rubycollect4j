@@ -24,7 +24,7 @@ import cleanzephyr.rubycollect4j.RubyArray;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
-import cleanzephyr.rubycollect4j.blocks.ItemTransformBlock;
+import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
 
 public final class ChunkIterable<E, K> implements Iterable<Entry<K, RubyArray<E>>> {
   private final Iterable<E> iterable;

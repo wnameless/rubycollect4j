@@ -20,12 +20,12 @@
  */
 package cleanzephyr.rubycollect4j;
 
-import cleanzephyr.rubycollect4j.blocks.Block;
-import cleanzephyr.rubycollect4j.blocks.BooleanBlock;
-import cleanzephyr.rubycollect4j.blocks.IndexBlock;
-import cleanzephyr.rubycollect4j.blocks.ItemBlock;
-import cleanzephyr.rubycollect4j.blocks.ItemTransformBlock;
-import cleanzephyr.rubycollect4j.blocks.ItemWithReturnBlock;
+import cleanzephyr.rubycollect4j.block.Block;
+import cleanzephyr.rubycollect4j.block.BooleanBlock;
+import cleanzephyr.rubycollect4j.block.IndexBlock;
+import cleanzephyr.rubycollect4j.block.ItemBlock;
+import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
+import cleanzephyr.rubycollect4j.block.ItemWithReturnBlock;
 import com.google.common.collect.Lists;
 import static com.google.common.collect.Lists.newArrayList;
 import java.util.Arrays;

@@ -28,7 +28,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 
-import cleanzephyr.rubycollect4j.blocks.ItemTransformBlock;
+import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
 
 import static com.google.common.collect.Iterators.peekingIterator;
 import com.google.common.collect.PeekingIterator;

@@ -21,7 +21,7 @@
 package cleanzephyr.rubycollect4j;
 
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
-import cleanzephyr.rubycollect4j.blocks.ItemBlock;
+import cleanzephyr.rubycollect4j.block.ItemBlock;
 import static com.google.common.collect.Lists.newArrayList;
 import java.util.Iterator;
 

@@ -18,11 +18,9 @@
  * the License.
  *
  */
-package cleanzephyr.rubycollect4j.blocks;
+package cleanzephyr.rubycollect4j.block;
 
-import java.util.List;
+public interface EntryMergeBlock<K, V> {
 
-public interface ListBlock<E> {
-
-  public void yield(List<E> block);
+  public V yield(K key, V oldval, V newval);
 }

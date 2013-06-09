@@ -18,11 +18,9 @@
  * the License.
  *
  */
-package cleanzephyr.rubycollect4j.blocks;
+package cleanzephyr.rubycollect4j.block;
 
-import java.util.List;
+public interface Block<S> {
 
-public interface ItemToListBlock<E, S> {
-
-  public List<S> yield(E item);
+  public S yield();
 }

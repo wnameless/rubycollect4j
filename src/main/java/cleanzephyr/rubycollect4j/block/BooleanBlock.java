@@ -18,9 +18,9 @@
  * the License.
  *
  */
-package cleanzephyr.rubycollect4j.blocks;
+package cleanzephyr.rubycollect4j.block;
 
-public interface InjectWithInitBlock<E, S> {
+public interface BooleanBlock<E> {
 
-  public S yield(S memo, E item);
+  public boolean yield(E item);
 }

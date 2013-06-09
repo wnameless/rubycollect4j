@@ -18,9 +18,16 @@
  * the License.
  *
  */
-package cleanzephyr.rubycollect4j.blocks;
+package cleanzephyr.rubycollect4j.block;
 
-public interface Block<S> {
+/**
+ * An interface for lambda expression to yield the key and the value of a map
+ * entry.
+ *
+ * @param <K> key of a map entry
+ * @param <V> value of a map entry
+ */
+public interface EntryBlock<K, V> {
 
-  public S yield();
+  public void yield(K key, V value);
 }
