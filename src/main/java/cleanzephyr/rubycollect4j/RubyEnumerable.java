@@ -40,6 +40,7 @@ import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Lists.reverse;
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
 import cleanzephyr.rubycollect4j.iter.CycleIterable;
+import cleanzephyr.rubycollect4j.iter.EachConsIterable;
 import com.google.common.collect.Multimap;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -232,10 +233,10 @@ public class RubyEnumerable<E> {
     if (n <= 0) {
       throw new IllegalArgumentException("invalid size");
     }
-    List<E> list = newArrayList(iter);
+    RubyArray<E> list = newRubyArray(iter);
     for (int i = 0; i < list.size(); i++) {
       if (i + n <= list.size()) {
-        List<E> cons = newArrayList();
+        RubyArray<E> cons = newRubyArray();
         for (int j = i; j < i + n; j++) {
           cons.add(list.get(j));
         }
@@ -248,18 +249,7 @@ public class RubyEnumerable<E> {
     if (n <= 0) {
       throw new IllegalArgumentException("invalid size");
     }
-    RubyArray<RubyArray<E>> allCons = newRubyArray();
-    List<E> list = newArrayList(iter);
-    for (int i = 0; i < list.size(); i++) {
-      if (i + n <= list.size()) {
-        RubyArray<E> cons = newRubyArray();
-        for (int j = i; j < i + n; j++) {
-          cons.add(list.get(j));
-        }
-        allCons.add(cons);
-      }
-    }
-    return new RubyEnumerator(allCons);
+    return new RubyEnumerator<>(new EachConsIterable<E>(iter, n));
   }
 
   public RubyArray<E> eachEntry(ItemBlock<E> block) {
@@ -871,7 +861,7 @@ public class RubyEnumerable<E> {
       rubyArray.add(item);
       break;
     }
-    return new RubyEnumerator(rubyArray);
+    return new RubyEnumerator<>(rubyArray);
   }
 
   public RubyArray<E> toA() {
