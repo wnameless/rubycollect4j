@@ -29,6 +29,7 @@ import cleanzephyr.rubycollect4j.block.ItemWithReturnBlock;
 import cleanzephyr.rubycollect4j.iter.CombinationIterable;
 import cleanzephyr.rubycollect4j.iter.PermutationIterable;
 import cleanzephyr.rubycollect4j.iter.RepeatedCombinationIterable;
+import cleanzephyr.rubycollect4j.iter.RepeatedPermutationIterable;
 import com.google.common.collect.Lists;
 import static com.google.common.collect.Lists.newArrayList;
 import java.util.Arrays;
@@ -552,6 +553,24 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   public RubyArray<E> permutation(int n, ItemBlock<RubyArray<E>> block) {
     for (RubyArray<E> item : permutation(n)) {
       block.yield(item);
+    }
+    return this;
+  }
+
+  public RubyEnumerator<RubyArray<E>> repeatedPermutation(int n) {
+    RubyArray<RubyArray<E>> rp = newRubyArray();
+    if (n < 0) {
+      return new RubyEnumerator(rp);
+    }
+    if (n == 0) {
+      return new RubyEnumerator(rp.push(newRubyArray()));
+    }
+    return new RubyEnumerator<>(new RepeatedPermutationIterable<E>(list, n));
+  }
+
+  public RubyArray<E> repeatedPermutation(int n, ItemBlock<RubyArray<E>> block) {
+    for (RubyArray<E> perm : repeatedPermutation(n)) {
+      block.yield(perm);
     }
     return this;
   }

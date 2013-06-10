@@ -34,7 +34,7 @@ import java.util.NoSuchElementException;
  * @author WMW
  * @param <E>
  */
-public final class RepeatedCombinationIterator<E> implements Iterator<RubyArray<E>> {
+public final class RepeatedPermutationIterator<E> implements Iterator<RubyArray<E>> {
 
   private final List<E> list;
   private final int[] counter;
@@ -42,7 +42,7 @@ public final class RepeatedCombinationIterator<E> implements Iterator<RubyArray<
   private final int end;
   private boolean hasMore = true;
 
-  public RepeatedCombinationIterator(List<E> list, int n) {
+  public RepeatedPermutationIterator(List<E> list, int n) {
     this.list = list;
     this.counter = new int[n];
     this.endStatus = new int[n];
@@ -74,7 +74,7 @@ public final class RepeatedCombinationIterator<E> implements Iterator<RubyArray<
       } else if (i != 0 && counter[i - 1] != end) {
         counter[i - 1]++;
         for (int j = i; j < counter.length; j++) {
-          counter[j] = counter[ i - 1];
+          counter[j] = 0;
         }
         return;
       }
