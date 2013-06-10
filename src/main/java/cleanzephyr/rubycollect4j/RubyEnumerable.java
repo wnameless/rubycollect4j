@@ -42,17 +42,16 @@ import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
 import cleanzephyr.rubycollect4j.iter.CycleIterable;
 import cleanzephyr.rubycollect4j.iter.EachConsIterable;
 import cleanzephyr.rubycollect4j.iter.EachWithIndexIterable;
+import cleanzephyr.rubycollect4j.iter.EachWithObjectIterable;
 import com.google.common.collect.Multimap;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -305,11 +304,7 @@ public class RubyEnumerable<E> {
   }
 
   public <S> RubyEnumerator<Entry<E, S>> eachWithObject(S o) {
-    RubyArray<Map.Entry<E, S>> rubyArray = newRubyArray();
-    for (E item : iter) {
-      rubyArray.add(new AbstractMap.SimpleEntry(item, o));
-    }
-    return new RubyEnumerator(rubyArray);
+    return new RubyEnumerator<>(new EachWithObjectIterable<E, S>(iter, o));
   }
 
   public RubyArray<E> entries() {
