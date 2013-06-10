@@ -777,10 +777,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     if (n < 0) {
       throw new IllegalArgumentException("negative sample number");
     }
-    List<E> copyList = newArrayList(list);
+    List<Integer> indice = newArrayList();
+    for (int i = 0; i < list.size(); i++) {
+      indice.add(i);
+    }
     List<E> samples = newArrayList();
     while (samples.size() < list.size() && samples.size() < n) {
-      samples.add(copyList.remove(rand.nextInt(copyList.size())));
+      samples.add(list.get(indice.remove(rand.nextInt(indice.size()))));
     }
     return new RubyArray(samples);
   }
