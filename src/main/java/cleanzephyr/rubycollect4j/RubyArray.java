@@ -26,6 +26,7 @@ import cleanzephyr.rubycollect4j.block.IndexBlock;
 import cleanzephyr.rubycollect4j.block.ItemBlock;
 import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
 import cleanzephyr.rubycollect4j.block.ItemWithReturnBlock;
+import cleanzephyr.rubycollect4j.iter.CombinationIterable;
 import cleanzephyr.rubycollect4j.iter.RepeatedCombinationIterable;
 import com.google.common.collect.Lists;
 import static com.google.common.collect.Lists.newArrayList;
@@ -37,7 +38,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Random;
-import org.uncommons.maths.combinatorics.CombinationGenerator;
 
 /**
  *
@@ -201,20 +201,15 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     } else if (n > list.size()) {
       return new RubyEnumerator(comb);
     } else {
-      CombinationGenerator<E> cg = new CombinationGenerator<>(list, n);
-      for (List<E> c : cg) {
-        comb.add(new RubyArray<>(c));
-      }
-      return new RubyEnumerator(comb);
+      return new RubyEnumerator<>(new CombinationIterable<E>(list, n));
     }
   }
 
-  public RubyArray<RubyArray<E>> combination(int n, ItemBlock<RubyArray<E>> block) {
-    RubyArray<RubyArray<E>> comb = combination(n).toA();
-    comb.stream().forEach((item) -> {
-      block.yield(item);
-    });
-    return comb;
+  public RubyArray<E> combination(int n, ItemBlock<RubyArray<E>> block) {
+    for (RubyArray<E> c : combination(n)) {
+      block.yield(c);
+    }
+    return this;
   }
 
   public RubyEnumerator<RubyArray<E>> repeatedCombination(int n) {
