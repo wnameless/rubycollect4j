@@ -53,7 +53,6 @@ public final class EachSliceIterator<E> implements Iterator<RubyArray<E>> {
     if (!hasNext()) {
       throw new NoSuchElementException();
     }
-
     return nextElement();
   }
 

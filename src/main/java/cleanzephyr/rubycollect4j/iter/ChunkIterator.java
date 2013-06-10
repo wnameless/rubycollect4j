@@ -62,7 +62,6 @@ public final class ChunkIterator<E, K> implements Iterator<Entry<K, RubyArray<E>
     if (!pIterator.hasNext()) {
       throw new NoSuchElementException();
     }
-
     return nextElement();
   }
 

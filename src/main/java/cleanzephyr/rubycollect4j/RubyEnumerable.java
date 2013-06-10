@@ -43,6 +43,7 @@ import cleanzephyr.rubycollect4j.iter.CycleIterable;
 import cleanzephyr.rubycollect4j.iter.EachConsIterable;
 import cleanzephyr.rubycollect4j.iter.EachWithIndexIterable;
 import cleanzephyr.rubycollect4j.iter.EachWithObjectIterable;
+import cleanzephyr.rubycollect4j.iter.SliceBeforeIterable;
 import com.google.common.collect.Multimap;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -727,46 +728,11 @@ public class RubyEnumerable<E> {
   }
 
   public RubyEnumerator<RubyArray<E>> sliceBefore(String regex) {
-    RubyArray<RubyArray<E>> rubyArray = newRubyArray();
-    Pattern pattern = Pattern.compile(regex);
-    RubyArray<E> group = null;
-    for (E item : iter) {
-      if (group == null) {
-        group = newRubyArray();
-        group.add(item);
-      } else if (pattern.matcher(item.toString()).find()) {
-        rubyArray.add(group);
-        group = newRubyArray();
-        group.add(item);
-      } else {
-        group.add(item);
-      }
-    }
-    if (group != null && !group.isEmpty()) {
-      rubyArray.add(group);
-    }
-    return new RubyEnumerator(rubyArray);
+    return new RubyEnumerator(new SliceBeforeIterable(iter, regex));
   }
 
   public RubyEnumerator<RubyArray<E>> sliceBefore(BooleanBlock block) {
-    RubyArray<RubyArray<E>> rubyArray = newRubyArray();
-    RubyArray<E> group = null;
-    for (E item : iter) {
-      if (group == null) {
-        group = newRubyArray();
-        group.add(item);
-      } else if (block.yield(item)) {
-        rubyArray.add(group);
-        group = newRubyArray();
-        group.add(item);
-      } else {
-        group.add(item);
-      }
-    }
-    if (group != null && !group.isEmpty()) {
-      rubyArray.add(group);
-    }
-    return new RubyEnumerator(rubyArray);
+    return new RubyEnumerator<>(new SliceBeforeIterable(iter, block));
   }
 
   public RubyArray<E> sort() {

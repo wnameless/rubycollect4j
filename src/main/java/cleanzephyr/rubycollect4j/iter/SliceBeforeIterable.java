@@ -20,35 +20,40 @@
  */
 package cleanzephyr.rubycollect4j.iter;
 
-import com.google.common.collect.Iterables;
+import cleanzephyr.rubycollect4j.RubyArray;
+import cleanzephyr.rubycollect4j.block.BooleanBlock;
 import java.util.Iterator;
+import java.util.regex.Pattern;
 
 /**
  *
  * @author WMW
  * @param <E>
  */
-public final class CycleIterable<E> implements Iterable<E> {
+public final class SliceBeforeIterable<E> implements Iterable<RubyArray<E>> {
 
   private final Iterable<E> iter;
-  private final Integer n;
+  private final BooleanBlock<E> block;
+  private final Pattern pattern;
 
-  public CycleIterable(Iterable<E> iter) {
+  public SliceBeforeIterable(Iterable<E> iter, BooleanBlock<E> block) {
     this.iter = iter;
-    n = null;
+    this.block = block;
+    pattern = null;
   }
 
-  public CycleIterable(Iterable<E> iter, int n) {
+  public SliceBeforeIterable(Iterable<E> iter, String regex) {
     this.iter = iter;
-    this.n = n;
+    this.block = null;
+    pattern = Pattern.compile(regex);
   }
 
   @Override
-  public Iterator<E> iterator() {
-    if (n == null) {
-      return Iterables.cycle(iter).iterator();
+  public Iterator<RubyArray<E>> iterator() {
+    if (block != null) {
+      return new SliceBeforeIterator<>(iter.iterator(), block);
     } else {
-      return new CycleIterator<>(iter, n);
+      return new SliceBeforeIterator<>(iter.iterator(), pattern);
     }
   }
 

@@ -29,7 +29,7 @@ import java.util.Map.Entry;
  * @param <E>
  * @param <O>
  */
-public class EachWithObjectIterable<E, O> implements Iterable<Entry<E, O>> {
+public final class EachWithObjectIterable<E, O> implements Iterable<Entry<E, O>> {
 
   private final Iterable<E> iter;
   private final O obj;

@@ -24,6 +24,7 @@ import cleanzephyr.rubycollect4j.RubyArray;
 import java.util.Iterator;
 
 public final class EachSliceIterable<E> implements Iterable<RubyArray<E>> {
+
   private final Iterable<E> iterable;
   private final int size;
 
@@ -34,7 +35,7 @@ public final class EachSliceIterable<E> implements Iterable<RubyArray<E>> {
 
   @Override
   public Iterator<RubyArray<E>> iterator() {
-    return new EachSliceIterator<E>(iterable.iterator(), size);
+    return new EachSliceIterator<>(iterable.iterator(), size);
   }
 
 }

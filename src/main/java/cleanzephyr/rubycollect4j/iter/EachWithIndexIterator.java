@@ -23,13 +23,14 @@ package cleanzephyr.rubycollect4j.iter;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Iterator;
 import java.util.Map.Entry;
+import java.util.NoSuchElementException;
 
 /**
  *
  * @author WMW
  * @param <E>
  */
-public class EachWithIndexIterator<E> implements Iterator<Entry<E, Integer>> {
+public final class EachWithIndexIterator<E> implements Iterator<Entry<E, Integer>> {
 
   private final Iterator<E> iter;
   private final int[] index = new int[]{0};
@@ -51,6 +52,9 @@ public class EachWithIndexIterator<E> implements Iterator<Entry<E, Integer>> {
 
   @Override
   public Entry<E, Integer> next() {
+    if (!hasNext()) {
+      throw new NoSuchElementException();
+    }
     return nextElement();
   }
 }

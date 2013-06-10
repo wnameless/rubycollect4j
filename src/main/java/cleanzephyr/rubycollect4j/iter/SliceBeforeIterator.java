@@ -22,48 +22,53 @@ package cleanzephyr.rubycollect4j.iter;
 
 import cleanzephyr.rubycollect4j.RubyArray;
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
+import cleanzephyr.rubycollect4j.block.BooleanBlock;
+import com.google.common.collect.Iterators;
+import com.google.common.collect.PeekingIterator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.regex.Pattern;
 
 /**
  *
  * @author WMW
  * @param <E>
  */
-public final class EachConsIterator<E> implements Iterator<RubyArray<E>> {
+public final class SliceBeforeIterator<E> implements Iterator<RubyArray<E>> {
 
-  private final Iterator<E> iterator;
-  private final int size;
-  private final RubyArray<E> bucket = newRubyArray();
+  private final PeekingIterator<E> pIter;
+  private final BooleanBlock<E> block;
+  private final Pattern pattern;
 
-  public EachConsIterator(Iterator<E> iterator, int size) {
-    this.iterator = iterator;
-    this.size = size;
-    fillBucket();
+  public SliceBeforeIterator(Iterator<E> iter, BooleanBlock<E> block) {
+    pIter = Iterators.peekingIterator(iter);
+    this.block = block;
+    pattern = null;
   }
 
-  private void fillBucket() {
-    while (iterator.hasNext() && bucket.size() < size) {
-      bucket.add(iterator.next());
-    }
-  }
-
-  private void updateBucket() {
-    bucket.deleteAt(0);
-    if (iterator.hasNext()) {
-      bucket.add(iterator.next());
-    }
+  public SliceBeforeIterator(Iterator<E> iter, Pattern pattern) {
+    pIter = Iterators.peekingIterator(iter);
+    block = null;
+    this.pattern = pattern;
   }
 
   private RubyArray<E> nextElement() {
-    RubyArray<E> element = newRubyArray(bucket, true);
-    updateBucket();
+    RubyArray<E> element = newRubyArray();
+    if (block != null) {
+      do {
+        element.add(pIter.next());
+      } while (pIter.hasNext() && !block.yield(pIter.peek()));
+    } else {
+      do {
+        element.add(pIter.next());
+      } while (pIter.hasNext() && !pattern.matcher(pIter.peek().toString()).find());
+    }
     return element;
   }
 
   @Override
   public boolean hasNext() {
-    return bucket.size() == size;
+    return pIter.hasNext();
   }
 
   @Override
