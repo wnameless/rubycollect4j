@@ -27,6 +27,7 @@ import cleanzephyr.rubycollect4j.block.ItemBlock;
 import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
 import cleanzephyr.rubycollect4j.block.ItemWithReturnBlock;
 import cleanzephyr.rubycollect4j.iter.CombinationIterable;
+import cleanzephyr.rubycollect4j.iter.PermutationIterable;
 import cleanzephyr.rubycollect4j.iter.RepeatedCombinationIterable;
 import com.google.common.collect.Lists;
 import static com.google.common.collect.Lists.newArrayList;
@@ -38,6 +39,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Random;
+import org.uncommons.maths.combinatorics.PermutationGenerator;
 
 /**
  *
@@ -526,6 +528,32 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
       rubyArray.add(reverseList.get(i));
     }
     return rubyArray;
+  }
+
+  public RubyEnumerator<RubyArray<E>> permutation() {
+    return new RubyEnumerator(new PermutationGenerator<>(list));
+  }
+
+  public RubyEnumerator<RubyArray<E>> permutation(int n) {
+    RubyArray<RubyArray<E>> perms = newRubyArray();
+    if (n < 0) {
+      return new RubyEnumerator(perms);
+    } else if (n == 0) {
+      RubyArray<E> perm = newRubyArray();
+      perms.add(perm);
+      return new RubyEnumerator(perms);
+    } else if (n > list.size()) {
+      return new RubyEnumerator(perms);
+    } else {
+      return new RubyEnumerator(new PermutationIterable(list, n));
+    }
+  }
+
+  public RubyArray<E> permutation(int n, ItemBlock<RubyArray<E>> block) {
+    for (RubyArray<E> item : permutation(n)) {
+      block.yield(item);
+    }
+    return this;
   }
 
   public E pop() {

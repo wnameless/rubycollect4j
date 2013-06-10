@@ -30,29 +30,29 @@ import java.util.Iterator;
  * @author WMW
  * @param <E>
  */
-public final class CombinationIterable<E> implements Iterable<RubyArray<E>> {
+public final class PermutationIterable<E> implements Iterable<RubyArray<E>> {
 
   private final Collection<E> coll;
   private final int n;
 
-  public CombinationIterable(Collection<E> coll, int n) {
+  public PermutationIterable(Collection<E> coll, int n) {
     this.coll = coll;
     this.n = n;
   }
 
-  public CombinationIterable(Iterable<E> iter, int n) {
+  public PermutationIterable(Iterable<E> iter, int n) {
     coll = newArrayList(iter);
     this.n = n;
   }
 
-  public CombinationIterable(Iterator<E> iter, int n) {
+  public PermutationIterable(Iterator<E> iter, int n) {
     coll = newArrayList(iter);
     this.n = n;
   }
 
   @Override
   public Iterator<RubyArray<E>> iterator() {
-    return new CombinationIterator<>(coll, n);
+    return new PermutationIterator<>(coll, n);
   }
 
 }

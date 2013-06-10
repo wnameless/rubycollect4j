@@ -45,6 +45,11 @@ public final class RepeatedCombinationIterable<E> implements Iterable<RubyArray<
     this.n = n;
   }
 
+  public RepeatedCombinationIterable(Iterator<E> iter, int n) {
+    list = newArrayList(iter);
+    this.n = n;
+  }
+
   @Override
   public Iterator<RubyArray<E>> iterator() {
     return new RepeatedCombinationIterator<>(list, n);
