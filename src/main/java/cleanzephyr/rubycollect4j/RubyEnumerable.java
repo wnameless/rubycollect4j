@@ -63,7 +63,7 @@ import java.util.regex.Pattern;
  * @author WMW
  * @param <E>
  */
-public class RubyEnumerable<E> {
+public class RubyEnumerable<E> implements Iterable<E> {
 
   protected final Iterable<E> iter;
 
@@ -844,4 +844,10 @@ public class RubyEnumerable<E> {
       block.yield(item);
     }
   }
+
+  @Override
+  public Iterator<E> iterator() {
+    return iter.iterator();
+  }
+
 }

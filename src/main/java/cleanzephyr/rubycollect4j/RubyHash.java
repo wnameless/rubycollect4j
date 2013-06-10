@@ -40,7 +40,7 @@ import java.util.Set;
  * @param <K>
  * @param <V>
  */
-public class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements Map<K, V> {
+public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements Map<K, V> {
 
   private final LinkedHashMap<K, V> map;
   private V defaultValue;
