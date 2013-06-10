@@ -76,7 +76,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return new RubyArray<>(newArrayList(elements));
   }
 
-  public RubyArray(List<E> list) {
+  private RubyArray(List<E> list) {
     super(list);
     this.list = list;
   }

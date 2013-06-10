@@ -60,12 +60,11 @@ public class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements Map<K
     return new RubyHash(map);
   }
 
-  
-  public RubyHash(LinkedHashMap<K, V> map) {
+  private RubyHash(LinkedHashMap<K, V> map) {
     super(map.entrySet());
     this.map = map;
   }
-  
+
   public RubyHash<K, V> put(Entry<K, V> entry) {
     map.put(entry.getKey(), entry.getValue());
     return this;
@@ -337,11 +336,11 @@ public class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements Map<K
   }
 
   public RubyArray<V> valuesAt(K... keys) {
-    List<V> values = newArrayList();
+    RubyArray<V> values = newRubyArray();
     for (K key : keys) {
       values.add(map.get(key));
     }
-    return new RubyArray(values);
+    return values;
   }
 
   @Override
@@ -403,5 +402,5 @@ public class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements Map<K
   public String toString() {
     return map.toString();
   }
-  
+
 }
