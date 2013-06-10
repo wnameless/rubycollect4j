@@ -28,6 +28,7 @@ import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
 import cleanzephyr.rubycollect4j.block.ItemWithReturnBlock;
 import cleanzephyr.rubycollect4j.iter.CombinationIterable;
 import cleanzephyr.rubycollect4j.iter.PermutationIterable;
+import cleanzephyr.rubycollect4j.iter.ProductIterable;
 import cleanzephyr.rubycollect4j.iter.RepeatedCombinationIterable;
 import cleanzephyr.rubycollect4j.iter.RepeatedPermutationIterable;
 import com.google.common.collect.Lists;
@@ -198,8 +199,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     if (n < 0) {
       return new RubyEnumerator(comb);
     } else if (n == 0) {
-      RubyArray<E> ra = newRubyArray();
-      comb.add(ra);
+      comb.push(newRubyArray());
       return new RubyEnumerator(comb);
     } else if (n > list.size()) {
       return new RubyEnumerator(comb);
@@ -216,6 +216,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   }
 
   public RubyEnumerator<RubyArray<E>> repeatedCombination(int n) {
+    RubyArray<RubyArray<E>> rc = newRubyArray();
+    if (n < 0) {
+      return new RubyEnumerator(rc);
+    }
+    if (n == 0) {
+      return new RubyEnumerator(rc.push(newRubyArray()));
+    }
     return new RubyEnumerator<>(new RepeatedCombinationIterable<E>(list, n));
   }
 
@@ -540,8 +547,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     if (n < 0) {
       return new RubyEnumerator(perms);
     } else if (n == 0) {
-      RubyArray<E> perm = newRubyArray();
-      perms.add(perm);
+      perms.push(newRubyArray());
       return new RubyEnumerator(perms);
     } else if (n > list.size()) {
       return new RubyEnumerator(perms);
@@ -594,49 +600,16 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return rubyArray;
   }
 
-  public RubyArray<RubyArray<E>> product(RubyArray<E>... arys) {
-    RubyArray<RubyArray<E>> rubyArray = newRubyArray();
-    RubyArray<E>[] others = new RubyArray[arys.length + 1];
-    others[0] = this;
-    System.arraycopy(arys, 0, others, 1, arys.length);
-    int[] counters = new int[others.length];
-    while (isLooping(counters, others)) {
-      RubyArray<E> combination = newRubyArray();
-      for (int i = 0; i < counters.length; i++) {
-        combination.add(others[i].get(counters[i]));
-      }
-      rubyArray.add(combination);
-      increaseCounters(counters, others);
-    }
-    return rubyArray;
+  public RubyArray<RubyArray<E>> product(List<List<E>> others) {
+    return new RubyEnumerable<>(new ProductIterable<E>(this, others)).toA();
   }
 
-  private void increaseCounters(int[] counters, RubyArray<E>[] others) {
-    for (int i = counters.length - 1; i >= 0; i--) {
-      if (counters[i] < others[i].size() - 1) {
-        counters[i]++;
-        for (int j = i + 1; j < counters.length; j++) {
-          counters[j] = 0;
-        }
-        return;
-      } else {
-        counters[i] = -1;
-      }
-    }
+  public RubyArray<RubyArray<E>> product(List<E>... others) {
+    return new RubyEnumerable<>(new ProductIterable<E>(this, others)).toA();
   }
 
-  private boolean isLooping(int[] counters, RubyArray<E>[] others) {
-    for (int i = 0; i < counters.length; i++) {
-      if (others[i].isEmpty()) {
-        return false;
-      }
-    }
-    return Arrays.binarySearch(counters, -1) == -1;
-  }
-
-  public RubyArray<E> product(RubyArray<RubyArray<E>> arys, ItemBlock<RubyArray<E>> block) {
-    RubyArray<RubyArray<E>> combinations = product(arys.toArray(new RubyArray[arys.length()]));
-    for (RubyArray<E> comb : combinations) {
+  public RubyArray<E> product(List<List<E>> others, ItemBlock<RubyArray<E>> block) {
+    for (RubyArray<E> comb : product(others)) {
       block.yield(comb);
     }
     return this;
