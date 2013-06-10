@@ -41,6 +41,7 @@ import static com.google.common.collect.Lists.reverse;
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
 import cleanzephyr.rubycollect4j.iter.CycleIterable;
 import cleanzephyr.rubycollect4j.iter.EachConsIterable;
+import cleanzephyr.rubycollect4j.iter.EachWithIndexIterable;
 import com.google.common.collect.Multimap;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -293,13 +294,7 @@ public class RubyEnumerable<E> {
   }
 
   public RubyEnumerator<Entry<E, Integer>> eachWithIndex() {
-    RubyArray<Entry<E, Integer>> rubyArray = newRubyArray();
-    int i = 0;
-    for (E item : iter) {
-      rubyArray.add(new AbstractMap.SimpleEntry(item, i));
-      i++;
-    }
-    return new RubyEnumerator(rubyArray);
+    return new RubyEnumerator<>(new EachWithIndexIterable<E>(iter));
   }
 
   public <S> S eachWithObject(S o, ItemWithObjectBlock<E, S> block) {

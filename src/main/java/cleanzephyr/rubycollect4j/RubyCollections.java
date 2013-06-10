@@ -215,6 +215,6 @@ public final class RubyCollections {
   }
 
   public static void main(String[] args) {
-    puts(ra(1, 3, 4, 5, 7).eachCons(3).toA());
+    puts(ra(1, 3, 4, 5, 7).eachWithIndex().toA());
   }
 }
