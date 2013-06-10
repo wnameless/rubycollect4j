@@ -20,11 +20,12 @@
  */
 package cleanzephyr.rubycollect4j.iter;
 
-import com.google.common.collect.Iterables;
 import java.util.Iterator;
 
+import com.google.common.collect.Iterables;
+
 /**
- *
+ * 
  * @author WMW
  * @param <E>
  */

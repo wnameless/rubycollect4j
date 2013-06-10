@@ -20,17 +20,20 @@
  */
 package cleanzephyr.rubycollect4j.iter;
 
-import cleanzephyr.rubycollect4j.RubyArray;
 import static com.google.common.collect.Lists.newArrayList;
+
 import java.util.Iterator;
 import java.util.List;
 
+import cleanzephyr.rubycollect4j.RubyArray;
+
 /**
- *
+ * 
  * @author WMW
  * @param <E>
  */
-public final class RepeatedCombinationIterable<E> implements Iterable<RubyArray<E>> {
+public final class RepeatedCombinationIterable<E> implements
+    Iterable<RubyArray<E>> {
 
   private final List<E> list;
   private final int n;

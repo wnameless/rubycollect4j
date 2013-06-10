@@ -20,13 +20,15 @@
  */
 package cleanzephyr.rubycollect4j.iter;
 
-import cleanzephyr.rubycollect4j.RubyArray;
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import cleanzephyr.rubycollect4j.RubyArray;
+
 /**
- *
+ * 
  * @author WMW
  * @param <E>
  */
@@ -72,6 +74,11 @@ public final class EachConsIterator<E> implements Iterator<RubyArray<E>> {
       throw new NoSuchElementException();
     }
     return nextElement();
+  }
+
+  @Override
+  public void remove() {
+    throw new UnsupportedOperationException();
   }
 
 }

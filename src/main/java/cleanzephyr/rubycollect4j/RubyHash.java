@@ -20,44 +20,49 @@
  */
 package cleanzephyr.rubycollect4j;
 
-import cleanzephyr.rubycollect4j.block.EntryBlock;
-import cleanzephyr.rubycollect4j.block.EntryBooleanBlock;
-import cleanzephyr.rubycollect4j.block.EntryMergeBlock;
-import cleanzephyr.rubycollect4j.block.ItemBlock;
-import static com.google.common.collect.Lists.newArrayList;
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
 import static com.google.common.collect.Maps.newLinkedHashMap;
-import java.util.AbstractMap;
+
+import java.util.AbstractMap.SimpleEntry;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import cleanzephyr.rubycollect4j.block.EntryBlock;
+import cleanzephyr.rubycollect4j.block.EntryBooleanBlock;
+import cleanzephyr.rubycollect4j.block.EntryMergeBlock;
+import cleanzephyr.rubycollect4j.block.ItemBlock;
+
 /**
- *
+ * 
  * @author WMW
  * @param <K>
  * @param <V>
  */
-public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements Map<K, V> {
+public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
+    Map<K, V> {
 
   private final LinkedHashMap<K, V> map;
   private V defaultValue;
 
   public static <K, V> RubyHash<K, V> newRubyHash() {
-    return new RubyHash(newLinkedHashMap());
+    LinkedHashMap<K, V> linkedHashMap = newLinkedHashMap();
+    return new RubyHash<>(linkedHashMap);
   }
 
   public static <K, V> RubyHash<K, V> newRubyHash(Map<K, V> map) {
-    return new RubyHash(newLinkedHashMap(map));
+    LinkedHashMap<K, V> linkedHashMap = newLinkedHashMap(map);
+    return new RubyHash<>(linkedHashMap);
   }
 
-  public static <K, V> RubyHash<K, V> newRubyHash(LinkedHashMap<K, V> map, boolean defensiveCopy) {
+  public static <K, V> RubyHash<K, V> newRubyHash(LinkedHashMap<K, V> map,
+      boolean defensiveCopy) {
     if (defensiveCopy) {
-      return new RubyHash(newLinkedHashMap(map));
+      LinkedHashMap<K, V> linkedHashMap = newLinkedHashMap(map);
+      return new RubyHash<>(linkedHashMap);
     }
-    return new RubyHash(map);
+    return new RubyHash<>(map);
   }
 
   private RubyHash(LinkedHashMap<K, V> map) {
@@ -70,7 +75,8 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return this;
   }
 
-  public RubyHash<K, V> put(Entry<K, V>... entries) {
+  public RubyHash<K, V> put(
+      @SuppressWarnings("unchecked") Entry<K, V>... entries) {
     for (Entry<K, V> entry : entries) {
       map.put(entry.getKey(), entry.getValue());
     }
@@ -79,7 +85,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
 
   public Entry<K, V> assoc(K key) {
     if (map.containsKey(key)) {
-      return new AbstractMap.SimpleEntry(key, map.get(key));
+      return new SimpleEntry<K, V>(key, map.get(key));
     } else {
       return null;
     }
@@ -149,7 +155,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return map.isEmpty();
   }
 
-  public boolean eqlʔ(RubyHash other) {
+  public boolean eqlʔ(RubyHash<?, ?> other) {
     return this.equals(other);
   }
 
@@ -168,7 +174,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   public RubyArray<Entry<K, V>> flatten() {
-    return newRubyArray(new RubyEnumerable(map.entrySet()).toA());
+    return newRubyArray(new RubyEnumerable<>(map.entrySet()).toA());
   }
 
   public boolean keyʔ(K key) {
@@ -258,8 +264,12 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   public RubyHash<K, V> merge(Map<K, V> otherHash, EntryMergeBlock<K, V> block) {
     RubyHash<K, V> newHash = newRubyHash();
     for (Entry<K, V> item : map.entrySet()) {
-      if (map.containsKey(item.getKey()) && otherHash.containsKey(item.getKey())) {
-        newHash.put(item.getKey(), block.yield(item.getKey(), item.getValue(), otherHash.get(item.getKey())));
+      if (map.containsKey(item.getKey())
+          && otherHash.containsKey(item.getKey())) {
+        newHash.put(
+            item.getKey(),
+            block.yield(item.getKey(), item.getValue(),
+                otherHash.get(item.getKey())));
       } else {
         newHash.put(item);
       }
@@ -272,10 +282,15 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return newHash;
   }
 
-  public RubyHash<K, V> mergeǃ(Map<K, V> otherHash, EntryMergeBlock<K, V> block) {
+  public RubyHash<K, V>
+      mergeǃ(Map<K, V> otherHash, EntryMergeBlock<K, V> block) {
     for (Entry<K, V> item : map.entrySet()) {
-      if (map.containsKey(item.getKey()) && otherHash.containsKey(item.getKey())) {
-        map.put(item.getKey(), block.yield(item.getKey(), item.getValue(), otherHash.get(item.getKey())));
+      if (map.containsKey(item.getKey())
+          && otherHash.containsKey(item.getKey())) {
+        map.put(
+            item.getKey(),
+            block.yield(item.getKey(), item.getValue(),
+                otherHash.get(item.getKey())));
       } else {
         map.put(item.getKey(), item.getValue());
       }
@@ -288,7 +303,8 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return this;
   }
 
-  public RubyHash<K, V> update(Map<K, V> otherHash, EntryMergeBlock<K, V> block) {
+  public RubyHash<K, V>
+      update(Map<K, V> otherHash, EntryMergeBlock<K, V> block) {
     return mergeǃ(otherHash, block);
   }
 
@@ -335,7 +351,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return newRubyArray(map.values());
   }
 
-  public RubyArray<V> valuesAt(K... keys) {
+  public RubyArray<V> valuesAt(@SuppressWarnings("unchecked") K... keys) {
     RubyArray<V> values = newRubyArray();
     for (K key : keys) {
       values.add(map.get(key));

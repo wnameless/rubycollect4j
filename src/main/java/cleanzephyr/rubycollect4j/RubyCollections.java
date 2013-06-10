@@ -20,9 +20,9 @@
  */
 package cleanzephyr.rubycollect4j;
 
-import static cleanzephyr.rubycollect4j.RubyIO.puts;
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
 import static cleanzephyr.rubycollect4j.RubyHash.newRubyHash;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -35,7 +35,7 @@ import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 /**
- *
+ * 
  * @author WMW
  */
 public final class RubyCollections {
@@ -53,8 +53,10 @@ public final class RubyCollections {
 
     try {
       Process proc = Runtime.getRuntime().exec(cmd);
-      BufferedReader stdInput = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-      BufferedReader stdError = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
+      BufferedReader stdInput =
+          new BufferedReader(new InputStreamReader(proc.getInputStream()));
+      BufferedReader stdError =
+          new BufferedReader(new InputStreamReader(proc.getErrorStream()));
 
       String s;
       while ((s = stdInput.readLine()) != null) {
@@ -65,7 +67,8 @@ public final class RubyCollections {
         sb.append(s).append("\n");
       }
     } catch (IOException ex) {
-      Logger.getLogger(RubyCollections.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(RubyCollections.class.getName()).log(Level.SEVERE, null,
+          ex);
       sb.append(ex.getMessage());
     }
 
@@ -93,6 +96,7 @@ public final class RubyCollections {
     return ra.push(list);
   }
 
+  @SafeVarargs
   public static <E> RubyArray<E> ra(E... args) {
     return newRubyArray(args);
   }
@@ -105,7 +109,8 @@ public final class RubyCollections {
     return newRubyHash(map);
   }
 
-  public static <K, V> RubyHash<K, V> rh(LinkedHashMap<K, V> map, boolean defensiveCopy) {
+  public static <K, V> RubyHash<K, V> rh(LinkedHashMap<K, V> map,
+      boolean defensiveCopy) {
     return newRubyHash(map, defensiveCopy);
   }
 
@@ -122,7 +127,8 @@ public final class RubyCollections {
     return rh;
   }
 
-  public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2, K key3, V value3) {
+  public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
+      K key3, V value3) {
     RubyHash<K, V> rh = newRubyHash();
     rh.put(key1, value1);
     rh.put(key2, value2);
@@ -130,7 +136,8 @@ public final class RubyCollections {
     return rh;
   }
 
-  public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2, K key3, V value3, K key4, V value4) {
+  public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
+      K key3, V value3, K key4, V value4) {
     RubyHash<K, V> rh = newRubyHash();
     rh.put(key1, value1);
     rh.put(key2, value2);
@@ -139,7 +146,8 @@ public final class RubyCollections {
     return rh;
   }
 
-  public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2, K key3, V value3, K key4, V value4, K key5, V value5) {
+  public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
+      K key3, V value3, K key4, V value4, K key5, V value5) {
     RubyHash<K, V> rh = newRubyHash();
     rh.put(key1, value1);
     rh.put(key2, value2);
@@ -149,7 +157,8 @@ public final class RubyCollections {
     return rh;
   }
 
-  public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2, K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6) {
+  public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
+      K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6) {
     RubyHash<K, V> rh = newRubyHash();
     rh.put(key1, value1);
     rh.put(key2, value2);
@@ -160,7 +169,9 @@ public final class RubyCollections {
     return rh;
   }
 
-  public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2, K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6, K key7, V value7) {
+  public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
+      K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
+      K key7, V value7) {
     RubyHash<K, V> rh = newRubyHash();
     rh.put(key1, value1);
     rh.put(key2, value2);
@@ -172,7 +183,9 @@ public final class RubyCollections {
     return rh;
   }
 
-  public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2, K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6, K key7, V value7, K key8, V value8) {
+  public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
+      K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
+      K key7, V value7, K key8, V value8) {
     RubyHash<K, V> rh = newRubyHash();
     rh.put(key1, value1);
     rh.put(key2, value2);
@@ -185,7 +198,9 @@ public final class RubyCollections {
     return rh;
   }
 
-  public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2, K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6, K key7, V value7, K key8, V value8, K key9, V value9) {
+  public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
+      K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
+      K key7, V value7, K key8, V value8, K key9, V value9) {
     RubyHash<K, V> rh = newRubyHash();
     rh.put(key1, value1);
     rh.put(key2, value2);
@@ -199,7 +214,9 @@ public final class RubyCollections {
     return rh;
   }
 
-  public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2, K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6, K key7, V value7, K key8, V value8, K key9, V value9, K key10, V value10) {
+  public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
+      K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
+      K key7, V value7, K key8, V value8, K key9, V value9, K key10, V value10) {
     RubyHash<K, V> rh = newRubyHash();
     rh.put(key1, value1);
     rh.put(key2, value2);
@@ -214,7 +231,4 @@ public final class RubyCollections {
     return rh;
   }
 
-  public static void main(String[] args) {
-    puts(ra(1, 2, 3).product(ra(4, 5, 6)));
-  }
 }

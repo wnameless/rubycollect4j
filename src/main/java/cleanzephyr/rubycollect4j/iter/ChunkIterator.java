@@ -1,6 +1,6 @@
 /**
  *
- * @author Wei-Ming Wu
+o * @author Wei-Ming Wu
  *
  *
  * Copyright 2013 Wei-Ming Wu
@@ -33,7 +33,8 @@ import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
 import static com.google.common.collect.Iterators.peekingIterator;
 import com.google.common.collect.PeekingIterator;
 
-public final class ChunkIterator<E, K> implements Iterator<Entry<K, RubyArray<E>>> {
+public final class ChunkIterator<E, K> implements
+    Iterator<Entry<K, RubyArray<E>>> {
 
   private final PeekingIterator<E> pIterator;
   private final ItemTransformBlock<E, K> block;
@@ -63,6 +64,11 @@ public final class ChunkIterator<E, K> implements Iterator<Entry<K, RubyArray<E>
       throw new NoSuchElementException();
     }
     return nextElement();
+  }
+
+  @Override
+  public void remove() {
+    throw new UnsupportedOperationException();
   }
 
 }

@@ -20,14 +20,16 @@
  */
 package cleanzephyr.rubycollect4j.iter;
 
-import cleanzephyr.rubycollect4j.RubyArray;
 import static com.google.common.collect.Lists.newArrayList;
+
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import cleanzephyr.rubycollect4j.RubyArray;
+
 /**
- *
+ * 
  * @author WMW
  * @param <E>
  */
@@ -40,7 +42,8 @@ public final class ProductIterable<E> implements Iterable<RubyArray<E>> {
     lists.addAll(others);
   }
 
-  public ProductIterable(List<E> self, List<E>... others) {
+  public ProductIterable(List<E> self,
+      @SuppressWarnings("unchecked") List<E>... others) {
     lists.add(self);
     lists.addAll(Arrays.asList(others));
   }

@@ -23,4 +23,5 @@ package cleanzephyr.rubycollect4j.block;
 public interface InjectWithInitBlock<E, S> {
 
   public S yield(S memo, E item);
+
 }

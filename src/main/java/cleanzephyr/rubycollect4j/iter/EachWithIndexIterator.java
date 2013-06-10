@@ -26,14 +26,15 @@ import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 
 /**
- *
+ * 
  * @author WMW
  * @param <E>
  */
-public final class EachWithIndexIterator<E> implements Iterator<Entry<E, Integer>> {
+public final class EachWithIndexIterator<E> implements
+    Iterator<Entry<E, Integer>> {
 
   private final Iterator<E> iter;
-  private final int[] index = new int[]{0};
+  private final int[] index = new int[] { 0 };
 
   public EachWithIndexIterator(Iterator<E> iter) {
     this.iter = iter;
@@ -57,4 +58,10 @@ public final class EachWithIndexIterator<E> implements Iterator<Entry<E, Integer
     }
     return nextElement();
   }
+
+  @Override
+  public void remove() {
+    throw new UnsupportedOperationException();
+  }
+
 }

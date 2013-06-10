@@ -20,13 +20,14 @@
  */
 package cleanzephyr.rubycollect4j.iter;
 
-import cleanzephyr.rubycollect4j.RubyArray;
-import cleanzephyr.rubycollect4j.block.BooleanBlock;
 import java.util.Iterator;
 import java.util.regex.Pattern;
 
+import cleanzephyr.rubycollect4j.RubyArray;
+import cleanzephyr.rubycollect4j.block.BooleanBlock;
+
 /**
- *
+ * 
  * @author WMW
  * @param <E>
  */

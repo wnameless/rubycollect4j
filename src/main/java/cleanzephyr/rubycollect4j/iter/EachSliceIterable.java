@@ -20,8 +20,9 @@
  */
 package cleanzephyr.rubycollect4j.iter;
 
-import cleanzephyr.rubycollect4j.RubyArray;
 import java.util.Iterator;
+
+import cleanzephyr.rubycollect4j.RubyArray;
 
 public final class EachSliceIterable<E> implements Iterable<RubyArray<E>> {
 

@@ -23,4 +23,5 @@ package cleanzephyr.rubycollect4j.block;
 public interface ItemTransformBlock<E, S> {
 
   public S yield(E item);
+
 }

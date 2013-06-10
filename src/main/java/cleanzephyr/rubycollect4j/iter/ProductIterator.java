@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
- *
+ * 
  * @author WMW
  * @param <E>
  */
@@ -85,6 +85,11 @@ public final class ProductIterator<E> implements Iterator<RubyArray<E>> {
       throw new NoSuchElementException();
     }
     return nextElement();
+  }
+
+  @Override
+  public void remove() {
+    throw new UnsupportedOperationException();
   }
 
 }

@@ -24,12 +24,13 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 /**
- *
+ * 
  * @author WMW
  * @param <E>
  * @param <O>
  */
-public final class EachWithObjectIterable<E, O> implements Iterable<Entry<E, O>> {
+public final class EachWithObjectIterable<E, O> implements
+    Iterable<Entry<E, O>> {
 
   private final Iterable<E> iter;
   private final O obj;

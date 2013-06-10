@@ -21,11 +21,14 @@
 package cleanzephyr.rubycollect4j;
 
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
-import cleanzephyr.rubycollect4j.block.ItemBlock;
 import static com.google.common.collect.Lists.newArrayList;
+
 import java.util.Iterator;
 
-public final class RubyEnumerator<E> extends RubyEnumerable<E> implements Iterable<E> {
+import cleanzephyr.rubycollect4j.block.ItemBlock;
+
+public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
+    Iterable<E> {
 
   public RubyEnumerator(Iterable<E> iter) {
     super(iter);
@@ -52,4 +55,5 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements Iterab
   public Iterator<E> iterator() {
     return iter.iterator();
   }
+
 }

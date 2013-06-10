@@ -26,12 +26,13 @@ import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 
 /**
- *
+ * 
  * @author WMW
  * @param <E>
  * @param <O>
  */
-public final class EachWithObjectIterator<E, O> implements Iterator<Entry<E, O>> {
+public final class EachWithObjectIterator<E, O> implements
+    Iterator<Entry<E, O>> {
 
   private final Iterator<E> iter;
   private final O obj;
@@ -56,6 +57,11 @@ public final class EachWithObjectIterator<E, O> implements Iterator<Entry<E, O>>
       throw new NoSuchElementException();
     }
     return nextElement();
+  }
+
+  @Override
+  public void remove() {
+    throw new UnsupportedOperationException();
   }
 
 }

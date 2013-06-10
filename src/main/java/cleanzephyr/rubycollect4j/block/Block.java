@@ -23,4 +23,5 @@ package cleanzephyr.rubycollect4j.block;
 public interface Block<S> {
 
   public S yield();
+
 }

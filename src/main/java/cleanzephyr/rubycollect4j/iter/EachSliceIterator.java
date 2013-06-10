@@ -20,10 +20,12 @@
  */
 package cleanzephyr.rubycollect4j.iter;
 
-import cleanzephyr.rubycollect4j.RubyArray;
+import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
+
+import cleanzephyr.rubycollect4j.RubyArray;
 
 public final class EachSliceIterator<E> implements Iterator<RubyArray<E>> {
 
@@ -54,6 +56,11 @@ public final class EachSliceIterator<E> implements Iterator<RubyArray<E>> {
       throw new NoSuchElementException();
     }
     return nextElement();
+  }
+
+  @Override
+  public void remove() {
+    throw new UnsupportedOperationException();
   }
 
 }

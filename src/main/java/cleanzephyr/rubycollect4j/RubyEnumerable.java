@@ -20,8 +20,25 @@
  */
 package cleanzephyr.rubycollect4j;
 
-import static java.util.Map.Entry;
+import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
 import static cleanzephyr.rubycollect4j.RubyHash.newRubyHash;
+import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Lists.reverse;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import cleanzephyr.rubycollect4j.block.BooleanBlock;
 import cleanzephyr.rubycollect4j.block.InjectBlock;
 import cleanzephyr.rubycollect4j.block.InjectWithInitBlock;
@@ -32,34 +49,20 @@ import cleanzephyr.rubycollect4j.block.ItemWithIndexBlock;
 import cleanzephyr.rubycollect4j.block.ItemWithObjectBlock;
 import cleanzephyr.rubycollect4j.block.ListBlock;
 import cleanzephyr.rubycollect4j.iter.ChunkIterable;
-import cleanzephyr.rubycollect4j.iter.EachSliceIterable;
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Lists.reverse;
-import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
 import cleanzephyr.rubycollect4j.iter.CycleIterable;
 import cleanzephyr.rubycollect4j.iter.EachConsIterable;
+import cleanzephyr.rubycollect4j.iter.EachSliceIterable;
 import cleanzephyr.rubycollect4j.iter.EachWithIndexIterable;
 import cleanzephyr.rubycollect4j.iter.EachWithObjectIterable;
 import cleanzephyr.rubycollect4j.iter.SliceBeforeIterable;
+
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
- *
+ * 
  * @author WMW
  * @param <E>
  */
@@ -111,7 +114,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return bool;
   }
 
-  public <K> RubyEnumerator<Entry<K, RubyArray<E>>> chunk(ItemTransformBlock<E, K> block) {
+  public <K> RubyEnumerator<Entry<K, RubyArray<E>>> chunk(
+      ItemTransformBlock<E, K> block) {
     return new RubyEnumerator<>(new ChunkIterable<E, K>(iter, block));
   }
 
@@ -141,13 +145,14 @@ public class RubyEnumerable<E> implements Iterable<E> {
 
   public int count() {
     int count = 0;
-    for (E item : iter) {
+    for (@SuppressWarnings("unused")
+    E item : iter) {
       count++;
     }
     return count;
   }
 
-  public int count(BooleanBlock block) {
+  public int count(BooleanBlock<E> block) {
     int count = 0;
     for (E item : iter) {
       if (block.yield(item)) {
@@ -157,7 +162,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return count;
   }
 
-  public void cycle(ItemBlock block) {
+  public void cycle(ItemBlock<E> block) {
     while (true) {
       for (E item : iter) {
         block.yield(item);
@@ -169,7 +174,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return new RubyEnumerator<>(Iterables.cycle(iter));
   }
 
-  public void cycle(int n, ItemBlock block) {
+  public void cycle(int n, ItemBlock<E> block) {
     for (int i = 0; i < n; i++) {
       for (E item : iter) {
         block.yield(item);
@@ -181,7 +186,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return new RubyEnumerator<>(new CycleIterable<E>(iter, n));
   }
 
-  public E detect(BooleanBlock block) {
+  public E detect(BooleanBlock<E> block) {
     for (E item : iter) {
       if (block.yield(item)) {
         return item;
@@ -191,7 +196,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   public RubyEnumerator<E> detect() {
-    return new RubyEnumerator(iter);
+    return new RubyEnumerator<>(iter);
   }
 
   public RubyArray<E> drop(int n) {
@@ -209,7 +214,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return rubyArray;
   }
 
-  public RubyArray<E> dropWhile(BooleanBlock block) {
+  public RubyArray<E> dropWhile(BooleanBlock<E> block) {
     RubyArray<E> rubyArray = newRubyArray();
     boolean cutPoint = false;
     for (E item : iter) {
@@ -227,7 +232,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
       rubyArray.add(item);
       break;
     }
-    return new RubyEnumerator(rubyArray);
+    return new RubyEnumerator<>(rubyArray);
   }
 
   public void eachCons(int n, ListBlock<E> block) {
@@ -263,7 +268,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   public RubyEnumerator<E> eachEntry() {
-    return new RubyEnumerator(iter);
+    return new RubyEnumerator<>(iter);
   }
 
   public void eachSlice(int n, ListBlock<E> block) {
@@ -312,7 +317,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return newRubyArray(iter);
   }
 
-  public E find(BooleanBlock block) {
+  public E find(BooleanBlock<E> block) {
     return detect(block);
   }
 
@@ -320,7 +325,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return detect();
   }
 
-  public RubyArray<E> findAll(BooleanBlock block) {
+  public RubyArray<E> findAll(BooleanBlock<E> block) {
     RubyArray<E> rubyArray = newRubyArray();
     for (E item : iter) {
       if (block.yield(item)) {
@@ -331,7 +336,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   public RubyEnumerator<E> findAll() {
-    return new RubyEnumerator(iter);
+    return new RubyEnumerator<>(iter);
   }
 
   public E first() {
@@ -377,7 +382,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   public RubyEnumerator<E> findIndex() {
-    return new RubyEnumerator(iter);
+    return new RubyEnumerator<>(iter);
   }
 
   public <S> RubyArray<S> flatMap(ItemToListBlock<E, S> block) {
@@ -426,7 +431,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   public RubyEnumerator<E> groupBy() {
-    return new RubyEnumerator(iter);
+    return new RubyEnumerator<>(iter);
   }
 
   public boolean includeʔ(E target) {
@@ -442,6 +447,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return includeʔ(target);
   }
 
+  @SuppressWarnings("unchecked")
   public E inject(String methodName) {
     E result = null;
     Iterator<E> iterator = iter.iterator();
@@ -452,10 +458,15 @@ public class RubyEnumerable<E> implements Iterable<E> {
       } else {
         E curr = iterator.next();
         try {
-          Method m = result.getClass().getDeclaredMethod(methodName, result.getClass());
+          Method m =
+              result.getClass()
+                  .getDeclaredMethod(methodName, result.getClass());
           result = (E) m.invoke(result, curr);
-        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-          Logger.getLogger(RubyEnumerable.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchMethodException | SecurityException
+            | IllegalAccessException | IllegalArgumentException
+            | InvocationTargetException ex) {
+          Logger.getLogger(RubyEnumerable.class.getName()).log(Level.SEVERE,
+              null, ex);
         }
       }
       i++;
@@ -463,16 +474,21 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return result;
   }
 
+  @SuppressWarnings("unchecked")
   public E inject(E init, String methodName) {
     E result = init;
     Iterator<E> iterator = iter.iterator();
     while (iterator.hasNext()) {
       E curr = iterator.next();
       try {
-        Method m = result.getClass().getDeclaredMethod(methodName, result.getClass());
+        Method m =
+            result.getClass().getDeclaredMethod(methodName, result.getClass());
         result = (E) m.invoke(result, curr);
-      } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-        Logger.getLogger(RubyEnumerable.class.getName()).log(Level.SEVERE, null, ex);
+      } catch (NoSuchMethodException | SecurityException
+          | IllegalAccessException | IllegalArgumentException
+          | InvocationTargetException ex) {
+        Logger.getLogger(RubyEnumerable.class.getName()).log(Level.SEVERE,
+            null, ex);
       }
     }
     return result;
@@ -527,7 +543,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return src.get(dst.indexOf(maxDst));
   }
 
-  public <S> E maxBy(Comparator<? super S> comp, ItemTransformBlock<E, S> block) {
+  public <S> E
+      maxBy(Comparator<? super S> comp, ItemTransformBlock<E, S> block) {
     List<E> src = newArrayList();
     List<S> dst = newArrayList();
     for (E item : iter) {
@@ -539,7 +556,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   public RubyEnumerator<E> maxBy() {
-    return new RubyEnumerator(iter);
+    return new RubyEnumerator<>(iter);
   }
 
   public E min() {
@@ -562,7 +579,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return src.get(dst.indexOf(minDst));
   }
 
-  public <S> E minBy(Comparator<? super S> comp, ItemTransformBlock<E, S> block) {
+  public <S> E
+      minBy(Comparator<? super S> comp, ItemTransformBlock<E, S> block) {
     List<E> src = newArrayList();
     List<S> dst = newArrayList();
     for (E item : iter) {
@@ -574,7 +592,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   public RubyEnumerator<E> minBy() {
-    return new RubyEnumerator(iter);
+    return new RubyEnumerator<>(iter);
   }
 
   public RubyArray<E> minmax() {
@@ -584,7 +602,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
 
   public RubyArray<E> minmax(Comparator<? super E> comp) {
     RubyArray<E> rubyArray = newRubyArray(iter);
-    return newRubyArray(Collections.min(rubyArray, comp), Collections.max(rubyArray, comp));
+    return newRubyArray(Collections.min(rubyArray, comp),
+        Collections.max(rubyArray, comp));
   }
 
   public <S> RubyArray<E> minmaxBy(ItemTransformBlock<E, S> block) {
@@ -596,10 +615,12 @@ public class RubyEnumerable<E> implements Iterable<E> {
     }
     S minDst = new RubyEnumerable<>(dst).min();
     S maxDst = new RubyEnumerable<>(dst).max();
-    return newRubyArray(src.get(dst.indexOf(minDst)), src.get(dst.indexOf(maxDst)));
+    return newRubyArray(src.get(dst.indexOf(minDst)),
+        src.get(dst.indexOf(maxDst)));
   }
 
-  public <S> RubyArray<E> minmaxBy(Comparator<? super S> comp, ItemTransformBlock<E, S> block) {
+  public <S> RubyArray<E> minmaxBy(Comparator<? super S> comp,
+      ItemTransformBlock<E, S> block) {
     RubyArray<E> src = newRubyArray();
     RubyArray<S> dst = newRubyArray();
     for (E item : iter) {
@@ -608,14 +629,15 @@ public class RubyEnumerable<E> implements Iterable<E> {
     }
     S minDst = Collections.min(dst, comp);
     S maxDst = Collections.max(dst, comp);
-    return newRubyArray(src.get(dst.indexOf(minDst)), src.get(dst.indexOf(maxDst)));
+    return newRubyArray(src.get(dst.indexOf(minDst)),
+        src.get(dst.indexOf(maxDst)));
   }
 
   public RubyEnumerator<E> minmaxBy() {
-    return new RubyEnumerator(iter);
+    return new RubyEnumerator<>(iter);
   }
 
-  public RubyArray<RubyArray<E>> partition(BooleanBlock block) {
+  public RubyArray<RubyArray<E>> partition(BooleanBlock<E> block) {
     RubyArray<E> trueList = newRubyArray();
     RubyArray<E> falseList = newRubyArray();
     for (E item : iter) {
@@ -629,7 +651,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   public RubyEnumerator<E> partition() {
-    return new RubyEnumerator(iter);
+    return new RubyEnumerator<>(iter);
   }
 
   public boolean noneʔ() {
@@ -705,10 +727,10 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   public RubyEnumerator<E> reject() {
-    return new RubyEnumerator(iter);
+    return new RubyEnumerator<>(iter);
   }
 
-  public void reverseEach(ItemBlock block) {
+  public void reverseEach(ItemBlock<E> block) {
     List<E> list = newArrayList(iter);
     for (E item : reverse(list)) {
       block.yield(item);
@@ -716,10 +738,10 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   public RubyEnumerator<E> reverseEach() {
-    return new RubyEnumerator(Lists.reverse(newArrayList(iter)));
+    return new RubyEnumerator<>(Lists.reverse(newArrayList(iter)));
   }
 
-  public RubyArray<E> select(BooleanBlock block) {
+  public RubyArray<E> select(BooleanBlock<E> block) {
     return findAll(block);
   }
 
@@ -728,18 +750,20 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   public RubyEnumerator<RubyArray<E>> sliceBefore(String regex) {
-    return new RubyEnumerator(new SliceBeforeIterable(iter, regex));
+    return new RubyEnumerator<>(new SliceBeforeIterable<E>(iter, regex));
   }
 
-  public RubyEnumerator<RubyArray<E>> sliceBefore(BooleanBlock block) {
-    return new RubyEnumerator<>(new SliceBeforeIterable(iter, block));
+  public RubyEnumerator<RubyArray<E>> sliceBefore(BooleanBlock<E> block) {
+    return new RubyEnumerator<>(new SliceBeforeIterable<E>(iter, block));
   }
 
   public RubyArray<E> sort() {
     RubyArray<E> rubyArray = newRubyArray(iter);
     Object[] array = rubyArray.toArray();
     Arrays.sort(array);
-    return newRubyArray((E[]) array);
+    @SuppressWarnings("unchecked")
+    E[] elements = (E[]) array;
+    return newRubyArray(elements);
   }
 
   public <S> RubyArray<E> sortBy(ItemTransformBlock<E, S> block) {
@@ -760,7 +784,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return sortedList;
   }
 
-  public <S> RubyArray<E> sortBy(Comparator<? super S> comp, ItemTransformBlock<E, S> block) {
+  public <S> RubyArray<E> sortBy(Comparator<? super S> comp,
+      ItemTransformBlock<E, S> block) {
     Multimap<S, E> multimap = ArrayListMultimap.create();
     RubyArray<E> sortedList = newRubyArray();
     for (E item : iter) {
@@ -779,7 +804,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   public RubyEnumerator<E> sortBy() {
-    return new RubyEnumerator(iter);
+    return new RubyEnumerator<>(iter);
   }
 
   public RubyArray<E> take(int n) {
@@ -799,7 +824,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return rubyArray;
   }
 
-  public RubyArray<E> takeWhile(BooleanBlock block) {
+  public RubyArray<E> takeWhile(BooleanBlock<E> block) {
     RubyArray<E> rubyArray = newRubyArray();
     for (E item : iter) {
       if (block.yield(item)) {
@@ -824,22 +849,28 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return newRubyArray(iter);
   }
 
-  public RubyArray<RubyArray<E>> zip(RubyArray<E>... others) {
+  public RubyArray<RubyArray<E>> zip(
+      @SuppressWarnings("unchecked") RubyArray<E>... others) {
+    return zip(Arrays.asList(others));
+  }
+
+  public RubyArray<RubyArray<E>> zip(List<RubyArray<E>> others) {
     RubyArray<E> rubyArray = newRubyArray(iter);
     RubyArray<RubyArray<E>> zippedRubyArray = newRubyArray();
     for (int i = 0; i < rubyArray.size(); i++) {
       RubyArray<E> zip = newRubyArray();
       zip.add(rubyArray.at(i));
-      for (int j = 0; j < others.length; j++) {
-        zip.add(others[j].at(i));
+      for (int j = 0; j < others.size(); j++) {
+        zip.add(others.get(j).at(i));
       }
       zippedRubyArray.add(zip);
     }
     return zippedRubyArray;
   }
 
-  public void zip(RubyArray<RubyArray<E>> others, ItemBlock<RubyArray<E>> block) {
-    RubyArray<RubyArray<E>> zippedRubyArray = zip(others.toArray(new RubyArray[others.length()]));
+  public void
+      zip(RubyArray<RubyArray<E>> others, ItemBlock<RubyArray<E>> block) {
+    RubyArray<RubyArray<E>> zippedRubyArray = zip(others);
     for (RubyArray<E> item : zippedRubyArray) {
       block.yield(item);
     }

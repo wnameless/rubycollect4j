@@ -24,7 +24,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- *
+ * 
  * @author WMW
  * @param <E>
  */
@@ -56,6 +56,11 @@ public final class CycleIterator<E> implements Iterator<E> {
     } else {
       throw new NoSuchElementException();
     }
+  }
+
+  @Override
+  public void remove() {
+    throw new UnsupportedOperationException();
   }
 
 }

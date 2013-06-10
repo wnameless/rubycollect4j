@@ -20,21 +20,22 @@
  */
 package cleanzephyr.rubycollect4j.iter;
 
-import cleanzephyr.rubycollect4j.RubyArray;
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
-import cleanzephyr.rubycollect4j.RubyEnumerable;
-import static com.google.common.collect.Lists.newArrayList;
+
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import cleanzephyr.rubycollect4j.RubyArray;
+
 /**
- *
+ * 
  * @author WMW
  * @param <E>
  */
-public final class RepeatedPermutationIterator<E> implements Iterator<RubyArray<E>> {
+public final class RepeatedPermutationIterator<E> implements
+    Iterator<RubyArray<E>> {
 
   private final List<E> list;
   private final int[] counter;
@@ -92,6 +93,11 @@ public final class RepeatedPermutationIterator<E> implements Iterator<RubyArray<
       throw new NoSuchElementException();
     }
     return nextElement();
+  }
+
+  @Override
+  public void remove() {
+    throw new UnsupportedOperationException();
   }
 
 }

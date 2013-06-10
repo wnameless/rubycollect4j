@@ -25,4 +25,5 @@ import java.util.List;
 public interface ListBlock<E> {
 
   public void yield(List<E> block);
+
 }

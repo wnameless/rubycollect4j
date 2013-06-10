@@ -23,4 +23,5 @@ package cleanzephyr.rubycollect4j.block;
 public interface EntryTransformBlock<K, V, S> {
 
   public S yield(K key, V value);
+
 }

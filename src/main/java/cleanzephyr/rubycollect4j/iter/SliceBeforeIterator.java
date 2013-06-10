@@ -20,17 +20,20 @@
  */
 package cleanzephyr.rubycollect4j.iter;
 
-import cleanzephyr.rubycollect4j.RubyArray;
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
-import cleanzephyr.rubycollect4j.block.BooleanBlock;
-import com.google.common.collect.Iterators;
-import com.google.common.collect.PeekingIterator;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
 
+import cleanzephyr.rubycollect4j.RubyArray;
+import cleanzephyr.rubycollect4j.block.BooleanBlock;
+
+import com.google.common.collect.Iterators;
+import com.google.common.collect.PeekingIterator;
+
 /**
- *
+ * 
  * @author WMW
  * @param <E>
  */
@@ -61,7 +64,8 @@ public final class SliceBeforeIterator<E> implements Iterator<RubyArray<E>> {
     } else {
       do {
         element.add(pIter.next());
-      } while (pIter.hasNext() && !pattern.matcher(pIter.peek().toString()).find());
+      } while (pIter.hasNext()
+          && !pattern.matcher(pIter.peek().toString()).find());
     }
     return element;
   }
@@ -77,6 +81,11 @@ public final class SliceBeforeIterator<E> implements Iterator<RubyArray<E>> {
       throw new NoSuchElementException();
     }
     return nextElement();
+  }
+
+  @Override
+  public void remove() {
+    throw new UnsupportedOperationException();
   }
 
 }

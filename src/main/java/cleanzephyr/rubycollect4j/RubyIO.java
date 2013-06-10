@@ -63,4 +63,5 @@ public final class RubyIO {
   public static void puts(long x) {
     out.println(x);
   }
+
 }

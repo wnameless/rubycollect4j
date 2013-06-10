@@ -24,11 +24,12 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 /**
- *
+ * 
  * @author WMW
  * @param <E>
  */
-public final class EachWithIndexIterable<E> implements Iterable<Entry<E, Integer>> {
+public final class EachWithIndexIterable<E> implements
+    Iterable<Entry<E, Integer>> {
 
   private final Iterable<E> iter;
 
