@@ -96,7 +96,6 @@ public final class RubyCollections {
     return ra.push(list);
   }
 
-  @SafeVarargs
   public static <E> RubyArray<E> ra(E... args) {
     return newRubyArray(args);
   }

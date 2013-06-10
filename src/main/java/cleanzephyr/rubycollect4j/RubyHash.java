@@ -48,21 +48,21 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
 
   public static <K, V> RubyHash<K, V> newRubyHash() {
     LinkedHashMap<K, V> linkedHashMap = newLinkedHashMap();
-    return new RubyHash<>(linkedHashMap);
+    return new RubyHash<K, V>(linkedHashMap);
   }
 
   public static <K, V> RubyHash<K, V> newRubyHash(Map<K, V> map) {
     LinkedHashMap<K, V> linkedHashMap = newLinkedHashMap(map);
-    return new RubyHash<>(linkedHashMap);
+    return new RubyHash<K, V>(linkedHashMap);
   }
 
   public static <K, V> RubyHash<K, V> newRubyHash(LinkedHashMap<K, V> map,
       boolean defensiveCopy) {
     if (defensiveCopy) {
       LinkedHashMap<K, V> linkedHashMap = newLinkedHashMap(map);
-      return new RubyHash<>(linkedHashMap);
+      return new RubyHash<K, V>(linkedHashMap);
     }
-    return new RubyHash<>(map);
+    return new RubyHash<K, V>(map);
   }
 
   private RubyHash(LinkedHashMap<K, V> map) {
@@ -75,8 +75,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return this;
   }
 
-  public RubyHash<K, V> put(
-      @SuppressWarnings("unchecked") Entry<K, V>... entries) {
+  public RubyHash<K, V> put(Entry<K, V>... entries) {
     for (Entry<K, V> entry : entries) {
       map.put(entry.getKey(), entry.getValue());
     }
@@ -174,7 +173,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   public RubyArray<Entry<K, V>> flatten() {
-    return newRubyArray(new RubyEnumerable<>(map.entrySet()).toA());
+    return newRubyArray(new RubyEnumerable<Entry<K, V>>(map.entrySet()).toA());
   }
 
   public boolean keyʔ(K key) {
@@ -351,7 +350,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return newRubyArray(map.values());
   }
 
-  public RubyArray<V> valuesAt(@SuppressWarnings("unchecked") K... keys) {
+  public RubyArray<V> valuesAt(K... keys) {
     RubyArray<V> values = newRubyArray();
     for (K key : keys) {
       values.add(map.get(key));

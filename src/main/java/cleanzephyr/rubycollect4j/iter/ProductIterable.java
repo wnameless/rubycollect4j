@@ -42,15 +42,14 @@ public final class ProductIterable<E> implements Iterable<RubyArray<E>> {
     lists.addAll(others);
   }
 
-  public ProductIterable(List<E> self,
-      @SuppressWarnings("unchecked") List<E>... others) {
+  public ProductIterable(List<E> self, List<E>... others) {
     lists.add(self);
     lists.addAll(Arrays.asList(others));
   }
 
   @Override
   public Iterator<RubyArray<E>> iterator() {
-    return new ProductIterator<>(lists);
+    return new ProductIterator<E>(lists);
   }
 
 }

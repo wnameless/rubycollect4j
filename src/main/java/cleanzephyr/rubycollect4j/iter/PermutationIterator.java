@@ -42,14 +42,14 @@ public final class PermutationIterator<E> implements Iterator<RubyArray<E>> {
   private PermutationGenerator<E> pg;
 
   public PermutationIterator(Collection<E> coll, int n) {
-    cg = new CombinationGenerator<>(coll, n);
-    pg = new PermutationGenerator<>(cg.nextCombinationAsList());
+    cg = new CombinationGenerator<E>(coll, n);
+    pg = new PermutationGenerator<E>(cg.nextCombinationAsList());
   }
 
   private RubyArray<E> nextElement() {
     RubyArray<E> perm = newRubyArray(pg.nextPermutationAsList());
     if (!pg.hasMore() && cg.hasMore()) {
-      pg = new PermutationGenerator<>(cg.nextCombinationAsList());
+      pg = new PermutationGenerator<E>(cg.nextCombinationAsList());
     }
     return perm;
   }

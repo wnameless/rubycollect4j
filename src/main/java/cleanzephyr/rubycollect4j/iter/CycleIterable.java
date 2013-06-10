@@ -49,7 +49,7 @@ public final class CycleIterable<E> implements Iterable<E> {
     if (n == null) {
       return Iterables.cycle(iter).iterator();
     } else {
-      return new CycleIterator<>(iter, n);
+      return new CycleIterator<E>(iter, n);
     }
   }
 

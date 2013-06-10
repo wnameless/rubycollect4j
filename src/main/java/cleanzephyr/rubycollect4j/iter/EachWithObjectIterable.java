@@ -42,7 +42,7 @@ public final class EachWithObjectIterable<E, O> implements
 
   @Override
   public Iterator<Entry<E, O>> iterator() {
-    return new EachWithObjectIterator<>(iter.iterator(), obj);
+    return new EachWithObjectIterator<E, O>(iter.iterator(), obj);
   }
 
 }

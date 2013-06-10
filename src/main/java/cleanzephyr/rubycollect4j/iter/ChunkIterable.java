@@ -38,7 +38,7 @@ public final class ChunkIterable<E, K> implements
 
   @Override
   public Iterator<Entry<K, RubyArray<E>>> iterator() {
-    return new ChunkIterator<>(iterable.iterator(), block);
+    return new ChunkIterator<E, K>(iterable.iterator(), block);
   }
 
 }
