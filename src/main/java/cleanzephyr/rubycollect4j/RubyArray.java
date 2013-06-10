@@ -81,7 +81,6 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     }
   }
 
-  @SafeVarargs
   public static <E> RubyArray<E> newRubyArray(E... elements) {
     return new RubyArray<E>(newArrayList(elements));
   }
@@ -204,15 +203,16 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   public RubyEnumerator<RubyArray<E>> combination(int n) {
     RubyArray<RubyArray<E>> comb = newRubyArray();
     if (n < 0) {
-      return new RubyEnumerator<>(comb);
+      return new RubyEnumerator<RubyArray<E>>(comb);
     } else if (n == 0) {
       RubyArray<E> ra = newRubyArray();
       comb.push(ra);
-      return new RubyEnumerator<>(comb);
+      return new RubyEnumerator<RubyArray<E>>(comb);
     } else if (n > list.size()) {
-      return new RubyEnumerator<>(comb);
+      return new RubyEnumerator<RubyArray<E>>(comb);
     } else {
-      return new RubyEnumerator<>(new CombinationIterable<E>(list, n));
+      return new RubyEnumerator<RubyArray<E>>(new CombinationIterable<E>(list,
+          n));
     }
   }
 
@@ -226,13 +226,14 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   public RubyEnumerator<RubyArray<E>> repeatedCombination(int n) {
     RubyArray<RubyArray<E>> rc = newRubyArray();
     if (n < 0) {
-      return new RubyEnumerator<>(rc);
+      return new RubyEnumerator<RubyArray<E>>(rc);
     }
     if (n == 0) {
       RubyArray<E> ra = newRubyArray();
-      return new RubyEnumerator<>(rc.push(ra));
+      return new RubyEnumerator<RubyArray<E>>(rc.push(ra));
     }
-    return new RubyEnumerator<>(new RepeatedCombinationIterable<E>(list, n));
+    return new RubyEnumerator<RubyArray<E>>(new RepeatedCombinationIterable<E>(
+        list, n));
   }
 
   public RubyArray<E> repeatedCombination(int n, ItemBlock<RubyArray<E>> block) {
@@ -470,8 +471,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return this;
   }
 
-  public RubyArray<E> insert(int index,
-      @SuppressWarnings("unchecked") E... args) {
+  public RubyArray<E> insert(int index, E... args) {
     if (index < -list.size()) {
       throw new IllegalArgumentException("IndexError: index " + index
           + " too small for array; minimum: " + -list.size());
@@ -552,21 +552,23 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   }
 
   public RubyEnumerator<RubyArray<E>> permutation() {
-    return new RubyEnumerator<>(new PermutationIterable<E>(list, list.size()));
+    return new RubyEnumerator<RubyArray<E>>(new PermutationIterable<E>(list,
+        list.size()));
   }
 
   public RubyEnumerator<RubyArray<E>> permutation(int n) {
     RubyArray<RubyArray<E>> perms = newRubyArray();
     if (n < 0) {
-      return new RubyEnumerator<>(perms);
+      return new RubyEnumerator<RubyArray<E>>(perms);
     } else if (n == 0) {
       RubyArray<E> ra = newRubyArray();
       perms.push(ra);
-      return new RubyEnumerator<>(perms);
+      return new RubyEnumerator<RubyArray<E>>(perms);
     } else if (n > list.size()) {
-      return new RubyEnumerator<>(perms);
+      return new RubyEnumerator<RubyArray<E>>(perms);
     } else {
-      return new RubyEnumerator<>(new PermutationIterable<E>(list, n));
+      return new RubyEnumerator<RubyArray<E>>(new PermutationIterable<E>(list,
+          n));
     }
   }
 
@@ -580,13 +582,14 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   public RubyEnumerator<RubyArray<E>> repeatedPermutation(int n) {
     RubyArray<RubyArray<E>> rp = newRubyArray();
     if (n < 0) {
-      return new RubyEnumerator<>(rp);
+      return new RubyEnumerator<RubyArray<E>>(rp);
     }
     if (n == 0) {
       RubyArray<E> ra = newRubyArray();
-      return new RubyEnumerator<>(rp.push(ra));
+      return new RubyEnumerator<RubyArray<E>>(rp.push(ra));
     }
-    return new RubyEnumerator<>(new RepeatedPermutationIterable<E>(list, n));
+    return new RubyEnumerator<RubyArray<E>>(new RepeatedPermutationIterable<E>(
+        list, n));
   }
 
   public RubyArray<E> repeatedPermutation(int n, ItemBlock<RubyArray<E>> block) {
@@ -621,12 +624,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   }
 
   public RubyArray<RubyArray<E>> product(List<List<E>> others) {
-    return new RubyEnumerable<>(new ProductIterable<E>(this, others)).toA();
+    return new RubyEnumerable<RubyArray<E>>(
+        new ProductIterable<E>(this, others)).toA();
   }
 
-  public RubyArray<RubyArray<E>> product(
-      @SuppressWarnings("unchecked") List<E>... others) {
-    return new RubyEnumerable<>(new ProductIterable<E>(this, others)).toA();
+  public RubyArray<RubyArray<E>> product(List<E>... others) {
+    return new RubyEnumerable<RubyArray<E>>(
+        new ProductIterable<E>(this, others)).toA();
   }
 
   public RubyArray<E> product(List<List<E>> others,

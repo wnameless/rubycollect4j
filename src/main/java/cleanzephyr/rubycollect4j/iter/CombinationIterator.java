@@ -40,7 +40,7 @@ public final class CombinationIterator<E> implements Iterator<RubyArray<E>> {
   private final CombinationGenerator<E> cg;
 
   public CombinationIterator(Collection<E> coll, int n) {
-    cg = new CombinationGenerator<>(coll, n);
+    cg = new CombinationGenerator<E>(coll, n);
   }
 
   private RubyArray<E> nextElement() {

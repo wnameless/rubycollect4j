@@ -43,7 +43,7 @@ public final class EachWithObjectIterator<E, O> implements
   }
 
   private Entry<E, O> nextElement() {
-    return new SimpleEntry<>(iter.next(), obj);
+    return new SimpleEntry<E, O>(iter.next(), obj);
   }
 
   @Override

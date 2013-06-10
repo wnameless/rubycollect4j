@@ -54,7 +54,7 @@ public final class PermutationIterable<E> implements Iterable<RubyArray<E>> {
 
   @Override
   public Iterator<RubyArray<E>> iterator() {
-    return new PermutationIterator<>(coll, n);
+    return new PermutationIterator<E>(coll, n);
   }
 
 }

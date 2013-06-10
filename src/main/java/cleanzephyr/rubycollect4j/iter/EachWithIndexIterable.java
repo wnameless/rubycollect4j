@@ -39,7 +39,7 @@ public final class EachWithIndexIterable<E> implements
 
   @Override
   public Iterator<Entry<E, Integer>> iterator() {
-    return new EachWithIndexIterator<>(iter.iterator());
+    return new EachWithIndexIterator<E>(iter.iterator());
   }
 
 }

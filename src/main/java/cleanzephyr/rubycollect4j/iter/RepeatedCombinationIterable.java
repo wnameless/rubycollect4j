@@ -55,7 +55,7 @@ public final class RepeatedCombinationIterable<E> implements
 
   @Override
   public Iterator<RubyArray<E>> iterator() {
-    return new RepeatedCombinationIterator<>(list, n);
+    return new RepeatedCombinationIterator<E>(list, n);
   }
 
 }
