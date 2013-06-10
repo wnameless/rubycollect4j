@@ -26,6 +26,7 @@ import cleanzephyr.rubycollect4j.block.IndexBlock;
 import cleanzephyr.rubycollect4j.block.ItemBlock;
 import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
 import cleanzephyr.rubycollect4j.block.ItemWithReturnBlock;
+import cleanzephyr.rubycollect4j.iter.RepeatedCombinationIterable;
 import com.google.common.collect.Lists;
 import static com.google.common.collect.Lists.newArrayList;
 import java.util.Arrays;
@@ -217,69 +218,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   }
 
   public RubyEnumerator<RubyArray<E>> repeatedCombination(int n) {
-    RubyArray<RubyArray<E>> rp = newRubyArray();
-    if (n < 0) {
-      return new RubyEnumerator(rp);
-    }
-    if (n == 0) {
-      return new RubyEnumerator(rp.push(newRubyArray()));
-    }
-    int[] counter = new int[n];
-    repeatedCombinationLoop(counter, 0, list.size() - 1, (count) -> {
-      RubyArray<E> c = newRubyArray();
-      for (int i = 0; i < count.length; i++) {
-        c.push(list.get(count[i]));
-      }
-      rp.add(c);
-    });
-    return new RubyEnumerator(rp);
-  }
-
-  private void repeatedCombinationLoop(int[] counter, int start, int end, ItemBlock<int[]> block) {
-    int[] endStatus = new int[counter.length];
-    Arrays.fill(endStatus, end);
-    do {
-      block.yield(counter);
-      increaseCombinationLoopCounter(counter, start, end);
-    } while (!Arrays.equals(counter, endStatus));
-    block.yield(counter);
-  }
-
-  private void increaseCombinationLoopCounter(int[] counter, int start, int end) {
-    for (int i = counter.length - 1; i >= 0; i--) {
-      if (counter[i] < end) {
-        counter[i]++;
-        return;
-      } else if (i != 0
-              && counter[i - 1] != end) {
-        counter[i - 1]++;
-        for (int j = i; j < counter.length; j++) {
-          counter[j] = counter[ i - 1];
-        }
-        return;
-      }
-    }
+    return new RubyEnumerator<>(new RepeatedCombinationIterable<E>(list, n));
   }
 
   public RubyArray<E> repeatedCombination(int n, ItemBlock<RubyArray<E>> block) {
-    RubyArray<RubyArray<E>> rp = newRubyArray();
-    if (n < 0) {
-      return this;
-    }
-    if (n == 0) {
-      rp.push(newRubyArray());
-      block.yield(rp.first());
-      return this;
-    }
-    int[] counter = new int[n];
-    repeatedCombinationLoop(counter, 0, list.size() - 1, (count) -> {
-      RubyArray<E> c = newRubyArray();
-      for (int i = 0; i < count.length; i++) {
-        c.push(list.get(count[i]));
-      }
+    for (RubyArray<E> c : repeatedCombination(n)) {
       block.yield(c);
-      rp.add(c);
-    });
+    }
     return this;
   }
 

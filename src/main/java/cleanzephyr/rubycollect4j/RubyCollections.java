@@ -215,6 +215,6 @@ public final class RubyCollections {
   }
 
   public static void main(String[] args) {
-    puts(ra(1, 3, 4, 5, 7).sliceBefore("3").toA());
+    puts(ra(1, 2, 3).repeatedCombination(2).toA());
   }
 }
