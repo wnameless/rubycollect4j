@@ -56,4 +56,35 @@ public class RubyEnumerableTest {
     }));
   }
 
+  @Test
+  public void testAnyʔ() {
+    re = new RubyEnumerable<Integer>(Arrays.asList(1, 2));
+    assertEquals(true, re.anyʔ());
+    re = new RubyEnumerable<Integer>(new Integer[0]);
+    assertEquals(false, re.anyʔ());
+    re = new RubyEnumerable<Integer>(1, 2, null);
+    assertEquals(true, re.anyʔ());
+  }
+
+  @Test
+  public void testAnyʔWithBlock() {
+    re = new RubyEnumerable<Integer>(Arrays.asList(1, 2, 3));
+    assertEquals(true, re.anyʔ(new BooleanBlock<Integer>() {
+
+      @Override
+      public boolean yield(Integer item) {
+        return item % 2 == 0;
+      }
+
+    }));
+    assertEquals(false, re.anyʔ(new BooleanBlock<Integer>() {
+
+      @Override
+      public boolean yield(Integer item) {
+        return item > 5;
+      }
+
+    }));
+  }
+
 }
