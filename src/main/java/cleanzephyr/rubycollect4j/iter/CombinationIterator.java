@@ -22,12 +22,6 @@ public class CombinationIterator<E> implements Iterator<RubyArray<E>> {
     initCounter();
     this.endStatus = new int[n];
     initEndStatus();
-    for (int i : counter) {
-      System.out.print(i + " ");
-    }
-    for (int i : endStatus) {
-      System.out.print(i + " ");
-    }
     if (!isLooping() && !Arrays.equals(counter, endStatus)) {
       hasMore = false;
     }

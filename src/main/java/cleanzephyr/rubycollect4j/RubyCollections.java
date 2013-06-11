@@ -232,7 +232,7 @@ public final class RubyCollections {
   }
 
   public static void main(String[] args) {
-    puts(ra(1, 2, 3, 4).combination(2).toA());
+    puts(ra(1, 2, 3).permutation(3).toA());
   }
 
 }

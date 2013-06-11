@@ -28,12 +28,6 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.uncommons.maths</groupId>
-      <artifactId>uncommons-maths</artifactId>
-      <version>1.2.2a</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
       <version>14.0.1</version>

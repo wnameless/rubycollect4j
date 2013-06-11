@@ -20,12 +20,12 @@
  */
 package cleanzephyr.rubycollect4j.iter;
 
-import static com.google.common.collect.Lists.newArrayList;
-
-import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import cleanzephyr.rubycollect4j.RubyArray;
+
+import static com.google.common.collect.Lists.newArrayList;
 
 /**
  * 
@@ -34,27 +34,27 @@ import cleanzephyr.rubycollect4j.RubyArray;
  */
 public final class PermutationIterable<E> implements Iterable<RubyArray<E>> {
 
-  private final Collection<E> coll;
+  private final List<E> list;
   private final int n;
 
-  public PermutationIterable(Collection<E> coll, int n) {
-    this.coll = coll;
+  public PermutationIterable(List<E> List, int n) {
+    this.list = List;
     this.n = n;
   }
 
   public PermutationIterable(Iterable<E> iter, int n) {
-    coll = newArrayList(iter);
+    list = newArrayList(iter);
     this.n = n;
   }
 
   public PermutationIterable(Iterator<E> iter, int n) {
-    coll = newArrayList(iter);
+    list = newArrayList(iter);
     this.n = n;
   }
 
   @Override
   public Iterator<RubyArray<E>> iterator() {
-    return new PermutationIterator<E>(coll, n);
+    return new PermutationIterator<E>(list, n);
   }
 
 }

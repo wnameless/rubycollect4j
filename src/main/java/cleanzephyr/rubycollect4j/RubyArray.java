@@ -211,8 +211,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     } else if (n > list.size()) {
       return new RubyEnumerator<RubyArray<E>>(comb);
     } else {
-      return new RubyEnumerator<RubyArray<E>>(new CombinationIterable<E>(
-          list, n));
+      return new RubyEnumerator<RubyArray<E>>(new CombinationIterable<E>(list,
+          n));
     }
   }
 
