@@ -20,8 +20,6 @@
  */
 package cleanzephyr.rubycollect4j;
 
-import static com.google.common.collect.Lists.newArrayList;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -44,6 +42,8 @@ import cleanzephyr.rubycollect4j.iter.RepeatedCombinationIterable;
 import cleanzephyr.rubycollect4j.iter.RepeatedPermutationIterable;
 
 import com.google.common.collect.Lists;
+
+import static com.google.common.collect.Lists.newArrayList;
 
 /**
  * 
@@ -211,8 +211,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     } else if (n > list.size()) {
       return new RubyEnumerator<RubyArray<E>>(comb);
     } else {
-      return new RubyEnumerator<RubyArray<E>>(new CombinationIterable<E>(list,
-          n));
+      return new RubyEnumerator<RubyArray<E>>(new CombinationIterable<E>(
+          list, n));
     }
   }
 
