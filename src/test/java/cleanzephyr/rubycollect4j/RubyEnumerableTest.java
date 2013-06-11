@@ -17,8 +17,8 @@ import cleanzephyr.rubycollect4j.block.ListBlock;
 
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
 import static cleanzephyr.rubycollect4j.RubyCollections.ra;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class RubyEnumerableTest {
   private RubyEnumerable<Integer> re;
@@ -305,6 +305,34 @@ public class RubyEnumerableTest {
       public void yield(List<Integer> item) {}
 
     });
+  }
+
+  @Test
+  public void testEachEntry() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(RubyEnumerator.class, re.eachEntry().getClass());
+    assertEquals(ra(1, 2, 3, 4), re.eachEntry().toA());
+  }
+
+  @Test
+  public void testEachEntryWithBlock() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    final RubyArray<Integer> ints = ra();
+    re.eachEntry(new ItemBlock<Integer>() {
+
+      @Override
+      public void yield(Integer item) {
+        ints.add(item * 2);
+      }
+
+    });
+    assertEquals(ra(2, 4, 6, 8), ints);
+    assertEquals(RubyEnumerable.class, re.eachEntry(new ItemBlock<Integer>() {
+
+      @Override
+      public void yield(Integer item) {}
+
+    }).getClass());
   }
 
 }
