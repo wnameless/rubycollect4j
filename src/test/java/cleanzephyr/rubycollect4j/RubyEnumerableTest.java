@@ -1,12 +1,16 @@
 package cleanzephyr.rubycollect4j;
 
+import java.util.AbstractMap.SimpleEntry;
 import java.util.Arrays;
+import java.util.Map.Entry;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import cleanzephyr.rubycollect4j.block.BooleanBlock;
+import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
 
+import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
 import static junit.framework.Assert.assertEquals;
 
 public class RubyEnumerableTest {
@@ -27,7 +31,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testAllʔ() {
-    re = new RubyEnumerable<Integer>(Arrays.asList(1, 2));
+    re = new RubyEnumerable<Integer>(1, 2);
     assertEquals(true, re.allʔ());
     re = new RubyEnumerable<Integer>(new Integer[0]);
     assertEquals(true, re.allʔ());
@@ -37,7 +41,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testAllʔWithBlock() {
-    re = new RubyEnumerable<Integer>(Arrays.asList(1, 2, 3));
+    re = new RubyEnumerable<Integer>(1, 2, 3);
     assertEquals(false, re.allʔ(new BooleanBlock<Integer>() {
 
       @Override
@@ -58,7 +62,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testAnyʔ() {
-    re = new RubyEnumerable<Integer>(Arrays.asList(1, 2));
+    re = new RubyEnumerable<Integer>(1, 2);
     assertEquals(true, re.anyʔ());
     re = new RubyEnumerable<Integer>(new Integer[0]);
     assertEquals(false, re.anyʔ());
@@ -68,7 +72,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testAnyʔWithBlock() {
-    re = new RubyEnumerable<Integer>(Arrays.asList(1, 2, 3));
+    re = new RubyEnumerable<Integer>(1, 2, 3);
     assertEquals(true, re.anyʔ(new BooleanBlock<Integer>() {
 
       @Override
@@ -87,4 +91,24 @@ public class RubyEnumerableTest {
     }));
   }
 
+  @Test
+  public void testChunk() {
+    re = new RubyEnumerable<Integer>(1, 2, 2, 3);
+    RubyArray<Entry<Boolean, RubyArray<Integer>>> chunk =
+        re.chunk(new ItemTransformBlock<Integer, Boolean>() {
+
+          @Override
+          public Boolean yield(Integer item) {
+            return item % 2 == 0;
+          }
+
+        }).toA();
+    assertEquals(new SimpleEntry<Boolean, RubyArray<Integer>>(false,
+        newRubyArray(1)).toString(), chunk.get(0).toString());
+    assertEquals(new SimpleEntry<Boolean, RubyArray<Integer>>(true,
+        newRubyArray(2, 2)).toString(), chunk.get(1).toString());
+    assertEquals(new SimpleEntry<Boolean, RubyArray<Integer>>(false,
+        newRubyArray(3)).toString(), chunk.get(2).toString());
+    assertEquals(3, chunk.size());
+  }
 }
