@@ -248,4 +248,11 @@ public class RubyEnumerableTest {
     }));
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void testDrop() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(ra(3, 4), re.drop(2));
+    re.drop(-1);
+  }
+
 }
