@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import cleanzephyr.rubycollect4j.block.BooleanBlock;
 import cleanzephyr.rubycollect4j.block.ItemBlock;
-import cleanzephyr.rubycollect4j.block.ItemToListBlock;
+import cleanzephyr.rubycollect4j.block.ItemToRubyArrayBlock;
 import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
 import cleanzephyr.rubycollect4j.block.ListBlock;
 
@@ -151,11 +151,11 @@ public class RubyEnumerableTest {
   public void testCollectConcatWithBlock() {
     re = new RubyEnumerable<Integer>(1, 2, 3, 4);
     assertEquals(ra(1.0, 2.0, 3.0, 4.0),
-        re.collectConcat(new ItemToListBlock<Integer, Double>() {
+        re.collectConcat(new ItemToRubyArrayBlock<Integer, Double>() {
 
           @Override
-          public List<Double> yield(Integer item) {
-            return Arrays.asList(Double.valueOf(item));
+          public RubyArray<Double> yield(Integer item) {
+            return ra(Double.valueOf(item));
           }
 
         }));

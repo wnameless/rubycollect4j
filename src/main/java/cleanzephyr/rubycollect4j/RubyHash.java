@@ -20,9 +20,6 @@
  */
 package cleanzephyr.rubycollect4j;
 
-import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
-import static com.google.common.collect.Maps.newLinkedHashMap;
-
 import java.util.AbstractMap.SimpleEntry;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -32,7 +29,11 @@ import java.util.Set;
 import cleanzephyr.rubycollect4j.block.EntryBlock;
 import cleanzephyr.rubycollect4j.block.EntryBooleanBlock;
 import cleanzephyr.rubycollect4j.block.EntryMergeBlock;
+import cleanzephyr.rubycollect4j.block.EntryToRubyArrayBlock;
 import cleanzephyr.rubycollect4j.block.ItemBlock;
+
+import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
+import static com.google.common.collect.Maps.newLinkedHashMap;
 
 /**
  * 
@@ -105,6 +106,14 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
 
   public V getDefault() {
     return defaultValue;
+  }
+
+  public <S> RubyArray<S> collectConcat(EntryToRubyArrayBlock<K, V, S> block) {
+    RubyArray<S> rubyArray = newRubyArray();
+    for (Entry<K, V> entry : collectConcat()) {
+      rubyArray.addAll(block.yield(entry.getKey(), entry.getValue()));
+    }
+    return rubyArray;
   }
 
   public V delete(K key) {

@@ -38,7 +38,7 @@ import cleanzephyr.rubycollect4j.block.BooleanBlock;
 import cleanzephyr.rubycollect4j.block.InjectBlock;
 import cleanzephyr.rubycollect4j.block.InjectWithInitBlock;
 import cleanzephyr.rubycollect4j.block.ItemBlock;
-import cleanzephyr.rubycollect4j.block.ItemToListBlock;
+import cleanzephyr.rubycollect4j.block.ItemToRubyArrayBlock;
 import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
 import cleanzephyr.rubycollect4j.block.ItemWithIndexBlock;
 import cleanzephyr.rubycollect4j.block.ItemWithObjectBlock;
@@ -140,7 +140,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return new RubyEnumerator<E>(iter);
   }
 
-  public <S> RubyArray<S> collectConcat(ItemToListBlock<E, S> block) {
+  public <S> RubyArray<S> collectConcat(ItemToRubyArrayBlock<E, S> block) {
     RubyArray<S> rubyArray = newRubyArray();
     for (E item : iter) {
       rubyArray.addAll(block.yield(item));
@@ -387,7 +387,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return collectConcat();
   }
 
-  public <S> RubyArray<S> flatMap(ItemToListBlock<E, S> block) {
+  public <S> RubyArray<S> flatMap(ItemToRubyArrayBlock<E, S> block) {
     return collectConcat(block);
   }
 

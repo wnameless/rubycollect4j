@@ -20,10 +20,10 @@
  */
 package cleanzephyr.rubycollect4j.block;
 
-import java.util.List;
+import cleanzephyr.rubycollect4j.RubyArray;
 
-public interface EntryToListBlock<K, V, S> {
+public interface ItemToRubyArrayBlock<E, S> {
 
-  public List<S> yield(K key, V value);
+  public RubyArray<S> yield(E item);
 
 }
