@@ -136,16 +136,16 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return rubyArray;
   }
 
+  public RubyEnumerator<E> collectConcat() {
+    return new RubyEnumerator<E>(iter);
+  }
+
   public <S> RubyArray<S> collectConcat(ItemToListBlock<E, S> block) {
     RubyArray<S> rubyArray = newRubyArray();
     for (E item : iter) {
       rubyArray.addAll(block.yield(item));
     }
     return rubyArray;
-  }
-
-  public RubyEnumerator<E> collectConcat() {
-    return new RubyEnumerator<E>(iter);
   }
 
   public int count() {

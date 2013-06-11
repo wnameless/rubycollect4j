@@ -2,12 +2,14 @@ package cleanzephyr.rubycollect4j;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map.Entry;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import cleanzephyr.rubycollect4j.block.BooleanBlock;
+import cleanzephyr.rubycollect4j.block.ItemToListBlock;
 import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
 
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
@@ -129,6 +131,27 @@ public class RubyEnumerableTest {
           @Override
           public Double yield(Integer item) {
             return Double.valueOf(item);
+          }
+
+        }));
+  }
+
+  @Test
+  public void testCollectConcat() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(RubyEnumerator.class, re.collectConcat().getClass());
+    assertEquals(ra(1, 2, 3, 4), re.collectConcat().toA());
+  }
+
+  @Test
+  public void testCollectConcatWithBlock() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(ra(1.0, 2.0, 3.0, 4.0),
+        re.collectConcat(new ItemToListBlock<Integer, Double>() {
+
+          @Override
+          public List<Double> yield(Integer item) {
+            return Arrays.asList(Double.valueOf(item));
           }
 
         }));
