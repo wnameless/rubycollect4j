@@ -13,6 +13,7 @@ import cleanzephyr.rubycollect4j.block.BooleanBlock;
 import cleanzephyr.rubycollect4j.block.ItemBlock;
 import cleanzephyr.rubycollect4j.block.ItemToListBlock;
 import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
+import cleanzephyr.rubycollect4j.block.ListBlock;
 
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
 import static cleanzephyr.rubycollect4j.RubyCollections.ra;
@@ -273,6 +274,37 @@ public class RubyEnumerableTest {
       }
 
     }));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testEachCons() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(RubyEnumerator.class, re.eachCons(2).getClass());
+    @SuppressWarnings("unchecked")
+    RubyArray<RubyArray<Integer>> ra = ra(ra(1, 2), ra(2, 3), ra(3, 4));
+    assertEquals(ra, re.eachCons(2).toA());
+    re.eachCons(0);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testEachConsWithBlock() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    final RubyArray<List<Integer>> ra = ra();
+    re.eachCons(2, new ListBlock<Integer>() {
+
+      @Override
+      public void yield(List<Integer> item) {
+        ra.push(item);
+      }
+
+    });
+    assertEquals(ra, re.eachCons(2).toA());
+    re.eachCons(0, new ListBlock<Integer>() {
+
+      @Override
+      public void yield(List<Integer> item) {}
+
+    });
   }
 
 }

@@ -251,16 +251,13 @@ public class RubyEnumerable<E> implements Iterable<E> {
     if (n <= 0) {
       throw new IllegalArgumentException("invalid size");
     }
-    RubyArray<E> list = newRubyArray(iter);
-    for (int i = 0; i < list.size(); i++) {
-      if (i + n <= list.size()) {
-        RubyArray<E> cons = newRubyArray();
-        for (int j = i; j < i + n; j++) {
-          cons.add(list.get(j));
-        }
-        block.yield(cons);
-      }
+    for (RubyArray<E> cons : eachCons(n)) {
+      block.yield(cons);
     }
+  }
+
+  public RubyEnumerator<E> eachEntry() {
+    return new RubyEnumerator<E>(iter);
   }
 
   public RubyArray<E> eachEntry(ItemBlock<E> block) {
@@ -270,10 +267,6 @@ public class RubyEnumerable<E> implements Iterable<E> {
       rubyArray.add(item);
     }
     return rubyArray;
-  }
-
-  public RubyEnumerator<E> eachEntry() {
-    return new RubyEnumerator<E>(iter);
   }
 
   public void eachSlice(int n, ListBlock<E> block) {
