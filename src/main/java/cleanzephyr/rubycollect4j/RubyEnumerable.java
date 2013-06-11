@@ -20,11 +20,6 @@
  */
 package cleanzephyr.rubycollect4j;
 
-import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
-import static cleanzephyr.rubycollect4j.RubyHash.newRubyHash;
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Lists.reverse;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -61,6 +56,11 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 
+import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
+import static cleanzephyr.rubycollect4j.RubyHash.newRubyHash;
+import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Lists.reverse;
+
 /**
  * 
  * @author WMW
@@ -72,6 +72,10 @@ public class RubyEnumerable<E> implements Iterable<E> {
 
   public RubyEnumerable(Iterable<E> iter) {
     this.iter = iter;
+  }
+
+  public RubyEnumerable(E... args) {
+    this.iter = Arrays.asList(args);
   }
 
   public boolean allʔ() {
