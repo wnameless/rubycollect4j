@@ -191,6 +191,10 @@ public class RubyEnumerable<E> implements Iterable<E> {
     }
   }
 
+  public RubyEnumerator<E> detect() {
+    return new RubyEnumerator<E>(iter);
+  }
+
   public E detect(BooleanBlock<E> block) {
     for (E item : iter) {
       if (block.yield(item)) {
@@ -198,10 +202,6 @@ public class RubyEnumerable<E> implements Iterable<E> {
       }
     }
     return null;
-  }
-
-  public RubyEnumerator<E> detect() {
-    return new RubyEnumerator<E>(iter);
   }
 
   public RubyArray<E> drop(int n) {
@@ -219,6 +219,15 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return rubyArray;
   }
 
+  public RubyEnumerator<E> dropWhile() {
+    RubyArray<E> rubyArray = newRubyArray();
+    for (E item : iter) {
+      rubyArray.add(item);
+      break;
+    }
+    return new RubyEnumerator<E>(rubyArray);
+  }
+
   public RubyArray<E> dropWhile(BooleanBlock<E> block) {
     RubyArray<E> rubyArray = newRubyArray();
     boolean cutPoint = false;
@@ -229,15 +238,6 @@ public class RubyEnumerable<E> implements Iterable<E> {
       }
     }
     return rubyArray;
-  }
-
-  public RubyEnumerator<E> dropWhile() {
-    RubyArray<E> rubyArray = newRubyArray();
-    for (E item : iter) {
-      rubyArray.add(item);
-      break;
-    }
-    return new RubyEnumerator<E>(rubyArray);
   }
 
   public void eachCons(int n, ListBlock<E> block) {
