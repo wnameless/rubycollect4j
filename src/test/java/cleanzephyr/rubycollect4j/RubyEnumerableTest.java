@@ -255,4 +255,24 @@ public class RubyEnumerableTest {
     re.drop(-1);
   }
 
+  @Test
+  public void testDropWhile() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(RubyEnumerator.class, re.dropWhile().getClass());
+    assertEquals(ra(1), re.dropWhile().toA());
+  }
+
+  @Test
+  public void testDropWhileWithBlock() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(ra(3, 4), re.dropWhile(new BooleanBlock<Integer>() {
+
+      @Override
+      public boolean yield(Integer item) {
+        return item < 3;
+      }
+
+    }));
+  }
+
 }

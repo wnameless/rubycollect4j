@@ -232,12 +232,19 @@ public class RubyEnumerable<E> implements Iterable<E> {
     RubyArray<E> rubyArray = newRubyArray();
     boolean cutPoint = false;
     for (E item : iter) {
-      if (block.yield(item) || cutPoint) {
+      if (!block.yield(item) || cutPoint) {
         cutPoint = true;
         rubyArray.add(item);
       }
     }
     return rubyArray;
+  }
+
+  public RubyEnumerator<RubyArray<E>> eachCons(int n) {
+    if (n <= 0) {
+      throw new IllegalArgumentException("invalid size");
+    }
+    return new RubyEnumerator<RubyArray<E>>(new EachConsIterable<E>(iter, n));
   }
 
   public void eachCons(int n, ListBlock<E> block) {
@@ -254,13 +261,6 @@ public class RubyEnumerable<E> implements Iterable<E> {
         block.yield(cons);
       }
     }
-  }
-
-  public RubyEnumerator<RubyArray<E>> eachCons(int n) {
-    if (n <= 0) {
-      throw new IllegalArgumentException("invalid size");
-    }
-    return new RubyEnumerator<RubyArray<E>>(new EachConsIterable<E>(iter, n));
   }
 
   public RubyArray<E> eachEntry(ItemBlock<E> block) {
