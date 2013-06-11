@@ -348,8 +348,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return list.isEmpty();
   }
 
-  public boolean eqlʔ(RubyArray<E> other) {
-    return this.equals(other);
+  public boolean eqlʔ(Object o) {
+    return equals(o);
   }
 
   public E fetch(int index) {
@@ -1051,6 +1051,18 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   @Override
   public List<E> subList(int fromIndex, int toIndex) {
     return list.subList(fromIndex, toIndex);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (!(o instanceof List))
+      return false;
+    return list.equals(o);
+  }
+
+  @Override
+  public int hashCode() {
+    return list.hashCode();
   }
 
   @Override

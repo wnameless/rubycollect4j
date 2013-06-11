@@ -11,6 +11,7 @@ import cleanzephyr.rubycollect4j.block.BooleanBlock;
 import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
 
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
+import static cleanzephyr.rubycollect4j.RubyCollections.ra;
 import static junit.framework.Assert.assertEquals;
 
 public class RubyEnumerableTest {
@@ -111,4 +112,26 @@ public class RubyEnumerableTest {
         newRubyArray(3)).toString(), chunk.get(2).toString());
     assertEquals(3, chunk.size());
   }
+
+  @Test
+  public void testCollect() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(RubyEnumerator.class, re.collect().getClass());
+    assertEquals(ra(1, 2, 3, 4), re.collect().toA());
+  }
+
+  @Test
+  public void testCollectWithBlock() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(ra(1.0, 2.0, 3.0, 4.0),
+        re.collect(new ItemTransformBlock<Integer, Double>() {
+
+          @Override
+          public Double yield(Integer item) {
+            return Double.valueOf(item);
+          }
+
+        }));
+  }
+
 }

@@ -124,16 +124,16 @@ public class RubyEnumerable<E> implements Iterable<E> {
         iter, block));
   }
 
+  public RubyEnumerator<E> collect() {
+    return new RubyEnumerator<E>(iter);
+  }
+
   public <S> RubyArray<S> collect(ItemTransformBlock<E, S> block) {
     RubyArray<S> rubyArray = newRubyArray();
     for (E item : iter) {
       rubyArray.add(block.yield(item));
     }
     return rubyArray;
-  }
-
-  public RubyEnumerator<E> collect() {
-    return new RubyEnumerator<E>(iter);
   }
 
   public <S> RubyArray<S> collectConcat(ItemToListBlock<E, S> block) {
