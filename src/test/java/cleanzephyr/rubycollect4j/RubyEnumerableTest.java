@@ -335,4 +335,30 @@ public class RubyEnumerableTest {
     }).getClass());
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void testEachSlice() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(RubyEnumerator.class, re.eachSlice(3).getClass());
+    @SuppressWarnings("unchecked")
+    RubyArray<RubyArray<Integer>> ra = ra(ra(1, 2, 3), ra(4));
+    assertEquals(ra, re.eachSlice(3).toA());
+    re.eachSlice(0);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testEachSliceWithBlock() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    final RubyArray<Integer> ints = ra();
+    re.eachSlice(3, new ListBlock<Integer>() {
+
+      @Override
+      public void yield(List<Integer> item) {
+        ints.add(item.get(0));
+      }
+
+    });
+    assertEquals(ra(1, 4), ints);
+    re.eachSlice(0);
+  }
+
 }
