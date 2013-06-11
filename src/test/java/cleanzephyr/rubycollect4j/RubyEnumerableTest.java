@@ -157,4 +157,25 @@ public class RubyEnumerableTest {
         }));
   }
 
+  @Test
+  public void testCount() {
+    re = new RubyEnumerable<Integer>();
+    assertEquals(0, re.count());
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(4, re.count());
+  }
+
+  @Test
+  public void testCountWithBlock() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(2, re.count(new BooleanBlock<Integer>() {
+
+      @Override
+      public boolean yield(Integer item) {
+        return item % 2 == 1;
+      }
+
+    }));
+  }
+
 }
