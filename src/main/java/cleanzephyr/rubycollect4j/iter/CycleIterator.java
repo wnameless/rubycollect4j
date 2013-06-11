@@ -40,6 +40,15 @@ public final class CycleIterator<E> implements Iterator<E> {
     it = iter.iterator();
   }
 
+  private E nextElement() {
+    E next = it.next();
+    if (!it.hasNext()) {
+      it = iter.iterator();
+      n--;
+    }
+    return next;
+  }
+
   @Override
   public boolean hasNext() {
     return n > 0 && it.hasNext();
@@ -47,15 +56,10 @@ public final class CycleIterator<E> implements Iterator<E> {
 
   @Override
   public E next() {
-    if (hasNext()) {
-      return it.next();
-    } else if (n > 1) {
-      n--;
-      it = iter.iterator();
-      return next();
-    } else {
+    if (!hasNext()) {
       throw new NoSuchElementException();
     }
+    return nextElement();
   }
 
   @Override

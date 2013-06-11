@@ -167,16 +167,12 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return count;
   }
 
-  public void cycle(ItemBlock<E> block) {
-    while (true) {
-      for (E item : iter) {
-        block.yield(item);
-      }
-    }
-  }
-
   public RubyEnumerator<E> cycle() {
     return new RubyEnumerator<E>(Iterables.cycle(iter));
+  }
+
+  public RubyEnumerator<E> cycle(int n) {
+    return new RubyEnumerator<E>(new CycleIterable<E>(iter, n));
   }
 
   public void cycle(int n, ItemBlock<E> block) {
@@ -187,8 +183,12 @@ public class RubyEnumerable<E> implements Iterable<E> {
     }
   }
 
-  public RubyEnumerator<E> cycle(int n) {
-    return new RubyEnumerator<E>(new CycleIterable<E>(iter, n));
+  public void cycle(ItemBlock<E> block) {
+    while (true) {
+      for (E item : iter) {
+        block.yield(item);
+      }
+    }
   }
 
   public E detect(BooleanBlock<E> block) {

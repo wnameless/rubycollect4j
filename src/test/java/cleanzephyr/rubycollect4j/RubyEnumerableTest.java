@@ -2,6 +2,7 @@ package cleanzephyr.rubycollect4j;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -9,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cleanzephyr.rubycollect4j.block.BooleanBlock;
+import cleanzephyr.rubycollect4j.block.ItemBlock;
 import cleanzephyr.rubycollect4j.block.ItemToListBlock;
 import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
 
@@ -176,6 +178,45 @@ public class RubyEnumerableTest {
       }
 
     }));
+  }
+
+  @Test
+  public void testCycle() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(RubyEnumerator.class, re.cycle().getClass());
+    RubyArray<Integer> ints = ra(1, 2, 3, 4);
+    Iterator<Integer> iter = re.cycle().iterator();
+    for (int i = 0; i < 100; i++) {
+      assertEquals(ints.get(0), iter.next());
+      ints.rotateǃ();
+    }
+  }
+
+  @Test
+  public void testCycleWithN() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(RubyEnumerator.class, re.cycle().getClass());
+    RubyArray<Integer> ints = newRubyArray();
+    Iterator<Integer> iter = re.cycle(2).iterator();
+    while (iter.hasNext()) {
+      ints.push(iter.next());
+    }
+    assertEquals(ra(1, 2, 3, 4, 1, 2, 3, 4), ints);
+  }
+
+  @Test
+  public void testCycleWithBlock() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    final RubyArray<Integer> ints = newRubyArray();
+    re.cycle(2, new ItemBlock<Integer>() {
+
+      @Override
+      public void yield(Integer item) {
+        ints.push(item * 2);
+      }
+
+    });
+    assertEquals(ra(2, 4, 6, 8, 2, 4, 6, 8), ints);
   }
 
 }
