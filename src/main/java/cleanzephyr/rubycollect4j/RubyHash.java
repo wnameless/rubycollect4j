@@ -164,7 +164,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   public boolean eqlʔ(RubyHash<?, ?> other) {
-    return this.equals(other);
+    return equals(other);
   }
 
   public V fetch(K key) {
@@ -420,6 +420,18 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   @Override
   public Set<Entry<K, V>> entrySet() {
     return map.entrySet();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (!(o instanceof Map))
+      return false;
+    return map.equals(o);
+  }
+
+  @Override
+  public int hashCode() {
+    return map.hashCode();
   }
 
   @Override
