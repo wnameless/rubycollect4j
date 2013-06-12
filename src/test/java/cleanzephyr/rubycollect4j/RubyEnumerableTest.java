@@ -654,6 +654,8 @@ public class RubyEnumerableTest {
   public void testMax() {
     re = new RubyEnumerable<Integer>(1, 2, 3, 4);
     assertEquals(Integer.valueOf(4), re.max());
+    re = new RubyEnumerable<Integer>();
+    assertNull(re.max());
   }
 
   @Test
@@ -664,6 +666,47 @@ public class RubyEnumerableTest {
       @Override
       public int compare(Integer arg0, Integer arg1) {
         return arg1 - arg0;
+      }
+
+    }));
+  }
+
+  @Test
+  public void testMaxBy() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(RubyEnumerator.class, re.maxBy().getClass());
+    assertEquals(ra(1, 2, 3, 4), re.maxBy().toA());
+  }
+
+  @Test
+  public void testMaxByWithComparatorAndBlock() {
+    RubyEnumerable<String> re =
+        new RubyEnumerable<String>("aaaa", "bbb", "cc", "d");
+    assertEquals("d", re.maxBy(new Comparator<Integer>() {
+
+      @Override
+      public int compare(Integer o1, Integer o2) {
+        return o2 - o1;
+      }
+    }, new ItemTransformBlock<String, Integer>() {
+
+      @Override
+      public Integer yield(String item) {
+        return item.length();
+      }
+
+    }));
+  }
+
+  @Test
+  public void testMaxByWithBlock() {
+    RubyEnumerable<String> re =
+        new RubyEnumerable<String>("aaaa", "bbb", "cc", "d");
+    assertEquals("aaaa", re.maxBy(new ItemTransformBlock<String, Integer>() {
+
+      @Override
+      public Integer yield(String item) {
+        return item.length();
       }
 
     }));
