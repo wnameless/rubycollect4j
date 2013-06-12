@@ -860,4 +860,25 @@ public class RubyEnumerableTest {
     assertFalse(re.noneʔ());
   }
 
+  @Test
+  public void testNoneʔWithBlock() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertTrue(re.noneʔ(new BooleanBlock<Integer>() {
+
+      @Override
+      public boolean yield(Integer item) {
+        return item > 5;
+      }
+
+    }));
+    assertFalse(re.noneʔ(new BooleanBlock<Integer>() {
+
+      @Override
+      public boolean yield(Integer item) {
+        return item == 3;
+      }
+
+    }));
+  }
+
 }
