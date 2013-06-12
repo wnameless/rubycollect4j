@@ -517,4 +517,25 @@ public class RubyEnumerableTest {
     re.first(-1);
   }
 
+  @Test
+  public void testFlatMap() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(RubyEnumerator.class, re.flatMap().getClass());
+    assertEquals(ra(1, 2, 3, 4), re.flatMap().toA());
+  }
+
+  @Test
+  public void testFlatMapWithBlock() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(ra(1L, 2L, 3L, 4L),
+        re.flatMap(new ItemToRubyArrayBlock<Integer, Long>() {
+
+          @Override
+          public RubyArray<Long> yield(Integer item) {
+            return ra(Long.valueOf(item));
+          }
+
+        }));
+  }
+
 }
