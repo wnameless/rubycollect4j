@@ -374,9 +374,10 @@ public class RubyEnumerable<E> implements Iterable<E> {
     if (n < 0) {
       throw new IllegalArgumentException("attempt to take negative size");
     }
-    RubyArray<E> rubyArray = newRubyArray(iter);
-    for (int i = 0; i < n && i < rubyArray.size(); i++) {
-      rubyArray.add(rubyArray.get(i));
+    Iterator<E> it = iter.iterator();
+    RubyArray<E> rubyArray = newRubyArray();
+    for (int i = 0; i < n && it.hasNext(); i++) {
+      rubyArray.add(it.next());
     }
     return rubyArray;
   }

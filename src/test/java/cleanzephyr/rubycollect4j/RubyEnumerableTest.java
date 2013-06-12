@@ -500,4 +500,21 @@ public class RubyEnumerableTest {
     re = new RubyEnumerable<Integer>(1, 2, 3, 4);
     assertEquals(Integer.valueOf(2), re.findIndex(3));
   }
+
+  @Test
+  public void testFirst() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(Integer.valueOf(1), re.first());
+    re = new RubyEnumerable<Integer>();
+    assertNull(re.first());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testFirstWithN() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(ra(1, 2, 3), re.first(3));
+    assertEquals(ra(1, 2, 3, 4), re.first(6));
+    re.first(-1);
+  }
+
 }
