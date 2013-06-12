@@ -14,6 +14,7 @@ import cleanzephyr.rubycollect4j.block.ItemBlock;
 import cleanzephyr.rubycollect4j.block.ItemToRubyArrayBlock;
 import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
 import cleanzephyr.rubycollect4j.block.ItemWithIndexBlock;
+import cleanzephyr.rubycollect4j.block.ItemWithObjectBlock;
 import cleanzephyr.rubycollect4j.block.ListBlock;
 
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
@@ -389,6 +390,35 @@ public class RubyEnumerableTest {
 
         }).getClass());
     assertEquals(ra(1, 3, 5, 7), ints);
+  }
+
+  @Test
+  public void testEachWithObject() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    Long obj = 0L;
+    assertEquals(RubyEnumerator.class, re.eachWithObject(obj).getClass());
+    @SuppressWarnings("unchecked")
+    RubyArray<SimpleEntry<Integer, Long>> ra =
+        ra(new SimpleEntry<Integer, Long>(1, obj),
+            new SimpleEntry<Integer, Long>(2, obj),
+            new SimpleEntry<Integer, Long>(3, obj),
+            new SimpleEntry<Integer, Long>(4, obj));
+    assertEquals(ra, re.eachWithObject(obj).toA());
+  }
+
+  @Test
+  public void testEachWithObjectWithBlock() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    Long[] obj = new Long[] { 0L };
+    assertEquals(new Long[] { 10L }[0],
+        re.eachWithObject(obj, new ItemWithObjectBlock<Integer, Long[]>() {
+
+          @Override
+          public void yield(Integer item, Long[] o) {
+            o[0] += item;
+          }
+
+        })[0]);
   }
 
 }
