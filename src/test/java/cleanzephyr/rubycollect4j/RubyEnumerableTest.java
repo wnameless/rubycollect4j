@@ -1037,4 +1037,26 @@ public class RubyEnumerableTest {
     }));
   }
 
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testSliceBeforeWithBlock() {
+    re = new RubyEnumerable<Integer>(1, 3, 3, 4);
+    assertEquals(ra(ra(1), ra(3), ra(3, 4)),
+        re.sliceBefore(new BooleanBlock<Integer>() {
+
+          @Override
+          public boolean yield(Integer item) {
+            return item % 2 == 1;
+          }
+
+        }).toA());
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testSliceBeforeWithRegex() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 3);
+    assertEquals(ra(ra(1, 2), ra(3), ra(3)), re.sliceBefore("3").toA());
+  }
+
 }
