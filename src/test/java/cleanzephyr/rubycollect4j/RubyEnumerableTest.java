@@ -475,4 +475,29 @@ public class RubyEnumerableTest {
     }));
   }
 
+  @Test
+  public void testFindIndex() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(RubyEnumerator.class, re.findIndex().getClass());
+    assertEquals(ra(1, 2, 3, 4), re.findIndex().toA());
+  }
+
+  @Test
+  public void testFindIndexWithBlock() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(Integer.valueOf(3), re.findIndex(new BooleanBlock<Integer>() {
+
+      @Override
+      public boolean yield(Integer item) {
+        return item >= 4;
+      }
+
+    }));
+  }
+
+  @Test
+  public void testFindIndexWithTarget() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(Integer.valueOf(2), re.findIndex(3));
+  }
 }
