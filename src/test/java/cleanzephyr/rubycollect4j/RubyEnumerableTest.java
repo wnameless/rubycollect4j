@@ -1154,6 +1154,7 @@ public class RubyEnumerableTest {
   }
 
   @SuppressWarnings("unchecked")
+  @Test
   public void testZipWithBlock() {
     re = new RubyEnumerable<Integer>(1, 2, 3);
     final RubyArray<Integer> ints = ra();
@@ -1172,6 +1173,6 @@ public class RubyEnumerableTest {
       }
 
     });
-    assertEquals(ra(6, 15, 24), ints);
+    assertEquals(ra(12, 15, 18), ints);
   }
 }
