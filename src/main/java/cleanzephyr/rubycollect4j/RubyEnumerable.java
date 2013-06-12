@@ -886,7 +886,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return zip(Arrays.asList(others));
   }
 
-  public RubyArray<RubyArray<E>> zip(List<List<E>> others) {
+  public RubyArray<RubyArray<E>> zip(List<? extends List<E>> others) {
     RubyArray<E> rubyArray = newRubyArray(iter);
     RubyArray<RubyArray<E>> zippedRubyArray = newRubyArray();
     for (int i = 0; i < rubyArray.size(); i++) {
@@ -905,7 +905,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return zippedRubyArray;
   }
 
-  public void zip(List<List<E>> others, ItemBlock<List<E>> block) {
+  public void
+      zip(List<? extends List<E>> others, ItemBlock<RubyArray<E>> block) {
     RubyArray<RubyArray<E>> zippedRubyArray = zip(others);
     for (RubyArray<E> item : zippedRubyArray) {
       block.yield(item);

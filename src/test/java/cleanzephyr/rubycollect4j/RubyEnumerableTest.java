@@ -1136,4 +1136,42 @@ public class RubyEnumerableTest {
     }));
   }
 
+  @Test
+  public void testToA() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(ra(1, 2, 3, 4), re.toA());
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testZip() {
+    re = new RubyEnumerable<Integer>(1, 2, 3);
+    assertEquals(ra(ra(1, 4), ra(2, 5), ra(3, null)), re.zip(ra(4, 5)));
+    assertEquals(ra(ra(1, 4, 7), ra(2, 5, 8), ra(3, 6, 9)),
+        re.zip(ra(4, 5, 6), ra(7, 8, 9)));
+    assertEquals(ra(ra(1, 4, 7), ra(2, 5, 8), ra(3, 6, 9)),
+        re.zip(ra(ra(4, 5, 6), ra(7, 8, 9))));
+  }
+
+  @SuppressWarnings("unchecked")
+  public void testZipWithBlock() {
+    re = new RubyEnumerable<Integer>(1, 2, 3);
+    final RubyArray<Integer> ints = ra();
+    re.zip(ra(ra(4, 5, 6), ra(7, 8, 9)), new ItemBlock<RubyArray<Integer>>() {
+
+      @Override
+      public void yield(RubyArray<Integer> item) {
+        ints.push(item.reduce(new InjectBlock<Integer>() {
+
+          @Override
+          public Integer yield(Integer memo, Integer item) {
+            return memo + item;
+          }
+
+        }));
+      }
+
+    });
+    assertEquals(ra(6, 15, 24), ints);
+  }
 }
