@@ -26,6 +26,8 @@ import java.util.List;
 
 import org.junit.Test;
 
+import cleanzephyr.rubycollect4j.block.ItemBlock;
+
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
 import static cleanzephyr.rubycollect4j.RubyCollections.ra;
 import static com.google.common.collect.Lists.newArrayList;
@@ -99,6 +101,38 @@ public class RubyArrayTest {
       }
 
     }));
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testCombination() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(RubyEnumerator.class, ra.combination(0).getClass());
+    assertEquals(ra(), ra.combination(-1).toA());
+    assertEquals(ra(ra()), ra.combination(0).toA());
+    assertEquals(ra(), ra.combination(5).toA());
+    assertEquals(ra(ra(1), ra(2), ra(3), ra(4)), ra.combination(1).toA());
+    assertEquals(
+        ra(ra(1, 2), ra(1, 3), ra(1, 4), ra(2, 3), ra(2, 4), ra(3, 4)), ra
+            .combination(2).toA());
+    assertEquals(ra(ra(1, 2, 3), ra(1, 2, 4), ra(1, 3, 4), ra(2, 3, 4)), ra
+        .combination(3).toA());
+    assertEquals(ra(ra(1, 2, 3, 4)), ra.combination(4).toA());
+  }
+
+  @Test
+  public void testCombinationWithBlock() {
+    ra = ra(1, 2, 3, 4);
+    final RubyArray<Integer> ints = ra();
+    assertEquals(ra, ra.combination(3, new ItemBlock<RubyArray<Integer>>() {
+
+      @Override
+      public void yield(RubyArray<Integer> item) {
+        ints.concat(item);
+      }
+
+    }));
+    assertEquals(ra(1, 2, 3, 1, 2, 4, 1, 3, 4, 2, 3, 4), ints);
   }
 
 }

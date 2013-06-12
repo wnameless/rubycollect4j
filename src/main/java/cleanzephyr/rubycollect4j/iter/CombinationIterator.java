@@ -66,7 +66,8 @@ public class CombinationIterator<E> implements Iterator<RubyArray<E>> {
       if (counter[i] < list.size() - (counter.length - i)) {
         counter[i]++;
         return;
-      } else if (i != 0 && counter[i - 1] != list.size() - (counter.length - i)) {
+      } else if (i != 0
+          && counter[i - 1] != list.size() - (counter.length - i + 1)) {
         counter[i - 1]++;
         for (int j = i; j < counter.length; j++) {
           counter[j] = counter[j - 1] + 1;
