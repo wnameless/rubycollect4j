@@ -757,11 +757,12 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return new RubyEnumerator<E>(Lists.reverse(newArrayList(iter)));
   }
 
-  public void reverseEach(ItemBlock<E> block) {
+  public RubyEnumerable<E> reverseEach(ItemBlock<E> block) {
     List<E> list = newArrayList(iter);
     for (E item : reverse(list)) {
       block.yield(item);
     }
+    return this;
   }
 
   public RubyEnumerator<E> select() {

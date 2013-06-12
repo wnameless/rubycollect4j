@@ -995,4 +995,26 @@ public class RubyEnumerableTest {
     }));
   }
 
+  @Test
+  public void testReverseEach() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(RubyEnumerator.class, re.reverseEach().getClass());
+    assertEquals(ra(4, 3, 2, 1), re.reverseEach().toA());
+  }
+
+  @Test
+  public void testReverseEachWithBlock() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    final RubyArray<Integer> ra = ra();
+    assertEquals(re, re.reverseEach(new ItemBlock<Integer>() {
+
+      @Override
+      public void yield(Integer item) {
+        ra.push(item);
+      }
+
+    }));
+    assertEquals(ra(4, 3, 2, 1), ra);
+  }
+
 }
