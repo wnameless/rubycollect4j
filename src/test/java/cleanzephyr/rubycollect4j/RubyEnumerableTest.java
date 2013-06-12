@@ -1117,4 +1117,23 @@ public class RubyEnumerableTest {
     re.take(-1);
   }
 
+  @Test
+  public void testTakeWhile() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(ra(1), re.takeWhile().toA());
+  }
+
+  @Test
+  public void testTakeWhileWithBlock() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(ra(1, 2), re.takeWhile(new BooleanBlock<Integer>() {
+
+      @Override
+      public boolean yield(Integer item) {
+        return item != 3;
+      }
+
+    }));
+  }
+
 }
