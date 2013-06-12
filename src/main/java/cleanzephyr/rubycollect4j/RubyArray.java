@@ -90,6 +90,19 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     this.list = list;
   }
 
+  public <S> RubyArray<S> assoc(S target) {
+    for (E item : list) {
+      if (item instanceof List) {
+        @SuppressWarnings("unchecked")
+        List<S> itemList = (List<S>) item;
+        if (itemList.size() > 0 && itemList.get(0).equals(target)) {
+          return newRubyArray(itemList, true);
+        }
+      }
+    }
+    return null;
+  }
+
   public RubyArray<E> ㄍ(E item) {
     return push(item);
   }
@@ -162,19 +175,6 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
 
   public RubyArray<E> ㄧ(List<E> other) {
     return minus(other);
-  }
-
-  public <S> RubyArray<S> assoc(S target) {
-    for (E item : list) {
-      if (item instanceof List) {
-        @SuppressWarnings("unchecked")
-        List<S> itemList = (List<S>) item;
-        if (itemList.size() > 0 && itemList.get(0).equals(target)) {
-          return newRubyArray(itemList, true);
-        }
-      }
-    }
-    return null;
   }
 
   public E at(int index) {
