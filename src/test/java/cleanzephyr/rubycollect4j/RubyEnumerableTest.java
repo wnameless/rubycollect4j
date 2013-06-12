@@ -846,4 +846,18 @@ public class RubyEnumerableTest {
         }));
   }
 
+  @Test
+  public void testNoneʔ() {
+    re = new RubyEnumerable<Integer>();
+    assertTrue(re.noneʔ());
+    RubyArray<Integer> ra = ra();
+    ra.push(null);
+    re = new RubyEnumerable<Integer>(ra);
+    assertTrue(re.noneʔ());
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertFalse(re.noneʔ());
+    re = new RubyEnumerable<Integer>(1, 2, 3, null);
+    assertFalse(re.noneʔ());
+  }
+
 }
