@@ -712,4 +712,11 @@ public class RubyEnumerableTest {
     }));
   }
 
+  @Test
+  public void testMemberʔ() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertTrue(re.memberʔ(1));
+    assertFalse(re.memberʔ(5));
+  }
+
 }
