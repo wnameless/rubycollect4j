@@ -2,6 +2,7 @@ package cleanzephyr.rubycollect4j;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
@@ -653,6 +654,19 @@ public class RubyEnumerableTest {
   public void testMax() {
     re = new RubyEnumerable<Integer>(1, 2, 3, 4);
     assertEquals(Integer.valueOf(4), re.max());
+  }
+
+  @Test
+  public void testMaxWithComparator() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(Integer.valueOf(1), re.max(new Comparator<Integer>() {
+
+      @Override
+      public int compare(Integer arg0, Integer arg1) {
+        return arg1 - arg0;
+      }
+
+    }));
   }
 
 }
