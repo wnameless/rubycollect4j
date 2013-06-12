@@ -455,4 +455,24 @@ public class RubyEnumerableTest {
     }));
   }
 
+  @Test
+  public void testFindAll() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(RubyEnumerator.class, re.findAll().getClass());
+    assertEquals(ra(1, 2, 3, 4), re.findAll().toA());
+  }
+
+  @Test
+  public void testFindAllWithBlock() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(ra(2, 3, 4), re.findAll(new BooleanBlock<Integer>() {
+
+      @Override
+      public boolean yield(Integer item) {
+        return item >= 2;
+      }
+
+    }));
+  }
+
 }
