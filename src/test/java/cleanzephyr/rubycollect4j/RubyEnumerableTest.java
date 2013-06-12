@@ -13,6 +13,7 @@ import cleanzephyr.rubycollect4j.block.BooleanBlock;
 import cleanzephyr.rubycollect4j.block.ItemBlock;
 import cleanzephyr.rubycollect4j.block.ItemToRubyArrayBlock;
 import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
+import cleanzephyr.rubycollect4j.block.ItemWithIndexBlock;
 import cleanzephyr.rubycollect4j.block.ListBlock;
 
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
@@ -359,6 +360,35 @@ public class RubyEnumerableTest {
     });
     assertEquals(ra(1, 4), ints);
     re.eachSlice(0);
+  }
+
+  @Test
+  public void testEachWithIndex() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(RubyEnumerator.class, re.eachWithIndex().getClass());
+    @SuppressWarnings("unchecked")
+    RubyArray<SimpleEntry<Integer, Integer>> ra =
+        ra(new SimpleEntry<Integer, Integer>(1, 0),
+            new SimpleEntry<Integer, Integer>(2, 1),
+            new SimpleEntry<Integer, Integer>(3, 2),
+            new SimpleEntry<Integer, Integer>(4, 3));
+    assertEquals(ra, re.eachWithIndex().toA());
+  }
+
+  @Test
+  public void testEachWithIndexWithBlock() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    final RubyArray<Integer> ints = ra();
+    assertEquals(RubyEnumerable.class,
+        re.eachWithIndex(new ItemWithIndexBlock<Integer>() {
+
+          @Override
+          public void yield(Integer item, int index) {
+            ints.add(item + index);
+          }
+
+        }).getClass());
+    assertEquals(ra(1, 3, 5, 7), ints);
   }
 
 }

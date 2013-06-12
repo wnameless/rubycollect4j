@@ -288,15 +288,13 @@ public class RubyEnumerable<E> implements Iterable<E> {
         iter));
   }
 
-  public RubyArray<E> eachWithIndex(ItemWithIndexBlock<E> block) {
-    RubyArray<E> rubyArray = newRubyArray();
+  public RubyEnumerable<E> eachWithIndex(ItemWithIndexBlock<E> block) {
     int i = 0;
     for (E item : iter) {
       block.yield(item, i);
-      rubyArray.add(item);
       i++;
     }
-    return rubyArray;
+    return this;
   }
 
   public <S> RubyEnumerator<Entry<E, S>> eachWithObject(S o) {
