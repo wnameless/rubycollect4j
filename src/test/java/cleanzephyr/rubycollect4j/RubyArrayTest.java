@@ -29,6 +29,7 @@ import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
 import static cleanzephyr.rubycollect4j.RubyCollections.ra;
 import static com.google.common.collect.Lists.newArrayList;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class RubyArrayTest {
   private RubyArray<Integer> ra;
@@ -58,6 +59,15 @@ public class RubyArrayTest {
     @SuppressWarnings("unchecked")
     RubyArray<RubyArray<Integer>> ra = ra(ra(1, 2, 3), ra(4, 5, 6));
     assertEquals(ra(4, 5, 6), ra.assoc(4));
+  }
+
+  @Test
+  public void testAt() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(Integer.valueOf(1), ra.at(0));
+    assertEquals(Integer.valueOf(4), ra.at(-1));
+    assertNull(ra.at(4));
+    assertNull(ra.at(-5));
   }
 
 }
