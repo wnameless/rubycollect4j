@@ -516,12 +516,21 @@ public class RubyEnumerableTest {
       }
 
     }));
+    assertNull(re.findIndex(new BooleanBlock<Integer>() {
+
+      @Override
+      public boolean yield(Integer item) {
+        return item > 4;
+      }
+
+    }));
   }
 
   @Test
   public void testFindIndexWithTarget() {
     re = newRubyEnumerable(1, 2, 3, 4);
     assertEquals(Integer.valueOf(2), re.findIndex(3));
+    assertNull(re.findIndex(0));
   }
 
   @Test
