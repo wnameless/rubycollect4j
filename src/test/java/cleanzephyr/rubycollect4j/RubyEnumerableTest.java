@@ -781,4 +781,27 @@ public class RubyEnumerableTest {
     }));
   }
 
+  @Test
+  public void testMinmax() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(ra(1, 4), re.minmax());
+    re = new RubyEnumerable<Integer>(1);
+    assertEquals(ra(1, 1), re.minmax());
+    re = new RubyEnumerable<Integer>();
+    assertEquals(ra(null, null), re.minmax());
+  }
+
+  @Test
+  public void testMinmaxWithComparator() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(ra(4, 1), re.minmax(new Comparator<Integer>() {
+
+      @Override
+      public int compare(Integer o1, Integer o2) {
+        return o2 - o1;
+      }
+
+    }));
+  }
+
 }
