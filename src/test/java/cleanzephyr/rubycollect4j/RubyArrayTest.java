@@ -21,6 +21,7 @@
 package cleanzephyr.rubycollect4j;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import org.junit.Test;
@@ -68,6 +69,36 @@ public class RubyArrayTest {
     assertEquals(Integer.valueOf(4), ra.at(-1));
     assertNull(ra.at(4));
     assertNull(ra.at(-5));
+  }
+
+  @Test
+  public void testBsearch() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(Integer.valueOf(3), ra.bsearch(3));
+    ra = ra(4, 1, 3, 2);
+    assertNull(ra.bsearch(4));
+  }
+
+  @Test
+  public void testBsearchWithComparator() {
+    ra = ra(1, 2, 3, 4);
+    assertNull(ra.bsearch(3, new Comparator<Integer>() {
+
+      @Override
+      public int compare(Integer arg0, Integer arg1) {
+        return arg1 - arg0;
+      }
+
+    }));
+    ra = ra(4, 3, 2, 1);
+    assertEquals(Integer.valueOf(3), ra.bsearch(3, new Comparator<Integer>() {
+
+      @Override
+      public int compare(Integer arg0, Integer arg1) {
+        return arg1 - arg0;
+      }
+
+    }));
   }
 
 }

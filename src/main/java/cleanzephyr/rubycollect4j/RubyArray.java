@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Random;
 
+import org.apache.commons.collections.comparators.ComparableComparator;
+
 import cleanzephyr.rubycollect4j.block.Block;
 import cleanzephyr.rubycollect4j.block.BooleanBlock;
 import cleanzephyr.rubycollect4j.block.IndexBlock;
@@ -88,19 +90,6 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   private RubyArray(List<E> list) {
     super(list);
     this.list = list;
-  }
-
-  public <S> RubyArray<S> assoc(S target) {
-    for (E item : list) {
-      if (item instanceof List) {
-        @SuppressWarnings("unchecked")
-        List<S> itemList = (List<S>) item;
-        if (itemList.size() > 0 && itemList.get(0).equals(target)) {
-          return newRubyArray(itemList, true);
-        }
-      }
-    }
-    return null;
   }
 
   public RubyArray<E> ㄍ(E item) {
@@ -177,6 +166,19 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return minus(other);
   }
 
+  public <S> RubyArray<S> assoc(S target) {
+    for (E item : list) {
+      if (item instanceof List) {
+        @SuppressWarnings("unchecked")
+        List<S> itemList = (List<S>) item;
+        if (itemList.size() > 0 && itemList.get(0).equals(target)) {
+          return newRubyArray(itemList, true);
+        }
+      }
+    }
+    return null;
+  }
+
   public E at(int index) {
     if (list.isEmpty()) {
       return null;
@@ -189,7 +191,19 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     }
   }
 
+  // TODO: Implement bsearch to take code block
   public E bsearch(E target) {
+    if (list.size() == 0) {
+      return null;
+    }
+    E sample = list.get(0);
+    if (sample instanceof Comparable) {
+      @SuppressWarnings("unchecked")
+      int index =
+          Collections.binarySearch(list, target,
+              ComparableComparator.getInstance());
+      return index < 0 ? null : list.get(index);
+    }
     Object[] array = list.toArray();
     int index = Arrays.binarySearch(array, target);
     return index < 0 ? null : list.get(index);
