@@ -538,4 +538,24 @@ public class RubyEnumerableTest {
         }));
   }
 
+  @Test
+  public void testGrep() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(ra(2, 4), re.grep("[24]"));
+  }
+
+  @Test
+  public void testGrepWithBlock() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(ra("2", "4"),
+        re.grep("[24]", new ItemTransformBlock<Integer, String>() {
+
+          @Override
+          public String yield(Integer item) {
+            return item.toString();
+          }
+
+        }));
+  }
+
 }
