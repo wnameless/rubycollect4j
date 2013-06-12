@@ -34,6 +34,8 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.collections.comparators.ComparableComparator;
+
 import cleanzephyr.rubycollect4j.block.BooleanBlock;
 import cleanzephyr.rubycollect4j.block.InjectBlock;
 import cleanzephyr.rubycollect4j.block.InjectWithInitBlock;
@@ -536,7 +538,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   public E max() {
-    return sort().first();
+    return sort().last();
   }
 
   public E max(Comparator<? super E> comp) {
@@ -576,7 +578,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   public E min() {
-    return sort().last();
+    return sort().first();
   }
 
   public E min(Comparator<? super E> comp) {
@@ -614,7 +616,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   @SuppressWarnings("unchecked")
   public RubyArray<E> minmax() {
     RubyArray<E> rubyArray = sort();
-    return newRubyArray(rubyArray.last(), rubyArray.first());
+    return newRubyArray(rubyArray.first(), rubyArray.last());
   }
 
   @SuppressWarnings("unchecked")
@@ -780,11 +782,18 @@ public class RubyEnumerable<E> implements Iterable<E> {
         regex));
   }
 
+  @SuppressWarnings("unchecked")
   public RubyArray<E> sort() {
     RubyArray<E> rubyArray = newRubyArray(iter);
+    if (rubyArray.size() > 0) {
+      E sample = rubyArray.first();
+      if (sample instanceof Comparable) {
+        Collections.sort(rubyArray, ComparableComparator.getInstance());
+        return rubyArray;
+      }
+    }
     Object[] array = rubyArray.toArray();
     Arrays.sort(array);
-    @SuppressWarnings("unchecked")
     E[] elements = (E[]) array;
     return newRubyArray(elements);
   }

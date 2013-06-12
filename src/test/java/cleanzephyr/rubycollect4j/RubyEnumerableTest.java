@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import cleanzephyr.rubycollect4j.block.BooleanBlock;
@@ -29,9 +28,6 @@ import static org.junit.Assert.assertTrue;
 
 public class RubyEnumerableTest {
   private RubyEnumerable<Integer> re;
-
-  @Before
-  public void setUp() throws Exception {}
 
   @Test
   public void testConstructor() {
@@ -651,6 +647,12 @@ public class RubyEnumerableTest {
           }
 
         }));
+  }
+
+  @Test
+  public void testMax() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(Integer.valueOf(4), re.max());
   }
 
 }
