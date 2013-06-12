@@ -21,7 +21,9 @@ import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
 import static cleanzephyr.rubycollect4j.RubyCollections.ra;
 import static cleanzephyr.rubycollect4j.RubyCollections.rh;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public class RubyEnumerableTest {
   private RubyEnumerable<Integer> re;
@@ -578,6 +580,13 @@ public class RubyEnumerableTest {
           }
 
         }));
+  }
+
+  @Test
+  public void testIncludeʔ() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertTrue(re.includeʔ(1));
+    assertFalse(re.includeʔ(5));
   }
 
 }
