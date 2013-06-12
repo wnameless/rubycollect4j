@@ -723,7 +723,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return newRubyArray(trueList, falseList);
   }
 
-  public E reduce(E init, String methodName) {
+  public <S> S reduce(S init, String methodName) {
     return inject(init, methodName);
   }
 

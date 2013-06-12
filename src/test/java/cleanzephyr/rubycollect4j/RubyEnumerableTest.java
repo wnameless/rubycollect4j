@@ -934,4 +934,65 @@ public class RubyEnumerableTest {
         }));
   }
 
+  @Test
+  public void testReduceWithInit() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    RubyArray<Integer> ra = ra();
+    assertEquals(ra(1, 2, 3, 4), re.reduce(ra, "push"));
+  }
+
+  @Test
+  public void testReduceWithBlock() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(Integer.valueOf(10), re.reduce(new InjectBlock<Integer>() {
+
+      @Override
+      public Integer yield(Integer memo, Integer item) {
+        return memo + item;
+      }
+
+    }));
+  }
+
+  @Test
+  public void testReduceWithInitAndBlock() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(Long.valueOf(20),
+        re.reduce(Long.valueOf(10), new InjectWithInitBlock<Integer, Long>() {
+
+          @Override
+          public Long yield(Long memo, Integer item) {
+            return memo + item;
+          }
+
+        }));
+  }
+
+  @Test
+  public void testReduce() {
+    RubyEnumerable<Boolean> bools =
+        new RubyEnumerable<Boolean>(true, true, true);
+    assertEquals(Boolean.TRUE, bools.reduce("equals"));
+  }
+
+  @Test
+  public void testReject() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(RubyEnumerator.class, re.reject().getClass());
+    assertEquals(ra(1, 2, 3, 4), re.reject().toA());
+  }
+
+  @Test
+  public void testRejectWithBlock() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(ra(2, 3, 4), re.reject(new BooleanBlock<Integer>() {
+
+      @Override
+      public boolean yield(Integer item) {
+        return item == 1;
+      }
+
+    }));
+  }
+
 }
