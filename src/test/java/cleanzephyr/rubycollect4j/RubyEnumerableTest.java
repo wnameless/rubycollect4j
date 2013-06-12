@@ -1059,4 +1059,12 @@ public class RubyEnumerableTest {
     assertEquals(ra(ra(1, 2), ra(3), ra(3)), re.sliceBefore("3").toA());
   }
 
+  @Test
+  public void testSort() {
+    re = new RubyEnumerable<Integer>(4, 1, 2, 3, 3);
+    assertEquals(ra(1, 2, 3, 3, 4), re.sort());
+    assertEquals(ra("abc", "b", "cd"), new RubyEnumerable<String>("b", "cd",
+        "abc").sort());
+  }
+
 }
