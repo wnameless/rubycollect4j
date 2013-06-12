@@ -53,4 +53,11 @@ public class RubyArrayTest {
     assertEquals(ra(1, 2, 3), ra);
   }
 
+  @Test
+  public void testAssoc() {
+    @SuppressWarnings("unchecked")
+    RubyArray<RubyArray<Integer>> ra = ra(ra(1, 2, 3), ra(4, 5, 6));
+    assertEquals(ra(4, 5, 6), ra.assoc(4));
+  }
+
 }
