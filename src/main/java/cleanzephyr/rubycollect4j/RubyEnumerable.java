@@ -673,7 +673,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
     boolean bool = true;
     for (E item : iter) {
       if (block.yield(item)) {
-        bool = false;
+        return false;
       }
     }
     return bool;

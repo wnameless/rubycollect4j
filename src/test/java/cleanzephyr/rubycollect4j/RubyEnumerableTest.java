@@ -881,4 +881,35 @@ public class RubyEnumerableTest {
     }));
   }
 
+  @Test
+  public void testOneʔ() {
+    re = new RubyEnumerable<Integer>(1);
+    assertTrue(re.oneʔ());
+    re = new RubyEnumerable<Integer>(1, null);
+    assertTrue(re.oneʔ());
+    re = new RubyEnumerable<Integer>(1, 2);
+    assertFalse(re.oneʔ());
+  }
+
+  @Test
+  public void testOneʔWithBlock() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertTrue(re.oneʔ(new BooleanBlock<Integer>() {
+
+      @Override
+      public boolean yield(Integer item) {
+        return item > 3;
+      }
+
+    }));
+    assertFalse(re.oneʔ(new BooleanBlock<Integer>() {
+
+      @Override
+      public boolean yield(Integer item) {
+        return item > 2;
+      }
+
+    }));
+  }
+
 }
