@@ -1017,4 +1017,24 @@ public class RubyEnumerableTest {
     assertEquals(ra(4, 3, 2, 1), ra);
   }
 
+  @Test
+  public void testSelect() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(RubyEnumerator.class, re.select().getClass());
+    assertEquals(ra(1, 2, 3, 4), re.select().toA());
+  }
+
+  @Test
+  public void testSelectBlock() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(ra(3, 4), re.select(new BooleanBlock<Integer>() {
+
+      @Override
+      public boolean yield(Integer item) {
+        return item >= 3;
+      }
+
+    }));
+  }
+
 }
