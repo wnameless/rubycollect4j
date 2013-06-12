@@ -10,6 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cleanzephyr.rubycollect4j.block.BooleanBlock;
+import cleanzephyr.rubycollect4j.block.InjectBlock;
+import cleanzephyr.rubycollect4j.block.InjectWithInitBlock;
 import cleanzephyr.rubycollect4j.block.ItemBlock;
 import cleanzephyr.rubycollect4j.block.ItemToRubyArrayBlock;
 import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
@@ -587,6 +589,47 @@ public class RubyEnumerableTest {
     re = new RubyEnumerable<Integer>(1, 2, 3, 4);
     assertTrue(re.includeʔ(1));
     assertFalse(re.includeʔ(5));
+  }
+
+  @Test
+  public void testInjectWithInit() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    RubyArray<Integer> ra = ra();
+    assertEquals(ra(1, 2, 3, 4), re.inject(ra, "push"));
+  }
+
+  @Test
+  public void testInjectWithBlock() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(Integer.valueOf(10), re.inject(new InjectBlock<Integer>() {
+
+      @Override
+      public Integer yield(Integer memo, Integer item) {
+        return memo + item;
+      }
+
+    }));
+  }
+
+  @Test
+  public void testInjectWithInitAndBlock() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(Long.valueOf(20),
+        re.inject(Long.valueOf(10), new InjectWithInitBlock<Integer, Long>() {
+
+          @Override
+          public Long yield(Long memo, Integer item) {
+            return memo + item;
+          }
+
+        }));
+  }
+
+  @Test
+  public void testInject() {
+    RubyEnumerable<Boolean> bools =
+        new RubyEnumerable<Boolean>(true, true, true);
+    assertEquals(Boolean.TRUE, bools.inject("equals"));
   }
 
 }

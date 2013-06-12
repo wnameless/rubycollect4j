@@ -441,18 +441,18 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   @SuppressWarnings("unchecked")
-  public E inject(E init, String methodName) {
-    E result = init;
+  public <S> S inject(S init, String methodName) {
+    S result = init;
     Iterator<E> iterator = iter.iterator();
     while (iterator.hasNext()) {
       E curr = iterator.next();
       try {
-        Method m =
-            result.getClass().getDeclaredMethod(methodName, result.getClass());
-        result = (E) m.invoke(result, curr);
-      } catch (NoSuchMethodException ex) {
-        Logger.getLogger(RubyEnumerable.class.getName()).log(Level.SEVERE,
-            null, ex);
+        Method[] methods = result.getClass().getDeclaredMethods();
+        for (Method method : methods) {
+          if (method.getName().equals(methodName)) {
+            result = (S) method.invoke(result, curr);
+          }
+        }
       } catch (SecurityException ex) {
         Logger.getLogger(RubyEnumerable.class.getName()).log(Level.SEVERE,
             null, ex);
@@ -502,13 +502,12 @@ public class RubyEnumerable<E> implements Iterable<E> {
       } else {
         E curr = iterator.next();
         try {
-          Method m =
-              result.getClass()
-                  .getDeclaredMethod(methodName, result.getClass());
-          result = (E) m.invoke(result, curr);
-        } catch (NoSuchMethodException ex) {
-          Logger.getLogger(RubyEnumerable.class.getName()).log(Level.SEVERE,
-              null, ex);
+          Method[] methods = result.getClass().getDeclaredMethods();
+          for (Method method : methods) {
+            if (method.getName().equals(methodName)) {
+              result = (E) method.invoke(result, curr);
+            }
+          }
         } catch (SecurityException ex) {
           Logger.getLogger(RubyEnumerable.class.getName()).log(Level.SEVERE,
               null, ex);
