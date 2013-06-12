@@ -427,4 +427,32 @@ public class RubyEnumerableTest {
     assertEquals(ra(1, 2, 3, 4), re.entries());
   }
 
+  @Test
+  public void testFind() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(RubyEnumerator.class, re.find().getClass());
+    assertEquals(ra(1, 2, 3, 4), re.find().toA());
+  }
+
+  @Test
+  public void testFindWithBlock() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(Integer.valueOf(3), re.find(new BooleanBlock<Integer>() {
+
+      @Override
+      public boolean yield(Integer item) {
+        return item == 3;
+      }
+
+    }));
+    assertNull(re.find(new BooleanBlock<Integer>() {
+
+      @Override
+      public boolean yield(Integer item) {
+        return item == 5;
+      }
+
+    }));
+  }
+
 }
