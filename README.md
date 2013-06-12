@@ -1,6 +1,12 @@
 rubycollect4j
 =============
-Ruby Collections for Java 8. For more documentation, please read JavaDoc.
+Ruby Collections for Java 8.
+
+The rubycollect4j implements all methods refer to Ruby Array, Hash and Enumerable.
+
+For further information, please visit http://ruby-doc.org website.
+
+For more documentation, please read JavaDoc.
 
 With Java 8:
 ``` java
