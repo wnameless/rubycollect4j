@@ -20,22 +20,30 @@
  */
 package cleanzephyr.rubycollect4j;
 
-import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
-import static com.google.common.collect.Lists.newArrayList;
-
 import java.util.Iterator;
 
 import cleanzephyr.rubycollect4j.block.ItemBlock;
 
+import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
+import static com.google.common.collect.Lists.newArrayList;
+
 public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
     Iterable<E> {
+
+  public static <E> RubyEnumerator<E> newRubyEnumerator(Iterable<E> iter) {
+    return new RubyEnumerator<E>(iter);
+  }
+
+  public static <E> RubyEnumerator<E> newRubyEnumerator(Iterator<E> iter) {
+    return new RubyEnumerator<E>(iter);
+  }
 
   public RubyEnumerator(Iterable<E> iter) {
     super(iter);
   }
 
-  public RubyEnumerator(Iterator<E> it) {
-    super(newArrayList(it));
+  public RubyEnumerator(Iterator<E> iter) {
+    super(newArrayList(iter));
   }
 
   public RubyArray<E> each(ItemBlock<E> block) {
