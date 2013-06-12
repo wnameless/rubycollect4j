@@ -19,6 +19,7 @@ import cleanzephyr.rubycollect4j.block.ListBlock;
 
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
 import static cleanzephyr.rubycollect4j.RubyCollections.ra;
+import static cleanzephyr.rubycollect4j.RubyCollections.rh;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
@@ -553,6 +554,27 @@ public class RubyEnumerableTest {
           @Override
           public String yield(Integer item) {
             return item.toString();
+          }
+
+        }));
+  }
+
+  @Test
+  public void testGroupBy() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(RubyEnumerator.class, re.groupBy().getClass());
+    assertEquals(ra(1, 2, 3, 4), re.groupBy().toA());
+  }
+
+  @Test
+  public void testGroupByWithBlock() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(rh(1, ra(1, 4), 2, ra(2), 0, ra(3)),
+        re.groupBy(new ItemTransformBlock<Integer, Integer>() {
+
+          @Override
+          public Integer yield(Integer item) {
+            return item % 3;
           }
 
         }));
