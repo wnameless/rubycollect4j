@@ -719,4 +719,66 @@ public class RubyEnumerableTest {
     assertFalse(re.memberʔ(5));
   }
 
+  @Test
+  public void testMin() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(Integer.valueOf(1), re.min());
+    re = new RubyEnumerable<Integer>();
+    assertNull(re.min());
+  }
+
+  @Test
+  public void testMinWithComparator() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(Integer.valueOf(4), re.min(new Comparator<Integer>() {
+
+      @Override
+      public int compare(Integer arg0, Integer arg1) {
+        return arg1 - arg0;
+      }
+
+    }));
+  }
+
+  @Test
+  public void testMixBy() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(RubyEnumerator.class, re.minBy().getClass());
+    assertEquals(ra(1, 2, 3, 4), re.minBy().toA());
+  }
+
+  @Test
+  public void testMinByWithComparatorAndBlock() {
+    RubyEnumerable<String> re =
+        new RubyEnumerable<String>("aaaa", "bbb", "cc", "d");
+    assertEquals("aaaa", re.minBy(new Comparator<Integer>() {
+
+      @Override
+      public int compare(Integer o1, Integer o2) {
+        return o2 - o1;
+      }
+    }, new ItemTransformBlock<String, Integer>() {
+
+      @Override
+      public Integer yield(String item) {
+        return item.length();
+      }
+
+    }));
+  }
+
+  @Test
+  public void testMinByWithBlock() {
+    RubyEnumerable<String> re =
+        new RubyEnumerable<String>("aaaa", "bbb", "cc", "d");
+    assertEquals("d", re.minBy(new ItemTransformBlock<String, Integer>() {
+
+      @Override
+      public Integer yield(String item) {
+        return item.length();
+      }
+
+    }));
+  }
+
 }
