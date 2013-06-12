@@ -632,4 +632,25 @@ public class RubyEnumerableTest {
     assertEquals(Boolean.TRUE, bools.inject("equals"));
   }
 
+  @Test
+  public void testMap() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(RubyEnumerator.class, re.map().getClass());
+    assertEquals(ra(1, 2, 3, 4), re.map().toA());
+  }
+
+  @Test
+  public void testMapWithBlock() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(ra(1L, 2L, 3L, 4L),
+        re.map(new ItemTransformBlock<Integer, Long>() {
+
+          @Override
+          public Long yield(Integer item) {
+            return Long.valueOf(item);
+          }
+
+        }));
+  }
+
 }
