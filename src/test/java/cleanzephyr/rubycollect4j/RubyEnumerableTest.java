@@ -912,4 +912,26 @@ public class RubyEnumerableTest {
     }));
   }
 
+  @Test
+  public void testPartition() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(RubyEnumerator.class, re.partition().getClass());
+    assertEquals(ra(1, 2, 3, 4), re.partition().toA());
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testPartitionWithBlock() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(ra(ra(1, 3), ra(2, 4)),
+        re.partition(new BooleanBlock<Integer>() {
+
+          @Override
+          public boolean yield(Integer item) {
+            return item % 2 == 1;
+          }
+
+        }));
+  }
+
 }
