@@ -741,7 +741,7 @@ public class RubyEnumerableTest {
   }
 
   @Test
-  public void testMixBy() {
+  public void testMinBy() {
     re = new RubyEnumerable<Integer>(1, 2, 3, 4);
     assertEquals(RubyEnumerator.class, re.minBy().getClass());
     assertEquals(ra(1, 2, 3, 4), re.minBy().toA());
@@ -802,6 +802,48 @@ public class RubyEnumerableTest {
       }
 
     }));
+  }
+
+  @Test
+  public void testMinmaxBy() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(RubyEnumerator.class, re.minmaxBy().getClass());
+    assertEquals(ra(1, 2, 3, 4), re.minmaxBy().toA());
+  }
+
+  @Test
+  public void testMinmaxByWithComparatorAndBlock() {
+    RubyEnumerable<String> re =
+        new RubyEnumerable<String>("aaaa", "bbb", "cc", "d");
+    assertEquals(ra("aaaa", "d"), re.minmaxBy(new Comparator<Integer>() {
+
+      @Override
+      public int compare(Integer o1, Integer o2) {
+        return o2 - o1;
+      }
+    }, new ItemTransformBlock<String, Integer>() {
+
+      @Override
+      public Integer yield(String item) {
+        return item.length();
+      }
+
+    }));
+  }
+
+  @Test
+  public void testMinmaxByWithBlock() {
+    RubyEnumerable<String> re =
+        new RubyEnumerable<String>("aaaa", "bbb", "cc", "d");
+    assertEquals(ra("d", "aaaa"),
+        re.minmaxBy(new ItemTransformBlock<String, Integer>() {
+
+          @Override
+          public Integer yield(String item) {
+            return item.length();
+          }
+
+        }));
   }
 
 }
