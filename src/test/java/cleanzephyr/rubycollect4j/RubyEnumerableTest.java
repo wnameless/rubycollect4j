@@ -1067,4 +1067,47 @@ public class RubyEnumerableTest {
         "abc").sort());
   }
 
+  @Test
+  public void testSortBy() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(RubyEnumerator.class, re.sortBy().getClass());
+    assertEquals(ra(1, 2, 3, 4), re.sortBy().toA());
+  }
+
+  @Test
+  public void testSortByWithComparatorAndBlock() {
+    RubyEnumerable<String> re =
+        new RubyEnumerable<String>("aaaa", "bbb", "cc", "d");
+    assertEquals(ra("aaaa", "bbb", "cc", "d"),
+        re.sortBy(new Comparator<Integer>() {
+
+          @Override
+          public int compare(Integer o1, Integer o2) {
+            return o2 - o1;
+          }
+        }, new ItemTransformBlock<String, Integer>() {
+
+          @Override
+          public Integer yield(String item) {
+            return item.length();
+          }
+
+        }));
+  }
+
+  @Test
+  public void testSortByWithBlock() {
+    RubyEnumerable<String> re =
+        new RubyEnumerable<String>("aaaa", "bbb", "cc", "d");
+    assertEquals(ra("d", "cc", "bbb", "aaaa"),
+        re.sortBy(new ItemTransformBlock<String, Integer>() {
+
+          @Override
+          public Integer yield(String item) {
+            return item.length();
+          }
+
+        }));
+  }
+
 }
