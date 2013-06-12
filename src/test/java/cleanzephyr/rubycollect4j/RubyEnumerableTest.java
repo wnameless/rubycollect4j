@@ -421,4 +421,10 @@ public class RubyEnumerableTest {
         })[0]);
   }
 
+  @Test
+  public void testEntries() {
+    re = new RubyEnumerable<Integer>(1, 2, 3, 4);
+    assertEquals(ra(1, 2, 3, 4), re.entries());
+  }
+
 }
