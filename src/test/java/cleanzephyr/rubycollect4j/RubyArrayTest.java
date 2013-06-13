@@ -651,4 +651,61 @@ public class RubyArrayTest {
     assertEquals(ra.size(), ra.length());
   }
 
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testPermutaion() {
+    ra = ra(1, 2, 3);
+    assertEquals(RubyEnumerator.class, ra.permutation().getClass());
+    assertEquals(
+        ra(ra(1, 2, 3), ra(1, 3, 2), ra(2, 1, 3), ra(2, 3, 1), ra(3, 1, 2),
+            ra(3, 2, 1)), ra.permutation().toA());
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testPermutaionWithN() {
+    ra = ra(1, 2, 3);
+    assertEquals(RubyEnumerator.class, ra.permutation(0).getClass());
+    assertEquals(ra(), ra.permutation(-1).toA());
+    assertEquals(ra(ra()), ra.permutation(0).toA());
+    assertEquals(ra(ra(1), ra(2), ra(3)), ra.permutation(1).toA());
+    assertEquals(
+        ra(ra(1, 2), ra(1, 3), ra(2, 1), ra(2, 3), ra(3, 1), ra(3, 2)), ra
+            .permutation(2).toA());
+    assertEquals(
+        ra(ra(1, 2, 3), ra(1, 3, 2), ra(2, 1, 3), ra(2, 3, 1), ra(3, 1, 2),
+            ra(3, 2, 1)), ra.permutation(3).toA());
+    assertEquals(ra(), ra.permutation(4).toA());
+  }
+
+  @Test
+  public void testPermutaionWithNAndBlock() {
+    ra = ra(1, 2, 3);
+    final RubyArray<Integer> ints = ra();
+    assertEquals(ra, ra.permutation(1, new ItemBlock<RubyArray<Integer>>() {
+
+      @Override
+      public void yield(RubyArray<Integer> item) {
+        ints.concat(item);
+      }
+
+    }));
+    assertEquals(ra(1, 2, 3), ints);
+  }
+
+  @Test
+  public void testPermutaionWithBlock() {
+    ra = ra(1, 2, 3);
+    final RubyArray<Integer> ints = ra();
+    assertEquals(ra, ra.permutation(new ItemBlock<RubyArray<Integer>>() {
+
+      @Override
+      public void yield(RubyArray<Integer> item) {
+        ints.concat(item);
+      }
+
+    }));
+    assertEquals(ra(1, 2, 3, 1, 3, 2, 2, 1, 3, 2, 3, 1, 3, 1, 2, 3, 2, 1), ints);
+  }
+
 }

@@ -642,6 +642,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return this;
   }
 
+  public RubyArray<E> permutation(ItemBlock<RubyArray<E>> block) {
+    for (RubyArray<E> item : permutation()) {
+      block.yield(item);
+    }
+    return this;
+  }
+
   public RubyEnumerator<RubyArray<E>> repeatedPermutation(int n) {
     RubyArray<RubyArray<E>> rp = newRubyArray();
     if (n < 0) {
