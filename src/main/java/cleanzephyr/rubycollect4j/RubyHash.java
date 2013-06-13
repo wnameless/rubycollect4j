@@ -76,9 +76,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return this;
   }
 
-  public RubyHash<K, V> put(Entry<K, V>... entries) {
-    for (Entry<K, V> entry : entries) {
-      map.put(entry.getKey(), entry.getValue());
+  public RubyHash<K, V> put(Entry<K, V> entry, Entry<K, V>... entries) {
+    map.put(entry.getKey(), entry.getValue());
+    for (Entry<K, V> e : entries) {
+      map.put(e.getKey(), e.getValue());
     }
     return this;
   }

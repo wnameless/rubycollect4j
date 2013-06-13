@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import static cleanzephyr.rubycollect4j.RubyCollections.hp;
+import static cleanzephyr.rubycollect4j.RubyCollections.rh;
 import static cleanzephyr.rubycollect4j.RubyHash.newRubyHash;
 import static com.google.common.collect.Maps.newHashMap;
 import static com.google.common.collect.Maps.newLinkedHashMap;
@@ -25,6 +27,14 @@ public class RubyHashTest {
     assertEquals(RubyHash.class, rh.getClass());
     rh = newRubyHash(lhm, false);
     assertEquals(RubyHash.class, rh.getClass());
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testPut() {
+    rh = newRubyHash();
+    assertEquals(rh(1, 2), rh.put(hp(1, 2)));
+    assertEquals(rh(1, 2, 3, 4, 5, 6), rh.put(hp(3, 4), hp(5, 6)));
   }
 
 }

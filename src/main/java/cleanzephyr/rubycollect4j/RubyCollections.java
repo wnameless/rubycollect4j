@@ -23,10 +23,12 @@ package cleanzephyr.rubycollect4j;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -229,6 +231,10 @@ public final class RubyCollections {
     rh.put(key9, value9);
     rh.put(key10, value10);
     return rh;
+  }
+
+  public static <K, V> Entry<K, V> hp(K key, V value) {
+    return new SimpleEntry<K, V>(key, value);
   }
 
   public static void main(String[] args) {
