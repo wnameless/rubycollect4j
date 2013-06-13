@@ -11,6 +11,7 @@ import static cleanzephyr.rubycollect4j.RubyHash.newRubyHash;
 import static com.google.common.collect.Maps.newHashMap;
 import static com.google.common.collect.Maps.newLinkedHashMap;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 
 public class RubyHashTest {
@@ -43,6 +44,18 @@ public class RubyHashTest {
     rh = rh(1, 2, 3, 4, 5, 6);
     assertEquals(hp(3, 4), rh.assoc(3));
     assertNull(rh.assoc(7));
+  }
+
+  @Test(expected = UnsupportedOperationException.class)
+  public void testCompareByIdentity() {
+    rh = newRubyHash();
+    rh.compareByIdentity();
+  }
+
+  @Test
+  public void testCompareByIdentityʔ() {
+    rh = newRubyHash();
+    assertFalse(rh.comparedByIdentityʔ());
   }
 
 }
