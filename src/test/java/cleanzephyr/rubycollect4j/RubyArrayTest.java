@@ -893,4 +893,11 @@ public class RubyArrayTest {
     assertEquals(ra(1, 1, 1, 2, 2, 1, 2, 2), ints);
   }
 
+  @Test
+  public void testReplace() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(4, 5, 6, 7), ra.replace(ra(4, 5, 6, 7)));
+    assertEquals(ra(4, 5, 6, 7), ra);
+  }
+
 }

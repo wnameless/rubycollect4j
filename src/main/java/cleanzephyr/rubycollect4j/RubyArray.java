@@ -757,12 +757,6 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return this;
   }
 
-  public RubyArray<E> replace(RubyArray<E> other) {
-    list.clear();
-    list.addAll(other);
-    return this;
-  }
-
   public RubyArray<E> reverse() {
     return newRubyArray(Lists.reverse(list));
   }
