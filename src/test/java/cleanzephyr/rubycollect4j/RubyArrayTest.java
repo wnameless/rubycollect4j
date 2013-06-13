@@ -135,4 +135,18 @@ public class RubyArrayTest {
     assertEquals(ra(1, 2, 3, 1, 2, 4, 1, 3, 4, 2, 3, 4), ints);
   }
 
+  @Test
+  public void testCompact() {
+    ra = ra(1, 2, 3, null);
+    ra = ra.compact();
+    assertEquals(ra(1, 2, 3), ra);
+  }
+
+  @Test
+  public void testCompactǃ() {
+    ra = ra(1, 2, 3, null);
+    ra.compactǃ();
+    assertEquals(ra(1, 2, 3), ra);
+  }
+
 }
