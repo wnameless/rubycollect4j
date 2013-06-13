@@ -258,22 +258,6 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return map.containsKey(key);
   }
 
-  public boolean valueʔ(V value) {
-    return map.containsValue(value);
-  }
-
-  public RubyHash<K, V> toH() {
-    return this;
-  }
-
-  public RubyHash<K, V> toHash() {
-    return this;
-  }
-
-  public String toS() {
-    return map.toString();
-  }
-
   public int length() {
     return map.size();
   }
@@ -287,17 +271,6 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
       newHash.put(item);
     }
     return newHash;
-  }
-
-  public RubyHash<K, V> mergeǃ(Map<K, V> otherHash) {
-    for (Entry<K, V> item : otherHash.entrySet()) {
-      map.put(item.getKey(), item.getValue());
-    }
-    return this;
-  }
-
-  public RubyHash<K, V> update(Map<K, V> otherHash) {
-    return mergeǃ(otherHash);
   }
 
   public RubyHash<K, V> merge(Map<K, V> otherHash, EntryMergeBlock<K, V> block) {
@@ -321,6 +294,13 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return newHash;
   }
 
+  public RubyHash<K, V> mergeǃ(Map<K, V> otherHash) {
+    for (Entry<K, V> item : otherHash.entrySet()) {
+      map.put(item.getKey(), item.getValue());
+    }
+    return this;
+  }
+
   public RubyHash<K, V>
       mergeǃ(Map<K, V> otherHash, EntryMergeBlock<K, V> block) {
     for (Entry<K, V> item : map.entrySet()) {
@@ -340,6 +320,26 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
       }
     }
     return this;
+  }
+
+  public boolean valueʔ(V value) {
+    return map.containsValue(value);
+  }
+
+  public RubyHash<K, V> toH() {
+    return this;
+  }
+
+  public RubyHash<K, V> toHash() {
+    return this;
+  }
+
+  public String toS() {
+    return map.toString();
+  }
+
+  public RubyHash<K, V> update(Map<K, V> otherHash) {
+    return mergeǃ(otherHash);
   }
 
   public RubyHash<K, V>

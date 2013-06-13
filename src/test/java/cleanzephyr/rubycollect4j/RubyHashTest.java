@@ -297,4 +297,11 @@ public class RubyHashTest {
     assertFalse(rh.keyʔ(2));
   }
 
+  @Test
+  public void testLength() {
+    rh = rh(1, 2, 3, 4, 5, 6);
+    assertEquals(3, rh.length());
+    assertEquals(rh.size(), rh.length());
+  }
+
 }
