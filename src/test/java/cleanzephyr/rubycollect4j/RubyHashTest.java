@@ -38,14 +38,6 @@ public class RubyHashTest {
     assertEquals(RubyHash.class, rh.getClass());
   }
 
-  @SuppressWarnings("unchecked")
-  @Test
-  public void testPut() {
-    rh = newRubyHash();
-    assertEquals(rh(1, 2), rh.put(hp(1, 2)));
-    assertEquals(rh(1, 2, 3, 4, 5, 6), rh.put(hp(3, 4), hp(5, 6)));
-  }
-
   @Test
   public void testAssoc() {
     rh = rh(1, 2, 3, 4, 5, 6);
@@ -345,6 +337,21 @@ public class RubyHashTest {
 
         }));
     assertEquals(rh(1, 3, 3, 4, 5, 6, 0, 1), rh);
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testPut() {
+    rh = newRubyHash();
+    assertEquals(rh(1, 2), rh.put(hp(1, 2)));
+    assertEquals(rh(1, 2, 3, 4, 5, 6), rh.put(hp(3, 4), hp(5, 6)));
+  }
+
+  @Test
+  public void testRassoc() {
+    rh = rh(1, 2, 3, 6, 5, 6);
+    assertEquals(hp(3, 6), rh.rassoc(6));
+    assertNull(rh.rassoc(5));
   }
 
 }

@@ -73,19 +73,6 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     this.map = map;
   }
 
-  public RubyHash<K, V> put(Entry<K, V> entry) {
-    map.put(entry.getKey(), entry.getValue());
-    return this;
-  }
-
-  public RubyHash<K, V> put(Entry<K, V> entry, Entry<K, V>... entries) {
-    map.put(entry.getKey(), entry.getValue());
-    for (Entry<K, V> e : entries) {
-      map.put(e.getKey(), e.getValue());
-    }
-    return this;
-  }
-
   public Entry<K, V> assoc(K key) {
     if (map.containsKey(key)) {
       return new SimpleEntry<K, V>(key, map.get(key));
@@ -322,6 +309,28 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return this;
   }
 
+  public RubyHash<K, V> put(Entry<K, V> entry) {
+    map.put(entry.getKey(), entry.getValue());
+    return this;
+  }
+
+  public RubyHash<K, V> put(Entry<K, V> entry, Entry<K, V>... entries) {
+    map.put(entry.getKey(), entry.getValue());
+    for (Entry<K, V> e : entries) {
+      map.put(e.getKey(), e.getValue());
+    }
+    return this;
+  }
+
+  public Entry<K, V> rassoc(V value) {
+    for (Entry<K, V> item : map.entrySet()) {
+      if (item.getValue().equals(value)) {
+        return item;
+      }
+    }
+    return null;
+  }
+
   public boolean valueʔ(V value) {
     return map.containsValue(value);
   }
@@ -345,15 +354,6 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   public RubyHash<K, V>
       update(Map<K, V> otherHash, EntryMergeBlock<K, V> block) {
     return mergeǃ(otherHash, block);
-  }
-
-  public Entry<K, V> rassoc(V value) {
-    for (Entry<K, V> item : map.entrySet()) {
-      if (item.getValue().equals(item)) {
-        return item;
-      }
-    }
-    return null;
   }
 
   public RubyHash<K, V> rejectǃ(EntryBooleanBlock<K, V> block) {
