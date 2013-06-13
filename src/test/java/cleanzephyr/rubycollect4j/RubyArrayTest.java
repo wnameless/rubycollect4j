@@ -795,4 +795,13 @@ public class RubyArrayTest {
     assertEquals(ra(1, 1, 1, 2, 2, 1, 2, 2), ints);
   }
 
+  @Test
+  public void testRassoc() {
+    @SuppressWarnings("unchecked")
+    RubyArray<RubyArray<Integer>> ra =
+        ra(ra(1, 2), ra(3, 4), ra(4, 4), ra(6, 7));
+    assertEquals(ra(3, 4), ra.rassoc(4));
+    assertNull(ra.rassoc(6));
+  }
+
 }
