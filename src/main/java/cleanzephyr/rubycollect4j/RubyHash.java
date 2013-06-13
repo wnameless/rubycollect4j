@@ -207,7 +207,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   public RubyArray<Entry<K, V>> flatten() {
-    return newRubyArray(new RubyEnumerable<Entry<K, V>>(map.entrySet()).toA());
+    return newRubyArray(map.entrySet());
   }
 
   public boolean keyʔ(K key) {
