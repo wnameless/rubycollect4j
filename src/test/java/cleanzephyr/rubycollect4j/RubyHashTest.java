@@ -188,4 +188,14 @@ public class RubyHashTest {
     assertEquals(ra(2, 4, 6), ints);
   }
 
+  @Test
+  public void testEmptyʔ() {
+    rh = rh(1, 2, 3, 4, 5, 6);
+    assertFalse(rh.emptyʔ());
+    rh = rh();
+    assertTrue(rh.emptyʔ());
+    rh = rh(null, null);
+    assertFalse(rh.emptyʔ());
+  }
+
 }
