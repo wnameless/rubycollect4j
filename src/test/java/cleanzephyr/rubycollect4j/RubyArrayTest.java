@@ -583,4 +583,11 @@ public class RubyArrayTest {
     ra.insert(-5, 0);
   }
 
+  @Test
+  public void testInspect() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals("[1, 2, 3, 4]", ra.inspect());
+    assertEquals(ra.toString(), ra.inspect());
+  }
+
 }

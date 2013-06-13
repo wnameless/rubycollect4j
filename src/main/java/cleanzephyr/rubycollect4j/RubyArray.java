@@ -551,10 +551,6 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return this;
   }
 
-  public String toS() {
-    return list.toString();
-  }
-
   public String inspect() {
     return list.toString();
   }
@@ -927,6 +923,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
 
   public int length() {
     return list.size();
+  }
+
+  public String toS() {
+    return list.toString();
   }
 
   public RubyArray<E> uniq() {
