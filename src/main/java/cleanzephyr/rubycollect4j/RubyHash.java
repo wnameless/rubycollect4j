@@ -154,6 +154,17 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return this;
   }
 
+  public RubyEnumerator<K> eachKey() {
+    return newRubyEnumerator(map.keySet());
+  }
+
+  public RubyHash<K, V> eachKey(ItemBlock<K> block) {
+    for (K item : map.keySet()) {
+      block.yield(item);
+    }
+    return this;
+  }
+
   public RubyEnumerator<Entry<K, V>> eachPair() {
     return newRubyEnumerator(map.entrySet());
   }
@@ -162,11 +173,8 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return each(block);
   }
 
-  public RubyHash<K, V> eachKey(ItemBlock<K> block) {
-    for (K item : map.keySet()) {
-      block.yield(item);
-    }
-    return this;
+  public RubyEnumerator<V> eachValue() {
+    return newRubyEnumerator(map.values());
   }
 
   public RubyHash<K, V> eachValue(ItemBlock<V> block) {
