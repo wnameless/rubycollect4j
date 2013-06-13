@@ -1071,4 +1071,18 @@ public class RubyArrayTest {
     ra.shift(-1);
   }
 
+  @Test
+  public void testShuffle() {
+    ra = ra(1, 2, 3, 4);
+    assertFalse(ra(1, 2, 3, 4).equals(ra.shuffle()));
+    assertEquals(ra(1, 2, 3, 4), ra);
+  }
+
+  @Test
+  public void testShuffleǃ() {
+    ra = ra(1, 2, 3, 4);
+    ra.shuffleǃ();
+    assertFalse(ra(1, 2, 3, 4).equals(ra));
+  }
+
 }
