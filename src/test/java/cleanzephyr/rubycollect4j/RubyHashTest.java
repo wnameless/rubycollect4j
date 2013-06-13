@@ -420,4 +420,11 @@ public class RubyHashTest {
     assertTrue(rh == rh.toHash());
   }
 
+  @Test
+  public void testToS() {
+    rh = rh(1, 2, 3, 4, 5, 6);
+    assertEquals("{1=2, 3=4, 5=6}", rh.toS());
+    assertEquals(rh.toString(), rh.toS());
+  }
+
 }
