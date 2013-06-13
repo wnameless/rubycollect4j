@@ -1234,4 +1234,10 @@ public class RubyArrayTest {
     assertEquals(ra(0, 1, 2, 3, 4), ra.unshift(0));
   }
 
+  @Test
+  public void tesetValuesAt() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(4, 1, null, null), ra.valuesAt(-1, 0, 5, -6));
+  }
+
 }
