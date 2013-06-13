@@ -115,14 +115,6 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return intersection(other);
   }
 
-  public RubyArray<E> X(int n) {
-    return multiply(n);
-  }
-
-  public String X(String separator) {
-    return join(separator);
-  }
-
   public RubyArray<E> add(List<E> other) {
     List<E> addList = newArrayList();
     for (E item : list) {
@@ -1031,6 +1023,14 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
       values.add(this.at(index));
     }
     return newRubyArray(values);
+  }
+
+  public RubyArray<E> X(int n) {
+    return multiply(n);
+  }
+
+  public String X(String separator) {
+    return join(separator);
   }
 
   public RubyArray<E> ǀ(RubyArray<E> other) {

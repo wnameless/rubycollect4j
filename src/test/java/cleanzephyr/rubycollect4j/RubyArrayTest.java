@@ -652,6 +652,25 @@ public class RubyArrayTest {
     assertEquals(ra.size(), ra.length());
   }
 
+  @Test
+  public void testMultiply() {
+    ra = ra(1, 2, 3);
+    assertEquals(ra(), ra.multiply(0));
+    assertEquals(ra(1, 2, 3, 1, 2, 3), ra.multiply(2));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testMultiplyException() {
+    ra = ra(1, 2, 3);
+    ra.multiply(-1);
+  }
+
+  @Test
+  public void testMultiplyWithString() {
+    ra = ra(1, 2, 3);
+    assertEquals("1,2,3", ra.multiply(","));
+  }
+
   @SuppressWarnings("unchecked")
   @Test
   public void testPermutaion() {
@@ -1244,6 +1263,24 @@ public class RubyArrayTest {
   public void tesetValuesAt() {
     ra = ra(1, 2, 3, 4);
     assertEquals(ra(4, 1, null, null), ra.valuesAt(-1, 0, 5, -6));
+  }
+
+  public void testX() {
+    ra = ra(1, 2, 3);
+    assertEquals(ra(), ra.X(0));
+    assertEquals(ra(1, 2, 3, 1, 2, 3), ra.X(2));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testXException() {
+    ra = ra(1, 2, 3);
+    ra.X(-1);
+  }
+
+  @Test
+  public void testXWithString() {
+    ra = ra(1, 2, 3);
+    assertEquals("1,2,3", ra.X(","));
   }
 
   @Test
