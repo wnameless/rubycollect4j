@@ -1047,4 +1047,28 @@ public class RubyArrayTest {
     }));
   }
 
+  @Test
+  public void testShift() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(Integer.valueOf(1), ra.shift());
+    assertEquals(ra(2, 3, 4), ra);
+    ra = ra();
+    assertNull(ra.shift());
+  }
+
+  @Test
+  public void testShiftWithN() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(1, 2), ra.shift(2));
+    assertEquals(ra(3, 4), ra);
+    assertEquals(ra(3, 4), ra.shift(5));
+    assertEquals(ra(), ra);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testShiftException() {
+    ra = ra(1, 2, 3, 4);
+    ra.shift(-1);
+  }
+
 }
