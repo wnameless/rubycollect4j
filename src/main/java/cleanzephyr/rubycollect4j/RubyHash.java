@@ -226,10 +226,16 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return invertHash;
   }
 
+  public RubyEnumerator<Entry<K, V>> keepIf() {
+    return newRubyEnumerator(map.entrySet());
+  }
+
   public RubyHash<K, V> keepIf(EntryBooleanBlock<K, V> block) {
-    for (Entry<K, V> item : map.entrySet()) {
+    Iterator<Entry<K, V>> iter = map.entrySet().iterator();
+    while (iter.hasNext()) {
+      Entry<K, V> item = iter.next();
       if (!block.yield(item.getKey(), item.getValue())) {
-        map.remove(item.getKey());
+        iter.remove();
       }
     }
     return this;

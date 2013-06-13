@@ -255,4 +255,26 @@ public class RubyHashTest {
     assertEquals(rh(2, 1, 5, 4), rh.invert());
   }
 
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testKeepIf() {
+    rh = rh(1, 2, 3, 4, 5, 6);
+    assertTrue(rh.keepIf() instanceof RubyEnumerator);
+    assertEquals(ra(hp(1, 2), hp(3, 4), hp(5, 6)), rh.keepIf().toA());
+  }
+
+  @Test
+  public void testKeepIfWithBlock() {
+    rh = rh(1, 2, 3, 4, 5, 6);
+    assertEquals(rh(1, 2), rh.keepIf(new EntryBooleanBlock<Integer, Integer>() {
+
+      @Override
+      public boolean yield(Integer key, Integer value) {
+        return key + value < 7;
+      }
+
+    }));
+    assertEquals(rh(1, 2), rh);
+  }
+
 }
