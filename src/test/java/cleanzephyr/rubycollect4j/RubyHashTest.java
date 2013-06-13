@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import cleanzephyr.rubycollect4j.block.EntryBlock;
 import cleanzephyr.rubycollect4j.block.EntryBooleanBlock;
 
 import static cleanzephyr.rubycollect4j.RubyCollections.hp;
@@ -92,6 +93,54 @@ public class RubyHashTest {
 
         }));
     assertEquals(rh(3, 4, 5, 6), rh);
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testEach() {
+    rh = rh(1, 2, 3, 4, 5, 6);
+    assertTrue(rh.each() instanceof RubyEnumerator);
+    assertEquals(ra(hp(1, 2), hp(3, 4), hp(5, 6)), rh.each().toA());
+  }
+
+  @Test
+  public void testEachWithBlock() {
+    rh = rh(1, 2, 3, 4, 5, 6);
+    final RubyArray<Integer> ints = ra();
+    assertEquals(rh, rh.each(new EntryBlock<Integer, Integer>() {
+
+      @Override
+      public void yield(Integer key, Integer value) {
+        ints.push(key);
+        ints.push(value);
+      }
+
+    }));
+    assertEquals(ra(1, 2, 3, 4, 5, 6), ints);
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testEachPair() {
+    rh = rh(1, 2, 3, 4, 5, 6);
+    assertTrue(rh.eachPair() instanceof RubyEnumerator);
+    assertEquals(ra(hp(1, 2), hp(3, 4), hp(5, 6)), rh.eachPair().toA());
+  }
+
+  @Test
+  public void testEachPairWithBlock() {
+    rh = rh(1, 2, 3, 4, 5, 6);
+    final RubyArray<Integer> ints = ra();
+    assertEquals(rh, rh.eachPair(new EntryBlock<Integer, Integer>() {
+
+      @Override
+      public void yield(Integer key, Integer value) {
+        ints.push(key);
+        ints.push(value);
+      }
+
+    }));
+    assertEquals(ra(1, 2, 3, 4, 5, 6), ints);
   }
 
 }
