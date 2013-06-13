@@ -688,15 +688,15 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return rubyArray;
   }
 
-  public RubyArray<RubyArray<E>> product(List<List<E>> others) {
-    return newRubyEnumerable(new ProductIterable<E>(this, others)).toA();
-  }
-
   public RubyArray<RubyArray<E>> product(List<E>... others) {
     return newRubyEnumerable(new ProductIterable<E>(this, others)).toA();
   }
 
-  public RubyArray<E> product(List<List<E>> others,
+  public RubyArray<RubyArray<E>> product(List<? extends List<E>> others) {
+    return newRubyEnumerable(new ProductIterable<E>(this, others)).toA();
+  }
+
+  public RubyArray<E> product(List<? extends List<E>> others,
       ItemBlock<RubyArray<E>> block) {
     for (RubyArray<E> comb : product(others)) {
       block.yield(comb);

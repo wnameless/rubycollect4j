@@ -20,13 +20,13 @@
  */
 package cleanzephyr.rubycollect4j.iter;
 
-import static com.google.common.collect.Lists.newArrayList;
-
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
 import cleanzephyr.rubycollect4j.RubyArray;
+
+import static com.google.common.collect.Lists.newArrayList;
 
 /**
  * 
@@ -37,7 +37,7 @@ public final class ProductIterable<E> implements Iterable<RubyArray<E>> {
 
   private final List<List<E>> lists = newArrayList();
 
-  public ProductIterable(List<E> self, List<List<E>> others) {
+  public ProductIterable(List<E> self, List<? extends List<E>> others) {
     lists.add(self);
     lists.addAll(others);
   }

@@ -708,6 +708,61 @@ public class RubyArrayTest {
     assertEquals(ra(1, 2, 3, 1, 3, 2, 2, 1, 3, 2, 3, 1, 3, 1, 2, 3, 2, 1), ints);
   }
 
+  @Test
+  public void testPop() {
+    ra = ra();
+    assertNull(ra.pop());
+    ra = ra(1, 2, 3, 4);
+    assertEquals(Integer.valueOf(4), ra.pop());
+  }
+
+  @Test
+  public void testPopWithN() {
+    ra = ra();
+    assertEquals(ra(), ra.pop(3));
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(), ra.pop(0));
+    assertEquals(ra(3, 4), ra.pop(2));
+    assertEquals(ra(1, 2), ra);
+    assertEquals(ra(1, 2), ra.pop(3));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testPopException() {
+    ra = ra(1, 2, 3, 4);
+    ra.pop(-1);
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testProduct() {
+    ra = ra(1, 2);
+    assertEquals(ra(), ra().product());
+    assertEquals(ra(ra(1), ra(2)), ra.product());
+    assertEquals(ra(ra(1, 3), ra(1, 4), ra(2, 3), ra(2, 4)),
+        ra.product(ra(3, 4)));
+    assertEquals(ra(ra(1, 3, 5), ra(1, 4, 5), ra(2, 3, 5), ra(2, 4, 5)),
+        ra.product(ra(3, 4), ra(5)));
+    assertEquals(ra(ra(1, 3, 5), ra(1, 4, 5), ra(2, 3, 5), ra(2, 4, 5)),
+        ra.product(ra(ra(3, 4), ra(5))));
+  }
+
+  @Test
+  public void testProductWithBlock() {
+    ra = ra(1, 2);
+    final RubyArray<Integer> ints = ra();
+    assertEquals(ra,
+        ra.product(ra(ra(3, 4)), new ItemBlock<RubyArray<Integer>>() {
+
+          @Override
+          public void yield(RubyArray<Integer> item) {
+            ints.concat(item);
+          }
+
+        }));
+    assertEquals(ra(1, 3, 1, 4, 2, 3, 2, 4), ints);
+  }
+
   @SuppressWarnings("unchecked")
   @Test
   public void testRepeatedPermutaion() {
@@ -738,31 +793,6 @@ public class RubyArrayTest {
 
         }));
     assertEquals(ra(1, 1, 1, 2, 2, 1, 2, 2), ints);
-  }
-
-  @Test
-  public void testPop() {
-    ra = ra();
-    assertNull(ra.pop());
-    ra = ra(1, 2, 3, 4);
-    assertEquals(Integer.valueOf(4), ra.pop());
-  }
-
-  @Test
-  public void testPopWithN() {
-    ra = ra();
-    assertEquals(ra(), ra.pop(3));
-    ra = ra(1, 2, 3, 4);
-    assertEquals(ra(), ra.pop(0));
-    assertEquals(ra(3, 4), ra.pop(2));
-    assertEquals(ra(1, 2), ra);
-    assertEquals(ra(1, 2), ra.pop(3));
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testPopException() {
-    ra = ra(1, 2, 3, 4);
-    ra.pop(-1);
   }
 
 }
