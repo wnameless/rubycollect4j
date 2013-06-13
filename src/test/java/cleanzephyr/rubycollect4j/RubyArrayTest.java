@@ -31,6 +31,7 @@ import cleanzephyr.rubycollect4j.block.BooleanBlock;
 import cleanzephyr.rubycollect4j.block.IndexBlock;
 import cleanzephyr.rubycollect4j.block.IndexWithReturnBlock;
 import cleanzephyr.rubycollect4j.block.ItemBlock;
+import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
 
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
 import static cleanzephyr.rubycollect4j.RubyCollections.ra;
@@ -1160,6 +1161,38 @@ public class RubyArrayTest {
     ra = ra(1, 2, 3, 4);
     assertEquals("[1, 2, 3, 4]", ra.toS());
     assertEquals(ra.toString(), ra.toS());
+  }
+
+  @Test
+  public void testU() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(1, 2, 3, 4, 6, 7), ra.U(ra(2, 3, 3, 6, 7)));
+  }
+
+  @Test
+  public void testUnion() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(1, 2, 3, 4, 6, 7), ra.union(ra(2, 3, 3, 6, 7)));
+  }
+
+  @Test
+  public void testUniq() {
+    ra = ra(1, 1, 2, 2, 3, 3, 4, 4);
+    assertEquals(ra(1, 2, 3, 4), ra.uniq());
+  }
+
+  @Test
+  public void testUniqWithBlock() {
+    RubyArray<String> ra = ra("aa", "bb", "ccc", "ddd", "f");
+    assertEquals(ra("aa", "ccc", "f"),
+        ra.uniq(new ItemTransformBlock<String, Integer>() {
+
+          @Override
+          public Integer yield(String item) {
+            return item.length();
+          }
+
+        }));
   }
 
 }

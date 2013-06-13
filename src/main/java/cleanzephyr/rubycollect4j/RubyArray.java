@@ -27,6 +27,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 import java.util.Random;
 
 import org.apache.commons.collections.comparators.ComparableComparator;
@@ -48,6 +49,7 @@ import com.google.common.collect.Lists;
 
 import static cleanzephyr.rubycollect4j.RubyEnumerator.newRubyEnumerator;
 import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Maps.newLinkedHashMap;
 
 /**
  * 
@@ -956,37 +958,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return list.toString();
   }
 
-  public RubyArray<E> uniq() {
-    List<E> uniqList = newArrayList();
-    for (E item : list) {
-      if (!uniqList.contains(item)) {
-        uniqList.add(item);
-      }
-    }
-    return newRubyArray(uniqList);
+  public RubyArray<E> U(RubyArray<E> other) {
+    return union(other);
   }
 
-  public RubyArray<E> uniqǃ() {
-    RubyArray<E> uniqList = uniq();
-    list.clear();
-    list.addAll(uniqList);
-    return this;
-  }
-
-  public <S> RubyArray<E> uniq(ItemTransformBlock<E, S> block) {
-    List<E> uniqList = newArrayList();
-    List<S> uniqByList = newArrayList();
-    for (E item : list) {
-      S trans = block.yield(item);
-      if (!uniqByList.contains(trans)) {
-        uniqByList.add(trans);
-        uniqList.add(item);
-      }
-    }
-    return newRubyArray(uniqList);
-  }
-
-  public RubyArray<E> union(RubyArray<E> other) {
+  public RubyArray<E> union(List<E> other) {
     List<E> unionList = newArrayList();
     for (E item : list) {
       if (!unionList.contains(item)) {
@@ -1001,8 +977,32 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return newRubyArray(unionList);
   }
 
-  public RubyArray<E> U(RubyArray<E> other) {
-    return union(other);
+  public RubyArray<E> uniq() {
+    Map<E, Object> uniqMap = newLinkedHashMap();
+    for (E item : list) {
+      uniqMap.put(item, null);
+    }
+    return newRubyArray(uniqMap.keySet());
+  }
+
+  public <S> RubyArray<E> uniq(ItemTransformBlock<E, S> block) {
+    List<E> uniqList = newArrayList();
+    Map<S, Object> uniqByMap = newLinkedHashMap();
+    for (E item : list) {
+      S trans = block.yield(item);
+      if (!uniqByMap.containsKey(trans)) {
+        uniqByMap.put(trans, null);
+        uniqList.add(item);
+      }
+    }
+    return newRubyArray(uniqList);
+  }
+
+  public RubyArray<E> uniqǃ() {
+    RubyArray<E> uniqList = uniq();
+    list.clear();
+    list.addAll(uniqList);
+    return this;
   }
 
   public RubyArray<E> ǀ(RubyArray<E> other) {
