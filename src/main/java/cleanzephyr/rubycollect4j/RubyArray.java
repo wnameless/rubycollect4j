@@ -332,6 +332,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     }
   }
 
+  public RubyEnumerator<E> deleteIf() {
+    return newRubyEnumerator(this);
+  }
+
   public RubyArray<E> deleteIf(BooleanBlock<E> block) {
     ListIterator<E> li = list.listIterator();
     while (li.hasNext()) {
@@ -341,6 +345,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
       }
     }
     return this;
+  }
+
+  public RubyEnumerator<E> each() {
+    return newRubyEnumerator(list);
   }
 
   public RubyArray<E> each(ItemBlock<E> block) {

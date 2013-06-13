@@ -27,6 +27,7 @@ import java.util.List;
 import org.junit.Test;
 
 import cleanzephyr.rubycollect4j.block.Block;
+import cleanzephyr.rubycollect4j.block.BooleanBlock;
 import cleanzephyr.rubycollect4j.block.ItemBlock;
 
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
@@ -205,6 +206,36 @@ public class RubyArrayTest {
     assertEquals(ra(2, 3), ra);
     ra = ra();
     assertNull(ra.deleteAt(0));
+  }
+
+  @Test
+  public void testDeleteIf() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(RubyEnumerator.class, ra.deleteIf().getClass());
+    assertEquals(ra(1, 2, 3, 4), ra.deleteIf().toA());
+  }
+
+  @Test
+  public void testDeleteIfWithBlock() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(1, 2, 3, 4), ra.deleteIf(new BooleanBlock<Integer>() {
+
+      @Override
+      public boolean yield(Integer item) {
+        return item > 5;
+      }
+
+    }));
+    assertEquals(ra(1, 2, 3, 4), ra);
+    assertEquals(ra(3, 4), ra.deleteIf(new BooleanBlock<Integer>() {
+
+      @Override
+      public boolean yield(Integer item) {
+        return item < 3;
+      }
+
+    }));
+    assertEquals(ra(3, 4), ra);
   }
 
 }
