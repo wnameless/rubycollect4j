@@ -1228,4 +1228,10 @@ public class RubyArrayTest {
     }));
   }
 
+  @Test
+  public void testUnshift() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(0, 1, 2, 3, 4), ra.unshift(0));
+  }
+
 }
