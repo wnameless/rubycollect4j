@@ -524,4 +524,16 @@ public class RubyArrayTest {
         }));
     assertEquals(ra(0, 1, 2, 3, 4, 5, 6), ra);
   }
+
+  @Test
+  public void testFlatten() {
+    @SuppressWarnings("unchecked")
+    RubyArray<RubyArray<Integer>> layer2 = ra(ra(1), ra(2, 3), ra(4, 5, 6));
+    assertEquals(ra(1, 2, 3, 4, 5, 6), layer2.flatten());
+    @SuppressWarnings("unchecked")
+    RubyArray<RubyArray<RubyArray<Integer>>> layer3 =
+        ra(ra(ra(1), ra(2, 3)), ra(ra(4, 5, 6)));
+    assertEquals(ra(1, 2, 3, 4, 5, 6), layer3.flatten());
+  }
+
 }
