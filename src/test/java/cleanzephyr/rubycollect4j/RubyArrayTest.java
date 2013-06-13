@@ -147,6 +147,15 @@ public class RubyArrayTest {
     ra = ra(1, 2, 3, null);
     ra.compactǃ();
     assertEquals(ra(1, 2, 3), ra);
+    ra = ra(1, 2, 3);
+    assertNull(ra.compactǃ());
+  }
+
+  @Test
+  public void testConcat() {
+    ra = ra(1, 2, 3);
+    ra.concat(ra(4, 5, 6));
+    assertEquals(ra(1, 2, 3, 4, 5, 6), ra);
   }
 
 }

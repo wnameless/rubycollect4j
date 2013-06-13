@@ -1244,7 +1244,7 @@ public class RubyEnumerableTest {
   @Test
   public void testIterator() {
     re = newRubyEnumerable(1, 2, 3, 4);
-    assertEquals(Iterator.class, re.iterator().getClass());
+    assertTrue(re.iterator() instanceof Iterator);
   }
 
 }
