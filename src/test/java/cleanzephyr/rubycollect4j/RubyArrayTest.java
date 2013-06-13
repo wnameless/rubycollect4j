@@ -996,4 +996,26 @@ public class RubyArrayTest {
     assertEquals(ra(3, 4, 1, 2), ra);
   }
 
+  @Test
+  public void testSample() {
+    ra = ra(1, 2, 3, 4);
+    assertTrue(ra.includeʔ(ra.sample()));
+    assertNull(ra().sample());
+  }
+
+  @Test
+  public void testSampleWithN() {
+    ra = ra(1, 2, 3, 4);
+    RubyArray<Integer> samples = ra.sample(3);
+    assertEquals(3, samples.uniq().count());
+    assertEquals(4, ra.sample(5).uniq().count());
+    assertEquals(ra(), ra.sample(0));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testSampleException() {
+    ra = ra(1, 2, 3, 4);
+    ra.sample(-1);
+  }
+
 }
