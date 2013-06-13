@@ -34,9 +34,9 @@ import org.apache.commons.collections.comparators.ComparableComparator;
 import cleanzephyr.rubycollect4j.block.Block;
 import cleanzephyr.rubycollect4j.block.BooleanBlock;
 import cleanzephyr.rubycollect4j.block.IndexBlock;
+import cleanzephyr.rubycollect4j.block.IndexWithReturnBlock;
 import cleanzephyr.rubycollect4j.block.ItemBlock;
 import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
-import cleanzephyr.rubycollect4j.block.ItemWithReturnBlock;
 import cleanzephyr.rubycollect4j.iter.CombinationIterable;
 import cleanzephyr.rubycollect4j.iter.EachIndexIterable;
 import cleanzephyr.rubycollect4j.iter.PermutationIterable;
@@ -409,6 +409,12 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   }
 
   public RubyArray<E> fill(E item, int start) {
+    if (start <= -list.size()) {
+      return fill(item);
+    }
+    if (start < 0) {
+      start += list.size();
+    }
     for (int i = start; i < list.size(); i++) {
       list.set(i, item);
     }
@@ -416,51 +422,66 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   }
 
   public RubyArray<E> fill(E item, int start, int length) {
-    for (int i = start; i < start + length && i < list.size(); i++) {
+    if (start < 0) {
+      start += list.size();
+      if (start < 0) {
+        start = 0;
+      }
+    }
+    if (start > list.size()) {
+      for (int i = list.size(); i < start; i++) {
+        list.add(null);
+      }
+    }
+    for (int i = start; i < list.size() && i < start + length; i++) {
       list.set(i, item);
     }
-    return this;
-  }
-
-  public RubyArray<E> fill(ItemWithReturnBlock<E> block) {
-    for (int i = 0; i < list.size(); i++) {
-      list.set(i, block.yield(list.get(i)));
+    for (int i = list.size(); i < start + length; i++) {
+      list.add(item);
     }
     return this;
   }
 
-  public RubyArray<E> fill(int start, ItemWithReturnBlock<E> block) {
+  public RubyArray<E> fill(IndexWithReturnBlock<E> block) {
+    for (int i = 0; i < list.size(); i++) {
+      list.set(i, block.yield(i));
+    }
+    return this;
+  }
+
+  public RubyArray<E> fill(int start, IndexWithReturnBlock<E> block) {
+    if (start <= -list.size()) {
+      return fill(block);
+    }
+    if (start < 0) {
+      start += list.size();
+    }
     for (int i = start; i < list.size(); i++) {
-      list.set(i, block.yield(list.get(i)));
+      list.set(i, block.yield(i));
     }
     return this;
   }
 
-  public RubyArray<E> fill(int start, int length, ItemWithReturnBlock<E> block) {
-    for (int i = start; i < start + length && i < list.size(); i++) {
-      list.set(i, block.yield(list.get(i)));
+  public RubyArray<E>
+      fill(int start, int length, IndexWithReturnBlock<E> block) {
+    if (start < 0) {
+      start += list.size();
+      if (start < 0) {
+        start = 0;
+      }
+    }
+    if (start > list.size()) {
+      for (int i = list.size(); i < start; i++) {
+        list.add(null);
+      }
+    }
+    for (int i = start; i < list.size() && i < start + length; i++) {
+      list.set(i, block.yield(i));
+    }
+    for (int i = list.size(); i < start + length; i++) {
+      list.add(block.yield(i));
     }
     return this;
-  }
-
-  public Integer index(E target) {
-    Integer index = null;
-    for (int i = 0; i < list.size(); i++) {
-      if (list.get(i).equals(target)) {
-        return i;
-      }
-    }
-    return index;
-  }
-
-  public Integer index(BooleanBlock<E> block) {
-    Integer index = null;
-    for (int i = 0; i < list.size(); i++) {
-      if (block.yield(list.get(i))) {
-        return i;
-      }
-    }
-    return index;
   }
 
   @SuppressWarnings("unchecked")
@@ -489,6 +510,26 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
       }
     }
     return rubyArray;
+  }
+
+  public Integer index(E target) {
+    Integer index = null;
+    for (int i = 0; i < list.size(); i++) {
+      if (list.get(i).equals(target)) {
+        return i;
+      }
+    }
+    return index;
+  }
+
+  public Integer index(BooleanBlock<E> block) {
+    Integer index = null;
+    for (int i = 0; i < list.size(); i++) {
+      if (block.yield(list.get(i))) {
+        return i;
+      }
+    }
+    return index;
   }
 
   public RubyArray<E> replace(List<E> other) {

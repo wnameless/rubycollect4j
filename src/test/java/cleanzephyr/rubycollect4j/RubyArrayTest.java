@@ -29,6 +29,7 @@ import org.junit.Test;
 import cleanzephyr.rubycollect4j.block.Block;
 import cleanzephyr.rubycollect4j.block.BooleanBlock;
 import cleanzephyr.rubycollect4j.block.IndexBlock;
+import cleanzephyr.rubycollect4j.block.IndexWithReturnBlock;
 import cleanzephyr.rubycollect4j.block.ItemBlock;
 
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
@@ -361,4 +362,166 @@ public class RubyArrayTest {
     assertEquals(ra(-5), ints);
   }
 
+  @Test
+  public void testFill() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(5, 5, 5, 5), ra.fill(5));
+    assertEquals(ra(5, 5, 5, 5), ra);
+  }
+
+  @Test
+  public void testFillWithStart() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(1, 2, 5, 5), ra.fill(5, 2));
+    assertEquals(ra(1, 2, 5, 5), ra);
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(1, 2, 5, 5), ra.fill(5, -2));
+    assertEquals(ra(1, 2, 5, 5), ra);
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(5, 5, 5, 5), ra.fill(5, -4));
+    assertEquals(ra(5, 5, 5, 5), ra);
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(1, 2, 3, 4), ra.fill(5, 4));
+    assertEquals(ra(1, 2, 3, 4), ra);
+  }
+
+  @Test
+  public void testFillWithStartAndLength() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(1, 2, 5, 4), ra.fill(5, 2, 1));
+    assertEquals(ra(1, 2, 5, 4), ra);
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(1, 2, 5, 4), ra.fill(5, -2, 1));
+    assertEquals(ra(1, 2, 5, 4), ra);
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(5, 2, 3, 4), ra.fill(5, -7, 1));
+    assertEquals(ra(5, 2, 3, 4), ra);
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(1, 2, 3, 4, null, null, 5, 5), ra.fill(5, 6, 2));
+    assertEquals(ra(1, 2, 3, 4, null, null, 5, 5), ra);
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(5, 5, 5, 5, 5, 5, 5), ra.fill(5, 0, 7));
+    assertEquals(ra(5, 5, 5, 5, 5, 5, 5), ra);
+  }
+
+  @Test
+  public void testFillWithBlock() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(0, 1, 2, 3), ra.fill(new IndexWithReturnBlock<Integer>() {
+
+      @Override
+      public Integer yield(Integer index) {
+        return index;
+      }
+
+    }));
+    assertEquals(ra(0, 1, 2, 3), ra);
+  }
+
+  @Test
+  public void testFillWithBlockAndStart() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(1, 2, 2, 3),
+        ra.fill(2, new IndexWithReturnBlock<Integer>() {
+
+          @Override
+          public Integer yield(Integer index) {
+            return index;
+          }
+
+        }));
+    assertEquals(ra(1, 2, 2, 3), ra);
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(1, 2, 2, 3),
+        ra.fill(-2, new IndexWithReturnBlock<Integer>() {
+
+          @Override
+          public Integer yield(Integer index) {
+            return index;
+          }
+
+        }));
+    assertEquals(ra(1, 2, 2, 3), ra);
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(0, 1, 2, 3),
+        ra.fill(-4, new IndexWithReturnBlock<Integer>() {
+
+          @Override
+          public Integer yield(Integer index) {
+            return index;
+          }
+
+        }));
+    assertEquals(ra(0, 1, 2, 3), ra);
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(1, 2, 3, 4),
+        ra.fill(4, new IndexWithReturnBlock<Integer>() {
+
+          @Override
+          public Integer yield(Integer index) {
+            return index;
+          }
+
+        }));
+    assertEquals(ra(1, 2, 3, 4), ra);
+  }
+
+  @Test
+  public void testFillWithBlockAndStartAndLength() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(1, 2, 2, 4),
+        ra.fill(2, 1, new IndexWithReturnBlock<Integer>() {
+
+          @Override
+          public Integer yield(Integer index) {
+            return index;
+          }
+
+        }));
+    assertEquals(ra(1, 2, 2, 4), ra);
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(1, 2, 2, 4),
+        ra.fill(-2, 1, new IndexWithReturnBlock<Integer>() {
+
+          @Override
+          public Integer yield(Integer index) {
+            return index;
+          }
+
+        }));
+    assertEquals(ra(1, 2, 2, 4), ra);
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(0, 2, 3, 4),
+        ra.fill(-7, 1, new IndexWithReturnBlock<Integer>() {
+
+          @Override
+          public Integer yield(Integer index) {
+            return index;
+          }
+
+        }));
+    assertEquals(ra(0, 2, 3, 4), ra);
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(1, 2, 3, 4, null, null, 6, 7),
+        ra.fill(6, 2, new IndexWithReturnBlock<Integer>() {
+
+          @Override
+          public Integer yield(Integer index) {
+            return index;
+          }
+
+        }));
+    assertEquals(ra(1, 2, 3, 4, null, null, 6, 7), ra);
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(0, 1, 2, 3, 4, 5, 6),
+        ra.fill(0, 7, new IndexWithReturnBlock<Integer>() {
+
+          @Override
+          public Integer yield(Integer index) {
+            return index;
+          }
+
+        }));
+    assertEquals(ra(0, 1, 2, 3, 4, 5, 6), ra);
+  }
 }

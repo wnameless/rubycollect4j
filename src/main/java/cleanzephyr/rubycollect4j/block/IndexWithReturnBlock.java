@@ -20,8 +20,8 @@
  */
 package cleanzephyr.rubycollect4j.block;
 
-public interface ItemWithReturnBlock<E> {
+public interface IndexWithReturnBlock<S> {
 
-  public E yield(E item);
+  public S yield(Integer index);
 
 }
