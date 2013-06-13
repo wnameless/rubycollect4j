@@ -119,25 +119,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return intersection(other);
   }
 
-  public RubyArray<E> multiply(int n) {
-    if (n < 0) {
-      throw new IllegalArgumentException("negative argument");
-    }
-    List<E> multiplyList = newArrayList();
-    for (int i = 0; i < n; i++) {
-      for (E item : list) {
-        multiplyList.add(item);
-      }
-    }
-    return newRubyArray(multiplyList);
-  }
-
   public RubyArray<E> X(int n) {
     return multiply(n);
-  }
-
-  public String multiply(String separator) {
-    return join(separator);
   }
 
   public String X(String separator) {
@@ -157,21 +140,6 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
 
   public RubyArray<E> 十(List<E> other) {
     return add(other);
-  }
-
-  public RubyArray<E> minus(List<E> other) {
-    List<E> minusList = newArrayList();
-    for (E item : list) {
-      minusList.add(item);
-    }
-    for (E item : other) {
-      minusList.remove(item);
-    }
-    return newRubyArray(minusList);
-  }
-
-  public RubyArray<E> ㄧ(List<E> other) {
-    return minus(other);
   }
 
   public <S> RubyArray<S> assoc(S target) {
@@ -603,6 +571,23 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return list.size();
   }
 
+  public RubyArray<E> multiply(int n) {
+    if (n < 0) {
+      throw new IllegalArgumentException("negative argument");
+    }
+    List<E> multiplyList = newArrayList();
+    for (int i = 0; i < n; i++) {
+      for (E item : list) {
+        multiplyList.add(item);
+      }
+    }
+    return newRubyArray(multiplyList);
+  }
+
+  public String multiply(String separator) {
+    return join(separator);
+  }
+
   public RubyEnumerator<RubyArray<E>> permutation() {
     return newRubyEnumerator(new PermutationIterable<E>(list, list.size()));
   }
@@ -958,6 +943,19 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return newRubyArray(slicedList);
   }
 
+  public RubyArray<E> subtract(List<E> other) {
+    List<E> subtractList = newArrayList();
+    for (E item : list) {
+      subtractList.add(item);
+    }
+    for (E item : other) {
+      List<E> target = newArrayList();
+      target.add(item);
+      subtractList.removeAll(target);
+    }
+    return newRubyArray(subtractList);
+  }
+
   public String toS() {
     return list.toString();
   }
@@ -1037,6 +1035,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
       values.add(this.at(index));
     }
     return newRubyArray(values);
+  }
+
+  public RubyArray<E> ㄧ(List<E> other) {
+    return subtract(other);
   }
 
   @Override

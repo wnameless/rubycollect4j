@@ -1157,6 +1157,12 @@ public class RubyArrayTest {
   }
 
   @Test
+  public void testSubtract() {
+    ra = ra(1, 2, 3, 4, 4);
+    assertEquals(ra(1, 2), ra.subtract(ra(3, 4, 5)));
+  }
+
+  @Test
   public void testToS() {
     ra = ra(1, 2, 3, 4);
     assertEquals("[1, 2, 3, 4]", ra.toS());
@@ -1238,6 +1244,12 @@ public class RubyArrayTest {
   public void tesetValuesAt() {
     ra = ra(1, 2, 3, 4);
     assertEquals(ra(4, 1, null, null), ra.valuesAt(-1, 0, 5, -6));
+  }
+
+  @Test
+  public void testㄧ() {
+    ra = ra(1, 2, 3, 4, 4);
+    assertEquals(ra(1, 2), ra.ㄧ(ra(3, 4, 5)));
   }
 
 }
