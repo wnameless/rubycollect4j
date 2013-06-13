@@ -355,7 +355,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     if (map.isEmpty()) {
       return null;
     } else {
-      return map.entrySet().iterator().next();
+      Iterator<Entry<K, V>> iter = map.entrySet().iterator();
+      Entry<K, V> first = iter.next();
+      iter.remove();
+      return first;
     }
   }
 

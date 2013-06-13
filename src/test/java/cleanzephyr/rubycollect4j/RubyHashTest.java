@@ -392,4 +392,12 @@ public class RubyHashTest {
     assertEquals(rh(5, 6, 7, 8), rh);
   }
 
+  @Test
+  public void testShift() {
+    rh = rh(1, 2);
+    assertEquals(hp(1, 2), rh.shift());
+    assertEquals(rh(), rh);
+    assertNull(rh.shift());
+  }
+
 }
