@@ -1073,16 +1073,44 @@ public class RubyArrayTest {
 
   @Test
   public void testShuffle() {
-    ra = ra(1, 2, 3, 4);
-    assertFalse(ra(1, 2, 3, 4).equals(ra.shuffle()));
-    assertEquals(ra(1, 2, 3, 4), ra);
+    ra = ra(0).fill(0, 1000, new IndexWithReturnBlock<Integer>() {
+
+      @Override
+      public Integer yield(Integer index) {
+        return index;
+      }
+
+    });
+    assertFalse(ra.equals(ra.shuffle()));
+    assertEquals(ra(0).fill(0, 1000, new IndexWithReturnBlock<Integer>() {
+
+      @Override
+      public Integer yield(Integer index) {
+        return index;
+      }
+
+    }), ra);
   }
 
   @Test
   public void testShuffleǃ() {
-    ra = ra(1, 2, 3, 4);
+    ra = ra(0).fill(0, 1000, new IndexWithReturnBlock<Integer>() {
+
+      @Override
+      public Integer yield(Integer index) {
+        return index;
+      }
+
+    });
     ra.shuffleǃ();
-    assertFalse(ra(1, 2, 3, 4).equals(ra));
+    assertFalse(ra(0).fill(0, 1000, new IndexWithReturnBlock<Integer>() {
+
+      @Override
+      public Integer yield(Integer index) {
+        return index;
+      }
+
+    }).equals(ra));
   }
 
   @Test
@@ -1125,6 +1153,13 @@ public class RubyArrayTest {
     assertEquals(ra(1, 2, 4), ra);
     assertNull(ra.sliceǃ(4, 2));
     assertNull(ra.sliceǃ(-5, 3));
+  }
+
+  @Test
+  public void testToS() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals("[1, 2, 3, 4]", ra.toS());
+    assertEquals(ra.toString(), ra.toS());
   }
 
 }
