@@ -293,4 +293,14 @@ public class RubyArrayTest {
     assertFalse(ra.emptyʔ());
   }
 
+  @Test
+  public void testEqlʔ() {
+    ra = ra(1, 2, 3);
+    assertTrue(ra.eqlʔ(ra(1, 2, 3)));
+    assertFalse(ra.eqlʔ(ra(3, 2, 1)));
+    List<Integer> list = newArrayList(1, 2, 3);
+    assertTrue(ra.eqlʔ(list));
+    assertTrue(ra().eqlʔ(newArrayList()));
+  }
+
 }
