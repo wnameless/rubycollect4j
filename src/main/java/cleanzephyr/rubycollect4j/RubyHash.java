@@ -345,8 +345,23 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     }
   }
 
-  public boolean valueʔ(V value) {
-    return map.containsValue(value);
+  public RubyHash<K, V> replace(Map<K, V> otherHash) {
+    map.clear();
+    map.putAll(otherHash);
+    return this;
+  }
+
+  public Entry<K, V> shift() {
+    if (map.isEmpty()) {
+      return null;
+    } else {
+      return map.entrySet().iterator().next();
+    }
+  }
+
+  public V store(K key, V value) {
+    map.put(key, value);
+    return value;
   }
 
   public RubyHash<K, V> toH() {
@@ -370,25 +385,6 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return mergeǃ(otherHash, block);
   }
 
-  public RubyHash<K, V> replace(Map<K, V> otherHash) {
-    map.clear();
-    map.putAll(otherHash);
-    return this;
-  }
-
-  public Entry<K, V> shift() {
-    if (map.isEmpty()) {
-      return null;
-    } else {
-      return map.entrySet().iterator().next();
-    }
-  }
-
-  public V store(K key, V value) {
-    map.put(key, value);
-    return value;
-  }
-
   @Override
   public RubyArray<V> values() {
     return newRubyArray(map.values());
@@ -400,6 +396,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
       values.add(map.get(key));
     }
     return values;
+  }
+
+  public boolean valueʔ(V value) {
+    return map.containsValue(value);
   }
 
   @Override

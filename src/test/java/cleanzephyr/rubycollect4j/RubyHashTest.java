@@ -385,4 +385,11 @@ public class RubyHashTest {
     }));
   }
 
+  @Test
+  public void testReplace() {
+    rh = rh(1, 2, 3, 4);
+    assertEquals(rh(5, 6, 7, 8), rh.replace(rh(5, 6, 7, 8)));
+    assertEquals(rh(5, 6, 7, 8), rh);
+  }
+
 }
