@@ -677,9 +677,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   }
 
   public RubyArray<E> pop(int n) {
+    if (n < 0) {
+      throw new IllegalArgumentException("ArgumentError: negative array size");
+    }
     RubyArray<E> rubyArray = newRubyArray();
-    for (int i = 0; i < n; i++) {
+    while (n > 0 && !list.isEmpty()) {
       rubyArray.add(0, pop());
+      n--;
     }
     return rubyArray;
   }

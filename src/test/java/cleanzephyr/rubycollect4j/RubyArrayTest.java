@@ -740,4 +740,29 @@ public class RubyArrayTest {
     assertEquals(ra(1, 1, 1, 2, 2, 1, 2, 2), ints);
   }
 
+  @Test
+  public void testPop() {
+    ra = ra();
+    assertNull(ra.pop());
+    ra = ra(1, 2, 3, 4);
+    assertEquals(Integer.valueOf(4), ra.pop());
+  }
+
+  @Test
+  public void testPopWithN() {
+    ra = ra();
+    assertEquals(ra(), ra.pop(3));
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(), ra.pop(0));
+    assertEquals(ra(3, 4), ra.pop(2));
+    assertEquals(ra(1, 2), ra);
+    assertEquals(ra(1, 2), ra.pop(3));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testPopException() {
+    ra = ra(1, 2, 3, 4);
+    ra.pop(-1);
+  }
+
 }
