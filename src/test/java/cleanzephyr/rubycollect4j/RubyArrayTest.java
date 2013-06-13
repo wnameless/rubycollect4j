@@ -1085,4 +1085,22 @@ public class RubyArrayTest {
     assertFalse(ra(1, 2, 3, 4).equals(ra));
   }
 
+  @Test
+  public void testSlice() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(Integer.valueOf(1), ra.slice(0));
+    assertEquals(Integer.valueOf(4), ra.slice(-1));
+    assertNull(ra.slice(4));
+    assertNull(ra.slice(-5));
+  }
+
+  @Test
+  public void testSliceWithLength() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(1, 2, 3, 4), ra.slice(0, 5));
+    assertEquals(ra(3), ra.slice(-2, 1));
+    assertNull(ra.slice(4, 2));
+    assertNull(ra.slice(-5, 3));
+  }
+
 }
