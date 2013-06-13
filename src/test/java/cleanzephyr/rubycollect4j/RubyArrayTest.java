@@ -564,4 +564,23 @@ public class RubyArrayTest {
     assertNull(ra.index(5));
   }
 
+  @Test
+  public void testInsert() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(1, 2, 3, 5, 6, 4), ra.insert(-2, 5, 6));
+    assertEquals(ra(1, 2, 3, 5, 6, 4), ra);
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(1, 2, 5, 6, 3, 4), ra.insert(2, 5, 6));
+    assertEquals(ra(1, 2, 5, 6, 3, 4), ra);
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(1, 2, 3, 4, null, null, null, 5, 6), ra.insert(7, 5, 6));
+    assertEquals(ra(1, 2, 3, 4, null, null, null, 5, 6), ra);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testInsertException() {
+    ra = ra(1, 2, 3, 4);
+    ra.insert(-5, 0);
+  }
+
 }

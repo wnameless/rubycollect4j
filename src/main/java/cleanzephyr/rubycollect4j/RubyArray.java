@@ -527,12 +527,6 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return idx == -1 ? null : idx;
   }
 
-  public RubyArray<E> replace(List<E> other) {
-    list.clear();
-    list.addAll(other);
-    return this;
-  }
-
   public RubyArray<E> insert(int index, E... args) {
     if (index < -list.size()) {
       throw new IllegalArgumentException("IndexError: index " + index
@@ -725,6 +719,12 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     } else {
       return null;
     }
+  }
+
+  public RubyArray<E> replace(List<E> other) {
+    list.clear();
+    list.addAll(other);
+    return this;
   }
 
   public RubyArray<E> replace(RubyArray<E> other) {
