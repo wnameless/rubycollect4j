@@ -1018,4 +1018,33 @@ public class RubyArrayTest {
     ra.sample(-1);
   }
 
+  @Test
+  public void testSelectǃ() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(RubyEnumerator.class, ra.selectǃ().getClass());
+    assertEquals(ra(1, 2, 3, 4), ra.selectǃ().toA());
+  }
+
+  @Test
+  public void testSelectǃWithBlock() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(1, 3), ra.selectǃ(new BooleanBlock<Integer>() {
+
+      @Override
+      public boolean yield(Integer item) {
+        return item % 2 == 1;
+      }
+
+    }));
+    assertEquals(ra(1, 3), ra);
+    assertNull(ra.selectǃ(new BooleanBlock<Integer>() {
+
+      @Override
+      public boolean yield(Integer item) {
+        return item % 2 == 1;
+      }
+
+    }));
+  }
+
 }

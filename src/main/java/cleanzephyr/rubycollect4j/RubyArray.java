@@ -857,13 +857,16 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return newRubyArray(samples);
   }
 
+  public RubyEnumerator<E> selectǃ() {
+    return newRubyEnumerator(list);
+  }
+
   public RubyArray<E> selectǃ(BooleanBlock<E> block) {
-    RubyArray<E> rubyArray = select(block);
-    if (rubyArray.size() == list.size()) {
+    int beforeSize = list.size();
+    keepIf(block);
+    if (list.size() == beforeSize) {
       return null;
     } else {
-      list.clear();
-      list.addAll(rubyArray);
       return this;
     }
   }
