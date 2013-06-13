@@ -208,4 +208,23 @@ public class RubyHashTest {
     assertFalse(rh.eqlʔ(rh(1, 2, 3, 4, 5, 6)));
   }
 
+  @Test
+  public void testFetch() {
+    rh = rh(1, 2, 3, 4, 5, 6);
+    assertEquals(Integer.valueOf(6), rh.fetch(5));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testFetchException() {
+    rh = rh(1, 2, 3, 4, 5, 6);
+    assertNull(rh.fetch(7));
+  }
+
+  @Test
+  public void testFetchWithDefaultValue() {
+    rh = rh(1, 2, 3, 4, 5, 6);
+    assertEquals(Integer.valueOf(6), rh.fetch(5, 10));
+    assertEquals(Integer.valueOf(10), rh.fetch(7, 10));
+  }
+
 }
