@@ -35,7 +35,9 @@ import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
 import static cleanzephyr.rubycollect4j.RubyCollections.ra;
 import static com.google.common.collect.Lists.newArrayList;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public class RubyArrayTest {
   private RubyArray<Integer> ra;
@@ -281,6 +283,14 @@ public class RubyArrayTest {
 
     }));
     assertEquals(ra(0, 2, 4, 6), ints);
+  }
+
+  @Test
+  public void testEmptyʔ() {
+    ra = ra();
+    assertTrue(ra.emptyʔ());
+    ra = ra(1, 2, 3, 4);
+    assertFalse(ra.emptyʔ());
   }
 
 }
