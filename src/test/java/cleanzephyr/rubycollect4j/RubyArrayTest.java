@@ -544,6 +544,12 @@ public class RubyArrayTest {
   }
 
   @Test
+  public void testHash() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra.hashCode(), ra.hash());
+  }
+
+  @Test
   public void testIndexWithBlock() {
     ra = ra(1, 2, 3, 4);
     assertEquals(Integer.valueOf(1), ra.index(new BooleanBlock<Integer>() {

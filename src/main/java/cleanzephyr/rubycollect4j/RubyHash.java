@@ -210,28 +210,8 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return newRubyArray(map.entrySet());
   }
 
-  public boolean keyʔ(K key) {
-    return map.containsKey(key);
-  }
-
-  public boolean valueʔ(V value) {
-    return map.containsValue(value);
-  }
-
   public int hash() {
     return map.hashCode();
-  }
-
-  public RubyHash<K, V> toH() {
-    return this;
-  }
-
-  public RubyHash<K, V> toHash() {
-    return this;
-  }
-
-  public String toS() {
-    return map.toString();
   }
 
   public String inspect() {
@@ -253,6 +233,26 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
       }
     }
     return this;
+  }
+
+  public boolean keyʔ(K key) {
+    return map.containsKey(key);
+  }
+
+  public boolean valueʔ(V value) {
+    return map.containsValue(value);
+  }
+
+  public RubyHash<K, V> toH() {
+    return this;
+  }
+
+  public RubyHash<K, V> toHash() {
+    return this;
+  }
+
+  public String toS() {
+    return map.toString();
   }
 
   public K key(V value) {

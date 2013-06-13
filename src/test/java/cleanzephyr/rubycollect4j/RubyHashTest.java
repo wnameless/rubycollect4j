@@ -234,4 +234,10 @@ public class RubyHashTest {
     assertEquals(ra(hp(1, 2), hp(3, 4), hp(5, 6)), rh.flatten());
   }
 
+  @Test
+  public void testHash() {
+    rh = rh(1, 2, 3, 4, 5, 6);
+    assertEquals(rh.hashCode(), rh.hash());
+  }
+
 }

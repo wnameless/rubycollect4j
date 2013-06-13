@@ -432,6 +432,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return rubyArray;
   }
 
+  public int hash() {
+    return list.hashCode();
+  }
+
   public Integer index(BooleanBlock<E> block) {
     Integer index = null;
     for (int i = 0; i < list.size(); i++) {
