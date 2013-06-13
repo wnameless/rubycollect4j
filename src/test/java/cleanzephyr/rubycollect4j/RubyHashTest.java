@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import cleanzephyr.rubycollect4j.block.EntryBlock;
 import cleanzephyr.rubycollect4j.block.EntryBooleanBlock;
+import cleanzephyr.rubycollect4j.block.EntryMergeBlock;
 import cleanzephyr.rubycollect4j.block.ItemBlock;
 
 import static cleanzephyr.rubycollect4j.RubyCollections.hp;
@@ -302,6 +303,26 @@ public class RubyHashTest {
     rh = rh(1, 2, 3, 4, 5, 6);
     assertEquals(3, rh.length());
     assertEquals(rh.size(), rh.length());
+  }
+
+  @Test
+  public void testMerge() {
+    rh = rh(1, 2, 3, 4, 5, 6);
+    assertEquals(rh(1, 2, 3, 8, 5, 9, 7, 7), rh.merge(rh(3, 8, 5, 9, 7, 7)));
+  }
+
+  @Test
+  public void testMergeWithBlock() {
+    rh = rh(1, 2, 3, 4, 5, 6);
+    assertEquals(rh(1, 3, 3, 4, 5, 6, 0, 1),
+        rh.merge(rh(0, 1, 1, 3, 3, 2), new EntryMergeBlock<Integer, Integer>() {
+
+          @Override
+          public Integer yield(Integer key, Integer oldval, Integer newval) {
+            return Math.max(oldval, newval);
+          }
+
+        }));
   }
 
 }
