@@ -284,4 +284,11 @@ public class RubyHashTest {
     assertNull(rh.key(8));
   }
 
+  @Test
+  public void testKeyʔ() {
+    rh = rh(1, 2, 3, 4, 5, 6);
+    assertTrue(rh.keyʔ(1));
+    assertFalse(rh.keyʔ(2));
+  }
+
 }
