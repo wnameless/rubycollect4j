@@ -11,6 +11,7 @@ import static cleanzephyr.rubycollect4j.RubyHash.newRubyHash;
 import static com.google.common.collect.Maps.newHashMap;
 import static com.google.common.collect.Maps.newLinkedHashMap;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class RubyHashTest {
   private RubyHash<Integer, Integer> rh;
@@ -35,6 +36,13 @@ public class RubyHashTest {
     rh = newRubyHash();
     assertEquals(rh(1, 2), rh.put(hp(1, 2)));
     assertEquals(rh(1, 2, 3, 4, 5, 6), rh.put(hp(3, 4), hp(5, 6)));
+  }
+
+  @Test
+  public void testAssoc() {
+    rh = rh(1, 2, 3, 4, 5, 6);
+    assertEquals(hp(3, 4), rh.assoc(3));
+    assertNull(rh.assoc(7));
   }
 
 }
