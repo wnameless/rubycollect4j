@@ -26,6 +26,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import cleanzephyr.rubycollect4j.block.Block;
 import cleanzephyr.rubycollect4j.block.ItemBlock;
 
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
@@ -162,6 +163,36 @@ public class RubyArrayTest {
   public void testCount() {
     ra = ra(1, 2, 2, 3);
     assertEquals(2, ra.count(2));
+  }
+
+  @Test
+  public void testDelete() {
+    ra = ra(1, 2, 3, 3);
+    assertEquals(Integer.valueOf(3), ra.delete(3));
+    assertNull(ra.delete(3));
+    assertEquals(ra(1, 2), ra);
+  }
+
+  @Test
+  public void testDeleteWithBlock() {
+    ra = ra(1, 2, 3, 3);
+    assertEquals(Integer.valueOf(3), ra.delete(3, new Block<Integer>() {
+
+      @Override
+      public Integer yield() {
+        return 6;
+      }
+
+    }));
+    assertEquals(Integer.valueOf(6), ra.delete(3, new Block<Integer>() {
+
+      @Override
+      public Integer yield() {
+        return 6;
+      }
+
+    }));
+    assertEquals(ra(1, 2), ra);
   }
 
 }
