@@ -833,6 +833,36 @@ public class RubyArrayTest {
 
   @SuppressWarnings("unchecked")
   @Test
+  public void testRepeatedCombination() {
+    ra = ra(1, 2);
+    assertEquals(RubyEnumerator.class, ra.repeatedCombination(0).getClass());
+    assertEquals(ra(), ra.repeatedCombination(-1).toA());
+    assertEquals(ra(ra()), ra.repeatedCombination(0).toA());
+    assertEquals(ra(ra(1), ra(2)), ra.repeatedCombination(1).toA());
+    assertEquals(ra(ra(1, 1), ra(1, 2), ra(2, 2)), ra.repeatedCombination(2)
+        .toA());
+    assertEquals(ra(ra(1, 1, 1), ra(1, 1, 2), ra(1, 2, 2), ra(2, 2, 2)), ra
+        .repeatedCombination(3).toA());
+  }
+
+  @Test
+  public void testRepeatedCombinationWithBlock() {
+    ra = ra(1, 2);
+    final RubyArray<Integer> ints = ra();
+    assertEquals(ra,
+        ra.repeatedCombination(2, new ItemBlock<RubyArray<Integer>>() {
+
+          @Override
+          public void yield(RubyArray<Integer> item) {
+            ints.concat(item);
+          }
+
+        }));
+    assertEquals(ra(1, 1, 1, 2, 2, 2), ints);
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
   public void testRepeatedPermutaion() {
     ra = ra(1, 2);
     assertEquals(RubyEnumerator.class, ra.repeatedPermutation(0).getClass());

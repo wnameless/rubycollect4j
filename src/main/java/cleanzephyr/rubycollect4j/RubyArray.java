@@ -238,25 +238,6 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return this;
   }
 
-  public RubyEnumerator<RubyArray<E>> repeatedCombination(int n) {
-    RubyArray<RubyArray<E>> rc = newRubyArray();
-    if (n < 0) {
-      return newRubyEnumerator(rc);
-    }
-    if (n == 0) {
-      RubyArray<E> ra = newRubyArray();
-      return newRubyEnumerator(rc.push(ra));
-    }
-    return newRubyEnumerator(new RepeatedCombinationIterable<E>(list, n));
-  }
-
-  public RubyArray<E> repeatedCombination(int n, ItemBlock<RubyArray<E>> block) {
-    for (RubyArray<E> c : repeatedCombination(n)) {
-      block.yield(c);
-    }
-    return this;
-  }
-
   public RubyArray<E> compact() {
     RubyArray<E> rubyArray = newRubyArray();
     for (E item : list) {
@@ -649,25 +630,6 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return this;
   }
 
-  public RubyEnumerator<RubyArray<E>> repeatedPermutation(int n) {
-    RubyArray<RubyArray<E>> rp = newRubyArray();
-    if (n < 0) {
-      return newRubyEnumerator(rp);
-    }
-    if (n == 0) {
-      RubyArray<E> ra = newRubyArray();
-      return newRubyEnumerator(rp.push(ra));
-    }
-    return newRubyEnumerator(new RepeatedPermutationIterable<E>(list, n));
-  }
-
-  public RubyArray<E> repeatedPermutation(int n, ItemBlock<RubyArray<E>> block) {
-    for (RubyArray<E> perm : repeatedPermutation(n)) {
-      block.yield(perm);
-    }
-    return this;
-  }
-
   public E pop() {
     if (list.isEmpty()) {
       return null;
@@ -749,6 +711,44 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     } else {
       return null;
     }
+  }
+
+  public RubyEnumerator<RubyArray<E>> repeatedCombination(int n) {
+    RubyArray<RubyArray<E>> rc = newRubyArray();
+    if (n < 0) {
+      return newRubyEnumerator(rc);
+    }
+    if (n == 0) {
+      RubyArray<E> ra = newRubyArray();
+      return newRubyEnumerator(rc.push(ra));
+    }
+    return newRubyEnumerator(new RepeatedCombinationIterable<E>(list, n));
+  }
+
+  public RubyArray<E> repeatedCombination(int n, ItemBlock<RubyArray<E>> block) {
+    for (RubyArray<E> c : repeatedCombination(n)) {
+      block.yield(c);
+    }
+    return this;
+  }
+
+  public RubyEnumerator<RubyArray<E>> repeatedPermutation(int n) {
+    RubyArray<RubyArray<E>> rp = newRubyArray();
+    if (n < 0) {
+      return newRubyEnumerator(rp);
+    }
+    if (n == 0) {
+      RubyArray<E> ra = newRubyArray();
+      return newRubyEnumerator(rp.push(ra));
+    }
+    return newRubyEnumerator(new RepeatedPermutationIterable<E>(list, n));
+  }
+
+  public RubyArray<E> repeatedPermutation(int n, ItemBlock<RubyArray<E>> block) {
+    for (RubyArray<E> perm : repeatedPermutation(n)) {
+      block.yield(perm);
+    }
+    return this;
   }
 
   public RubyArray<E> replace(List<E> other) {
