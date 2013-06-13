@@ -900,4 +900,20 @@ public class RubyArrayTest {
     assertEquals(ra(4, 5, 6, 7), ra);
   }
 
+  @Test
+  public void testReverse() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(4, 3, 2, 1), ra.reverse());
+    assertEquals(ra(1, 2, 3, 4), ra);
+  }
+
+  @Test
+  public void testReverseǃ() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(4, 3, 2, 1), ra.reverseǃ());
+    assertEquals(ra(4, 3, 2, 1), ra);
+    ra = ra();
+    assertEquals(ra(), ra.reverseǃ());
+  }
+
 }

@@ -762,9 +762,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   }
 
   public RubyArray<E> reverseǃ() {
-    List<E> reversedList = Lists.reverse(list);
-    list.clear();
-    list.addAll(reversedList);
+    int size = list.size();
+    for (int i = 0; i < size; i++) {
+      list.add(i, list.remove(size - 1));
+    }
     return this;
   }
 
