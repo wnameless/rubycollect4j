@@ -240,4 +240,11 @@ public class RubyHashTest {
     assertEquals(rh.hashCode(), rh.hash());
   }
 
+  @Test
+  public void testInspect() {
+    rh = rh(1, 2, 3, 4, 5, 6);
+    assertEquals("{1=2, 3=4, 5=6}", rh.inspect());
+    assertEquals(rh.toString(), rh.inspect());
+  }
+
 }
