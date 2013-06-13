@@ -5,5 +5,6 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ RubyArrayTest.class, RubyEnumerableTest.class })
+@SuiteClasses({ RubyArrayTest.class, RubyEnumerableTest.class,
+    RubyHashTest.class })
 public class AllTests {}
