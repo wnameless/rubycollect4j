@@ -681,14 +681,6 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     for (int i = 0; i < n; i++) {
       rubyArray.add(0, pop());
     }
-    rubyArray.keepIf(new BooleanBlock<E>() {
-
-      @Override
-      public boolean yield(E item) {
-        return item != null;
-      }
-
-    });
     return rubyArray;
   }
 
