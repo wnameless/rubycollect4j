@@ -579,6 +579,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return sb.toString();
   }
 
+  public RubyEnumerator<E> keepIf() {
+    return newRubyEnumerator(list);
+  }
+
   public RubyArray<E> keepIf(BooleanBlock<E> block) {
     ListIterator<E> li = list.listIterator();
     while (li.hasNext()) {

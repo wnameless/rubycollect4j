@@ -606,4 +606,25 @@ public class RubyArrayTest {
     assertEquals("1\t2\t3\t4\t", ra.join("\t"));
   }
 
+  @Test
+  public void testKeepIf() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(RubyEnumerator.class, ra.keepIf().getClass());
+    assertEquals(ra(1, 2, 3, 4), ra.keepIf().toA());
+  }
+
+  @Test
+  public void testKeepIfWithBlock() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(1, 3), ra.keepIf(new BooleanBlock<Integer>() {
+
+      @Override
+      public boolean yield(Integer item) {
+        return item % 2 == 1;
+      }
+
+    }));
+    assertEquals(ra(1, 3), ra);
+  }
+
 }
