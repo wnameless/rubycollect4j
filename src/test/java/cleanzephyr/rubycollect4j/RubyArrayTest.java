@@ -763,6 +763,24 @@ public class RubyArrayTest {
     assertEquals(ra(1, 3, 1, 4, 2, 3, 2, 4), ints);
   }
 
+  @Test
+  public void testPush() {
+    ra = ra();
+    assertEquals(ra(1), ra.push(1));
+    assertEquals(ra(1), ra);
+    assertEquals(ra(1, 2), ra.push(2));
+    assertEquals(ra(1, 2), ra);
+  }
+
+  @Test
+  public void testRassoc() {
+    @SuppressWarnings("unchecked")
+    RubyArray<RubyArray<Integer>> ra =
+        ra(ra(1, 2), ra(3, 4), ra(4, 4), ra(6, 7));
+    assertEquals(ra(3, 4), ra.rassoc(4));
+    assertNull(ra.rassoc(6));
+  }
+
   @SuppressWarnings("unchecked")
   @Test
   public void testRepeatedPermutaion() {
@@ -793,15 +811,6 @@ public class RubyArrayTest {
 
         }));
     assertEquals(ra(1, 1, 1, 2, 2, 1, 2, 2), ints);
-  }
-
-  @Test
-  public void testRassoc() {
-    @SuppressWarnings("unchecked")
-    RubyArray<RubyArray<Integer>> ra =
-        ra(ra(1, 2), ra(3, 4), ra(4, 4), ra(6, 7));
-    assertEquals(ra(3, 4), ra.rassoc(4));
-    assertNull(ra.rassoc(6));
   }
 
 }
