@@ -247,4 +247,12 @@ public class RubyHashTest {
     assertEquals(rh.toString(), rh.inspect());
   }
 
+  @Test
+  public void testInvert() {
+    rh = rh(1, 2, 3, 4, 5, 6);
+    assertEquals(rh(2, 1, 4, 3, 6, 5), rh.invert());
+    rh = rh(1, 2, 3, 5, 4, 5);
+    assertEquals(rh(2, 1, 5, 4), rh.invert());
+  }
+
 }
