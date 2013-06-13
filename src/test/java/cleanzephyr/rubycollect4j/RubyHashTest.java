@@ -5,7 +5,10 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import cleanzephyr.rubycollect4j.block.EntryBooleanBlock;
+
 import static cleanzephyr.rubycollect4j.RubyCollections.hp;
+import static cleanzephyr.rubycollect4j.RubyCollections.ra;
 import static cleanzephyr.rubycollect4j.RubyCollections.rh;
 import static cleanzephyr.rubycollect4j.RubyHash.newRubyHash;
 import static com.google.common.collect.Maps.newHashMap;
@@ -13,6 +16,7 @@ import static com.google.common.collect.Maps.newLinkedHashMap;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public class RubyHashTest {
   private RubyHash<Integer, Integer> rh;
@@ -64,7 +68,30 @@ public class RubyHashTest {
     assertEquals(Integer.valueOf(4), rh.delete(3));
     assertNull(rh.delete(0));
     rh.setDefault(10);
-    assertEquals(Integer.valueOf(10), rh.delete(3));
+    assertEquals(rh.getDefault(), rh.delete(3));
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testDeleteIf() {
+    rh = rh(1, 2, 3, 4, 5, 6);
+    assertTrue(rh.deleteIf() instanceof RubyEnumerator);
+    assertEquals(ra(hp(1, 2), hp(3, 4), hp(5, 6)), rh.deleteIf().toA());
+  }
+
+  @Test
+  public void testDeleteIfWithBlock() {
+    rh = rh(1, 2, 3, 4, 5, 6);
+    assertEquals(rh(3, 4, 5, 6),
+        rh.deleteIf(new EntryBooleanBlock<Integer, Integer>() {
+
+          @Override
+          public boolean yield(Integer key, Integer value) {
+            return key + value < 7;
+          }
+
+        }));
+    assertEquals(rh(3, 4, 5, 6), rh);
   }
 
 }
