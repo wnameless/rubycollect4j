@@ -802,6 +802,35 @@ public class RubyArrayTest {
     assertEquals(ra(1, 2, 3, 4), ra);
   }
 
+  @Test
+  public void testRejectǃ() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(RubyEnumerator.class, ra.rejectǃ().getClass());
+    assertEquals(ra(1, 2, 3, 4), ra.rejectǃ().toA());
+  }
+
+  @Test
+  public void testRejectǃWithBlock() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(1, 2), ra.rejectǃ(new BooleanBlock<Integer>() {
+
+      @Override
+      public boolean yield(Integer item) {
+        return item > 2;
+      }
+
+    }));
+    assertEquals(ra(1, 2), ra);
+    assertNull(ra.rejectǃ(new BooleanBlock<Integer>() {
+
+      @Override
+      public boolean yield(Integer item) {
+        return item > 2;
+      }
+
+    }));
+  }
+
   @SuppressWarnings("unchecked")
   @Test
   public void testRepeatedPermutaion() {
