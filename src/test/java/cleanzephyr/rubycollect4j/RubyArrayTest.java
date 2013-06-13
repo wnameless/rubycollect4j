@@ -38,6 +38,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class RubyArrayTest {
   private RubyArray<Integer> ra;
@@ -301,6 +302,63 @@ public class RubyArrayTest {
     List<Integer> list = newArrayList(1, 2, 3);
     assertTrue(ra.eqlʔ(list));
     assertTrue(ra().eqlʔ(newArrayList()));
+  }
+
+  @Test
+  public void testFetch() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(Integer.valueOf(3), ra.fetch(2));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testFetchException() {
+    ra = ra(1, 2, 3, 4);
+    try {
+      ra.fetch(4);
+      fail();
+    } catch (Exception e) {}
+    ra.fetch(-5);
+  }
+
+  @Test
+  public void testFetchWithDefaultValue() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(Integer.valueOf(3), ra.fetch(2, 10));
+    assertEquals(Integer.valueOf(10), ra.fetch(4, 10));
+    assertEquals(Integer.valueOf(10), ra.fetch(-5, 10));
+  }
+
+  @Test
+  public void testFetchWithBlock() {
+    ra = ra(1, 2, 3, 4);
+    final RubyArray<Integer> ints = ra();
+    assertEquals(Integer.valueOf(3), ra.fetch(2, new IndexBlock() {
+
+      @Override
+      public void yield(Integer index) {
+        ints.push(index);
+      }
+
+    }));
+    assertEquals(null, ra.fetch(4, new IndexBlock() {
+
+      @Override
+      public void yield(Integer index) {
+        ints.push(index);
+      }
+
+    }));
+    assertEquals(ra(4), ints);
+    ints.clear();
+    assertEquals(null, ra.fetch(-5, new IndexBlock() {
+
+      @Override
+      public void yield(Integer index) {
+        ints.push(index);
+      }
+
+    }));
+    assertEquals(ra(-5), ints);
   }
 
 }

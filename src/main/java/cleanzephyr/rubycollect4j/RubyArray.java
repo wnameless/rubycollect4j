@@ -393,7 +393,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return at(index);
   }
 
-  public E fetch(int index, ItemBlock<Integer> block) {
+  public E fetch(int index, IndexBlock block) {
     if (index >= list.size() || index < -list.size()) {
       block.yield(index);
       return null;
