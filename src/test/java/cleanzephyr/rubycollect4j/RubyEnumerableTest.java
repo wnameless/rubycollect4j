@@ -301,17 +301,22 @@ public class RubyEnumerableTest {
     }));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testEachCons() {
     re = newRubyEnumerable(1, 2, 3, 4);
     assertEquals(RubyEnumerator.class, re.eachCons(2).getClass());
     @SuppressWarnings("unchecked")
     RubyArray<RubyArray<Integer>> ra = ra(ra(1, 2), ra(2, 3), ra(3, 4));
     assertEquals(ra, re.eachCons(2).toA());
-    re.eachCons(0);
   }
 
   @Test(expected = IllegalArgumentException.class)
+  public void testEachConsException() {
+    re = newRubyEnumerable(1, 2, 3, 4);
+    re.eachCons(0);
+  }
+
+  @Test
   public void testEachConsWithBlock() {
     re = newRubyEnumerable(1, 2, 3, 4);
     final RubyArray<List<Integer>> ra = ra();
@@ -324,6 +329,11 @@ public class RubyEnumerableTest {
 
     });
     assertEquals(ra, re.eachCons(2).toA());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testEachConsWithBlockException() {
+    re = newRubyEnumerable(1, 2, 3, 4);
     re.eachCons(0, new ListBlock<Integer>() {
 
       @Override
@@ -360,17 +370,22 @@ public class RubyEnumerableTest {
     }).getClass());
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testEachSlice() {
     re = newRubyEnumerable(1, 2, 3, 4);
     assertEquals(RubyEnumerator.class, re.eachSlice(3).getClass());
     @SuppressWarnings("unchecked")
     RubyArray<RubyArray<Integer>> ra = ra(ra(1, 2, 3), ra(4));
     assertEquals(ra, re.eachSlice(3).toA());
-    re.eachSlice(0);
   }
 
   @Test(expected = IllegalArgumentException.class)
+  public void testEachSliceException() {
+    re = newRubyEnumerable(1, 2, 3, 4);
+    re.eachSlice(0);
+  }
+
+  @Test
   public void testEachSliceWithBlock() {
     re = newRubyEnumerable(1, 2, 3, 4);
     final RubyArray<Integer> ints = ra();
@@ -383,7 +398,18 @@ public class RubyEnumerableTest {
 
     });
     assertEquals(ra(1, 4), ints);
-    re.eachSlice(0);
+
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testEachSliceWithBlockException() {
+    re = newRubyEnumerable(1, 2, 3, 4);
+    re.eachSlice(0, new ListBlock<Integer>() {
+
+      @Override
+      public void yield(List<Integer> item) {}
+
+    });
   }
 
   @Test
@@ -541,11 +567,16 @@ public class RubyEnumerableTest {
     assertNull(re.first());
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testFirstWithN() {
     re = newRubyEnumerable(1, 2, 3, 4);
     assertEquals(ra(1, 2, 3), re.first(3));
     assertEquals(ra(1, 2, 3, 4), re.first(6));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testFirstWithNException() {
+    re = newRubyEnumerable(1, 2, 3, 4);
     re.first(-1);
   }
 
@@ -1130,10 +1161,16 @@ public class RubyEnumerableTest {
         }));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testTake() {
     re = newRubyEnumerable(1, 2, 3, 4);
     assertEquals(ra(1, 2), re.take(2));
+    assertEquals(ra(1, 2, 3, 4), re.take(5));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testTakeException() {
+    re = newRubyEnumerable(1, 2, 3, 4);
     re.take(-1);
   }
 
@@ -1151,6 +1188,14 @@ public class RubyEnumerableTest {
       @Override
       public boolean yield(Integer item) {
         return item != 3;
+      }
+
+    }));
+    assertEquals(ra(1, 2, 3, 4), re.takeWhile(new BooleanBlock<Integer>() {
+
+      @Override
+      public boolean yield(Integer item) {
+        return item < 5;
       }
 
     }));
@@ -1195,4 +1240,11 @@ public class RubyEnumerableTest {
     });
     assertEquals(ra(12, 15, 18), ints);
   }
+
+  @Test
+  public void testIterator() {
+    re = newRubyEnumerable(1, 2, 3, 4);
+    assertEquals(Iterator.class, re.iterator().getClass());
+  }
+
 }
