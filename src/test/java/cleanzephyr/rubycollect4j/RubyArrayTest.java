@@ -195,4 +195,16 @@ public class RubyArrayTest {
     assertEquals(ra(1, 2), ra);
   }
 
+  @Test
+  public void testDeteleAt() {
+    ra = ra(1, 2, 3, 4);
+    assertNull(ra.deleteAt(4));
+    assertNull(ra.deleteAt(-5));
+    assertEquals(Integer.valueOf(1), ra.deleteAt(0));
+    assertEquals(Integer.valueOf(4), ra.deleteAt(-1));
+    assertEquals(ra(2, 3), ra);
+    ra = ra();
+    assertNull(ra.deleteAt(0));
+  }
+
 }
