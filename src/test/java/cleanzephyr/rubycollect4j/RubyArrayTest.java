@@ -644,4 +644,11 @@ public class RubyArrayTest {
     assertEquals(ra(), ra.last(2));
   }
 
+  @Test
+  public void testLength() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(4, ra.length());
+    assertEquals(ra.size(), ra.length());
+  }
+
 }

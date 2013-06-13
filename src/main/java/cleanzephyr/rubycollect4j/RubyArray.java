@@ -612,6 +612,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return rubyArray;
   }
 
+  public int length() {
+    return list.size();
+  }
+
   public RubyEnumerator<RubyArray<E>> permutation() {
     return newRubyEnumerator(new PermutationIterable<E>(list, list.size()));
   }
@@ -928,10 +932,6 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
       }
     }
     return newRubyArray(slicedList);
-  }
-
-  public int length() {
-    return list.size();
   }
 
   public String toS() {
