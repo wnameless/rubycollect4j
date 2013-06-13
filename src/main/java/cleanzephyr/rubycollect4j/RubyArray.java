@@ -111,6 +111,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return newRubyArray(andList);
   }
 
+  public RubyArray<E> ǀ(RubyArray<E> other) {
+    return union(other);
+  }
+
   public RubyArray<E> Ⴖ(List<E> other) {
     return intersection(other);
   }
@@ -999,14 +1003,27 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   }
 
   public RubyArray<E> uniqǃ() {
+    int beforeSize = list.size();
     RubyArray<E> uniqList = uniq();
     list.clear();
     list.addAll(uniqList);
-    return this;
+    return list.size() == beforeSize ? null : this;
   }
 
-  public RubyArray<E> ǀ(RubyArray<E> other) {
-    return union(other);
+  public <S> RubyArray<E> uniqǃ(ItemTransformBlock<E, S> block) {
+    int beforeSize = list.size();
+    List<E> uniqList = newArrayList();
+    Map<S, Object> uniqByMap = newLinkedHashMap();
+    for (E item : list) {
+      S trans = block.yield(item);
+      if (!uniqByMap.containsKey(trans)) {
+        uniqByMap.put(trans, null);
+        uniqList.add(item);
+      }
+    }
+    list.clear();
+    list.addAll(uniqList);
+    return list.size() == beforeSize ? null : this;
   }
 
   public RubyArray<E> unshift(E item) {

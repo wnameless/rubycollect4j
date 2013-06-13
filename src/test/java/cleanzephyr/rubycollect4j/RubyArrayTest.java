@@ -1195,4 +1195,37 @@ public class RubyArrayTest {
         }));
   }
 
+  @Test
+  public void testUniqǃ() {
+    ra = ra(1, 1, 2, 2, 3, 3, 4, 4);
+    assertEquals(ra(1, 2, 3, 4), ra.uniqǃ());
+    assertEquals(ra(1, 2, 3, 4), ra);
+    ra = ra(1, 2, 3, 4);
+    assertNull(ra.uniqǃ());
+  }
+
+  @Test
+  public void testUniqǃWithBlock() {
+    RubyArray<String> ra = ra("aa", "bb", "ccc", "ddd", "f");
+    assertEquals(ra("aa", "ccc", "f"),
+        ra.uniqǃ(new ItemTransformBlock<String, Integer>() {
+
+          @Override
+          public Integer yield(String item) {
+            return item.length();
+          }
+
+        }));
+    assertEquals(ra("aa", "ccc", "f"), ra);
+    ra = ra("a", "bb", "ccc", "dddd");
+    assertNull(ra.uniqǃ(new ItemTransformBlock<String, Integer>() {
+
+      @Override
+      public Integer yield(String item) {
+        return item.length();
+      }
+
+    }));
+  }
+
 }
