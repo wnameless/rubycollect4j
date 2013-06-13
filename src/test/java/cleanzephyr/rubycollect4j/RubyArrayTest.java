@@ -158,4 +158,10 @@ public class RubyArrayTest {
     assertEquals(ra(1, 2, 3, 4, 5, 6), ra);
   }
 
+  @Test
+  public void testCount() {
+    ra = ra(1, 2, 2, 3);
+    assertEquals(2, ra.count(2));
+  }
+
 }
