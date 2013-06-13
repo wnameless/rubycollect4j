@@ -325,4 +325,26 @@ public class RubyHashTest {
         }));
   }
 
+  @Test
+  public void testMergeǃ() {
+    rh = rh(1, 2, 3, 4, 5, 6);
+    assertEquals(rh(1, 2, 3, 8, 5, 9, 7, 7), rh.mergeǃ(rh(3, 8, 5, 9, 7, 7)));
+    assertEquals(rh(1, 2, 3, 8, 5, 9, 7, 7), rh);
+  }
+
+  @Test
+  public void testMergeǃWithBlock() {
+    rh = rh(1, 2, 3, 4, 5, 6);
+    assertEquals(rh(1, 3, 3, 4, 5, 6, 0, 1), rh.mergeǃ(rh(0, 1, 1, 3, 3, 2),
+        new EntryMergeBlock<Integer, Integer>() {
+
+          @Override
+          public Integer yield(Integer key, Integer oldval, Integer newval) {
+            return Math.max(oldval, newval);
+          }
+
+        }));
+    assertEquals(rh(1, 3, 3, 4, 5, 6, 0, 1), rh);
+  }
+
 }
