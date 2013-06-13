@@ -1103,4 +1103,28 @@ public class RubyArrayTest {
     assertNull(ra.slice(-5, 3));
   }
 
+  @Test
+  public void testSliceǃ() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(Integer.valueOf(1), ra.sliceǃ(0));
+    assertEquals(ra(2, 3, 4), ra);
+    assertEquals(Integer.valueOf(4), ra.sliceǃ(-1));
+    assertEquals(ra(2, 3), ra);
+    assertNull(ra.sliceǃ(4));
+    assertNull(ra.sliceǃ(-5));
+    assertNull(ra().sliceǃ(0));
+  }
+
+  @Test
+  public void testSliceǃWithLength() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(1, 2, 3, 4), ra.sliceǃ(0, 5));
+    assertEquals(ra(), ra);
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(3), ra.sliceǃ(-2, 1));
+    assertEquals(ra(1, 2, 4), ra);
+    assertNull(ra.sliceǃ(4, 2));
+    assertNull(ra.sliceǃ(-5, 3));
+  }
+
 }
