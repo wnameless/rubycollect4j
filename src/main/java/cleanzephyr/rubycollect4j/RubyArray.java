@@ -723,6 +723,24 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return null;
   }
 
+  public RubyEnumerator<E> reject() {
+    return newRubyEnumerator(list);
+  }
+
+  public RubyArray<E> reject(BooleanBlock<E> block) {
+    RubyArray<E> rubyArray = newRubyArray();
+    for (E item : list) {
+      if (!block.yield(item)) {
+        rubyArray.push(item);
+      }
+    }
+    return rubyArray;
+  }
+
+  public RubyEnumerator<E> rejectǃ() {
+    return newRubyEnumerator(list);
+  }
+
   public RubyArray<E> rejectǃ(BooleanBlock<E> block) {
     int beforeLength = list.size();
     RubyArray<E> rubyArray = deleteIf(block);
