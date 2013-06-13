@@ -18,10 +18,21 @@
  * the License.
  *
  */
-package cleanzephyr.rubycollect4j.block;
+package cleanzephyr.rubycollect4j.iter;
 
-public interface IndexBlock {
+import java.util.Iterator;
 
-  public void yield(Integer index);
+public final class EachIndexIterable implements Iterable<Integer> {
+
+  private final int size;
+
+  public EachIndexIterable(int size) {
+    this.size = size;
+  }
+
+  @Override
+  public Iterator<Integer> iterator() {
+    return new EachIndexIterator(size);
+  }
 
 }

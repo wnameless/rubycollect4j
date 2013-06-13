@@ -38,6 +38,7 @@ import cleanzephyr.rubycollect4j.block.ItemBlock;
 import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
 import cleanzephyr.rubycollect4j.block.ItemWithReturnBlock;
 import cleanzephyr.rubycollect4j.iter.CombinationIterable;
+import cleanzephyr.rubycollect4j.iter.EachIndexIterable;
 import cleanzephyr.rubycollect4j.iter.PermutationIterable;
 import cleanzephyr.rubycollect4j.iter.ProductIterable;
 import cleanzephyr.rubycollect4j.iter.RepeatedCombinationIterable;
@@ -358,7 +359,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return this;
   }
 
-  public RubyArray<E> eachIndex(IndexBlock<E> block) {
+  public RubyEnumerator<Integer> eachIndex() {
+    return newRubyEnumerator(new EachIndexIterable(list.size()));
+  }
+
+  public RubyArray<E> eachIndex(IndexBlock block) {
     for (int i = 0; i < list.size(); i++) {
       block.yield(i);
     }

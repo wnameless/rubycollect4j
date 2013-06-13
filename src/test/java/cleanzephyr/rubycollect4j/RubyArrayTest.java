@@ -28,6 +28,7 @@ import org.junit.Test;
 
 import cleanzephyr.rubycollect4j.block.Block;
 import cleanzephyr.rubycollect4j.block.BooleanBlock;
+import cleanzephyr.rubycollect4j.block.IndexBlock;
 import cleanzephyr.rubycollect4j.block.ItemBlock;
 
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
@@ -258,6 +259,28 @@ public class RubyArrayTest {
 
     }));
     assertEquals(ra(2, 4, 6, 8), ints);
+  }
+
+  @Test
+  public void testEachIndex() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(RubyEnumerator.class, ra.eachIndex().getClass());
+    assertEquals(ra(0, 1, 2, 3), ra.eachIndex().toA());
+  }
+
+  @Test
+  public void testEachIndexWithBlock() {
+    ra = ra(1, 2, 3, 4);
+    final RubyArray<Integer> ints = ra();
+    assertEquals(ra, ra.eachIndex(new IndexBlock() {
+
+      @Override
+      public void yield(Integer index) {
+        ints.push(index * 2);
+      }
+
+    }));
+    assertEquals(ra(0, 2, 4, 6), ints);
   }
 
 }

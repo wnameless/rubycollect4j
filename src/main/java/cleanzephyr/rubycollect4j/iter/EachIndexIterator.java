@@ -18,10 +18,36 @@
  * the License.
  *
  */
-package cleanzephyr.rubycollect4j.block;
+package cleanzephyr.rubycollect4j.iter;
 
-public interface IndexBlock {
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
-  public void yield(Integer index);
+public final class EachIndexIterator implements Iterator<Integer> {
+
+  private final int size;
+  private int index;
+
+  public EachIndexIterator(int size) {
+    this.size = size;
+  }
+
+  @Override
+  public boolean hasNext() {
+    return index < size;
+  }
+
+  @Override
+  public Integer next() {
+    if (!hasNext()) {
+      throw new NoSuchElementException();
+    }
+    return index++;
+  }
+
+  @Override
+  public void remove() {
+    throw new UnsupportedOperationException();
+  }
 
 }
