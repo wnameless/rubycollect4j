@@ -27,8 +27,8 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 import org.apache.commons.collections.comparators.ComparableComparator;
 
@@ -49,7 +49,7 @@ import com.google.common.collect.Lists;
 
 import static cleanzephyr.rubycollect4j.RubyEnumerator.newRubyEnumerator;
 import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Maps.newLinkedHashMap;
+import static com.google.common.collect.Sets.newLinkedHashSet;
 
 /**
  * 
@@ -960,20 +960,20 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   }
 
   public RubyArray<E> uniq() {
-    Map<E, Object> uniqMap = newLinkedHashMap();
+    Set<E> uniqSet = newLinkedHashSet();
     for (E item : list) {
-      uniqMap.put(item, null);
+      uniqSet.add(item);
     }
-    return newRubyArray(uniqMap.keySet());
+    return newRubyArray(uniqSet);
   }
 
   public <S> RubyArray<E> uniq(ItemTransformBlock<E, S> block) {
     List<E> uniqList = newArrayList();
-    Map<S, Object> uniqByMap = newLinkedHashMap();
+    Set<S> uniqSet = newLinkedHashSet();
     for (E item : list) {
       S trans = block.yield(item);
-      if (!uniqByMap.containsKey(trans)) {
-        uniqByMap.put(trans, null);
+      if (!uniqSet.contains(trans)) {
+        uniqSet.add(trans);
         uniqList.add(item);
       }
     }
@@ -991,11 +991,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   public <S> RubyArray<E> uniqǃ(ItemTransformBlock<E, S> block) {
     int beforeSize = list.size();
     List<E> uniqList = newArrayList();
-    Map<S, Object> uniqByMap = newLinkedHashMap();
+    Set<S> uniqSet = newLinkedHashSet();
     for (E item : list) {
       S trans = block.yield(item);
-      if (!uniqByMap.containsKey(trans)) {
-        uniqByMap.put(trans, null);
+      if (!uniqSet.contains(trans)) {
+        uniqSet.add(trans);
         uniqList.add(item);
       }
     }
