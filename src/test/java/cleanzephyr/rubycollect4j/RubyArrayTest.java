@@ -951,4 +951,49 @@ public class RubyArrayTest {
     assertNull(ra.rindex(5));
   }
 
+  @Test
+  public void testRotate() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(2, 3, 4, 1), ra.rotate());
+    assertEquals(ra(1, 2, 3, 4), ra);
+    assertEquals(ra(), ra().rotate());
+  }
+
+  @Test
+  public void testRotateWithN() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(1, 2, 3, 4), ra.rotate(0));
+    assertEquals(ra(2, 3, 4, 1), ra.rotate(1));
+    assertEquals(ra(4, 1, 2, 3), ra.rotate(-1));
+    assertEquals(ra(2, 3, 4, 1), ra.rotate(5));
+    assertEquals(ra(3, 4, 1, 2), ra.rotate(-6));
+  }
+
+  @Test
+  public void testRotateǃ() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(2, 3, 4, 1), ra.rotateǃ());
+    assertEquals(ra(2, 3, 4, 1), ra);
+    assertEquals(ra(), ra().rotateǃ());
+  }
+
+  @Test
+  public void testRotateǃWithN() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(1, 2, 3, 4), ra.rotateǃ(0));
+    assertEquals(ra(1, 2, 3, 4), ra);
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(2, 3, 4, 1), ra.rotateǃ(1));
+    assertEquals(ra(2, 3, 4, 1), ra);
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(4, 1, 2, 3), ra.rotateǃ(-1));
+    assertEquals(ra(4, 1, 2, 3), ra);
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(2, 3, 4, 1), ra.rotateǃ(5));
+    assertEquals(ra(2, 3, 4, 1), ra);
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(3, 4, 1, 2), ra.rotateǃ(-6));
+    assertEquals(ra(3, 4, 1, 2), ra);
+  }
+
 }
