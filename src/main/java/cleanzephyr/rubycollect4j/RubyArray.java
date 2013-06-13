@@ -111,10 +111,6 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return newRubyArray(andList);
   }
 
-  public RubyArray<E> ǀ(RubyArray<E> other) {
-    return union(other);
-  }
-
   public RubyArray<E> Ⴖ(List<E> other) {
     return intersection(other);
   }
@@ -1035,6 +1031,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
       values.add(this.at(index));
     }
     return newRubyArray(values);
+  }
+
+  public RubyArray<E> ǀ(RubyArray<E> other) {
+    return union(other);
   }
 
   public RubyArray<E> ㄧ(List<E> other) {

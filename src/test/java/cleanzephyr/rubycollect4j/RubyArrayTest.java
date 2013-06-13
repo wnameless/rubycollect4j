@@ -1252,4 +1252,10 @@ public class RubyArrayTest {
     assertEquals(ra(1, 2), ra.ㄧ(ra(3, 4, 5)));
   }
 
+  @Test
+  public void testǀ() {
+    ra = ra(1, 2, 3, 4, 4);
+    assertEquals(ra(1, 2, 3, 4, 5), ra.ǀ(ra(3, 4, 5)));
+  }
+
 }
