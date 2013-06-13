@@ -558,7 +558,9 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   public String join() {
     StringBuilder sb = new StringBuilder();
     for (E item : list) {
-      sb.append(item.toString());
+      if (item != null) {
+        sb.append(item.toString());
+      }
     }
     return sb.toString();
   }
@@ -569,7 +571,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
       if (i > 0 && i != list.size()) {
         sb.append(separator);
       }
-      sb.append(list.get(i).toString());
+      E item = list.get(i);
+      if (item != null) {
+        sb.append(item.toString());
+      }
     }
     return sb.toString();
   }

@@ -590,4 +590,20 @@ public class RubyArrayTest {
     assertEquals(ra.toString(), ra.inspect());
   }
 
+  @Test
+  public void testJoin() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals("1234", ra.join());
+    ra.push(null);
+    assertEquals("1234", ra.join());
+  }
+
+  @Test
+  public void testJoinWithSeparator() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals("1,2,3,4", ra.join(","));
+    ra.push(null);
+    assertEquals("1\t2\t3\t4\t", ra.join("\t"));
+  }
+
 }
