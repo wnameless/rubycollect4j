@@ -400,4 +400,12 @@ public class RubyHashTest {
     assertNull(rh.shift());
   }
 
+  @Test
+  public void testStore() {
+    rh = rh(1, 2);
+    assertEquals(Integer.valueOf(4), rh.store(3, 4));
+    assertEquals(Integer.valueOf(6), rh.store(5, 6));
+    assertEquals(rh(1, 2, 3, 4, 5, 6), rh);
+  }
+
 }
