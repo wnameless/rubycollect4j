@@ -627,4 +627,21 @@ public class RubyArrayTest {
     assertEquals(ra(1, 3), ra);
   }
 
+  @Test
+  public void testLast() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(Integer.valueOf(4), ra.last());
+    ra = ra();
+    assertNull(ra.last());
+  }
+
+  @Test
+  public void testLastWithN() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(2, 3, 4), ra.last(3));
+    assertEquals(ra(1, 2, 3, 4), ra.last(6));
+    ra = ra();
+    assertEquals(ra(), ra.last(2));
+  }
+
 }
