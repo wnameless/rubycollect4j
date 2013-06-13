@@ -408,4 +408,16 @@ public class RubyHashTest {
     assertEquals(rh(1, 2, 3, 4, 5, 6), rh);
   }
 
+  @Test
+  public void testToH() {
+    rh = rh(1, 2, 3, 4, 5, 6);
+    assertTrue(rh == rh.toH());
+  }
+
+  @Test
+  public void testToHash() {
+    rh = rh(1, 2, 3, 4, 5, 6);
+    assertTrue(rh == rh.toHash());
+  }
+
 }
