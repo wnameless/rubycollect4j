@@ -427,4 +427,26 @@ public class RubyHashTest {
     assertEquals(rh.toString(), rh.toS());
   }
 
+  @Test
+  public void testUpdate() {
+    rh = rh(1, 2, 3, 4, 5, 6);
+    assertEquals(rh(1, 2, 3, 8, 5, 9, 7, 7), rh.update(rh(3, 8, 5, 9, 7, 7)));
+    assertEquals(rh(1, 2, 3, 8, 5, 9, 7, 7), rh);
+  }
+
+  @Test
+  public void testUpdateWithBlock() {
+    rh = rh(1, 2, 3, 4, 5, 6);
+    assertEquals(rh(1, 3, 3, 4, 5, 6, 0, 1), rh.update(rh(0, 1, 1, 3, 3, 2),
+        new EntryMergeBlock<Integer, Integer>() {
+
+          @Override
+          public Integer yield(Integer key, Integer oldval, Integer newval) {
+            return Math.max(oldval, newval);
+          }
+
+        }));
+    assertEquals(rh(1, 3, 3, 4, 5, 6, 0, 1), rh);
+  }
+
 }
