@@ -66,6 +66,12 @@ public class RubyArrayTest {
   }
 
   @Test
+  public void testAdd() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(1, 2, 3, 4, 5, 6), ra.add(ra(5, 6)));
+  }
+
+  @Test
   public void testAssoc() {
     @SuppressWarnings("unchecked")
     RubyArray<RubyArray<Integer>> ra = ra(ra(1, 2, 3), ra(4, 5, 6));
@@ -1290,12 +1296,6 @@ public class RubyArrayTest {
   }
 
   @Test
-  public void testㄧ() {
-    ra = ra(1, 2, 3, 4, 4);
-    assertEquals(ra(1, 2), ra.ㄧ(ra(3, 4, 5)));
-  }
-
-  @Test
   public void testǀ() {
     ra = ra(1, 2, 3, 4, 4);
     assertEquals(ra(1, 2, 3, 4, 5), ra.ǀ(ra(3, 4, 5)));
@@ -1305,6 +1305,27 @@ public class RubyArrayTest {
   public void testႶ() {
     ra = ra(1, 2, 3, 4);
     assertEquals(ra(2, 3), ra.intersection(ra(-1, 2, 3, 6)));
+  }
+
+  @Test
+  public void testㄍ() {
+    ra = ra();
+    assertEquals(ra(1), ra.ㄍ(1));
+    assertEquals(ra(1), ra);
+    assertEquals(ra(1, 2), ra.ㄍ(2));
+    assertEquals(ra(1, 2), ra);
+  }
+
+  @Test
+  public void testㄧ() {
+    ra = ra(1, 2, 3, 4, 4);
+    assertEquals(ra(1, 2), ra.ㄧ(ra(3, 4, 5)));
+  }
+
+  @Test
+  public void test十() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(1, 2, 3, 4, 5, 6), ra.十(ra(5, 6)));
   }
 
 }

@@ -96,10 +96,6 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     this.list = list;
   }
 
-  public RubyArray<E> ㄍ(E item) {
-    return push(item);
-  }
-
   public RubyArray<E> add(List<E> other) {
     List<E> addList = newArrayList();
     for (E item : list) {
@@ -109,10 +105,6 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
       addList.add(item);
     }
     return newRubyArray(addList);
-  }
-
-  public RubyArray<E> 十(List<E> other) {
-    return add(other);
   }
 
   public <S> RubyArray<S> assoc(S target) {
@@ -1037,8 +1029,16 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return intersection(other);
   }
 
+  public RubyArray<E> ㄍ(E item) {
+    return push(item);
+  }
+
   public RubyArray<E> ㄧ(List<E> other) {
     return subtract(other);
+  }
+
+  public RubyArray<E> 十(List<E> other) {
+    return add(other);
   }
 
   @Override
