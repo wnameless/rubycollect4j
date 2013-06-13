@@ -512,16 +512,6 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return rubyArray;
   }
 
-  public Integer index(E target) {
-    Integer index = null;
-    for (int i = 0; i < list.size(); i++) {
-      if (list.get(i).equals(target)) {
-        return i;
-      }
-    }
-    return index;
-  }
-
   public Integer index(BooleanBlock<E> block) {
     Integer index = null;
     for (int i = 0; i < list.size(); i++) {
@@ -530,6 +520,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
       }
     }
     return index;
+  }
+
+  public Integer index(E target) {
+    int idx = list.indexOf(target);
+    return idx == -1 ? null : idx;
   }
 
   public RubyArray<E> replace(List<E> other) {

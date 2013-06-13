@@ -536,4 +536,32 @@ public class RubyArrayTest {
     assertEquals(ra(1, 2, 3, 4, 5, 6), layer3.flatten());
   }
 
+  @Test
+  public void testIndexWithBlock() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(Integer.valueOf(1), ra.index(new BooleanBlock<Integer>() {
+
+      @Override
+      public boolean yield(Integer item) {
+        return item >= 2;
+      }
+
+    }));
+    assertNull(ra.index(new BooleanBlock<Integer>() {
+
+      @Override
+      public boolean yield(Integer item) {
+        return item > 4;
+      }
+
+    }));
+  }
+
+  @Test
+  public void testIndex() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(Integer.valueOf(2), ra.index(3));
+    assertNull(ra.index(5));
+  }
+
 }
