@@ -58,4 +58,13 @@ public class RubyHashTest {
     assertFalse(rh.comparedByIdentityʔ());
   }
 
+  @Test
+  public void testDelete() {
+    rh = rh(1, 2, 3, 4, 5, 6);
+    assertEquals(Integer.valueOf(4), rh.delete(3));
+    assertNull(rh.delete(0));
+    rh.setDefault(10);
+    assertEquals(Integer.valueOf(10), rh.delete(3));
+  }
+
 }

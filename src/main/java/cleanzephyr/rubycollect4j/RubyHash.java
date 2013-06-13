@@ -100,23 +100,6 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return false;
   }
 
-  public V setDefault(V defaultValue) {
-    this.defaultValue = defaultValue;
-    return this.defaultValue;
-  }
-
-  public V getDefault() {
-    return defaultValue;
-  }
-
-  public <S> RubyArray<S> collectConcat(EntryToRubyArrayBlock<K, V, S> block) {
-    RubyArray<S> rubyArray = newRubyArray();
-    for (Entry<K, V> entry : collectConcat()) {
-      rubyArray.addAll(block.yield(entry.getKey(), entry.getValue()));
-    }
-    return rubyArray;
-  }
-
   public V delete(K key) {
     V removedItem = map.remove(key);
     if (removedItem == null && defaultValue != null) {
@@ -133,6 +116,23 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
       }
     }
     return this;
+  }
+
+  public V setDefault(V defaultValue) {
+    this.defaultValue = defaultValue;
+    return this.defaultValue;
+  }
+
+  public V getDefault() {
+    return defaultValue;
+  }
+
+  public <S> RubyArray<S> collectConcat(EntryToRubyArrayBlock<K, V, S> block) {
+    RubyArray<S> rubyArray = newRubyArray();
+    for (Entry<K, V> entry : collectConcat()) {
+      rubyArray.addAll(block.yield(entry.getKey(), entry.getValue()));
+    }
+    return rubyArray;
   }
 
   public RubyHash<K, V> each(EntryBlock<K, V> block) {
