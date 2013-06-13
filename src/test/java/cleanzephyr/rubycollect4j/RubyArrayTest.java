@@ -592,6 +592,12 @@ public class RubyArrayTest {
   }
 
   @Test
+  public void testIntersection() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(2, 3), ra.intersection(ra(-1, 2, 3, 6)));
+  }
+
+  @Test
   public void testJoin() {
     ra = ra(1, 2, 3, 4);
     assertEquals("1234", ra.join());
@@ -1293,6 +1299,12 @@ public class RubyArrayTest {
   public void testǀ() {
     ra = ra(1, 2, 3, 4, 4);
     assertEquals(ra(1, 2, 3, 4, 5), ra.ǀ(ra(3, 4, 5)));
+  }
+
+  @Test
+  public void testႶ() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(2, 3), ra.intersection(ra(-1, 2, 3, 6)));
   }
 
 }

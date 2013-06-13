@@ -100,21 +100,6 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return push(item);
   }
 
-  public RubyArray<E> intersection(List<E> other) {
-    List<E> andList = newArrayList();
-    for (E item : this) {
-      if (!andList.contains(item) && list.contains(item)
-          && other.contains(item)) {
-        andList.add(item);
-      }
-    }
-    return newRubyArray(andList);
-  }
-
-  public RubyArray<E> Ⴖ(List<E> other) {
-    return intersection(other);
-  }
-
   public RubyArray<E> add(List<E> other) {
     List<E> addList = newArrayList();
     for (E item : list) {
@@ -496,6 +481,17 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
 
   public String inspect() {
     return list.toString();
+  }
+
+  public RubyArray<E> intersection(List<E> other) {
+    List<E> andList = newArrayList();
+    for (E item : this) {
+      if (!andList.contains(item) && list.contains(item)
+          && other.contains(item)) {
+        andList.add(item);
+      }
+    }
+    return newRubyArray(andList);
   }
 
   public String join() {
@@ -1035,6 +1031,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
 
   public RubyArray<E> ǀ(RubyArray<E> other) {
     return union(other);
+  }
+
+  public RubyArray<E> Ⴖ(List<E> other) {
+    return intersection(other);
   }
 
   public RubyArray<E> ㄧ(List<E> other) {
