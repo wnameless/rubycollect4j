@@ -238,4 +238,26 @@ public class RubyArrayTest {
     assertEquals(ra(3, 4), ra);
   }
 
+  @Test
+  public void testEach() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(RubyEnumerator.class, ra.each().getClass());
+    assertEquals(ra(1, 2, 3, 4), ra.each().toA());
+  }
+
+  @Test
+  public void testEachWithBlock() {
+    ra = ra(1, 2, 3, 4);
+    final RubyArray<Integer> ints = ra();
+    assertEquals(ra, ra.each(new ItemBlock<Integer>() {
+
+      @Override
+      public void yield(Integer item) {
+        ints.push(item * 2);
+      }
+
+    }));
+    assertEquals(ra(2, 4, 6, 8), ints);
+  }
+
 }
