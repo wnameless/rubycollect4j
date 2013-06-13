@@ -916,4 +916,39 @@ public class RubyArrayTest {
     assertEquals(ra(), ra.reverseǃ());
   }
 
+  @Test
+  public void testRindex() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(RubyEnumerator.class, ra.rindex().getClass());
+    assertEquals(ra(4, 3, 2, 1), ra.rindex().toA());
+  }
+
+  @Test
+  public void testRindexWithBlock() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(Integer.valueOf(3), ra.rindex(new BooleanBlock<Integer>() {
+
+      @Override
+      public boolean yield(Integer item) {
+        return item > 1;
+      }
+
+    }));
+    assertNull(ra.rindex(new BooleanBlock<Integer>() {
+
+      @Override
+      public boolean yield(Integer item) {
+        return item < 1;
+      }
+
+    }));
+  }
+
+  @Test
+  public void testRindexWithTarget() {
+    ra = ra(1, 2, 4, 4);
+    assertEquals(Integer.valueOf(3), ra.rindex(4));
+    assertNull(ra.rindex(5));
+  }
+
 }

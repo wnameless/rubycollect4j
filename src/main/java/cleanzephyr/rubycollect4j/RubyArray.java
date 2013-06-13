@@ -504,8 +504,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   }
 
   public Integer index(E target) {
-    int idx = list.indexOf(target);
-    return idx == -1 ? null : idx;
+    int index = list.indexOf(target);
+    return index == -1 ? null : index;
   }
 
   public RubyArray<E> insert(int index, E... args) {
@@ -769,14 +769,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return this;
   }
 
-  public Integer rindex(E target) {
-    Integer index = null;
-    for (int i = list.size() - 1; i >= 0; i--) {
-      if (list.get(i).equals(target)) {
-        return i;
-      }
-    }
-    return index;
+  public RubyEnumerator<E> rindex() {
+    return newRubyEnumerator(Lists.reverse(list));
   }
 
   public Integer rindex(BooleanBlock<E> block) {
@@ -787,6 +781,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
       }
     }
     return index;
+  }
+
+  public Integer rindex(E target) {
+    int index = list.lastIndexOf(target);
+    return index == -1 ? null : index;
   }
 
   public RubyArray<E> rotate() {
