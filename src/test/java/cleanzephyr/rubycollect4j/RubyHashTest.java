@@ -354,4 +354,35 @@ public class RubyHashTest {
     assertNull(rh.rassoc(5));
   }
 
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testRejectǃ() {
+    rh = rh(1, 2, 3, 4, 5, 6);
+    assertTrue(rh.rejectǃ() instanceof RubyEnumerator);
+    assertEquals(ra(hp(1, 2), hp(3, 4), hp(5, 6)), rh.rejectǃ().toA());
+  }
+
+  @Test
+  public void testRejectǃWithBlock() {
+    rh = rh(1, 2, 3, 4, 5, 6);
+    assertEquals(rh(1, 2, 5, 6),
+        rh.rejectǃ(new EntryBooleanBlock<Integer, Integer>() {
+
+          @Override
+          public boolean yield(Integer key, Integer value) {
+            return key + value == 7;
+          }
+
+        }));
+    assertEquals(rh(1, 2, 5, 6), rh);
+    assertNull(rh.rejectǃ(new EntryBooleanBlock<Integer, Integer>() {
+
+      @Override
+      public boolean yield(Integer key, Integer value) {
+        return key + value == 7;
+      }
+
+    }));
+  }
+
 }

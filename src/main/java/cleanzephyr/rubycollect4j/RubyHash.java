@@ -331,6 +331,20 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return null;
   }
 
+  public RubyEnumerator<Entry<K, V>> rejectǃ() {
+    return newRubyEnumerator(map.entrySet());
+  }
+
+  public RubyHash<K, V> rejectǃ(EntryBooleanBlock<K, V> block) {
+    int beforeSize = map.size();
+    deleteIf(block);
+    if (map.size() == beforeSize) {
+      return null;
+    } else {
+      return this;
+    }
+  }
+
   public boolean valueʔ(V value) {
     return map.containsValue(value);
   }
@@ -354,16 +368,6 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   public RubyHash<K, V>
       update(Map<K, V> otherHash, EntryMergeBlock<K, V> block) {
     return mergeǃ(otherHash, block);
-  }
-
-  public RubyHash<K, V> rejectǃ(EntryBooleanBlock<K, V> block) {
-    int beforeSize = map.size();
-    deleteIf(block);
-    if (map.size() == beforeSize) {
-      return null;
-    } else {
-      return this;
-    }
   }
 
   public RubyHash<K, V> replace(Map<K, V> otherHash) {
