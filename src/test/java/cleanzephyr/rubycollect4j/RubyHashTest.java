@@ -456,4 +456,10 @@ public class RubyHashTest {
     assertEquals(ra(2, 4, 6), rh.values());
   }
 
+  @Test
+  public void testValuesAt() {
+    rh = rh(1, 2, 3, 4, 5, 6);
+    assertEquals(ra(2, 6, 4, 2, null), rh.valuesAt(1, 5, 3, 1, 7));
+  }
+
 }
