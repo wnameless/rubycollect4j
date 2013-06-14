@@ -63,12 +63,16 @@ public class RubyArrayTest {
     ra = newRubyArray(ints, true);
     ints.set(0, 4);
     assertEquals(ra(1, 2, 3), ra);
+    ints = newArrayList(1, 2, 3);
+    ra = newRubyArray(ints, false);
+    ints.set(0, 4);
+    assertEquals(ra(4, 2, 3), ra);
   }
 
   @Test
   public void testAdd() {
     ra = ra(1, 2, 3, 4);
-    assertEquals(ra(1, 2, 3, 4, 5, 6), ra.add(ra(5, 6)));
+    assertEquals(ra(1, 2, 3, 4, 5, 6), ra.plus(ra(5, 6)));
   }
 
   @Test
@@ -76,6 +80,7 @@ public class RubyArrayTest {
     @SuppressWarnings("unchecked")
     RubyArray<RubyArray<Integer>> ra = ra(ra(1, 2, 3), ra(4, 5, 6));
     assertEquals(ra(4, 5, 6), ra.assoc(4));
+    assertNull(ra.assoc(7));
   }
 
   @Test
@@ -85,6 +90,7 @@ public class RubyArrayTest {
     assertEquals(Integer.valueOf(4), ra.at(-1));
     assertNull(ra.at(4));
     assertNull(ra.at(-5));
+    assertNull(ra().at(0));
   }
 
   @Test
@@ -93,6 +99,7 @@ public class RubyArrayTest {
     assertEquals(Integer.valueOf(3), ra.bsearch(3));
     ra = ra(4, 1, 3, 2);
     assertNull(ra.bsearch(4));
+    assertNull(ra().bsearch(1));
   }
 
   @Test
@@ -310,6 +317,7 @@ public class RubyArrayTest {
     List<Integer> list = newArrayList(1, 2, 3);
     assertTrue(ra.eqlʔ(list));
     assertTrue(ra().eqlʔ(newArrayList()));
+    assertFalse(ra.eqlʔ(new Object()));
   }
 
   @Test
@@ -1196,7 +1204,7 @@ public class RubyArrayTest {
   @Test
   public void testSubtract() {
     ra = ra(1, 2, 3, 4, 4);
-    assertEquals(ra(1, 2), ra.subtract(ra(3, 4, 5)));
+    assertEquals(ra(1, 2), ra.minus(ra(3, 4, 5)));
   }
 
   @Test
@@ -1283,6 +1291,7 @@ public class RubyArrayTest {
     assertEquals(ra(4, 1, null, null), ra.valuesAt(-1, 0, 5, -6));
   }
 
+  @Test
   public void testX() {
     ra = ra(1, 2, 3);
     assertEquals(ra(), ra.X(0));
@@ -1310,7 +1319,7 @@ public class RubyArrayTest {
   @Test
   public void testႶ() {
     ra = ra(1, 2, 3, 4);
-    assertEquals(ra(2, 3), ra.intersection(ra(-1, 2, 3, 6)));
+    assertEquals(ra(2, 3), ra.Ⴖ(ra(-1, 2, 3, 6)));
   }
 
   @Test

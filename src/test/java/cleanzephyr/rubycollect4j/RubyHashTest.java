@@ -199,6 +199,7 @@ public class RubyHashTest {
     assertTrue(rh.eqlʔ(rh(1, 2, 3, 4, 5, 6)));
     rh = rh(1, 2, 3, 4);
     assertFalse(rh.eqlʔ(rh(1, 2, 3, 4, 5, 6)));
+    assertFalse(rh.eqlʔ(new Object()));
   }
 
   @Test
