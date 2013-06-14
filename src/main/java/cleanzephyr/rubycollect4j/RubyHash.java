@@ -21,17 +21,22 @@
 package cleanzephyr.rubycollect4j;
 
 import java.util.AbstractMap.SimpleEntry;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import cleanzephyr.rubycollect4j.block.BooleanBlock;
 import cleanzephyr.rubycollect4j.block.EntryBlock;
 import cleanzephyr.rubycollect4j.block.EntryBooleanBlock;
 import cleanzephyr.rubycollect4j.block.EntryMergeBlock;
 import cleanzephyr.rubycollect4j.block.EntryToRubyArrayBlock;
+import cleanzephyr.rubycollect4j.block.EntryTransformBlock;
 import cleanzephyr.rubycollect4j.block.ItemBlock;
+import cleanzephyr.rubycollect4j.block.ItemToRubyArrayBlock;
+import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
 
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
 import static cleanzephyr.rubycollect4j.RubyEnumerator.newRubyEnumerator;
@@ -120,14 +125,6 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
 
   public V getDefault() {
     return defaultValue;
-  }
-
-  public <S> RubyArray<S> collectConcat(EntryToRubyArrayBlock<K, V, S> block) {
-    RubyArray<S> rubyArray = newRubyArray();
-    for (Entry<K, V> entry : collectConcat()) {
-      rubyArray.addAll(block.yield(entry.getKey(), entry.getValue()));
-    }
-    return rubyArray;
   }
 
   public RubyEnumerator<Entry<K, V>> each() {
@@ -383,6 +380,361 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   public RubyHash<K, V>
       update(Map<K, V> otherHash, EntryMergeBlock<K, V> block) {
     return mergeǃ(otherHash, block);
+  }
+
+  // Apply entry blocks to RubyEnumerable methods
+  public boolean allʔ(final EntryBooleanBlock<K, V> block) {
+    return allʔ(new BooleanBlock<Entry<K, V>>() {
+
+      @Override
+      public boolean yield(Entry<K, V> item) {
+        return block.yield(item.getKey(), item.getValue());
+      }
+
+    });
+  }
+
+  public boolean anyʔ(final EntryBooleanBlock<K, V> block) {
+    return anyʔ(new BooleanBlock<Entry<K, V>>() {
+
+      @Override
+      public boolean yield(Entry<K, V> item) {
+        return block.yield(item.getKey(), item.getValue());
+      }
+
+    });
+  }
+
+  public <S> RubyEnumerator<Entry<S, RubyArray<Entry<K, V>>>> chunk(
+      final EntryTransformBlock<K, V, S> block) {
+    return chunk(new ItemTransformBlock<Entry<K, V>, S>() {
+
+      @Override
+      public S yield(Entry<K, V> item) {
+        return block.yield(item.getKey(), item.getValue());
+      }
+
+    });
+  }
+
+  public <S> RubyArray<S> collectConcat(
+      final EntryToRubyArrayBlock<K, V, S> block) {
+    return collectConcat(new ItemToRubyArrayBlock<Entry<K, V>, S>() {
+
+      @Override
+      public RubyArray<S> yield(Entry<K, V> item) {
+        return block.yield(item.getKey(), item.getValue());
+      }
+
+    });
+  }
+
+  public int count(final EntryBooleanBlock<K, V> block) {
+    return count(new BooleanBlock<Entry<K, V>>() {
+
+      @Override
+      public boolean yield(Entry<K, V> item) {
+        return block.yield(item.getKey(), item.getValue());
+      }
+
+    });
+  }
+
+  public void cycle(int n, final EntryBlock<K, V> block) {
+    cycle(n, new ItemBlock<Entry<K, V>>() {
+
+      @Override
+      public void yield(Entry<K, V> item) {
+        block.yield(item.getKey(), item.getValue());
+      }
+
+    });
+  }
+
+  public void cycle(final EntryBlock<K, V> block) {
+    cycle(new ItemBlock<Entry<K, V>>() {
+
+      @Override
+      public void yield(Entry<K, V> item) {
+        block.yield(item.getKey(), item.getValue());
+      }
+
+    });
+  }
+
+  public Entry<K, V> detect(final EntryBooleanBlock<K, V> block) {
+    return detect(new BooleanBlock<Entry<K, V>>() {
+
+      @Override
+      public boolean yield(Entry<K, V> item) {
+        return block.yield(item.getKey(), item.getValue());
+      }
+
+    });
+  }
+
+  public RubyArray<Entry<K, V>> dropWhile(final EntryBooleanBlock<K, V> block) {
+    return dropWhile(new BooleanBlock<Entry<K, V>>() {
+
+      @Override
+      public boolean yield(Entry<K, V> item) {
+        return block.yield(item.getKey(), item.getValue());
+      }
+
+    });
+  }
+
+  public RubyEnumerable<Entry<K, V>> eachEntry(final EntryBlock<K, V> block) {
+    return eachEntry(new ItemBlock<Entry<K, V>>() {
+
+      @Override
+      public void yield(Entry<K, V> item) {
+        block.yield(item.getKey(), item.getValue());
+      }
+
+    });
+  }
+
+  public Entry<K, V> find(final EntryBooleanBlock<K, V> block) {
+    return detect(block);
+  }
+
+  public RubyArray<Entry<K, V>> findAll(final EntryBooleanBlock<K, V> block) {
+    return findAll(new BooleanBlock<Entry<K, V>>() {
+
+      @Override
+      public boolean yield(Entry<K, V> item) {
+        return block.yield(item.getKey(), item.getValue());
+      }
+
+    });
+  }
+
+  public Integer findIndex(final EntryBooleanBlock<K, V> block) {
+    return findIndex(new BooleanBlock<Entry<K, V>>() {
+
+      @Override
+      public boolean yield(Entry<K, V> item) {
+        return block.yield(item.getKey(), item.getValue());
+      }
+
+    });
+  }
+
+  public <S> RubyArray<S> flatMap(final EntryToRubyArrayBlock<K, V, S> block) {
+    return collectConcat(block);
+  }
+
+  public <S> RubyArray<S> grep(String regex,
+      final EntryTransformBlock<K, V, S> block) {
+    return grep(regex, new ItemTransformBlock<Entry<K, V>, S>() {
+
+      @Override
+      public S yield(Entry<K, V> item) {
+        return block.yield(item.getKey(), item.getValue());
+      }
+
+    });
+  }
+
+  public <S> RubyHash<S, RubyArray<Entry<K, V>>> groupBy(
+      final EntryTransformBlock<K, V, S> block) {
+    return groupBy(new ItemTransformBlock<Entry<K, V>, S>() {
+
+      @Override
+      public S yield(Entry<K, V> item) {
+        return block.yield(item.getKey(), item.getValue());
+      }
+
+    });
+  }
+
+  public <S> RubyArray<S> map(final EntryTransformBlock<K, V, S> block) {
+    return map(new ItemTransformBlock<Entry<K, V>, S>() {
+
+      @Override
+      public S yield(Entry<K, V> item) {
+        return block.yield(item.getKey(), item.getValue());
+      }
+
+    });
+  }
+
+  public <S> Entry<K, V> maxBy(Comparator<? super S> comp,
+      final EntryTransformBlock<K, V, S> block) {
+    return maxBy(comp, new ItemTransformBlock<Entry<K, V>, S>() {
+
+      @Override
+      public S yield(Entry<K, V> item) {
+        return block.yield(item.getKey(), item.getValue());
+      }
+
+    });
+  }
+
+  public <S> Entry<K, V> maxBy(final EntryTransformBlock<K, V, S> block) {
+    return maxBy(new ItemTransformBlock<Entry<K, V>, S>() {
+
+      @Override
+      public S yield(Entry<K, V> item) {
+        return block.yield(item.getKey(), item.getValue());
+      }
+
+    });
+  }
+
+  public <S> Entry<K, V> minBy(Comparator<? super S> comp,
+      final EntryTransformBlock<K, V, S> block) {
+    return minBy(comp, new ItemTransformBlock<Entry<K, V>, S>() {
+
+      @Override
+      public S yield(Entry<K, V> item) {
+        return block.yield(item.getKey(), item.getValue());
+      }
+
+    });
+  }
+
+  public <S> Entry<K, V> minBy(final EntryTransformBlock<K, V, S> block) {
+    return minBy(new ItemTransformBlock<Entry<K, V>, S>() {
+
+      @Override
+      public S yield(Entry<K, V> item) {
+        return block.yield(item.getKey(), item.getValue());
+      }
+
+    });
+  }
+
+  public <S> RubyArray<Entry<K, V>> minmaxBy(Comparator<? super S> comp,
+      final EntryTransformBlock<K, V, S> block) {
+    return minmaxBy(comp, new ItemTransformBlock<Entry<K, V>, S>() {
+
+      @Override
+      public S yield(Entry<K, V> item) {
+        return block.yield(item.getKey(), item.getValue());
+      }
+
+    });
+  }
+
+  public <S> RubyArray<Entry<K, V>> minmaxBy(
+      final EntryTransformBlock<K, V, S> block) {
+    return minmaxBy(new ItemTransformBlock<Entry<K, V>, S>() {
+
+      @Override
+      public S yield(Entry<K, V> item) {
+        return block.yield(item.getKey(), item.getValue());
+      }
+
+    });
+  }
+
+  public boolean noneʔ(final EntryBooleanBlock<K, V> block) {
+    return noneʔ(new BooleanBlock<Entry<K, V>>() {
+
+      @Override
+      public boolean yield(Entry<K, V> item) {
+        return block.yield(item.getKey(), item.getValue());
+      }
+
+    });
+  }
+
+  public boolean oneʔ(final EntryBooleanBlock<K, V> block) {
+    return oneʔ(new BooleanBlock<Entry<K, V>>() {
+
+      @Override
+      public boolean yield(Entry<K, V> item) {
+        return block.yield(item.getKey(), item.getValue());
+      }
+
+    });
+  }
+
+  public RubyArray<RubyArray<Entry<K, V>>> partition(
+      final EntryBooleanBlock<K, V> block) {
+    return partition(new BooleanBlock<Entry<K, V>>() {
+
+      @Override
+      public boolean yield(Entry<K, V> item) {
+        return block.yield(item.getKey(), item.getValue());
+      }
+
+    });
+  }
+
+  public RubyArray<Entry<K, V>> reject(final EntryBooleanBlock<K, V> block) {
+    return reject(new BooleanBlock<Entry<K, V>>() {
+
+      @Override
+      public boolean yield(Entry<K, V> item) {
+        return block.yield(item.getKey(), item.getValue());
+      }
+
+    });
+  }
+
+  public RubyEnumerable<Entry<K, V>> reverseEach(final EntryBlock<K, V> block) {
+    return reverseEach(new ItemBlock<Entry<K, V>>() {
+
+      @Override
+      public void yield(Entry<K, V> item) {
+        block.yield(item.getKey(), item.getValue());
+      }
+
+    });
+  }
+
+  public RubyArray<Entry<K, V>> select(final EntryBooleanBlock<K, V> block) {
+    return findAll(block);
+  }
+
+  public RubyEnumerator<RubyArray<Entry<K, V>>> sliceBefore(
+      final EntryBooleanBlock<K, V> block) {
+    return sliceBefore(new BooleanBlock<Entry<K, V>>() {
+
+      @Override
+      public boolean yield(Entry<K, V> item) {
+        return block.yield(item.getKey(), item.getValue());
+      }
+
+    });
+  }
+
+  public <S> RubyArray<Entry<K, V>> sortBy(Comparator<? super S> comp,
+      final EntryTransformBlock<K, V, S> block) {
+    return sortBy(comp, new ItemTransformBlock<Entry<K, V>, S>() {
+
+      @Override
+      public S yield(Entry<K, V> item) {
+        return block.yield(item.getKey(), item.getValue());
+      }
+
+    });
+  }
+
+  public <S> RubyArray<Entry<K, V>> sortBy(
+      final EntryTransformBlock<K, V, S> block) {
+    return sortBy(new ItemTransformBlock<Entry<K, V>, S>() {
+
+      @Override
+      public S yield(Entry<K, V> item) {
+        return block.yield(item.getKey(), item.getValue());
+      }
+
+    });
+  }
+
+  public RubyArray<Entry<K, V>> takeWhile(final EntryBooleanBlock<K, V> block) {
+    return takeWhile(new BooleanBlock<Entry<K, V>>() {
+
+      @Override
+      public boolean yield(Entry<K, V> item) {
+        return block.yield(item.getKey(), item.getValue());
+      }
+
+    });
   }
 
   @Override

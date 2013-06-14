@@ -46,6 +46,10 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
     super(newArrayList(iter));
   }
 
+  public RubyEnumerator<E> each() {
+    return this;
+  }
+
   public RubyArray<E> each(ItemBlock<E> block) {
     RubyArray<E> rubyArray = newRubyArray();
     for (E item : iter) {
@@ -53,10 +57,6 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
       rubyArray.add(item);
     }
     return rubyArray;
-  }
-
-  public RubyEnumerator<E> each() {
-    return this;
   }
 
   @Override

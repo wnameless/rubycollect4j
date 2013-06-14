@@ -1,5 +1,26 @@
+/**
+ *
+ * @author Wei-Ming Wu
+ *
+ *
+ * Copyright 2013 Wei-Ming Wu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ *
+ */
 package cleanzephyr.rubycollect4j;
 
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -8,6 +29,8 @@ import org.junit.Test;
 import cleanzephyr.rubycollect4j.block.EntryBlock;
 import cleanzephyr.rubycollect4j.block.EntryBooleanBlock;
 import cleanzephyr.rubycollect4j.block.EntryMergeBlock;
+import cleanzephyr.rubycollect4j.block.EntryToRubyArrayBlock;
+import cleanzephyr.rubycollect4j.block.EntryTransformBlock;
 import cleanzephyr.rubycollect4j.block.ItemBlock;
 
 import static cleanzephyr.rubycollect4j.RubyCollections.hp;
@@ -468,6 +491,490 @@ public class RubyHashTest {
     rh = rh(1, 2, 3, 4, 5, 6);
     assertTrue(rh.valueʔ(4));
     assertFalse(rh.valueʔ(8));
+  }
+
+  // Tests for entry blocks of RubyEnumerable methods
+  @Test
+  public void testAllʔ() {
+    assertTrue(rh(1, 2, 3, 4, 5, 6).allʔ(
+        new EntryBooleanBlock<Integer, Integer>() {
+
+          @Override
+          public boolean yield(Integer key, Integer value) {
+            return key > 0 && value > 0;
+          }
+
+        }));
+  }
+
+  @Test
+  public void testAnyʔ() {
+    assertTrue(rh(1, 2, 3, 4, 5, 6).anyʔ(
+        new EntryBooleanBlock<Integer, Integer>() {
+
+          @Override
+          public boolean yield(Integer key, Integer value) {
+            return key > 0 && value > 0;
+          }
+
+        }));
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testChunk() {
+    assertEquals(ra(hp(3L, ra(hp(1, 2))), hp(7L, ra(hp(3, 4)))), rh(1, 2, 3, 4)
+        .chunk(new EntryTransformBlock<Integer, Integer, Long>() {
+
+          @Override
+          public Long yield(Integer key, Integer value) {
+            return Long.valueOf(key + value);
+          }
+
+        }).toA());
+  }
+
+  @Test
+  public void testCollectConcat() {
+    assertEquals(
+        ra(3L, 7L),
+        rh(1, 2, 3, 4).collectConcat(
+            new EntryToRubyArrayBlock<Integer, Integer, Long>() {
+
+              @Override
+              public RubyArray<Long> yield(Integer key, Integer value) {
+                return ra(Long.valueOf(key + value));
+              }
+
+            }).toA());
+  }
+
+  @Test
+  public void testCount() {
+    assertEquals(1,
+        rh(1, 2, 3, 4).count(new EntryBooleanBlock<Integer, Integer>() {
+
+          @Override
+          public boolean yield(Integer key, Integer value) {
+            return key == 1;
+          }
+
+        }));
+  }
+
+  @Test
+  public void testCycle() {
+    final RubyArray<Integer> ints = ra();
+    rh(1, 2, 3, 4).cycle(2, new EntryBlock<Integer, Integer>() {
+
+      @Override
+      public void yield(Integer key, Integer value) {
+        ints.add(key);
+        ints.add(value);
+      }
+
+    });
+    assertEquals(ra(1, 2, 3, 4, 1, 2, 3, 4), ints);
+  }
+
+  @Test
+  public void testDetect() {
+    assertEquals(hp(3, 4),
+        rh(1, 2, 3, 4, 5, 6).detect(new EntryBooleanBlock<Integer, Integer>() {
+
+          @Override
+          public boolean yield(Integer key, Integer value) {
+            return value == 4;
+          }
+
+        }));
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testDropWhile() {
+    assertEquals(
+        ra(hp(3, 4), hp(5, 6)),
+        rh(1, 2, 3, 4, 5, 6).dropWhile(
+            new EntryBooleanBlock<Integer, Integer>() {
+
+              @Override
+              public boolean yield(Integer key, Integer value) {
+                return key + value <= 4;
+              }
+
+            }));
+  }
+
+  @Test
+  public void testEachEntry() {
+    final RubyArray<Integer> ints = ra();
+    rh(1, 2, 3, 4).eachEntry(new EntryBlock<Integer, Integer>() {
+
+      @Override
+      public void yield(Integer key, Integer value) {
+        ints.push(value);
+      }
+
+    });
+    assertEquals(ra(2, 4), ints);
+  }
+
+  @Test
+  public void testFind() {
+    assertEquals(hp(3, 4),
+        rh(1, 2, 3, 4, 5, 6).find(new EntryBooleanBlock<Integer, Integer>() {
+
+          @Override
+          public boolean yield(Integer key, Integer value) {
+            return value == 4;
+          }
+
+        }));
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testFindAll() {
+    assertEquals(ra(hp(1, 2), hp(3, 4)),
+        rh(1, 2, 3, 4, 5, 6).findAll(new EntryBooleanBlock<Integer, Integer>() {
+
+          @Override
+          public boolean yield(Integer key, Integer value) {
+            return key < 4;
+          }
+
+        }));
+  }
+
+  @Test
+  public void testFindIndex() {
+    assertEquals(
+        Integer.valueOf(0),
+        rh(1, 2, 3, 4, 5, 6).findIndex(
+            new EntryBooleanBlock<Integer, Integer>() {
+
+              @Override
+              public boolean yield(Integer key, Integer value) {
+                return key < 4;
+              }
+
+            }));
+  }
+
+  @Test
+  public void testFlatMap() {
+    assertEquals(
+        ra(3L, 7L),
+        rh(1, 2, 3, 4).flatMap(
+            new EntryToRubyArrayBlock<Integer, Integer, Long>() {
+
+              @Override
+              public RubyArray<Long> yield(Integer key, Integer value) {
+                return ra(Long.valueOf(key + value));
+              }
+
+            }).toA());
+  }
+
+  @Test
+  public void testGrep() {
+    assertEquals(
+        ra(7L),
+        rh(1, 2, 3, 4, 5, 6).grep("4",
+            new EntryTransformBlock<Integer, Integer, Long>() {
+
+              @Override
+              public Long yield(Integer key, Integer value) {
+                return Long.valueOf(key + value);
+              }
+
+            }));
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testGroupBy() {
+    assertEquals(
+        rh(true, ra(hp(1, 2), hp(3, 4)), false, ra(hp(5, 6))),
+        rh(1, 2, 3, 4, 5, 6).groupBy(
+            new EntryTransformBlock<Integer, Integer, Boolean>() {
+
+              @Override
+              public Boolean yield(Integer key, Integer value) {
+                return key + value < 10;
+              }
+
+            }));
+  }
+
+  @Test
+  public void testMap() {
+    assertEquals(
+        ra(3L, 7L, 11L),
+        rh(1, 2, 3, 4, 5, 6).map(
+            new EntryTransformBlock<Integer, Integer, Long>() {
+
+              @Override
+              public Long yield(Integer key, Integer value) {
+                return Long.valueOf(key + value);
+              }
+
+            }));
+  }
+
+  @Test
+  public void testMaxByWithComparator() {
+    assertEquals(hp(3L, 4L).toString(),
+        rh(1, 6, 2, 5, 3, 4).maxBy(new Comparator<Long>() {
+
+          @Override
+          public int compare(Long o1, Long o2) {
+            return (int) (o2 - o1);
+          }
+
+        }, new EntryTransformBlock<Integer, Integer, Long>() {
+
+          @Override
+          public Long yield(Integer key, Integer value) {
+            return Long.valueOf(value - key);
+          }
+
+        }).toString());
+  }
+
+  @Test
+  public void testMaxBy() {
+    assertEquals(
+        hp(1L, 6L).toString(),
+        rh(1, 6, 2, 5, 3, 4).maxBy(
+            new EntryTransformBlock<Integer, Integer, Long>() {
+
+              @Override
+              public Long yield(Integer key, Integer value) {
+                return Long.valueOf(value - key);
+              }
+
+            }).toString());
+  }
+
+  @Test
+  public void testMinByWithComparator() {
+    assertEquals(hp(1L, 6L).toString(),
+        rh(1, 6, 2, 5, 3, 4).minBy(new Comparator<Long>() {
+
+          @Override
+          public int compare(Long o1, Long o2) {
+            return (int) (o2 - o1);
+          }
+
+        }, new EntryTransformBlock<Integer, Integer, Long>() {
+
+          @Override
+          public Long yield(Integer key, Integer value) {
+            return Long.valueOf(value - key);
+          }
+
+        }).toString());
+  }
+
+  @Test
+  public void testMinBy() {
+    assertEquals(
+        hp(3L, 4L).toString(),
+        rh(1, 6, 2, 5, 3, 4).minBy(
+            new EntryTransformBlock<Integer, Integer, Long>() {
+
+              @Override
+              public Long yield(Integer key, Integer value) {
+                return Long.valueOf(value - key);
+              }
+
+            }).toString());
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testMinmaxByWithComparator() {
+    assertEquals(ra(hp(1L, 6L), hp(3L, 4L)).toString(), rh(1, 6, 2, 5, 3, 4)
+        .minmaxBy(new Comparator<Long>() {
+
+          @Override
+          public int compare(Long o1, Long o2) {
+            return (int) (o2 - o1);
+          }
+
+        }, new EntryTransformBlock<Integer, Integer, Long>() {
+
+          @Override
+          public Long yield(Integer key, Integer value) {
+            return Long.valueOf(value - key);
+          }
+
+        }).toString());
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testMinmaxBy() {
+    assertEquals(ra(hp(3L, 4L), hp(1L, 6L)).toString(), rh(1, 6, 2, 5, 3, 4)
+        .minmaxBy(new EntryTransformBlock<Integer, Integer, Long>() {
+
+          @Override
+          public Long yield(Integer key, Integer value) {
+            return Long.valueOf(value - key);
+          }
+
+        }).toString());
+  }
+
+  @Test
+  public void testNoneʔ() {
+    assertTrue(rh(1, 2, 3, 4, 5, 6).noneʔ(
+        new EntryBooleanBlock<Integer, Integer>() {
+
+          @Override
+          public boolean yield(Integer key, Integer value) {
+            return value > 10;
+          }
+
+        }));
+  }
+
+  @Test
+  public void testOneʔ() {
+    assertFalse(rh(1, 2, 3, 4, 5, 6).oneʔ(
+        new EntryBooleanBlock<Integer, Integer>() {
+
+          @Override
+          public boolean yield(Integer key, Integer value) {
+            return value > 3;
+          }
+
+        }));
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testPartition() {
+    assertEquals(ra(ra(hp(1, 2)), ra(hp(3, 4), hp(5, 6))), rh(1, 2, 3, 4, 5, 6)
+        .partition(new EntryBooleanBlock<Integer, Integer>() {
+
+          @Override
+          public boolean yield(Integer key, Integer value) {
+            return key == 1;
+          }
+
+        }));
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testReject() {
+    assertEquals(ra(hp(3, 4), hp(5, 6)),
+        rh(1, 2, 3, 4, 5, 6).reject(new EntryBooleanBlock<Integer, Integer>() {
+
+          @Override
+          public boolean yield(Integer key, Integer value) {
+            return key == 1;
+          }
+
+        }));
+  }
+
+  @Test
+  public void testReverseEach() {
+    final RubyArray<Integer> ints = ra();
+    rh(1, 2, 3, 4, 5, 6).reverseEach(new EntryBlock<Integer, Integer>() {
+
+      @Override
+      public void yield(Integer key, Integer value) {
+        ints.push(key);
+      }
+
+    });
+    assertEquals(ra(5, 3, 1), ints);
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testSelect() {
+    assertEquals(ra(hp(1, 2), hp(3, 4)),
+        rh(1, 2, 3, 4, 5, 6).select(new EntryBooleanBlock<Integer, Integer>() {
+
+          @Override
+          public boolean yield(Integer key, Integer value) {
+            return key < 4;
+          }
+
+        }));
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testSliceBefore() {
+    assertEquals(ra(ra(hp(1, 2), hp(3, 4)), ra(hp(5, 6))), rh(1, 2, 3, 4, 5, 6)
+        .sliceBefore(new EntryBooleanBlock<Integer, Integer>() {
+
+          @Override
+          public boolean yield(Integer key, Integer value) {
+            return key > 4;
+          }
+
+        }).toA());
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testSortByWithComparator() {
+    assertEquals(ra(hp(3L, 4L), hp(2L, 5L), hp(1L, 6L)).toString(),
+        rh(1, 6, 2, 5, 3, 4).sortBy(new Comparator<Long>() {
+
+          @Override
+          public int compare(Long o1, Long o2) {
+            return (int) (o2 - o1);
+          }
+
+        }, new EntryTransformBlock<Integer, Integer, Long>() {
+
+          @Override
+          public Long yield(Integer key, Integer value) {
+            return Long.valueOf(key);
+          }
+
+        }).toString());
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testSortByBy() {
+    assertEquals(
+        ra(hp(1L, 6L), hp(2L, 5L), hp(3L, 4L)).toString(),
+        rh(1, 6, 2, 5, 3, 4).sortBy(
+            new EntryTransformBlock<Integer, Integer, Long>() {
+
+              @Override
+              public Long yield(Integer key, Integer value) {
+                return Long.valueOf(key);
+              }
+
+            }).toString());
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testTakeWhile() {
+    assertEquals(
+        ra(hp(1, 2), hp(3, 4)),
+        rh(1, 2, 3, 4, 5, 6).takeWhile(
+            new EntryBooleanBlock<Integer, Integer>() {
+
+              @Override
+              public boolean yield(Integer key, Integer value) {
+                return key < 5;
+              }
+
+            }));
   }
 
 }
