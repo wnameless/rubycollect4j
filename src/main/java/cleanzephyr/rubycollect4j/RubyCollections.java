@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -35,7 +34,6 @@ import java.util.regex.Pattern;
 
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
 import static cleanzephyr.rubycollect4j.RubyHash.newRubyHash;
-import static cleanzephyr.rubycollect4j.RubyIO.puts;
 
 /**
  * 
@@ -43,12 +41,12 @@ import static cleanzephyr.rubycollect4j.RubyIO.puts;
  */
 public final class RubyCollections {
 
-  public static RubyArray<String> qw(String str) {
-    return newRubyArray(str.trim().split("\\s+"));
-  }
-
   public static Pattern qr(String regex) {
     return Pattern.compile(regex);
+  }
+
+  public static RubyArray<String> qw(String str) {
+    return newRubyArray(str.trim().split("\\s+"));
   }
 
   public static String qx(String cmd) {
@@ -82,6 +80,10 @@ public final class RubyCollections {
     return newRubyArray();
   }
 
+  public static <E> RubyArray<E> ra(E... args) {
+    return newRubyArray(args);
+  }
+
   public static <E> RubyArray<E> ra(Iterable<E> iter) {
     return newRubyArray(iter);
   }
@@ -99,21 +101,12 @@ public final class RubyCollections {
     return ra.push(list);
   }
 
-  public static <E> RubyArray<E> ra(E... args) {
-    return newRubyArray(args);
-  }
-
   public static <K, V> RubyHash<K, V> rh() {
     return newRubyHash();
   }
 
   public static <K, V> RubyHash<K, V> rh(Map<K, V> map) {
     return newRubyHash(map);
-  }
-
-  public static <K, V> RubyHash<K, V> rh(LinkedHashMap<K, V> map,
-      boolean defensiveCopy) {
-    return newRubyHash(map, defensiveCopy);
   }
 
   public static <K, V> RubyHash<K, V> rh(K key, V value) {
@@ -235,10 +228,6 @@ public final class RubyCollections {
 
   public static <K, V> Entry<K, V> hp(K key, V value) {
     return new SimpleEntry<K, V>(key, value);
-  }
-
-  public static void main(String[] args) {
-    puts(ra(1, 2, 3).permutation(3).toA());
   }
 
 }
