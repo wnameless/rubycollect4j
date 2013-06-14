@@ -34,8 +34,7 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.collections.comparators.ComparableComparator;
-
+import cleanzephyr.rebycollect4j.util.ComparableComparator;
 import cleanzephyr.rubycollect4j.block.BooleanBlock;
 import cleanzephyr.rubycollect4j.block.InjectBlock;
 import cleanzephyr.rubycollect4j.block.InjectWithInitBlock;
@@ -787,13 +786,13 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return newRubyEnumerator(new SliceBeforeIterable<E>(iter, regex));
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({ "unchecked", "rawtypes" })
   public RubyArray<E> sort() {
     RubyArray<E> rubyArray = newRubyArray(iter);
     if (rubyArray.size() > 0) {
       E sample = rubyArray.first();
       if (sample instanceof Comparable) {
-        Collections.sort(rubyArray, ComparableComparator.getInstance());
+        Collections.sort(rubyArray, new ComparableComparator());
         return rubyArray;
       }
     }

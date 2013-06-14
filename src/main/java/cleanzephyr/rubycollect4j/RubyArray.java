@@ -30,8 +30,7 @@ import java.util.ListIterator;
 import java.util.Random;
 import java.util.Set;
 
-import org.apache.commons.collections.comparators.ComparableComparator;
-
+import cleanzephyr.rebycollect4j.util.ComparableComparator;
 import cleanzephyr.rubycollect4j.block.Block;
 import cleanzephyr.rubycollect4j.block.BooleanBlock;
 import cleanzephyr.rubycollect4j.block.IndexBlock;
@@ -128,10 +127,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     }
     E sample = get(0);
     if (sample instanceof Comparable) {
-      @SuppressWarnings("unchecked")
+      @SuppressWarnings({ "unchecked", "rawtypes" })
       int index =
           Collections.binarySearch(list, target,
-              ComparableComparator.getInstance());
+              new ComparableComparator());
       return index < 0 ? null : get(index);
     }
     Object[] array = toArray();
