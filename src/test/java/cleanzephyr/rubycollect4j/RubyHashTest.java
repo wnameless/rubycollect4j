@@ -462,4 +462,11 @@ public class RubyHashTest {
     assertEquals(ra(2, 6, 4, 2, null), rh.valuesAt(1, 5, 3, 1, 7));
   }
 
+  @Test
+  public void testValueʔ() {
+    rh = rh(1, 2, 3, 4, 5, 6);
+    assertTrue(rh.valueʔ(4));
+    assertFalse(rh.valueʔ(8));
+  }
+
 }
