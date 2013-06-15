@@ -43,6 +43,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 public class RubyArrayTest {
+
   private RubyArray<Integer> ra;
 
   @Test
@@ -825,27 +826,6 @@ public class RubyArrayTest {
         ra(ra(1, 2), ra(3, 4), ra(4, 4), ra(6, 7));
     assertEquals(ra(3, 4), ra.rassoc(4));
     assertNull(ra.rassoc(6));
-  }
-
-  @Test
-  public void testReject() {
-    ra = ra(1, 2, 3, 4);
-    assertEquals(RubyEnumerator.class, ra.reject().getClass());
-    assertEquals(ra(1, 2, 3, 4), ra.reject().toA());
-  }
-
-  @Test
-  public void testRejectWithBlock() {
-    ra = ra(1, 2, 3, 4);
-    assertEquals(ra(1, 2), ra.reject(new BooleanBlock<Integer>() {
-
-      @Override
-      public boolean yield(Integer item) {
-        return item > 2;
-      }
-
-    }));
-    assertEquals(ra(1, 2, 3, 4), ra);
   }
 
   @Test

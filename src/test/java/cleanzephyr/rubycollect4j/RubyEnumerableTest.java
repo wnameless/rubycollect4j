@@ -49,6 +49,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 public class RubyEnumerableTest {
+
   private RubyEnumerable<Integer> re;
 
   @Test

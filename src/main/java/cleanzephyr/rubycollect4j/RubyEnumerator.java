@@ -24,7 +24,6 @@ import java.util.Iterator;
 
 import cleanzephyr.rubycollect4j.block.ItemBlock;
 
-import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
 import static com.google.common.collect.Lists.newArrayList;
 
 public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
@@ -50,13 +49,11 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
     return this;
   }
 
-  public RubyArray<E> each(ItemBlock<E> block) {
-    RubyArray<E> rubyArray = newRubyArray();
+  public RubyEnumerator<E> each(ItemBlock<E> block) {
     for (E item : iter) {
       block.yield(item);
-      rubyArray.add(item);
     }
-    return rubyArray;
+    return this;
   }
 
   @Override

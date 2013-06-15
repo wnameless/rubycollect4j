@@ -52,7 +52,9 @@ import static com.google.common.collect.Sets.newLinkedHashSet;
 
 /**
  * 
- * @author WMW
+ * RubyArray implements all methods refer to the Array of Ruby language.
+ * RubyArray is also a Java List.
+ * 
  * @param <E>
  */
 public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
@@ -60,23 +62,59 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   private final List<E> list;
   private final Random rand = new Random();
 
+  /**
+   * Static factory method to build an empty RubyArray.
+   * 
+   * @return a new RubyArray
+   */
   public static <E> RubyArray<E> newRubyArray() {
     List<E> list = newArrayList();
     return new RubyArray<E>(list);
   }
 
+  /**
+   * Static factory method to build an RubyArray by an Iterable.
+   * 
+   * @param iter
+   *          an Iterable
+   * @return a new RubyArray
+   */
   public static <E> RubyArray<E> newRubyArray(Iterable<E> iter) {
     return new RubyArray<E>(newArrayList(iter));
   }
 
+  /**
+   * Static factory method to build an RubyArray by an Iterator.
+   * 
+   * @param iter
+   *          an Iterator
+   * @return a new RubyArray
+   */
   public static <E> RubyArray<E> newRubyArray(Iterator<E> iter) {
     return new RubyArray<E>(newArrayList(iter));
   }
 
+  /**
+   * Static factory method to build an RubyArray by an List.
+   * 
+   * @param list
+   *          a List
+   * @return a new RubyArray
+   */
   public static <E> RubyArray<E> newRubyArray(List<E> list) {
     return new RubyArray<E>(list);
   }
 
+  /**
+   * Static factory method to build an RubyArray by an List. It makes a
+   * defensive copy if specified.
+   * 
+   * @param list
+   *          a List
+   * @param defensiveCopy
+   *          true If defensive copy required and false otherwise
+   * @return a new RubyArray
+   */
   public static <E> RubyArray<E> newRubyArray(List<E> list,
       boolean defensiveCopy) {
     if (defensiveCopy) {
@@ -86,15 +124,36 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     }
   }
 
+  /**
+   * Static factory method to build an RubyArray by varargs.
+   * 
+   * @param elements
+   *          varargs
+   * @return a new RubyArray
+   */
   public static <E> RubyArray<E> newRubyArray(E... elements) {
     return new RubyArray<E>(newArrayList(elements));
   }
 
+  /**
+   * Private constructor to enhance static factory methods and prevent from
+   * inheritance.
+   * 
+   * @param list
+   *          an List
+   */
   private RubyArray(List<E> list) {
     super(list);
     this.list = list;
   }
 
+  /**
+   * Find a List element which contains target as the first element.
+   * 
+   * @param target
+   *          the first element of returned List
+   * @return a List or null
+   */
   public <S> RubyArray<S> assoc(S target) {
     for (E item : list) {
       if (item instanceof List) {
@@ -108,6 +167,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return null;
   }
 
+  /**
+   * Return the element at any index. -1 represents the last index and so on.
+   * 
+   * @param index
+   *          the index of a element
+   * @return an element or null
+   */
   public E at(int index) {
     if (isEmpty()) {
       return null;
@@ -121,6 +187,14 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   }
 
   // TODO: Implement bsearch to take code block
+  /**
+   * Use binary search to find a element. Assume this RubyArray is already
+   * sorted.
+   * 
+   * @param target
+   *          the element to be searched
+   * @return an element or null
+   */
   public E bsearch(E target) {
     if (size() == 0) {
       return null;
@@ -129,8 +203,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     if (sample instanceof Comparable) {
       @SuppressWarnings({ "unchecked", "rawtypes" })
       int index =
-          Collections.binarySearch(list, target,
-              new ComparableComparator());
+          Collections.binarySearch(list, target, new ComparableComparator());
       return index < 0 ? null : get(index);
     }
     Object[] array = toArray();
@@ -138,11 +211,28 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return index < 0 ? null : get(index);
   }
 
+  /**
+   * Use binary search with a Comparator to find a element. Assume this
+   * RubyArray is already sorted.
+   * 
+   * @param target
+   *          the element to be searched
+   * @param comp
+   *          a Comparator is used to sort this RubyArray
+   * @return an element or null
+   */
   public E bsearch(E target, Comparator<? super E> comp) {
     int index = Collections.binarySearch(list, target, comp);
     return index < 0 ? null : get(index);
   }
 
+  /**
+   * Generate all combinations of length n with elements of this RubyArray.
+   * 
+   * @param n
+   *          the length of all combinations
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<RubyArray<E>> combination(int n) {
     RubyArray<RubyArray<E>> comb = newRubyArray();
     if (n < 0) {
@@ -158,6 +248,16 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     }
   }
 
+  /**
+   * Generate all combinations of length n with elements of this RubyArray and
+   * yield them with a block.
+   * 
+   * @param n
+   *          the length of all combinations
+   * @param block
+   *          a block to yield each combination
+   * @return this RubyArray
+   */
   public RubyArray<E> combination(int n, ItemBlock<RubyArray<E>> block) {
     for (RubyArray<E> c : combination(n)) {
       block.yield(c);
@@ -165,6 +265,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return this;
   }
 
+  /**
+   * Remove all null elements and store others in a new RubyArray.
+   * 
+   * @return a new RubyArray
+   */
   public RubyArray<E> compact() {
     RubyArray<E> rubyArray = newRubyArray();
     for (E item : list) {
@@ -175,6 +280,12 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return rubyArray;
   }
 
+  /**
+   * Remove all null elements in this RubyArray. Return null if nothing is
+   * removed.
+   * 
+   * @return this RubyArray or null
+   */
   public RubyArray<E> compactǃ() {
     boolean isCompacted = false;
     ListIterator<E> li = listIterator();
@@ -188,11 +299,25 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return isCompacted ? this : null;
   }
 
+  /**
+   * Append all elements of other List in this RubyArray.
+   * 
+   * @param other
+   *          a List
+   * @return this RubyArray
+   */
   public RubyArray<E> concat(List<E> other) {
     addAll(other);
     return this;
   }
 
+  /**
+   * Return the number of certain elements in this RubyArray.
+   * 
+   * @param target
+   *          element to be counted
+   * @return an int
+   */
   public int count(E target) {
     int count = 0;
     for (E item : list) {
@@ -203,6 +328,14 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return count;
   }
 
+  /**
+   * Delete all elements which equals to target. Return null if nothing is
+   * deleted.
+   * 
+   * @param target
+   *          element to be deleted
+   * @return the target or null
+   */
   public E delete(E target) {
     boolean isDeleted = false;
     ListIterator<E> li = listIterator();
@@ -216,6 +349,16 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return isDeleted ? target : null;
   }
 
+  /**
+   * Delete all elements which equals to target. Return the result of the block
+   * if nothing is deleted.
+   * 
+   * @param target
+   *          element to be deleted
+   * @param block
+   *          yield if nothing is deleted
+   * @return a element
+   */
   public E delete(E target, Block<E> block) {
     boolean isDeleted = false;
     ListIterator<E> li = listIterator();
@@ -229,6 +372,14 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return isDeleted ? target : block.yield();
   }
 
+  /**
+   * Delete the element of any index. -1 represents the last index. Return null
+   * if index is not found.
+   * 
+   * @param index
+   *          the index of a element
+   * @return an element or null
+   */
   public E deleteAt(int index) {
     if (isEmpty()) {
       return null;
@@ -241,10 +392,22 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     }
   }
 
+  /**
+   * Return a RubyEnumerator of this RubyArray.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<E> deleteIf() {
     return newRubyEnumerator(this);
   }
 
+  /**
+   * Delete elements which the result yielded by the block are true.
+   * 
+   * @param block
+   *          determine if a element is deleted or not
+   * @return this RubyArray
+   */
   public RubyArray<E> deleteIf(BooleanBlock<E> block) {
     ListIterator<E> li = listIterator();
     while (li.hasNext()) {
@@ -256,6 +419,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return this;
   }
 
+  /**
+   * Return a RubyEnumerator of this RubyArray.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<E> each() {
     return newRubyEnumerator(list);
   }
@@ -267,6 +435,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return this;
   }
 
+  /**
+   * Return a RubyEnumerator of this RubyArray.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<Integer> eachIndex() {
     return newRubyEnumerator(new EachIndexIterable(size()));
   }
@@ -501,6 +674,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return sb.toString();
   }
 
+  /**
+   * Return a RubyEnumerator of this RubyArray.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<E> keepIf() {
     return newRubyEnumerator(list);
   }
@@ -654,20 +832,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return null;
   }
 
-  public RubyEnumerator<E> reject() {
-    return newRubyEnumerator(list);
-  }
-
-  public RubyArray<E> reject(BooleanBlock<E> block) {
-    RubyArray<E> rubyArray = newRubyArray();
-    for (E item : list) {
-      if (!block.yield(item)) {
-        rubyArray.push(item);
-      }
-    }
-    return rubyArray;
-  }
-
+  /**
+   * Return a RubyEnumerator of this RubyArray.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<E> rejectǃ() {
     return newRubyEnumerator(list);
   }
@@ -738,6 +907,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return this;
   }
 
+  /**
+   * Return a RubyEnumerator of this RubyArray.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<E> rindex() {
     return newRubyEnumerator(Lists.reverse(list));
   }
@@ -826,6 +1000,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return newRubyArray(samples);
   }
 
+  /**
+   * Return a RubyEnumerator of this RubyArray.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<E> selectǃ() {
     return newRubyEnumerator(list);
   }

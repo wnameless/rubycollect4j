@@ -133,6 +133,11 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return newRubyEnumerator(new ChunkIterable<E, K>(iter, block));
   }
 
+  /**
+   * Return a RubyEnumerator of this RubyEnumerable.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<E> collect() {
     return newRubyEnumerator(iter);
   }
@@ -145,6 +150,11 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return rubyArray;
   }
 
+  /**
+   * Return a RubyEnumerator of this RubyEnumerable.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<E> collectConcat() {
     return newRubyEnumerator(iter);
   }
@@ -200,6 +210,11 @@ public class RubyEnumerable<E> implements Iterable<E> {
     }
   }
 
+  /**
+   * Return a RubyEnumerator of this RubyEnumerable.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<E> detect() {
     return newRubyEnumerator(iter);
   }
@@ -265,6 +280,11 @@ public class RubyEnumerable<E> implements Iterable<E> {
     }
   }
 
+  /**
+   * Return a RubyEnumerator of this RubyEnumerable.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<E> eachEntry() {
     return newRubyEnumerator(iter);
   }
@@ -328,6 +348,11 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return detect(block);
   }
 
+  /**
+   * Return a RubyEnumerator of this RubyEnumerable.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<E> findAll() {
     return newRubyEnumerator(iter);
   }
@@ -342,6 +367,11 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return rubyArray;
   }
 
+  /**
+   * Return a RubyEnumerator of this RubyEnumerable.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<E> findIndex() {
     return newRubyEnumerator(iter);
   }
@@ -389,6 +419,11 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return rubyArray;
   }
 
+  /**
+   * Return a RubyEnumerator of this RubyEnumerable.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<E> flatMap() {
     return collectConcat();
   }
@@ -421,6 +456,11 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return rubyArray;
   }
 
+  /**
+   * Return a RubyEnumerator of this RubyEnumerable.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<E> groupBy() {
     return newRubyEnumerator(iter);
   }
@@ -534,6 +574,11 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return result;
   }
 
+  /**
+   * Return a RubyEnumerator of this RubyEnumerable.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<E> map() {
     return collect();
   }
@@ -710,6 +755,11 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return count == 1;
   }
 
+  /**
+   * Return a RubyEnumerator of this RubyEnumerable.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<E> partition() {
     return newRubyEnumerator(iter);
   }
@@ -744,6 +794,11 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return inject(methodName);
   }
 
+  /**
+   * Return a RubyEnumerator of this RubyEnumerable.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<E> reject() {
     return newRubyEnumerator(iter);
   }
@@ -770,6 +825,11 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return this;
   }
 
+  /**
+   * Return a RubyEnumerator of this RubyEnumerable.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<E> select() {
     return findAll();
   }
@@ -802,6 +862,11 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return newRubyArray(elements);
   }
 
+  /**
+   * Return a RubyEnumerator of this RubyEnumerable.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<E> sortBy() {
     return newRubyEnumerator(iter);
   }

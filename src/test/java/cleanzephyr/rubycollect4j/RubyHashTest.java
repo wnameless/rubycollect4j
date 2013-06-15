@@ -45,6 +45,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 public class RubyHashTest {
+
   private RubyHash<Integer, Integer> rh;
 
   @Test
@@ -725,28 +726,27 @@ public class RubyHashTest {
 
   @Test
   public void testMaxByWithComparator() {
-    assertEquals(hp(3L, 4L).toString(),
-        rh(1, 6, 2, 5, 3, 4).maxBy(new Comparator<Long>() {
+    assertEquals(hp(3, 4), rh(1, 6, 2, 5, 3, 4).maxBy(new Comparator<Long>() {
 
-          @Override
-          public int compare(Long o1, Long o2) {
-            return (int) (o2 - o1);
-          }
+      @Override
+      public int compare(Long o1, Long o2) {
+        return (int) (o2 - o1);
+      }
 
-        }, new EntryTransformBlock<Integer, Integer, Long>() {
+    }, new EntryTransformBlock<Integer, Integer, Long>() {
 
-          @Override
-          public Long yield(Integer key, Integer value) {
-            return Long.valueOf(value - key);
-          }
+      @Override
+      public Long yield(Integer key, Integer value) {
+        return Long.valueOf(value - key);
+      }
 
-        }).toString());
+    }));
   }
 
   @Test
   public void testMaxBy() {
     assertEquals(
-        hp(1L, 6L).toString(),
+        hp(1, 6),
         rh(1, 6, 2, 5, 3, 4).maxBy(
             new EntryTransformBlock<Integer, Integer, Long>() {
 
@@ -755,33 +755,32 @@ public class RubyHashTest {
                 return Long.valueOf(value - key);
               }
 
-            }).toString());
+            }));
   }
 
   @Test
   public void testMinByWithComparator() {
-    assertEquals(hp(1L, 6L).toString(),
-        rh(1, 6, 2, 5, 3, 4).minBy(new Comparator<Long>() {
+    assertEquals(hp(1, 6), rh(1, 6, 2, 5, 3, 4).minBy(new Comparator<Long>() {
 
-          @Override
-          public int compare(Long o1, Long o2) {
-            return (int) (o2 - o1);
-          }
+      @Override
+      public int compare(Long o1, Long o2) {
+        return (int) (o2 - o1);
+      }
 
-        }, new EntryTransformBlock<Integer, Integer, Long>() {
+    }, new EntryTransformBlock<Integer, Integer, Long>() {
 
-          @Override
-          public Long yield(Integer key, Integer value) {
-            return Long.valueOf(value - key);
-          }
+      @Override
+      public Long yield(Integer key, Integer value) {
+        return Long.valueOf(value - key);
+      }
 
-        }).toString());
+    }));
   }
 
   @Test
   public void testMinBy() {
     assertEquals(
-        hp(3L, 4L).toString(),
+        hp(3, 4),
         rh(1, 6, 2, 5, 3, 4).minBy(
             new EntryTransformBlock<Integer, Integer, Long>() {
 
@@ -790,14 +789,14 @@ public class RubyHashTest {
                 return Long.valueOf(value - key);
               }
 
-            }).toString());
+            }));
   }
 
   @SuppressWarnings("unchecked")
   @Test
   public void testMinmaxByWithComparator() {
-    assertEquals(ra(hp(1L, 6L), hp(3L, 4L)).toString(), rh(1, 6, 2, 5, 3, 4)
-        .minmaxBy(new Comparator<Long>() {
+    assertEquals(ra(hp(1, 6), hp(3, 4)),
+        rh(1, 6, 2, 5, 3, 4).minmaxBy(new Comparator<Long>() {
 
           @Override
           public int compare(Long o1, Long o2) {
@@ -811,21 +810,23 @@ public class RubyHashTest {
             return Long.valueOf(value - key);
           }
 
-        }).toString());
+        }));
   }
 
   @SuppressWarnings("unchecked")
   @Test
   public void testMinmaxBy() {
-    assertEquals(ra(hp(3L, 4L), hp(1L, 6L)).toString(), rh(1, 6, 2, 5, 3, 4)
-        .minmaxBy(new EntryTransformBlock<Integer, Integer, Long>() {
+    assertEquals(
+        ra(hp(3, 4), hp(1, 6)),
+        rh(1, 6, 2, 5, 3, 4).minmaxBy(
+            new EntryTransformBlock<Integer, Integer, Long>() {
 
-          @Override
-          public Long yield(Integer key, Integer value) {
-            return Long.valueOf(value - key);
-          }
+              @Override
+              public Long yield(Integer key, Integer value) {
+                return Long.valueOf(value - key);
+              }
 
-        }).toString());
+            }));
   }
 
   @Test
@@ -927,7 +928,7 @@ public class RubyHashTest {
   @SuppressWarnings("unchecked")
   @Test
   public void testSortByWithComparator() {
-    assertEquals(ra(hp(3L, 4L), hp(2L, 5L), hp(1L, 6L)).toString(),
+    assertEquals(ra(hp(3, 4), hp(2, 5), hp(1, 6)),
         rh(1, 6, 2, 5, 3, 4).sortBy(new Comparator<Long>() {
 
           @Override
@@ -942,14 +943,14 @@ public class RubyHashTest {
             return Long.valueOf(key);
           }
 
-        }).toString());
+        }));
   }
 
   @SuppressWarnings("unchecked")
   @Test
   public void testSortByBy() {
     assertEquals(
-        ra(hp(1L, 6L), hp(2L, 5L), hp(3L, 4L)).toString(),
+        ra(hp(1, 6), hp(2, 5), hp(3, 4)),
         rh(1, 6, 2, 5, 3, 4).sortBy(
             new EntryTransformBlock<Integer, Integer, Long>() {
 
@@ -958,7 +959,7 @@ public class RubyHashTest {
                 return Long.valueOf(key);
               }
 
-            }).toString());
+            }));
   }
 
   @SuppressWarnings("unchecked")

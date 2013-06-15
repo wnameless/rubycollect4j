@@ -22,6 +22,12 @@ package cleanzephyr.rebycollect4j.util;
 
 import java.util.Comparator;
 
+/**
+ * 
+ * A Comparator which is designed to compare any 2 Comparable objects.
+ * 
+ * @param <E>
+ */
 public final class ComparableComparator<E extends Comparable<E>> implements
     Comparator<E> {
 
