@@ -20,10 +20,10 @@
  */
 package cleanzephyr.rubycollect4j.block;
 
-import java.util.Map;
+import java.util.Map.Entry;
 
 public interface EntryInjectWithInitBlock<K, V, S> {
 
-  public S yield(S memo, Map.Entry<K, V> item);
+  public S yield(S memo, Entry<K, V> item);
 
 }

@@ -444,6 +444,12 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return newRubyEnumerator(new EachIndexIterable(size()));
   }
 
+  /**
+   * Yield each index of elements to the block.
+   * 
+   * @param block
+   * @return this RubyArray
+   */
   public RubyArray<E> eachIndex(IndexBlock block) {
     for (int i = 0; i < size(); i++) {
       block.yield(i);
@@ -451,14 +457,35 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return this;
   }
 
+  /**
+   * Check if this is an empty RubyArray.
+   * 
+   * @return true if this RubyArray is empty, false otherwise.
+   */
   public boolean emptyʔ() {
     return isEmpty();
   }
 
+  /**
+   * Equivalent to equals().
+   * 
+   * @param o
+   *          any Object
+   * @return true if 2 objects are equals, false otherwise
+   */
   public boolean eqlʔ(Object o) {
     return equals(o);
   }
 
+  /**
+   * Return the element at any index. -1 represents the last index and so on.
+   * 
+   * @param index
+   *          the index of a element
+   * @return an element
+   * @throws IllegalArgumentException
+   *           if index is not found
+   */
   public E fetch(int index) {
     if (index >= size() || index < -size()) {
       throw new IllegalArgumentException("index " + index
@@ -467,6 +494,15 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return at(index);
   }
 
+  /**
+   * Return the element at any index. -1 represents the last index and so on.
+   * 
+   * @param index
+   *          the index of a element
+   * @param defaultValue
+   *          the default value while index is not found
+   * @return an element
+   */
   public E fetch(int index, E defaultValue) {
     if (index >= size() || index < -size()) {
       return defaultValue;
@@ -474,6 +510,15 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return at(index);
   }
 
+  /**
+   * Return the element at any index. -1 represents the last index and so on.
+   * 
+   * @param index
+   *          the index of a element
+   * @param block
+   *          yield index to the block if index is not found
+   * @return an element or null
+   */
   public E fetch(int index, IndexBlock block) {
     if (index >= size() || index < -size()) {
       block.yield(index);
@@ -482,6 +527,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return at(index);
   }
 
+  /**
+   * Fill the whole RubyArray with the element.
+   * 
+   * @param item
+   *          the element to be filled
+   * @return this RubyArray
+   */
   public RubyArray<E> fill(E item) {
     for (int i = 0; i < size(); i++) {
       set(i, item);
@@ -489,6 +541,15 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return this;
   }
 
+  /**
+   * Start to fill the RubyArray from an index with the element.
+   * 
+   * @param item
+   *          the element to be filled
+   * @param start
+   *          where to begin
+   * @return this RubyArray
+   */
   public RubyArray<E> fill(E item, int start) {
     if (start <= -size()) {
       return fill(item);
@@ -502,6 +563,17 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return this;
   }
 
+  /**
+   * Start to fill part of the RubyArray from an index with the element.
+   * 
+   * @param item
+   *          the element to be filled
+   * @param start
+   *          where to begin
+   * @param length
+   *          define the interval to be filled
+   * @return this RubyArray
+   */
   public RubyArray<E> fill(E item, int start, int length) {
     if (start < 0) {
       start += size();
@@ -523,6 +595,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return this;
   }
 
+  /**
+   * Fill the whole RubyArray with the element returned by the block.
+   * 
+   * @param block
+   *          return the element to be filled
+   * @return this RubyArray
+   */
   public RubyArray<E> fill(IndexWithReturnBlock<E> block) {
     for (int i = 0; i < size(); i++) {
       set(i, block.yield(i));
@@ -530,6 +609,16 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return this;
   }
 
+  /**
+   * Strat fill the RubyArray from an index with the element returned by the
+   * block.
+   * 
+   * @param start
+   *          where to begin
+   * @param block
+   *          return the element to be filled
+   * @return this RubyArray
+   */
   public RubyArray<E> fill(int start, IndexWithReturnBlock<E> block) {
     if (start <= -size()) {
       return fill(block);
@@ -543,6 +632,18 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return this;
   }
 
+  /**
+   * Strat fill part of the RubyArray from an index with the element returned by
+   * the block.
+   * 
+   * @param start
+   *          where to begin
+   * @param length
+   *          define the interval to be filled
+   * @param block
+   *          return the element to be filled
+   * @return this RubyArray
+   */
   public RubyArray<E>
       fill(int start, int length, IndexWithReturnBlock<E> block) {
     if (start < 0) {
@@ -565,6 +666,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return this;
   }
 
+  /**
+   * Flatten RubyArray of RubyArrays to 1 dimension RubyArray.
+   * 
+   * @return a new RubyArray
+   */
   @SuppressWarnings("unchecked")
   public <S> RubyArray<S> flatten() {
     RubyArray<S> rubyArray = newRubyArray();
@@ -593,10 +699,22 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return rubyArray;
   }
 
+  /**
+   * Equivalent to hashCode().
+   * 
+   * @return an int
+   */
   public int hash() {
     return hashCode();
   }
 
+  /**
+   * Find the index of the element which is true returned by the yielded block.
+   * 
+   * @param block
+   *          to filter the target
+   * @return an element or null
+   */
   public Integer index(BooleanBlock<E> block) {
     Integer index = null;
     for (int i = 0; i < size(); i++) {
@@ -607,6 +725,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return index;
   }
 
+  /**
+   * Find the index of the target element.
+   * 
+   * @param target
+   *          to be found
+   * @return an element or null
+   */
   public Integer index(E target) {
     int index = indexOf(target);
     return index == -1 ? null : index;
@@ -841,6 +966,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return newRubyEnumerator(list);
   }
 
+  /**
+   * Delete all elements which are false returned by the block.
+   * 
+   * @param block
+   *          to check elements
+   * @return this RubyArray
+   */
   public RubyArray<E> rejectǃ(BooleanBlock<E> block) {
     int beforeLength = size();
     RubyArray<E> rubyArray = deleteIf(block);
@@ -1100,6 +1232,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return newRubyArray(slicedList);
   }
 
+  /**
+   * Eliminate all elements from other List and store into a new RubyArray.
+   * 
+   * @param other
+   *          any List
+   * @return a new RubyArray
+   */
   public RubyArray<E> minus(List<E> other) {
     List<E> minusList = newArrayList();
     for (E item : list) {
@@ -1113,14 +1252,33 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return newRubyArray(minusList);
   }
 
+  /**
+   * Equivalent to toString().
+   * 
+   * @return a String
+   */
   public String toS() {
     return toString();
   }
 
+  /**
+   * Equivalent to union().
+   * 
+   * @param other
+   *          any List
+   * @return a new RubyArray
+   */
   public RubyArray<E> U(RubyArray<E> other) {
     return union(other);
   }
 
+  /**
+   * Store all distinct elements into a new RubyArray.
+   * 
+   * @param other
+   *          any List
+   * @return a new RubyArray
+   */
   public RubyArray<E> union(List<E> other) {
     List<E> unionList = newArrayList();
     for (E item : list) {
@@ -1136,6 +1294,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return newRubyArray(unionList);
   }
 
+  /**
+   * Unique this RubyArray and store the result to a new RubyArray.
+   * 
+   * @return a new RubyArray
+   */
   public RubyArray<E> uniq() {
     Set<E> uniqSet = newLinkedHashSet();
     for (E item : list) {
@@ -1144,6 +1307,14 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return newRubyArray(uniqSet);
   }
 
+  /**
+   * Unique this RubyArray by the result returned by the block and store the
+   * result to a new RubyArray.
+   * 
+   * @param block
+   *          to transform elements
+   * @return a new RubyArray
+   */
   public <S> RubyArray<E> uniq(ItemTransformBlock<E, S> block) {
     List<E> uniqList = newArrayList();
     Set<S> uniqSet = newLinkedHashSet();
@@ -1157,6 +1328,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return newRubyArray(uniqList);
   }
 
+  /**
+   * Unique this RubyArray. Return null if unchanged.
+   * 
+   * @return this RubyArray or null
+   */
   public RubyArray<E> uniqǃ() {
     int beforeSize = size();
     RubyArray<E> uniqList = uniq();
@@ -1165,6 +1341,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return size() == beforeSize ? null : this;
   }
 
+  /**
+   * Unique this RubyArray by the result returned by the block.
+   * 
+   * @param block
+   *          to transform elements
+   * @return this RubyArray
+   */
   public <S> RubyArray<E> uniqǃ(ItemTransformBlock<E, S> block) {
     int beforeSize = size();
     List<E> uniqList = newArrayList();
@@ -1181,11 +1364,25 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return size() == beforeSize ? null : this;
   }
 
+  /**
+   * Put an element at beginning of this RubyArray
+   * 
+   * @param item
+   *          an element
+   * @return this RubyArray
+   */
   public RubyArray<E> unshift(E item) {
     add(0, item);
     return this;
   }
 
+  /**
+   * Store all elements from indice in a RubyArray.
+   * 
+   * @param indice
+   *          where elements to be found
+   * @return a new RubyArray
+   */
   public RubyArray<E> valuesAt(int... indice) {
     List<E> values = newArrayList();
     for (int index : indice) {
@@ -1194,30 +1391,79 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return newRubyArray(values);
   }
 
+  /**
+   * Equivalent to multiply().
+   * 
+   * @param n
+   *          multiply n times
+   * @return a new RubyArray
+   */
   public RubyArray<E> X(int n) {
     return multiply(n);
   }
 
+  /**
+   * Equivalent to join().
+   * 
+   * @param separator
+   *          to join elements
+   * @return a String
+   */
   public String X(String separator) {
     return join(separator);
   }
 
+  /**
+   * Equivalent to union().
+   * 
+   * @param other
+   *          any List
+   * @return a new RubyArray
+   */
   public RubyArray<E> ǀ(RubyArray<E> other) {
     return union(other);
   }
 
+  /**
+   * Equivalent to intersection().
+   * 
+   * @param other
+   *          any List
+   * @return a new RubyArray
+   */
   public RubyArray<E> Ⴖ(List<E> other) {
     return intersection(other);
   }
 
+  /**
+   * Equivalent to push().
+   * 
+   * @param item
+   *          an element
+   * @return this RubyArray
+   */
   public RubyArray<E> ㄍ(E item) {
     return push(item);
   }
 
+  /**
+   * Equivalent to minus().
+   * 
+   * @param other
+   *          any List
+   * @return a new RubyArray
+   */
   public RubyArray<E> ㄧ(List<E> other) {
     return minus(other);
   }
 
+  /**
+   * Equivalent to plus().
+   * 
+   * @param other
+   *          any List
+   * @return a new RubyArray
+   */
   public RubyArray<E> 十(List<E> other) {
     return plus(other);
   }
