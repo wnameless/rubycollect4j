@@ -38,8 +38,8 @@ import cleanzephyr.rubycollect4j.block.ItemWithIndexBlock;
 import cleanzephyr.rubycollect4j.block.ItemWithObjectBlock;
 import cleanzephyr.rubycollect4j.block.ListBlock;
 
-import static cleanzephyr.rebycollect4j.util.Pair.newPair;
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
+import static cleanzephyr.rubycollect4j.RubyCollections.newPair;
 import static cleanzephyr.rubycollect4j.RubyCollections.ra;
 import static cleanzephyr.rubycollect4j.RubyCollections.rh;
 import static cleanzephyr.rubycollect4j.RubyEnumerable.newRubyEnumerable;

@@ -24,7 +24,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 
-import static cleanzephyr.rebycollect4j.util.Pair.newPair;
+import static cleanzephyr.rubycollect4j.RubyCollections.newPair;
 
 /**
  * 

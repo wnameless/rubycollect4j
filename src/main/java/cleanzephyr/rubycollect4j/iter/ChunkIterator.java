@@ -29,8 +29,8 @@ import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
 
 import com.google.common.collect.PeekingIterator;
 
-import static cleanzephyr.rebycollect4j.util.Pair.newPair;
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
+import static cleanzephyr.rubycollect4j.RubyCollections.newPair;
 import static com.google.common.collect.Iterators.peekingIterator;
 
 public final class ChunkIterator<E, K> implements

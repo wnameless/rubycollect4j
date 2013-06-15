@@ -30,9 +30,9 @@ import java.util.regex.Pattern;
 
 import org.junit.Test;
 
-import static cleanzephyr.rebycollect4j.util.Pair.newPair;
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
 import static cleanzephyr.rubycollect4j.RubyCollections.hp;
+import static cleanzephyr.rubycollect4j.RubyCollections.newPair;
 import static cleanzephyr.rubycollect4j.RubyCollections.qr;
 import static cleanzephyr.rubycollect4j.RubyCollections.qw;
 import static cleanzephyr.rubycollect4j.RubyCollections.qx;

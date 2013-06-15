@@ -37,8 +37,8 @@ import cleanzephyr.rubycollect4j.block.ItemBlock;
 import cleanzephyr.rubycollect4j.block.ItemToRubyArrayBlock;
 import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
 
-import static cleanzephyr.rebycollect4j.util.Pair.newPair;
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
+import static cleanzephyr.rubycollect4j.RubyCollections.newPair;
 import static cleanzephyr.rubycollect4j.RubyEnumerator.newRubyEnumerator;
 import static com.google.common.collect.Maps.newLinkedHashMap;
 
