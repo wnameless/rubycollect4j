@@ -402,7 +402,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   }
 
   /**
-   * Delete elements which the result yielded by the block are true.
+   * Delete elements which the result returned by the block are true.
    * 
    * @param block
    *          determine if a element is deleted or not
@@ -709,7 +709,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   }
 
   /**
-   * Find the index of the element which is true returned by the yielded block.
+   * Find the index of the element which is true returned by the block.
    * 
    * @param block
    *          to filter the target
@@ -737,6 +737,15 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return index == -1 ? null : index;
   }
 
+  /**
+   * Start to insert elements to this RubyArray from the index.
+   * 
+   * @param index
+   *          where to insert
+   * @param args
+   *          elements to be inserted
+   * @return this RubyArray
+   */
   public RubyArray<E> insert(int index, E... args) {
     if (index < -size()) {
       throw new IllegalArgumentException("IndexError: index " + index
@@ -761,10 +770,22 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return this;
   }
 
+  /**
+   * Equivalent to toString().
+   * 
+   * @return a String
+   */
   public String inspect() {
     return toString();
   }
 
+  /**
+   * Store all common elements into a new RubyArray.
+   * 
+   * @param other
+   *          any List
+   * @return a new RubyArray
+   */
   public RubyArray<E> intersection(List<E> other) {
     List<E> andList = newArrayList();
     for (E item : this) {
@@ -775,6 +796,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return newRubyArray(andList);
   }
 
+  /**
+   * Transform each element to a String, then join them.
+   * 
+   * @return a String
+   */
   public String join() {
     StringBuilder sb = new StringBuilder();
     for (E item : list) {
@@ -785,6 +811,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return sb.toString();
   }
 
+  /**
+   * Transform each element to a String, then join them by the separator.
+   * 
+   * @param separator
+   *          to join elements
+   * @return a String
+   */
   public String join(String separator) {
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < size(); i++) {
@@ -808,6 +841,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return newRubyEnumerator(list);
   }
 
+  /**
+   * Keep elements which the result returned by the block are false.
+   * 
+   * @param block
+   *          to filter elements
+   * @return this RubyArray
+   */
   public RubyArray<E> keepIf(BooleanBlock<E> block) {
     ListIterator<E> li = listIterator();
     while (li.hasNext()) {
@@ -819,28 +859,52 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return this;
   }
 
+  /**
+   * Return the last element of this RubyArray.
+   * 
+   * @return an element
+   */
   public E last() {
-    List<E> reverseList = Lists.reverse(list);
-    if (reverseList.isEmpty()) {
+    if (isEmpty()) {
       return null;
     } else {
-      return reverseList.get(0);
+      return get(size() - 1);
     }
   }
 
+  /**
+   * Return last n elements of this RubyArray.
+   * 
+   * @param n
+   *          number of elements
+   * @return a new RubyArray
+   */
   public RubyArray<E> last(int n) {
-    List<E> reverseList = Lists.reverse(list);
     RubyArray<E> rubyArray = newRubyArray();
-    for (int i = 0; i < n && i < reverseList.size(); i++) {
-      rubyArray.unshift(reverseList.get(i));
+    for (int i = size() - 1; i >= size() - n && i >= 0; i--) {
+      rubyArray.unshift(get(i));
     }
     return rubyArray;
   }
 
+  /**
+   * Equivalent to size().
+   * 
+   * @return an int
+   */
   public int length() {
     return size();
   }
 
+  /**
+   * Multiply this RubyArray by n times.
+   * 
+   * @param n
+   *          multiply n times
+   * @return a new RubyArray
+   * @throws IllegalArgumentException
+   *           if n less than 0
+   */
   public RubyArray<E> multiply(int n) {
     if (n < 0) {
       throw new IllegalArgumentException("negative argument");
@@ -854,14 +918,35 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return newRubyArray(multiplyList);
   }
 
+  /**
+   * Equivalent to join().
+   * 
+   * @param separator
+   *          to join elements
+   * @return a String
+   */
   public String multiply(String separator) {
     return join(separator);
   }
 
+  /**
+   * Generate a RubyEnumerator which contains all permutations of this
+   * RubyArray.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<RubyArray<E>> permutation() {
     return newRubyEnumerator(new PermutationIterable<E>(list, size()));
   }
 
+  /**
+   * Generate a RubyEnumerator which contains all permutations of n length of
+   * this RubyArray.
+   * 
+   * @param n
+   *          length of each permutation
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<RubyArray<E>> permutation(int n) {
     RubyArray<RubyArray<E>> perms = newRubyArray();
     if (n < 0) {
@@ -877,6 +962,15 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     }
   }
 
+  /**
+   * Yield all permutations of n length of this RubyArray to the block.
+   * 
+   * @param n
+   *          length of each permutation
+   * @param block
+   *          to yield each permutation
+   * @return this RubyArray
+   */
   public RubyArray<E> permutation(int n, ItemBlock<RubyArray<E>> block) {
     for (RubyArray<E> item : permutation(n)) {
       block.yield(item);
@@ -884,6 +978,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return this;
   }
 
+  /**
+   * Yield all permutations of this RubyArray to the block.
+   * 
+   * @param block
+   *          to yield each permutation
+   * @return this RubyArray
+   */
   public RubyArray<E> permutation(ItemBlock<RubyArray<E>> block) {
     for (RubyArray<E> item : permutation()) {
       block.yield(item);
@@ -891,6 +992,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return this;
   }
 
+  /**
+   * Append other List to self into a new RubyArray.
+   * 
+   * @param other
+   *          any List
+   * @return a new RubyArray
+   */
   public RubyArray<E> plus(List<E> other) {
     List<E> addList = newArrayList();
     for (E item : list) {
@@ -902,6 +1010,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return newRubyArray(addList);
   }
 
+  /**
+   * Remove the last element of this RubyArray.
+   * 
+   * @return an element or null
+   */
   public E pop() {
     if (isEmpty()) {
       return null;
@@ -910,6 +1023,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     }
   }
 
+  /**
+   * Remove the last n element of this RubyArray.
+   * 
+   * @param n
+   *          number of elements
+   * @return a new RubyArray
+   */
   public RubyArray<E> pop(int n) {
     if (n < 0) {
       throw new IllegalArgumentException("ArgumentError: negative array size");
@@ -922,14 +1042,38 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return rubyArray;
   }
 
+  /**
+   * Generate the production of self with other Lists.
+   * 
+   * @param others
+   *          Lists
+   * @return a new RubyArray of RubyArrays
+   */
   public RubyArray<RubyArray<E>> product(List<E>... others) {
     return newRubyEnumerable(new ProductIterable<E>(this, others)).toA();
   }
 
+  /**
+   * Generate the production of self with List of Lists.
+   * 
+   * @param others
+   *          List of Lists
+   * @return a new RubyArray of RubyArrays
+   */
   public RubyArray<RubyArray<E>> product(List<? extends List<E>> others) {
     return newRubyEnumerable(new ProductIterable<E>(this, others)).toA();
   }
 
+  /**
+   * Generate the production of self with List of Lists and yield them to the
+   * block.
+   * 
+   * @param others
+   *          List of Lists
+   * @param block
+   *          to yield each product result
+   * @return this RubyArray
+   */
   public RubyArray<E> product(List<? extends List<E>> others,
       ItemBlock<RubyArray<E>> block) {
     for (RubyArray<E> comb : product(others)) {
@@ -938,11 +1082,25 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return this;
   }
 
+  /**
+   * Equivalent to add().
+   * 
+   * @param item
+   *          an element
+   * @return this RubyArray
+   */
   public RubyArray<E> push(E item) {
     add(item);
     return this;
   }
 
+  /**
+   * Find a List element which contains target as the last element.
+   * 
+   * @param target
+   *          the last element of returned List
+   * @return a List or null
+   */
   public <S> RubyArray<S> rassoc(S target) {
     for (E item : list) {
       if (item instanceof List) {
@@ -983,6 +1141,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     }
   }
 
+  /**
+   * Generate all repeated combinations of this RubyArray.
+   * 
+   * @param n
+   *          length of each repeated combination
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<RubyArray<E>> repeatedCombination(int n) {
     RubyArray<RubyArray<E>> rc = newRubyArray();
     if (n < 0) {
@@ -995,6 +1160,16 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return newRubyEnumerator(new RepeatedCombinationIterable<E>(list, n));
   }
 
+  /**
+   * Generate all repeated combinations of n length of this RubyArray and yield
+   * to the block.
+   * 
+   * @param n
+   *          length of each repeated combination
+   * @param block
+   *          to yield each repeated combination
+   * @return this RubyArray
+   */
   public RubyArray<E> repeatedCombination(int n, ItemBlock<RubyArray<E>> block) {
     for (RubyArray<E> c : repeatedCombination(n)) {
       block.yield(c);
@@ -1002,6 +1177,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return this;
   }
 
+  /**
+   * Generate all repeated permutations of n length of this RubyArray.
+   * 
+   * @param n
+   *          length of each repeated permutation
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<RubyArray<E>> repeatedPermutation(int n) {
     RubyArray<RubyArray<E>> rp = newRubyArray();
     if (n < 0) {
@@ -1014,6 +1196,16 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return newRubyEnumerator(new RepeatedPermutationIterable<E>(list, n));
   }
 
+  /**
+   * Generate all repeated permutations of n length of this RubyArray and yield
+   * to the block.
+   * 
+   * @param n
+   *          length of each repeated permutation
+   * @param block
+   *          to yield each repeated permutation
+   * @return this RubyArray
+   */
   public RubyArray<E> repeatedPermutation(int n, ItemBlock<RubyArray<E>> block) {
     for (RubyArray<E> perm : repeatedPermutation(n)) {
       block.yield(perm);
@@ -1021,16 +1213,33 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return this;
   }
 
+  /**
+   * Replace all elements of self with other List
+   * 
+   * @param other
+   *          any List
+   * @return this RubyArray
+   */
   public RubyArray<E> replace(List<E> other) {
     clear();
     addAll(other);
     return this;
   }
 
+  /**
+   * Reverse this RubyArray and store into a new RubyArray.
+   * 
+   * @return a new RubyArray
+   */
   public RubyArray<E> reverse() {
     return newRubyArray(Lists.reverse(list));
   }
 
+  /**
+   * Reverse this RubyArray.
+   * 
+   * @return this RubyArray
+   */
   public RubyArray<E> reverseǃ() {
     int size = size();
     for (int i = 0; i < size; i++) {
@@ -1040,14 +1249,21 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   }
 
   /**
-   * Return a RubyEnumerator of this RubyArray.
+   * Find the last index of the element which is true returned by the block.
    * 
-   * @return a RubyEnumerator
+   * @param block
+   *          to filter the target
+   * @return an element or null
    */
   public RubyEnumerator<E> rindex() {
     return newRubyEnumerator(Lists.reverse(list));
   }
 
+  /**
+   * 
+   * @param block
+   * @return
+   */
   public Integer rindex(BooleanBlock<E> block) {
     Integer index = null;
     for (int i = size() - 1; i >= 0; i--) {
@@ -1058,11 +1274,23 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return index;
   }
 
+  /**
+   * Find the last index of the target element.
+   * 
+   * @param target
+   *          to be found
+   * @return an element or null
+   */
   public Integer rindex(E target) {
     int index = lastIndexOf(target);
     return index == -1 ? null : index;
   }
 
+  /**
+   * Move the first element to the last and store them to a new RubyArray.
+   * 
+   * @return a new RubyArray
+   */
   public RubyArray<E> rotate() {
     RubyArray<E> rubyArray = newRubyArray(list, true);
     if (rubyArray.size() > 0) {
@@ -1071,6 +1299,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return rubyArray;
   }
 
+  /**
+   * Move the first element to the last.
+   * 
+   * @return this RubyArray
+   */
   public RubyArray<E> rotateǃ() {
     if (size() > 0) {
       add(remove(0));
@@ -1078,22 +1311,35 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return this;
   }
 
-  public RubyArray<E> rotate(int count) {
+  /**
+   * Move the first element to the last n times and store them to a new
+   * RubyArray.
+   * 
+   * @param n
+   *          moves
+   * @return a new RubyArray
+   */
+  public RubyArray<E> rotate(int n) {
     List<E> rotatedList = newArrayList(list);
     if (rotatedList.size() > 0) {
-      while (count != 0) {
-        if (count > 0) {
+      while (n != 0) {
+        if (n > 0) {
           rotatedList.add(rotatedList.remove(0));
-          count--;
-        } else if (count < 0) {
+          n--;
+        } else if (n < 0) {
           rotatedList.add(0, rotatedList.remove(rotatedList.size() - 1));
-          count++;
+          n++;
         }
       }
     }
     return newRubyArray(rotatedList);
   }
 
+  /**
+   * Move the first element to the last n times.
+   * 
+   * @return this RubyArray
+   */
   public RubyArray<E> rotateǃ(int count) {
     if (size() > 0) {
       while (count != 0) {
@@ -1109,6 +1355,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return this;
   }
 
+  /**
+   * Pick an element randomly.
+   * 
+   * @return an element
+   */
   public E sample() {
     if (size() > 0) {
       return get(rand.nextInt(size()));
@@ -1117,6 +1368,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     }
   }
 
+  /**
+   * Pick n element randomly.
+   * 
+   * @param n
+   *          number of elements
+   * @return a new RubyArray
+   */
   public RubyArray<E> sample(int n) {
     if (n < 0) {
       throw new IllegalArgumentException("negative sample number");
@@ -1141,6 +1399,14 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return newRubyEnumerator(list);
   }
 
+  /**
+   * Select elements which the result returned by the block are false. Return
+   * null if nothing is changed.
+   * 
+   * @param block
+   *          to filter elements
+   * @return this RubyArray or null
+   */
   public RubyArray<E> selectǃ(BooleanBlock<E> block) {
     int beforeSize = size();
     keepIf(block);
@@ -1151,6 +1417,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     }
   }
 
+  /**
+   * Remove the first element.
+   * 
+   * @return an element
+   */
   public E shift() {
     if (isEmpty()) {
       return null;
@@ -1159,6 +1430,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     }
   }
 
+  /**
+   * Remove the first n element.
+   * 
+   * @param n
+   *          number of elements
+   * @return a new RubyArray
+   */
   public RubyArray<E> shift(int n) {
     if (n < 0) {
       throw new IllegalArgumentException("negative array size");
@@ -1170,21 +1448,47 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return newRubyArray(shiftedList);
   }
 
+  /**
+   * Shuffle this RubyArray and store into a new RubyArray.
+   * 
+   * @return a new RubyArray
+   */
   public RubyArray<E> shuffle() {
     List<E> shuffledList = newArrayList(list);
     Collections.shuffle(shuffledList);
     return newRubyArray(shuffledList);
   }
 
+  /**
+   * Shuffle this RubyArray.
+   * 
+   * @return this RubyArray
+   */
   public RubyArray<E> shuffleǃ() {
     Collections.shuffle(list);
     return this;
   }
 
+  /**
+   * Equivalent to at().
+   * 
+   * @param index
+   *          the index of a element
+   * @return an element or null
+   */
   public E slice(int index) {
     return at(index);
   }
 
+  /**
+   * Slice an interval of this RubyArray into a new RubyArray.
+   * 
+   * @param index
+   *          where to start
+   * @param length
+   *          size of returned RubyArray
+   * @return a new RubyArray
+   */
   public RubyArray<E> slice(int index, int length) {
     List<E> slicedList = newArrayList();
     if (index < -size()) {
@@ -1202,6 +1506,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return newRubyArray(slicedList);
   }
 
+  /**
+   * Remove an element out of this RubyArray.
+   * 
+   * @param index
+   *          of the element
+   * @return an element
+   */
   public E sliceǃ(int index) {
     if (isEmpty()) {
       return null;
@@ -1214,6 +1525,15 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     }
   }
 
+  /**
+   * Slice an interval of this RubyArray out of self.
+   * 
+   * @param index
+   *          where to start
+   * @param length
+   *          size of returned RubyArray
+   * @return a new RubyArray
+   */
   public RubyArray<E> sliceǃ(int index, int length) {
     List<E> slicedList = newArrayList();
     if (index < -size()) {
