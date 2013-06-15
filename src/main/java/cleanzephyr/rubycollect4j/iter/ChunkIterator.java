@@ -27,11 +27,11 @@ import java.util.NoSuchElementException;
 import cleanzephyr.rubycollect4j.RubyArray;
 import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
 
+import com.google.common.collect.Iterators;
 import com.google.common.collect.PeekingIterator;
 
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
 import static cleanzephyr.rubycollect4j.RubyCollections.newPair;
-import static com.google.common.collect.Iterators.peekingIterator;
 
 public final class ChunkIterator<E, K> implements
     Iterator<Entry<K, RubyArray<E>>> {
@@ -40,7 +40,7 @@ public final class ChunkIterator<E, K> implements
   private final ItemTransformBlock<E, K> block;
 
   public ChunkIterator(Iterator<E> iterator, ItemTransformBlock<E, K> block) {
-    pIterator = peekingIterator(iterator);
+    pIterator = Iterators.peekingIterator(iterator);
     this.block = block;
   }
 

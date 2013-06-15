@@ -24,10 +24,15 @@ import java.util.Iterator;
 
 import cleanzephyr.rubycollect4j.block.ItemBlock;
 
+import com.google.common.collect.Iterators;
+import com.google.common.collect.PeekingIterator;
+
 import static com.google.common.collect.Lists.newArrayList;
 
 public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
-    Iterable<E> {
+    Iterable<E>, Iterator<E> {
+
+  private PeekingIterator<E> pIterator;
 
   public static <E> RubyEnumerator<E> newRubyEnumerator(Iterable<E> iter) {
     return new RubyEnumerator<E>(iter);
@@ -39,10 +44,12 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
 
   public RubyEnumerator(Iterable<E> iter) {
     super(iter);
+    pIterator = Iterators.peekingIterator(super.iterator());
   }
 
   public RubyEnumerator(Iterator<E> iter) {
     super(newArrayList(iter));
+    pIterator = Iterators.peekingIterator(super.iterator());
   }
 
   public RubyEnumerator<E> each() {
@@ -56,9 +63,33 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
     return this;
   }
 
+  public RubyEnumerator<E> rewind() {
+    pIterator = Iterators.peekingIterator(super.iterator());
+    return this;
+  }
+
+  public E peek() {
+    return pIterator.peek();
+  }
+
   @Override
   public Iterator<E> iterator() {
     return iter.iterator();
+  }
+
+  @Override
+  public boolean hasNext() {
+    return pIterator.hasNext();
+  }
+
+  @Override
+  public E next() {
+    return pIterator.next();
+  }
+
+  @Override
+  public void remove() {
+    pIterator.remove();
   }
 
 }

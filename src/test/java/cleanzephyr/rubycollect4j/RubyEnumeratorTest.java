@@ -51,6 +51,23 @@ public class RubyEnumeratorTest {
   }
 
   @Test
+  public void testRewind() {
+    while (re.hasNext()) {
+      re.next();
+    }
+    re.rewind();
+    assertTrue(re.hasNext());
+  }
+
+  @Test
+  public void testPeek() {
+    while (re.hasNext()) {
+      Integer peeking = re.peek();
+      assertEquals(peeking, re.next());
+    }
+  }
+
+  @Test
   public void testIterator() {
     assertTrue(re.iterator() instanceof Iterator);
   }
