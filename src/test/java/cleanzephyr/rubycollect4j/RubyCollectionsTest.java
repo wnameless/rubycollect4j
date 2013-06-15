@@ -20,7 +20,6 @@
  */
 package cleanzephyr.rubycollect4j;
 
-import java.util.AbstractMap.SimpleEntry;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -31,6 +30,7 @@ import java.util.regex.Pattern;
 
 import org.junit.Test;
 
+import static cleanzephyr.rebycollect4j.util.Pair.newPair;
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
 import static cleanzephyr.rubycollect4j.RubyCollections.hp;
 import static cleanzephyr.rubycollect4j.RubyCollections.qr;
@@ -128,7 +128,7 @@ public class RubyCollectionsTest {
   @Test
   public void testHp() {
     assertTrue(hp(1, 1) instanceof Entry);
-    assertEquals(new SimpleEntry<Integer, Integer>(1, 1), hp(1, 1));
+    assertEquals(newPair(1, 1), hp(1, 1));
   }
 
 }

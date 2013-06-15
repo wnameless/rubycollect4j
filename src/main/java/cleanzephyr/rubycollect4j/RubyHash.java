@@ -20,7 +20,6 @@
  */
 package cleanzephyr.rubycollect4j;
 
-import java.util.AbstractMap.SimpleEntry;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -38,6 +37,7 @@ import cleanzephyr.rubycollect4j.block.ItemBlock;
 import cleanzephyr.rubycollect4j.block.ItemToRubyArrayBlock;
 import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
 
+import static cleanzephyr.rebycollect4j.util.Pair.newPair;
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
 import static cleanzephyr.rubycollect4j.RubyEnumerator.newRubyEnumerator;
 import static com.google.common.collect.Maps.newLinkedHashMap;
@@ -80,7 +80,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
 
   public Entry<K, V> assoc(K key) {
     if (map.containsKey(key)) {
-      return new SimpleEntry<K, V>(key, map.get(key));
+      return newPair(key, map.get(key));
     } else {
       return null;
     }

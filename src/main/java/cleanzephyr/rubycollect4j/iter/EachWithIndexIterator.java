@@ -20,10 +20,11 @@
  */
 package cleanzephyr.rubycollect4j.iter;
 
-import java.util.AbstractMap.SimpleEntry;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
+
+import static cleanzephyr.rebycollect4j.util.Pair.newPair;
 
 /**
  * 
@@ -41,8 +42,7 @@ public final class EachWithIndexIterator<E> implements
   }
 
   private Entry<E, Integer> nextElement() {
-    Entry<E, Integer> element =
-        new SimpleEntry<E, Integer>(iter.next(), index[0]);
+    Entry<E, Integer> element = newPair(iter.next(), index[0]);
     index[0]++;
     return element;
   }

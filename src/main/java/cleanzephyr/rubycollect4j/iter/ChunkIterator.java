@@ -20,10 +20,6 @@ o * @author Wei-Ming Wu
  */
 package cleanzephyr.rubycollect4j.iter;
 
-import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
-import static com.google.common.collect.Iterators.peekingIterator;
-
-import java.util.AbstractMap.SimpleEntry;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
@@ -32,6 +28,10 @@ import cleanzephyr.rubycollect4j.RubyArray;
 import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
 
 import com.google.common.collect.PeekingIterator;
+
+import static cleanzephyr.rebycollect4j.util.Pair.newPair;
+import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
+import static com.google.common.collect.Iterators.peekingIterator;
 
 public final class ChunkIterator<E, K> implements
     Iterator<Entry<K, RubyArray<E>>> {
@@ -50,7 +50,7 @@ public final class ChunkIterator<E, K> implements
     while (pIterator.hasNext() && key.equals(block.yield(pIterator.peek()))) {
       bucket.add(pIterator.next());
     }
-    return new SimpleEntry<K, RubyArray<E>>(key, bucket);
+    return newPair(key, bucket);
   }
 
   @Override
