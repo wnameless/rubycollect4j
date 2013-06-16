@@ -22,44 +22,98 @@ package cleanzephyr.rubycollect4j;
 
 import static java.lang.System.out;
 
+/**
+ * 
+ * RubyIO mimics the useful Ruby puts method by wrapping the Java
+ * System.out.println method.
+ * 
+ */
 public final class RubyIO {
 
+  /**
+   * Equivalent to System.out.println().
+   */
   public static void puts() {
     out.println();
   }
 
+  /**
+   * Equivalent to System.out.println().
+   * 
+   * @param x
+   */
   public static void puts(Object x) {
     out.println(x);
   }
 
+  /**
+   * Equivalent to System.out.println().
+   * 
+   * @param x
+   */
   public static void puts(String x) {
     out.println(x);
   }
 
+  /**
+   * Equivalent to System.out.println().
+   * 
+   * @param x
+   */
   public static void puts(boolean x) {
     out.println(x);
   }
 
+  /**
+   * Equivalent to System.out.println().
+   * 
+   * @param x
+   */
   public static void puts(char x) {
     out.println(x);
   }
 
+  /**
+   * Equivalent to System.out.println().
+   * 
+   * @param x
+   */
   public static void puts(char[] x) {
     out.println(x);
   }
 
+  /**
+   * Equivalent to System.out.println().
+   * 
+   * @param x
+   */
   public static void puts(double x) {
     out.println(x);
   }
 
+  /**
+   * Equivalent to System.out.println().
+   * 
+   * @param x
+   */
   public static void puts(float x) {
     out.println(x);
   }
 
+  /**
+   * Equivalent to System.out.println().
+   * 
+   * @param x
+   */
   public static void puts(int x) {
     out.println(x);
   }
 
+  /**
+   * Equivalent to System.out.println().
+   * 
+   * @param x
+   */
   public static void puts(long x) {
     out.println(x);
   }

@@ -139,7 +139,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * inheritance.
    * 
    * @param list
-   *          an List
+   *          a List
    */
   private RubyArray(List<E> list) {
     super(list);

@@ -41,8 +41,9 @@ import static cleanzephyr.rubycollect4j.RubyEnumerator.newRubyEnumerator;
 import static com.google.common.collect.Maps.newLinkedHashMap;
 
 /**
+ * RubyHash implements all methods refer to the Hash of Ruby language. RubyHash
+ * is also a Java Map.
  * 
- * @author WMW
  * @param <K>
  * @param <V>
  */
@@ -52,16 +53,37 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   private final LinkedHashMap<K, V> map;
   private V defaultValue;
 
+  /**
+   * Build up an empty RubyHash.
+   * 
+   * @return a new RubyHash
+   */
   public static <K, V> RubyHash<K, V> newRubyHash() {
     LinkedHashMap<K, V> linkedHashMap = newLinkedHashMap();
     return new RubyHash<K, V>(linkedHashMap);
   }
 
+  /**
+   * Build up an empty RubyHash by given Map.
+   * 
+   * @param map
+   *          a Map
+   * @return a new RubyHash
+   */
   public static <K, V> RubyHash<K, V> newRubyHash(Map<K, V> map) {
     LinkedHashMap<K, V> linkedHashMap = newLinkedHashMap(map);
     return new RubyHash<K, V>(linkedHashMap);
   }
 
+  /**
+   * Build up an empty RubyHash by given LinkedHashMap.
+   * 
+   * @param map
+   *          a Map
+   * @param defensiveCopy
+   *          it makes a defensive copy if specified
+   * @return a new RubyHash
+   */
   public static <K, V> RubyHash<K, V> newRubyHash(LinkedHashMap<K, V> map,
       boolean defensiveCopy) {
     if (defensiveCopy) {
@@ -71,6 +93,13 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return new RubyHash<K, V>(map);
   }
 
+  /**
+   * Private constructor to enhance static factory methods and prevent from
+   * inheritance.
+   * 
+   * @param map
+   *          a Map
+   */
   private RubyHash(LinkedHashMap<K, V> map) {
     super(map.entrySet());
     this.map = map;
