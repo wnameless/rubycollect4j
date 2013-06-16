@@ -26,13 +26,13 @@ puts(result);
 With Java 6:
 ``` java
 // Sort the characters by its frequency based on the word 'Mississippi' case-insensitively
-RubyArray<String> word = newRubyArray("Mississippi".split("(?!^)"));
+final RubyArray<String> word = newRubyArray("Mississippi".split("(?!^)"));
 
-String result = word.map(new ItemTransformBlock<String, String>() {
+String result = word.map(new TransformBlock<String, String>() {
   public String yield(String c) {
     return c.toLowerCase();
   }
-}).sortBy(new ItemTransformBlock<String, Integer>() {
+}).sortBy(new TransformBlock<String, Integer>() {
   public Integer yield(String c) {
     return word.count(c);
   }
