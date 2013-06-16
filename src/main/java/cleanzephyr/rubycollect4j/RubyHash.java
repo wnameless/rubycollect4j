@@ -105,6 +105,13 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     this.map = map;
   }
 
+  /**
+   * Find an Entry by given key.
+   * 
+   * @param key
+   *          to be found
+   * @return an Entry or null
+   */
   public Entry<K, V> assoc(K key) {
     if (map.containsKey(key)) {
       return newPair(key, map.get(key));
@@ -113,14 +120,33 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     }
   }
 
+  /**
+   * Not supported yet!
+   * 
+   * @return a RubyHash
+   * @throws UnsupportedOperationException
+   */
   public RubyHash<K, V> compareByIdentity() {
     throw new UnsupportedOperationException("Not supported yet.");
   }
 
+  /**
+   * Return false because compareByIdentity() is not supported yet.
+   * 
+   * @return false
+   */
   public boolean comparedByIdentityʔ() {
     return false;
   }
 
+  /**
+   * Delete an Entry by given key and return the deleted value. If key is not
+   * found and default value is not set, return null, default value otherwise.
+   * 
+   * @param key
+   *          to be deleted
+   * @return deleted value or null
+   */
   public V delete(K key) {
     V removedItem = remove(key);
     if (removedItem == null && defaultValue != null) {
@@ -130,10 +156,22 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     }
   }
 
+  /**
+   * Return a RubyEnumerator of entries this RubyHash.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<Entry<K, V>> deleteIf() {
     return newRubyEnumerator(entrySet());
   }
 
+  /**
+   * Delete entries which the result returned by the block are true.
+   * 
+   * @param block
+   *          to filter elements
+   * @return this RubyHash
+   */
   public RubyHash<K, V> deleteIf(EntryBooleanBlock<K, V> block) {
     Iterator<Entry<K, V>> iter = entrySet().iterator();
     while (iter.hasNext()) {
@@ -145,19 +183,43 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return this;
   }
 
+  /**
+   * Set the default value of this RubyHash.
+   * 
+   * @param defaultValue
+   *          default value if key is not found
+   * @return default value
+   */
   public V setDefault(V defaultValue) {
     this.defaultValue = defaultValue;
     return this.defaultValue;
   }
 
+  /**
+   * Return the default value of this RubyHash.
+   * 
+   * @return default value
+   */
   public V getDefault() {
     return defaultValue;
   }
 
+  /**
+   * Return a RubyEnumerator of entries of this RubyHash.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<Entry<K, V>> each() {
     return newRubyEnumerator(entrySet());
   }
 
+  /**
+   * Yield each element to given block.
+   * 
+   * @param block
+   *          to yield each entry
+   * @return this RubyHash
+   */
   public RubyHash<K, V> each(EntryBlock<K, V> block) {
     for (Entry<K, V> item : entrySet()) {
       block.yield(item.getKey(), item.getValue());
@@ -165,10 +227,22 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return this;
   }
 
+  /**
+   * Return a RubyEnumerator of keys of this RubyHash.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<K> eachKey() {
     return newRubyEnumerator(keySet());
   }
 
+  /**
+   * Yield each key to given block.
+   * 
+   * @param block
+   *          to yield each key
+   * @return this RubyHash
+   */
   public RubyHash<K, V> eachKey(Block<K> block) {
     for (K item : keySet()) {
       block.yield(item);
@@ -176,18 +250,42 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return this;
   }
 
+  /**
+   * Return a RubyEnumerator of entries this RubyHash.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<Entry<K, V>> eachPair() {
     return newRubyEnumerator(entrySet());
   }
 
+  /**
+   * Equivalent to each().
+   * 
+   * @param block
+   *          to yield each entry
+   * @return this RubyHash
+   */
   public RubyHash<K, V> eachPair(EntryBlock<K, V> block) {
     return each(block);
   }
 
+  /**
+   * Return a RubyEnumerator of values of this RubyHash.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<V> eachValue() {
     return newRubyEnumerator(values());
   }
 
+  /**
+   * Yield each value to given block.
+   * 
+   * @param block
+   *          to yield each value
+   * @return this RubyHash
+   */
   public RubyHash<K, V> eachValue(Block<V> block) {
     for (V item : values()) {
       block.yield(item);
@@ -195,14 +293,35 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return this;
   }
 
+  /**
+   * Check if this RubyHash is empty.
+   * 
+   * @return true if this RubyHash is empty, false otherwise
+   */
   public boolean emptyʔ() {
     return isEmpty();
   }
 
+  /**
+   * Equivalent to equals().
+   * 
+   * @param other
+   *          any Object
+   * @return true if 2 objects are equaled, false otherwise
+   */
   public boolean eqlʔ(Object other) {
     return equals(other);
   }
 
+  /**
+   * Fetch the value of the key.
+   * 
+   * @param key
+   *          to be found
+   * @return value of the key
+   * @throws IllegalArgumentException
+   *           if key is not found
+   */
   public V fetch(K key) {
     if (!containsKey(key)) {
       throw new IllegalArgumentException("key not found: " + key);
@@ -210,6 +329,15 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return get(key);
   }
 
+  /**
+   * Fetch the value of the key.
+   * 
+   * @param key
+   *          to be found
+   * @param defaultValue
+   *          when key is not found
+   * @return value of the key or defaultValue
+   */
   public V fetch(K key, V defaultValue) {
     if (!containsKey(key)) {
       return defaultValue;
@@ -217,18 +345,39 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return get(key);
   }
 
+  /**
+   * Return a RubyEnumerator of entries of this RubyHash.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyArray<Entry<K, V>> flatten() {
     return newRubyArray(entrySet());
   }
 
+  /**
+   * Equivalent to hashCode().
+   * 
+   * @return an int
+   */
   public int hash() {
     return hashCode();
   }
 
+  /**
+   * Equivalent to toString().
+   * 
+   * @return a String
+   */
   public String inspect() {
     return toString();
   }
 
+  /**
+   * Create an inverted RubyHash which gets the reversed value-key entries based
+   * on this RubyHash.
+   * 
+   * @return a new RubyHash
+   */
   public RubyHash<V, K> invert() {
     RubyHash<V, K> invertHash = newRubyHash();
     for (Entry<K, V> item : entrySet()) {
@@ -237,10 +386,22 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return invertHash;
   }
 
+  /**
+   * Return a RubyEnumerator of entries of this RubyHash.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<Entry<K, V>> keepIf() {
     return newRubyEnumerator(entrySet());
   }
 
+  /**
+   * Keep elements which the result returned by the block are false.
+   * 
+   * @param block
+   *          to filter elements
+   * @return this RubyHash
+   */
   public RubyHash<K, V> keepIf(EntryBooleanBlock<K, V> block) {
     Iterator<Entry<K, V>> iter = entrySet().iterator();
     while (iter.hasNext()) {
@@ -252,6 +413,13 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return this;
   }
 
+  /**
+   * Find the key related to given value.
+   * 
+   * @param value
+   *          to be found
+   * @return key of the given value or null
+   */
   public K key(V value) {
     for (Entry<K, V> item : entrySet()) {
       if (item.getValue().equals(value)) {
@@ -261,18 +429,42 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return null;
   }
 
+  /**
+   * Return a RubyEnumerator of keys of this RubyHash.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyArray<K> keys() {
     return newRubyArray(keySet());
   }
 
+  /**
+   * Equivalent to containsKey().
+   * 
+   * @param key
+   *          to be found
+   * @return true if key is found, false otherwise
+   */
   public boolean keyʔ(K key) {
     return containsKey(key);
   }
 
+  /**
+   * Equivalent to size().
+   * 
+   * @return an int
+   */
   public int length() {
     return size();
   }
 
+  /**
+   * Merge any Map with self and store into a new RubyHash.
+   * 
+   * @param otherHash
+   *          any Map
+   * @return a new RubyHash
+   */
   public RubyHash<K, V> merge(Map<K, V> otherHash) {
     RubyHash<K, V> newHash = newRubyHash();
     for (Entry<K, V> item : entrySet()) {
@@ -284,6 +476,16 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return newHash;
   }
 
+  /**
+   * Merge any Map with self and store into a new RubyHash. Resolve the key
+   * conflicts by given block.
+   * 
+   * @param otherHash
+   *          any Map
+   * @param block
+   *          to determine which value is used when key is conflict
+   * @return a new RubyHash
+   */
   public RubyHash<K, V> merge(Map<K, V> otherHash, EntryMergeBlock<K, V> block) {
     RubyHash<K, V> newHash = newRubyHash();
     for (Entry<K, V> item : entrySet()) {
@@ -304,6 +506,13 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return newHash;
   }
 
+  /**
+   * Merge any Map within self.
+   * 
+   * @param otherHash
+   *          any Map
+   * @return this RubyHash
+   */
   public RubyHash<K, V> mergeǃ(Map<K, V> otherHash) {
     for (Entry<K, V> item : otherHash.entrySet()) {
       put(item.getKey(), item.getValue());
@@ -311,6 +520,15 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return this;
   }
 
+  /**
+   * Merge any Map within self. Resolve the key conflicts by given block.
+   * 
+   * @param otherHash
+   *          any Map
+   * @param block
+   *          to determine which value is used when key is conflict
+   * @return a new RubyHash
+   */
   public RubyHash<K, V>
       mergeǃ(Map<K, V> otherHash, EntryMergeBlock<K, V> block) {
     for (Entry<K, V> item : entrySet()) {
@@ -330,11 +548,27 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return this;
   }
 
+  /**
+   * Put an entry into this RubyHash directly.
+   * 
+   * @param entry
+   *          an Entry
+   * @return this RubyHash
+   */
   public RubyHash<K, V> put(Entry<K, V> entry) {
     put(entry.getKey(), entry.getValue());
     return this;
   }
 
+  /**
+   * Put an entries into this RubyHash directly.
+   * 
+   * @param entry
+   *          an Entry
+   * @param entries
+   *          array of entries
+   * @return this RubyHash
+   */
   public RubyHash<K, V> put(Entry<K, V> entry, Entry<K, V>... entries) {
     put(entry.getKey(), entry.getValue());
     for (Entry<K, V> e : entries) {
@@ -343,6 +577,13 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return this;
   }
 
+  /**
+   * Find an Entry by given value.
+   * 
+   * @param value
+   *          to be found
+   * @return an Entry or null
+   */
   public Entry<K, V> rassoc(V value) {
     for (Entry<K, V> item : entrySet()) {
       if (item.getValue().equals(value)) {
@@ -352,10 +593,23 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return null;
   }
 
+  /**
+   * Return a RubyEnumerator of entries of this RubyHash.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<Entry<K, V>> rejectǃ() {
     return newRubyEnumerator(entrySet());
   }
 
+  /**
+   * Delete entries which the result returned by the block are true. Return null
+   * if nothing is deleted.
+   * 
+   * @param block
+   *          to filter elements
+   * @return this RubyHash or null
+   */
   public RubyHash<K, V> rejectǃ(EntryBooleanBlock<K, V> block) {
     int beforeSize = size();
     deleteIf(block);
@@ -366,12 +620,24 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     }
   }
 
+  /**
+   * Replace all entries with the entries of given Map.
+   * 
+   * @param otherHash
+   *          any Map
+   * @return this RubyHash
+   */
   public RubyHash<K, V> replace(Map<K, V> otherHash) {
     clear();
     putAll(otherHash);
     return this;
   }
 
+  /**
+   * Remove the first Entry and return it.
+   * 
+   * @return an Entry
+   */
   public Entry<K, V> shift() {
     if (isEmpty()) {
       return null;
@@ -383,27 +649,67 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     }
   }
 
+  /**
+   * Store a key-value pair and return the value.
+   * 
+   * @param key
+   *          of Entry
+   * @param value
+   *          of Entry
+   * @return value
+   */
   public V store(K key, V value) {
     put(key, value);
     return value;
   }
 
+  /**
+   * Return this RubyHash.
+   * 
+   * @return this RubyHash
+   */
   public RubyHash<K, V> toH() {
     return this;
   }
 
+  /**
+   * Return this RubyHash.
+   * 
+   * @return this RubyHash
+   */
   public RubyHash<K, V> toHash() {
     return this;
   }
 
+  /**
+   * Equivalent to toString().
+   * 
+   * @return a String
+   */
   public String toS() {
     return toString();
   }
 
+  /**
+   * Equivalent to mergeǃ().
+   * 
+   * @param otherHash
+   *          any Map
+   * @return this RubyHash
+   */
   public RubyHash<K, V> update(Map<K, V> otherHash) {
     return mergeǃ(otherHash);
   }
 
+  /**
+   * Equivalent to mergeǃ().
+   * 
+   * @param otherHash
+   *          any Map
+   * @param block
+   *          to determine which value is used when key is conflict
+   * @return a new RubyHash
+   */
   public RubyHash<K, V>
       update(Map<K, V> otherHash, EntryMergeBlock<K, V> block) {
     return mergeǃ(otherHash, block);
