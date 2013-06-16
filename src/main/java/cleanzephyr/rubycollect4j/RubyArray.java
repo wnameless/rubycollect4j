@@ -32,7 +32,6 @@ import java.util.Set;
 
 import javax.xml.bind.TypeConstraintException;
 
-import cleanzephyr.rebycollect4j.util.ComparableComparator;
 import cleanzephyr.rubycollect4j.block.Block;
 import cleanzephyr.rubycollect4j.block.BooleanBlock;
 import cleanzephyr.rubycollect4j.block.TransformBlock;
@@ -197,15 +196,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     if (size() == 0) {
       return null;
     }
-    E sample = get(0);
-    if (sample instanceof Comparable) {
-      @SuppressWarnings({ "unchecked", "rawtypes" })
-      int index =
-          Collections.binarySearch(list, target, new ComparableComparator());
-      return index < 0 ? null : get(index);
-    }
-    Object[] array = toArray();
-    int index = Arrays.binarySearch(array, target);
+    int index = Arrays.binarySearch(list.toArray(), target);
     return index < 0 ? null : get(index);
   }
 

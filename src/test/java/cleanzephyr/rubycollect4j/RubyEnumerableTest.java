@@ -20,6 +20,7 @@
  */
 package cleanzephyr.rubycollect4j;
 
+import java.awt.Point;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -28,12 +29,12 @@ import java.util.Map.Entry;
 
 import org.junit.Test;
 
+import cleanzephyr.rubycollect4j.block.Block;
 import cleanzephyr.rubycollect4j.block.BooleanBlock;
 import cleanzephyr.rubycollect4j.block.ReduceBlock;
-import cleanzephyr.rubycollect4j.block.WithInitBlock;
-import cleanzephyr.rubycollect4j.block.Block;
 import cleanzephyr.rubycollect4j.block.TransformBlock;
 import cleanzephyr.rubycollect4j.block.WithIndexBlock;
+import cleanzephyr.rubycollect4j.block.WithInitBlock;
 import cleanzephyr.rubycollect4j.block.WithObjectBlock;
 
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
@@ -1111,6 +1112,13 @@ public class RubyEnumerableTest {
     assertEquals(ra(1, 2, 3, 3, 4), re.sort());
     assertEquals(ra("abc", "b", "cd"), newRubyEnumerable("b", "cd", "abc")
         .sort());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testSortException() {
+    assertEquals(ra(new Point(1, 2), new Point(3, 4), new Point(5, 6)),
+        newRubyEnumerable(new Point(5, 6), new Point(1, 2), new Point(3, 4))
+            .sort());
   }
 
   @Test

@@ -34,13 +34,12 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import cleanzephyr.rebycollect4j.util.ComparableComparator;
+import cleanzephyr.rubycollect4j.block.Block;
 import cleanzephyr.rubycollect4j.block.BooleanBlock;
 import cleanzephyr.rubycollect4j.block.ReduceBlock;
-import cleanzephyr.rubycollect4j.block.WithInitBlock;
-import cleanzephyr.rubycollect4j.block.Block;
 import cleanzephyr.rubycollect4j.block.TransformBlock;
 import cleanzephyr.rubycollect4j.block.WithIndexBlock;
+import cleanzephyr.rubycollect4j.block.WithInitBlock;
 import cleanzephyr.rubycollect4j.block.WithObjectBlock;
 import cleanzephyr.rubycollect4j.iter.ChunkIterable;
 import cleanzephyr.rubycollect4j.iter.CycleIterable;
@@ -227,8 +226,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    *          to take element and generate a RubyArray
    * @return a RubyArray
    */
-  public <S> RubyArray<S> collectConcat(
-      TransformBlock<E, RubyArray<S>> block) {
+  public <S> RubyArray<S> collectConcat(TransformBlock<E, RubyArray<S>> block) {
     RubyArray<S> rubyArray = newRubyArray();
     for (E item : iter) {
       rubyArray.addAll(block.yield(item));
@@ -972,8 +970,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    *          to transform elements
    * @return an element or null
    */
-  public <S> E
-      maxBy(Comparator<? super S> comp, TransformBlock<E, S> block) {
+  public <S> E maxBy(Comparator<? super S> comp, TransformBlock<E, S> block) {
     List<E> src = newArrayList();
     List<S> dst = newArrayList();
     for (E item : iter) {
@@ -1057,8 +1054,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    *          to transform elements
    * @return an element or null
    */
-  public <S> E
-      minBy(Comparator<? super S> comp, TransformBlock<E, S> block) {
+  public <S> E minBy(Comparator<? super S> comp, TransformBlock<E, S> block) {
     List<E> src = newArrayList();
     List<S> dst = newArrayList();
     for (E item : iter) {
@@ -1403,21 +1399,31 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * Object ordering if elements are not Comparable.
    * 
    * @return a RubyArray
+   * @throws IllegalArgumentException
+   *           when any 2 elements are not comparable
    */
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public RubyArray<E> sort() {
     RubyArray<E> rubyArray = newRubyArray(iter);
-    if (rubyArray.size() > 0) {
-      E sample = rubyArray.first();
-      if (sample instanceof Comparable) {
-        Collections.sort(rubyArray, new ComparableComparator());
-        return rubyArray;
-      }
+    if (rubyArray.size() <= 1) {
+      return rubyArray;
     }
-    Object[] array = rubyArray.toArray();
-    Arrays.sort(array);
-    E[] elements = (E[]) array;
-    return newRubyArray(elements);
+    E sample = rubyArray.first();
+    if (sample instanceof Comparable) {
+      Collections.sort(rubyArray, new Comparator() {
+
+        @Override
+        public int compare(Object arg0, Object arg1) {
+          return ((Comparable) arg0).compareTo(arg1);
+        }
+
+      });
+      return rubyArray;
+    } else {
+      throw new IllegalArgumentException("ArgumentError: comparison of "
+          + rubyArray.get(0).getClass() + " with "
+          + rubyArray.get(1).getClass() + " failed");
+    }
   }
 
   /**
@@ -1603,8 +1609,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * @param block
    *          to yield zipped elements
    */
-  public void
-      zip(List<? extends List<E>> others, Block<RubyArray<E>> block) {
+  public void zip(List<? extends List<E>> others, Block<RubyArray<E>> block) {
     RubyArray<RubyArray<E>> zippedRubyArray = zip(others);
     for (RubyArray<E> item : zippedRubyArray) {
       block.yield(item);
