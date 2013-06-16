@@ -23,6 +23,7 @@ package cleanzephyr.rubycollect4j;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import org.junit.Test;
 
@@ -231,7 +232,7 @@ public class RubyHashTest {
     assertEquals(Integer.valueOf(6), rh.fetch(5));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test(expected = NoSuchElementException.class)
   public void testFetchException() {
     rh = rh(1, 2, 3, 4, 5, 6);
     assertNull(rh.fetch(7));

@@ -482,12 +482,12 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @param index
    *          the index of a element
    * @return an element
-   * @throws IllegalArgumentException
+   * @throws IndexOutOfBoundsException
    *           if index is not found
    */
   public E fetch(int index) {
     if (index >= size() || index < -size()) {
-      throw new IllegalArgumentException("index " + index
+      throw new IndexOutOfBoundsException("index " + index
           + " outside of array bounds: " + -size() + "..." + size());
     }
     return at(index);
@@ -744,10 +744,12 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @param args
    *          elements to be inserted
    * @return this RubyArray
+   * @throws IndexOutOfBoundsException
+   *           if index < -size
    */
   public RubyArray<E> insert(int index, E... args) {
     if (index < -size()) {
-      throw new IllegalArgumentException("IndexError: index " + index
+      throw new IndexOutOfBoundsException("IndexError: index " + index
           + " too small for array; minimum: " + -size());
     } else if (index < 0) {
       int relIndex = size() + index + 1;
@@ -902,7 +904,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    *          multiply n times
    * @return a new RubyArray
    * @throws IllegalArgumentException
-   *           if n less than 0
+   *           if n < 0
    */
   public RubyArray<E> multiply(int n) {
     if (n < 0) {
@@ -926,6 +928,17 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    */
   public String multiply(String separator) {
     return join(separator);
+  }
+
+  /**
+   * Not supported yet!
+   * 
+   * @param template
+   *          a template string
+   * @return a binary string
+   */
+  public String pack(String template) {
+    throw new UnsupportedOperationException("Not supported yet.");
   }
 
   /**
@@ -1028,6 +1041,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @param n
    *          number of elements
    * @return a new RubyArray
+   * @throws IllegalArgumentException
+   *           if n < 0
    */
   public RubyArray<E> pop(int n) {
     if (n < 0) {
@@ -1373,6 +1388,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @param n
    *          number of elements
    * @return a new RubyArray
+   * @throws IllegalArgumentException
+   *           if n < 0
    */
   public RubyArray<E> sample(int n) {
     if (n < 0) {
@@ -1435,6 +1452,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @param n
    *          number of elements
    * @return a new RubyArray
+   * @throws IllegalArgumentException
+   *           if n < 0
    */
   public RubyArray<E> shift(int n) {
     if (n < 0) {
@@ -1585,6 +1604,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * RubyArray.
    * 
    * @return a RubyArray of RubyArrays
+   * @throws TypeConstraintException
+   *           if S is not a List
+   * @throws IndexOutOfBoundsException
+   *           if all lists are not the same size
    */
   @SuppressWarnings("rawtypes")
   public <S> RubyArray<RubyArray<S>> transpose() {

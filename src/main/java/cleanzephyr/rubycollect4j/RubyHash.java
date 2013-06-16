@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import cleanzephyr.rubycollect4j.block.Block;
@@ -319,12 +320,12 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @param key
    *          to be found
    * @return value of the key
-   * @throws IllegalArgumentException
+   * @throws NoSuchElementException
    *           if key is not found
    */
   public V fetch(K key) {
     if (!containsKey(key)) {
-      throw new IllegalArgumentException("key not found: " + key);
+      throw new NoSuchElementException("key not found: " + key);
     }
     return get(key);
   }

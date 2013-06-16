@@ -327,7 +327,7 @@ public class RubyArrayTest {
     assertEquals(Integer.valueOf(3), ra.fetch(2));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test(expected = IndexOutOfBoundsException.class)
   public void testFetchException() {
     ra = ra(1, 2, 3, 4);
     try {
@@ -600,7 +600,7 @@ public class RubyArrayTest {
     assertEquals(ra(1, 2, 3, 4, null, null, null, 5, 6), ra);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test(expected = IndexOutOfBoundsException.class)
   public void testInsertException() {
     ra = ra(1, 2, 3, 4);
     ra.insert(-5, 0);

@@ -53,7 +53,6 @@ public class RubyIOTest {
   public void testPutsNothing() {
     puts();
     assertEquals("\n", outContent.toString());
-
   }
 
   @Test
