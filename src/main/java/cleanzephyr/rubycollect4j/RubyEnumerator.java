@@ -29,33 +29,79 @@ import com.google.common.collect.PeekingIterator;
 
 import static com.google.common.collect.Lists.newArrayList;
 
+/**
+ * 
+ * RubyEnumerator implements most of the methods refer to the Enumerator of Ruby
+ * language. RubyEnumerator is both Iterable and Iterator and it's also a
+ * peeking iterator.
+ * 
+ * @param <E>
+ */
 public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
     Iterable<E>, Iterator<E> {
 
   private PeekingIterator<E> pIterator;
 
+  /**
+   * Build up a RubyEnumerator by given Iterable.
+   * 
+   * @param iter
+   *          an Iterable
+   * @return a new RubyEnumerator
+   */
   public static <E> RubyEnumerator<E> newRubyEnumerator(Iterable<E> iter) {
     return new RubyEnumerator<E>(iter);
   }
 
+  /**
+   * Build up a RubyEnumerator by given Iterator.
+   * 
+   * @param iter
+   *          an Iterator
+   * @return a new RubyEnumerator
+   */
   public static <E> RubyEnumerator<E> newRubyEnumerator(Iterator<E> iter) {
     return new RubyEnumerator<E>(iter);
   }
 
+  /**
+   * Construct a RubyEnumerator by given Iterable.
+   * 
+   * @param iter
+   *          an Iterable
+   */
   public RubyEnumerator(Iterable<E> iter) {
     super(iter);
     pIterator = Iterators.peekingIterator(super.iterator());
   }
 
+  /**
+   * Construct a RubyEnumerator by given Iterator.
+   * 
+   * @param iter
+   *          an Iterator
+   */
   public RubyEnumerator(Iterator<E> iter) {
     super(newArrayList(iter));
     pIterator = Iterators.peekingIterator(super.iterator());
   }
 
+  /**
+   * Return a RubyEnumerator which is self.
+   * 
+   * @return this RubyEnumerator
+   */
   public RubyEnumerator<E> each() {
     return this;
   }
 
+  /**
+   * Yield each element to the block.
+   * 
+   * @param block
+   *          to yield each element
+   * @return this RubyEnumerator
+   */
   public RubyEnumerator<E> each(Block<E> block) {
     for (E item : iter) {
       block.yield(item);
@@ -63,11 +109,21 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
     return this;
   }
 
+  /**
+   * Reset the iterator of this RubyEnumerator to the beginning.
+   * 
+   * @return this RubyEnumerator
+   */
   public RubyEnumerator<E> rewind() {
     pIterator = Iterators.peekingIterator(super.iterator());
     return this;
   }
 
+  /**
+   * Return the next element without advancing the iteration.
+   * 
+   * @return an element
+   */
   public E peek() {
     return pIterator.peek();
   }
