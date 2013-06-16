@@ -35,7 +35,6 @@ import javax.xml.bind.TypeConstraintException;
 import cleanzephyr.rebycollect4j.util.ComparableComparator;
 import cleanzephyr.rubycollect4j.block.Block;
 import cleanzephyr.rubycollect4j.block.BooleanBlock;
-import cleanzephyr.rubycollect4j.block.ReturnBlock;
 import cleanzephyr.rubycollect4j.block.TransformBlock;
 import cleanzephyr.rubycollect4j.iter.CombinationIterable;
 import cleanzephyr.rubycollect4j.iter.EachIndexIterable;
@@ -170,7 +169,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * Return the element at any index. -1 represents the last index and so on.
    * 
    * @param index
-   *          the index of a element
+   *          of an element
    * @return an element or null
    */
   public E at(int index) {
@@ -187,11 +186,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
 
   // TODO: Implement bsearch to take code block
   /**
-   * Use binary search to find a element. Assume this RubyArray is already
+   * Use binary search to find an element. Assume this RubyArray is already
    * sorted.
    * 
    * @param target
-   *          the element to be searched
+   *          to be searched
    * @return an element or null
    */
   public E bsearch(E target) {
@@ -211,11 +210,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   }
 
   /**
-   * Use binary search with a Comparator to find a element. Assume this
+   * Use binary search with a Comparator to find an element. Assume this
    * RubyArray is already sorted.
    * 
    * @param target
-   *          the element to be searched
+   *          to be searched
    * @param comp
    *          a Comparator is used to sort this RubyArray
    * @return an element or null
@@ -229,7 +228,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * Generate all combinations of length n with elements of this RubyArray.
    * 
    * @param n
-   *          the length of all combinations
+   *          length of all combinations
    * @return a RubyEnumerator
    */
   public RubyEnumerator<RubyArray<E>> combination(int n) {
@@ -252,9 +251,9 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * yield them with a block.
    * 
    * @param n
-   *          the length of all combinations
+   *          length of all combinations
    * @param block
-   *          a block to yield each combination
+   *          to yield each combination
    * @return this RubyArray
    */
   public RubyArray<E> combination(int n, Block<RubyArray<E>> block) {
@@ -314,7 +313,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * Return the number of certain elements in this RubyArray.
    * 
    * @param target
-   *          element to be counted
+   *          to be counted
    * @return an int
    */
   public int count(E target) {
@@ -332,7 +331,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * deleted.
    * 
    * @param target
-   *          element to be deleted
+   *          to be deleted
    * @return the target or null
    */
   public E delete(E target) {
@@ -353,12 +352,12 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * if nothing is deleted.
    * 
    * @param target
-   *          element to be deleted
+   *          to be deleted
    * @param block
-   *          yield if nothing is deleted
-   * @return a element
+   *          to yield if nothing is deleted
+   * @return an element
    */
-  public E delete(E target, ReturnBlock<E> block) {
+  public E delete(E target, TransformBlock<E, E> block) {
     boolean isDeleted = false;
     ListIterator<E> li = listIterator();
     while (li.hasNext()) {
@@ -368,7 +367,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
         isDeleted = true;
       }
     }
-    return isDeleted ? target : block.yield();
+    return isDeleted ? target : block.yield(target);
   }
 
   /**
@@ -376,7 +375,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * if index is not found.
    * 
    * @param index
-   *          the index of a element
+   *          of an element
    * @return an element or null
    */
   public E deleteAt(int index) {
@@ -480,7 +479,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * Return the element at any index. -1 represents the last index and so on.
    * 
    * @param index
-   *          the index of a element
+   *          of an element
    * @return an element
    * @throws IndexOutOfBoundsException
    *           if index is not found
@@ -497,7 +496,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * Return the element at any index. -1 represents the last index and so on.
    * 
    * @param index
-   *          the index of a element
+   *          of an element
    * @param defaultValue
    *          the default value while index is not found
    * @return an element
@@ -513,9 +512,9 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * Return the element at any index. -1 represents the last index and so on.
    * 
    * @param index
-   *          the index of a element
+   *          of an element
    * @param block
-   *          yield index to the block if index is not found
+   *          to yield if index is not found
    * @return an element or null
    */
   public E fetch(int index, Block<Integer> block) {
@@ -530,7 +529,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * Fill the whole RubyArray with the element.
    * 
    * @param item
-   *          the element to be filled
+   *          to be filled
    * @return this RubyArray
    */
   public RubyArray<E> fill(E item) {
@@ -544,7 +543,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * Start to fill the RubyArray from an index with the element.
    * 
    * @param item
-   *          the element to be filled
+   *          to be filled
    * @param start
    *          where to begin
    * @return this RubyArray
@@ -566,7 +565,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * Start to fill part of the RubyArray from an index with the element.
    * 
    * @param item
-   *          the element to be filled
+   *          to be filled
    * @param start
    *          where to begin
    * @param length
@@ -595,10 +594,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   }
 
   /**
-   * Fill the whole RubyArray with the element returned by the block.
+   * Fill the whole RubyArray with elements returned by the block.
    * 
    * @param block
-   *          return the element to be filled
+   *          to transform elements to be filled
    * @return this RubyArray
    */
   public RubyArray<E> fill(TransformBlock<Integer, E> block) {
@@ -615,7 +614,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @param start
    *          where to begin
    * @param block
-   *          return the element to be filled
+   *          to transform elements to be filled
    * @return this RubyArray
    */
   public RubyArray<E> fill(int start, TransformBlock<Integer, E> block) {
@@ -640,7 +639,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @param length
    *          define the interval to be filled
    * @param block
-   *          return the element to be filled
+   *          to transform elements to be filled
    * @return this RubyArray
    */
   public RubyArray<E> fill(int start, int length,
@@ -740,7 +739,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * Start to insert elements to this RubyArray from the index.
    * 
    * @param index
-   *          where to insert
+   *          to insert from
    * @param args
    *          elements to be inserted
    * @return this RubyArray
@@ -1079,13 +1078,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   }
 
   /**
-   * Generate the production of self with List of Lists and yield them to the
+   * Generate the productions of self with List of Lists and yield them to the
    * block.
    * 
    * @param others
    *          List of Lists
    * @param block
-   *          to yield each product result
+   *          to yield each production
    * @return this RubyArray
    */
   public RubyArray<E> product(List<? extends List<E>> others,
@@ -1142,7 +1141,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * Delete all elements which are false returned by the block.
    * 
    * @param block
-   *          to check elements
+   *          to filter elements
    * @return this RubyArray
    */
   public RubyArray<E> rejectǃ(BooleanBlock<E> block) {
@@ -1491,7 +1490,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * Equivalent to at().
    * 
    * @param index
-   *          the index of a element
+   *          of an element
    * @return an element or null
    */
   public E slice(int index) {

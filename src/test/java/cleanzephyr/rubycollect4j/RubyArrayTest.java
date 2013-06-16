@@ -30,7 +30,6 @@ import org.junit.Test;
 
 import cleanzephyr.rubycollect4j.block.Block;
 import cleanzephyr.rubycollect4j.block.BooleanBlock;
-import cleanzephyr.rubycollect4j.block.ReturnBlock;
 import cleanzephyr.rubycollect4j.block.TransformBlock;
 
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
@@ -197,22 +196,24 @@ public class RubyArrayTest {
   @Test
   public void testDeleteWithBlock() {
     ra = ra(1, 2, 3, 3);
-    assertEquals(Integer.valueOf(3), ra.delete(3, new ReturnBlock<Integer>() {
+    assertEquals(Integer.valueOf(3),
+        ra.delete(3, new TransformBlock<Integer, Integer>() {
 
-      @Override
-      public Integer yield() {
-        return 6;
-      }
+          @Override
+          public Integer yield(Integer item) {
+            return item * 3;
+          }
 
-    }));
-    assertEquals(Integer.valueOf(6), ra.delete(3, new ReturnBlock<Integer>() {
+        }));
+    assertEquals(Integer.valueOf(27),
+        ra.delete(9, new TransformBlock<Integer, Integer>() {
 
-      @Override
-      public Integer yield() {
-        return 6;
-      }
+          @Override
+          public Integer yield(Integer item) {
+            return item * 3;
+          }
 
-    }));
+        }));
     assertEquals(ra(1, 2), ra);
   }
 
