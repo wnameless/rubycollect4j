@@ -536,6 +536,21 @@ public class RubyHashTest {
   }
 
   @Test
+  public void testCollect() {
+    assertEquals(
+        ra(3L, 7L, 11L),
+        rh(1, 2, 3, 4, 5, 6).collect(
+            new EntryTransformBlock<Integer, Integer, Long>() {
+
+              @Override
+              public Long yield(Integer key, Integer value) {
+                return Long.valueOf(key + value);
+              }
+
+            }));
+  }
+
+  @Test
   public void testCollectConcat() {
     assertEquals(
         ra(3L, 7L),
@@ -563,8 +578,25 @@ public class RubyHashTest {
         }));
   }
 
-  @Test
+  @Test(expected = IllegalStateException.class)
   public void testCycle() {
+    final RubyArray<Integer> ints = ra();
+    rh(1, 2, 3, 4).cycle(new EntryBlock<Integer, Integer>() {
+
+      @Override
+      public void yield(Integer key, Integer value) {
+        ints.add(key);
+        ints.add(value);
+        if (ints.size() > 1000) {
+          throw new IllegalStateException();
+        }
+      }
+
+    });
+  }
+
+  @Test
+  public void testCycleWithN() {
     final RubyArray<Integer> ints = ra();
     rh(1, 2, 3, 4).cycle(2, new EntryBlock<Integer, Integer>() {
 

@@ -751,6 +751,17 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
+  public <S> RubyArray<S> collect(final EntryTransformBlock<K, V, S> block) {
+    return collect(new TransformBlock<Entry<K, V>, S>() {
+
+      @Override
+      public S yield(Entry<K, V> item) {
+        return block.yield(item.getKey(), item.getValue());
+      }
+
+    });
+  }
+
   public <S> RubyArray<S> collectConcat(
       final EntryTransformBlock<K, V, RubyArray<S>> block) {
     return collectConcat(new TransformBlock<Entry<K, V>, RubyArray<S>>() {
@@ -774,8 +785,8 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
-  public void cycle(int n, final EntryBlock<K, V> block) {
-    cycle(n, new Block<Entry<K, V>>() {
+  public void cycle(final EntryBlock<K, V> block) {
+    cycle(new Block<Entry<K, V>>() {
 
       @Override
       public void yield(Entry<K, V> item) {
@@ -785,8 +796,8 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
-  public void cycle(final EntryBlock<K, V> block) {
-    cycle(new Block<Entry<K, V>>() {
+  public void cycle(int n, final EntryBlock<K, V> block) {
+    cycle(n, new Block<Entry<K, V>>() {
 
       @Override
       public void yield(Entry<K, V> item) {

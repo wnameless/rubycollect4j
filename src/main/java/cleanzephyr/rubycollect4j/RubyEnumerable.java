@@ -1386,17 +1386,32 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return findAll(block);
   }
 
+  /**
+   * Group elements into RubyArrays and the first element of each RubyArray
+   * should get true returned by the block.
+   * 
+   * @param block
+   *          to check where to do slice
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<RubyArray<E>> sliceBefore(BooleanBlock<E> block) {
     return newRubyEnumerator(new SliceBeforeIterable<E>(iter, block));
   }
 
+  /**
+   * Group elements into RubyArrays and the first element of each RubyArray
+   * should be matched by the regex.
+   * 
+   * @param regex
+   *          to check where to do slice
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<RubyArray<E>> sliceBefore(String regex) {
     return newRubyEnumerator(new SliceBeforeIterable<E>(iter, regex));
   }
 
   /**
-   * Sort elements of this RubyEnumerable into a RubyArray. Using the natural
-   * Object ordering if elements are not Comparable.
+   * Sort elements of this RubyEnumerable into a RubyArray.
    * 
    * @return a RubyArray
    * @throws IllegalArgumentException
@@ -1424,6 +1439,22 @@ public class RubyEnumerable<E> implements Iterable<E> {
           + rubyArray.get(0).getClass() + " with "
           + rubyArray.get(1).getClass() + " failed");
     }
+  }
+
+  /**
+   * Sort elements of this RubyEnumerable by given Comparator into a RubyArray.
+   * 
+   * @param comp
+   *          a Comparator
+   * @return a RubyArray
+   */
+  public RubyArray<E> sort(Comparator<E> comp) {
+    RubyArray<E> rubyArray = newRubyArray(iter);
+    if (rubyArray.size() <= 1) {
+      return rubyArray;
+    }
+    Collections.sort(rubyArray, comp);
+    return rubyArray;
   }
 
   /**
@@ -1467,7 +1498,6 @@ public class RubyEnumerable<E> implements Iterable<E> {
   /**
    * Sort elements of this RubyEnumerable by the ordering of elements
    * transformed by the block into a RubyArray.
-   * 
    * 
    * @param block
    *          to transform elements

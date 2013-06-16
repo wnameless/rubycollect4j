@@ -232,7 +232,7 @@ public class RubyEnumerableTest {
   }
 
   @Test
-  public void testCycleWithBlock() {
+  public void testCycleWithNAndBlock() {
     re = newRubyEnumerable(1, 2, 3, 4);
     final RubyArray<Integer> ints = newRubyArray();
     re.cycle(2, new Block<Integer>() {
@@ -244,6 +244,23 @@ public class RubyEnumerableTest {
 
     });
     assertEquals(ra(2, 4, 6, 8, 2, 4, 6, 8), ints);
+  }
+
+  @Test(expected = IllegalStateException.class)
+  public void testCycleWithBlock() {
+    re = newRubyEnumerable(1, 2, 3, 4);
+    final RubyArray<Integer> ints = newRubyArray();
+    re.cycle(new Block<Integer>() {
+
+      @Override
+      public void yield(Integer item) {
+        ints.push(item);
+        if (ints.size() > 1000) {
+          throw new IllegalStateException();
+        }
+      }
+
+    });
   }
 
   @Test
@@ -1112,6 +1129,27 @@ public class RubyEnumerableTest {
     assertEquals(ra(1, 2, 3, 3, 4), re.sort());
     assertEquals(ra("abc", "b", "cd"), newRubyEnumerable("b", "cd", "abc")
         .sort());
+  }
+
+  @Test
+  public void testSortWithComparator() {
+    re = newRubyEnumerable(4, 1, 2, 3, 3);
+    assertEquals(ra(4, 3, 3, 2, 1), re.sort(new Comparator<Integer>() {
+
+      @Override
+      public int compare(Integer o1, Integer o2) {
+        return o2 - o1;
+      }
+
+    }));
+    assertEquals(ra(1), newRubyEnumerable(1).sort(new Comparator<Integer>() {
+
+      @Override
+      public int compare(Integer o1, Integer o2) {
+        return o2 - o1;
+      }
+
+    }));
   }
 
   @Test(expected = IllegalArgumentException.class)

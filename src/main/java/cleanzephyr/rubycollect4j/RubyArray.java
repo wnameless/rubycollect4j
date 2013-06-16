@@ -42,7 +42,9 @@ import cleanzephyr.rubycollect4j.iter.ProductIterable;
 import cleanzephyr.rubycollect4j.iter.RepeatedCombinationIterable;
 import cleanzephyr.rubycollect4j.iter.RepeatedPermutationIterable;
 
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
 
 import static cleanzephyr.rubycollect4j.RubyEnumerator.newRubyEnumerator;
 import static com.google.common.collect.Lists.newArrayList;
@@ -1297,7 +1299,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    */
   public RubyArray<E> rotate() {
     RubyArray<E> rubyArray = newRubyArray(list, true);
-    if (rubyArray.size() > 0) {
+    if (rubyArray.size() > 1) {
       rubyArray.add(rubyArray.remove(0));
     }
     return rubyArray;
@@ -1309,7 +1311,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return this RubyArray
    */
   public RubyArray<E> rotateǃ() {
-    if (size() > 0) {
+    if (size() > 1) {
       add(remove(0));
     }
     return this;
@@ -1325,12 +1327,12 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    */
   public RubyArray<E> rotate(int n) {
     List<E> rotatedList = newArrayList(list);
-    if (rotatedList.size() > 0) {
+    if (rotatedList.size() > 1) {
       while (n != 0) {
         if (n > 0) {
           rotatedList.add(rotatedList.remove(0));
           n--;
-        } else if (n < 0) {
+        } else {
           rotatedList.add(0, rotatedList.remove(rotatedList.size() - 1));
           n++;
         }
@@ -1345,12 +1347,12 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return this RubyArray
    */
   public RubyArray<E> rotateǃ(int count) {
-    if (size() > 0) {
+    if (size() > 1) {
       while (count != 0) {
         if (count > 0) {
           add(remove(0));
           count--;
-        } else if (count < 0) {
+        } else {
           add(0, remove(size() - 1));
           count++;
         }
@@ -1558,6 +1560,112 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
       }
     }
     return newRubyArray(slicedList);
+  }
+
+  /**
+   * Sort this RubyArray.
+   * 
+   * @return this RubyArray
+   */
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+  public RubyArray<E> sortǃ() {
+    if (size() <= 1) {
+      return this;
+    }
+    E sample = first();
+    if (sample instanceof Comparable) {
+      Collections.sort(list, new Comparator() {
+
+        @Override
+        public int compare(Object arg0, Object arg1) {
+          return ((Comparable) arg0).compareTo(arg1);
+        }
+
+      });
+      return this;
+    } else {
+      throw new IllegalArgumentException("ArgumentError: comparison of "
+          + get(0).getClass() + " with " + get(1).getClass() + " failed");
+    }
+  }
+
+  /**
+   * Sort this RubyArray by given Comparator.
+   * 
+   * @param comp
+   *          a Comparator
+   * @return this RubyArray
+   */
+  public RubyArray<E> sortǃ(Comparator<E> comp) {
+    if (size() <= 1) {
+      return this;
+    }
+    Collections.sort(list, comp);
+    return this;
+  }
+
+  /**
+   * Return a RubyEnumerator of this RubyArray.
+   * 
+   * @return a RubyEnumerator
+   */
+  public RubyEnumerator<E> sortByǃ() {
+    return newRubyEnumerator(list);
+  }
+
+  /**
+   * Sort elements of this RubyArray by the ordering of elements transformed by
+   * the block induced by the Comparator.
+   * 
+   * @param comp
+   *          a Comparator
+   * @param block
+   *          to transform elements
+   * @return this RubyArray
+   */
+  public <S> RubyArray<E> sortByǃ(Comparator<? super S> comp,
+      TransformBlock<E, S> block) {
+    Multimap<S, E> multimap = ArrayListMultimap.create();
+    for (E item : iter) {
+      multimap.put(block.yield(item), item);
+    }
+    List<S> keys = newArrayList(multimap.keySet());
+    Collections.sort(keys, comp);
+    clear();
+    for (S key : keys) {
+      Collection<E> coll = multimap.get(key);
+      Iterator<E> iterator = coll.iterator();
+      while (iterator.hasNext()) {
+        list.add(iterator.next());
+      }
+    }
+    return this;
+  }
+
+  /**
+   * Sort elements of this RubyArray by the ordering of elements transformed by
+   * the block.
+   * 
+   * @param block
+   *          to transform elements
+   * @return this RubyArray
+   */
+  public <S> RubyArray<E> sortByǃ(TransformBlock<E, S> block) {
+    Multimap<S, E> multimap = ArrayListMultimap.create();
+    for (E item : list) {
+      multimap.put(block.yield(item), item);
+    }
+    List<S> keys = newArrayList(multimap.keySet());
+    keys = newRubyEnumerable(keys).sort();
+    clear();
+    for (S key : keys) {
+      Collection<E> coll = multimap.get(key);
+      Iterator<E> iterator = coll.iterator();
+      while (iterator.hasNext()) {
+        list.add(iterator.next());
+      }
+    }
+    return this;
   }
 
   /**

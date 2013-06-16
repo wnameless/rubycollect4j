@@ -20,6 +20,7 @@
  */
 package cleanzephyr.rubycollect4j;
 
+import java.awt.Point;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -992,6 +993,7 @@ public class RubyArrayTest {
     assertEquals(ra(4, 1, 2, 3), ra.rotate(-1));
     assertEquals(ra(2, 3, 4, 1), ra.rotate(5));
     assertEquals(ra(3, 4, 1, 2), ra.rotate(-6));
+    assertEquals(ra(1), ra(1).rotate(-6));
   }
 
   @Test
@@ -1019,6 +1021,7 @@ public class RubyArrayTest {
     ra = ra(1, 2, 3, 4);
     assertEquals(ra(3, 4, 1, 2), ra.rotateǃ(-6));
     assertEquals(ra(3, 4, 1, 2), ra);
+    assertEquals(ra(1), ra(1).rotateǃ(-6));
   }
 
   @Test
@@ -1178,6 +1181,84 @@ public class RubyArrayTest {
     assertEquals(ra(1, 2, 4), ra);
     assertNull(ra.sliceǃ(4, 2));
     assertNull(ra.sliceǃ(-5, 3));
+  }
+
+  @Test
+  public void testSortǃ() {
+    ra = ra(2, 1, 4, 3);
+    assertEquals(ra(1, 2, 3, 4), ra.sortǃ());
+    assertEquals(ra(1, 2, 3, 4), ra);
+  }
+
+  @Test
+  public void testSortǃWithComparator() {
+    ra = ra(4, 1, 2, 3, 3);
+    assertEquals(ra(4, 3, 3, 2, 1), ra.sortǃ(new Comparator<Integer>() {
+
+      @Override
+      public int compare(Integer o1, Integer o2) {
+        return o2 - o1;
+      }
+
+    }));
+    assertEquals(ra(4, 3, 3, 2, 1), ra);
+    assertEquals(ra(1), ra(1).sortǃ(new Comparator<Integer>() {
+
+      @Override
+      public int compare(Integer o1, Integer o2) {
+        return o2 - o1;
+      }
+
+    }));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testSortǃException() {
+    RubyArray<Point> ra = ra(new Point(1, 2), new Point(3, 4));
+    ra.sortǃ();
+  }
+
+  @Test
+  public void testSortByǃ() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(RubyEnumerator.class, ra.sortByǃ().getClass());
+    assertEquals(ra(1, 2, 3, 4), ra.sortByǃ().toA());
+  }
+
+  @Test
+  public void testSortByǃWithComparatorAndBlock() {
+    RubyArray<String> ra = ra("aaaa", "bbb", "cc", "d");
+    assertEquals(ra("aaaa", "bbb", "cc", "d"),
+        ra.sortByǃ(new Comparator<Integer>() {
+
+          @Override
+          public int compare(Integer o1, Integer o2) {
+            return o2 - o1;
+          }
+        }, new TransformBlock<String, Integer>() {
+
+          @Override
+          public Integer yield(String item) {
+            return item.length();
+          }
+
+        }));
+    assertEquals(ra("aaaa", "bbb", "cc", "d"), ra);
+  }
+
+  @Test
+  public void testSortByǃWithBlock() {
+    RubyArray<String> ra = ra("aaaa", "bbb", "cc", "d");
+    assertEquals(ra("d", "cc", "bbb", "aaaa"),
+        ra.sortByǃ(new TransformBlock<String, Integer>() {
+
+          @Override
+          public Integer yield(String item) {
+            return item.length();
+          }
+
+        }));
+    assertEquals(ra("d", "cc", "bbb", "aaaa"), ra);
   }
 
   @Test
