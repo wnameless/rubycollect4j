@@ -20,6 +20,13 @@
  */
 package cleanzephyr.rubycollect4j.block;
 
+/**
+ * 
+ * An interface for lambda expression to yield an element and return a boolean
+ * value.
+ * 
+ * @param <E>
+ */
 public interface BooleanBlock<E> {
 
   public boolean yield(E item);

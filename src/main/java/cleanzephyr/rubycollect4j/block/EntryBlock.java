@@ -21,13 +21,13 @@
 package cleanzephyr.rubycollect4j.block;
 
 /**
- * An interface for lambda expression to yield the key and the value of a map
- * entry.
+ * 
+ * An interface for lambda expression to yield the key and value of a Map Entry.
  * 
  * @param <K>
- *          key of a map entry
+ *          key of a Map Entry
  * @param <V>
- *          value of a map entry
+ *          value of a Map Entry
  */
 public interface EntryBlock<K, V> {
 

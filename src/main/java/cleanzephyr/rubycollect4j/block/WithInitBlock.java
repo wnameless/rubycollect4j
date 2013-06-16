@@ -20,6 +20,13 @@
  */
 package cleanzephyr.rubycollect4j.block;
 
+/**
+ * 
+ * An interface for lambda expression to yield an element with an initial value
+ * and return a value based on the initial one.
+ * 
+ * @param <E>
+ */
 public interface WithInitBlock<E, S> {
 
   public S yield(S memo, E item);

@@ -20,6 +20,16 @@
  */
 package cleanzephyr.rubycollect4j.block;
 
+/**
+ * 
+ * An interface for lambda expression to yield the key and values of 2 Map
+ * entries and return one of the values.
+ * 
+ * @param <K>
+ *          key of a Map Entry
+ * @param <V>
+ *          value of a Map Entry
+ */
 public interface EntryMergeBlock<K, V> {
 
   public V yield(K key, V oldval, V newval);

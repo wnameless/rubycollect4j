@@ -20,6 +20,12 @@
  */
 package cleanzephyr.rubycollect4j.block;
 
+/**
+ * 
+ * An interface for lambda expression to yield 2 elements and reduce them.
+ * 
+ * @param <E>
+ */
 public interface ReduceBlock<E> {
 
   public E yield(E memo, E item);

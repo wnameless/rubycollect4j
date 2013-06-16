@@ -20,6 +20,16 @@
  */
 package cleanzephyr.rubycollect4j.block;
 
+/**
+ * 
+ * An interface for lambda expression to yield the key and value of a Map Entry
+ * and return a boolean value.
+ * 
+ * @param <K>
+ *          key of a Map Entry
+ * @param <V>
+ *          value of a Map Entry
+ */
 public interface EntryBooleanBlock<K, V> {
 
   public boolean yield(K key, V value);
