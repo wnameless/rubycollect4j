@@ -24,6 +24,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.xml.bind.TypeConstraintException;
+
 import org.junit.Test;
 
 import cleanzephyr.rubycollect4j.block.Block;
@@ -1188,6 +1190,27 @@ public class RubyArrayTest {
     ra = ra(1, 2, 3, 4);
     assertEquals("[1, 2, 3, 4]", ra.toS());
     assertEquals(ra.toString(), ra.toS());
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testTranspose() {
+    assertEquals(ra(), ra().transpose());
+    RubyArray<RubyArray<Integer>> ra = ra(ra(1, 2, 3), ra(4, 5, 6));
+    assertEquals(ra(ra(1, 4), ra(2, 5), ra(3, 6)), ra.transpose());
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testTransposeException1() {
+    RubyArray<Integer> ra = ra(1, 2, 3);
+    ra.transpose();
+  }
+
+  @Test(expected = IndexOutOfBoundsException.class)
+  public void testTransposeException2() {
+    @SuppressWarnings("unchecked")
+    RubyArray<RubyArray<Integer>> ra = ra(ra(1, 2, 3), ra(4, 5));
+    ra.transpose();
   }
 
   @Test

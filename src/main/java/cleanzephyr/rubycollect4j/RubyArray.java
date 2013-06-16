@@ -30,6 +30,8 @@ import java.util.ListIterator;
 import java.util.Random;
 import java.util.Set;
 
+import javax.xml.bind.TypeConstraintException;
+
 import cleanzephyr.rebycollect4j.util.ComparableComparator;
 import cleanzephyr.rubycollect4j.block.Block;
 import cleanzephyr.rubycollect4j.block.BooleanBlock;
@@ -1576,6 +1578,45 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    */
   public String toS() {
     return toString();
+  }
+
+  /**
+   * Assume this RubyArray is a matrix and transpose this matrix into a new
+   * RubyArray.
+   * 
+   * @return a RubyArray of RubyArrays
+   */
+  @SuppressWarnings("rawtypes")
+  public <S> RubyArray<RubyArray<S>> transpose() {
+    if (isEmpty()) {
+      return newRubyArray();
+    }
+    Integer size = null;
+    for (E item : list) {
+      if (!(item instanceof List)) {
+        throw new TypeConstraintException(
+            "TypeError: no implicit conversion of "
+                + item.getClass().toString() + " into List");
+      }
+      if (size == null) {
+        size = ((List) item).size();
+      } else if (size != ((List) item).size()) {
+        throw new IndexOutOfBoundsException(
+            "IndexError: element size differs (" + ((List) item).size()
+                + " should be " + size + ")");
+      }
+    }
+    RubyArray<RubyArray<S>> rubyArray = newRubyArray();
+    for (int i = 0; i < size; i++) {
+      RubyArray<S> ra = newRubyArray();
+      for (E item : list) {
+        @SuppressWarnings("unchecked")
+        List<S> lst = (List<S>) item;
+        ra.add(lst.get(i));
+      }
+      rubyArray.add(ra);
+    }
+    return rubyArray;
   }
 
   /**
