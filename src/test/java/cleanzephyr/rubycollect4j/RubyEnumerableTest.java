@@ -36,7 +36,6 @@ import cleanzephyr.rubycollect4j.block.ItemToRubyArrayBlock;
 import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
 import cleanzephyr.rubycollect4j.block.ItemWithIndexBlock;
 import cleanzephyr.rubycollect4j.block.ItemWithObjectBlock;
-import cleanzephyr.rubycollect4j.block.ListBlock;
 
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
 import static cleanzephyr.rubycollect4j.RubyCollections.newPair;
@@ -321,10 +320,10 @@ public class RubyEnumerableTest {
   public void testEachConsWithBlock() {
     re = newRubyEnumerable(1, 2, 3, 4);
     final RubyArray<List<Integer>> ra = ra();
-    re.eachCons(2, new ListBlock<Integer>() {
+    re.eachCons(2, new ItemBlock<RubyArray<Integer>>() {
 
       @Override
-      public void yield(List<Integer> item) {
+      public void yield(RubyArray<Integer> item) {
         ra.push(item);
       }
 
@@ -335,10 +334,10 @@ public class RubyEnumerableTest {
   @Test(expected = IllegalArgumentException.class)
   public void testEachConsWithBlockException() {
     re = newRubyEnumerable(1, 2, 3, 4);
-    re.eachCons(0, new ListBlock<Integer>() {
+    re.eachCons(0, new ItemBlock<RubyArray<Integer>>() {
 
       @Override
-      public void yield(List<Integer> item) {}
+      public void yield(RubyArray<Integer> item) {}
 
     });
   }
@@ -390,10 +389,10 @@ public class RubyEnumerableTest {
   public void testEachSliceWithBlock() {
     re = newRubyEnumerable(1, 2, 3, 4);
     final RubyArray<Integer> ints = ra();
-    re.eachSlice(3, new ListBlock<Integer>() {
+    re.eachSlice(3, new ItemBlock<RubyArray<Integer>>() {
 
       @Override
-      public void yield(List<Integer> item) {
+      public void yield(RubyArray<Integer> item) {
         ints.add(item.get(0));
       }
 
@@ -405,10 +404,10 @@ public class RubyEnumerableTest {
   @Test(expected = IllegalArgumentException.class)
   public void testEachSliceWithBlockException() {
     re = newRubyEnumerable(1, 2, 3, 4);
-    re.eachSlice(0, new ListBlock<Integer>() {
+    re.eachSlice(0, new ItemBlock<RubyArray<Integer>>() {
 
       @Override
-      public void yield(List<Integer> item) {}
+      public void yield(RubyArray<Integer> item) {}
 
     });
   }

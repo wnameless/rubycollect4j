@@ -63,7 +63,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   private final Random rand = new Random();
 
   /**
-   * Static factory method to build an empty RubyArray.
+   * Build up an empty RubyArray.
    * 
    * @return a new RubyArray
    */
@@ -73,7 +73,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   }
 
   /**
-   * Static factory method to build an RubyArray by an Iterable.
+   * Build up a RubyArray by given Iterable.
    * 
    * @param iter
    *          an Iterable
@@ -84,7 +84,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   }
 
   /**
-   * Static factory method to build an RubyArray by an Iterator.
+   * Build up a RubyArray by given Iterator.
    * 
    * @param iter
    *          an Iterator
@@ -95,7 +95,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   }
 
   /**
-   * Static factory method to build an RubyArray by an List.
+   * Build up a RubyArray by given List.
    * 
    * @param list
    *          a List
@@ -106,8 +106,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   }
 
   /**
-   * Static factory method to build an RubyArray by an List. It makes a
-   * defensive copy if specified.
+   * Build a RubyArray by given List. It makes a defensive copy if specified.
    * 
    * @param list
    *          a List
@@ -125,7 +124,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   }
 
   /**
-   * Static factory method to build an RubyArray by varargs.
+   * Build up a RubyArray by given elements.
    * 
    * @param elements
    *          varargs
@@ -405,7 +404,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * Delete elements which the result returned by the block are true.
    * 
    * @param block
-   *          determine if a element is deleted or not
+   *          to filter elements
    * @return this RubyArray
    */
   public RubyArray<E> deleteIf(BooleanBlock<E> block) {
@@ -610,7 +609,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   }
 
   /**
-   * Strat fill the RubyArray from an index with the element returned by the
+   * Start to fill the RubyArray from an index with the element returned by the
    * block.
    * 
    * @param start
@@ -633,8 +632,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   }
 
   /**
-   * Strat fill part of the RubyArray from an index with the element returned by
-   * the block.
+   * Start to fill part of the RubyArray from an index with the element returned
+   * by the block.
    * 
    * @param start
    *          where to begin
@@ -1379,13 +1378,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     if (n < 0) {
       throw new IllegalArgumentException("negative sample number");
     }
-    List<Integer> indice = newArrayList();
+    List<Integer> indices = newArrayList();
     for (int i = 0; i < size(); i++) {
-      indice.add(i);
+      indices.add(i);
     }
     List<E> samples = newArrayList();
     while (samples.size() < size() && samples.size() < n) {
-      samples.add(get(indice.remove(rand.nextInt(indice.size()))));
+      samples.add(get(indices.remove(rand.nextInt(indices.size()))));
     }
     return newRubyArray(samples);
   }
@@ -1697,15 +1696,15 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   }
 
   /**
-   * Store all elements from indice in a RubyArray.
+   * Store all elements from indices in a RubyArray.
    * 
-   * @param indice
+   * @param indices
    *          where elements to be found
    * @return a new RubyArray
    */
-  public RubyArray<E> valuesAt(int... indice) {
+  public RubyArray<E> valuesAt(int... indices) {
     List<E> values = newArrayList();
-    for (int index : indice) {
+    for (int index : indices) {
       values.add(this.at(index));
     }
     return newRubyArray(values);

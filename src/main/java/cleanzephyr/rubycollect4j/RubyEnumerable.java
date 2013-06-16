@@ -43,7 +43,6 @@ import cleanzephyr.rubycollect4j.block.ItemToRubyArrayBlock;
 import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
 import cleanzephyr.rubycollect4j.block.ItemWithIndexBlock;
 import cleanzephyr.rubycollect4j.block.ItemWithObjectBlock;
-import cleanzephyr.rubycollect4j.block.ListBlock;
 import cleanzephyr.rubycollect4j.iter.ChunkIterable;
 import cleanzephyr.rubycollect4j.iter.CycleIterable;
 import cleanzephyr.rubycollect4j.iter.EachConsIterable;
@@ -64,70 +63,126 @@ import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Lists.reverse;
 
 /**
+ * An extension class for any Iterable object. It includes all methods refer to
+ * the Enumerable module of Ruby.
  * 
- * @author WMW
  * @param <E>
  */
 public class RubyEnumerable<E> implements Iterable<E> {
 
   protected final Iterable<E> iter;
 
+  /**
+   * Build up a RubyEnumerable by given Iterable.
+   * 
+   * @param iter
+   *          an Iterable
+   * @return a new RubyEnumerable
+   */
   public static <E> RubyEnumerable<E> newRubyEnumerable(Iterable<E> iter) {
     return new RubyEnumerable<E>(iter);
   }
 
-  public static <E> RubyEnumerable<E> newRubyEnumerable(E... args) {
-    return new RubyEnumerable<E>(args);
+  /**
+   * Build up a RubyEnumerable by given elements.
+   * 
+   * @param elements
+   *          varargs
+   * @return a new RubyEnumerable
+   */
+  public static <E> RubyEnumerable<E> newRubyEnumerable(E... elements) {
+    return new RubyEnumerable<E>(elements);
   }
 
+  /**
+   * Construct by given Iterable.
+   * 
+   * @param iter
+   *          an Iterable
+   */
   public RubyEnumerable(Iterable<E> iter) {
     this.iter = iter;
   }
 
-  public RubyEnumerable(E... args) {
-    this.iter = Arrays.asList(args);
+  /**
+   * Construct by given elements.
+   * 
+   * @param elements
+   *          varargs
+   */
+  public RubyEnumerable(E... elements) {
+    this.iter = newArrayList(elements);
   }
 
+  /**
+   * Check if null included.
+   * 
+   * @return true if null is found, false otherwise
+   */
   public boolean allʔ() {
-    boolean bool = true;
     for (E item : iter) {
       if (item == null) {
         return false;
       }
     }
-    return bool;
+    return true;
   }
 
+  /**
+   * Check if any result returned by the block is false.
+   * 
+   * @param block
+   *          to check elements
+   * @return true if all result are true, false otherwise
+   */
   public boolean allʔ(BooleanBlock<E> block) {
-    boolean bool = true;
     for (E item : iter) {
       if (block.yield(item) == false) {
         return false;
       }
     }
-    return bool;
+    return true;
   }
 
+  /**
+   * Check if any not-null object included.
+   * 
+   * @return true if not-null object is found, false otherwise
+   */
   public boolean anyʔ() {
-    boolean bool = false;
     for (E item : iter) {
       if (item != null) {
         return true;
       }
     }
-    return bool;
+    return false;
   }
 
+  /**
+   * Check if any result returned by the block is true.
+   * 
+   * @param block
+   *          to check elements
+   * @return true if any result are true, false otherwise
+   */
   public boolean anyʔ(BooleanBlock<E> block) {
-    boolean bool = false;
     for (E item : iter) {
       if (block.yield(item)) {
         return true;
       }
     }
-    return bool;
+    return false;
   }
 
+  /**
+   * Chunk elements to entries. Keys of entries are the result returned by the
+   * block. Values of entries are RubyArrays of elements which get the same
+   * result returned by the block and aside to each other.
+   * 
+   * @param block
+   *          to chunk elements
+   * @return a RubyEnumerator
+   */
   public <K> RubyEnumerator<Entry<K, RubyArray<E>>> chunk(
       ItemTransformBlock<E, K> block) {
     return newRubyEnumerator(new ChunkIterable<E, K>(iter, block));
@@ -142,6 +197,13 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return newRubyEnumerator(iter);
   }
 
+  /**
+   * Store elements which are transformed by the block into a RubyArray.
+   * 
+   * @param block
+   *          to transform elements
+   * @return a RubyArray
+   */
   public <S> RubyArray<S> collect(ItemTransformBlock<E, S> block) {
     RubyArray<S> rubyArray = newRubyArray();
     for (E item : iter) {
@@ -159,6 +221,13 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return newRubyEnumerator(iter);
   }
 
+  /**
+   * Turn each element to a RubyArray and then flatten it.
+   * 
+   * @param block
+   *          to take element and generate a RubyArray
+   * @return a RubyArray
+   */
   public <S> RubyArray<S> collectConcat(ItemToRubyArrayBlock<E, S> block) {
     RubyArray<S> rubyArray = newRubyArray();
     for (E item : iter) {
@@ -167,6 +236,11 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return rubyArray;
   }
 
+  /**
+   * Count the elements.
+   * 
+   * @return a int
+   */
   public int count() {
     int count = 0;
     for (@SuppressWarnings("unused")
@@ -176,6 +250,13 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return count;
   }
 
+  /**
+   * Count the elements which get true returned by the block.
+   * 
+   * @param block
+   *          to define elements to be counted
+   * @return a int
+   */
   public int count(BooleanBlock<E> block) {
     int count = 0;
     for (E item : iter) {
@@ -186,14 +267,35 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return count;
   }
 
+  /**
+   * Generate a sequence from start element to end element and so on infinitely.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<E> cycle() {
     return newRubyEnumerator(Iterables.cycle(iter));
   }
 
+  /**
+   * Generate a sequence from start element to end element, repeat n times.
+   * 
+   * @param n
+   *          times to repeat
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<E> cycle(int n) {
     return newRubyEnumerator(new CycleIterable<E>(iter, n));
   }
 
+  /**
+   * Generate a sequence from start element to end element, repeat n times.
+   * Yield each element to the block.
+   * 
+   * @param n
+   *          times to repeat
+   * @param block
+   *          to yield each element
+   */
   public void cycle(int n, ItemBlock<E> block) {
     for (int i = 0; i < n; i++) {
       for (E item : iter) {
@@ -202,6 +304,13 @@ public class RubyEnumerable<E> implements Iterable<E> {
     }
   }
 
+  /**
+   * Generate a sequence from start element to end element and so on infinitely.
+   * Yield each element to the block.
+   * 
+   * @param block
+   *          to yield each element
+   */
   public void cycle(ItemBlock<E> block) {
     while (true) {
       for (E item : iter) {
@@ -219,6 +328,14 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return newRubyEnumerator(iter);
   }
 
+  /**
+   * Find the first element which gets true returned by the block. Return null
+   * if element is not found.
+   * 
+   * @param block
+   *          to filter elements
+   * @return an element or null
+   */
   public E detect(BooleanBlock<E> block) {
     for (E item : iter) {
       if (block.yield(item)) {
@@ -228,6 +345,13 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return null;
   }
 
+  /**
+   * Drop the first n elements and store rest to a RubyArray.
+   * 
+   * @param n
+   *          number of elements to drop
+   * @return a RubyArray
+   */
   public RubyArray<E> drop(int n) {
     if (n < 0) {
       throw new IllegalArgumentException("attempt to drop negative size");
@@ -243,6 +367,12 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return rubyArray;
   }
 
+  /**
+   * Return a RubyEnumerator which contains the first element of this
+   * RubyEnumerable.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<E> dropWhile() {
     RubyArray<E> rubyArray = newRubyArray();
     for (E item : iter) {
@@ -252,6 +382,13 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return newRubyEnumerator(rubyArray);
   }
 
+  /**
+   * Drop the first n elements until a element get false returned by the block.
+   * 
+   * @param block
+   *          to define which elements to be dropped
+   * @return a RubyArray
+   */
   public RubyArray<E> dropWhile(BooleanBlock<E> block) {
     RubyArray<E> rubyArray = newRubyArray();
     boolean cutPoint = false;
@@ -264,6 +401,16 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return rubyArray;
   }
 
+  /**
+   * Iterate each element and store the element with n - 1 consecutive elements
+   * into a RubyArray.
+   * 
+   * @param n
+   *          number of consecutive elements
+   * @return a RubyEnumerator
+   * @throws IllegalArgumentException
+   *           if n <= 0
+   */
   public RubyEnumerator<RubyArray<E>> eachCons(int n) {
     if (n <= 0) {
       throw new IllegalArgumentException("invalid size");
@@ -271,7 +418,18 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return newRubyEnumerator(new EachConsIterable<E>(iter, n));
   }
 
-  public void eachCons(int n, ListBlock<E> block) {
+  /**
+   * Iterate each element and yield the element with n - 1 consecutive elements
+   * to the block.
+   * 
+   * @param n
+   *          number of consecutive elements
+   * @param block
+   *          to yield the RubyArray of consecutive elements
+   * @throws llegalArgumentException
+   *           if n <= 0
+   */
+  public void eachCons(int n, ItemBlock<RubyArray<E>> block) {
     if (n <= 0) {
       throw new IllegalArgumentException("invalid size");
     }
@@ -289,6 +447,13 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return newRubyEnumerator(iter);
   }
 
+  /**
+   * Yield each elements to the block.
+   * 
+   * @param block
+   *          to yield each element
+   * @return this RubyEnumerable
+   */
   public RubyEnumerable<E> eachEntry(ItemBlock<E> block) {
     for (E item : iter) {
       block.yield(item);
@@ -296,6 +461,15 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return this;
   }
 
+  /**
+   * Slice elements into RubyArrays with length n.
+   * 
+   * @param n
+   *          size of each slice
+   * @return a RubyEnumerator
+   * @throws IllegalArgumentException
+   *           if n <= 0
+   */
   public RubyEnumerator<RubyArray<E>> eachSlice(int n) {
     if (n <= 0) {
       throw new IllegalArgumentException("invalid slice size");
@@ -303,7 +477,15 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return newRubyEnumerator(new EachSliceIterable<E>(iter, n));
   }
 
-  public void eachSlice(int n, ListBlock<E> block) {
+  /**
+   * Slice elements into RubyArrays with length n and yield them to the block.
+   * 
+   * @param n
+   *          size of each slice
+   * @param block
+   *          to yield each slice
+   */
+  public void eachSlice(int n, ItemBlock<RubyArray<E>> block) {
     if (n <= 0) {
       throw new IllegalArgumentException("invalid slice size");
     }
@@ -312,10 +494,23 @@ public class RubyEnumerable<E> implements Iterable<E> {
     }
   }
 
+  /**
+   * Iterate elements with their indices by Entry<E, Integer>.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<Entry<E, Integer>> eachWithIndex() {
     return newRubyEnumerator(new EachWithIndexIterable<E>(iter));
   }
 
+  /**
+   * Iterate elements with their indices by Entry<E, Integer> and yield them to
+   * the block.
+   * 
+   * @param block
+   *          to yield each Entry
+   * @return this RubyEnumerable
+   */
   public RubyEnumerable<E> eachWithIndex(ItemWithIndexBlock<E> block) {
     int i = 0;
     for (E item : iter) {
@@ -325,10 +520,23 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return this;
   }
 
+  /**
+   * Iterate elements with the Object S by Entry<E, S>.
+   * 
+   * @return a RubyEnumerator
+   */
   public <S> RubyEnumerator<Entry<E, S>> eachWithObject(S o) {
     return newRubyEnumerator(new EachWithObjectIterable<E, S>(iter, o));
   }
 
+  /**
+   * Iterate elements with the Object S by Entry<E, S> and yield them to the
+   * block.
+   * 
+   * @param block
+   *          to yield each Entry
+   * @return the Object S
+   */
   public <S> S eachWithObject(S o, ItemWithObjectBlock<E, S> block) {
     for (E item : iter) {
       block.yield(item, o);
@@ -336,14 +544,31 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return o;
   }
 
+  /**
+   * Store each element into a RubyArray.
+   * 
+   * @return a RubyArray
+   */
   public RubyArray<E> entries() {
     return newRubyArray(iter);
   }
 
+  /**
+   * Equivalent to detect().
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<E> find() {
     return detect();
   }
 
+  /**
+   * Equivalent to detect().
+   * 
+   * @param block
+   *          to filter elements
+   * @return an element or null
+   */
   public E find(BooleanBlock<E> block) {
     return detect(block);
   }
@@ -357,6 +582,13 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return newRubyEnumerator(iter);
   }
 
+  /**
+   * Store elements which get true returned by the block into a RubyArray.
+   * 
+   * @param block
+   *          to filter elements
+   * @return a RubyArray
+   */
   public RubyArray<E> findAll(BooleanBlock<E> block) {
     RubyArray<E> rubyArray = newRubyArray();
     for (E item : iter) {
@@ -376,6 +608,14 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return newRubyEnumerator(iter);
   }
 
+  /**
+   * Find the index of a element which gets true returned by the block. Return
+   * null if nothing is found.
+   * 
+   * @param block
+   *          to check elements
+   * @return an Integer or null
+   */
   public Integer findIndex(BooleanBlock<E> block) {
     int index = 0;
     for (E item : iter) {
@@ -387,6 +627,13 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return null;
   }
 
+  /**
+   * Find the index of the target element. Return null if target is not found.
+   * 
+   * @param target
+   *          to be found
+   * @return an Integer or null
+   */
   public Integer findIndex(E target) {
     int index = 0;
     for (E item : iter) {
@@ -398,6 +645,12 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return null;
   }
 
+  /**
+   * Get the first element of this RubyEnumerable. Return null if this
+   * RubyEnumerable is empty.
+   * 
+   * @return an element or null
+   */
   public E first() {
     Iterator<E> iterator = iter.iterator();
     if (iterator.hasNext()) {
@@ -407,6 +660,13 @@ public class RubyEnumerable<E> implements Iterable<E> {
     }
   }
 
+  /**
+   * Get the first n element of this RubyEnumerable.
+   * 
+   * @param n
+   *          number of elements
+   * @return a RubyArray
+   */
   public RubyArray<E> first(int n) {
     if (n < 0) {
       throw new IllegalArgumentException("attempt to take negative size");
@@ -420,7 +680,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Return a RubyEnumerator of this RubyEnumerable.
+   * Equivalent to collectConcat().
    * 
    * @return a RubyEnumerator
    */
@@ -428,10 +688,24 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return collectConcat();
   }
 
+  /**
+   * Equivalent to collectConcat().
+   * 
+   * @param block
+   *          to take element and generate a RubyArray
+   * @return a RubyArray
+   */
   public <S> RubyArray<S> flatMap(ItemToRubyArrayBlock<E, S> block) {
     return collectConcat(block);
   }
 
+  /**
+   * Store elements which are matched by regex into a RubyArray.
+   * 
+   * @param regex
+   *          regular expression
+   * @return a RubyArray
+   */
   public RubyArray<E> grep(String regex) {
     Pattern pattern = Pattern.compile(regex);
     RubyArray<E> rubyArray = newRubyArray();
@@ -444,6 +718,16 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return rubyArray;
   }
 
+  /**
+   * Store elements which are matched by regex transformed by the block into a
+   * RubyArray.
+   * 
+   * @param regex
+   *          regular expression
+   * @param block
+   *          to transform elements
+   * @return a RubyArray
+   */
   public <S> RubyArray<S> grep(String regex, ItemTransformBlock<E, S> block) {
     Pattern pattern = Pattern.compile(regex);
     RubyArray<S> rubyArray = newRubyArray();
@@ -465,6 +749,14 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return newRubyEnumerator(iter);
   }
 
+  /**
+   * Put elements with the same result K returned by the block into Entry<K,
+   * RubyArray<E>> of a RubyHash.
+   * 
+   * @param block
+   *          to group each element
+   * @return a RubyHash
+   */
   public <K> RubyHash<K, RubyArray<E>> groupBy(ItemTransformBlock<E, K> block) {
     Multimap<K, E> multimap = ArrayListMultimap.create();
     for (E item : iter) {
@@ -478,6 +770,12 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return map;
   }
 
+  /**
+   * Check if target element is included.
+   * 
+   * @param target
+   * @return true if target is found,false otherwise
+   */
   public boolean includeʔ(E target) {
     for (E item : iter) {
       if (item.equals(target)) {
@@ -487,6 +785,55 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return false;
   }
 
+  /**
+   * Assign the first element as the initial value. Reduce each elements with
+   * block, then assign the result back to initial value and so on.
+   * 
+   * @param block
+   *          to reduce each element
+   * @return an element
+   */
+  public E inject(InjectBlock<E> block) {
+    E result = null;
+    int i = 0;
+    for (E item : iter) {
+      if (i == 0) {
+        result = item;
+      } else {
+        result = block.yield(result, item);
+      }
+      i++;
+    }
+    return result;
+  }
+
+  /**
+   * Reduce each elements with block, then assign the result back to initial
+   * value and so on.
+   * 
+   * @param init
+   *          initial value
+   * @param block
+   *          to reduce each element
+   * @return an element S
+   */
+  public <S> S inject(S init, InjectWithInitBlock<E, S> block) {
+    for (E item : iter) {
+      init = block.yield(init, item);
+    }
+    return init;
+  }
+
+  /**
+   * Reduce each elements with initial value by a method of S, then assign the
+   * result back to initial value and so on.
+   * 
+   * @param init
+   *          initial value
+   * @param methodName
+   *          method used to reduce elements
+   * @return an element S
+   */
   @SuppressWarnings("unchecked")
   public <S> S inject(S init, String methodName) {
     S result = init;
@@ -517,27 +864,15 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return result;
   }
 
-  public E inject(InjectBlock<E> block) {
-    E result = null;
-    int i = 0;
-    for (E item : iter) {
-      if (i == 0) {
-        result = item;
-      } else {
-        result = block.yield(result, item);
-      }
-      i++;
-    }
-    return result;
-  }
-
-  public <S> S inject(S init, InjectWithInitBlock<E, S> block) {
-    for (E item : iter) {
-      init = block.yield(init, item);
-    }
-    return init;
-  }
-
+  /**
+   * Assign the first element as the initial value. Reduce each elements with
+   * initial value by a method of S, then assign the result back to initial
+   * value and so on.
+   * 
+   * @param methodName
+   *          method used to reduce elements
+   * @return an element
+   */
   @SuppressWarnings("unchecked")
   public E inject(String methodName) {
     E result = null;
@@ -583,23 +918,60 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return collect();
   }
 
+  /**
+   * Equivalent to collect().
+   * 
+   * @param block
+   *          to transform elements
+   * @return a RubyArray
+   */
   public <S> RubyArray<S> map(ItemTransformBlock<E, S> block) {
     return collect(block);
   }
 
+  /**
+   * Find the max element of this RubyEnumerable. Return null if this
+   * RubyEnumerable is empty.
+   * 
+   * @return an element or null
+   */
   public E max() {
     return sort().last();
   }
 
+  /**
+   * Find the max element induced by the Comparator of this RubyEnumerable.
+   * Return null if this RubyEnumerable is empty.
+   * 
+   * @param comp
+   *          a Comparator
+   * @return an element or null
+   */
   public E max(Comparator<? super E> comp) {
     List<E> list = newArrayList(iter);
     return Collections.max(list, comp);
   }
 
+  /**
+   * Return a RubyEnumerator of this RubyEnumerable.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<E> maxBy() {
     return newRubyEnumerator(iter);
   }
 
+  /**
+   * Find the element which is the max element induced by the Comparator
+   * transformed by the block of this RubyEnumerable. Return null if this
+   * RubyEnumerable is empty.
+   * 
+   * @param comp
+   *          a Comparator
+   * @param block
+   *          to transform elements
+   * @return an element or null
+   */
   public <S> E
       maxBy(Comparator<? super S> comp, ItemTransformBlock<E, S> block) {
     List<E> src = newArrayList();
@@ -612,6 +984,14 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return src.get(dst.indexOf(maxDst));
   }
 
+  /**
+   * Find the element which is the max element transformed by the block of this
+   * RubyEnumerable. Return null if this RubyEnumerable is empty.
+   * 
+   * @param block
+   *          to transform elements
+   * @return an element or null
+   */
   public <S> E maxBy(ItemTransformBlock<E, S> block) {
     List<E> src = newArrayList();
     List<S> dst = newArrayList();
@@ -623,23 +1003,60 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return src.get(dst.indexOf(maxDst));
   }
 
+  /**
+   * Equivalent to includeʔ().
+   * 
+   * @param target
+   *          to be found
+   * @return an element or null
+   */
   public boolean memberʔ(E target) {
     return includeʔ(target);
   }
 
+  /**
+   * Find the min element of this RubyEnumerable. Return null if this
+   * RubyEnumerable is empty.
+   * 
+   * @return an element or null
+   */
   public E min() {
     return sort().first();
   }
 
+  /**
+   * Find the min element induced by the Comparator of this RubyEnumerable.
+   * Return null if this RubyEnumerable is empty.
+   * 
+   * @param comp
+   *          a Comparator
+   * @return an element or null
+   */
   public E min(Comparator<? super E> comp) {
     List<E> list = newArrayList(iter);
     return Collections.min(list, comp);
   }
 
+  /**
+   * Return a RubyEnumerator of this RubyEnumerable.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<E> minBy() {
     return newRubyEnumerator(iter);
   }
 
+  /**
+   * Find the element which is the min element induced by the Comparator
+   * transformed by the block of this RubyEnumerable. Return null if this
+   * RubyEnumerable is empty.
+   * 
+   * @param comp
+   *          a Comparator
+   * @param block
+   *          to transform elements
+   * @return an element or null
+   */
   public <S> E
       minBy(Comparator<? super S> comp, ItemTransformBlock<E, S> block) {
     List<E> src = newArrayList();
@@ -652,6 +1069,14 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return src.get(dst.indexOf(minDst));
   }
 
+  /**
+   * Find the element which is the min element transformed by the block of this
+   * RubyEnumerable. Return null if this RubyEnumerable is empty.
+   * 
+   * @param block
+   *          to transform elements
+   * @return an element or null
+   */
   public <S> E minBy(ItemTransformBlock<E, S> block) {
     List<E> src = newArrayList();
     List<S> dst = newArrayList();
@@ -663,12 +1088,26 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return src.get(dst.indexOf(minDst));
   }
 
+  /**
+   * Find the min & max elements of this RubyEnumerable and store them into a
+   * RubyArray.
+   * 
+   * @return a RubyArray
+   */
   @SuppressWarnings("unchecked")
   public RubyArray<E> minmax() {
     RubyArray<E> rubyArray = sort();
     return newRubyArray(rubyArray.first(), rubyArray.last());
   }
 
+  /**
+   * Find the min & max elements induced by the Comparator of this
+   * RubyEnumerable and store them into a RubyArray.
+   * 
+   * @param comp
+   *          a Comparator
+   * @return a RubyArray
+   */
   @SuppressWarnings("unchecked")
   public RubyArray<E> minmax(Comparator<? super E> comp) {
     RubyArray<E> rubyArray = newRubyArray(iter);
@@ -676,10 +1115,26 @@ public class RubyEnumerable<E> implements Iterable<E> {
         Collections.max(rubyArray, comp));
   }
 
+  /**
+   * Return a RubyEnumerator of this RubyEnumerable.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<E> minmaxBy() {
     return newRubyEnumerator(iter);
   }
 
+  /**
+   * Find elements which are the min & max elements induced by the Comparator
+   * transformed by the block of this RubyEnumerable and store them into a
+   * RubyArray.
+   * 
+   * @param comp
+   *          a Comparator
+   * @param block
+   *          to transform elements
+   * @return a RubyArray
+   */
   @SuppressWarnings("unchecked")
   public <S> RubyArray<E> minmaxBy(Comparator<? super S> comp,
       ItemTransformBlock<E, S> block) {
@@ -695,6 +1150,14 @@ public class RubyEnumerable<E> implements Iterable<E> {
         src.get(dst.indexOf(maxDst)));
   }
 
+  /**
+   * Find elements which is the min & max elements transformed by the block of
+   * this RubyEnumerable and store them into a RubyArray.
+   * 
+   * @param block
+   *          to transform elements
+   * @return a RubyArray
+   */
   @SuppressWarnings("unchecked")
   public <S> RubyArray<E> minmaxBy(ItemTransformBlock<E, S> block) {
     RubyArray<E> src = newRubyArray();
@@ -709,26 +1172,42 @@ public class RubyEnumerable<E> implements Iterable<E> {
         src.get(dst.indexOf(maxDst)));
   }
 
+  /**
+   * Check if this RubyEnumerable contains only null objects.
+   * 
+   * @return true if all elements are null, false otherwise
+   */
   public boolean noneʔ() {
-    boolean bool = true;
     for (E item : iter) {
       if (item != null) {
         return false;
       }
     }
-    return bool;
+    return true;
   }
 
+  /**
+   * Check if this RubyEnumerable contains only elements which get false
+   * returned by the block.
+   * 
+   * @param block
+   *          to check elements
+   * @return true if all results of block are false, false otherwise
+   */
   public boolean noneʔ(BooleanBlock<E> block) {
-    boolean bool = true;
     for (E item : iter) {
       if (block.yield(item)) {
         return false;
       }
     }
-    return bool;
+    return true;
   }
 
+  /**
+   * Check if this RubyEnumerable contains only one element beside null objects.
+   * 
+   * @return true if only one element and nulls are found, false otherwise
+   */
   public boolean oneʔ() {
     int count = 0;
     for (E item : iter) {
@@ -742,6 +1221,14 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return count == 1;
   }
 
+  /**
+   * Check if this RubyEnumerable contains only one element which get true
+   * returned by the block.
+   * 
+   * @param block
+   *          to check elements
+   * @return true if only one result of block is true, false otherwise
+   */
   public boolean oneʔ(BooleanBlock<E> block) {
     int count = 0;
     for (E item : iter) {
@@ -764,6 +1251,13 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return newRubyEnumerator(iter);
   }
 
+  /**
+   * Divide elements into 2 groups by the given block.
+   * 
+   * @param block
+   *          to part elements
+   * @return a RubyArray of 2 RubyArrays
+   */
   @SuppressWarnings("unchecked")
   public RubyArray<RubyArray<E>> partition(BooleanBlock<E> block) {
     RubyArray<E> trueList = newRubyArray();
@@ -778,18 +1272,50 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return newRubyArray(trueList, falseList);
   }
 
-  public <S> S reduce(S init, String methodName) {
-    return inject(init, methodName);
-  }
-
+  /**
+   * Equivalent to inject().
+   * 
+   * @param block
+   *          to reduce each element
+   * @return an element
+   */
   public E reduce(InjectBlock<E> block) {
     return inject(block);
   }
 
+  /**
+   * Equivalent to inject().
+   * 
+   * @param init
+   *          initial value
+   * @param block
+   *          to reduce each element
+   * @return an element S
+   */
   public <S> S reduce(S init, InjectWithInitBlock<E, S> block) {
     return inject(init, block);
   }
 
+  /**
+   * Equivalent to inject().
+   * 
+   * @param init
+   *          initial value
+   * @param methodName
+   *          method used to reduce elements
+   * @return an element S
+   */
+  public <S> S reduce(S init, String methodName) {
+    return inject(init, methodName);
+  }
+
+  /**
+   * Equivalent to inject().
+   * 
+   * @param methodName
+   *          method used to reduce elements
+   * @return an element
+   */
   public E reduce(String methodName) {
     return inject(methodName);
   }
@@ -803,6 +1329,13 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return newRubyEnumerator(iter);
   }
 
+  /**
+   * Delete elements which get true returned by the block.
+   * 
+   * @param block
+   *          to filter elements
+   * @return a RubyArray
+   */
   public RubyArray<E> reject(BooleanBlock<E> block) {
     RubyArray<E> rubyArray = newRubyArray();
     for (E item : iter) {
@@ -813,10 +1346,22 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return rubyArray;
   }
 
+  /**
+   * Return a reversed RubyEnumerator of this RubyEnumerable.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<E> reverseEach() {
     return newRubyEnumerator(Lists.reverse(newArrayList(iter)));
   }
 
+  /**
+   * Iterate each element reversed by given block.
+   * 
+   * @param block
+   *          to yield each element
+   * @return this RubyEnumerable
+   */
   public RubyEnumerable<E> reverseEach(ItemBlock<E> block) {
     List<E> list = newArrayList(iter);
     for (E item : reverse(list)) {
@@ -834,6 +1379,13 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return findAll();
   }
 
+  /**
+   * Equivalent to findAll().
+   * 
+   * @param block
+   *          to filter elements
+   * @return a RubyArray
+   */
   public RubyArray<E> select(BooleanBlock<E> block) {
     return findAll(block);
   }
@@ -846,6 +1398,12 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return newRubyEnumerator(new SliceBeforeIterable<E>(iter, regex));
   }
 
+  /**
+   * Sort elements of this RubyEnumerable into a RubyArray. Using the natural
+   * Object ordering if elements are not Comparable.
+   * 
+   * @return a RubyArray
+   */
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public RubyArray<E> sort() {
     RubyArray<E> rubyArray = newRubyArray(iter);
@@ -871,6 +1429,16 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return newRubyEnumerator(iter);
   }
 
+  /**
+   * Sort elements of this RubyEnumerable by the ordering of elements
+   * transformed by the block induced by the Comparator into a RubyArray.
+   * 
+   * @param comp
+   *          a Comparator
+   * @param block
+   *          to transform elements
+   * @return a RubyArray
+   */
   public <S> RubyArray<E> sortBy(Comparator<? super S> comp,
       ItemTransformBlock<E, S> block) {
     Multimap<S, E> multimap = ArrayListMultimap.create();
@@ -890,6 +1458,15 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return sortedList;
   }
 
+  /**
+   * Sort elements of this RubyEnumerable by the ordering of elements
+   * transformed by the block into a RubyArray.
+   * 
+   * 
+   * @param block
+   *          to transform elements
+   * @return a RubyArray
+   */
   public <S> RubyArray<E> sortBy(ItemTransformBlock<E, S> block) {
     Multimap<S, E> multimap = ArrayListMultimap.create();
     RubyArray<E> sortedList = newRubyArray();
@@ -908,6 +1485,15 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return sortedList;
   }
 
+  /**
+   * Store the first n elements into a RubyArray.
+   * 
+   * @param n
+   *          number of elements
+   * @return a RubyArray
+   * @throws IllegalArgumentException
+   *           if n < 0
+   */
   public RubyArray<E> take(int n) {
     if (n < 0) {
       throw new IllegalArgumentException("attempt to take negative size");
@@ -925,6 +1511,12 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return rubyArray;
   }
 
+  /**
+   * Return a RubyEnumerator which contains the first element of this
+   * RubyEnumerable.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<E> takeWhile() {
     RubyArray<E> rubyArray = newRubyArray();
     for (E item : iter) {
@@ -934,6 +1526,14 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return newRubyEnumerator(rubyArray);
   }
 
+  /**
+   * Store element into a RubyArray from beginning until the result returned by
+   * the block is false.
+   * 
+   * @param block
+   *          to filter elements
+   * @return a RubyArray
+   */
   public RubyArray<E> takeWhile(BooleanBlock<E> block) {
     RubyArray<E> rubyArray = newRubyArray();
     for (E item : iter) {
@@ -946,14 +1546,35 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return rubyArray;
   }
 
+  /**
+   * Convert this RubyEnumerable to a RubyArray.
+   * 
+   * @return a RubyArray
+   */
   public RubyArray<E> toA() {
     return newRubyArray(iter);
   }
 
+  /**
+   * Group elements which get the same indices among all other Lists into
+   * RubyArrays.
+   * 
+   * @param others
+   *          Lists
+   * @return a RubyArray of RubyArrays
+   */
   public RubyArray<RubyArray<E>> zip(List<E>... others) {
     return zip(Arrays.asList(others));
   }
 
+  /**
+   * Group elements which get the same indices among all other Lists into
+   * RubyArrays.
+   * 
+   * @param others
+   *          List of Lists
+   * @return a RubyArray of RubyArrays
+   */
   public RubyArray<RubyArray<E>> zip(List<? extends List<E>> others) {
     RubyArray<E> rubyArray = newRubyArray(iter);
     RubyArray<RubyArray<E>> zippedRubyArray = newRubyArray();
@@ -973,6 +1594,15 @@ public class RubyEnumerable<E> implements Iterable<E> {
     return zippedRubyArray;
   }
 
+  /**
+   * Group elements which get the same indices among all other Lists into
+   * RubyArrays and yield them to the block.
+   * 
+   * @param others
+   *          List of Lists
+   * @param block
+   *          to yield zipped elements
+   */
   public void
       zip(List<? extends List<E>> others, ItemBlock<RubyArray<E>> block) {
     RubyArray<RubyArray<E>> zippedRubyArray = zip(others);
