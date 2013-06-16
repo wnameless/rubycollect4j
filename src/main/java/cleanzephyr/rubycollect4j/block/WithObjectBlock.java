@@ -20,8 +20,8 @@
  */
 package cleanzephyr.rubycollect4j.block;
 
-public interface ItemTransformBlock<E, S> {
+public interface WithObjectBlock<E, S> {
 
-  public S yield(E item);
+  public void yield(E item, S o);
 
 }

@@ -24,14 +24,14 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import cleanzephyr.rubycollect4j.RubyArray;
-import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
+import cleanzephyr.rubycollect4j.block.TransformBlock;
 
 public final class ChunkIterable<E, K> implements
     Iterable<Entry<K, RubyArray<E>>> {
   private final Iterable<E> iterable;
-  private final ItemTransformBlock<E, K> block;
+  private final TransformBlock<E, K> block;
 
-  public ChunkIterable(Iterable<E> iterable, ItemTransformBlock<E, K> block) {
+  public ChunkIterable(Iterable<E> iterable, TransformBlock<E, K> block) {
     this.iterable = iterable;
     this.block = block;
   }

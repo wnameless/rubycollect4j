@@ -25,7 +25,7 @@ import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 
 import cleanzephyr.rubycollect4j.RubyArray;
-import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
+import cleanzephyr.rubycollect4j.block.TransformBlock;
 
 import com.google.common.collect.Iterators;
 import com.google.common.collect.PeekingIterator;
@@ -37,9 +37,9 @@ public final class ChunkIterator<E, K> implements
     Iterator<Entry<K, RubyArray<E>>> {
 
   private final PeekingIterator<E> pIterator;
-  private final ItemTransformBlock<E, K> block;
+  private final TransformBlock<E, K> block;
 
-  public ChunkIterator(Iterator<E> iterator, ItemTransformBlock<E, K> block) {
+  public ChunkIterator(Iterator<E> iterator, TransformBlock<E, K> block) {
     pIterator = Iterators.peekingIterator(iterator);
     this.block = block;
   }

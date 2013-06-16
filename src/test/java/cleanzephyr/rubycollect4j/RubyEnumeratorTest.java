@@ -6,7 +6,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import cleanzephyr.rubycollect4j.block.ItemBlock;
+import cleanzephyr.rubycollect4j.block.Block;
 
 import static cleanzephyr.rubycollect4j.RubyEnumerator.newRubyEnumerator;
 import static com.google.common.collect.Lists.newArrayList;
@@ -39,7 +39,7 @@ public class RubyEnumeratorTest {
   @Test
   public void testEachWithBlock() {
     final List<Integer> ints = newArrayList();
-    assertTrue(re == re.each(new ItemBlock<Integer>() {
+    assertTrue(re == re.each(new Block<Integer>() {
 
       @Override
       public void yield(Integer item) {

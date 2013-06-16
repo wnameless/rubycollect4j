@@ -27,15 +27,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import cleanzephyr.rubycollect4j.block.Block;
 import cleanzephyr.rubycollect4j.block.BooleanBlock;
 import cleanzephyr.rubycollect4j.block.EntryBlock;
 import cleanzephyr.rubycollect4j.block.EntryBooleanBlock;
 import cleanzephyr.rubycollect4j.block.EntryMergeBlock;
-import cleanzephyr.rubycollect4j.block.EntryToRubyArrayBlock;
 import cleanzephyr.rubycollect4j.block.EntryTransformBlock;
-import cleanzephyr.rubycollect4j.block.ItemBlock;
-import cleanzephyr.rubycollect4j.block.ItemToRubyArrayBlock;
-import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
+import cleanzephyr.rubycollect4j.block.TransformBlock;
 
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
 import static cleanzephyr.rubycollect4j.RubyCollections.newPair;
@@ -142,7 +140,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return newRubyEnumerator(keySet());
   }
 
-  public RubyHash<K, V> eachKey(ItemBlock<K> block) {
+  public RubyHash<K, V> eachKey(Block<K> block) {
     for (K item : keySet()) {
       block.yield(item);
     }
@@ -161,7 +159,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return newRubyEnumerator(values());
   }
 
-  public RubyHash<K, V> eachValue(ItemBlock<V> block) {
+  public RubyHash<K, V> eachValue(Block<V> block) {
     for (V item : values()) {
       block.yield(item);
     }
@@ -407,7 +405,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
 
   public <S> RubyEnumerator<Entry<S, RubyArray<Entry<K, V>>>> chunk(
       final EntryTransformBlock<K, V, S> block) {
-    return chunk(new ItemTransformBlock<Entry<K, V>, S>() {
+    return chunk(new TransformBlock<Entry<K, V>, S>() {
 
       @Override
       public S yield(Entry<K, V> item) {
@@ -418,8 +416,8 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   public <S> RubyArray<S> collectConcat(
-      final EntryToRubyArrayBlock<K, V, S> block) {
-    return collectConcat(new ItemToRubyArrayBlock<Entry<K, V>, S>() {
+      final EntryTransformBlock<K, V, RubyArray<S>> block) {
+    return collectConcat(new TransformBlock<Entry<K, V>, RubyArray<S>>() {
 
       @Override
       public RubyArray<S> yield(Entry<K, V> item) {
@@ -441,7 +439,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   public void cycle(int n, final EntryBlock<K, V> block) {
-    cycle(n, new ItemBlock<Entry<K, V>>() {
+    cycle(n, new Block<Entry<K, V>>() {
 
       @Override
       public void yield(Entry<K, V> item) {
@@ -452,7 +450,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   public void cycle(final EntryBlock<K, V> block) {
-    cycle(new ItemBlock<Entry<K, V>>() {
+    cycle(new Block<Entry<K, V>>() {
 
       @Override
       public void yield(Entry<K, V> item) {
@@ -485,7 +483,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   public RubyEnumerable<Entry<K, V>> eachEntry(final EntryBlock<K, V> block) {
-    return eachEntry(new ItemBlock<Entry<K, V>>() {
+    return eachEntry(new Block<Entry<K, V>>() {
 
       @Override
       public void yield(Entry<K, V> item) {
@@ -521,13 +519,14 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
-  public <S> RubyArray<S> flatMap(final EntryToRubyArrayBlock<K, V, S> block) {
+  public <S> RubyArray<S> flatMap(
+      final EntryTransformBlock<K, V, RubyArray<S>> block) {
     return collectConcat(block);
   }
 
   public <S> RubyArray<S> grep(String regex,
       final EntryTransformBlock<K, V, S> block) {
-    return grep(regex, new ItemTransformBlock<Entry<K, V>, S>() {
+    return grep(regex, new TransformBlock<Entry<K, V>, S>() {
 
       @Override
       public S yield(Entry<K, V> item) {
@@ -539,7 +538,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
 
   public <S> RubyHash<S, RubyArray<Entry<K, V>>> groupBy(
       final EntryTransformBlock<K, V, S> block) {
-    return groupBy(new ItemTransformBlock<Entry<K, V>, S>() {
+    return groupBy(new TransformBlock<Entry<K, V>, S>() {
 
       @Override
       public S yield(Entry<K, V> item) {
@@ -550,7 +549,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   public <S> RubyArray<S> map(final EntryTransformBlock<K, V, S> block) {
-    return map(new ItemTransformBlock<Entry<K, V>, S>() {
+    return map(new TransformBlock<Entry<K, V>, S>() {
 
       @Override
       public S yield(Entry<K, V> item) {
@@ -562,7 +561,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
 
   public <S> Entry<K, V> maxBy(Comparator<? super S> comp,
       final EntryTransformBlock<K, V, S> block) {
-    return maxBy(comp, new ItemTransformBlock<Entry<K, V>, S>() {
+    return maxBy(comp, new TransformBlock<Entry<K, V>, S>() {
 
       @Override
       public S yield(Entry<K, V> item) {
@@ -573,7 +572,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   public <S> Entry<K, V> maxBy(final EntryTransformBlock<K, V, S> block) {
-    return maxBy(new ItemTransformBlock<Entry<K, V>, S>() {
+    return maxBy(new TransformBlock<Entry<K, V>, S>() {
 
       @Override
       public S yield(Entry<K, V> item) {
@@ -585,7 +584,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
 
   public <S> Entry<K, V> minBy(Comparator<? super S> comp,
       final EntryTransformBlock<K, V, S> block) {
-    return minBy(comp, new ItemTransformBlock<Entry<K, V>, S>() {
+    return minBy(comp, new TransformBlock<Entry<K, V>, S>() {
 
       @Override
       public S yield(Entry<K, V> item) {
@@ -596,7 +595,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   public <S> Entry<K, V> minBy(final EntryTransformBlock<K, V, S> block) {
-    return minBy(new ItemTransformBlock<Entry<K, V>, S>() {
+    return minBy(new TransformBlock<Entry<K, V>, S>() {
 
       @Override
       public S yield(Entry<K, V> item) {
@@ -608,7 +607,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
 
   public <S> RubyArray<Entry<K, V>> minmaxBy(Comparator<? super S> comp,
       final EntryTransformBlock<K, V, S> block) {
-    return minmaxBy(comp, new ItemTransformBlock<Entry<K, V>, S>() {
+    return minmaxBy(comp, new TransformBlock<Entry<K, V>, S>() {
 
       @Override
       public S yield(Entry<K, V> item) {
@@ -620,7 +619,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
 
   public <S> RubyArray<Entry<K, V>> minmaxBy(
       final EntryTransformBlock<K, V, S> block) {
-    return minmaxBy(new ItemTransformBlock<Entry<K, V>, S>() {
+    return minmaxBy(new TransformBlock<Entry<K, V>, S>() {
 
       @Override
       public S yield(Entry<K, V> item) {
@@ -676,7 +675,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   public RubyEnumerable<Entry<K, V>> reverseEach(final EntryBlock<K, V> block) {
-    return reverseEach(new ItemBlock<Entry<K, V>>() {
+    return reverseEach(new Block<Entry<K, V>>() {
 
       @Override
       public void yield(Entry<K, V> item) {
@@ -704,7 +703,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
 
   public <S> RubyArray<Entry<K, V>> sortBy(Comparator<? super S> comp,
       final EntryTransformBlock<K, V, S> block) {
-    return sortBy(comp, new ItemTransformBlock<Entry<K, V>, S>() {
+    return sortBy(comp, new TransformBlock<Entry<K, V>, S>() {
 
       @Override
       public S yield(Entry<K, V> item) {
@@ -716,7 +715,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
 
   public <S> RubyArray<Entry<K, V>> sortBy(
       final EntryTransformBlock<K, V, S> block) {
-    return sortBy(new ItemTransformBlock<Entry<K, V>, S>() {
+    return sortBy(new TransformBlock<Entry<K, V>, S>() {
 
       @Override
       public S yield(Entry<K, V> item) {

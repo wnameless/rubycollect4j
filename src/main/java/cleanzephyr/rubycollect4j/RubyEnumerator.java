@@ -22,7 +22,7 @@ package cleanzephyr.rubycollect4j;
 
 import java.util.Iterator;
 
-import cleanzephyr.rubycollect4j.block.ItemBlock;
+import cleanzephyr.rubycollect4j.block.Block;
 
 import com.google.common.collect.Iterators;
 import com.google.common.collect.PeekingIterator;
@@ -56,7 +56,7 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
     return this;
   }
 
-  public RubyEnumerator<E> each(ItemBlock<E> block) {
+  public RubyEnumerator<E> each(Block<E> block) {
     for (E item : iter) {
       block.yield(item);
     }

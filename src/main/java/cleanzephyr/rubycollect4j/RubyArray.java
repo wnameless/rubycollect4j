@@ -33,10 +33,8 @@ import java.util.Set;
 import cleanzephyr.rebycollect4j.util.ComparableComparator;
 import cleanzephyr.rubycollect4j.block.Block;
 import cleanzephyr.rubycollect4j.block.BooleanBlock;
-import cleanzephyr.rubycollect4j.block.IndexBlock;
-import cleanzephyr.rubycollect4j.block.IndexWithReturnBlock;
-import cleanzephyr.rubycollect4j.block.ItemBlock;
-import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
+import cleanzephyr.rubycollect4j.block.ReturnBlock;
+import cleanzephyr.rubycollect4j.block.TransformBlock;
 import cleanzephyr.rubycollect4j.iter.CombinationIterable;
 import cleanzephyr.rubycollect4j.iter.EachIndexIterable;
 import cleanzephyr.rubycollect4j.iter.PermutationIterable;
@@ -257,7 +255,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    *          a block to yield each combination
    * @return this RubyArray
    */
-  public RubyArray<E> combination(int n, ItemBlock<RubyArray<E>> block) {
+  public RubyArray<E> combination(int n, Block<RubyArray<E>> block) {
     for (RubyArray<E> c : combination(n)) {
       block.yield(c);
     }
@@ -358,7 +356,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    *          yield if nothing is deleted
    * @return a element
    */
-  public E delete(E target, Block<E> block) {
+  public E delete(E target, ReturnBlock<E> block) {
     boolean isDeleted = false;
     ListIterator<E> li = listIterator();
     while (li.hasNext()) {
@@ -427,7 +425,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return newRubyEnumerator(list);
   }
 
-  public RubyArray<E> each(ItemBlock<E> block) {
+  public RubyArray<E> each(Block<E> block) {
     for (E item : list) {
       block.yield(item);
     }
@@ -449,7 +447,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @param block
    * @return this RubyArray
    */
-  public RubyArray<E> eachIndex(IndexBlock block) {
+  public RubyArray<E> eachIndex(Block<Integer> block) {
     for (int i = 0; i < size(); i++) {
       block.yield(i);
     }
@@ -518,7 +516,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    *          yield index to the block if index is not found
    * @return an element or null
    */
-  public E fetch(int index, IndexBlock block) {
+  public E fetch(int index, Block<Integer> block) {
     if (index >= size() || index < -size()) {
       block.yield(index);
       return null;
@@ -601,7 +599,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    *          return the element to be filled
    * @return this RubyArray
    */
-  public RubyArray<E> fill(IndexWithReturnBlock<E> block) {
+  public RubyArray<E> fill(TransformBlock<Integer, E> block) {
     for (int i = 0; i < size(); i++) {
       set(i, block.yield(i));
     }
@@ -618,7 +616,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    *          return the element to be filled
    * @return this RubyArray
    */
-  public RubyArray<E> fill(int start, IndexWithReturnBlock<E> block) {
+  public RubyArray<E> fill(int start, TransformBlock<Integer, E> block) {
     if (start <= -size()) {
       return fill(block);
     }
@@ -643,8 +641,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    *          return the element to be filled
    * @return this RubyArray
    */
-  public RubyArray<E>
-      fill(int start, int length, IndexWithReturnBlock<E> block) {
+  public RubyArray<E> fill(int start, int length,
+      TransformBlock<Integer, E> block) {
     if (start < 0) {
       start += size();
       if (start < 0) {
@@ -970,7 +968,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    *          to yield each permutation
    * @return this RubyArray
    */
-  public RubyArray<E> permutation(int n, ItemBlock<RubyArray<E>> block) {
+  public RubyArray<E> permutation(int n, Block<RubyArray<E>> block) {
     for (RubyArray<E> item : permutation(n)) {
       block.yield(item);
     }
@@ -984,7 +982,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    *          to yield each permutation
    * @return this RubyArray
    */
-  public RubyArray<E> permutation(ItemBlock<RubyArray<E>> block) {
+  public RubyArray<E> permutation(Block<RubyArray<E>> block) {
     for (RubyArray<E> item : permutation()) {
       block.yield(item);
     }
@@ -1074,7 +1072,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return this RubyArray
    */
   public RubyArray<E> product(List<? extends List<E>> others,
-      ItemBlock<RubyArray<E>> block) {
+      Block<RubyArray<E>> block) {
     for (RubyArray<E> comb : product(others)) {
       block.yield(comb);
     }
@@ -1169,7 +1167,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    *          to yield each repeated combination
    * @return this RubyArray
    */
-  public RubyArray<E> repeatedCombination(int n, ItemBlock<RubyArray<E>> block) {
+  public RubyArray<E> repeatedCombination(int n, Block<RubyArray<E>> block) {
     for (RubyArray<E> c : repeatedCombination(n)) {
       block.yield(c);
     }
@@ -1205,7 +1203,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    *          to yield each repeated permutation
    * @return this RubyArray
    */
-  public RubyArray<E> repeatedPermutation(int n, ItemBlock<RubyArray<E>> block) {
+  public RubyArray<E> repeatedPermutation(int n, Block<RubyArray<E>> block) {
     for (RubyArray<E> perm : repeatedPermutation(n)) {
       block.yield(perm);
     }
@@ -1634,7 +1632,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    *          to transform elements
    * @return a new RubyArray
    */
-  public <S> RubyArray<E> uniq(ItemTransformBlock<E, S> block) {
+  public <S> RubyArray<E> uniq(TransformBlock<E, S> block) {
     List<E> uniqList = newArrayList();
     Set<S> uniqSet = newLinkedHashSet();
     for (E item : list) {
@@ -1667,7 +1665,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    *          to transform elements
    * @return this RubyArray
    */
-  public <S> RubyArray<E> uniqǃ(ItemTransformBlock<E, S> block) {
+  public <S> RubyArray<E> uniqǃ(TransformBlock<E, S> block) {
     int beforeSize = size();
     List<E> uniqList = newArrayList();
     Set<S> uniqSet = newLinkedHashSet();

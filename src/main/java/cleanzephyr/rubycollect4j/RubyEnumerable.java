@@ -36,13 +36,12 @@ import java.util.regex.Pattern;
 
 import cleanzephyr.rebycollect4j.util.ComparableComparator;
 import cleanzephyr.rubycollect4j.block.BooleanBlock;
-import cleanzephyr.rubycollect4j.block.InjectBlock;
-import cleanzephyr.rubycollect4j.block.InjectWithInitBlock;
-import cleanzephyr.rubycollect4j.block.ItemBlock;
-import cleanzephyr.rubycollect4j.block.ItemToRubyArrayBlock;
-import cleanzephyr.rubycollect4j.block.ItemTransformBlock;
-import cleanzephyr.rubycollect4j.block.ItemWithIndexBlock;
-import cleanzephyr.rubycollect4j.block.ItemWithObjectBlock;
+import cleanzephyr.rubycollect4j.block.ReduceBlock;
+import cleanzephyr.rubycollect4j.block.WithInitBlock;
+import cleanzephyr.rubycollect4j.block.Block;
+import cleanzephyr.rubycollect4j.block.TransformBlock;
+import cleanzephyr.rubycollect4j.block.WithIndexBlock;
+import cleanzephyr.rubycollect4j.block.WithObjectBlock;
 import cleanzephyr.rubycollect4j.iter.ChunkIterable;
 import cleanzephyr.rubycollect4j.iter.CycleIterable;
 import cleanzephyr.rubycollect4j.iter.EachConsIterable;
@@ -184,7 +183,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * @return a RubyEnumerator
    */
   public <K> RubyEnumerator<Entry<K, RubyArray<E>>> chunk(
-      ItemTransformBlock<E, K> block) {
+      TransformBlock<E, K> block) {
     return newRubyEnumerator(new ChunkIterable<E, K>(iter, block));
   }
 
@@ -204,7 +203,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    *          to transform elements
    * @return a RubyArray
    */
-  public <S> RubyArray<S> collect(ItemTransformBlock<E, S> block) {
+  public <S> RubyArray<S> collect(TransformBlock<E, S> block) {
     RubyArray<S> rubyArray = newRubyArray();
     for (E item : iter) {
       rubyArray.add(block.yield(item));
@@ -228,7 +227,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
    *          to take element and generate a RubyArray
    * @return a RubyArray
    */
-  public <S> RubyArray<S> collectConcat(ItemToRubyArrayBlock<E, S> block) {
+  public <S> RubyArray<S> collectConcat(
+      TransformBlock<E, RubyArray<S>> block) {
     RubyArray<S> rubyArray = newRubyArray();
     for (E item : iter) {
       rubyArray.addAll(block.yield(item));
@@ -296,7 +296,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * @param block
    *          to yield each element
    */
-  public void cycle(int n, ItemBlock<E> block) {
+  public void cycle(int n, Block<E> block) {
     for (int i = 0; i < n; i++) {
       for (E item : iter) {
         block.yield(item);
@@ -311,7 +311,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * @param block
    *          to yield each element
    */
-  public void cycle(ItemBlock<E> block) {
+  public void cycle(Block<E> block) {
     while (true) {
       for (E item : iter) {
         block.yield(item);
@@ -429,7 +429,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * @throws llegalArgumentException
    *           if n <= 0
    */
-  public void eachCons(int n, ItemBlock<RubyArray<E>> block) {
+  public void eachCons(int n, Block<RubyArray<E>> block) {
     if (n <= 0) {
       throw new IllegalArgumentException("invalid size");
     }
@@ -454,7 +454,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    *          to yield each element
    * @return this RubyEnumerable
    */
-  public RubyEnumerable<E> eachEntry(ItemBlock<E> block) {
+  public RubyEnumerable<E> eachEntry(Block<E> block) {
     for (E item : iter) {
       block.yield(item);
     }
@@ -485,7 +485,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * @param block
    *          to yield each slice
    */
-  public void eachSlice(int n, ItemBlock<RubyArray<E>> block) {
+  public void eachSlice(int n, Block<RubyArray<E>> block) {
     if (n <= 0) {
       throw new IllegalArgumentException("invalid slice size");
     }
@@ -511,7 +511,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    *          to yield each Entry
    * @return this RubyEnumerable
    */
-  public RubyEnumerable<E> eachWithIndex(ItemWithIndexBlock<E> block) {
+  public RubyEnumerable<E> eachWithIndex(WithIndexBlock<E> block) {
     int i = 0;
     for (E item : iter) {
       block.yield(item, i);
@@ -537,7 +537,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    *          to yield each Entry
    * @return the Object S
    */
-  public <S> S eachWithObject(S o, ItemWithObjectBlock<E, S> block) {
+  public <S> S eachWithObject(S o, WithObjectBlock<E, S> block) {
     for (E item : iter) {
       block.yield(item, o);
     }
@@ -695,7 +695,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    *          to take element and generate a RubyArray
    * @return a RubyArray
    */
-  public <S> RubyArray<S> flatMap(ItemToRubyArrayBlock<E, S> block) {
+  public <S> RubyArray<S> flatMap(TransformBlock<E, RubyArray<S>> block) {
     return collectConcat(block);
   }
 
@@ -728,7 +728,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    *          to transform elements
    * @return a RubyArray
    */
-  public <S> RubyArray<S> grep(String regex, ItemTransformBlock<E, S> block) {
+  public <S> RubyArray<S> grep(String regex, TransformBlock<E, S> block) {
     Pattern pattern = Pattern.compile(regex);
     RubyArray<S> rubyArray = newRubyArray();
     for (E item : iter) {
@@ -757,7 +757,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    *          to group each element
    * @return a RubyHash
    */
-  public <K> RubyHash<K, RubyArray<E>> groupBy(ItemTransformBlock<E, K> block) {
+  public <K> RubyHash<K, RubyArray<E>> groupBy(TransformBlock<E, K> block) {
     Multimap<K, E> multimap = ArrayListMultimap.create();
     for (E item : iter) {
       K key = block.yield(item);
@@ -793,7 +793,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    *          to reduce each element
    * @return an element
    */
-  public E inject(InjectBlock<E> block) {
+  public E inject(ReduceBlock<E> block) {
     E result = null;
     int i = 0;
     for (E item : iter) {
@@ -817,7 +817,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    *          to reduce each element
    * @return an element S
    */
-  public <S> S inject(S init, InjectWithInitBlock<E, S> block) {
+  public <S> S inject(S init, WithInitBlock<E, S> block) {
     for (E item : iter) {
       init = block.yield(init, item);
     }
@@ -925,7 +925,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    *          to transform elements
    * @return a RubyArray
    */
-  public <S> RubyArray<S> map(ItemTransformBlock<E, S> block) {
+  public <S> RubyArray<S> map(TransformBlock<E, S> block) {
     return collect(block);
   }
 
@@ -973,7 +973,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * @return an element or null
    */
   public <S> E
-      maxBy(Comparator<? super S> comp, ItemTransformBlock<E, S> block) {
+      maxBy(Comparator<? super S> comp, TransformBlock<E, S> block) {
     List<E> src = newArrayList();
     List<S> dst = newArrayList();
     for (E item : iter) {
@@ -992,7 +992,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    *          to transform elements
    * @return an element or null
    */
-  public <S> E maxBy(ItemTransformBlock<E, S> block) {
+  public <S> E maxBy(TransformBlock<E, S> block) {
     List<E> src = newArrayList();
     List<S> dst = newArrayList();
     for (E item : iter) {
@@ -1058,7 +1058,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * @return an element or null
    */
   public <S> E
-      minBy(Comparator<? super S> comp, ItemTransformBlock<E, S> block) {
+      minBy(Comparator<? super S> comp, TransformBlock<E, S> block) {
     List<E> src = newArrayList();
     List<S> dst = newArrayList();
     for (E item : iter) {
@@ -1077,7 +1077,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    *          to transform elements
    * @return an element or null
    */
-  public <S> E minBy(ItemTransformBlock<E, S> block) {
+  public <S> E minBy(TransformBlock<E, S> block) {
     List<E> src = newArrayList();
     List<S> dst = newArrayList();
     for (E item : iter) {
@@ -1137,7 +1137,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    */
   @SuppressWarnings("unchecked")
   public <S> RubyArray<E> minmaxBy(Comparator<? super S> comp,
-      ItemTransformBlock<E, S> block) {
+      TransformBlock<E, S> block) {
     RubyArray<E> src = newRubyArray();
     RubyArray<S> dst = newRubyArray();
     for (E item : iter) {
@@ -1159,7 +1159,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * @return a RubyArray
    */
   @SuppressWarnings("unchecked")
-  public <S> RubyArray<E> minmaxBy(ItemTransformBlock<E, S> block) {
+  public <S> RubyArray<E> minmaxBy(TransformBlock<E, S> block) {
     RubyArray<E> src = newRubyArray();
     RubyArray<S> dst = newRubyArray();
     for (E item : iter) {
@@ -1279,7 +1279,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    *          to reduce each element
    * @return an element
    */
-  public E reduce(InjectBlock<E> block) {
+  public E reduce(ReduceBlock<E> block) {
     return inject(block);
   }
 
@@ -1292,7 +1292,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    *          to reduce each element
    * @return an element S
    */
-  public <S> S reduce(S init, InjectWithInitBlock<E, S> block) {
+  public <S> S reduce(S init, WithInitBlock<E, S> block) {
     return inject(init, block);
   }
 
@@ -1362,7 +1362,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    *          to yield each element
    * @return this RubyEnumerable
    */
-  public RubyEnumerable<E> reverseEach(ItemBlock<E> block) {
+  public RubyEnumerable<E> reverseEach(Block<E> block) {
     List<E> list = newArrayList(iter);
     for (E item : reverse(list)) {
       block.yield(item);
@@ -1440,7 +1440,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * @return a RubyArray
    */
   public <S> RubyArray<E> sortBy(Comparator<? super S> comp,
-      ItemTransformBlock<E, S> block) {
+      TransformBlock<E, S> block) {
     Multimap<S, E> multimap = ArrayListMultimap.create();
     RubyArray<E> sortedList = newRubyArray();
     for (E item : iter) {
@@ -1467,7 +1467,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    *          to transform elements
    * @return a RubyArray
    */
-  public <S> RubyArray<E> sortBy(ItemTransformBlock<E, S> block) {
+  public <S> RubyArray<E> sortBy(TransformBlock<E, S> block) {
     Multimap<S, E> multimap = ArrayListMultimap.create();
     RubyArray<E> sortedList = newRubyArray();
     for (E item : iter) {
@@ -1604,7 +1604,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    *          to yield zipped elements
    */
   public void
-      zip(List<? extends List<E>> others, ItemBlock<RubyArray<E>> block) {
+      zip(List<? extends List<E>> others, Block<RubyArray<E>> block) {
     RubyArray<RubyArray<E>> zippedRubyArray = zip(others);
     for (RubyArray<E> item : zippedRubyArray) {
       block.yield(item);

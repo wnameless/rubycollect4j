@@ -20,10 +20,8 @@
  */
 package cleanzephyr.rubycollect4j.block;
 
-import cleanzephyr.rubycollect4j.RubyArray;
+public interface TransformBlock<E, S> {
 
-public interface EntryToRubyArrayBlock<K, V, S> {
-
-  public RubyArray<S> yield(K key, V value);
+  public S yield(E item);
 
 }

@@ -26,12 +26,11 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import cleanzephyr.rubycollect4j.block.Block;
 import cleanzephyr.rubycollect4j.block.EntryBlock;
 import cleanzephyr.rubycollect4j.block.EntryBooleanBlock;
 import cleanzephyr.rubycollect4j.block.EntryMergeBlock;
-import cleanzephyr.rubycollect4j.block.EntryToRubyArrayBlock;
 import cleanzephyr.rubycollect4j.block.EntryTransformBlock;
-import cleanzephyr.rubycollect4j.block.ItemBlock;
 
 import static cleanzephyr.rubycollect4j.RubyCollections.hp;
 import static cleanzephyr.rubycollect4j.RubyCollections.ra;
@@ -148,7 +147,7 @@ public class RubyHashTest {
   public void testEachKeyWithBlock() {
     rh = rh(1, 2, 3, 4, 5, 6);
     final RubyArray<Integer> ints = ra();
-    assertEquals(rh, rh.eachKey(new ItemBlock<Integer>() {
+    assertEquals(rh, rh.eachKey(new Block<Integer>() {
 
       @Override
       public void yield(Integer key) {
@@ -194,7 +193,7 @@ public class RubyHashTest {
   public void testEachValueWithBlock() {
     rh = rh(1, 2, 3, 4, 5, 6);
     final RubyArray<Integer> ints = ra();
-    assertEquals(rh, rh.eachValue(new ItemBlock<Integer>() {
+    assertEquals(rh, rh.eachValue(new Block<Integer>() {
 
       @Override
       public void yield(Integer key) {
@@ -540,7 +539,7 @@ public class RubyHashTest {
     assertEquals(
         ra(3L, 7L),
         rh(1, 2, 3, 4).collectConcat(
-            new EntryToRubyArrayBlock<Integer, Integer, Long>() {
+            new EntryTransformBlock<Integer, Integer, RubyArray<Long>>() {
 
               @Override
               public RubyArray<Long> yield(Integer key, Integer value) {
@@ -668,7 +667,7 @@ public class RubyHashTest {
     assertEquals(
         ra(3L, 7L),
         rh(1, 2, 3, 4).flatMap(
-            new EntryToRubyArrayBlock<Integer, Integer, Long>() {
+            new EntryTransformBlock<Integer, Integer, RubyArray<Long>>() {
 
               @Override
               public RubyArray<Long> yield(Integer key, Integer value) {
