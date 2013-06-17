@@ -19,7 +19,7 @@ String result = word.map((c) -> {
   return word.count(c);
 }).uniq().join();
 
-puts(result);
+p(result);
 // Output: "mpis"
 ```
 
@@ -38,6 +38,6 @@ String result = word.map(new TransformBlock<String, String>() {
   }
 }).uniq().join();
 
-puts(result);
+p(result);
 // Output: "mpis"
 ```
