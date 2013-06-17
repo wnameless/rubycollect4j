@@ -495,7 +495,7 @@ public final class RubyCollections {
    *          a List of Entry
    * @return a RubyHash
    */
-  public static <K, V> RubyHash<K, V> Hash(List<Entry<K, V>> list) {
+  public static <K, V> RubyHash<K, V> Hash(List<? extends Entry<K, V>> list) {
     RubyHash<K, V> rubyHash = rh();
     for (Entry<K, V> entry : list) {
       rubyHash.put(entry);

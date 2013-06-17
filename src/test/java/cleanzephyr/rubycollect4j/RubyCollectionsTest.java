@@ -31,6 +31,7 @@ import java.util.regex.Pattern;
 import org.junit.Test;
 
 import static cleanzephyr.rubycollect4j.RubyArray.newRubyArray;
+import static cleanzephyr.rubycollect4j.RubyCollections.Hash;
 import static cleanzephyr.rubycollect4j.RubyCollections.hp;
 import static cleanzephyr.rubycollect4j.RubyCollections.newPair;
 import static cleanzephyr.rubycollect4j.RubyCollections.qr;
@@ -129,6 +130,12 @@ public class RubyCollectionsTest {
   public void testHp() {
     assertTrue(hp(1, 1) instanceof Entry);
     assertEquals(newPair(1, 1), hp(1, 1));
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testHash() {
+    assertEquals(rh(1, 2, 3, 4, 5, 6), Hash(ra(hp(1, 2), hp(3, 4), hp(5, 6))));
   }
 
 }
