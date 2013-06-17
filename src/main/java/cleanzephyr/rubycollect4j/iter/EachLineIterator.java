@@ -1,23 +1,23 @@
 package cleanzephyr.rubycollect4j.iter;
 
-import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class EachLineIterator implements Iterator<String> {
-  private BufferedReader reader;
+  private RandomAccessFile raFile;
   private String line;
 
-  public EachLineIterator(BufferedReader reader) {
-    this.reader = reader;
+  public EachLineIterator(RandomAccessFile raFile) {
+    this.raFile = raFile;
     nextLine();
   }
 
   private void nextLine() {
     try {
-      line = reader.readLine();
+      line = raFile.readLine();
     } catch (IOException ex) {
       Logger.getLogger(EachLineIterator.class.getName()).log(Level.SEVERE,
           null, ex);

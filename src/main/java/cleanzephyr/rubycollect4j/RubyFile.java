@@ -6,12 +6,14 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static cleanzephyr.rubycollect4j.RubyIO.Mode.R;
+
 public final class RubyFile extends RubyIO {
 
   public static RubyFile open(String path) {
     RubyFile rf = null;
     try {
-      rf = new RubyFile(new File(path), Mode.R);
+      rf = new RubyFile(new File(path), R);
     } catch (FileNotFoundException ex) {
       Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
     } catch (IOException ex) {
@@ -39,14 +41,7 @@ public final class RubyFile extends RubyIO {
 
   private RubyFile(File file, String mode) throws FileNotFoundException,
       IOException {
-    super(file, Mode.getMode(mode));
-  }
-
-  public static void main(String[] args) {
-    RubyFile rf = RubyFile.open("/Users/WMW/Desktop/test", "a+");
-    rf.puts("hahaha");
-    rf.puts("hsfaha");
-    System.out.println(rf.read());
+    super(file, Mode.fromString(mode));
   }
 
 }

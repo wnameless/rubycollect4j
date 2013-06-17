@@ -20,13 +20,9 @@
  */
 package cleanzephyr.rubycollect4j;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.RandomAccessFile;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.logging.Level;
@@ -44,19 +40,32 @@ public class RubyIO {
 
   public enum Mode {
 
-    R("r"), RW("r+"), W("w"), WR("w+"), A("a"), AR("a+");
+    R("r", true, false), RW("r+", true, true), W("w", false, true), WR("w+",
+        true, true), A("a", false, true), AR("a+", true, true);
 
     private final String mode;
+    private final boolean isReadable;
+    private final boolean isWritable;
 
-    private Mode(String mode) {
+    private Mode(String mode, boolean isReadable, boolean isWritable) {
       this.mode = mode;
+      this.isReadable = isReadable;
+      this.isWritable = isWritable;
     }
 
     public String getMode() {
       return mode;
     }
 
-    public static Mode getMode(String permission) {
+    public boolean isReadable() {
+      return isReadable;
+    }
+
+    public boolean isWritable() {
+      return isWritable;
+    }
+
+    public static Mode fromString(String permission) {
       RubyHash<String, Mode> modeHash =
           Hash(ra(values()).map(
               new TransformBlock<Mode, Entry<String, Mode>>() {
@@ -76,67 +85,79 @@ public class RubyIO {
 
   }
 
-  private final BufferedReader reader;
-  private final BufferedWriter writer;
+  private final RandomAccessFile raFile;
+  private final Mode mode;
 
   public RubyIO(File file, Mode mode) throws IOException {
     switch (mode) {
-    case R:
-      reader = new BufferedReader(new FileReader(file));
-      writer = null;
-      break;
     case RW:
-      reader = new BufferedReader(new FileReader(file));
-      writer = new BufferedWriter(new FileWriter(file));
+      raFile = new RandomAccessFile(file, "rws");
+      this.mode = mode;
+      raFile.seek(0);
       break;
     case W:
-      reader = null;
-      writer = new BufferedWriter(new FileWriter(file));
+      raFile = new RandomAccessFile(file, "rws");
+      this.mode = mode;
+      raFile.setLength(0);
+      raFile.seek(0);
       break;
     case WR:
-      reader = new BufferedReader(new FileReader(file));
-      writer = new BufferedWriter(new FileWriter(file));
+      raFile = new RandomAccessFile(file, "rws");
+      this.mode = mode;
+      raFile.setLength(0);
+      raFile.seek(0);
       break;
     case A:
-      reader = null;
-      writer = new BufferedWriter(new FileWriter(file, true));
+      raFile = new RandomAccessFile(file, "rws");
+      this.mode = mode;
+      raFile.seek(raFile.length());
       break;
     case AR:
-      reader = new BufferedReader(new FileReader(file));
-      writer = new BufferedWriter(new FileWriter(file, true));
+      raFile = new RandomAccessFile(file, "rws");
+      this.mode = mode;
+      raFile.seek(raFile.length());
       break;
     default:
-      reader = new BufferedReader(new FileReader(file));
-      writer = null;
+      raFile = new RandomAccessFile(file, "r");
+      this.mode = Mode.R;
       break;
+    }
+  }
+
+  public void close() {
+    try {
+      raFile.close();
+    } catch (IOException ex) {
+      Logger.getLogger(RubyIO.class.getName()).log(Level.SEVERE, null, ex);
     }
   }
 
   public RubyEnumerator<String> eachLine() {
-    if (reader == null) {
+    if (mode.isReadable() == false) {
       throw new UnsupportedOperationException("IOError: not opened for reading");
     }
-    return newRubyEnumerator(new EachLineIterable(reader));
+    return newRubyEnumerator(new EachLineIterable(raFile));
   }
 
   public void puts(String words) {
-    if (writer == null) {
+    if (mode.isWritable() == false) {
       throw new UnsupportedOperationException("IOError: not opened for writing");
     }
     try {
-      writer.append(words);
-      writer.newLine();
-      writer.flush();
+      raFile.writeBytes(words + "\n");
     } catch (IOException ex) {
       Logger.getLogger(RubyIO.class.getName()).log(Level.SEVERE, null, ex);
     }
   }
 
   public String read() {
+    if (mode.isReadable() == false) {
+      throw new UnsupportedOperationException("IOError: not opened for reading");
+    }
     StringBuilder sb = new StringBuilder();
     String line;
     try {
-      while ((line = reader.readLine()) != null) {
+      while ((line = raFile.readLine()) != null) {
         sb.append(line + "\n");
       }
     } catch (IOException ex) {
@@ -145,23 +166,24 @@ public class RubyIO {
     return sb.toString();
   }
 
-  public int write(String words) {
-    if (writer == null) {
-      throw new UnsupportedOperationException("IOError: not opened for writing");
-    }
+  public void seek(long pos) {
     try {
-      writer.append(words);
-      writer.flush();
+      raFile.seek(pos);
     } catch (IOException ex) {
       Logger.getLogger(RubyIO.class.getName()).log(Level.SEVERE, null, ex);
     }
-    int byteLen = 0;
+  }
+
+  public int write(String words) {
+    if (mode.isWritable() == false) {
+      throw new UnsupportedOperationException("IOError: not opened for writing");
+    }
     try {
-      byteLen = words.getBytes("UTF-8").length;
-    } catch (UnsupportedEncodingException ex) {
+      raFile.writeBytes(words);
+    } catch (IOException ex) {
       Logger.getLogger(RubyIO.class.getName()).log(Level.SEVERE, null, ex);
     }
-    return byteLen;
+    return words.getBytes().length;
   }
 
 }
