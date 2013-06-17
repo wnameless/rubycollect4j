@@ -26,8 +26,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import cleanzephyr.rubycollect4j.block.TransformBlock;
 import cleanzephyr.rubycollect4j.iter.EachLineIterable;
@@ -40,6 +43,7 @@ import static cleanzephyr.rubycollect4j.RubyEnumerator.newRubyEnumerator;
 public class RubyIO {
 
   public enum Mode {
+
     R("r"), RW("r+"), W("w"), WR("w+"), A("a"), AR("a+");
 
     private final String mode;
@@ -109,15 +113,55 @@ public class RubyIO {
   }
 
   public RubyEnumerator<String> eachLine() {
+    if (reader == null) {
+      throw new UnsupportedOperationException("IOError: not opened for reading");
+    }
     return newRubyEnumerator(new EachLineIterable(reader));
   }
 
-  public int puts(String words) {
-    return 0;
+  public void puts(String words) {
+    if (writer == null) {
+      throw new UnsupportedOperationException("IOError: not opened for writing");
+    }
+    try {
+      writer.append(words);
+      writer.newLine();
+      writer.flush();
+    } catch (IOException ex) {
+      Logger.getLogger(RubyIO.class.getName()).log(Level.SEVERE, null, ex);
+    }
+  }
+
+  public String read() {
+    StringBuilder sb = new StringBuilder();
+    String line;
+    try {
+      while ((line = reader.readLine()) != null) {
+        sb.append(line + "\n");
+      }
+    } catch (IOException ex) {
+      Logger.getLogger(RubyIO.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return sb.toString();
   }
 
   public int write(String words) {
-    return 0;
+    if (writer == null) {
+      throw new UnsupportedOperationException("IOError: not opened for writing");
+    }
+    try {
+      writer.append(words);
+      writer.flush();
+    } catch (IOException ex) {
+      Logger.getLogger(RubyIO.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    int byteLen = 0;
+    try {
+      byteLen = words.getBytes("UTF-8").length;
+    } catch (UnsupportedEncodingException ex) {
+      Logger.getLogger(RubyIO.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return byteLen;
   }
 
 }
