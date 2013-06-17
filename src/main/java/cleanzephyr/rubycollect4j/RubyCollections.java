@@ -488,4 +488,19 @@ public final class RubyCollections {
     return newPair(key, value);
   }
 
+  /**
+   * Turn a List of Entry into a RubyHash.
+   * 
+   * @param list
+   *          a List of Entry
+   * @return a RubyHash
+   */
+  public static <K, V> RubyHash<K, V> Hash(List<Entry<K, V>> list) {
+    RubyHash<K, V> rubyHash = rh();
+    for (Entry<K, V> entry : list) {
+      rubyHash.put(entry);
+    }
+    return rubyHash;
+  }
+
 }

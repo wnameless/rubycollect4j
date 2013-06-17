@@ -28,11 +28,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static cleanzephyr.rubycollect4j.RubyIO.puts;
+import static cleanzephyr.rubycollect4j.RubyKernel.p;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class RubyIOTest {
+public class RubyKernelTest {
 
   private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
   private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
@@ -51,62 +51,62 @@ public class RubyIOTest {
 
   @Test
   public void testPutsNothing() {
-    puts();
+    p();
     assertEquals("\n", outContent.toString());
   }
 
   @Test
   public void testPutsString() {
-    puts("");
+    p("");
     assertEquals("\n", outContent.toString());
   }
 
   @Test
   public void testPutsObject() {
-    puts(new Object());
+    p(new Object());
     assertTrue(Pattern.compile("java\\.lang\\.Object")
         .matcher(outContent.toString()).find());
   }
 
   @Test
   public void testPutsBoolean() {
-    puts(true);
+    p(true);
     assertEquals("true\n", outContent.toString());
   }
 
   @Test
   public void testPutsChar() {
-    puts('x');
+    p('x');
     assertEquals("x\n", outContent.toString());
   }
 
   @Test
   public void testPutsCharArray() {
-    puts(new char[] { 'x', 'y', 'z' });
+    p(new char[] { 'x', 'y', 'z' });
     assertEquals("xyz\n", outContent.toString());
   }
 
   @Test
   public void testPutsDouble() {
-    puts(1.0);
+    p(1.0);
     assertEquals("1.0\n", outContent.toString());
   }
 
   @Test
   public void testPutsFloat() {
-    puts(1.0f);
+    p(1.0f);
     assertEquals("1.0\n", outContent.toString());
   }
 
   @Test
   public void testPutsInt() {
-    puts(1);
+    p(1);
     assertEquals("1\n", outContent.toString());
   }
 
   @Test
   public void testPutsLong() {
-    puts(1L);
+    p(1L);
     assertEquals("1\n", outContent.toString());
   }
 

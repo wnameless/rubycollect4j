@@ -20,102 +20,104 @@
  */
 package cleanzephyr.rubycollect4j;
 
-import static java.lang.System.out;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Map.Entry;
+import java.util.NoSuchElementException;
 
-/**
- * 
- * RubyIO mimics the useful Ruby puts method by wrapping the Java
- * System.out.println method.
- * 
- */
-public final class RubyIO {
+import cleanzephyr.rubycollect4j.block.TransformBlock;
+import cleanzephyr.rubycollect4j.iter.EachLineIterable;
 
-  /**
-   * Equivalent to System.out.println().
-   */
-  public static void puts() {
-    out.println();
+import static cleanzephyr.rubycollect4j.RubyCollections.Hash;
+import static cleanzephyr.rubycollect4j.RubyCollections.hp;
+import static cleanzephyr.rubycollect4j.RubyCollections.ra;
+import static cleanzephyr.rubycollect4j.RubyEnumerator.newRubyEnumerator;
+
+public class RubyIO {
+
+  public enum Mode {
+    R("r"), RW("r+"), W("w"), WR("w+"), A("a"), AR("a+");
+
+    private final String mode;
+
+    private Mode(String mode) {
+      this.mode = mode;
+    }
+
+    public String getMode() {
+      return mode;
+    }
+
+    public static Mode getMode(String permission) {
+      RubyHash<String, Mode> modeHash =
+          Hash(ra(values()).map(
+              new TransformBlock<Mode, Entry<String, Mode>>() {
+
+                @Override
+                public Entry<String, Mode> yield(Mode item) {
+                  return hp(item.getMode(), item);
+                }
+
+              }));
+      if (modeHash.keyʔ(permission)) {
+        return modeHash.get(permission);
+      } else {
+        throw new NoSuchElementException();
+      }
+    }
+
   }
 
-  /**
-   * Equivalent to System.out.println().
-   * 
-   * @param x
-   */
-  public static void puts(Object x) {
-    out.println(x);
+  private final BufferedReader reader;
+  private final BufferedWriter writer;
+
+  public RubyIO(File file, Mode mode) throws IOException {
+    switch (mode) {
+    case R:
+      reader = new BufferedReader(new FileReader(file));
+      writer = null;
+      break;
+    case RW:
+      reader = new BufferedReader(new FileReader(file));
+      writer = new BufferedWriter(new FileWriter(file));
+      break;
+    case W:
+      reader = null;
+      writer = new BufferedWriter(new FileWriter(file));
+      break;
+    case WR:
+      reader = new BufferedReader(new FileReader(file));
+      writer = new BufferedWriter(new FileWriter(file));
+      break;
+    case A:
+      reader = null;
+      writer = new BufferedWriter(new FileWriter(file, true));
+      break;
+    case AR:
+      reader = new BufferedReader(new FileReader(file));
+      writer = new BufferedWriter(new FileWriter(file, true));
+      break;
+    default:
+      reader = new BufferedReader(new FileReader(file));
+      writer = null;
+      break;
+    }
   }
 
-  /**
-   * Equivalent to System.out.println().
-   * 
-   * @param x
-   */
-  public static void puts(String x) {
-    out.println(x);
+  public RubyEnumerator<String> eachLine() {
+    return newRubyEnumerator(new EachLineIterable(reader));
   }
 
-  /**
-   * Equivalent to System.out.println().
-   * 
-   * @param x
-   */
-  public static void puts(boolean x) {
-    out.println(x);
+  public int puts(String words) {
+    return 0;
   }
 
-  /**
-   * Equivalent to System.out.println().
-   * 
-   * @param x
-   */
-  public static void puts(char x) {
-    out.println(x);
-  }
-
-  /**
-   * Equivalent to System.out.println().
-   * 
-   * @param x
-   */
-  public static void puts(char[] x) {
-    out.println(x);
-  }
-
-  /**
-   * Equivalent to System.out.println().
-   * 
-   * @param x
-   */
-  public static void puts(double x) {
-    out.println(x);
-  }
-
-  /**
-   * Equivalent to System.out.println().
-   * 
-   * @param x
-   */
-  public static void puts(float x) {
-    out.println(x);
-  }
-
-  /**
-   * Equivalent to System.out.println().
-   * 
-   * @param x
-   */
-  public static void puts(int x) {
-    out.println(x);
-  }
-
-  /**
-   * Equivalent to System.out.println().
-   * 
-   * @param x
-   */
-  public static void puts(long x) {
-    out.println(x);
+  public int write(String words) {
+    return 0;
   }
 
 }
