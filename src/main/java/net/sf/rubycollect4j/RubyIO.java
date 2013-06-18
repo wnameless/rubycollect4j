@@ -101,13 +101,13 @@ public class RubyIO {
     /**
      * Retrieve a Mode from a String.
      * 
-     * @param permission
+     * @param mode
      *          mode in String form
      * @return a Mode
      * @throws NoSuchElementException
      *           if the permission is not matched any of the Mode
      */
-    public static Mode fromString(String permission) {
+    public static Mode fromString(String mode) {
       RubyHash<String, Mode> modeHash =
           Hash(ra(values()).map(
               new TransformBlock<Mode, Entry<String, Mode>>() {
@@ -118,8 +118,8 @@ public class RubyIO {
                 }
 
               }));
-      if (modeHash.keyʔ(permission)) {
-        return modeHash.get(permission);
+      if (modeHash.keyʔ(mode)) {
+        return modeHash.get(mode);
       } else {
         throw new NoSuchElementException();
       }
@@ -174,6 +174,23 @@ public class RubyIO {
       this.mode = Mode.R;
       break;
     }
+  }
+
+  /**
+   * Generator a RubyEnumerator of lines in a file.
+   * 
+   * @param path
+   *          of a File
+   * @return a RubyEnumerator
+   */
+  public static RubyEnumerator<String> foreach(String path) {
+    RubyIO io = null;
+    try {
+      io = new RubyIO(new File(path), Mode.R);
+    } catch (IOException ex) {
+      Logger.getLogger(RubyIO.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return io.eachLine();
   }
 
   /**

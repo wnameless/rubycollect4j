@@ -45,48 +45,16 @@ public final class RubyFile extends RubyIO {
    *          a File
    * @return a RubyFile
    */
-  public static RubyFile open(File file) {
+  public static RubyFile open(String path, String mode) {
     RubyFile rf = null;
     try {
-      rf = new RubyFile(file, R);
+      rf = new RubyFile(new File(path), Mode.fromString(mode));
     } catch (FileNotFoundException ex) {
       Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
     } catch (IOException ex) {
       Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
     }
     return rf;
-  }
-
-  /**
-   * Create a RubyFile by given file and mode.
-   * 
-   * @param file
-   *          a File
-   * @param mode
-   *          r, rw, w, w+, a, a+
-   * @return a RubyFile
-   */
-  public static RubyFile open(File file, String mode) {
-    RubyFile rf = null;
-    try {
-      rf = new RubyFile(file, mode);
-    } catch (FileNotFoundException ex) {
-      Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (IOException ex) {
-      Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
-    }
-    return rf;
-  }
-
-  /**
-   * Create a RubyFile by given path. Set the mode to read-only.
-   * 
-   * @param path
-   *          of a file
-   * @return a RubyFile
-   */
-  public static RubyFile open(String path) {
-    return open(new File(path));
   }
 
   /**
@@ -98,8 +66,8 @@ public final class RubyFile extends RubyIO {
    *          r, rw, w, w+, a, a+
    * @return a RubyFile
    */
-  public static RubyFile open(String path, String mode) {
-    return open(new File(path), mode);
+  public static RubyFile open(String path) {
+    return open(path, R.getMode());
   }
 
   /**
@@ -270,25 +238,14 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Generator a RubyEnumerator of lines in the file.
-   * 
-   * @param file
-   *          a File
-   * @return a RubyEnumerator
-   */
-  public static RubyEnumerator<String> foreach(File file) {
-    return open(file).eachLine();
-  }
-
-  /**
-   * Generator a RubyEnumerator of lines in the file.
+   * Check if path is a file.
    * 
    * @param path
    *          of a file
-   * @return a RubyEnumerator
+   * @return true if path is a file, false otherwise
    */
-  public static RubyEnumerator<String> foreach(String path) {
-    return foreach(new File(path));
+  public static boolean fileʔ(String path) {
+    return new File(path).isFile();
   }
 
   /**

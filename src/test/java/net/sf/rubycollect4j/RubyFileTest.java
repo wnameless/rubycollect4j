@@ -94,11 +94,9 @@ public class RubyFileTest {
   }
 
   @Test
-  public void testForeach() {
-    assertEquals("abcdef",
-        RubyFile.foreach(BASE_DIR + "ruby_io_read_only_mode.txt").toA().join());
-    File file = new File(BASE_DIR + "ruby_io_read_only_mode.txt");
-    assertEquals("abcdef", RubyFile.foreach(file).toA().join());
+  public void testFileʔ() {
+    assertTrue(RubyFile.fileʔ(BASE_DIR + "ruby_file_exist_test.txt"));
+    assertFalse(RubyFile.fileʔ(BASE_DIR));
   }
 
   @Test

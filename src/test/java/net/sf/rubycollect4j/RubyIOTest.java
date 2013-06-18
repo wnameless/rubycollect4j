@@ -20,7 +20,6 @@
  */
 package net.sf.rubycollect4j;
 
-import java.io.File;
 import java.util.NoSuchElementException;
 
 import org.junit.Test;
@@ -36,10 +35,6 @@ public class RubyIOTest {
   @Test
   public void testFactory() {
     rf = RubyFile.open(BASE_DIR + "ruby_io_read_only_mode.txt");
-    assertEquals(RubyFile.class, rf.getClass());
-    rf.close();
-    File file = new File(BASE_DIR + "ruby_io_read_only_mode.txt");
-    rf = RubyFile.open(file);
     assertEquals(RubyFile.class, rf.getClass());
     rf.close();
   }
@@ -158,6 +153,12 @@ public class RubyIOTest {
     rf.seek(0);
     assertEquals("123456\n", rf.read());
     rf.close();
+  }
+
+  @Test
+  public void testForeach() {
+    assertEquals("abcdef",
+        RubyFile.foreach(BASE_DIR + "ruby_io_read_only_mode.txt").toA().join());
   }
 
 }
