@@ -131,6 +131,35 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
+   * Find the name of the file.
+   * 
+   * @param path
+   *          of a file
+   * @return the basename of the path
+   */
+  public static String basename(String path) {
+    return new File(path).getName();
+  }
+
+  /**
+   * Find the name of a file.
+   * 
+   * @param path
+   *          of a file
+   * @param suffix
+   *          to be removed if it's at the end of the name
+   * @return the name of the file
+   */
+  public static String basename(String path, String suffix) {
+    String name = new File(path).getName();
+    if (name.lastIndexOf(suffix) + suffix.length() == name.length()) {
+      return name.substring(0, name.length() - suffix.length());
+    } else {
+      return name;
+    }
+  }
+
+  /**
    * Delete all given files.
    * 
    * @param files
@@ -153,8 +182,18 @@ public final class RubyFile extends RubyIO {
    * @return true if file is a directory, false otherwise
    */
   public static boolean directoryʔ(String path) {
-    File file = new File(path);
-    return file.isDirectory();
+    return new File(path).isDirectory();
+  }
+
+  /**
+   * Find the parent folder of the file.
+   * 
+   * @param path
+   *          of a file
+   * @return the parent folder of the file
+   */
+  public static String dirname(String path) {
+    return new File(path).getParent();
   }
 
   /**
@@ -165,8 +204,7 @@ public final class RubyFile extends RubyIO {
    * @return true if file existed, false otherwise
    */
   public static boolean existʔ(String path) {
-    File file = new File(path);
-    return file.exists();
+    return new File(path).exists();
   }
 
   /**

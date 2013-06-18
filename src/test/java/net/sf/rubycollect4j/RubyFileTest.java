@@ -14,6 +14,16 @@ public class RubyFileTest {
   private RubyFile rf;
 
   @Test
+  public void testBasename() {
+    assertEquals("ruby_file_exist_test.txt",
+        RubyFile.basename(BASE_DIR + "ruby_file_exist_test.txt"));
+    assertEquals("ruby_file_exist_test",
+        RubyFile.basename(BASE_DIR + "ruby_file_exist_test.txt", ".txt"));
+    assertEquals("ruby_file_exist_test.txt",
+        RubyFile.basename(BASE_DIR + "ruby_file_exist_test.txt", ".ppt"));
+  }
+
+  @Test
   public void testDelete() {
     rf = RubyFile.open(BASE_DIR + "ruby_file_delete_test.txt", "w");
     rf.close();
@@ -25,6 +35,12 @@ public class RubyFileTest {
   public void testDirectoryʔ() {
     assertTrue(RubyFile.directoryʔ(BASE_DIR));
     assertFalse(RubyFile.directoryʔ(BASE_DIR + "ruby_file_exist_test.txt"));
+  }
+
+  @Test
+  public void testDirname() {
+    assertEquals(new File(BASE_DIR).getPath(),
+        RubyFile.dirname(BASE_DIR + "ruby_file_exist_test.txt"));
   }
 
   @Test
