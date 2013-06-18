@@ -8,6 +8,7 @@ import org.junit.Test;
 import static net.sf.rubycollect4j.RubyCollections.qx;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 public class RubyFileTest {
@@ -124,6 +125,14 @@ public class RubyFileTest {
   }
 
   @Test
+  public void testSizeʔ() {
+    assertNull(RubyFile.sizeʔ(BASE_DIR + "nonexist"));
+    assertNull(RubyFile.sizeʔ(BASE_DIR + "ruby_file_exist_test.txt"));
+    assertEquals(Long.valueOf(6L),
+        RubyFile.sizeʔ(BASE_DIR + "ruby_file_size?_test.txt"));
+  }
+
+  @Test
   public void testWritableʔ() {
     RubyFile.chmod(0444, BASE_DIR + "ruby_file_writable?_test.txt");
     assertFalse(RubyFile.writableʔ(BASE_DIR + "ruby_file_writable?_test.txt"));
@@ -136,6 +145,7 @@ public class RubyFileTest {
   public void testZeroʔ() {
     assertTrue(RubyFile.zeroʔ(BASE_DIR + "ruby_file_exist_test.txt"));
     assertFalse(RubyFile.zeroʔ(BASE_DIR + "nonexist"));
+    assertFalse(RubyFile.zeroʔ(BASE_DIR + "ruby_file_size?_test.txt"));
   }
 
   @Test

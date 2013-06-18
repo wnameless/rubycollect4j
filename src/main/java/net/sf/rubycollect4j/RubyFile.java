@@ -330,7 +330,7 @@ public final class RubyFile extends RubyIO {
     if (!(existʔ(path))) {
       return false;
     }
-    return sizeʔ(path) == null || sizeʔ(path) == 0L;
+    return sizeʔ(path) == null;
   }
 
   /**
