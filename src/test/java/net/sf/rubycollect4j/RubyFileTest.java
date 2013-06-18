@@ -22,6 +22,12 @@ public class RubyFileTest {
   }
 
   @Test
+  public void testDirectoryʔ() {
+    assertTrue(RubyFile.directoryʔ(BASE_DIR));
+    assertFalse(RubyFile.directoryʔ(BASE_DIR + "ruby_file_exist_test.txt"));
+  }
+
+  @Test
   public void testExistʔ() {
     assertTrue(RubyFile.existʔ(BASE_DIR + "ruby_file_exist_test.txt"));
     assertFalse(RubyFile.existʔ(BASE_DIR + "ruby_file_nonexist_test.txt"));

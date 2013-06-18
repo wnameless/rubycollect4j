@@ -146,6 +146,18 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
+   * Check if a file is a directory.
+   * 
+   * @param path
+   *          of a file
+   * @return true if file is a directory, false otherwise
+   */
+  public static boolean directoryʔ(String path) {
+    File file = new File(path);
+    return file.isDirectory();
+  }
+
+  /**
    * Check if a file existed.
    * 
    * @param path
