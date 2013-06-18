@@ -127,8 +127,8 @@ public class RubyIO {
 
   }
 
-  private final RandomAccessFile raFile;
-  private final Mode mode;
+  protected final RandomAccessFile raFile;
+  protected final Mode mode;
 
   /**
    * Create an IO with given permission.

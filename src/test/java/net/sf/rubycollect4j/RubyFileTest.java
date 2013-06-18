@@ -1,6 +1,7 @@
 package net.sf.rubycollect4j;
 
 import java.io.File;
+import java.util.Date;
 
 import org.junit.Test;
 
@@ -94,6 +95,20 @@ public class RubyFileTest {
   }
 
   @Test
+  public void testExpandPath() {
+    assertEquals(
+        qx("pwd").trim() + "/" + BASE_DIR + "ruby_file_exist_test.txt",
+        RubyFile.expandPath(BASE_DIR + "ruby_file_exist_test.txt"));
+  }
+
+  @Test
+  public void testExtname() {
+    assertEquals(".txt",
+        RubyFile.extname(BASE_DIR + "ruby_file_exist_test.txt"));
+    assertEquals("", RubyFile.extname(BASE_DIR));
+  }
+
+  @Test
   public void testFileʔ() {
     assertTrue(RubyFile.fileʔ(BASE_DIR + "ruby_file_exist_test.txt"));
     assertFalse(RubyFile.fileʔ(BASE_DIR));
@@ -115,6 +130,42 @@ public class RubyFileTest {
     RubyFile.chmod(0222, BASE_DIR + "ruby_file_writable?_test.txt");
     assertTrue(RubyFile.writableʔ(BASE_DIR + "ruby_file_writable?_test.txt"));
     RubyFile.chmod(0644, BASE_DIR + "ruby_file_writable?_test.txt");
+  }
+
+  @Test
+  public void testZeroʔ() {
+    assertTrue(RubyFile.zeroʔ(BASE_DIR + "ruby_file_exist_test.txt"));
+    assertFalse(RubyFile.zeroʔ(BASE_DIR + "nonexist"));
+  }
+
+  @Test
+  public void testMdate() {
+    rf = RubyFile.open(BASE_DIR + "ruby_file_exist_test.txt", "w");
+    long modifiedTime = rf.mtime().getTime();
+    assertTrue(new Date().getTime() - 5000 <= modifiedTime
+        && modifiedTime <= new Date().getTime() + 5000);
+    rf.close();
+  }
+
+  @Test
+  public void testPath() {
+    rf = RubyFile.open(BASE_DIR + "ruby_file_exist_test.txt");
+    assertEquals(BASE_DIR + "ruby_file_exist_test.txt", rf.path());
+    rf.close();
+  }
+
+  @Test
+  public void testSize() {
+    rf = RubyFile.open(BASE_DIR + "ruby_file_exist_test.txt");
+    assertEquals(0L, rf.size());
+    rf.close();
+  }
+
+  @Test
+  public void testToPath() {
+    rf = RubyFile.open(BASE_DIR + "ruby_file_exist_test.txt");
+    assertEquals(BASE_DIR + "ruby_file_exist_test.txt", rf.toPath());
+    rf.close();
   }
 
 }
