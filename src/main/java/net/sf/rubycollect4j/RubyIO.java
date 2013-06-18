@@ -36,10 +36,18 @@ import static net.sf.rubycollect4j.RubyCollections.hp;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyEnumerator.newRubyEnumerator;
 
-
-
+/**
+ * 
+ * RubyIO implements few of the methods refer to the IO class of Ruby.
+ * 
+ */
 public class RubyIO {
 
+  /**
+   * 
+   * This Mode enum contains all kinds of open modes of RubyIO.
+   * 
+   */
   public enum Mode {
 
     R("r", true, false), RW("r+", true, true), W("w", false, true), WR("w+",
@@ -49,24 +57,56 @@ public class RubyIO {
     private final boolean isReadable;
     private final boolean isWritable;
 
+    /**
+     * Constructor of Mode enum
+     * 
+     * @param mode
+     *          in String form
+     * @param isReadable
+     * @param isWritable
+     */
     private Mode(String mode, boolean isReadable, boolean isWritable) {
       this.mode = mode;
       this.isReadable = isReadable;
       this.isWritable = isWritable;
     }
 
+    /**
+     * Return the Mode in String form.
+     * 
+     * @return Mode in String form
+     */
     public String getMode() {
       return mode;
     }
 
+    /**
+     * Check if it is readable.
+     * 
+     * @return true if it allows to be read, false otherwise
+     */
     public boolean isReadable() {
       return isReadable;
     }
 
+    /**
+     * Check if it is Writable.
+     * 
+     * @return true if it allows to be written, false otherwise
+     */
     public boolean isWritable() {
       return isWritable;
     }
 
+    /**
+     * Retrieve a Mode from a String.
+     * 
+     * @param permission
+     *          mode in String form
+     * @return a Mode
+     * @throws NoSuchElementException
+     *           if the permission is not matched any of the Mode
+     */
     public static Mode fromString(String permission) {
       RubyHash<String, Mode> modeHash =
           Hash(ra(values()).map(
@@ -90,6 +130,16 @@ public class RubyIO {
   private final RandomAccessFile raFile;
   private final Mode mode;
 
+  /**
+   * Create an IO with given permission.
+   * 
+   * @param file
+   *          a File
+   * @param mode
+   *          a Mode
+   * @throws IOException
+   *           if file can't not open
+   */
   public RubyIO(File file, Mode mode) throws IOException {
     switch (mode) {
     case RW:
@@ -126,6 +176,9 @@ public class RubyIO {
     }
   }
 
+  /**
+   * Close this IO.
+   */
   public void close() {
     try {
       raFile.close();
@@ -134,6 +187,11 @@ public class RubyIO {
     }
   }
 
+  /**
+   * Generator a RubyEnumerator of lines in the file.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<String> eachLine() {
     if (mode.isReadable() == false) {
       throw new UnsupportedOperationException("IOError: not opened for reading");
@@ -141,6 +199,12 @@ public class RubyIO {
     return newRubyEnumerator(new EachLineIterable(raFile));
   }
 
+  /**
+   * Write a line in the file.
+   * 
+   * @param words
+   *          to write a line
+   */
   public void puts(String words) {
     if (mode.isWritable() == false) {
       throw new UnsupportedOperationException("IOError: not opened for writing");
@@ -152,6 +216,11 @@ public class RubyIO {
     }
   }
 
+  /**
+   * Read the content of a file.
+   * 
+   * @return a String
+   */
   public String read() {
     if (mode.isReadable() == false) {
       throw new UnsupportedOperationException("IOError: not opened for reading");
@@ -168,6 +237,12 @@ public class RubyIO {
     return sb.toString();
   }
 
+  /**
+   * Move the cursor to certain position.
+   * 
+   * @param pos
+   *          of the file
+   */
   public void seek(long pos) {
     try {
       raFile.seek(pos);
@@ -176,6 +251,13 @@ public class RubyIO {
     }
   }
 
+  /**
+   * Write to the file.
+   * 
+   * @param words
+   *          to write
+   * @return the number of written bytes.
+   */
   public int write(String words) {
     if (mode.isWritable() == false) {
       throw new UnsupportedOperationException("IOError: not opened for writing");
