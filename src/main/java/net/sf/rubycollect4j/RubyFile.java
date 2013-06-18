@@ -23,6 +23,8 @@ package net.sf.rubycollect4j;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -131,6 +133,17 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
+   * Find the absolute path of the file.
+   * 
+   * @param path
+   *          of a file
+   * @return the absolute path of the file
+   */
+  public static String absolutePath(String path) {
+    return new File(path).getAbsolutePath();
+  }
+
+  /**
    * Find the name of the file.
    * 
    * @param path
@@ -157,6 +170,33 @@ public final class RubyFile extends RubyIO {
     } else {
       return name;
     }
+  }
+
+  public static int chmod(int modeInt, String... files) {
+    for (String f : files) {
+      File file = new File(f);
+      try {
+        Class<?> fspClass =
+            Class.forName("java.util.prefs.FileSystemPreferences");
+        Method chmodMethod =
+            fspClass.getDeclaredMethod("chmod", String.class, Integer.TYPE);
+        chmodMethod.setAccessible(true);
+        chmodMethod.invoke(null, file.getPath(), modeInt);
+      } catch (ClassNotFoundException ex) {
+        Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
+      } catch (SecurityException ex) {
+        Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
+      } catch (NoSuchMethodException ex) {
+        Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
+      } catch (IllegalArgumentException ex) {
+        Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
+      } catch (IllegalAccessException ex) {
+        Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
+      } catch (InvocationTargetException ex) {
+        Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }
+    return files.length;
   }
 
   /**
@@ -194,6 +234,17 @@ public final class RubyFile extends RubyIO {
    */
   public static String dirname(String path) {
     return new File(path).getParent();
+  }
+
+  /**
+   * Check if a file is executable.
+   * 
+   * @param path
+   *          of a file
+   * @return true if the file is executable, false otherwise
+   */
+  public static boolean executableʔ(String path) {
+    return new File(path).canExecute();
   }
 
   /**
@@ -238,6 +289,28 @@ public final class RubyFile extends RubyIO {
    */
   public static RubyEnumerator<String> foreach(String path) {
     return foreach(new File(path));
+  }
+
+  /**
+   * Check if a file is readable.
+   * 
+   * @param path
+   *          of a file
+   * @return true if the file is readable, false otherwise
+   */
+  public static boolean readableʔ(String path) {
+    return new File(path).canRead();
+  }
+
+  /**
+   * Check if a file is writable.
+   * 
+   * @param path
+   *          of a file
+   * @return true if the file is writable, false otherwise
+   */
+  public static boolean writableʔ(String path) {
+    return new File(path).canWrite();
   }
 
 }

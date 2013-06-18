@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.junit.Test;
 
+import static net.sf.rubycollect4j.RubyCollections.qx;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -14,6 +15,11 @@ public class RubyFileTest {
   private RubyFile rf;
 
   @Test
+  public void testAbsolutePath() {
+    assertEquals(qx("pwd").trim(), RubyFile.absolutePath(""));
+  }
+
+  @Test
   public void testBasename() {
     assertEquals("ruby_file_exist_test.txt",
         RubyFile.basename(BASE_DIR + "ruby_file_exist_test.txt"));
@@ -21,6 +27,27 @@ public class RubyFileTest {
         RubyFile.basename(BASE_DIR + "ruby_file_exist_test.txt", ".txt"));
     assertEquals("ruby_file_exist_test.txt",
         RubyFile.basename(BASE_DIR + "ruby_file_exist_test.txt", ".ppt"));
+  }
+
+  @Test
+  public void testChmod() {
+    RubyFile.chmod(0000, BASE_DIR + "ruby_file_chmod_test.txt");
+    assertFalse(RubyFile.readableʔ(BASE_DIR + "ruby_file_chmod_test.txt"));
+    assertFalse(RubyFile.writableʔ(BASE_DIR + "ruby_file_chmod_test.txt"));
+    assertFalse(RubyFile.executableʔ(BASE_DIR + "ruby_file_chmod_test.txt"));
+    RubyFile.chmod(0111, BASE_DIR + "ruby_file_chmod_test.txt");
+    assertFalse(RubyFile.readableʔ(BASE_DIR + "ruby_file_chmod_test.txt"));
+    assertFalse(RubyFile.writableʔ(BASE_DIR + "ruby_file_chmod_test.txt"));
+    assertTrue(RubyFile.executableʔ(BASE_DIR + "ruby_file_chmod_test.txt"));
+    RubyFile.chmod(0222, BASE_DIR + "ruby_file_chmod_test.txt");
+    assertFalse(RubyFile.readableʔ(BASE_DIR + "ruby_file_chmod_test.txt"));
+    assertTrue(RubyFile.writableʔ(BASE_DIR + "ruby_file_chmod_test.txt"));
+    assertFalse(RubyFile.executableʔ(BASE_DIR + "ruby_file_chmod_test.txt"));
+    RubyFile.chmod(0444, BASE_DIR + "ruby_file_chmod_test.txt");
+    assertTrue(RubyFile.readableʔ(BASE_DIR + "ruby_file_chmod_test.txt"));
+    assertFalse(RubyFile.writableʔ(BASE_DIR + "ruby_file_chmod_test.txt"));
+    assertFalse(RubyFile.executableʔ(BASE_DIR + "ruby_file_chmod_test.txt"));
+    RubyFile.chmod(0644, BASE_DIR + "ruby_file_chmod_test.txt");
   }
 
   @Test
@@ -44,6 +71,17 @@ public class RubyFileTest {
   }
 
   @Test
+  public void testExecutableʔ() {
+    RubyFile.chmod(0444, BASE_DIR + "ruby_file_executable?_test.txt");
+    assertFalse(RubyFile.executableʔ(BASE_DIR
+        + "ruby_file_executable?_test.txt"));
+    RubyFile.chmod(0111, BASE_DIR + "ruby_file_executable?_test.txt");
+    assertTrue(RubyFile
+        .executableʔ(BASE_DIR + "ruby_file_executable?_test.txt"));
+    RubyFile.chmod(0644, BASE_DIR + "ruby_file_executable?_test.txt");
+  }
+
+  @Test
   public void testExistʔ() {
     assertTrue(RubyFile.existʔ(BASE_DIR + "ruby_file_exist_test.txt"));
     assertFalse(RubyFile.existʔ(BASE_DIR + "ruby_file_nonexist_test.txt"));
@@ -61,6 +99,24 @@ public class RubyFileTest {
         RubyFile.foreach(BASE_DIR + "ruby_io_read_only_mode.txt").toA().join());
     File file = new File(BASE_DIR + "ruby_io_read_only_mode.txt");
     assertEquals("abcdef", RubyFile.foreach(file).toA().join());
+  }
+
+  @Test
+  public void testReadableʔ() {
+    RubyFile.chmod(0222, BASE_DIR + "ruby_file_readable?_test.txt");
+    assertFalse(RubyFile.readableʔ(BASE_DIR + "ruby_file_readable?_test.txt"));
+    RubyFile.chmod(0444, BASE_DIR + "ruby_file_readable?_test.txt");
+    assertTrue(RubyFile.readableʔ(BASE_DIR + "ruby_file_readable?_test.txt"));
+    RubyFile.chmod(0644, BASE_DIR + "ruby_file_readable?_test.txt");
+  }
+
+  @Test
+  public void testWritableʔ() {
+    RubyFile.chmod(0444, BASE_DIR + "ruby_file_writable?_test.txt");
+    assertFalse(RubyFile.writableʔ(BASE_DIR + "ruby_file_writable?_test.txt"));
+    RubyFile.chmod(0222, BASE_DIR + "ruby_file_writable?_test.txt");
+    assertTrue(RubyFile.writableʔ(BASE_DIR + "ruby_file_writable?_test.txt"));
+    RubyFile.chmod(0644, BASE_DIR + "ruby_file_writable?_test.txt");
   }
 
 }
