@@ -1,5 +1,6 @@
 package cleanzephyr.rubycollect4j;
 
+import java.io.File;
 import java.util.NoSuchElementException;
 
 import org.junit.Test;
@@ -11,6 +12,17 @@ public class RubyIOTest {
 
   private static final String BASE_DIR = "src/test/resources/";
   private RubyFile rf;
+
+  @Test
+  public void testFactory() {
+    rf = RubyFile.open(BASE_DIR + "ruby_io_read_only_mode.txt");
+    assertEquals(RubyFile.class, rf.getClass());
+    rf.close();
+    File file = new File(BASE_DIR + "ruby_io_read_only_mode.txt");
+    rf = RubyFile.open(file);
+    assertEquals(RubyFile.class, rf.getClass());
+    rf.close();
+  }
 
   @Test(expected = NoSuchElementException.class)
   public void testOpenModeWithInvalidString() {
@@ -26,9 +38,15 @@ public class RubyIOTest {
   }
 
   @Test(expected = UnsupportedOperationException.class)
-  public void testReadOnlyModeException() {
+  public void testReadOnlyModeException1() {
     RubyFile rf = RubyFile.open(BASE_DIR + "ruby_io_read_only_mode.txt");
     rf.puts("test");
+  }
+
+  @Test(expected = UnsupportedOperationException.class)
+  public void testReadOnlyModeException2() {
+    RubyFile rf = RubyFile.open(BASE_DIR + "ruby_io_read_only_mode.txt");
+    rf.write("test");
   }
 
   @Test
@@ -122,4 +140,11 @@ public class RubyIOTest {
     rf.close();
   }
 
+  @Test
+  public void testForeach() {
+    assertEquals("abcdef",
+        RubyFile.foreach(BASE_DIR + "ruby_io_read_only_mode.txt").toA().join());
+    File file = new File(BASE_DIR + "ruby_io_read_only_mode.txt");
+    assertEquals("abcdef", RubyFile.foreach(file).toA().join());
+  }
 }

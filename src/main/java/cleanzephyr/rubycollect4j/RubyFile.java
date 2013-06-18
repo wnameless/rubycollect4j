@@ -10,10 +10,10 @@ import static cleanzephyr.rubycollect4j.RubyIO.Mode.R;
 
 public final class RubyFile extends RubyIO {
 
-  public static RubyFile open(String path) {
+  public static RubyFile open(File file) {
     RubyFile rf = null;
     try {
-      rf = new RubyFile(new File(path), R);
+      rf = new RubyFile(file, R);
     } catch (FileNotFoundException ex) {
       Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
     } catch (IOException ex) {
@@ -22,16 +22,24 @@ public final class RubyFile extends RubyIO {
     return rf;
   }
 
-  public static RubyFile open(String path, String mode) {
+  public static RubyFile open(File file, String mode) {
     RubyFile rf = null;
     try {
-      rf = new RubyFile(new File(path), mode);
+      rf = new RubyFile(file, mode);
     } catch (FileNotFoundException ex) {
       Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
     } catch (IOException ex) {
       Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
     }
     return rf;
+  }
+
+  public static RubyFile open(String path) {
+    return open(new File(path));
+  }
+
+  public static RubyFile open(String path, String mode) {
+    return open(new File(path), mode);
   }
 
   private RubyFile(File file, Mode mode) throws FileNotFoundException,
@@ -42,6 +50,14 @@ public final class RubyFile extends RubyIO {
   private RubyFile(File file, String mode) throws FileNotFoundException,
       IOException {
     super(file, Mode.fromString(mode));
+  }
+
+  public static RubyEnumerator<String> foreach(File file) {
+    return open(file).eachLine();
+  }
+
+  public static RubyEnumerator<String> foreach(String path) {
+    return foreach(new File(path));
   }
 
 }
