@@ -38,6 +38,7 @@ public class RubyDirTest {
     assertEquals(ra("ruby_file_exist_test.txt"),
         RubyDir.glob("src/test/resources/*exist*.txt"));
     assertEquals(12, RubyDir.glob("src/test/resources/*.txt").count());
+    assertEquals(ra("src", "target"), RubyDir.glob("*[c,t]"));
   }
 
 }

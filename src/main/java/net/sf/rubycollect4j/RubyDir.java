@@ -38,7 +38,13 @@ import static net.sf.rubycollect4j.RubyCollections.ra;
 public final class RubyDir {
 
   /**
-   * Retrieve all paths of files of given url.
+   * Retrieve all paths of files of given url pattern. The glob pattern is NOT
+   * fully implemented yet. Be carefully!
+   * 
+   * * Matches any file. <br/>
+   * ** Matches directories recursively.<br/>
+   * ? Matches any one character. Equivalent to /.{1}/ in regexp. <br/>
+   * [set] Matches any one character in set.<br/>
    * 
    * @param pattern
    *          of target files
@@ -79,15 +85,15 @@ public final class RubyDir {
     for (File f : files) {
       String path = f.getPath();
       String fPath = f.isDirectory() ? f.getPath() + "/" : f.getPath();
+      if (path.matches("(\\.[^/]+.*|.*/\\.[^/]+.*)")) {
+        continue;
+      }
       if (emptyRoot) {
         path = path.replace("./", "");
         fPath = fPath.replace("./", "");
       } else {
         path = path.replace(rootPath, "");
         fPath = fPath.replace(rootPath, "");
-      }
-      if (path.matches("(\\.[^/]+.*|.*/\\.[^/]+.*)")) {
-        continue;
       }
       if (path.matches(pattern)) {
         paths.add(path);
