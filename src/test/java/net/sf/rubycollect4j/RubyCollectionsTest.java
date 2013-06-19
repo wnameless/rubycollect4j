@@ -28,11 +28,11 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import net.sf.rubycollect4j.RubyArray;
-import net.sf.rubycollect4j.RubyHash;
-
 import org.junit.Test;
 
+import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Maps.newHashMap;
+import static com.google.common.collect.Sets.newLinkedHashSet;
 import static net.sf.rubycollect4j.RubyArray.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.Hash;
 import static net.sf.rubycollect4j.RubyCollections.hp;
@@ -42,10 +42,6 @@ import static net.sf.rubycollect4j.RubyCollections.qw;
 import static net.sf.rubycollect4j.RubyCollections.qx;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.rh;
-
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Maps.newHashMap;
-import static com.google.common.collect.Sets.newLinkedHashSet;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -65,7 +61,7 @@ public class RubyCollectionsTest {
 
   @Test
   public void testQx() {
-    assertEquals("Hello world!\n", qx("echo Hello world!"));
+    assertEquals("Hello world!\n", qx("echo", "Hello world!"));
   }
 
   @Test

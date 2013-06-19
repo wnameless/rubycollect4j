@@ -36,16 +36,17 @@ import static net.sf.rubycollect4j.RubyArray.newRubyArray;
 import static net.sf.rubycollect4j.RubyHash.newRubyHash;
 
 /**
- *
+ * 
  * Provide numerous useful static methods to make rubycollect4j easy to use.
- *
+ * 
  */
 public final class RubyCollections {
 
   /**
    * Build up a regular expression Pattern.
-   *
-   * @param regex regular expression
+   * 
+   * @param regex
+   *          regular expression
    * @return a Pattern
    */
   public static Pattern qr(String regex) {
@@ -54,8 +55,9 @@ public final class RubyCollections {
 
   /**
    * Build up a RubyArray of Strings.
-   *
-   * @param str words separated by spaces
+   * 
+   * @param str
+   *          words separated by spaces
    * @return a RubyArray
    */
   public static RubyArray<String> qw(String str) {
@@ -64,19 +66,20 @@ public final class RubyCollections {
 
   /**
    * Execute a system command and return its result.
-   *
-   * @param cmd to be executed
+   * 
+   * @param cmd
+   *          to be executed
    * @return a String
    */
-  public static String qx(String cmd) {
+  public static String qx(String... cmd) {
     StringBuilder sb = new StringBuilder();
 
     try {
       Process proc = Runtime.getRuntime().exec(cmd);
-      BufferedReader stdInput
-              = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-      BufferedReader stdError
-              = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
+      BufferedReader stdInput =
+          new BufferedReader(new InputStreamReader(proc.getInputStream()));
+      BufferedReader stdError =
+          new BufferedReader(new InputStreamReader(proc.getErrorStream()));
 
       String s;
       while ((s = stdInput.readLine()) != null) {
@@ -88,7 +91,7 @@ public final class RubyCollections {
       }
     } catch (IOException ex) {
       Logger.getLogger(RubyCollections.class.getName()).log(Level.SEVERE, null,
-              ex);
+          ex);
       sb.append(ex.getMessage());
     }
 
@@ -97,7 +100,7 @@ public final class RubyCollections {
 
   /**
    * Build up an empty RubyArray
-   *
+   * 
    * @return a RubyArray
    */
   public static <E> RubyArray<E> ra() {
@@ -106,8 +109,9 @@ public final class RubyCollections {
 
   /**
    * Build up a RubyArray by given elements.
-   *
-   * @param args elements
+   * 
+   * @param args
+   *          elements
    * @return a RubyArray
    */
   public static <E> RubyArray<E> ra(E... args) {
@@ -116,8 +120,9 @@ public final class RubyCollections {
 
   /**
    * Build up a RubyArray by given Iterable.
-   *
-   * @param iter an Iterable
+   * 
+   * @param iter
+   *          an Iterable
    * @return a RubyArray
    */
   public static <E> RubyArray<E> ra(Iterable<E> iter) {
@@ -126,8 +131,9 @@ public final class RubyCollections {
 
   /**
    * Build up a RubyArray by given Iterator.
-   *
-   * @param iter an Iterator
+   * 
+   * @param iter
+   *          an Iterator
    * @return a RubyArray
    */
   public static <E> RubyArray<E> ra(Iterator<E> iter) {
@@ -136,8 +142,9 @@ public final class RubyCollections {
 
   /**
    * Build up a RubyArray by given List.
-   *
-   * @param list a List
+   * 
+   * @param list
+   *          a List
    * @return a RubyArray
    */
   public static <E> RubyArray<E> ra(List<E> list) {
@@ -146,8 +153,9 @@ public final class RubyCollections {
 
   /**
    * Build up a RubyArray which contains the given RubyArray.
-   *
-   * @param rubyArray a RubyArray
+   * 
+   * @param rubyArray
+   *          a RubyArray
    * @return a RubyArray of RubyArray
    */
   public static <E> RubyArray<RubyArray<E>> ra(RubyArray<E> rubyArray) {
@@ -157,7 +165,7 @@ public final class RubyCollections {
 
   /**
    * Build up a empty RubyHash.
-   *
+   * 
    * @return a RubyHaah
    */
   public static <K, V> RubyHash<K, V> rh() {
@@ -166,8 +174,9 @@ public final class RubyCollections {
 
   /**
    * Build up a empty RubyHash by given Map.
-   *
-   * @param map any Map
+   * 
+   * @param map
+   *          any Map
    * @return a RubyHash
    */
   public static <K, V> RubyHash<K, V> rh(Map<K, V> map) {
@@ -176,9 +185,11 @@ public final class RubyCollections {
 
   /**
    * Build up a RubyHash by given key-value pair.
-   *
-   * @param key of entry
-   * @param value of entry
+   * 
+   * @param key
+   *          of entry
+   * @param value
+   *          of entry
    * @return a RubyHash
    */
   public static <K, V> RubyHash<K, V> rh(K key, V value) {
@@ -189,7 +200,7 @@ public final class RubyCollections {
 
   /**
    * Build up a RubyHash by given key-value pairs.
-   *
+   * 
    * @param key1
    * @param value1
    * @param key2
@@ -205,7 +216,7 @@ public final class RubyCollections {
 
   /**
    * Build up a RubyHash by given key-value pairs.
-   *
+   * 
    * @param key1
    * @param value1
    * @param key2
@@ -215,7 +226,7 @@ public final class RubyCollections {
    * @return a RubyHash
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
-          K key3, V value3) {
+      K key3, V value3) {
     RubyHash<K, V> rh = newRubyHash();
     rh.put(key1, value1);
     rh.put(key2, value2);
@@ -225,7 +236,7 @@ public final class RubyCollections {
 
   /**
    * Build up a RubyHash by given key-value pairs.
-   *
+   * 
    * @param key1
    * @param value1
    * @param key2
@@ -237,7 +248,7 @@ public final class RubyCollections {
    * @return a RubyHash
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
-          K key3, V value3, K key4, V value4) {
+      K key3, V value3, K key4, V value4) {
     RubyHash<K, V> rh = newRubyHash();
     rh.put(key1, value1);
     rh.put(key2, value2);
@@ -248,7 +259,7 @@ public final class RubyCollections {
 
   /**
    * Build up a RubyHash by given key-value pairs.
-   *
+   * 
    * @param key1
    * @param value1
    * @param key2
@@ -262,7 +273,7 @@ public final class RubyCollections {
    * @return a RubyHash
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
-          K key3, V value3, K key4, V value4, K key5, V value5) {
+      K key3, V value3, K key4, V value4, K key5, V value5) {
     RubyHash<K, V> rh = newRubyHash();
     rh.put(key1, value1);
     rh.put(key2, value2);
@@ -274,7 +285,7 @@ public final class RubyCollections {
 
   /**
    * Build up a RubyHash by given key-value pairs.
-   *
+   * 
    * @param key1
    * @param value1
    * @param key2
@@ -290,7 +301,7 @@ public final class RubyCollections {
    * @return a RubyHash
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
-          K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6) {
+      K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6) {
     RubyHash<K, V> rh = newRubyHash();
     rh.put(key1, value1);
     rh.put(key2, value2);
@@ -303,7 +314,7 @@ public final class RubyCollections {
 
   /**
    * Build up a RubyHash by given key-value pairs.
-   *
+   * 
    * @param key1
    * @param value1
    * @param key2
@@ -321,8 +332,8 @@ public final class RubyCollections {
    * @return a RubyHash
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
-          K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
-          K key7, V value7) {
+      K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
+      K key7, V value7) {
     RubyHash<K, V> rh = newRubyHash();
     rh.put(key1, value1);
     rh.put(key2, value2);
@@ -336,7 +347,7 @@ public final class RubyCollections {
 
   /**
    * Build up a RubyHash by given key-value pairs.
-   *
+   * 
    * @param key1
    * @param value1
    * @param key2
@@ -356,8 +367,8 @@ public final class RubyCollections {
    * @return a RubyHash.
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
-          K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
-          K key7, V value7, K key8, V value8) {
+      K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
+      K key7, V value7, K key8, V value8) {
     RubyHash<K, V> rh = newRubyHash();
     rh.put(key1, value1);
     rh.put(key2, value2);
@@ -372,7 +383,7 @@ public final class RubyCollections {
 
   /**
    * Build up a RubyHash by given key-value pairs.
-   *
+   * 
    * @param key1
    * @param value1
    * @param key2
@@ -394,8 +405,8 @@ public final class RubyCollections {
    * @return a RubyHash
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
-          K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
-          K key7, V value7, K key8, V value8, K key9, V value9) {
+      K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
+      K key7, V value7, K key8, V value8, K key9, V value9) {
     RubyHash<K, V> rh = newRubyHash();
     rh.put(key1, value1);
     rh.put(key2, value2);
@@ -411,7 +422,7 @@ public final class RubyCollections {
 
   /**
    * Build up a RubyHash by given key-value pairs.
-   *
+   * 
    * @param key1
    * @param value1
    * @param key2
@@ -435,8 +446,8 @@ public final class RubyCollections {
    * @return a RubyHash
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
-          K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
-          K key7, V value7, K key8, V value8, K key9, V value9, K key10, V value10) {
+      K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
+      K key7, V value7, K key8, V value8, K key9, V value9, K key10, V value10) {
     RubyHash<K, V> rh = newRubyHash();
     rh.put(key1, value1);
     rh.put(key2, value2);
@@ -453,9 +464,11 @@ public final class RubyCollections {
 
   /**
    * Build up a SimpleEntry.
-   *
-   * @param key of entry
-   * @param value of entry
+   * 
+   * @param key
+   *          of entry
+   * @param value
+   *          of entry
    * @return a SimpleEntry
    */
   public static <K, V> Entry<K, V> newPair(K key, V value) {
@@ -464,9 +477,11 @@ public final class RubyCollections {
 
   /**
    * Build up a SimpleEntry.
-   *
-   * @param key of entry
-   * @param value of entry
+   * 
+   * @param key
+   *          of entry
+   * @param value
+   *          of entry
    * @return a SimpleEntry
    */
   public static <K, V> Entry<K, V> hp(K key, V value) {
@@ -475,8 +490,9 @@ public final class RubyCollections {
 
   /**
    * Turn a List of Entry into a RubyHash.
-   *
-   * @param list a List of Entry
+   * 
+   * @param list
+   *          a List of Entry
    * @return a RubyHash
    */
   public static <K, V> RubyHash<K, V> Hash(List<? extends Entry<K, V>> list) {

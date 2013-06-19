@@ -25,9 +25,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.sf.rubycollect4j.block.BooleanBlock;
+import net.sf.rubycollect4j.block.TransformBlock;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static net.sf.rubycollect4j.RubyCollections.ra;
+import static net.sf.rubycollect4j.RubyEnumerator.newRubyEnumerator;
 
 /**
  * 
@@ -36,6 +38,69 @@ import static net.sf.rubycollect4j.RubyCollections.ra;
  * 
  */
 public final class RubyDir {
+
+  /**
+   * Delete a directory.
+   * 
+   * @param path
+   *          of a file
+   * @return true if the directory is deleted,false otherwise
+   */
+  public static boolean delete(String path) {
+    return new File(path).delete();
+  }
+
+  /**
+   * Store a entries of a folder into a RubyArray.
+   * 
+   * @param path
+   *          of a file
+   * @return a RubyArray
+   */
+  public static RubyArray<String> entries(String path) {
+    File file = new File(path);
+    return ra(file.listFiles()).map(new TransformBlock<File, String>() {
+
+      @Override
+      public String yield(File item) {
+        return item.getName();
+      }
+
+    }).unshift("..").unshift(".");
+  }
+
+  /**
+   * Check if a file is a directory.
+   * 
+   * @param path
+   *          of a file
+   * @return true if the file is a directory, false otherwise
+   */
+  public static boolean existsʔ(String path) {
+    return new File(path).isDirectory();
+  }
+
+  /**
+   * Check if a file is a directory.
+   * 
+   * @param path
+   *          of a file
+   * @return true if the file is a directory, false otherwise
+   */
+  public static boolean existʔ(String path) {
+    return new File(path).isDirectory();
+  }
+
+  /**
+   * Create a RubyEnumerator of entries of a file of the path.
+   * 
+   * @param path
+   *          of a file
+   * @return a RubyEnumerator
+   */
+  public static RubyEnumerator<String> foreach(String path) {
+    return newRubyEnumerator(entries(path));
+  }
 
   /**
    * Retrieve all paths of files of given url pattern. The glob pattern is NOT
@@ -121,6 +186,37 @@ public final class RubyDir {
     }
 
     return files;
+  }
+
+  /**
+   * Find the home directory of current user.
+   * 
+   * @return the home directory of current user
+   */
+  public static String home() {
+    return System.getProperty("user.home");
+  }
+
+  /**
+   * Make a directory.
+   * 
+   * @param path
+   *          of a file
+   * @return true if the directory is created, false otherwise
+   */
+  public static boolean mkdir(String path) {
+    return new File(path).mkdir();
+  }
+
+  /**
+   * Find the present working directory.
+   * 
+   * @return the present working directory
+   */
+  public static String pwd() {
+    String pwd = new File("./").getAbsolutePath();
+    pwd = pwd.substring(0, pwd.length() - 2);
+    return pwd;
   }
 
 }
