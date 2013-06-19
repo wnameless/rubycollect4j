@@ -39,7 +39,7 @@ public final class RubyDir {
 
   /**
    * Retrieve all paths of files of given url pattern. The glob pattern is NOT
-   * fully implemented yet. Be carefully!
+   * fully implemented yet. Be careful!
    * 
    * * Matches any file. <br/>
    * ** Matches directories recursively.<br/>
@@ -77,8 +77,9 @@ public final class RubyDir {
 
     pattern = pattern.replaceAll("\\?", ".{1}");
     pattern = pattern.replaceAll("\\*\\*/", ".+/");
-    pattern = pattern.replaceAll("\\*", "[^/]+");
+    pattern = pattern.replaceAll("\\*", "[^/]*");
 
+    System.out.println(pattern);
     RubyArray<File> files = ra(traverseFolder(new File(rootPath), recursive));
 
     RubyArray<String> paths = ra();

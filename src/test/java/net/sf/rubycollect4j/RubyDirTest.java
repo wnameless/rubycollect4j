@@ -27,18 +27,27 @@ import static org.junit.Assert.assertEquals;
 
 public class RubyDirTest {
 
+  private static final String BASE_DIR = "src/test/resources/glob_test/";
+
   @Test
   public void testGlob() {
     assertEquals(ra(), RubyDir.glob(""));
-    assertEquals(ra("pom.xml", "README.md", "src", "target"), RubyDir.glob("*"));
-    assertEquals(ra("pom.xml", "README.md", "src", "target"),
-        RubyDir.glob("**"));
-    assertEquals(ra("src/", "target/"), RubyDir.glob("*/"));
-    assertEquals(ra("pom.xml"), RubyDir.glob("*.xml"));
-    assertEquals(ra("ruby_file_exist_test.txt"),
-        RubyDir.glob("src/test/resources/*exist*.txt"));
-    assertEquals(12, RubyDir.glob("src/test/resources/*.txt").count());
-    assertEquals(ra("src", "target"), RubyDir.glob("*[c,t]"));
+    assertEquals(ra("pom.xml", "README.md", "src", "target").sort(), RubyDir
+        .glob("*").sort());
+    assertEquals(ra("pom.xml", "README.md", "src", "target").sort(), RubyDir
+        .glob("**").sort());
+    assertEquals(ra("src/", "target/").sort(), RubyDir.glob("*/").sort());
+    assertEquals(
+        ra("folder1/", "folder1/folder1-1/", "folder1/folder1-2/", "folder2/",
+            "folder2/folder2-1/").sort(), RubyDir.glob(BASE_DIR + "**/").sort());
+    assertEquals(ra("folder2-1", "file2-1").sort(),
+        RubyDir.glob(BASE_DIR + "folder2/*").sort());
+    assertEquals(
+        ra("folder1/folder1-1/file1-1-1", "folder1/folder1-2/file1-2-1").sort(),
+        RubyDir.glob(BASE_DIR + "**/*1-*-1*").sort());
+    assertEquals(18, RubyDir.glob(BASE_DIR + "**/*").count());
+    assertEquals(ra("file1-2", "file1-3", "folder1-2").sort(),
+        RubyDir.glob(BASE_DIR + "folder1/*[2,3]").sort());
   }
 
 }
