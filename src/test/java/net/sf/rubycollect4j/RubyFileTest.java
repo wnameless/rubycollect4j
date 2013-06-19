@@ -152,8 +152,7 @@ public class RubyFileTest {
   public void testMdate() {
     rf = RubyFile.open(BASE_DIR + "ruby_file_exist_test.txt", "w");
     long modifiedTime = rf.mtime().getTime();
-    assertTrue(new Date().getTime() - 5000 <= modifiedTime
-        && modifiedTime <= new Date().getTime() + 5000);
+    assertTrue(modifiedTime <= new Date().getTime());
     rf.close();
   }
 

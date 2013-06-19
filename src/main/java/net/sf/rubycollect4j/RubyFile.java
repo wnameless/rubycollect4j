@@ -367,7 +367,7 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Find the path of the fiel.
+   * Find the path of the file.
    * 
    * @return the path of the file.
    */
