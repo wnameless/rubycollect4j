@@ -144,7 +144,6 @@ public final class RubyDir {
     pattern = pattern.replaceAll("\\*\\*/", ".+/");
     pattern = pattern.replaceAll("\\*", "[^/]*");
 
-    System.out.println(pattern);
     RubyArray<File> files = ra(traverseFolder(new File(rootPath), recursive));
 
     RubyArray<String> paths = ra();
