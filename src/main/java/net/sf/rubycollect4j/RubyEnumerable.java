@@ -49,18 +49,18 @@ import net.sf.rubycollect4j.iter.EachWithIndexIterable;
 import net.sf.rubycollect4j.iter.EachWithObjectIterable;
 import net.sf.rubycollect4j.iter.SliceBeforeIterable;
 
-
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 
+import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Lists.reverse;
 import static net.sf.rubycollect4j.RubyArray.newRubyArray;
 import static net.sf.rubycollect4j.RubyEnumerator.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyHash.newRubyHash;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Lists.reverse;
+;
 
 /**
  * An extension class for any Iterable object. It includes all methods refer to
@@ -86,12 +86,21 @@ public class RubyEnumerable<E> implements Iterable<E> {
   /**
    * Build up a RubyEnumerable by given elements.
    * 
+   * @pqrqm element first element
    * @param elements
    *          varargs
    * @return a new RubyEnumerable
    */
-  public static <E> RubyEnumerable<E> newRubyEnumerable(E... elements) {
-    return new RubyEnumerable<E>(elements);
+  public static <E> RubyEnumerable<E> newRubyEnumerable(E element,
+      E... elements) {
+    return new RubyEnumerable<E>(element, elements);
+  }
+
+  /**
+   * Build up an empty RubyEnumerable.
+   */
+  public static <E> RubyEnumerable<E> newRubyEnumerable() {
+    return new RubyEnumerable<E>();
   }
 
   /**
@@ -107,11 +116,22 @@ public class RubyEnumerable<E> implements Iterable<E> {
   /**
    * Construct by given elements.
    * 
+   * @param element
+   *          first element
    * @param elements
    *          varargs
    */
-  public RubyEnumerable(E... elements) {
-    this.iter = newArrayList(elements);
+  public RubyEnumerable(E element, E... elements) {
+    List<E> list = newArrayList(elements);
+    list.add(0, element);
+    this.iter = list;
+  }
+
+  /**
+   * Construct an empty RubyEnumerable.
+   */
+  public RubyEnumerable() {
+    this.iter = newArrayList();
   }
 
   /**

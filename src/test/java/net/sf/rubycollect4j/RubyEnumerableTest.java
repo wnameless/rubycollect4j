@@ -27,9 +27,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
-import net.sf.rubycollect4j.RubyArray;
-import net.sf.rubycollect4j.RubyEnumerable;
-import net.sf.rubycollect4j.RubyEnumerator;
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.block.BooleanBlock;
 import net.sf.rubycollect4j.block.ReduceBlock;
@@ -45,8 +42,6 @@ import static net.sf.rubycollect4j.RubyCollections.newPair;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.rh;
 import static net.sf.rubycollect4j.RubyEnumerable.newRubyEnumerable;
-
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -60,7 +55,7 @@ public class RubyEnumerableTest {
   public void testConstructor() {
     re = newRubyEnumerable(Arrays.asList(1, 2));
     assertEquals(RubyEnumerable.class, re.getClass());
-    re = newRubyEnumerable(new Integer[] { 1 });
+    re = newRubyEnumerable(0, 1);
     assertEquals(RubyEnumerable.class, re.getClass());
     re = newRubyEnumerable(1, 2, 3);
     assertEquals(RubyEnumerable.class, re.getClass());
@@ -70,7 +65,7 @@ public class RubyEnumerableTest {
   public void testAllʔ() {
     re = newRubyEnumerable(1, 2);
     assertEquals(true, re.allʔ());
-    re = newRubyEnumerable(new Integer[0]);
+    re = newRubyEnumerable();
     assertEquals(true, re.allʔ());
     re = newRubyEnumerable(1, 2, null);
     assertEquals(false, re.allʔ());
@@ -101,7 +96,7 @@ public class RubyEnumerableTest {
   public void testAnyʔ() {
     re = newRubyEnumerable(1, 2);
     assertEquals(true, re.anyʔ());
-    re = newRubyEnumerable(new Integer[0]);
+    re = newRubyEnumerable();
     assertEquals(false, re.anyʔ());
     re = newRubyEnumerable(1, 2, null);
     assertEquals(true, re.anyʔ());
@@ -955,7 +950,7 @@ public class RubyEnumerableTest {
   public void testOneʔ() {
     re = newRubyEnumerable(1);
     assertTrue(re.oneʔ());
-    re = newRubyEnumerable(1, null);
+    re = newRubyEnumerable(null, null, 1);
     assertTrue(re.oneʔ());
     re = newRubyEnumerable(1, 2);
     assertFalse(re.oneʔ());
