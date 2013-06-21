@@ -24,6 +24,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
+import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.block.BooleanBlock;
 import net.sf.rubycollect4j.block.TransformBlock;
 
@@ -37,7 +38,38 @@ import static net.sf.rubycollect4j.RubyEnumerator.newRubyEnumerator;
  * the Dir class of Ruby.
  * 
  */
-public final class RubyDir {
+public final class RubyDir extends RubyEnumerable<String> {
+
+  private final File directory;
+  private final RubyArray<String> entries;
+  private int position = 0;
+
+  /**
+   * Build up a RubyDir by given path.
+   * 
+   * @param path
+   *          of a file
+   * @return a RubyDir
+   */
+  public static RubyDir open(String path) {
+    File dir = new File(path);
+    if (!dir.exists() || !dir.isDirectory()) {
+      throw new IllegalArgumentException("No such file or directory - " + path);
+    }
+
+    return new RubyDir(dir);
+  }
+
+  /**
+   * 
+   * @param directory
+   * @param entries
+   */
+  private RubyDir(File directory) {
+    super(entries(directory.getPath()));
+    this.directory = directory;
+    entries = entries(directory.getPath());
+  }
 
   /**
    * Delete a directory.
@@ -216,6 +248,100 @@ public final class RubyDir {
     String pwd = new File("./").getAbsolutePath();
     pwd = pwd.substring(0, pwd.length() - 2);
     return pwd;
+  }
+
+  /**
+   * Create a RubyEnumerator of entries of this RubyDir.
+   * 
+   * @return a RubyEnumerator
+   */
+  public RubyEnumerator<String> each() {
+    return eachEntry();
+  }
+
+  /**
+   * Yield each entry to given block.
+   * 
+   * @param block
+   *          to yield entries
+   * @return this RubyDir
+   */
+  public RubyDir each(Block<String> block) {
+    eachEntry(block);
+    return this;
+  }
+
+  /**
+   * Find the path of this RubyDir.
+   * 
+   * @return the path of this RubyDir
+   */
+  public String path() {
+    return directory.getPath();
+  }
+
+  /**
+   * Find the current position of entries.
+   * 
+   * @return the current position of entries
+   */
+  public int pos() {
+    return position;
+  }
+
+  /**
+   * Set the current position of entries.
+   * 
+   * @param position
+   * @return the current position of entries
+   */
+  public int pos(int position) {
+    this.position = position;
+    return this.position;
+  }
+
+  /**
+   * Return the next of entries.
+   * 
+   * @return an entry of file
+   */
+  public String read() {
+    if (position < 0 || position >= entries.size()) {
+      return null;
+    }
+    return entries.get(position++);
+  }
+
+  /**
+   * Set 0 to the position of entries.
+   * 
+   * @return this RubyDir
+   */
+  public RubyDir rewind() {
+    position = 0;
+    return this;
+  }
+
+  /**
+   * Return a RubyDir that entries is set to given position.
+   * 
+   * @param position
+   *          to be searched
+   * @return a RubyDir that entries is set to given position
+   */
+  public RubyDir seek(int position) {
+    RubyDir dir = RubyDir.open(directory.getPath());
+    dir.pos(position);
+    return dir;
+  }
+
+  /**
+   * Find the current position of entries.
+   * 
+   * @return the current position of entries
+   */
+  public int tell() {
+    return pos();
   }
 
 }

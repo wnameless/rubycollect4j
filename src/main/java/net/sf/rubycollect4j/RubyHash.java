@@ -36,12 +36,10 @@ import net.sf.rubycollect4j.block.EntryMergeBlock;
 import net.sf.rubycollect4j.block.EntryTransformBlock;
 import net.sf.rubycollect4j.block.TransformBlock;
 
+import static com.google.common.collect.Maps.newLinkedHashMap;
 import static net.sf.rubycollect4j.RubyArray.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newPair;
 import static net.sf.rubycollect4j.RubyEnumerator.newRubyEnumerator;
-
-
-import static com.google.common.collect.Maps.newLinkedHashMap;
 
 /**
  * RubyHash implements all methods refer to the Hash of Ruby language. RubyHash
