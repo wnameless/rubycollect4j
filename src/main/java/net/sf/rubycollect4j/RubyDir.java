@@ -61,9 +61,10 @@ public final class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
+   * Create a RubyDir by given File.
    * 
    * @param directory
-   * @param entries
+   *          a File
    */
   private RubyDir(File directory) {
     super(entries(directory.getPath()));
