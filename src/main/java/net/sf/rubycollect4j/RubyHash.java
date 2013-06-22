@@ -59,6 +59,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   /**
    * Build up an empty RubyHash.
    * 
+   * @param <K>
+   *          the type of the key elements
+   * @param <V>
+   *          the type of the value elements
    * @return a new RubyHash
    */
   public static <K, V> RubyHash<K, V> newRubyHash() {
@@ -69,6 +73,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   /**
    * Build up an empty RubyHash by given Map.
    * 
+   * @param <K>
+   *          the type of the key elements
+   * @param <V>
+   *          the type of the value elements
    * @param map
    *          a Map
    * @return a new RubyHash
@@ -81,6 +89,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   /**
    * Build up an empty RubyHash by given LinkedHashMap.
    * 
+   * @param <K>
+   *          the type of the key elements
+   * @param <V>
+   *          the type of the value elements
    * @param map
    *          a Map
    * @param defensiveCopy
@@ -741,6 +753,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
+  /**
+   * @param <S>
+   *          the type of transformed elements
+   */
   public <S> RubyEnumerator<Entry<S, RubyArray<Entry<K, V>>>> chunk(
       final EntryTransformBlock<K, V, S> block) {
     return chunk(new TransformBlock<Entry<K, V>, S>() {
@@ -753,6 +769,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
+  /**
+   * @param <S>
+   *          the type of transformed elements
+   */
   public <S> RubyArray<S> collect(final EntryTransformBlock<K, V, S> block) {
     return collect(new TransformBlock<Entry<K, V>, S>() {
 
@@ -764,6 +784,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
+  /**
+   * @param <S>
+   *          the type of transformed elements
+   */
   public <S> RubyArray<S> collectConcat(
       final EntryTransformBlock<K, V, RubyArray<S>> block) {
     return collectConcat(new TransformBlock<Entry<K, V>, RubyArray<S>>() {
@@ -868,11 +892,19 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
+  /**
+   * @param <S>
+   *          the type of transformed elements
+   */
   public <S> RubyArray<S> flatMap(
       final EntryTransformBlock<K, V, RubyArray<S>> block) {
     return collectConcat(block);
   }
 
+  /**
+   * @param <S>
+   *          the type of transformed elements
+   */
   public <S> RubyArray<S> grep(String regex,
       final EntryTransformBlock<K, V, S> block) {
     return grep(regex, new TransformBlock<Entry<K, V>, S>() {
@@ -885,6 +917,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
+  /**
+   * @param <S>
+   *          the type of transformed elements
+   */
   public <S> RubyHash<S, RubyArray<Entry<K, V>>> groupBy(
       final EntryTransformBlock<K, V, S> block) {
     return groupBy(new TransformBlock<Entry<K, V>, S>() {
@@ -897,6 +933,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
+  /**
+   * @param <S>
+   *          the type of transformed elements
+   */
   public <S> RubyArray<S> map(final EntryTransformBlock<K, V, S> block) {
     return map(new TransformBlock<Entry<K, V>, S>() {
 
@@ -908,6 +948,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
+  /**
+   * @param <S>
+   *          the type of transformed elements
+   */
   public <S> Entry<K, V> maxBy(Comparator<? super S> comp,
       final EntryTransformBlock<K, V, S> block) {
     return maxBy(comp, new TransformBlock<Entry<K, V>, S>() {
@@ -920,6 +964,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
+  /**
+   * @param <S>
+   *          the type of transformed elements
+   */
   public <S> Entry<K, V> maxBy(final EntryTransformBlock<K, V, S> block) {
     return maxBy(new TransformBlock<Entry<K, V>, S>() {
 
@@ -931,6 +979,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
+  /**
+   * @param <S>
+   *          the type of transformed elements
+   */
   public <S> Entry<K, V> minBy(Comparator<? super S> comp,
       final EntryTransformBlock<K, V, S> block) {
     return minBy(comp, new TransformBlock<Entry<K, V>, S>() {
@@ -943,6 +995,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
+  /**
+   * @param <S>
+   *          the type of transformed elements
+   */
   public <S> Entry<K, V> minBy(final EntryTransformBlock<K, V, S> block) {
     return minBy(new TransformBlock<Entry<K, V>, S>() {
 
@@ -954,6 +1010,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
+  /**
+   * @param <S>
+   *          the type of transformed elements
+   */
   public <S> RubyArray<Entry<K, V>> minmaxBy(Comparator<? super S> comp,
       final EntryTransformBlock<K, V, S> block) {
     return minmaxBy(comp, new TransformBlock<Entry<K, V>, S>() {
@@ -966,6 +1026,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
+  /**
+   * @param <S>
+   *          the type of transformed elements
+   */
   public <S> RubyArray<Entry<K, V>> minmaxBy(
       final EntryTransformBlock<K, V, S> block) {
     return minmaxBy(new TransformBlock<Entry<K, V>, S>() {
@@ -1050,6 +1114,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
+  /**
+   * @param <S>
+   *          the type of transformed elements
+   */
   public <S> RubyArray<Entry<K, V>> sortBy(Comparator<? super S> comp,
       final EntryTransformBlock<K, V, S> block) {
     return sortBy(comp, new TransformBlock<Entry<K, V>, S>() {
@@ -1062,6 +1130,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
+  /**
+   * @param <S>
+   *          the type of transformed elements
+   */
   public <S> RubyArray<Entry<K, V>> sortBy(
       final EntryTransformBlock<K, V, S> block) {
     return sortBy(new TransformBlock<Entry<K, V>, S>() {
