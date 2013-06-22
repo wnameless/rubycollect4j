@@ -766,8 +766,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Put elements with the same result S returned by the block into a pair of S
-   * and RubyArray of a RubyHash.
+   * Put elements with the same result S returned by the block into a
+   * Entry&#60;S, RubyArray&#60;E&#62;&#62;y of a RubyHash.
    * 
    * @param <S>
    *          the type of transformed elements
