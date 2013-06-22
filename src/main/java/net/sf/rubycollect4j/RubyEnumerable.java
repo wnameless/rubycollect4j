@@ -84,19 +84,6 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Build up a RubyEnumerable by given elements.
-   * 
-   * @pqrqm element first element
-   * @param elements
-   *          varargs
-   * @return a new RubyEnumerable
-   */
-  public static <E> RubyEnumerable<E> newRubyEnumerable(E element,
-      E... elements) {
-    return new RubyEnumerable<E>(element, elements);
-  }
-
-  /**
    * Build up an empty RubyEnumerable.
    */
   public static <E> RubyEnumerable<E> newRubyEnumerable() {
@@ -111,20 +98,6 @@ public class RubyEnumerable<E> implements Iterable<E> {
    */
   public RubyEnumerable(Iterable<E> iter) {
     this.iter = iter;
-  }
-
-  /**
-   * Construct by given elements.
-   * 
-   * @param element
-   *          first element
-   * @param elements
-   *          varargs
-   */
-  public RubyEnumerable(E element, E... elements) {
-    List<E> list = newArrayList(elements);
-    list.add(0, element);
-    this.iter = list;
   }
 
   /**

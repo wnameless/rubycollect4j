@@ -55,25 +55,25 @@ public class RubyEnumerableTest {
   public void testConstructor() {
     re = newRubyEnumerable(Arrays.asList(1, 2));
     assertEquals(RubyEnumerable.class, re.getClass());
-    re = newRubyEnumerable(0, 1);
+    re = newRubyEnumerable(Arrays.asList(0, 1));
     assertEquals(RubyEnumerable.class, re.getClass());
-    re = newRubyEnumerable(1, 2, 3);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3));
     assertEquals(RubyEnumerable.class, re.getClass());
   }
 
   @Test
   public void testAllʔ() {
-    re = newRubyEnumerable(1, 2);
+    re = newRubyEnumerable(Arrays.asList(1, 2));
     assertEquals(true, re.allʔ());
     re = newRubyEnumerable();
     assertEquals(true, re.allʔ());
-    re = newRubyEnumerable(1, 2, null);
+    re = newRubyEnumerable(Arrays.asList(1, 2, null));
     assertEquals(false, re.allʔ());
   }
 
   @Test
   public void testAllʔWithBlock() {
-    re = newRubyEnumerable(1, 2, 3);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3));
     assertEquals(false, re.allʔ(new BooleanBlock<Integer>() {
 
       @Override
@@ -94,17 +94,17 @@ public class RubyEnumerableTest {
 
   @Test
   public void testAnyʔ() {
-    re = newRubyEnumerable(1, 2);
+    re = newRubyEnumerable(Arrays.asList(1, 2));
     assertEquals(true, re.anyʔ());
     re = newRubyEnumerable();
     assertEquals(false, re.anyʔ());
-    re = newRubyEnumerable(1, 2, null);
+    re = newRubyEnumerable(Arrays.asList(1, 2, null));
     assertEquals(true, re.anyʔ());
   }
 
   @Test
   public void testAnyʔWithBlock() {
-    re = newRubyEnumerable(1, 2, 3);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3));
     assertEquals(true, re.anyʔ(new BooleanBlock<Integer>() {
 
       @Override
@@ -125,7 +125,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testChunk() {
-    re = newRubyEnumerable(1, 2, 2, 3);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 2, 3));
     RubyArray<Entry<Boolean, RubyArray<Integer>>> chunk =
         re.chunk(new TransformBlock<Integer, Boolean>() {
 
@@ -146,14 +146,14 @@ public class RubyEnumerableTest {
 
   @Test
   public void testCollect() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(RubyEnumerator.class, re.collect().getClass());
     assertEquals(ra(1, 2, 3, 4), re.collect().toA());
   }
 
   @Test
   public void testCollectWithBlock() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(ra(1.0, 2.0, 3.0, 4.0),
         re.collect(new TransformBlock<Integer, Double>() {
 
@@ -167,14 +167,14 @@ public class RubyEnumerableTest {
 
   @Test
   public void testCollectConcat() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(RubyEnumerator.class, re.collectConcat().getClass());
     assertEquals(ra(1, 2, 3, 4), re.collectConcat().toA());
   }
 
   @Test
   public void testCollectConcatWithBlock() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(ra(1.0, 2.0, 3.0, 4.0),
         re.collectConcat(new TransformBlock<Integer, RubyArray<Double>>() {
 
@@ -190,13 +190,13 @@ public class RubyEnumerableTest {
   public void testCount() {
     re = newRubyEnumerable();
     assertEquals(0, re.count());
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(4, re.count());
   }
 
   @Test
   public void testCountWithBlock() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(2, re.count(new BooleanBlock<Integer>() {
 
       @Override
@@ -209,7 +209,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testCycle() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(RubyEnumerator.class, re.cycle().getClass());
     RubyArray<Integer> ints = ra(1, 2, 3, 4);
     Iterator<Integer> iter = re.cycle().iterator();
@@ -221,7 +221,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testCycleWithN() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(RubyEnumerator.class, re.cycle().getClass());
     RubyArray<Integer> ints = newRubyArray();
     Iterator<Integer> iter = re.cycle(2).iterator();
@@ -233,7 +233,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testCycleWithNAndBlock() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     final RubyArray<Integer> ints = newRubyArray();
     re.cycle(2, new Block<Integer>() {
 
@@ -248,7 +248,7 @@ public class RubyEnumerableTest {
 
   @Test(expected = IllegalStateException.class)
   public void testCycleWithBlock() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     final RubyArray<Integer> ints = newRubyArray();
     re.cycle(new Block<Integer>() {
 
@@ -265,14 +265,14 @@ public class RubyEnumerableTest {
 
   @Test
   public void testDetect() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(RubyEnumerator.class, re.detect().getClass());
     assertEquals(ra(1, 2, 3, 4), re.detect().toA());
   }
 
   @Test
   public void testDetectWithBlock() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(Integer.valueOf(3), re.detect(new BooleanBlock<Integer>() {
 
       @Override
@@ -293,21 +293,21 @@ public class RubyEnumerableTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testDrop() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(ra(3, 4), re.drop(2));
     re.drop(-1);
   }
 
   @Test
   public void testDropWhile() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(RubyEnumerator.class, re.dropWhile().getClass());
     assertEquals(ra(1), re.dropWhile().toA());
   }
 
   @Test
   public void testDropWhileWithBlock() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(ra(3, 4), re.dropWhile(new BooleanBlock<Integer>() {
 
       @Override
@@ -320,7 +320,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testEachCons() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(RubyEnumerator.class, re.eachCons(2).getClass());
     @SuppressWarnings("unchecked")
     RubyArray<RubyArray<Integer>> ra = ra(ra(1, 2), ra(2, 3), ra(3, 4));
@@ -329,13 +329,13 @@ public class RubyEnumerableTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testEachConsException() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     re.eachCons(0);
   }
 
   @Test
   public void testEachConsWithBlock() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     final RubyArray<List<Integer>> ra = ra();
     re.eachCons(2, new Block<RubyArray<Integer>>() {
 
@@ -350,7 +350,7 @@ public class RubyEnumerableTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testEachConsWithBlockException() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     re.eachCons(0, new Block<RubyArray<Integer>>() {
 
       @Override
@@ -361,14 +361,14 @@ public class RubyEnumerableTest {
 
   @Test
   public void testEachEntry() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(RubyEnumerator.class, re.eachEntry().getClass());
     assertEquals(ra(1, 2, 3, 4), re.eachEntry().toA());
   }
 
   @Test
   public void testEachEntryWithBlock() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     final RubyArray<Integer> ints = ra();
     re.eachEntry(new Block<Integer>() {
 
@@ -389,7 +389,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testEachSlice() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(RubyEnumerator.class, re.eachSlice(3).getClass());
     @SuppressWarnings("unchecked")
     RubyArray<RubyArray<Integer>> ra = ra(ra(1, 2, 3), ra(4));
@@ -398,13 +398,13 @@ public class RubyEnumerableTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testEachSliceException() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     re.eachSlice(0);
   }
 
   @Test
   public void testEachSliceWithBlock() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     final RubyArray<Integer> ints = ra();
     re.eachSlice(3, new Block<RubyArray<Integer>>() {
 
@@ -420,7 +420,7 @@ public class RubyEnumerableTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testEachSliceWithBlockException() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     re.eachSlice(0, new Block<RubyArray<Integer>>() {
 
       @Override
@@ -431,7 +431,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testEachWithIndex() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(RubyEnumerator.class, re.eachWithIndex().getClass());
     @SuppressWarnings("unchecked")
     RubyArray<? extends Entry<Integer, Integer>> ra =
@@ -441,7 +441,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testEachWithIndexWithBlock() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     final RubyArray<Integer> ints = ra();
     assertEquals(RubyEnumerable.class,
         re.eachWithIndex(new WithIndexBlock<Integer>() {
@@ -457,7 +457,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testEachWithObject() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     Long obj = 0L;
     assertEquals(RubyEnumerator.class, re.eachWithObject(obj).getClass());
     @SuppressWarnings("unchecked")
@@ -468,7 +468,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testEachWithObjectWithBlock() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     Long[] obj = new Long[] { 0L };
     assertEquals(new Long[] { 10L }[0],
         re.eachWithObject(obj, new WithObjectBlock<Integer, Long[]>() {
@@ -483,20 +483,20 @@ public class RubyEnumerableTest {
 
   @Test
   public void testEntries() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(ra(1, 2, 3, 4), re.entries());
   }
 
   @Test
   public void testFind() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(RubyEnumerator.class, re.find().getClass());
     assertEquals(ra(1, 2, 3, 4), re.find().toA());
   }
 
   @Test
   public void testFindWithBlock() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(Integer.valueOf(3), re.find(new BooleanBlock<Integer>() {
 
       @Override
@@ -517,14 +517,14 @@ public class RubyEnumerableTest {
 
   @Test
   public void testFindAll() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(RubyEnumerator.class, re.findAll().getClass());
     assertEquals(ra(1, 2, 3, 4), re.findAll().toA());
   }
 
   @Test
   public void testFindAllWithBlock() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(ra(2, 3, 4), re.findAll(new BooleanBlock<Integer>() {
 
       @Override
@@ -537,14 +537,14 @@ public class RubyEnumerableTest {
 
   @Test
   public void testFindIndex() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(RubyEnumerator.class, re.findIndex().getClass());
     assertEquals(ra(1, 2, 3, 4), re.findIndex().toA());
   }
 
   @Test
   public void testFindIndexWithBlock() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(Integer.valueOf(3), re.findIndex(new BooleanBlock<Integer>() {
 
       @Override
@@ -565,14 +565,14 @@ public class RubyEnumerableTest {
 
   @Test
   public void testFindIndexWithTarget() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(Integer.valueOf(2), re.findIndex(3));
     assertNull(re.findIndex(0));
   }
 
   @Test
   public void testFirst() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(Integer.valueOf(1), re.first());
     re = newRubyEnumerable();
     assertNull(re.first());
@@ -580,27 +580,27 @@ public class RubyEnumerableTest {
 
   @Test
   public void testFirstWithN() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(ra(1, 2, 3), re.first(3));
     assertEquals(ra(1, 2, 3, 4), re.first(6));
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testFirstWithNException() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     re.first(-1);
   }
 
   @Test
   public void testFlatMap() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(RubyEnumerator.class, re.flatMap().getClass());
     assertEquals(ra(1, 2, 3, 4), re.flatMap().toA());
   }
 
   @Test
   public void testFlatMapWithBlock() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(ra(1L, 2L, 3L, 4L),
         re.flatMap(new TransformBlock<Integer, RubyArray<Long>>() {
 
@@ -614,13 +614,13 @@ public class RubyEnumerableTest {
 
   @Test
   public void testGrep() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(ra(2, 4), re.grep("[24]"));
   }
 
   @Test
   public void testGrepWithBlock() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(ra("2", "4"),
         re.grep("[24]", new TransformBlock<Integer, String>() {
 
@@ -634,14 +634,14 @@ public class RubyEnumerableTest {
 
   @Test
   public void testGroupBy() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(RubyEnumerator.class, re.groupBy().getClass());
     assertEquals(ra(1, 2, 3, 4), re.groupBy().toA());
   }
 
   @Test
   public void testGroupByWithBlock() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(rh(1, ra(1, 4), 2, ra(2), 0, ra(3)),
         re.groupBy(new TransformBlock<Integer, Integer>() {
 
@@ -655,21 +655,21 @@ public class RubyEnumerableTest {
 
   @Test
   public void testIncludeʔ() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertTrue(re.includeʔ(1));
     assertFalse(re.includeʔ(5));
   }
 
   @Test
   public void testInjectWithInit() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     RubyArray<Integer> ra = ra();
     assertEquals(ra(1, 2, 3, 4), re.inject(ra, "push"));
   }
 
   @Test
   public void testInjectWithBlock() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(Integer.valueOf(10), re.inject(new ReduceBlock<Integer>() {
 
       @Override
@@ -682,7 +682,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testInjectWithInitAndBlock() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(Long.valueOf(20),
         re.inject(Long.valueOf(10), new WithInitBlock<Integer, Long>() {
 
@@ -696,20 +696,21 @@ public class RubyEnumerableTest {
 
   @Test
   public void testInject() {
-    RubyEnumerable<Boolean> bools = newRubyEnumerable(true, true, true);
+    RubyEnumerable<Boolean> bools =
+        newRubyEnumerable(Arrays.asList(true, true, true));
     assertEquals(Boolean.TRUE, bools.inject("equals"));
   }
 
   @Test
   public void testMap() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(RubyEnumerator.class, re.map().getClass());
     assertEquals(ra(1, 2, 3, 4), re.map().toA());
   }
 
   @Test
   public void testMapWithBlock() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(ra(1L, 2L, 3L, 4L),
         re.map(new TransformBlock<Integer, Long>() {
 
@@ -723,7 +724,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testMax() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(Integer.valueOf(4), re.max());
     re = newRubyEnumerable();
     assertNull(re.max());
@@ -731,7 +732,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testMaxWithComparator() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(Integer.valueOf(1), re.max(new Comparator<Integer>() {
 
       @Override
@@ -744,14 +745,15 @@ public class RubyEnumerableTest {
 
   @Test
   public void testMaxBy() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(RubyEnumerator.class, re.maxBy().getClass());
     assertEquals(ra(1, 2, 3, 4), re.maxBy().toA());
   }
 
   @Test
   public void testMaxByWithComparatorAndBlock() {
-    RubyEnumerable<String> re = newRubyEnumerable("aaaa", "bbb", "cc", "d");
+    RubyEnumerable<String> re =
+        newRubyEnumerable(Arrays.asList("aaaa", "bbb", "cc", "d"));
     assertEquals("d", re.maxBy(new Comparator<Integer>() {
 
       @Override
@@ -770,7 +772,8 @@ public class RubyEnumerableTest {
 
   @Test
   public void testMaxByWithBlock() {
-    RubyEnumerable<String> re = newRubyEnumerable("aaaa", "bbb", "cc", "d");
+    RubyEnumerable<String> re =
+        newRubyEnumerable(Arrays.asList("aaaa", "bbb", "cc", "d"));
     assertEquals("aaaa", re.maxBy(new TransformBlock<String, Integer>() {
 
       @Override
@@ -783,14 +786,14 @@ public class RubyEnumerableTest {
 
   @Test
   public void testMemberʔ() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertTrue(re.memberʔ(1));
     assertFalse(re.memberʔ(5));
   }
 
   @Test
   public void testMin() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(Integer.valueOf(1), re.min());
     re = newRubyEnumerable();
     assertNull(re.min());
@@ -798,7 +801,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testMinWithComparator() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(Integer.valueOf(4), re.min(new Comparator<Integer>() {
 
       @Override
@@ -811,14 +814,15 @@ public class RubyEnumerableTest {
 
   @Test
   public void testMinBy() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(RubyEnumerator.class, re.minBy().getClass());
     assertEquals(ra(1, 2, 3, 4), re.minBy().toA());
   }
 
   @Test
   public void testMinByWithComparatorAndBlock() {
-    RubyEnumerable<String> re = newRubyEnumerable("aaaa", "bbb", "cc", "d");
+    RubyEnumerable<String> re =
+        newRubyEnumerable(Arrays.asList("aaaa", "bbb", "cc", "d"));
     assertEquals("aaaa", re.minBy(new Comparator<Integer>() {
 
       @Override
@@ -837,7 +841,8 @@ public class RubyEnumerableTest {
 
   @Test
   public void testMinByWithBlock() {
-    RubyEnumerable<String> re = newRubyEnumerable("aaaa", "bbb", "cc", "d");
+    RubyEnumerable<String> re =
+        newRubyEnumerable(Arrays.asList("aaaa", "bbb", "cc", "d"));
     assertEquals("d", re.minBy(new TransformBlock<String, Integer>() {
 
       @Override
@@ -850,9 +855,9 @@ public class RubyEnumerableTest {
 
   @Test
   public void testMinmax() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(ra(1, 4), re.minmax());
-    re = newRubyEnumerable(1);
+    re = newRubyEnumerable(Arrays.asList(1));
     assertEquals(ra(1, 1), re.minmax());
     re = newRubyEnumerable();
     assertEquals(ra(null, null), re.minmax());
@@ -860,7 +865,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testMinmaxWithComparator() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(ra(4, 1), re.minmax(new Comparator<Integer>() {
 
       @Override
@@ -873,14 +878,15 @@ public class RubyEnumerableTest {
 
   @Test
   public void testMinmaxBy() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(RubyEnumerator.class, re.minmaxBy().getClass());
     assertEquals(ra(1, 2, 3, 4), re.minmaxBy().toA());
   }
 
   @Test
   public void testMinmaxByWithComparatorAndBlock() {
-    RubyEnumerable<String> re = newRubyEnumerable("aaaa", "bbb", "cc", "d");
+    RubyEnumerable<String> re =
+        newRubyEnumerable(Arrays.asList("aaaa", "bbb", "cc", "d"));
     assertEquals(ra("aaaa", "d"), re.minmaxBy(new Comparator<Integer>() {
 
       @Override
@@ -899,7 +905,8 @@ public class RubyEnumerableTest {
 
   @Test
   public void testMinmaxByWithBlock() {
-    RubyEnumerable<String> re = newRubyEnumerable("aaaa", "bbb", "cc", "d");
+    RubyEnumerable<String> re =
+        newRubyEnumerable(Arrays.asList("aaaa", "bbb", "cc", "d"));
     assertEquals(ra("d", "aaaa"),
         re.minmaxBy(new TransformBlock<String, Integer>() {
 
@@ -919,15 +926,15 @@ public class RubyEnumerableTest {
     ra.push(null);
     re = newRubyEnumerable(ra);
     assertTrue(re.noneʔ());
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertFalse(re.noneʔ());
-    re = newRubyEnumerable(1, 2, 3, null);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, null));
     assertFalse(re.noneʔ());
   }
 
   @Test
   public void testNoneʔWithBlock() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertTrue(re.noneʔ(new BooleanBlock<Integer>() {
 
       @Override
@@ -948,17 +955,17 @@ public class RubyEnumerableTest {
 
   @Test
   public void testOneʔ() {
-    re = newRubyEnumerable(1);
+    re = newRubyEnumerable(Arrays.asList(1));
     assertTrue(re.oneʔ());
-    re = newRubyEnumerable(null, null, 1);
+    re = newRubyEnumerable(Arrays.asList(null, null, 1));
     assertTrue(re.oneʔ());
-    re = newRubyEnumerable(1, 2);
+    re = newRubyEnumerable(Arrays.asList(1, 2));
     assertFalse(re.oneʔ());
   }
 
   @Test
   public void testOneʔWithBlock() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertTrue(re.oneʔ(new BooleanBlock<Integer>() {
 
       @Override
@@ -979,7 +986,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testPartition() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(RubyEnumerator.class, re.partition().getClass());
     assertEquals(ra(1, 2, 3, 4), re.partition().toA());
   }
@@ -987,7 +994,7 @@ public class RubyEnumerableTest {
   @SuppressWarnings("unchecked")
   @Test
   public void testPartitionWithBlock() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(ra(ra(1, 3), ra(2, 4)),
         re.partition(new BooleanBlock<Integer>() {
 
@@ -1001,14 +1008,14 @@ public class RubyEnumerableTest {
 
   @Test
   public void testReduceWithInit() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     RubyArray<Integer> ra = ra();
     assertEquals(ra(1, 2, 3, 4), re.reduce(ra, "push"));
   }
 
   @Test
   public void testReduceWithBlock() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(Integer.valueOf(10), re.reduce(new ReduceBlock<Integer>() {
 
       @Override
@@ -1021,7 +1028,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testReduceWithInitAndBlock() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(Long.valueOf(20),
         re.reduce(Long.valueOf(10), new WithInitBlock<Integer, Long>() {
 
@@ -1035,20 +1042,21 @@ public class RubyEnumerableTest {
 
   @Test
   public void testReduce() {
-    RubyEnumerable<Boolean> bools = newRubyEnumerable(true, true, true);
+    RubyEnumerable<Boolean> bools =
+        newRubyEnumerable(Arrays.asList(true, true, true));
     assertEquals(Boolean.TRUE, bools.reduce("equals"));
   }
 
   @Test
   public void testReject() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(RubyEnumerator.class, re.reject().getClass());
     assertEquals(ra(1, 2, 3, 4), re.reject().toA());
   }
 
   @Test
   public void testRejectWithBlock() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(ra(2, 3, 4), re.reject(new BooleanBlock<Integer>() {
 
       @Override
@@ -1061,14 +1069,14 @@ public class RubyEnumerableTest {
 
   @Test
   public void testReverseEach() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(RubyEnumerator.class, re.reverseEach().getClass());
     assertEquals(ra(4, 3, 2, 1), re.reverseEach().toA());
   }
 
   @Test
   public void testReverseEachWithBlock() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     final RubyArray<Integer> ra = ra();
     assertEquals(re, re.reverseEach(new Block<Integer>() {
 
@@ -1083,14 +1091,14 @@ public class RubyEnumerableTest {
 
   @Test
   public void testSelect() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(RubyEnumerator.class, re.select().getClass());
     assertEquals(ra(1, 2, 3, 4), re.select().toA());
   }
 
   @Test
   public void testSelectBlock() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(ra(3, 4), re.select(new BooleanBlock<Integer>() {
 
       @Override
@@ -1104,7 +1112,7 @@ public class RubyEnumerableTest {
   @SuppressWarnings("unchecked")
   @Test
   public void testSliceBeforeWithBlock() {
-    re = newRubyEnumerable(1, 3, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 3, 3, 4));
     assertEquals(ra(ra(1), ra(3), ra(3, 4)),
         re.sliceBefore(new BooleanBlock<Integer>() {
 
@@ -1119,21 +1127,21 @@ public class RubyEnumerableTest {
   @SuppressWarnings("unchecked")
   @Test
   public void testSliceBeforeWithRegex() {
-    re = newRubyEnumerable(1, 2, 3, 3);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 3));
     assertEquals(ra(ra(1, 2), ra(3), ra(3)), re.sliceBefore("3").toA());
   }
 
   @Test
   public void testSort() {
-    re = newRubyEnumerable(4, 1, 2, 3, 3);
+    re = newRubyEnumerable(Arrays.asList(4, 1, 2, 3, 3));
     assertEquals(ra(1, 2, 3, 3, 4), re.sort());
-    assertEquals(ra("abc", "b", "cd"), newRubyEnumerable("b", "cd", "abc")
-        .sort());
+    assertEquals(ra("abc", "b", "cd"),
+        newRubyEnumerable(Arrays.asList("b", "cd", "abc")).sort());
   }
 
   @Test
   public void testSortWithComparator() {
-    re = newRubyEnumerable(4, 1, 2, 3, 3);
+    re = newRubyEnumerable(Arrays.asList(4, 1, 2, 3, 3));
     assertEquals(ra(4, 3, 3, 2, 1), re.sort(new Comparator<Integer>() {
 
       @Override
@@ -1142,33 +1150,37 @@ public class RubyEnumerableTest {
       }
 
     }));
-    assertEquals(ra(1), newRubyEnumerable(1).sort(new Comparator<Integer>() {
+    assertEquals(ra(1),
+        newRubyEnumerable(Arrays.asList(1)).sort(new Comparator<Integer>() {
 
-      @Override
-      public int compare(Integer o1, Integer o2) {
-        return o2 - o1;
-      }
+          @Override
+          public int compare(Integer o1, Integer o2) {
+            return o2 - o1;
+          }
 
-    }));
+        }));
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testSortException() {
-    assertEquals(ra(new Point(1, 2), new Point(3, 4), new Point(5, 6)),
-        newRubyEnumerable(new Point(5, 6), new Point(1, 2), new Point(3, 4))
+    assertEquals(
+        ra(new Point(1, 2), new Point(3, 4), new Point(5, 6)),
+        newRubyEnumerable(
+            Arrays.asList(new Point(5, 6), new Point(1, 2), new Point(3, 4)))
             .sort());
   }
 
   @Test
   public void testSortBy() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(RubyEnumerator.class, re.sortBy().getClass());
     assertEquals(ra(1, 2, 3, 4), re.sortBy().toA());
   }
 
   @Test
   public void testSortByWithComparatorAndBlock() {
-    RubyEnumerable<String> re = newRubyEnumerable("aaaa", "bbb", "cc", "d");
+    RubyEnumerable<String> re =
+        newRubyEnumerable(Arrays.asList("aaaa", "bbb", "cc", "d"));
     assertEquals(ra("aaaa", "bbb", "cc", "d"),
         re.sortBy(new Comparator<Integer>() {
 
@@ -1188,7 +1200,8 @@ public class RubyEnumerableTest {
 
   @Test
   public void testSortByWithBlock() {
-    RubyEnumerable<String> re = newRubyEnumerable("aaaa", "bbb", "cc", "d");
+    RubyEnumerable<String> re =
+        newRubyEnumerable(Arrays.asList("aaaa", "bbb", "cc", "d"));
     assertEquals(ra("d", "cc", "bbb", "aaaa"),
         re.sortBy(new TransformBlock<String, Integer>() {
 
@@ -1202,26 +1215,26 @@ public class RubyEnumerableTest {
 
   @Test
   public void testTake() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(ra(1, 2), re.take(2));
     assertEquals(ra(1, 2, 3, 4), re.take(5));
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testTakeException() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     re.take(-1);
   }
 
   @Test
   public void testTakeWhile() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(ra(1), re.takeWhile().toA());
   }
 
   @Test
   public void testTakeWhileWithBlock() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(ra(1, 2), re.takeWhile(new BooleanBlock<Integer>() {
 
       @Override
@@ -1242,14 +1255,14 @@ public class RubyEnumerableTest {
 
   @Test
   public void testToA() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(ra(1, 2, 3, 4), re.toA());
   }
 
   @SuppressWarnings("unchecked")
   @Test
   public void testZip() {
-    re = newRubyEnumerable(1, 2, 3);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3));
     assertEquals(ra(ra(1, 4), ra(2, 5), ra(3, null)), re.zip(ra(4, 5)));
     assertEquals(ra(ra(1, 4, 7), ra(2, 5, 8), ra(3, 6, 9)),
         re.zip(ra(4, 5, 6), ra(7, 8, 9)));
@@ -1260,7 +1273,7 @@ public class RubyEnumerableTest {
   @SuppressWarnings("unchecked")
   @Test
   public void testZipWithBlock() {
-    re = newRubyEnumerable(1, 2, 3);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3));
     final RubyArray<Integer> ints = ra();
     re.zip(ra(ra(4, 5, 6), ra(7, 8, 9)), new Block<RubyArray<Integer>>() {
 
@@ -1282,7 +1295,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testIterator() {
-    re = newRubyEnumerable(1, 2, 3, 4);
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertTrue(re.iterator() instanceof Iterator);
   }
 
