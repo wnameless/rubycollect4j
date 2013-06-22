@@ -139,11 +139,10 @@ public final class RubyDir extends RubyEnumerable<String> {
    * Retrieve all paths of files of given url pattern. The glob pattern is NOT
    * fully implemented yet. Be careful!
    * 
-   * <span>&#42; Matches any file.</span><br/>
-   * <span>&#42;&#42; Matches directories recursively.</span><br/>
-   * <span>&#63; Matches any one character. Equivalent to /.{1}/ in regexp.
-   * </span><br/>
-   * <span>&#91;set&#93; Matches any one character in set.</span>
+   * {@literal *} Matches any file.<br/>
+   * {@literal **} Matches directories recursively.<br/>
+   * {@literal ?} Matches any one character. Equivalent to /.{1}/ in regexp.<br/>
+   * {@literal [set]} Matches any one character in set.
    * 
    * @param pattern
    *          of target files
