@@ -530,6 +530,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * 
    * @param <S>
    *          the type of transformed elements
+   * @param o
+   *          any Object
    * @return a RubyEnumerator
    */
   public <S> RubyEnumerator<Entry<E, S>> eachWithObject(S o) {
@@ -541,6 +543,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * 
    * @param <S>
    *          the type of transformed elements
+   * @param o
+   *          any Object
    * @param block
    *          to yield each Entry
    * @return the Object S
