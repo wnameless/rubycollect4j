@@ -24,7 +24,6 @@ import java.util.Iterator;
 
 import net.sf.rubycollect4j.block.Block;
 
-
 import com.google.common.collect.Iterators;
 import com.google.common.collect.PeekingIterator;
 
@@ -37,6 +36,7 @@ import static com.google.common.collect.Lists.newArrayList;
  * peeking iterator.
  * 
  * @param <E>
+ *          the type of the elements
  */
 public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
     Iterable<E>, Iterator<E> {

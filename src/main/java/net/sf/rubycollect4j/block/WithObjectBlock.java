@@ -25,6 +25,7 @@ package net.sf.rubycollect4j.block;
  * An interface for lambda expression to yield an element with an object.
  * 
  * @param <E>
+ *          the type of the elements
  */
 public interface WithObjectBlock<E, S> {
 

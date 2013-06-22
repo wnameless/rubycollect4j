@@ -67,6 +67,7 @@ import static net.sf.rubycollect4j.RubyHash.newRubyHash;
  * the Enumerable module of Ruby.
  * 
  * @param <E>
+ *          the type of the elements
  */
 public class RubyEnumerable<E> implements Iterable<E> {
 
@@ -402,7 +403,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    *          number of consecutive elements
    * @return a RubyEnumerator
    * @throws IllegalArgumentException
-   *           if n <= 0
+   *           if n less than or equal to 0
    */
   public RubyEnumerator<RubyArray<E>> eachCons(int n) {
     if (n <= 0) {
@@ -420,7 +421,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * @param block
    *          to yield the RubyArray of consecutive elements
    * @throws llegalArgumentException
-   *           if n <= 0
+   *           if n less than or equal to 0
    */
   public void eachCons(int n, Block<RubyArray<E>> block) {
     if (n <= 0) {
@@ -461,7 +462,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    *          size of each slice
    * @return a RubyEnumerator
    * @throws IllegalArgumentException
-   *           if n <= 0
+   *           if n less than or equal to 0
    */
   public RubyEnumerator<RubyArray<E>> eachSlice(int n) {
     if (n <= 0) {
@@ -514,7 +515,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Iterate elements with the Object S by Entry<E, S>.
+   * Iterate elements with the Object S.
    * 
    * @return a RubyEnumerator
    */
@@ -523,8 +524,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Iterate elements with the Object S by Entry<E, S> and yield them to the
-   * block.
+   * Iterate elements with the Object S and yield them to the block.
    * 
    * @param block
    *          to yield each Entry
@@ -743,8 +743,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Put elements with the same result K returned by the block into Entry<K,
-   * RubyArray<E>> of a RubyHash.
+   * Put elements with the same result K returned by the block into Entry\<K,
+   * RubyArray\<E\>\> of a RubyHash.
    * 
    * @param block
    *          to group each element
@@ -1523,7 +1523,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    *          number of elements
    * @return a RubyArray
    * @throws IllegalArgumentException
-   *           if n < 0
+   *           if n less than 0
    */
   public RubyArray<E> take(int n) {
     if (n < 0) {

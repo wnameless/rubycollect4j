@@ -20,7 +20,6 @@
  */
 package net.sf.rubycollect4j.iter;
 
-
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
@@ -28,16 +27,14 @@ import java.util.regex.Pattern;
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.block.BooleanBlock;
 
-
 import com.google.common.collect.Iterators;
 import com.google.common.collect.PeekingIterator;
 
 import static net.sf.rubycollect4j.RubyArray.newRubyArray;
 
 /**
- * 
- * @author WMW
  * @param <E>
+ *          the type of the elements
  */
 public final class SliceBeforeIterator<E> implements Iterator<RubyArray<E>> {
 

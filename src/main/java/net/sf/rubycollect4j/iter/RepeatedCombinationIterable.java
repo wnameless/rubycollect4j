@@ -20,18 +20,16 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static com.google.common.collect.Lists.newArrayList;
-
 import java.util.Iterator;
 import java.util.List;
 
 import net.sf.rubycollect4j.RubyArray;
 
+import static com.google.common.collect.Lists.newArrayList;
 
 /**
- * 
- * @author WMW
  * @param <E>
+ *          the type of the elements
  */
 public final class RepeatedCombinationIterable<E> implements
     Iterable<RubyArray<E>> {

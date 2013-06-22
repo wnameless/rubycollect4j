@@ -26,7 +26,12 @@ import java.util.Map.Entry;
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.block.TransformBlock;
 
-
+/**
+ * @param <E>
+ *          the type of the elements
+ * @param <K>
+ *          the type of the transformed elements
+ */
 public final class ChunkIterable<E, K> implements
     Iterable<Entry<K, RubyArray<E>>> {
   private final Iterable<E> iterable;

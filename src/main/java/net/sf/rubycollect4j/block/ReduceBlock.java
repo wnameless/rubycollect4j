@@ -25,6 +25,7 @@ package net.sf.rubycollect4j.block;
  * An interface for lambda expression to yield 2 elements and reduce them.
  * 
  * @param <E>
+ *          the type of the elements
  */
 public interface ReduceBlock<E> {
 

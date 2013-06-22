@@ -20,7 +20,6 @@
  */
 package net.sf.rubycollect4j.iter;
 
-
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -28,7 +27,10 @@ import net.sf.rubycollect4j.RubyArray;
 
 import static net.sf.rubycollect4j.RubyArray.newRubyArray;
 
-
+/**
+ * @param <E>
+ *          the type of the elements
+ */
 public final class EachSliceIterator<E> implements Iterator<RubyArray<E>> {
 
   private final Iterator<E> iterator;

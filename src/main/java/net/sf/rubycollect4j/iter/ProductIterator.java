@@ -30,9 +30,8 @@ import net.sf.rubycollect4j.RubyArray;
 import static net.sf.rubycollect4j.RubyArray.newRubyArray;
 
 /**
- * 
- * @author WMW
  * @param <E>
+ *          the type of the elements
  */
 public final class ProductIterator<E> implements Iterator<RubyArray<E>> {
 

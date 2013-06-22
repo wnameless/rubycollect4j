@@ -24,10 +24,10 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 /**
- * 
- * @author WMW
  * @param <E>
+ *          the type of the elements
  * @param <O>
+ *          the type of the object
  */
 public final class EachWithObjectIterable<E, O> implements
     Iterable<Entry<E, O>> {

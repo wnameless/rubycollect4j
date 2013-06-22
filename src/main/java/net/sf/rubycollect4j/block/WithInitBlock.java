@@ -26,6 +26,7 @@ package net.sf.rubycollect4j.block;
  * and return a value based on the initial one.
  * 
  * @param <E>
+ *          the type of the elements
  */
 public interface WithInitBlock<E, S> {
 

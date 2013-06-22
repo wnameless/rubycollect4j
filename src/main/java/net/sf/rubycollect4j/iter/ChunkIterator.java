@@ -1,6 +1,6 @@
 /**
  *
-o * @author Wei-Ming Wu
+ * @author Wei-Ming Wu
  *
  *
  * Copyright 2013 Wei-Ming Wu
@@ -27,14 +27,18 @@ import java.util.NoSuchElementException;
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.block.TransformBlock;
 
-
 import com.google.common.collect.Iterators;
 import com.google.common.collect.PeekingIterator;
 
 import static net.sf.rubycollect4j.RubyArray.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newPair;
 
-
+/**
+ * @param <E>
+ *          the type of the elements
+ * @param <K>
+ *          the type of the transformed elements
+ */
 public final class ChunkIterator<E, K> implements
     Iterator<Entry<K, RubyArray<E>>> {
 

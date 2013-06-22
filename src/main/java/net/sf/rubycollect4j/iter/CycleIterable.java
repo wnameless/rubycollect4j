@@ -25,9 +25,8 @@ import java.util.Iterator;
 import com.google.common.collect.Iterables;
 
 /**
- * 
- * @author WMW
  * @param <E>
+ *          the type of the elements
  */
 public final class CycleIterable<E> implements Iterable<E> {
 

@@ -25,13 +25,11 @@ import java.util.List;
 
 import net.sf.rubycollect4j.RubyArray;
 
-
 import static com.google.common.collect.Lists.newArrayList;
 
 /**
- * 
- * @author WMW
  * @param <E>
+ *          the type of the elements
  */
 public final class PermutationIterable<E> implements Iterable<RubyArray<E>> {
 

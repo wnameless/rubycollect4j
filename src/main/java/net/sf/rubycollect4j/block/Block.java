@@ -25,6 +25,7 @@ package net.sf.rubycollect4j.block;
  * An interface for lambda expression to yield an element.
  * 
  * @param <E>
+ *          the type of the elements
  */
 public interface Block<E> {
 

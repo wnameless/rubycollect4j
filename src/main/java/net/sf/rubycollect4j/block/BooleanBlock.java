@@ -26,6 +26,7 @@ package net.sf.rubycollect4j.block;
  * value.
  * 
  * @param <E>
+ *          the type of the elements
  */
 public interface BooleanBlock<E> {
 

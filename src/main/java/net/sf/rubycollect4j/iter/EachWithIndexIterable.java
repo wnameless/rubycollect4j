@@ -24,9 +24,8 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 /**
- * 
- * @author WMW
  * @param <E>
+ *          the type of the elements
  */
 public final class EachWithIndexIterable<E> implements
     Iterable<Entry<E, Integer>> {

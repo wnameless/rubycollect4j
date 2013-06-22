@@ -26,11 +26,9 @@ import java.util.NoSuchElementException;
 
 import static net.sf.rubycollect4j.RubyCollections.newPair;
 
-
 /**
- * 
- * @author WMW
  * @param <E>
+ *          the type of the elements
  */
 public final class EachWithIndexIterator<E> implements
     Iterator<Entry<E, Integer>> {

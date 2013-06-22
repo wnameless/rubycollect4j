@@ -46,7 +46,9 @@ import static net.sf.rubycollect4j.RubyEnumerator.newRubyEnumerator;
  * is also a Java Map.
  * 
  * @param <K>
+ *          the type of the key elements
  * @param <V>
+ *          the type of the value elements
  */
 public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     Map<K, V> {

@@ -26,11 +26,9 @@ import java.util.regex.Pattern;
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.block.BooleanBlock;
 
-
 /**
- * 
- * @author WMW
  * @param <E>
+ *          the type of the elements
  */
 public final class SliceBeforeIterable<E> implements Iterable<RubyArray<E>> {
 

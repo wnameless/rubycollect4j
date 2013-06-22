@@ -24,11 +24,9 @@ import java.util.Iterator;
 
 import net.sf.rubycollect4j.RubyArray;
 
-
 /**
- * 
- * @author WMW
  * @param <E>
+ *          the type of the elements
  */
 public final class EachConsIterable<E> implements Iterable<RubyArray<E>> {
 

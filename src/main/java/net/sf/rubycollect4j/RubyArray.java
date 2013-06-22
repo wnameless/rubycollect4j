@@ -42,15 +42,13 @@ import net.sf.rubycollect4j.iter.ProductIterable;
 import net.sf.rubycollect4j.iter.RepeatedCombinationIterable;
 import net.sf.rubycollect4j.iter.RepeatedPermutationIterable;
 
-
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 
-import static net.sf.rubycollect4j.RubyEnumerator.newRubyEnumerator;
-
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newLinkedHashSet;
+import static net.sf.rubycollect4j.RubyEnumerator.newRubyEnumerator;
 
 /**
  * 
@@ -58,6 +56,7 @@ import static com.google.common.collect.Sets.newLinkedHashSet;
  * RubyArray is also a Java List.
  * 
  * @param <E>
+ *          the type of the elements
  */
 public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
 
@@ -898,7 +897,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    *          multiply n times
    * @return a new RubyArray
    * @throws IllegalArgumentException
-   *           if n < 0
+   *           if n less than 0
    */
   public RubyArray<E> multiply(int n) {
     if (n < 0) {
@@ -1036,7 +1035,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    *          number of elements
    * @return a new RubyArray
    * @throws IllegalArgumentException
-   *           if n < 0
+   *           if n less than 0
    */
   public RubyArray<E> pop(int n) {
     if (n < 0) {
@@ -1383,7 +1382,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    *          number of elements
    * @return a new RubyArray
    * @throws IllegalArgumentException
-   *           if n < 0
+   *           if n less than 0
    */
   public RubyArray<E> sample(int n) {
     if (n < 0) {
@@ -1447,7 +1446,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    *          number of elements
    * @return a new RubyArray
    * @throws IllegalArgumentException
-   *           if n < 0
+   *           if n less than 0
    */
   public RubyArray<E> shift(int n) {
     if (n < 0) {

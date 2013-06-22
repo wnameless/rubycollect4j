@@ -24,9 +24,8 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * 
- * @author WMW
  * @param <E>
+ *          the type of the elements
  */
 public final class CycleIterator<E> implements Iterator<E> {
 

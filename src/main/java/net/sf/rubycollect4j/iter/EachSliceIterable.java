@@ -24,7 +24,10 @@ import java.util.Iterator;
 
 import net.sf.rubycollect4j.RubyArray;
 
-
+/**
+ * @param <E>
+ *          the type of the elements
+ */
 public final class EachSliceIterable<E> implements Iterable<RubyArray<E>> {
 
   private final Iterable<E> iterable;

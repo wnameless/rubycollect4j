@@ -20,7 +20,6 @@
  */
 package net.sf.rubycollect4j.iter;
 
-
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -30,11 +29,9 @@ import net.sf.rubycollect4j.RubyArray;
 
 import static net.sf.rubycollect4j.RubyArray.newRubyArray;
 
-
 /**
- * 
- * @author WMW
  * @param <E>
+ *          the type of the elements
  */
 public final class RepeatedPermutationIterator<E> implements
     Iterator<RubyArray<E>> {
