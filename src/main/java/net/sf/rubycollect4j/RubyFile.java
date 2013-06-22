@@ -45,8 +45,10 @@ public final class RubyFile extends RubyIO {
   /**
    * Create a RubyFile by given file. Set the mode to read-only.
    * 
-   * @param file
-   *          a File
+   * @param path
+   *          of a File
+   * @param mode
+   *          r, rw, w, w+, a, a+
    * @return a RubyFile
    */
   public static RubyFile open(String path, String mode) {
@@ -66,8 +68,6 @@ public final class RubyFile extends RubyIO {
    * 
    * @param path
    *          of a file
-   * @param mode
-   *          r, rw, w, w+, a, a+
    * @return a RubyFile
    */
   public static RubyFile open(String path) {
