@@ -76,6 +76,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   /**
    * Build up a RubyEnumerable by given Iterable.
    * 
+   * @param <E>
+   *          the type of the elements
    * @param iter
    *          an Iterable
    * @return a new RubyEnumerable
@@ -86,6 +88,10 @@ public class RubyEnumerable<E> implements Iterable<E> {
 
   /**
    * Build up an empty RubyEnumerable.
+   * 
+   * @param <E>
+   *          the type of the elements
+   * @return a new RubyEnumerable
    */
   public static <E> RubyEnumerable<E> newRubyEnumerable() {
     return new RubyEnumerable<E>();
@@ -173,13 +179,15 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * block. Values of entries are RubyArrays of elements which get the same
    * result returned by the block and aside to each other.
    * 
+   * @param <S>
+   *          the type of transformed elements
    * @param block
    *          to chunk elements
    * @return a RubyEnumerator
    */
-  public <K> RubyEnumerator<Entry<K, RubyArray<E>>> chunk(
-      TransformBlock<E, K> block) {
-    return newRubyEnumerator(new ChunkIterable<E, K>(iter, block));
+  public <S> RubyEnumerator<Entry<S, RubyArray<E>>> chunk(
+      TransformBlock<E, S> block) {
+    return newRubyEnumerator(new ChunkIterable<E, S>(iter, block));
   }
 
   /**
@@ -194,6 +202,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   /**
    * Store elements which are transformed by the block into a RubyArray.
    * 
+   * @param <S>
+   *          the type of transformed elements
    * @param block
    *          to transform elements
    * @return a RubyArray
@@ -218,6 +228,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   /**
    * Turn each element to a RubyArray and then flatten it.
    * 
+   * @param <S>
+   *          the type of transformed elements
    * @param block
    *          to take element and generate a RubyArray
    * @return a RubyArray
@@ -420,7 +432,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    *          number of consecutive elements
    * @param block
    *          to yield the RubyArray of consecutive elements
-   * @throws llegalArgumentException
+   * @throws IllegalArgumentException
    *           if n less than or equal to 0
    */
   public void eachCons(int n, Block<RubyArray<E>> block) {
@@ -489,7 +501,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Iterate elements with their indices by Entry<E, Integer>.
+   * Iterate elements with their indices by Entry.
    * 
    * @return a RubyEnumerator
    */
@@ -498,8 +510,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Iterate elements with their indices by Entry<E, Integer> and yield them to
-   * the block.
+   * Iterate elements with their indices by Entry and yield them to the block.
    * 
    * @param block
    *          to yield each Entry
@@ -517,6 +528,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   /**
    * Iterate elements with the Object S.
    * 
+   * @param <S>
+   *          the type of transformed elements
    * @return a RubyEnumerator
    */
   public <S> RubyEnumerator<Entry<E, S>> eachWithObject(S o) {
@@ -526,6 +539,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   /**
    * Iterate elements with the Object S and yield them to the block.
    * 
+   * @param <S>
+   *          the type of transformed elements
    * @param block
    *          to yield each Entry
    * @return the Object S
@@ -684,6 +699,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   /**
    * Equivalent to collectConcat().
    * 
+   * @param <S>
+   *          the type of transformed elements
    * @param block
    *          to take element and generate a RubyArray
    * @return a RubyArray
@@ -715,6 +732,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * Store elements which are matched by regex transformed by the block into a
    * RubyArray.
    * 
+   * @param <S>
+   *          the type of transformed elements
    * @param regex
    *          regular expression
    * @param block
@@ -743,21 +762,23 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Put elements with the same result K returned by the block into Entry\<K,
-   * RubyArray\<E\>\> of a RubyHash.
+   * Put elements with the same result S returned by the block into a pair of S
+   * and RubyArray of a RubyHash.
    * 
+   * @param <S>
+   *          the type of transformed elements
    * @param block
    *          to group each element
    * @return a RubyHash
    */
-  public <K> RubyHash<K, RubyArray<E>> groupBy(TransformBlock<E, K> block) {
-    Multimap<K, E> multimap = ArrayListMultimap.create();
+  public <S> RubyHash<S, RubyArray<E>> groupBy(TransformBlock<E, S> block) {
+    Multimap<S, E> multimap = ArrayListMultimap.create();
     for (E item : iter) {
-      K key = block.yield(item);
+      S key = block.yield(item);
       multimap.put(key, item);
     }
-    RubyHash<K, RubyArray<E>> map = newRubyHash();
-    for (K key : multimap.keySet()) {
+    RubyHash<S, RubyArray<E>> map = newRubyHash();
+    for (S key : multimap.keySet()) {
       map.put(key, newRubyArray(multimap.get(key)));
     }
     return map;
@@ -767,6 +788,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * Check if target element is included.
    * 
    * @param target
+   *          to be searched
    * @return true if target is found,false otherwise
    */
   public boolean includeʔ(E target) {
@@ -804,6 +826,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * Reduce each elements with block, then assign the result back to initial
    * value and so on.
    * 
+   * @param <S>
+   *          the type of transformed elements
    * @param init
    *          initial value
    * @param block
@@ -821,6 +845,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * Reduce each elements with initial value by a method of S, then assign the
    * result back to initial value and so on.
    * 
+   * @param <S>
+   *          the type of transformed elements
    * @param init
    *          initial value
    * @param methodName
@@ -914,6 +940,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   /**
    * Equivalent to collect().
    * 
+   * @param <S>
+   *          the type of transformed elements
    * @param block
    *          to transform elements
    * @return a RubyArray
@@ -959,6 +987,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * transformed by the block of this RubyEnumerable. Return null if this
    * RubyEnumerable is empty.
    * 
+   * @param <S>
+   *          the type of transformed elements
    * @param comp
    *          a Comparator
    * @param block
@@ -980,6 +1010,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * Find the element which is the max element transformed by the block of this
    * RubyEnumerable. Return null if this RubyEnumerable is empty.
    * 
+   * @param <S>
+   *          the type of transformed elements
    * @param block
    *          to transform elements
    * @return an element or null
@@ -1043,6 +1075,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * transformed by the block of this RubyEnumerable. Return null if this
    * RubyEnumerable is empty.
    * 
+   * @param <S>
+   *          the type of transformed elements
    * @param comp
    *          a Comparator
    * @param block
@@ -1064,6 +1098,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * Find the element which is the min element transformed by the block of this
    * RubyEnumerable. Return null if this RubyEnumerable is empty.
    * 
+   * @param <S>
+   *          the type of transformed elements
    * @param block
    *          to transform elements
    * @return an element or null
@@ -1080,7 +1116,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Find the min & max elements of this RubyEnumerable and store them into a
+   * Find the min and max elements of this RubyEnumerable and store them into a
    * RubyArray.
    * 
    * @return a RubyArray
@@ -1092,7 +1128,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Find the min & max elements induced by the Comparator of this
+   * Find the min and max elements induced by the Comparator of this
    * RubyEnumerable and store them into a RubyArray.
    * 
    * @param comp
@@ -1116,10 +1152,12 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Find elements which are the min & max elements induced by the Comparator
+   * Find elements which are the min and max elements induced by the Comparator
    * transformed by the block of this RubyEnumerable and store them into a
    * RubyArray.
    * 
+   * @param <S>
+   *          the type of transformed elements
    * @param comp
    *          a Comparator
    * @param block
@@ -1142,9 +1180,11 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Find elements which is the min & max elements transformed by the block of
+   * Find elements which is the min and max elements transformed by the block of
    * this RubyEnumerable and store them into a RubyArray.
    * 
+   * @param <S>
+   *          the type of transformed elements
    * @param block
    *          to transform elements
    * @return a RubyArray
@@ -1277,6 +1317,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   /**
    * Equivalent to inject().
    * 
+   * @param <S>
+   *          the type of transformed elements
    * @param init
    *          initial value
    * @param block
@@ -1290,6 +1332,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   /**
    * Equivalent to inject().
    * 
+   * @param <S>
+   *          the type of transformed elements
    * @param init
    *          initial value
    * @param methodName
@@ -1465,6 +1509,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * Sort elements of this RubyEnumerable by the ordering of elements
    * transformed by the block induced by the Comparator into a RubyArray.
    * 
+   * @param <S>
+   *          the type of transformed elements
    * @param comp
    *          a Comparator
    * @param block
@@ -1494,6 +1540,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * Sort elements of this RubyEnumerable by the ordering of elements
    * transformed by the block into a RubyArray.
    * 
+   * @param <S>
+   *          the type of transformed elements
    * @param block
    *          to transform elements
    * @return a RubyArray

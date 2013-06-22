@@ -66,6 +66,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   /**
    * Build up an empty RubyArray.
    * 
+   * @param <E>
+   *          the type of the elements
    * @return a new RubyArray
    */
   public static <E> RubyArray<E> newRubyArray() {
@@ -76,6 +78,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   /**
    * Build up a RubyArray by given Iterable.
    * 
+   * @param <E>
+   *          the type of the elements
    * @param iter
    *          an Iterable
    * @return a new RubyArray
@@ -87,6 +91,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   /**
    * Build up a RubyArray by given Iterator.
    * 
+   * @param <E>
+   *          the type of the elements
    * @param iter
    *          an Iterator
    * @return a new RubyArray
@@ -98,6 +104,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   /**
    * Build up a RubyArray by given List.
    * 
+   * @param <E>
+   *          the type of the elements
    * @param list
    *          a List
    * @return a new RubyArray
@@ -109,6 +117,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   /**
    * Build a RubyArray by given List. It makes a defensive copy if specified.
    * 
+   * @param <E>
+   *          the type of the elements
    * @param list
    *          a List
    * @param defensiveCopy
@@ -127,6 +137,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   /**
    * Build up a RubyArray by given elements.
    * 
+   * @param <E>
+   *          the type of the elements
    * @param elements
    *          varargs
    * @return a new RubyArray
@@ -150,6 +162,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   /**
    * Find a List element which contains target as the first element.
    * 
+   * @param <S>
+   *          the type of any List
    * @param target
    *          the first element of returned List
    * @return a List or null
@@ -440,6 +454,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * Yield each index of elements to the block.
    * 
    * @param block
+   *          to yield elements
    * @return this RubyArray
    */
   public RubyArray<E> eachIndex(Block<Integer> block) {
@@ -661,6 +676,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   /**
    * Flatten RubyArray of RubyArrays to 1 dimension RubyArray.
    * 
+   * @param <S>
+   *          the type of elements of the flatten RubyArray
    * @return a new RubyArray
    */
   @SuppressWarnings("unchecked")
@@ -738,7 +755,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    *          elements to be inserted
    * @return this RubyArray
    * @throws IndexOutOfBoundsException
-   *           if index < -size
+   *           if index less than -size
    */
   public RubyArray<E> insert(int index, E... args) {
     if (index < -size()) {
@@ -1104,6 +1121,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   /**
    * Find a List element which contains target as the last element.
    * 
+   * @param <S>
+   *          the type of any List
    * @param target
    *          the last element of returned List
    * @return a List or null
@@ -1256,20 +1275,20 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   }
 
   /**
-   * Find the last index of the element which is true returned by the block.
+   * Return a RubyEnumerator of this RubyArray reversed.
    * 
-   * @param block
-   *          to filter the target
-   * @return an element or null
+   * @return a RubyEnumerator
    */
   public RubyEnumerator<E> rindex() {
     return newRubyEnumerator(Lists.reverse(list));
   }
 
   /**
+   * Find the last index of the element which is true returned by the block.
    * 
    * @param block
-   * @return
+   *          to filter the element
+   * @return an element or null
    */
   public Integer rindex(BooleanBlock<E> block) {
     Integer index = null;
@@ -1345,17 +1364,19 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   /**
    * Move the first element to the last n times.
    * 
+   * @param n
+   *          times to perform the rotations
    * @return this RubyArray
    */
-  public RubyArray<E> rotateǃ(int count) {
+  public RubyArray<E> rotateǃ(int n) {
     if (size() > 1) {
-      while (count != 0) {
-        if (count > 0) {
+      while (n != 0) {
+        if (n > 0) {
           add(remove(0));
-          count--;
+          n--;
         } else {
           add(0, remove(size() - 1));
-          count++;
+          n++;
         }
       }
     }
@@ -1618,6 +1639,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * Sort elements of this RubyArray by the ordering of elements transformed by
    * the block induced by the Comparator.
    * 
+   * @param <S>
+   *          the type of transformed elements
    * @param comp
    *          a Comparator
    * @param block
@@ -1647,6 +1670,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * Sort elements of this RubyArray by the ordering of elements transformed by
    * the block.
    * 
+   * @param <S>
+   *          the type of transformed elements
    * @param block
    *          to transform elements
    * @return this RubyArray
@@ -1702,6 +1727,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * Assume this RubyArray is a matrix and transpose this matrix into a new
    * RubyArray.
    * 
+   * @param <S>
+   *          the type of transformed elements
    * @return a RubyArray of RubyArrays
    * @throws TypeConstraintException
    *           if S is not a List
@@ -1791,6 +1818,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * Unique this RubyArray by the result returned by the block and store the
    * result to a new RubyArray.
    * 
+   * @param <S>
+   *          the type of transformed elements
    * @param block
    *          to transform elements
    * @return a new RubyArray
@@ -1824,6 +1853,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   /**
    * Unique this RubyArray by the result returned by the block.
    * 
+   * @param <S>
+   *          the type of transformed elements
    * @param block
    *          to transform elements
    * @return this RubyArray
