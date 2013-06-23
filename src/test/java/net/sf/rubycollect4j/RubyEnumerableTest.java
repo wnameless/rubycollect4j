@@ -37,6 +37,8 @@ import net.sf.rubycollect4j.block.WithObjectBlock;
 
 import org.junit.Test;
 
+import com.google.common.primitives.Ints;
+
 import static net.sf.rubycollect4j.RubyArray.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newPair;
 import static net.sf.rubycollect4j.RubyCollections.ra;
@@ -65,7 +67,7 @@ public class RubyEnumerableTest {
   public void testAllʔ() {
     re = newRubyEnumerable(Arrays.asList(1, 2));
     assertEquals(true, re.allʔ());
-    re = newRubyEnumerable();
+    re = newRubyEnumerable(Ints.asList());
     assertEquals(true, re.allʔ());
     re = newRubyEnumerable(Arrays.asList(1, 2, null));
     assertEquals(false, re.allʔ());
@@ -96,7 +98,7 @@ public class RubyEnumerableTest {
   public void testAnyʔ() {
     re = newRubyEnumerable(Arrays.asList(1, 2));
     assertEquals(true, re.anyʔ());
-    re = newRubyEnumerable();
+    re = newRubyEnumerable(Ints.asList());
     assertEquals(false, re.anyʔ());
     re = newRubyEnumerable(Arrays.asList(1, 2, null));
     assertEquals(true, re.anyʔ());
@@ -188,7 +190,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testCount() {
-    re = newRubyEnumerable();
+    re = newRubyEnumerable(Ints.asList());
     assertEquals(0, re.count());
     re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(4, re.count());
@@ -574,7 +576,7 @@ public class RubyEnumerableTest {
   public void testFirst() {
     re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(Integer.valueOf(1), re.first());
-    re = newRubyEnumerable();
+    re = newRubyEnumerable(Ints.asList());
     assertNull(re.first());
   }
 
@@ -726,7 +728,7 @@ public class RubyEnumerableTest {
   public void testMax() {
     re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(Integer.valueOf(4), re.max());
-    re = newRubyEnumerable();
+    re = newRubyEnumerable(Ints.asList());
     assertNull(re.max());
   }
 
@@ -795,7 +797,7 @@ public class RubyEnumerableTest {
   public void testMin() {
     re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(Integer.valueOf(1), re.min());
-    re = newRubyEnumerable();
+    re = newRubyEnumerable(Ints.asList());
     assertNull(re.min());
   }
 
@@ -859,7 +861,7 @@ public class RubyEnumerableTest {
     assertEquals(ra(1, 4), re.minmax());
     re = newRubyEnumerable(Arrays.asList(1));
     assertEquals(ra(1, 1), re.minmax());
-    re = newRubyEnumerable();
+    re = newRubyEnumerable(Ints.asList());
     assertEquals(ra(null, null), re.minmax());
   }
 
@@ -920,7 +922,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testNoneʔ() {
-    re = newRubyEnumerable();
+    re = newRubyEnumerable(Ints.asList());
     assertTrue(re.noneʔ());
     RubyArray<Integer> ra = ra();
     ra.push(null);

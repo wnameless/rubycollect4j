@@ -87,17 +87,6 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Build up an empty RubyEnumerable.
-   * 
-   * @param <E>
-   *          the type of the elements
-   * @return a new RubyEnumerable
-   */
-  public static <E> RubyEnumerable<E> newRubyEnumerable() {
-    return new RubyEnumerable<E>();
-  }
-
-  /**
    * Construct by given Iterable.
    * 
    * @param iter
@@ -105,13 +94,6 @@ public class RubyEnumerable<E> implements Iterable<E> {
    */
   public RubyEnumerable(Iterable<E> iter) {
     this.iter = iter;
-  }
-
-  /**
-   * Construct an empty RubyEnumerable.
-   */
-  public RubyEnumerable() {
-    this.iter = newArrayList();
   }
 
   /**
