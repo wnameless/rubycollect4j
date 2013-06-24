@@ -1,13 +1,9 @@
 package net.sf.rubycollect4j.range;
 
-public interface Successive<E extends Comparable<E>> extends Comparable<E> {
+import java.util.Comparator;
 
-  E curr();
+public interface Successive<E extends Comparable<E>> extends Comparator<E> {
 
-  Successive<E> rewind();
-
-  E succ();
-
-  E succǃ();
+  E succ(E curr);
 
 }

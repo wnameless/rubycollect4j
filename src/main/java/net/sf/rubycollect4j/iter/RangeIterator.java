@@ -1,6 +1,7 @@
 package net.sf.rubycollect4j.iter;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import net.sf.rubycollect4j.range.Successive;
 
@@ -9,20 +10,27 @@ public final class RangeIterator<E extends Comparable<E>> implements
 
   private final Successive<E> successive;
   private final E endPoint;
+  private E curr;
 
-  public RangeIterator(Successive<E> successive, E endPoint) {
+  public RangeIterator(Successive<E> successive, E startPoint, E endPoint) {
     this.successive = successive;
     this.endPoint = endPoint;
+    curr = startPoint;
   }
 
   @Override
   public boolean hasNext() {
-    return successive.compareTo(endPoint) <= 0;
+    return successive.compare(curr, endPoint) <= 0;
   }
 
   @Override
   public E next() {
-    return successive.succǃ();
+    if (!hasNext()) {
+      throw new NoSuchElementException();
+    }
+    E next = curr;
+    curr = successive.succ(curr);
+    return next;
   }
 
   @Override

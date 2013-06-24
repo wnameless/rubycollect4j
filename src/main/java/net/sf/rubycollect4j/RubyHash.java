@@ -864,6 +864,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
       }
 
     });
+
   }
 
   public Entry<K, V> find(final EntryBooleanBlock<K, V> block) {

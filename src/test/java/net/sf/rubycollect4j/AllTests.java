@@ -28,5 +28,5 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({ RubyArrayTest.class, RubyCollectionsTest.class,
     RubyDirTest.class, RubyEnumerableTest.class, RubyEnumeratorTest.class,
     RubyFileTest.class, RubyHashTest.class, RubyIOTest.class,
-    RubyKernelTest.class })
+    RubyKernelTest.class, RubyRangeTest.class })
 public class AllTests {}
