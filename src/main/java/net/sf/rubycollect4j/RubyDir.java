@@ -34,8 +34,7 @@ import static net.sf.rubycollect4j.RubyEnumerator.newRubyEnumerator;
 
 /**
  * 
- * RubyDir is a directory utility which implements parts of the methods refer to
- * the Dir class of Ruby.
+ * RubyDir implements parts of the methods refer to the Dir class of Ruby.
  * 
  */
 public final class RubyDir extends RubyEnumerable<String> {
@@ -45,7 +44,7 @@ public final class RubyDir extends RubyEnumerable<String> {
   private int position = 0;
 
   /**
-   * Build up a RubyDir by given path.
+   * Creates a RubyDir by given path.
    * 
    * @param path
    *          of a file
@@ -61,7 +60,7 @@ public final class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
-   * Create a RubyDir by given File.
+   * Creates a RubyDir by given File.
    * 
    * @param directory
    *          a File
@@ -73,7 +72,7 @@ public final class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
-   * Delete a directory.
+   * Deletes a directory.
    * 
    * @param path
    *          of a file
@@ -84,7 +83,7 @@ public final class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
-   * Store a entries of a folder into a RubyArray.
+   * Stores a entries of a folder into a RubyArray.
    * 
    * @param path
    *          of a file
@@ -103,7 +102,7 @@ public final class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
-   * Check if a file is a directory.
+   * Checks if the file is a directory.
    * 
    * @param path
    *          of a file
@@ -114,7 +113,7 @@ public final class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
-   * Check if a file is a directory.
+   * Checks if the file is a directory.
    * 
    * @param path
    *          of a file
@@ -125,7 +124,7 @@ public final class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
-   * Create a RubyEnumerator of entries of a file of the path.
+   * Creates a RubyEnumerator of entries of the given path.
    * 
    * @param path
    *          of a file
@@ -136,7 +135,7 @@ public final class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
-   * Retrieve all paths of files of given url pattern. The glob pattern is NOT
+   * Retrieves all paths of files of given url pattern. The glob pattern is NOT
    * fully implemented yet. Be careful! <br/>
    * 
    * {@literal *} Matches any file.<br/>
@@ -221,7 +220,7 @@ public final class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
-   * Find the home directory of current user.
+   * Finds the home directory of current user.
    * 
    * @return the home directory of current user
    */
@@ -230,7 +229,7 @@ public final class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
-   * Make a directory.
+   * Creates a directory.
    * 
    * @param path
    *          of a file
@@ -241,7 +240,7 @@ public final class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
-   * Find the present working directory.
+   * Finds the present working directory.
    * 
    * @return the present working directory
    */
@@ -252,7 +251,7 @@ public final class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
-   * Create a RubyEnumerator of entries of this RubyDir.
+   * Creates a RubyEnumerator of entries of this RubyDir.
    * 
    * @return a RubyEnumerator
    */
@@ -261,7 +260,7 @@ public final class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
-   * Yield each entry to given block.
+   * Yields each entry to the given block.
    * 
    * @param block
    *          to yield entries
@@ -273,7 +272,7 @@ public final class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
-   * Find the path of this RubyDir.
+   * Finds the path of this RubyDir.
    * 
    * @return the path of this RubyDir
    */
@@ -282,7 +281,7 @@ public final class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
-   * Find the current position of entries.
+   * Finds the current position of entries.
    * 
    * @return the current position of entries
    */
@@ -291,7 +290,7 @@ public final class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
-   * Set the current position of entries.
+   * Sets the current position of entries.
    * 
    * @param position
    * @return the current position of entries
@@ -302,7 +301,7 @@ public final class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
-   * Return the next of entries.
+   * Returns the next of entries.
    * 
    * @return an entry of file
    */
@@ -314,7 +313,7 @@ public final class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
-   * Set 0 to the position of entries.
+   * Sets 0 to the position of entries.
    * 
    * @return this RubyDir
    */
@@ -324,11 +323,11 @@ public final class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
-   * Return a RubyDir that entries is set to given position.
+   * Returns a RubyDir that entries is set to the given position.
    * 
    * @param position
    *          to be searched
-   * @return a RubyDir that entries is set to given position
+   * @return a RubyDir that entries is set to the given position
    */
   public RubyDir seek(int position) {
     RubyDir dir = RubyDir.open(directory.getPath());
@@ -337,7 +336,7 @@ public final class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
-   * Find the current position of entries.
+   * Finds the current position of entries.
    * 
    * @return the current position of entries
    */

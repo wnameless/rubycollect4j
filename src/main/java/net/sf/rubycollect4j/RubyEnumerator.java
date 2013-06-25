@@ -44,7 +44,7 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
   private PeekingIterator<E> pIterator;
 
   /**
-   * Build up a RubyEnumerator by given Iterable.
+   * Creates a RubyEnumerator by given Iterable.
    * 
    * @param iter
    *          an Iterable
@@ -55,7 +55,7 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
   }
 
   /**
-   * Build up a RubyEnumerator by given Iterator.
+   * Creates a RubyEnumerator by given Iterator.
    * 
    * @param iter
    *          an Iterator
@@ -66,7 +66,7 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
   }
 
   /**
-   * Construct a RubyEnumerator by given Iterable.
+   * Creates a RubyEnumerator by given Iterable.
    * 
    * @param iter
    *          an Iterable
@@ -77,7 +77,7 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
   }
 
   /**
-   * Construct a RubyEnumerator by given Iterator.
+   * Creates a RubyEnumerator by given Iterator.
    * 
    * @param iter
    *          an Iterator
@@ -88,7 +88,7 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
   }
 
   /**
-   * Return a RubyEnumerator which is self.
+   * Returns a RubyEnumerator which is self.
    * 
    * @return this RubyEnumerator
    */
@@ -97,7 +97,7 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
   }
 
   /**
-   * Yield each element to the block.
+   * Yields each element to the block.
    * 
    * @param block
    *          to yield each element
@@ -111,7 +111,7 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
   }
 
   /**
-   * Reset the iterator of this RubyEnumerator to the beginning.
+   * Resets the iterator of this RubyEnumerator to the beginning.
    * 
    * @return this RubyEnumerator
    */
@@ -121,7 +121,7 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
   }
 
   /**
-   * Return the next element without advancing the iteration.
+   * Returns the next element without advancing the iteration.
    * 
    * @return an element
    */

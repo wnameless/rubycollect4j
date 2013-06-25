@@ -34,8 +34,7 @@ import static net.sf.rubycollect4j.RubyIO.Mode.R;
 
 /**
  * 
- * RubyFile is a file utility which implements parts of the methods refer to the
- * File class of Ruby.
+ * RubyFile implements parts of the methods refer to the File class of Ruby.
  * 
  */
 public final class RubyFile extends RubyIO {
@@ -43,7 +42,7 @@ public final class RubyFile extends RubyIO {
   private final File file;
 
   /**
-   * Create a RubyFile by given file. Set the mode to read-only.
+   * Creates a RubyFile by given file. Sets the mode to read-only.
    * 
    * @param path
    *          of a File
@@ -64,7 +63,7 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Create a RubyFile by given path and mode.
+   * Creates a RubyFile by given path and mode.
    * 
    * @param path
    *          of a file
@@ -92,7 +91,7 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Find the absolute path of the file.
+   * Finds the absolute path of the file.
    * 
    * @param path
    *          of a file
@@ -103,7 +102,7 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Find the name of the file.
+   * Finds the name of the file.
    * 
    * @param path
    *          of a file
@@ -114,7 +113,7 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Find the name of a file.
+   * Finds the name of a file.
    * 
    * @param path
    *          of a file
@@ -132,7 +131,7 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Change the permission mode of files.
+   * Changes the permission mode of files.
    * 
    * @param modeInt
    *          permission
@@ -168,7 +167,7 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Delete all given files.
+   * Deletes all given files.
    * 
    * @param files
    *          names of files
@@ -183,7 +182,7 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Check if a file is a directory.
+   * Checks if the file of the path is a directory.
    * 
    * @param path
    *          of a file
@@ -194,7 +193,7 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Find the parent folder of the file.
+   * Finds the parent folder of the file.
    * 
    * @param path
    *          of a file
@@ -205,7 +204,7 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Check if a file is executable.
+   * Checks if a file is executable.
    * 
    * @param path
    *          of a file
@@ -216,7 +215,7 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Check if a file existed.
+   * Checks if a file existed.
    * 
    * @param path
    *          of a file
@@ -238,7 +237,7 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Find the absolute path of the file.
+   * Finds the absolute path of the file.
    * 
    * @param path
    *          of a file
@@ -249,7 +248,7 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Find the extension name of the file.
+   * Finds the extension name of the file.
    * 
    * @param path
    *          of a file
@@ -262,7 +261,7 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Check if path is a file.
+   * Checks if path is a file.
    * 
    * @param path
    *          of a file
@@ -273,7 +272,7 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Check if a file is readable.
+   * Checks if a file is readable.
    * 
    * @param path
    *          of a file
@@ -311,7 +310,7 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Check if a file is writable.
+   * Checks if a file is writable.
    * 
    * @param path
    *          of a file
@@ -322,7 +321,7 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Check if the file gets 0 in length.
+   * Checks if the file gets 0 length.
    * 
    * @return true if file existed and gets 0 in length, otherwise false
    */
@@ -334,7 +333,7 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Find the last modified Data of the file.
+   * Finds the last modified Data of the file.
    * 
    * @return the last modified Data of the file
    */
@@ -343,7 +342,7 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Find the path of the fiel.
+   * Finds the path of the fiel.
    * 
    * @return the path of the file.
    */
@@ -352,7 +351,7 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Find the size of the file in bytes.
+   * Finds the size of the file in bytes.
    * 
    * @return the size of the file in bytes
    */
@@ -367,7 +366,7 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Find the path of the file.
+   * Finds the path of the file.
    * 
    * @return the path of the file.
    */

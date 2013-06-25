@@ -37,13 +37,13 @@ import static net.sf.rubycollect4j.RubyHash.newRubyHash;
 
 /**
  * 
- * Provide numerous useful static methods to make rubycollect4j easy to use.
+ * Provides numerous useful static methods to make rubycollect4j easy to use.
  * 
  */
 public final class RubyCollections {
 
   /**
-   * Build up a regular expression Pattern.
+   * Creates a regular expression Pattern.
    * 
    * @param regex
    *          regular expression
@@ -54,7 +54,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Build up a RubyArray of Strings.
+   * Creates a RubyArray of Strings.
    * 
    * @param str
    *          words separated by spaces
@@ -65,7 +65,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Execute a system command and return its result.
+   * Executes a system command and returns its result.
    * 
    * @param cmd
    *          to be executed
@@ -99,7 +99,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Build up an empty RubyArray
+   * Creates an empty RubyArray
    * 
    * @param <E>
    *          the type of the elements
@@ -110,7 +110,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Build up a RubyArray by given elements.
+   * Creates a RubyArray by given elements.
    * 
    * @param <E>
    *          the type of the elements
@@ -123,7 +123,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Build up a RubyArray by given Iterable.
+   * Creates a RubyArray by given Iterable.
    * 
    * @param <E>
    *          the type of the elements
@@ -136,7 +136,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Build up a RubyArray by given Iterator.
+   * Creates a RubyArray by given Iterator.
    * 
    * @param <E>
    *          the type of the elements
@@ -149,7 +149,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Build up a RubyArray by given List.
+   * Creates a RubyArray by given List.
    * 
    * @param <E>
    *          the type of the elements
@@ -162,7 +162,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Build up a RubyArray which contains the given RubyArray.
+   * Creates a RubyArray which contains the given RubyArray.
    * 
    * @param <E>
    *          the type of the elements
@@ -176,7 +176,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Build up a empty RubyHash.
+   * Creates a empty RubyHash.
    * 
    * @param <K>
    *          the type of the key elements
@@ -189,7 +189,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Build up a empty RubyHash by given Map.
+   * Creates a empty RubyHash by given Map.
    * 
    * @param <K>
    *          the type of the key elements
@@ -204,7 +204,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Build up a RubyHash by given key-value pair.
+   * Creates a RubyHash by given key-value pair.
    * 
    * @param <K>
    *          the type of the key elements
@@ -223,16 +223,20 @@ public final class RubyCollections {
   }
 
   /**
-   * Build up a RubyHash by given key-value pairs.
+   * Creates a RubyHash by given key-value pairs.
    * 
    * @param <K>
    *          the type of the key elements
    * @param <V>
    *          the type of the value elements
    * @param key1
+   *          of entry 1
    * @param value1
+   *          of entry 1
    * @param key2
+   *          of entry 2
    * @param value2
+   *          of entry 2
    * @return a RubyHash
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2) {
@@ -243,18 +247,24 @@ public final class RubyCollections {
   }
 
   /**
-   * Build up a RubyHash by given key-value pairs.
+   * Creates a RubyHash by given key-value pairs.
    * 
    * @param <K>
    *          the type of the key elements
    * @param <V>
    *          the type of the value elements
    * @param key1
+   *          of entry 1
    * @param value1
+   *          of entry 1
    * @param key2
+   *          of entry 2
    * @param value2
+   *          of entry 2
    * @param key3
+   *          of entry 3
    * @param value3
+   *          of entry 3
    * @return a RubyHash
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
@@ -267,20 +277,28 @@ public final class RubyCollections {
   }
 
   /**
-   * Build up a RubyHash by given key-value pairs.
+   * Creates a RubyHash by given key-value pairs.
    * 
    * @param <K>
    *          the type of the key elements
    * @param <V>
    *          the type of the value elements
    * @param key1
+   *          of entry 1
    * @param value1
+   *          of entry 1
    * @param key2
+   *          of entry 2
    * @param value2
+   *          of entry 2
    * @param key3
+   *          of entry 3
    * @param value3
+   *          of entry 3
    * @param key4
+   *          of entry 4
    * @param value4
+   *          of entry 4
    * @return a RubyHash
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
@@ -294,22 +312,32 @@ public final class RubyCollections {
   }
 
   /**
-   * Build up a RubyHash by given key-value pairs.
+   * Creates a RubyHash by given key-value pairs.
    * 
    * @param <K>
    *          the type of the key elements
    * @param <V>
    *          the type of the value elements
    * @param key1
+   *          of entry 1
    * @param value1
+   *          of entry 1
    * @param key2
+   *          of entry 2
    * @param value2
+   *          of entry 2
    * @param key3
+   *          of entry 3
    * @param value3
+   *          of entry 3
    * @param key4
+   *          of entry 4
    * @param value4
+   *          of entry 4
    * @param key5
+   *          of entry 5
    * @param value5
+   *          of entry 5
    * @return a RubyHash
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
@@ -324,24 +352,36 @@ public final class RubyCollections {
   }
 
   /**
-   * Build up a RubyHash by given key-value pairs.
+   * Creates a RubyHash by given key-value pairs.
    * 
    * @param <K>
    *          the type of the key elements
    * @param <V>
    *          the type of the value elements
    * @param key1
+   *          of entry 1
    * @param value1
+   *          of entry 1
    * @param key2
+   *          of entry 2
    * @param value2
+   *          of entry 2
    * @param key3
+   *          of entry 3
    * @param value3
+   *          of entry 3
    * @param key4
+   *          of entry 4
    * @param value4
+   *          of entry 4
    * @param key5
+   *          of entry 5
    * @param value5
+   *          of entry 5
    * @param key6
+   *          of entry 6
    * @param value6
+   *          of entry 6
    * @return a RubyHash
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
@@ -357,26 +397,40 @@ public final class RubyCollections {
   }
 
   /**
-   * Build up a RubyHash by given key-value pairs.
+   * Creates a RubyHash by given key-value pairs.
    * 
    * @param <K>
    *          the type of the key elements
    * @param <V>
    *          the type of the value elements
    * @param key1
+   *          of entry 1
    * @param value1
+   *          of entry 1
    * @param key2
+   *          of entry 2
    * @param value2
+   *          of entry 2
    * @param key3
+   *          of entry 3
    * @param value3
+   *          of entry 3
    * @param key4
+   *          of entry 4
    * @param value4
+   *          of entry 4
    * @param key5
+   *          of entry 5
    * @param value5
+   *          of entry 5
    * @param key6
+   *          of entry 6
    * @param value6
+   *          of entry 6
    * @param key7
+   *          of entry 7
    * @param value7
+   *          of entry 7
    * @return a RubyHash
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
@@ -394,29 +448,45 @@ public final class RubyCollections {
   }
 
   /**
-   * Build up a RubyHash by given key-value pairs.
+   * Creates a RubyHash by given key-value pairs.
    * 
    * @param <K>
    *          the type of the key elements
    * @param <V>
    *          the type of the value elements
    * @param key1
+   *          of entry 1
    * @param value1
+   *          of entry 1
    * @param key2
+   *          of entry 2
    * @param value2
+   *          of entry 2
    * @param key3
+   *          of entry 3
    * @param value3
+   *          of entry 3
    * @param key4
+   *          of entry 4
    * @param value4
+   *          of entry 4
    * @param key5
+   *          of entry 5
    * @param value5
+   *          of entry 5
    * @param key6
+   *          of entry 6
    * @param value6
+   *          of entry 6
    * @param key7
+   *          of entry 7
    * @param value7
+   *          of entry 7
    * @param key8
+   *          of entry 8
    * @param value8
-   * @return a RubyHash.
+   *          of entry 8
+   * @return a RubyHash
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
       K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
@@ -434,30 +504,48 @@ public final class RubyCollections {
   }
 
   /**
-   * Build up a RubyHash by given key-value pairs.
+   * Creates a RubyHash by given key-value pairs.
    * 
    * @param <K>
    *          the type of the key elements
    * @param <V>
    *          the type of the value elements
    * @param key1
+   *          of entry 1
    * @param value1
+   *          of entry 1
    * @param key2
+   *          of entry 2
    * @param value2
+   *          of entry 2
    * @param key3
+   *          of entry 3
    * @param value3
+   *          of entry 3
    * @param key4
+   *          of entry 4
    * @param value4
+   *          of entry 4
    * @param key5
+   *          of entry 5
    * @param value5
+   *          of entry 5
    * @param key6
+   *          of entry 6
    * @param value6
+   *          of entry 6
    * @param key7
+   *          of entry 7
    * @param value7
+   *          of entry 7
    * @param key8
+   *          of entry 8
    * @param value8
+   *          of entry 8
    * @param key9
+   *          of entry 9
    * @param value9
+   *          of entry 9
    * @return a RubyHash
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
@@ -477,32 +565,52 @@ public final class RubyCollections {
   }
 
   /**
-   * Build up a RubyHash by given key-value pairs.
+   * Creates a RubyHash by given key-value pairs.
    * 
    * @param <K>
    *          the type of the key elements
    * @param <V>
    *          the type of the value elements
    * @param key1
+   *          of entry 1
    * @param value1
+   *          of entry 1
    * @param key2
+   *          of entry 2
    * @param value2
+   *          of entry 2
    * @param key3
+   *          of entry 3
    * @param value3
+   *          of entry 3
    * @param key4
+   *          of entry 4
    * @param value4
+   *          of entry 4
    * @param key5
+   *          of entry 5
    * @param value5
+   *          of entry 5
    * @param key6
+   *          of entry 6
    * @param value6
+   *          of entry 6
    * @param key7
+   *          of entry 7
    * @param value7
+   *          of entry 7
    * @param key8
+   *          of entry 8
    * @param value8
+   *          of entry 8
    * @param key9
+   *          of entry 9
    * @param value9
+   *          of entry 9
    * @param key10
+   *          of entry 10
    * @param value10
+   *          of entry 10
    * @return a RubyHash
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
@@ -523,7 +631,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Build up a hash pair by the SimpleEntry.
+   * Creates a hash pair by the SimpleEntry.
    * 
    * @param <K>
    *          the type of the key
@@ -540,7 +648,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Build up a hash pair by the SimpleEntry.
+   * Creates a hash pair by the SimpleEntry.
    * 
    * @param <K>
    *          the type of the key
@@ -557,7 +665,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Turn a List of Entry into a RubyHash.
+   * Turns a List of Entry into a RubyHash.
    * 
    * @param <K>
    *          the type of the key elements

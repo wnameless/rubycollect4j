@@ -74,7 +74,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   protected final Iterable<E> iter;
 
   /**
-   * Build up a RubyEnumerable by given Iterable.
+   * Creates a RubyEnumerable by given Iterable.
    * 
    * @param <E>
    *          the type of the elements
@@ -87,7 +87,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Construct by given Iterable.
+   * Creates a RubyEnumerable by given Iterable.
    * 
    * @param iter
    *          an Iterable
@@ -97,7 +97,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Check if null included.
+   * Checks if null included.
    * 
    * @return true if null is found, false otherwise
    */
@@ -111,7 +111,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Check if any result returned by the block is false.
+   * Checks if any result returned by the block is false.
    * 
    * @param block
    *          to check elements
@@ -127,7 +127,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Check if any not-null object included.
+   * Checks if any not-null object included.
    * 
    * @return true if not-null object is found, false otherwise
    */
@@ -141,7 +141,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Check if any result returned by the block is true.
+   * Checks if any result returned by the block is true.
    * 
    * @param block
    *          to check elements
@@ -157,7 +157,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Chunk elements to entries. Keys of entries are the result returned by the
+   * Chunks elements to entries. Keys of entries are the result returned by the
    * block. Values of entries are RubyArrays of elements which get the same
    * result returned by the block and aside to each other.
    * 
@@ -173,7 +173,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Return a RubyEnumerator of this RubyEnumerable.
+   * Returns a RubyEnumerator of this RubyEnumerable.
    * 
    * @return a RubyEnumerator
    */
@@ -182,7 +182,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Store elements which are transformed by the block into a RubyArray.
+   * Stores elements which are transformed by the block into a RubyArray.
    * 
    * @param <S>
    *          the type of transformed elements
@@ -199,7 +199,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Return a RubyEnumerator of this RubyEnumerable.
+   * Returns a RubyEnumerator of this RubyEnumerable.
    * 
    * @return a RubyEnumerator
    */
@@ -208,7 +208,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Turn each element to a RubyArray and then flatten it.
+   * Turns each element into a RubyArray and then flattens it.
    * 
    * @param <S>
    *          the type of transformed elements
@@ -225,7 +225,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Count the elements.
+   * Counts the elements.
    * 
    * @return a int
    */
@@ -239,7 +239,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Count the elements which get true returned by the block.
+   * Counts the elements which are true returned by the block.
    * 
    * @param block
    *          to define elements to be counted
@@ -256,7 +256,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Generate a sequence from start element to end element and so on infinitely.
+   * Generates a sequence from start element to end element and so on
+   * infinitely.
    * 
    * @return a RubyEnumerator
    */
@@ -265,7 +266,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Generate a sequence from start element to end element, repeat n times.
+   * Generates a sequence from start element to end element, repeat n times.
    * 
    * @param n
    *          times to repeat
@@ -276,8 +277,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Generate a sequence from start element to end element, repeat n times.
-   * Yield each element to the block.
+   * Generates a sequence from start element to end element, repeat n times.
+   * Yields each element to the block.
    * 
    * @param n
    *          times to repeat
@@ -293,8 +294,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Generate a sequence from start element to end element and so on infinitely.
-   * Yield each element to the block.
+   * Generates a sequence from start element to end element and so on
+   * infinitely. Yields each element to the block.
    * 
    * @param block
    *          to yield each element
@@ -308,7 +309,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Return a RubyEnumerator of this RubyEnumerable.
+   * Returns a RubyEnumerator of this RubyEnumerable.
    * 
    * @return a RubyEnumerator
    */
@@ -317,7 +318,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Find the first element which gets true returned by the block. Return null
+   * Finds the first element which gets true returned by the block. Returns null
    * if element is not found.
    * 
    * @param block
@@ -334,7 +335,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Drop the first n elements and store rest to a RubyArray.
+   * Drops the first n elements and store rest to a RubyArray.
    * 
    * @param n
    *          number of elements to drop
@@ -356,7 +357,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Return a RubyEnumerator which contains the first element of this
+   * Returns a RubyEnumerator which contains the first element of this
    * RubyEnumerable.
    * 
    * @return a RubyEnumerator
@@ -371,7 +372,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Drop the first n elements until a element get false returned by the block.
+   * Drops the first n elements until a element gets false returned by the
+   * block.
    * 
    * @param block
    *          to define which elements to be dropped
@@ -390,8 +392,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Iterate each element and store the element with n - 1 consecutive elements
-   * into a RubyArray.
+   * Iterates each element and stores the element with n - 1 consecutive
+   * elements into a RubyArray.
    * 
    * @param n
    *          number of consecutive elements
@@ -407,8 +409,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Iterate each element and yield the element with n - 1 consecutive elements
-   * to the block.
+   * Iterates each element and yields the element with n - 1 consecutive
+   * elements to the block.
    * 
    * @param n
    *          number of consecutive elements
@@ -427,7 +429,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Return a RubyEnumerator of this RubyEnumerable.
+   * Returns a RubyEnumerator of this RubyEnumerable.
    * 
    * @return a RubyEnumerator
    */
@@ -436,7 +438,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Yield each elements to the block.
+   * Yields each elements to the block.
    * 
    * @param block
    *          to yield each element
@@ -450,7 +452,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Slice elements into RubyArrays with length n.
+   * Slices elements into RubyArrays with length n.
    * 
    * @param n
    *          size of each slice
@@ -466,7 +468,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Slice elements into RubyArrays with length n and yield them to the block.
+   * Slices elements into RubyArrays with length n and yield them to the block.
    * 
    * @param n
    *          size of each slice
@@ -483,7 +485,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Iterate elements with their indices by Entry.
+   * Iterates elements with their indices by Entry.
    * 
    * @return a RubyEnumerator
    */
@@ -492,7 +494,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Iterate elements with their indices by Entry and yield them to the block.
+   * Iterates elements with their indices by Entry and yields them to the block.
    * 
    * @param block
    *          to yield each Entry
@@ -508,7 +510,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Iterate elements with the Object S.
+   * Iterates elements with the Object S.
    * 
    * @param <S>
    *          the type of transformed elements
@@ -521,7 +523,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Iterate elements with the Object S and yield them to the block.
+   * Iterates elements with the Object S and yield them to the block.
    * 
    * @param <S>
    *          the type of transformed elements
@@ -539,7 +541,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Store each element into a RubyArray.
+   * Stores each element into a RubyArray.
    * 
    * @return a RubyArray
    */
@@ -568,7 +570,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Return a RubyEnumerator of this RubyEnumerable.
+   * Returns a RubyEnumerator of this RubyEnumerable.
    * 
    * @return a RubyEnumerator
    */
@@ -577,7 +579,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Store elements which get true returned by the block into a RubyArray.
+   * Stores elements which are true returned by the block into a RubyArray.
    * 
    * @param block
    *          to filter elements
@@ -594,7 +596,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Return a RubyEnumerator of this RubyEnumerable.
+   * Returns a RubyEnumerator of this RubyEnumerable.
    * 
    * @return a RubyEnumerator
    */
@@ -603,8 +605,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Find the index of a element which gets true returned by the block. Return
-   * null if nothing is found.
+   * Finds the index of a element which is true returned by the block. Returns
+   * null if nothing found.
    * 
    * @param block
    *          to check elements
@@ -622,7 +624,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Find the index of the target element. Return null if target is not found.
+   * Finds the index of the target element. Returns null if target not found.
    * 
    * @param target
    *          to be found
@@ -640,7 +642,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Get the first element of this RubyEnumerable. Return null if this
+   * Gets the first element of this RubyEnumerable. Returns null if this
    * RubyEnumerable is empty.
    * 
    * @return an element or null
@@ -655,7 +657,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Get the first n element of this RubyEnumerable.
+   * Gets the first n element of this RubyEnumerable.
    * 
    * @param n
    *          number of elements
@@ -696,7 +698,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Store elements which are matched by regex into a RubyArray.
+   * Stores elements which are matched by regex into a RubyArray.
    * 
    * @param regex
    *          regular expression
@@ -715,7 +717,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Store elements which are matched by regex transformed by the block into a
+   * Stores elements which are matched by regex transformed by the block into a
    * RubyArray.
    * 
    * @param <S>
@@ -739,7 +741,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Return a RubyEnumerator of this RubyEnumerable.
+   * Returns a RubyEnumerator of this RubyEnumerable.
    * 
    * @return a RubyEnumerator
    */
@@ -748,7 +750,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Put elements with the same result S returned by the block into a
+   * Puts elements with the same result S returned by the block into a
    * Entry&#60;S, RubyArray&#60;E&#62;&#62;y of a RubyHash.
    * 
    * @param <S>
@@ -771,7 +773,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Check if target element is included.
+   * Checks if target element included.
    * 
    * @param target
    *          to be searched
@@ -787,8 +789,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Assign the first element as the initial value. Reduce each elements with
-   * block, then assign the result back to initial value and so on.
+   * Assigns the first element as the initial value. Reduces each elements with
+   * block, then assigns the result back to initial value and so on.
    * 
    * @param block
    *          to reduce each element
@@ -809,7 +811,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Reduce each elements with block, then assign the result back to initial
+   * Reduces each elements with block, then assigns the result back to initial
    * value and so on.
    * 
    * @param <S>
@@ -828,7 +830,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Reduce each elements with initial value by a method of S, then assign the
+   * Reduces each elements with initial value by a method of S, then assigns the
    * result back to initial value and so on.
    * 
    * @param <S>
@@ -870,8 +872,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Assign the first element as the initial value. Reduce each elements with
-   * initial value by a method of S, then assign the result back to initial
+   * Assigns the first element as the initial value. Reduces each elements with
+   * initial value by a method of S, then assigns the result back to initial
    * value and so on.
    * 
    * @param methodName
@@ -915,7 +917,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Return a RubyEnumerator of this RubyEnumerable.
+   * Returns a RubyEnumerator of this RubyEnumerable.
    * 
    * @return a RubyEnumerator
    */
@@ -937,7 +939,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Find the max element of this RubyEnumerable. Return null if this
+   * Finds the max element of this RubyEnumerable. Returns null if this
    * RubyEnumerable is empty.
    * 
    * @return an element or null
@@ -947,8 +949,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Find the max element induced by the Comparator of this RubyEnumerable.
-   * Return null if this RubyEnumerable is empty.
+   * Finds the max element induced by the Comparator of this RubyEnumerable.
+   * Returns null if this RubyEnumerable is empty.
    * 
    * @param comp
    *          a Comparator
@@ -960,7 +962,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Return a RubyEnumerator of this RubyEnumerable.
+   * Returns a RubyEnumerator of this RubyEnumerable.
    * 
    * @return a RubyEnumerator
    */
@@ -969,8 +971,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Find the element which is the max element induced by the Comparator
-   * transformed by the block of this RubyEnumerable. Return null if this
+   * Finds the element which is the max element induced by the Comparator
+   * transformed by the block of this RubyEnumerable. Returns null if this
    * RubyEnumerable is empty.
    * 
    * @param <S>
@@ -993,8 +995,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Find the element which is the max element transformed by the block of this
-   * RubyEnumerable. Return null if this RubyEnumerable is empty.
+   * Finds the element which is the max element transformed by the block of this
+   * RubyEnumerable. Returns null if this RubyEnumerable is empty.
    * 
    * @param <S>
    *          the type of transformed elements
@@ -1025,7 +1027,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Find the min element of this RubyEnumerable. Return null if this
+   * Finds the min element of this RubyEnumerable. Returns null if this
    * RubyEnumerable is empty.
    * 
    * @return an element or null
@@ -1035,8 +1037,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Find the min element induced by the Comparator of this RubyEnumerable.
-   * Return null if this RubyEnumerable is empty.
+   * Finds the min element induced by the Comparator of this RubyEnumerable.
+   * Returns null if this RubyEnumerable is empty.
    * 
    * @param comp
    *          a Comparator
@@ -1048,7 +1050,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Return a RubyEnumerator of this RubyEnumerable.
+   * Returns a RubyEnumerator of this RubyEnumerable.
    * 
    * @return a RubyEnumerator
    */
@@ -1057,8 +1059,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Find the element which is the min element induced by the Comparator
-   * transformed by the block of this RubyEnumerable. Return null if this
+   * Finds the element which is the min element induced by the Comparator
+   * transformed by the block of this RubyEnumerable. Returns null if this
    * RubyEnumerable is empty.
    * 
    * @param <S>
@@ -1081,8 +1083,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Find the element which is the min element transformed by the block of this
-   * RubyEnumerable. Return null if this RubyEnumerable is empty.
+   * Finds the element which is the min element transformed by the block of this
+   * RubyEnumerable. Returns null if this RubyEnumerable is empty.
    * 
    * @param <S>
    *          the type of transformed elements
@@ -1102,8 +1104,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Find the min and max elements of this RubyEnumerable and store them into a
-   * RubyArray.
+   * Finds the min and max elements of this RubyEnumerable and stores them into
+   * a RubyArray.
    * 
    * @return a RubyArray
    */
@@ -1114,8 +1116,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Find the min and max elements induced by the Comparator of this
-   * RubyEnumerable and store them into a RubyArray.
+   * Finds the min and max elements induced by the Comparator of this
+   * RubyEnumerable and stores them into a RubyArray.
    * 
    * @param comp
    *          a Comparator
@@ -1129,7 +1131,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Return a RubyEnumerator of this RubyEnumerable.
+   * Returns a RubyEnumerator of this RubyEnumerable.
    * 
    * @return a RubyEnumerator
    */
@@ -1138,8 +1140,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Find elements which are the min and max elements induced by the Comparator
-   * transformed by the block of this RubyEnumerable and store them into a
+   * Finds elements which are the min and max elements induced by the Comparator
+   * transformed by the block of this RubyEnumerable and stores them into a
    * RubyArray.
    * 
    * @param <S>
@@ -1166,8 +1168,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Find elements which is the min and max elements transformed by the block of
-   * this RubyEnumerable and store them into a RubyArray.
+   * Finds elements which is the min and max elements transformed by the block
+   * of this RubyEnumerable and stores them into a RubyArray.
    * 
    * @param <S>
    *          the type of transformed elements
@@ -1190,7 +1192,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Check if this RubyEnumerable contains only null objects.
+   * Checks if this RubyEnumerable contains only null objects.
    * 
    * @return true if all elements are null, false otherwise
    */
@@ -1204,7 +1206,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Check if this RubyEnumerable contains only elements which get false
+   * Checks if this RubyEnumerable contains only elements which are false
    * returned by the block.
    * 
    * @param block
@@ -1221,7 +1223,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Check if this RubyEnumerable contains only one element beside null objects.
+   * Checks if this RubyEnumerable contains only one element beside null
+   * objects.
    * 
    * @return true if only one element and nulls are found, false otherwise
    */
@@ -1239,7 +1242,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Check if this RubyEnumerable contains only one element which get true
+   * Checks if this RubyEnumerable contains only one element which are true
    * returned by the block.
    * 
    * @param block
@@ -1260,7 +1263,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Return a RubyEnumerator of this RubyEnumerable.
+   * Returns a RubyEnumerator of this RubyEnumerable.
    * 
    * @return a RubyEnumerator
    */
@@ -1269,7 +1272,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Divide elements into 2 groups by the given block.
+   * Divides elements into 2 groups by the given block.
    * 
    * @param block
    *          to part elements
@@ -1342,7 +1345,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Return a RubyEnumerator of this RubyEnumerable.
+   * Returns a RubyEnumerator of this RubyEnumerable.
    * 
    * @return a RubyEnumerator
    */
@@ -1351,7 +1354,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Delete elements which get true returned by the block.
+   * Deletes elements which are true returned by the block.
    * 
    * @param block
    *          to filter elements
@@ -1368,7 +1371,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Return a reversed RubyEnumerator of this RubyEnumerable.
+   * Returns a reversed RubyEnumerator of this RubyEnumerable.
    * 
    * @return a RubyEnumerator
    */
@@ -1377,7 +1380,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Iterate each element reversed by given block.
+   * Iterates each element reversed by given block.
    * 
    * @param block
    *          to yield each element
@@ -1392,7 +1395,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Return a RubyEnumerator of this RubyEnumerable.
+   * Returns a RubyEnumerator of this RubyEnumerable.
    * 
    * @return a RubyEnumerator
    */
@@ -1412,7 +1415,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Group elements into RubyArrays and the first element of each RubyArray
+   * Groups elements into RubyArrays and the first element of each RubyArray
    * should get true returned by the block.
    * 
    * @param block
@@ -1424,7 +1427,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Group elements into RubyArrays and the first element of each RubyArray
+   * Groups elements into RubyArrays and the first element of each RubyArray
    * should be matched by the regex.
    * 
    * @param regex
@@ -1436,7 +1439,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Sort elements of this RubyEnumerable into a RubyArray.
+   * Sorts elements of this RubyEnumerable and stores them into a RubyArray.
    * 
    * @return a RubyArray
    * @throws IllegalArgumentException
@@ -1467,7 +1470,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Sort elements of this RubyEnumerable by given Comparator into a RubyArray.
+   * Sorts elements of this RubyEnumerable by given Comparator and stores them
+   * into a RubyArray.
    * 
    * @param comp
    *          a Comparator
@@ -1483,7 +1487,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Return a RubyEnumerator of this RubyEnumerable.
+   * Returns a RubyEnumerator of this RubyEnumerable.
    * 
    * @return a RubyEnumerator
    */
@@ -1492,8 +1496,9 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Sort elements of this RubyEnumerable by the ordering of elements
-   * transformed by the block induced by the Comparator into a RubyArray.
+   * Sorts elements of this RubyEnumerable by the ordering of elements
+   * transformed by the block induced by the Comparator and stores them into a
+   * RubyArray.
    * 
    * @param <S>
    *          the type of transformed elements
@@ -1523,8 +1528,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Sort elements of this RubyEnumerable by the ordering of elements
-   * transformed by the block into a RubyArray.
+   * Sorts elements of this RubyEnumerable by the ordering of elements
+   * transformed by the block and stores them into a RubyArray.
    * 
    * @param <S>
    *          the type of transformed elements
@@ -1551,7 +1556,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Store the first n elements into a RubyArray.
+   * Stores the first n elements into a RubyArray.
    * 
    * @param n
    *          number of elements
@@ -1577,7 +1582,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Return a RubyEnumerator which contains the first element of this
+   * Returns a RubyEnumerator which contains the first element of this
    * RubyEnumerable.
    * 
    * @return a RubyEnumerator
@@ -1592,7 +1597,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Store element into a RubyArray from beginning until the result returned by
+   * Stores element into a RubyArray from beginning until the result returned by
    * the block is false.
    * 
    * @param block
@@ -1612,7 +1617,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Convert this RubyEnumerable to a RubyArray.
+   * Converts this RubyEnumerable to a RubyArray.
    * 
    * @return a RubyArray
    */
@@ -1621,7 +1626,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Group elements which get the same indices among all other Lists into
+   * Groups elements which get the same indices among all other Lists into
    * RubyArrays.
    * 
    * @param others
@@ -1633,7 +1638,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Group elements which get the same indices among all other Lists into
+   * Groups elements which get the same indices among all other Lists into
    * RubyArrays.
    * 
    * @param others
@@ -1660,8 +1665,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Group elements which get the same indices among all other Lists into
-   * RubyArrays and yield them to the block.
+   * Groups elements which get the same indices among all other Lists into
+   * RubyArrays and yields them to the block.
    * 
    * @param others
    *          List of Lists

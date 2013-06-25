@@ -42,8 +42,8 @@ import static net.sf.rubycollect4j.RubyCollections.newPair;
 import static net.sf.rubycollect4j.RubyEnumerator.newRubyEnumerator;
 
 /**
- * RubyHash implements all methods refer to the Hash of Ruby language. RubyHash
- * is also a Java Map.
+ * RubyHash implements all methods refer to the Hash class of Ruby. RubyHash is
+ * also a Java Map.
  * 
  * @param <K>
  *          the type of the key elements
@@ -57,7 +57,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   private V defaultValue;
 
   /**
-   * Build up an empty RubyHash.
+   * Creates an empty RubyHash.
    * 
    * @param <K>
    *          the type of the key elements
@@ -71,7 +71,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Build up an empty RubyHash by given Map.
+   * Creates an empty RubyHash by given Map.
    * 
    * @param <K>
    *          the type of the key elements
@@ -87,7 +87,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Build up an empty RubyHash by given LinkedHashMap.
+   * Creates an empty RubyHash by given LinkedHashMap.
    * 
    * @param <K>
    *          the type of the key elements
@@ -121,7 +121,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Find an Entry by given key.
+   * Finds an Entry by given key.
    * 
    * @param key
    *          to be found
@@ -146,7 +146,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Return false because compareByIdentity() is not supported yet.
+   * Returns false because compareByIdentity() is not supported yet.
    * 
    * @return false
    */
@@ -155,8 +155,9 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Delete an Entry by given key and return the deleted value. If key is not
-   * found and default value is not set, return null, default value otherwise.
+   * Deletes an Entry by given key and returns the deleted value.Returns null if
+   * key is not found and default value is not set. Returns default value
+   * otherwise.
    * 
    * @param key
    *          to be deleted
@@ -172,7 +173,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Return a RubyEnumerator of entries this RubyHash.
+   * Returns a RubyEnumerator of entries this RubyHash.
    * 
    * @return a RubyEnumerator
    */
@@ -181,7 +182,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Delete entries which the result returned by the block are true.
+   * Deletes entries which the result are true returned by the block.
    * 
    * @param block
    *          to filter elements
@@ -199,7 +200,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Set the default value of this RubyHash.
+   * Sets the default value of this RubyHash.
    * 
    * @param defaultValue
    *          default value if key is not found
@@ -211,7 +212,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Return the default value of this RubyHash.
+   * Returns the default value of this RubyHash.
    * 
    * @return default value
    */
@@ -220,7 +221,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Return a RubyEnumerator of entries of this RubyHash.
+   * Returns a RubyEnumerator of entries of this RubyHash.
    * 
    * @return a RubyEnumerator
    */
@@ -229,7 +230,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Yield each element to given block.
+   * Yields each element to given block.
    * 
    * @param block
    *          to yield each entry
@@ -243,7 +244,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Return a RubyEnumerator of keys of this RubyHash.
+   * Returns a RubyEnumerator of keys of this RubyHash.
    * 
    * @return a RubyEnumerator
    */
@@ -252,7 +253,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Yield each key to given block.
+   * Yields each key to given block.
    * 
    * @param block
    *          to yield each key
@@ -266,7 +267,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Return a RubyEnumerator of entries this RubyHash.
+   * Returns a RubyEnumerator of entries this RubyHash.
    * 
    * @return a RubyEnumerator
    */
@@ -286,7 +287,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Return a RubyEnumerator of values of this RubyHash.
+   * Returns a RubyEnumerator of values of this RubyHash.
    * 
    * @return a RubyEnumerator
    */
@@ -295,7 +296,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Yield each value to given block.
+   * Yields each value to given block.
    * 
    * @param block
    *          to yield each value
@@ -309,7 +310,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Check if this RubyHash is empty.
+   * Checks if this RubyHash is empty.
    * 
    * @return true if this RubyHash is empty, false otherwise
    */
@@ -329,7 +330,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Fetch the value of the key.
+   * Fetchs the value of the key.
    * 
    * @param key
    *          to be found
@@ -345,7 +346,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Fetch the value of the key.
+   * Fetchs the value of the key.
    * 
    * @param key
    *          to be found
@@ -361,7 +362,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Return a RubyEnumerator of entries of this RubyHash.
+   * Returns a RubyEnumerator of entries of this RubyHash.
    * 
    * @return a RubyEnumerator
    */
@@ -388,8 +389,8 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Create an inverted RubyHash which gets the reversed value-key entries based
-   * on this RubyHash.
+   * Creates an inverted RubyHash which gets the reversed value-key entries
+   * based on this RubyHash.
    * 
    * @return a new RubyHash
    */
@@ -402,7 +403,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Return a RubyEnumerator of entries of this RubyHash.
+   * Returns a RubyEnumerator of entries of this RubyHash.
    * 
    * @return a RubyEnumerator
    */
@@ -411,7 +412,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Keep elements which the result returned by the block are false.
+   * Keeps elements which the result are true returned by the block.
    * 
    * @param block
    *          to filter elements
@@ -429,7 +430,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Find the key related to given value.
+   * Finds the key related to given value.
    * 
    * @param value
    *          to be found
@@ -445,7 +446,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Return a RubyEnumerator of keys of this RubyHash.
+   * Returns a RubyEnumerator of keys of this RubyHash.
    * 
    * @return a RubyEnumerator
    */
@@ -474,7 +475,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Merge any Map with self and store into a new RubyHash.
+   * Merges any Map with self and stores into a new RubyHash.
    * 
    * @param otherHash
    *          any Map
@@ -492,8 +493,8 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Merge any Map with self and store into a new RubyHash. Resolve the key
-   * conflicts by given block.
+   * Merges any Map with self and stores into a new RubyHash. Resolves the key
+   * which is conflict by given block.
    * 
    * @param otherHash
    *          any Map
@@ -522,7 +523,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Merge any Map within self.
+   * Merges any Map within self.
    * 
    * @param otherHash
    *          any Map
@@ -536,7 +537,8 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Merge any Map within self. Resolve the key conflicts by given block.
+   * Merges any Map within self. Resolves the key which is conflict by given
+   * block.
    * 
    * @param otherHash
    *          any Map
@@ -564,7 +566,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Put an entry into this RubyHash directly.
+   * Puts an entry into this RubyHash directly.
    * 
    * @param entry
    *          an Entry
@@ -576,7 +578,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Put an entries into this RubyHash directly.
+   * Puts an entries into this RubyHash directly.
    * 
    * @param entry
    *          an Entry
@@ -593,7 +595,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Find an Entry by given value.
+   * Finds an Entry by given value.
    * 
    * @param value
    *          to be found
@@ -609,7 +611,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Return a RubyEnumerator of entries of this RubyHash.
+   * Returns a RubyEnumerator of entries of this RubyHash.
    * 
    * @return a RubyEnumerator
    */
@@ -618,8 +620,8 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Delete entries which the result returned by the block are true. Return null
-   * if nothing is deleted.
+   * Deletes entries which are true returned by the block. Returns null if
+   * nothing is deleted.
    * 
    * @param block
    *          to filter elements
@@ -636,7 +638,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Replace all entries with the entries of given Map.
+   * Replaces all entries with the entries of given Map.
    * 
    * @param otherHash
    *          any Map
@@ -649,7 +651,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Remove the first Entry and return it.
+   * Removes the first Entry and returns it.
    * 
    * @return an Entry
    */
@@ -665,7 +667,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Store a key-value pair and return the value.
+   * Stores a key-value pair and returns the value.
    * 
    * @param key
    *          of Entry
@@ -679,7 +681,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Return this RubyHash.
+   * Returns this RubyHash.
    * 
    * @return this RubyHash
    */
@@ -688,7 +690,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Return this RubyHash.
+   * Returns this RubyHash.
    * 
    * @return this RubyHash
    */
@@ -731,6 +733,13 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   // Apply entry blocks to RubyEnumerable methods
+  /**
+   * Checks if any result returned by the block is false.
+   * 
+   * @param block
+   *          to check elements
+   * @return true if all result are true, false otherwise
+   */
   public boolean allʔ(final EntryBooleanBlock<K, V> block) {
     return allʔ(new BooleanBlock<Entry<K, V>>() {
 
@@ -742,6 +751,11 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
+  /**
+   * Checks if any not-null object included.
+   * 
+   * @return true if not-null object is found, false otherwise
+   */
   public boolean anyʔ(final EntryBooleanBlock<K, V> block) {
     return anyʔ(new BooleanBlock<Entry<K, V>>() {
 
@@ -754,8 +768,15 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
+   * Chunks elements to entries. Keys of entries are the result returned by the
+   * block. Values of entries are RubyArrays of elements which get the same
+   * result returned by the block and aside to each other.
+   * 
    * @param <S>
    *          the type of transformed elements
+   * @param block
+   *          to chunk elements
+   * @return a RubyEnumerator
    */
   public <S> RubyEnumerator<Entry<S, RubyArray<Entry<K, V>>>> chunk(
       final EntryTransformBlock<K, V, S> block) {
@@ -770,8 +791,13 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
+   * Stores elements which are transformed by the block into a RubyArray.
+   * 
    * @param <S>
    *          the type of transformed elements
+   * @param block
+   *          to transform elements
+   * @return a RubyArray
    */
   public <S> RubyArray<S> collect(final EntryTransformBlock<K, V, S> block) {
     return collect(new TransformBlock<Entry<K, V>, S>() {
@@ -785,8 +811,13 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
+   * Turns each element into a RubyArray and then flattens it.
+   * 
    * @param <S>
    *          the type of transformed elements
+   * @param block
+   *          to take element and generate a RubyArray
+   * @return a RubyArray
    */
   public <S> RubyArray<S> collectConcat(
       final EntryTransformBlock<K, V, RubyArray<S>> block) {
@@ -800,6 +831,13 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
+  /**
+   * Counts the elements which are true returned by the block.
+   * 
+   * @param block
+   *          to define elements to be counted
+   * @return a int
+   */
   public int count(final EntryBooleanBlock<K, V> block) {
     return count(new BooleanBlock<Entry<K, V>>() {
 
@@ -811,6 +849,12 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
+  /**
+   * Generates a sequence from start element to end element and so on
+   * infinitely.
+   * 
+   * @return a RubyEnumerator
+   */
   public void cycle(final EntryBlock<K, V> block) {
     cycle(new Block<Entry<K, V>>() {
 
@@ -822,6 +866,15 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
+  /**
+   * Generates a sequence from start element to end element, repeat n times.
+   * Yields each element to the block.
+   * 
+   * @param n
+   *          times to repeat
+   * @param block
+   *          to yield each element
+   */
   public void cycle(int n, final EntryBlock<K, V> block) {
     cycle(n, new Block<Entry<K, V>>() {
 
@@ -833,6 +886,14 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
+  /**
+   * Finds the first element which gets true returned by the block. Returns null
+   * if element is not found.
+   * 
+   * @param block
+   *          to filter elements
+   * @return an element or null
+   */
   public Entry<K, V> detect(final EntryBooleanBlock<K, V> block) {
     return detect(new BooleanBlock<Entry<K, V>>() {
 
@@ -844,6 +905,14 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
+  /**
+   * Drops the first n elements until a element gets false returned by the
+   * block.
+   * 
+   * @param block
+   *          to define which elements to be dropped
+   * @return a RubyArray
+   */
   public RubyArray<Entry<K, V>> dropWhile(final EntryBooleanBlock<K, V> block) {
     return dropWhile(new BooleanBlock<Entry<K, V>>() {
 
@@ -855,6 +924,13 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
+  /**
+   * Yields each elements to the block.
+   * 
+   * @param block
+   *          to yield each element
+   * @return this RubyEnumerable
+   */
   public RubyEnumerable<Entry<K, V>> eachEntry(final EntryBlock<K, V> block) {
     return eachEntry(new Block<Entry<K, V>>() {
 
@@ -867,6 +943,13 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
 
   }
 
+  /**
+   * Equivalent to detect().
+   * 
+   * @param block
+   *          to filter elements
+   * @return an element or null
+   */
   public Entry<K, V> find(final EntryBooleanBlock<K, V> block) {
     return detect(block);
   }
@@ -882,6 +965,13 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
+  /**
+   * Stores elements which are true returned by the block into a RubyArray.
+   * 
+   * @param block
+   *          to filter elements
+   * @return a RubyArray
+   */
   public Integer findIndex(final EntryBooleanBlock<K, V> block) {
     return findIndex(new BooleanBlock<Entry<K, V>>() {
 
@@ -894,8 +984,13 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
+   * Equivalent to collectConcat().
+   * 
    * @param <S>
    *          the type of transformed elements
+   * @param block
+   *          to take element and generate a RubyArray
+   * @return a RubyArray
    */
   public <S> RubyArray<S> flatMap(
       final EntryTransformBlock<K, V, RubyArray<S>> block) {
@@ -903,8 +998,16 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
+   * Stores elements which are matched by regex transformed by the block into a
+   * RubyArray.
+   * 
    * @param <S>
    *          the type of transformed elements
+   * @param regex
+   *          regular expression
+   * @param block
+   *          to transform elements
+   * @return a RubyArray
    */
   public <S> RubyArray<S> grep(String regex,
       final EntryTransformBlock<K, V, S> block) {
@@ -919,8 +1022,14 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
+   * Puts elements with the same result S returned by the block into a
+   * Entry&#60;S, RubyArray&#60;E&#62;&#62;y of a RubyHash.
+   * 
    * @param <S>
    *          the type of transformed elements
+   * @param block
+   *          to group each element
+   * @return a RubyHash
    */
   public <S> RubyHash<S, RubyArray<Entry<K, V>>> groupBy(
       final EntryTransformBlock<K, V, S> block) {
@@ -935,8 +1044,13 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
+   * Equivalent to collect().
+   * 
    * @param <S>
    *          the type of transformed elements
+   * @param block
+   *          to transform elements
+   * @return a RubyArray
    */
   public <S> RubyArray<S> map(final EntryTransformBlock<K, V, S> block) {
     return map(new TransformBlock<Entry<K, V>, S>() {
@@ -950,8 +1064,17 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
+   * Finds the element which is the max element induced by the Comparator
+   * transformed by the block of this RubyEnumerable. Returns null if this
+   * RubyEnumerable is empty.
+   * 
    * @param <S>
    *          the type of transformed elements
+   * @param comp
+   *          a Comparator
+   * @param block
+   *          to transform elements
+   * @return an element or null
    */
   public <S> Entry<K, V> maxBy(Comparator<? super S> comp,
       final EntryTransformBlock<K, V, S> block) {
@@ -966,8 +1089,14 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
+   * Finds the element which is the max element transformed by the block of this
+   * RubyEnumerable. Returns null if this RubyEnumerable is empty.
+   * 
    * @param <S>
    *          the type of transformed elements
+   * @param block
+   *          to transform elements
+   * @return an element or null
    */
   public <S> Entry<K, V> maxBy(final EntryTransformBlock<K, V, S> block) {
     return maxBy(new TransformBlock<Entry<K, V>, S>() {
@@ -981,8 +1110,17 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
+   * Finds the element which is the min element induced by the Comparator
+   * transformed by the block of this RubyEnumerable. Returns null if this
+   * RubyEnumerable is empty.
+   * 
    * @param <S>
    *          the type of transformed elements
+   * @param comp
+   *          a Comparator
+   * @param block
+   *          to transform elements
+   * @return an element or null
    */
   public <S> Entry<K, V> minBy(Comparator<? super S> comp,
       final EntryTransformBlock<K, V, S> block) {
@@ -997,8 +1135,14 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
+   * Finds the element which is the min element transformed by the block of this
+   * RubyEnumerable. Returns null if this RubyEnumerable is empty.
+   * 
    * @param <S>
    *          the type of transformed elements
+   * @param block
+   *          to transform elements
+   * @return an element or null
    */
   public <S> Entry<K, V> minBy(final EntryTransformBlock<K, V, S> block) {
     return minBy(new TransformBlock<Entry<K, V>, S>() {
@@ -1012,8 +1156,17 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
+   * Finds elements which are the min and max elements induced by the Comparator
+   * transformed by the block of this RubyEnumerable and stores them into a
+   * RubyArray.
+   * 
    * @param <S>
    *          the type of transformed elements
+   * @param comp
+   *          a Comparator
+   * @param block
+   *          to transform elements
+   * @return a RubyArray
    */
   public <S> RubyArray<Entry<K, V>> minmaxBy(Comparator<? super S> comp,
       final EntryTransformBlock<K, V, S> block) {
@@ -1028,8 +1181,14 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
+   * Finds elements which is the min and max elements transformed by the block
+   * of this RubyEnumerable and stores them into a RubyArray.
+   * 
    * @param <S>
    *          the type of transformed elements
+   * @param block
+   *          to transform elements
+   * @return a RubyArray
    */
   public <S> RubyArray<Entry<K, V>> minmaxBy(
       final EntryTransformBlock<K, V, S> block) {
@@ -1043,6 +1202,14 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
+  /**
+   * Checks if this RubyEnumerable contains only elements which are false
+   * returned by the block.
+   * 
+   * @param block
+   *          to check elements
+   * @return true if all results of block are false, false otherwise
+   */
   public boolean noneʔ(final EntryBooleanBlock<K, V> block) {
     return noneʔ(new BooleanBlock<Entry<K, V>>() {
 
@@ -1054,6 +1221,14 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
+  /**
+   * Checks if this RubyEnumerable contains only one element which are true
+   * returned by the block.
+   * 
+   * @param block
+   *          to check elements
+   * @return true if only one result of block is true, false otherwise
+   */
   public boolean oneʔ(final EntryBooleanBlock<K, V> block) {
     return oneʔ(new BooleanBlock<Entry<K, V>>() {
 
@@ -1077,6 +1252,13 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
+  /**
+   * Divides elements into 2 groups by the given block.
+   * 
+   * @param block
+   *          to part elements
+   * @return a RubyArray of 2 RubyArrays
+   */
   public RubyArray<Entry<K, V>> reject(final EntryBooleanBlock<K, V> block) {
     return reject(new BooleanBlock<Entry<K, V>>() {
 
@@ -1088,6 +1270,13 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
+  /**
+   * Iterates each element reversed by given block.
+   * 
+   * @param block
+   *          to yield each element
+   * @return this RubyEnumerable
+   */
   public RubyEnumerable<Entry<K, V>> reverseEach(final EntryBlock<K, V> block) {
     return reverseEach(new Block<Entry<K, V>>() {
 
@@ -1099,10 +1288,25 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
+  /**
+   * Equivalent to findAll().
+   * 
+   * @param block
+   *          to filter elements
+   * @return a RubyArray
+   */
   public RubyArray<Entry<K, V>> select(final EntryBooleanBlock<K, V> block) {
     return findAll(block);
   }
 
+  /**
+   * Groups elements into RubyArrays and the first element of each RubyArray
+   * should get true returned by the block.
+   * 
+   * @param block
+   *          to check where to do slice
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<RubyArray<Entry<K, V>>> sliceBefore(
       final EntryBooleanBlock<K, V> block) {
     return sliceBefore(new BooleanBlock<Entry<K, V>>() {
@@ -1116,8 +1320,17 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
+   * Sorts elements of this RubyEnumerable by the ordering of elements
+   * transformed by the block induced by the Comparator and stores them into a
+   * RubyArray.
+   * 
    * @param <S>
    *          the type of transformed elements
+   * @param comp
+   *          a Comparator
+   * @param block
+   *          to transform elements
+   * @return a RubyArray
    */
   public <S> RubyArray<Entry<K, V>> sortBy(Comparator<? super S> comp,
       final EntryTransformBlock<K, V, S> block) {
@@ -1132,8 +1345,14 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
+   * Sorts elements of this RubyEnumerable by the ordering of elements
+   * transformed by the block and stores them into a RubyArray.
+   * 
    * @param <S>
    *          the type of transformed elements
+   * @param block
+   *          to transform elements
+   * @return a RubyArray
    */
   public <S> RubyArray<Entry<K, V>> sortBy(
       final EntryTransformBlock<K, V, S> block) {
@@ -1147,6 +1366,14 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
+  /**
+   * Stores element into a RubyArray from beginning until the result returned by
+   * the block is false.
+   * 
+   * @param block
+   *          to filter elements
+   * @return a RubyArray
+   */
   public RubyArray<Entry<K, V>> takeWhile(final EntryBooleanBlock<K, V> block) {
     return takeWhile(new BooleanBlock<Entry<K, V>>() {
 
@@ -1163,6 +1390,13 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return newRubyArray(map.values());
   }
 
+  /**
+   * Finds all the values by given keys.
+   * 
+   * @param keys
+   *          to access values
+   * @return a RubyArray
+   */
   public RubyArray<V> valuesAt(K... keys) {
     RubyArray<V> values = newRubyArray();
     for (K key : keys) {
@@ -1171,6 +1405,13 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return values;
   }
 
+  /**
+   * Check if the value included.
+   * 
+   * @param value
+   *          to be checked
+   * @return true if value included, false otherwise
+   */
   public boolean valueʔ(V value) {
     return containsValue(value);
   }

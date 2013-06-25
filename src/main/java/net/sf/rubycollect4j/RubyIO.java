@@ -38,7 +38,7 @@ import static net.sf.rubycollect4j.RubyEnumerator.newRubyEnumerator;
 
 /**
  * 
- * RubyIO implements few of the methods refer to the IO class of Ruby.
+ * RubyIO implements part of the methods refer to the IO class of Ruby.
  * 
  */
 public class RubyIO {
@@ -72,7 +72,7 @@ public class RubyIO {
     }
 
     /**
-     * Return the Mode in String form.
+     * Returns the Mode in String form.
      * 
      * @return Mode in String form
      */
@@ -81,7 +81,7 @@ public class RubyIO {
     }
 
     /**
-     * Check if it is readable.
+     * Checks if it is readable.
      * 
      * @return true if it allows to be read, false otherwise
      */
@@ -90,7 +90,7 @@ public class RubyIO {
     }
 
     /**
-     * Check if it is Writable.
+     * Checks if it is Writable.
      * 
      * @return true if it allows to be written, false otherwise
      */
@@ -99,7 +99,7 @@ public class RubyIO {
     }
 
     /**
-     * Retrieve a Mode from a String.
+     * Retrieves a Mode from a String.
      * 
      * @param mode
      *          mode in String form
@@ -131,7 +131,7 @@ public class RubyIO {
   protected final Mode mode;
 
   /**
-   * Create an IO with given permission.
+   * Creates an IO by given File with given permission.
    * 
    * @param file
    *          a File
@@ -177,7 +177,7 @@ public class RubyIO {
   }
 
   /**
-   * Generator a RubyEnumerator of lines in a file.
+   * Generators a RubyEnumerator of lines in a file.
    * 
    * @param path
    *          of a File
@@ -194,7 +194,7 @@ public class RubyIO {
   }
 
   /**
-   * Close this IO.
+   * Closes this IO.
    */
   public void close() {
     try {
@@ -205,7 +205,7 @@ public class RubyIO {
   }
 
   /**
-   * Generator a RubyEnumerator of lines in the file.
+   * Generators a RubyEnumerator of lines in the file.
    * 
    * @return a RubyEnumerator
    */
@@ -217,7 +217,7 @@ public class RubyIO {
   }
 
   /**
-   * Write a line in the file.
+   * Writes a line in the file.
    * 
    * @param words
    *          to write a line
@@ -234,7 +234,7 @@ public class RubyIO {
   }
 
   /**
-   * Read the content of a file.
+   * Reads the content of a file.
    * 
    * @return a String
    */
@@ -255,7 +255,7 @@ public class RubyIO {
   }
 
   /**
-   * Move the cursor to certain position.
+   * Moves the cursor to certain position.
    * 
    * @param pos
    *          of the file
@@ -269,7 +269,7 @@ public class RubyIO {
   }
 
   /**
-   * Write to the file.
+   * Writes to the file.
    * 
    * @param words
    *          to write
