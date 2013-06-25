@@ -32,6 +32,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
+import net.sf.rubycollect4j.range.DoubleSuccessor;
+import net.sf.rubycollect4j.range.IntegerSuccessor;
+import net.sf.rubycollect4j.range.LongSuccessor;
+import net.sf.rubycollect4j.range.StringSuccessor;
+
 import static net.sf.rubycollect4j.RubyArray.newRubyArray;
 import static net.sf.rubycollect4j.RubyHash.newRubyHash;
 
@@ -681,6 +686,58 @@ public final class RubyCollections {
       rubyHash.put(entry);
     }
     return rubyHash;
+  }
+
+  /**
+   * Creates a RubyRange by given strings.
+   * 
+   * @param start
+   *          of the range
+   * @param end
+   *          of the range
+   * @return a RubyRange
+   */
+  public static RubyRange<String> rr(String start, String end) {
+    return new RubyRange<String>(StringSuccessor.getInstance(), start, end);
+  }
+
+  /**
+   * Creates a RubyRange by given integers.
+   * 
+   * @param start
+   *          of the range
+   * @param end
+   *          of the range
+   * @return a RubyRange
+   */
+  public static RubyRange<Integer> rr(int start, int end) {
+    return new RubyRange<Integer>(IntegerSuccessor.getInstance(), start, end);
+  }
+
+  /**
+   * Creates a RubyRange by given longs.
+   * 
+   * @param start
+   *          of the range
+   * @param end
+   *          of the range
+   * @return a RubyRange
+   */
+  public static RubyRange<Long> rr(long start, long end) {
+    return new RubyRange<Long>(LongSuccessor.getInstance(), start, end);
+  }
+
+  /**
+   * Creates a RubyRange by given doubles.
+   * 
+   * @param start
+   *          of the range
+   * @param end
+   *          of the range
+   * @return a RubyRange
+   */
+  public static RubyRange<Double> rr(double start, double end) {
+    return new RubyRange<Double>(DoubleSuccessor.getInstance(), start, end);
   }
 
 }

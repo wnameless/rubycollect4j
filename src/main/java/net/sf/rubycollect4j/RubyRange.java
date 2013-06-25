@@ -27,6 +27,8 @@ import net.sf.rubycollect4j.range.LongSuccessor;
 import net.sf.rubycollect4j.range.StringSuccessor;
 import net.sf.rubycollect4j.range.Successive;
 
+import com.google.common.base.Strings;
+
 /**
  * 
  * RubyRange is inspired by the Range class of Ruby. It does not exactly follow
@@ -40,20 +42,6 @@ import net.sf.rubycollect4j.range.Successive;
 public final class RubyRange<E extends Comparable<E>> extends RubyEnumerable<E> {
 
   /**
-   * Creates a RubyRange of given integers.
-   * 
-   * @param startPoint
-   *          where the range begins
-   * @param endPoint
-   *          where the range ends
-   * @return a RubyRange
-   */
-  public static RubyRange<Integer> range(int startPoint, int endPoint) {
-    return new RubyRange<Integer>(IntegerSuccessor.getInstance(), startPoint,
-        endPoint);
-  }
-
-  /**
    * Creates a RubyRange of given strings.
    * 
    * @param startPoint
@@ -62,8 +50,23 @@ public final class RubyRange<E extends Comparable<E>> extends RubyEnumerable<E> 
    *          where the range ends
    * @return a RubyRange
    */
-  public static RubyRange<String> range(String startPoint, String endPoint) {
-    return new RubyRange<String>(StringSuccessor.getInstance(), startPoint,
+  public static RubyRange<String> newRubyRange(String startPoint,
+      String endPoint) {
+    return new RubyRange<String>(StringSuccessor.getInstance(),
+        Strings.nullToEmpty(startPoint), Strings.nullToEmpty(endPoint));
+  }
+
+  /**
+   * Creates a RubyRange of given integers.
+   * 
+   * @param startPoint
+   *          where the range begins
+   * @param endPoint
+   *          where the range ends
+   * @return a RubyRange
+   */
+  public static RubyRange<Integer> newRubyRange(int startPoint, int endPoint) {
+    return new RubyRange<Integer>(IntegerSuccessor.getInstance(), startPoint,
         endPoint);
   }
 
@@ -76,7 +79,7 @@ public final class RubyRange<E extends Comparable<E>> extends RubyEnumerable<E> 
    *          where the range ends
    * @return a RubyRange
    */
-  public static RubyRange<Long> range(long startPoint, long endPoint) {
+  public static RubyRange<Long> newRubyRange(long startPoint, long endPoint) {
     return new RubyRange<Long>(LongSuccessor.getInstance(), startPoint,
         endPoint);
   }
@@ -90,7 +93,8 @@ public final class RubyRange<E extends Comparable<E>> extends RubyEnumerable<E> 
    *          where the range ends
    * @return a RubyRange
    */
-  public static RubyRange<Double> range(double startPoint, double endPoint) {
+  public static RubyRange<Double> newRubyRange(double startPoint,
+      double endPoint) {
     return new RubyRange<Double>(DoubleSuccessor.getInstance(), startPoint,
         endPoint);
   }
