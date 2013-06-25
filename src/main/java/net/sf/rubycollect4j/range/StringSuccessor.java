@@ -44,10 +44,8 @@ public final class StringSuccessor implements Successive<String> {
     for (int i = parts.size() - 1; i >= 0; i--) {
       if (!(isAlphanumeric(parts.get(i).get(0))))
         continue;
-      carry = increaseAlphanumeric(parts.get(i));
-      if (!(carry)) {
+      if (!(carry = increaseAlphanumeric(parts.get(i))))
         break;
-      }
     }
     if (carry) {
       for (List<Character> chars : parts) {
