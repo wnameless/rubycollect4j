@@ -23,12 +23,101 @@ public final class StringSuccessor implements Successive<String> {
 
   @Override
   public String succ(String curr) {
-    char[] chars = curr.toCharArray();
-
-    return null;
+    List<List<Character>> parts = partition(curr);
+    if (parts.size() > 1
+        || (parts.size() == 1 && isAlphanumeric(parts.get(0).get(0)))) {
+      nextAlphanumeric(parts);
+    } else {
+      nextUTF8(parts.get(0));
+    }
+    StringBuilder sb = new StringBuilder();
+    for (List<Character> chars : parts) {
+      for (Character c : chars) {
+        sb.append(c);
+      }
+    }
+    return sb.toString();
   }
 
-  private String[][] partition(String curr) {
+  private void nextAlphanumeric(List<List<Character>> parts) {
+    boolean carry = false;
+    for (int i = parts.size() - 1; i >= 0; i--) {
+      if (!(isAlphanumeric(parts.get(i).get(0))))
+        continue;
+      carry = increaseAlphanumeric(parts.get(i));
+      if (!(carry)) {
+        break;
+      }
+    }
+    if (carry) {
+      for (List<Character> chars : parts) {
+        Character c = chars.get(0);
+        if (isAlphanumeric(c)) {
+          if (48 <= (int) c && (int) c <= 57)
+            chars.add(0, '1');
+          if (65 <= (int) c && (int) c <= 90)
+            chars.add(0, 'A');
+          if (97 <= (int) c && (int) c <= 122)
+            chars.add(0, 'a');
+          break;
+        }
+      }
+    }
+  }
+
+  private boolean increaseAlphanumeric(List<Character> alphanums) {
+    boolean carry = false;
+    for (int i = alphanums.size() - 1; i >= 0; i--) {
+      char c = increaseASCII(alphanums.get(i));
+      alphanums.set(i, c);
+      if ((int) c == 48 || (int) c == 65 || (int) c == 97) {
+        carry = true;
+      } else {
+        carry = false;
+        break;
+      }
+    }
+    return carry;
+  }
+
+  private char increaseASCII(char c) {
+    if ((int) c == 57) {
+      return (char) 48;
+    } else if ((int) c == 90) {
+      return (char) 65;
+    } else if ((int) c == 122) {
+      return (char) 97;
+    } else {
+      return (char) ((int) c + 1);
+    }
+  }
+
+  private void nextUTF8(List<Character> utf8) {
+    boolean carry = false;
+    for (int i = utf8.size() - 1; i >= 0; i--) {
+      char c = increaseUTF8(utf8.get(i));
+      utf8.set(i, c);
+      if ((int) c != 1) {
+        carry = false;
+        break;
+      } else {
+        carry = true;
+      }
+    }
+    if (carry) {
+      utf8.add(0, (char) 1);
+    }
+  }
+
+  private char increaseUTF8(char c) {
+    if ((int) c < 65535) {
+      return (char) ((int) c + 1);
+    } else {
+      return (char) 1;
+    }
+  }
+
+  private List<List<Character>> partition(String curr) {
     List<List<Character>> parts = newArrayList();
     List<Character> chars = newArrayList();
     for (char c : curr.toCharArray()) {
@@ -36,14 +125,15 @@ public final class StringSuccessor implements Successive<String> {
           || isAlphanumeric(chars.get(chars.size() - 1)) == isAlphanumeric(c)) {
         chars.add(c);
       } else {
-        // parts.add()
+        parts.add(chars);
+        chars = newArrayList();
+        chars.add(c);
       }
     }
-    return null;
-  }
-
-  private boolean isASCII(char c) {
-    return 0 <= (int) c && (int) c <= 127;
+    if (!(chars.isEmpty())) {
+      parts.add(chars);
+    }
+    return parts;
   }
 
   private boolean isAlphanumeric(char c) {
@@ -55,8 +145,13 @@ public final class StringSuccessor implements Successive<String> {
 
   @Override
   public int compare(String o1, String o2) {
-    // TODO Auto-generated method stub
-    return 0;
+    if (o1.matches("^\\d+(\\.\\d+)?$") && o2.matches("^\\d+(\\.\\d+)?$")) {
+      return Double.valueOf(o1).compareTo(Double.valueOf(o2));
+    }
+    if (o1.length() > o2.length()) {
+      return 1;
+    }
+    return o1.compareTo(o2);
   }
 
 }
