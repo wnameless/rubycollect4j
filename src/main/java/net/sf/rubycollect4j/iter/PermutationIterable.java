@@ -25,8 +25,6 @@ import java.util.List;
 
 import net.sf.rubycollect4j.RubyArray;
 
-import static com.google.common.collect.Lists.newArrayList;
-
 /**
  * @param <E>
  *          the type of the elements
@@ -38,16 +36,6 @@ public final class PermutationIterable<E> implements Iterable<RubyArray<E>> {
 
   public PermutationIterable(List<E> List, int n) {
     this.list = List;
-    this.n = n;
-  }
-
-  public PermutationIterable(Iterable<E> iter, int n) {
-    list = newArrayList(iter);
-    this.n = n;
-  }
-
-  public PermutationIterable(Iterator<E> iter, int n) {
-    list = newArrayList(iter);
     this.n = n;
   }
 

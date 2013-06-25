@@ -25,8 +25,6 @@ import java.util.List;
 
 import net.sf.rubycollect4j.RubyArray;
 
-import static com.google.common.collect.Lists.newArrayList;
-
 /**
  * @param <E>
  *          the type of the elements
@@ -39,16 +37,6 @@ public final class RepeatedCombinationIterable<E> implements
 
   public RepeatedCombinationIterable(List<E> list, int n) {
     this.list = list;
-    this.n = n;
-  }
-
-  public RepeatedCombinationIterable(Iterable<E> iter, int n) {
-    list = newArrayList(iter);
-    this.n = n;
-  }
-
-  public RepeatedCombinationIterable(Iterator<E> iter, int n) {
-    list = newArrayList(iter);
     this.n = n;
   }
 

@@ -25,8 +25,6 @@ import java.util.List;
 
 import net.sf.rubycollect4j.RubyArray;
 
-import static com.google.common.collect.Lists.newArrayList;
-
 /**
  * @param <E>
  *          the type of the elements
@@ -39,16 +37,6 @@ public final class RepeatedPermutationIterable<E> implements
 
   public RepeatedPermutationIterable(List<E> list, int n) {
     this.list = list;
-    this.n = n;
-  }
-
-  public RepeatedPermutationIterable(Iterable<E> iter, int n) {
-    list = newArrayList(iter);
-    this.n = n;
-  }
-
-  public RepeatedPermutationIterable(Iterator<E> iter, int n) {
-    list = newArrayList(iter);
     this.n = n;
   }
 

@@ -25,8 +25,6 @@ import java.util.List;
 
 import net.sf.rubycollect4j.RubyArray;
 
-import static com.google.common.collect.Lists.newArrayList;
-
 /**
  * @param <E>
  *          the type of the elements
@@ -38,16 +36,6 @@ public class CombinationIterable<E> implements Iterable<RubyArray<E>> {
 
   public CombinationIterable(List<E> list, int n) {
     this.list = list;
-    this.n = n;
-  }
-
-  public CombinationIterable(Iterable<E> iter, int n) {
-    list = newArrayList(iter);
-    this.n = n;
-  }
-
-  public CombinationIterable(Iterator<E> iter, int n) {
-    list = newArrayList(iter);
     this.n = n;
   }
 
