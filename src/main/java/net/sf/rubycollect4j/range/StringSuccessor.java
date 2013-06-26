@@ -24,10 +24,23 @@ import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
 
+/**
+ * 
+ * StringSuccessor generates a successor of any given String. It's a singleton
+ * object. If given String included alphanumeric characters, it will generate
+ * successors based on those alphanumeric characters instead of the whole
+ * String.
+ * 
+ */
 public final class StringSuccessor implements Successive<String> {
 
   private static volatile StringSuccessor INSTANCE;
 
+  /**
+   * Returns the singleton StringSuccessor object.
+   * 
+   * @return a StringSuccessor
+   */
   public static StringSuccessor getInstance() {
     if (INSTANCE == null) {
       synchronized (IntegerSuccessor.class) {
@@ -45,7 +58,8 @@ public final class StringSuccessor implements Successive<String> {
   public String succ(String curr) {
     List<List<Character>> parts = partition(curr);
     if (parts.size() > 1
-        || (parts.size() == 1 && isAlphanumeric(parts.get(0).get(0)))) {
+        || (parts.size() == 1 && parts.get(0).size() != 1 && isAlphanumeric(parts
+            .get(0).get(0)))) {
       nextAlphanumeric(parts);
     } else {
       nextUTF8(parts.get(0));

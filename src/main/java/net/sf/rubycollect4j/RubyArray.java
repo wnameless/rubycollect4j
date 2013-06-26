@@ -147,13 +147,6 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return new RubyArray<E>(newArrayList(elements));
   }
 
-  /**
-   * Private constructor to enhance static factory methods and prevent from
-   * inheritance.
-   * 
-   * @param list
-   *          a List
-   */
   private RubyArray(List<E> list) {
     super(list);
     this.list = list;

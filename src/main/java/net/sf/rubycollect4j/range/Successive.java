@@ -32,6 +32,13 @@ import java.util.Comparator;
  */
 public interface Successive<E extends Comparable<E>> extends Comparator<E> {
 
+  /**
+   * Returns the successor of given element.
+   * 
+   * @param curr
+   *          a element
+   * @return the successor of given element
+   */
   E succ(E curr);
 
 }

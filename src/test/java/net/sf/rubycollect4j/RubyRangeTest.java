@@ -30,6 +30,8 @@ public class RubyRangeTest {
     assertEquals(ra("1.2", "1.3", "1.4", "1.5"), rr("1.2", "1.5").toA());
     assertEquals(ra("1.48", "1.49", "1.50"), rr("1.48", "1.5").toA());
     assertEquals(ra(), rr("zzz", "aaa").toA());
+    assertEquals(ra("Z", "[", "\\", "]", "^", "_", "`", "a"), rr("Z", "a")
+        .toA());
   }
 
   @Test

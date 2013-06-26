@@ -20,10 +20,21 @@
  */
 package net.sf.rubycollect4j.range;
 
+/**
+ * 
+ * DoubleSuccessor generates a successor of any given Double. It's a singleton
+ * object.
+ * 
+ */
 public final class DoubleSuccessor implements Successive<Double> {
 
   private static volatile DoubleSuccessor INSTANCE;
 
+  /**
+   * Returns the singleton DoubleSuccessor object.
+   * 
+   * @return a DoubleSuccessor
+   */
   public static DoubleSuccessor getInstance() {
     if (INSTANCE == null) {
       synchronized (LongSuccessor.class) {

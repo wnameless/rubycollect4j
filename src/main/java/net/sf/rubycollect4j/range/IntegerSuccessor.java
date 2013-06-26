@@ -20,10 +20,21 @@
  */
 package net.sf.rubycollect4j.range;
 
+/**
+ * 
+ * IntegerSuccessor generates a successor of any given Integer. It's a singleton
+ * object.
+ * 
+ */
 public final class IntegerSuccessor implements Successive<Integer> {
 
   private static volatile IntegerSuccessor INSTANCE;
 
+  /**
+   * Returns the singleton IntegerSuccessor object.
+   * 
+   * @return a IntegerSuccessor
+   */
   public static IntegerSuccessor getInstance() {
     if (INSTANCE == null) {
       synchronized (IntegerSuccessor.class) {

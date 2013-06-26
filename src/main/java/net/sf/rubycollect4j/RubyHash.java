@@ -108,13 +108,6 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return new RubyHash<K, V>(map);
   }
 
-  /**
-   * Private constructor to enhance static factory methods and prevent from
-   * inheritance.
-   * 
-   * @param map
-   *          a Map
-   */
   private RubyHash(LinkedHashMap<K, V> map) {
     super(map.entrySet());
     this.map = map;

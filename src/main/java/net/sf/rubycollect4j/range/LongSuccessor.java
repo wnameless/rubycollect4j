@@ -20,10 +20,21 @@
  */
 package net.sf.rubycollect4j.range;
 
+/**
+ * 
+ * LongSuccessor generates a successor of any given Long. It's a singleton
+ * object.
+ * 
+ */
 public final class LongSuccessor implements Successive<Long> {
 
   private static volatile LongSuccessor INSTANCE;
 
+  /**
+   * Returns the singleton LongSuccessor object.
+   * 
+   * @return a LongSuccessor
+   */
   public static LongSuccessor getInstance() {
     if (INSTANCE == null) {
       synchronized (LongSuccessor.class) {
