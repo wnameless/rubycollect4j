@@ -8,6 +8,15 @@ For further information, please visit http://ruby-doc.org website.
 
 For more documentation, please read JavaDoc.
 
+Installation with Maven:
+``` xml
+<dependency>
+  <groupId>net.sf.rubycollect4j</groupId>
+	<artifactId>rubycollect4j</artifactId>
+	<version>1.0.1</version>
+</dependency>
+```
+
 With Java 8:
 ``` java
 // Sort the characters by its frequency based on the word 'Mississippi' case-insensitively
