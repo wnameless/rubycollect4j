@@ -24,6 +24,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.AbstractMap.SimpleEntry;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -32,13 +34,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
-import net.sf.rubycollect4j.range.DoubleSuccessor;
-import net.sf.rubycollect4j.range.IntegerSuccessor;
-import net.sf.rubycollect4j.range.LongSuccessor;
-import net.sf.rubycollect4j.range.StringSuccessor;
-
 import static net.sf.rubycollect4j.RubyArray.newRubyArray;
 import static net.sf.rubycollect4j.RubyHash.newRubyHash;
+import static net.sf.rubycollect4j.RubyRange.newRubyRange;
 
 /**
  * 
@@ -697,8 +695,8 @@ public final class RubyCollections {
    *          of the range
    * @return a RubyRange
    */
-  public static RubyRange<String> rr(String start, String end) {
-    return new RubyRange<String>(StringSuccessor.getInstance(), start, end);
+  public static RubyRange<String> range(String start, String end) {
+    return newRubyRange(start, end);
   }
 
   /**
@@ -710,8 +708,8 @@ public final class RubyCollections {
    *          of the range
    * @return a RubyRange
    */
-  public static RubyRange<Integer> rr(int start, int end) {
-    return new RubyRange<Integer>(IntegerSuccessor.getInstance(), start, end);
+  public static RubyRange<Integer> range(int start, int end) {
+    return newRubyRange(start, end);
   }
 
   /**
@@ -723,8 +721,8 @@ public final class RubyCollections {
    *          of the range
    * @return a RubyRange
    */
-  public static RubyRange<Long> rr(long start, long end) {
-    return new RubyRange<Long>(LongSuccessor.getInstance(), start, end);
+  public static RubyRange<Long> range(long start, long end) {
+    return newRubyRange(start, end);
   }
 
   /**
@@ -736,8 +734,38 @@ public final class RubyCollections {
    *          of the range
    * @return a RubyRange
    */
-  public static RubyRange<Double> rr(double start, double end) {
-    return new RubyRange<Double>(DoubleSuccessor.getInstance(), start, end);
+  public static RubyRange<Double> range(double start, double end) {
+    return newRubyRange(start, end);
+  }
+
+  /**
+   * Creates a RubyRange by given Dates.
+   * 
+   * @param start
+   *          of the range
+   * @param end
+   *          of the range
+   * @return a RubyRange
+   */
+  public static RubyRange<Date> range(Date start, Date end) {
+    return newRubyRange(start, end);
+  }
+
+  /**
+   * Create a Date by given year, month and date.
+   * 
+   * @param year
+   *          of the Date
+   * @param month
+   *          of the Date
+   * @param date
+   *          of the Date
+   * @return a Date
+   */
+  public static Date date(int year, int month, int date) {
+    Calendar c = Calendar.getInstance();
+    c.set(year, month, date, 0, 0);
+    return c.getTime();
   }
 
 }
