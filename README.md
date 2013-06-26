@@ -1,6 +1,6 @@
 rubycollect4j
 =============
-Ruby Collections for Java 8.
+Ruby Collections for Java.
 
 The rubycollect4j implements all methods refer to Ruby Array, Hash and Enumerable.
 
