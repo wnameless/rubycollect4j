@@ -72,15 +72,6 @@ public class RubyIO {
     }
 
     /**
-     * Returns the Mode in String form.
-     * 
-     * @return Mode in String form
-     */
-    public String getMode() {
-      return mode;
-    }
-
-    /**
      * Checks if it is readable.
      * 
      * @return true if it allows to be read, false otherwise
@@ -114,7 +105,7 @@ public class RubyIO {
 
                 @Override
                 public Entry<String, Mode> yield(Mode item) {
-                  return hp(item.getMode(), item);
+                  return hp(item.toString(), item);
                 }
 
               }));
@@ -125,13 +116,18 @@ public class RubyIO {
       }
     }
 
+    @Override
+    public String toString() {
+      return mode;
+    }
+
   }
 
   protected final RandomAccessFile raFile;
   protected final Mode mode;
 
   /**
-   * Creates an IO by given File with given permission.
+   * Creates an IO by given File and open mode.
    * 
    * @param file
    *          a File

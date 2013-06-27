@@ -764,7 +764,8 @@ public final class RubyCollections {
    */
   public static Date date(int year, int month, int date) {
     Calendar c = Calendar.getInstance();
-    c.set(year, month, date, 0, 0);
+    c.set(year, month, date, 0, 0, 0);
+    c.set(Calendar.MILLISECOND, 0);
     return c.getTime();
   }
 

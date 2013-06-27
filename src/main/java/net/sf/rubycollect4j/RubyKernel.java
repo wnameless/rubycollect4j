@@ -24,7 +24,7 @@ import static java.lang.System.out;
 
 /**
  * 
- * RubyKernel mimics the useful Ruby puts method by wrapping the Java
+ * RubyKernel mimics the useful Ruby p method by wrapping the Java
  * System.out.println method.
  * 
  */

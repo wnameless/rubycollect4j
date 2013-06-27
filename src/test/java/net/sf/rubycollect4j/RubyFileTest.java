@@ -177,4 +177,12 @@ public class RubyFileTest {
     rf.close();
   }
 
+  @Test
+  public void testToString() {
+    rf = RubyFile.open(BASE_DIR + "ruby_file_exist_test.txt");
+    assertEquals("RubyFile{" + BASE_DIR + "ruby_file_exist_test.txt}",
+        rf.toString());
+    rf.close();
+  }
+
 }

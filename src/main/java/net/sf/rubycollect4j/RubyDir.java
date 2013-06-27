@@ -28,6 +28,8 @@ import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.block.BooleanBlock;
 import net.sf.rubycollect4j.block.TransformBlock;
 
+import com.google.common.base.Objects;
+
 import static com.google.common.collect.Lists.newArrayList;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyEnumerator.newRubyEnumerator;
@@ -342,6 +344,12 @@ public final class RubyDir extends RubyEnumerable<String> {
    */
   public int tell() {
     return pos();
+  }
+
+  @Override
+  public String toString() {
+    return Objects.toStringHelper(this.getClass())
+        .addValue(directory.getPath()).toString();
   }
 
 }

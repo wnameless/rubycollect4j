@@ -471,7 +471,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * 
    * @param o
    *          any Object
-   * @return true if 2 objects are equals, false otherwise
+   * @return true if 2 objects are equal, false otherwise
    */
   public boolean eqlʔ(Object o) {
     return equals(o);

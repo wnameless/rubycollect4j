@@ -316,7 +316,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * 
    * @param other
    *          any Object
-   * @return true if 2 objects are equaled, false otherwise
+   * @return true if 2 objects are equal, false otherwise
    */
   public boolean eqlʔ(Object other) {
     return equals(other);

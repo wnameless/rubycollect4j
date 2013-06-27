@@ -30,6 +30,8 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.common.base.Objects;
+
 import static net.sf.rubycollect4j.RubyIO.Mode.R;
 
 /**
@@ -70,7 +72,7 @@ public final class RubyFile extends RubyIO {
    * @return a RubyFile
    */
   public static RubyFile open(String path) {
-    return open(path, R.getMode());
+    return open(path, R.toString());
   }
 
   /**
@@ -372,6 +374,12 @@ public final class RubyFile extends RubyIO {
    */
   public String toPath() {
     return file.getPath();
+  }
+
+  @Override
+  public String toString() {
+    return Objects.toStringHelper(this.getClass()).addValue(file.getPath())
+        .toString();
   }
 
 }

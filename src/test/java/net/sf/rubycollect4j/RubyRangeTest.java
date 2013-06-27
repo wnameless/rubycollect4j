@@ -1,11 +1,16 @@
 package net.sf.rubycollect4j;
 
+import net.sf.rubycollect4j.block.Block;
+
 import org.junit.Test;
 
 import static net.sf.rubycollect4j.RubyCollections.date;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.range;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertTrue;
 
 public class RubyRangeTest {
 
@@ -21,7 +26,8 @@ public class RubyRangeTest {
     assertEquals(ra("a", "b", "c", "d", "e"), range("a", "e").toA());
     assertEquals(ra("ay", "az", "ba"), range("ay", "ba").toA());
     assertEquals(ra("aY", "aZ", "bA"), range("aY", "bA").toA());
-    assertEquals(ra("999--", "1000--", "1001--"), range("999--", "1001--").toA());
+    assertEquals(ra("999--", "1000--", "1001--"), range("999--", "1001--")
+        .toA());
     assertEquals(ra("999", "1000", "1001"), range("999", "1001").toA());
     assertEquals(ra("1.2", "1.3", "1.4", "1.5"), range("1.2", "1.5").toA());
     assertEquals(ra("1.48", "1.49", "1.50"), range("1.48", "1.5").toA());
@@ -51,6 +57,102 @@ public class RubyRangeTest {
     assertEquals(ra(date(2013, 7, 2), date(2013, 7, 3), date(2013, 7, 4)),
         range(date(2013, 7, 2), date(2013, 7, 4)).toA());
     assertEquals(ra(), range(date(2013, 7, 4), date(2013, 7, 2)).toA());
+  }
+
+  @Test
+  public void testBegin() {
+    assertEquals(Integer.valueOf(1), range(1, 1000).begin());
+  }
+
+  @Test
+  public void testCoverʔ() {
+    assertTrue(range(1, 100).coverʔ(50));
+    assertTrue(range(1, 100).coverʔ(1));
+    assertTrue(range(1, 100).coverʔ(100));
+    assertFalse(range(1, 100).coverʔ(101));
+  }
+
+  @Test
+  public void testEach() {
+    assertTrue(range(1, 10).each() instanceof RubyEnumerator);
+    assertEquals(ra(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), range(1, 10).each().toA());
+  }
+
+  @Test
+  public void testEachWithBlock() {
+    final RubyArray<Integer> ints = ra();
+    assertEquals(RubyRange.class, range(1, 10).each(new Block<Integer>() {
+
+      @Override
+      public void yield(Integer item) {
+        ints.push(item);
+      }
+
+    }).getClass());
+    assertEquals(ra(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), ints);
+  }
+
+  @Test
+  public void testEnd() {
+    assertEquals(Integer.valueOf(1000), range(1, 1000).end());
+  }
+
+  @Test
+  public void testEqlʔ() {
+    assertTrue(range(1, 1000).eqlʔ(range(1, 1000)));
+    assertFalse(range(1, 1000).eqlʔ(range(1, 1001)));
+    assertFalse(range(1, 1000).eqlʔ(range(2, 1000)));
+    assertFalse(range(1, 1000).eqlʔ(null));
+  }
+
+  @Test
+  public void testHash() {
+    assertEquals(range(1, 100).hashCode(), range(1, 100).hash());
+    assertNotSame(range(1, 101).hashCode(), range(1, 100).hash());
+  }
+
+  @Test
+  public void testIncludeʔ() {
+    assertTrue(range(1, 100).includeʔ(50));
+    assertTrue(range(1, 100).includeʔ(1));
+    assertTrue(range(1, 100).includeʔ(100));
+    assertFalse(range(1, 100).includeʔ(101));
+  }
+
+  @Test
+  public void testInspect() {
+    assertEquals(range(1, 100).toString(), range(1, 100).inspect());
+    assertEquals("1..100", range(1, 100).inspect());
+  }
+
+  @Test
+  public void testLast() {
+    assertEquals(Integer.valueOf(1000), range(1, 1000).last());
+  }
+
+  @Test
+  public void testLastWithN() {
+    assertEquals(ra(96, 97, 98, 99, 100), range(1, 100).last(5));
+    assertEquals(ra(), range(1, 100).last(-1));
+  }
+
+  @Test
+  public void testMemeberʔ() {
+    assertTrue(range(1, 100).memberʔ(50));
+    assertTrue(range(1, 100).memberʔ(1));
+    assertTrue(range(1, 100).memberʔ(100));
+    assertFalse(range(1, 100).memberʔ(101));
+  }
+
+  @Test
+  public void testEquals() {
+    assertEquals(range(1, 10), range(1, 10));
+  }
+
+  @Test
+  public void testToS() {
+    assertEquals(range(1, 100).toString(), range(1, 100).toS());
+    assertEquals("1..100", range(1, 100).toS());
   }
 
 }

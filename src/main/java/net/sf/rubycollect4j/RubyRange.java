@@ -22,6 +22,7 @@ package net.sf.rubycollect4j;
 
 import java.util.Date;
 
+import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.iter.RangeIterable;
 import net.sf.rubycollect4j.range.DateSuccessor;
 import net.sf.rubycollect4j.range.DoubleSuccessor;
@@ -30,7 +31,11 @@ import net.sf.rubycollect4j.range.LongSuccessor;
 import net.sf.rubycollect4j.range.StringSuccessor;
 import net.sf.rubycollect4j.range.Successive;
 
+import com.google.common.base.Objects;
 import com.google.common.base.Strings;
+
+import static net.sf.rubycollect4j.RubyCollections.ra;
+import static net.sf.rubycollect4j.RubyEnumerator.newRubyEnumerator;
 
 /**
  * 
@@ -43,6 +48,10 @@ import com.google.common.base.Strings;
  *          the type of elements
  */
 public final class RubyRange<E extends Comparable<E>> extends RubyEnumerable<E> {
+
+  private final Successive<E> successive;
+  private final E startPoint;
+  private final E endPoint;
 
   /**
    * Creates a RubyRange by given Strings.
@@ -128,6 +137,160 @@ public final class RubyRange<E extends Comparable<E>> extends RubyEnumerable<E> 
    */
   public RubyRange(Successive<E> successive, E startPoint, E endPoint) {
     super(new RangeIterable<E>(successive, startPoint, endPoint));
+    this.successive = successive;
+    this.startPoint = startPoint;
+    this.endPoint = endPoint;
+  }
+
+  /**
+   * Returns the beginning of this RubyRange.
+   * 
+   * @return the beginning of this RubyRange
+   */
+  public E begin() {
+    return startPoint;
+  }
+
+  /**
+   * Check if an item is within this RubyRange.
+   * 
+   * @param item
+   *          to be checked
+   * @return true if item is within this range, false otherwise
+   */
+  public boolean coverʔ(E item) {
+    return successive.compare(startPoint, item) <= 0
+        && successive.compare(endPoint, item) >= 0;
+  }
+
+  /**
+   * Returns a RubyEnumerator of this RubyRange.
+   * 
+   * @return a RubyEnumerator
+   */
+  public RubyEnumerator<E> each() {
+    return newRubyEnumerator(iter);
+  }
+
+  /**
+   * Yields each element of this RubyRange to the block.
+   * 
+   * @param block
+   *          to yield each element
+   * @return this RubyRange
+   */
+  public RubyRange<E> each(Block<E> block) {
+    eachEntry(block);
+    return this;
+  }
+
+  /**
+   * Returns the end of this RubyRange.
+   * 
+   * @return the end of this RubyRange
+   */
+  public E end() {
+    return endPoint;
+  }
+
+  /**
+   * Equivalent to equals().
+   * 
+   * @param o
+   *          any Object
+   * @return true if 2 objects are equal, false otherwise
+   */
+  public boolean eqlʔ(Object o) {
+    return equals(o);
+  }
+
+  /**
+   * Equivalent to hashCode().
+   * 
+   * @return a int
+   */
+  public int hash() {
+    return hashCode();
+  }
+
+  @Override
+  public boolean includeʔ(E item) {
+    return successive.compare(startPoint, item) <= 0
+        && successive.compare(endPoint, item) >= 0;
+  }
+
+  /**
+   * Equivalent to toString().
+   * 
+   * @return a String
+   */
+  public String inspect() {
+    return toString();
+  }
+
+  /**
+   * Returns the end of this RubyRange.
+   * 
+   * @return the end of this RubyRange
+   */
+  public E last() {
+    return end();
+  }
+
+  /**
+   * Returns the last n elements of this RubyRange.
+   * 
+   * @return a RubyArray
+   */
+  public RubyArray<E> last(int n) {
+    RubyArray<E> lasts = ra();
+    for (E item : iter) {
+      if (lasts.size() < n) {
+        lasts.add(item);
+      } else {
+        if (lasts.size() > 0) {
+          lasts.remove(0);
+          lasts.add(item);
+        }
+      }
+    }
+    return lasts;
+  }
+
+  @Override
+  public boolean memberʔ(E item) {
+    return includeʔ(item);
+  }
+
+  /**
+   * Equivalent to toString().
+   * 
+   * @return a String
+   */
+  public String toS() {
+    return toString();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (!(o instanceof RubyRange)) {
+      return false;
+    }
+    @SuppressWarnings("rawtypes")
+    RubyRange rr = (RubyRange) o;
+    return Objects.equal(successive, rr.successive)
+        && Objects.equal(startPoint, rr.startPoint)
+        && Objects.equal(endPoint, rr.endPoint);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(successive, startPoint, endPoint);
+  }
+
+  @Override
+  public String toString() {
+    return startPoint + ".." + endPoint;
   }
 
 }
