@@ -438,7 +438,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Yields each elements to the block.
+   * Yields each element to the block.
    * 
    * @param block
    *          to yield each element
@@ -789,7 +789,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Assigns the first element as the initial value. Reduces each elements with
+   * Assigns the first element as the initial value. Reduces each element with
    * block, then assigns the result back to initial value and so on.
    * 
    * @param block
@@ -811,7 +811,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Reduces each elements with block, then assigns the result back to initial
+   * Reduces each element with block, then assigns the result back to initial
    * value and so on.
    * 
    * @param <S>
@@ -830,7 +830,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Reduces each elements with initial value by a method of S, then assigns the
+   * Reduces each element with initial value by a method of S, then assigns the
    * result back to initial value and so on.
    * 
    * @param <S>
@@ -872,7 +872,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
   }
 
   /**
-   * Assigns the first element as the initial value. Reduces each elements with
+   * Assigns the first element as the initial value. Reduces each element with
    * initial value by a method of S, then assigns the result back to initial
    * value and so on.
    * 

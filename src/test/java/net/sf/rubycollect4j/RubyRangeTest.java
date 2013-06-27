@@ -145,6 +145,37 @@ public class RubyRangeTest {
   }
 
   @Test
+  public void testStep() {
+    assertTrue(range(1, 10).step(3) instanceof RubyEnumerator);
+    assertEquals(ra(1, 4, 7, 10), range(1, 10).step(3).toA());
+  }
+
+  @Test
+  public void testStepWithBlock() {
+    final RubyArray<Integer> ints = ra();
+    assertTrue(range(1, 10).step(3) instanceof RubyEnumerator);
+    assertEquals(RubyRange.class, range(1, 10).step(3, new Block<Integer>() {
+
+      @Override
+      public void yield(Integer item) {
+        ints.push(item);
+      }
+
+    }).getClass());
+    assertEquals(ra(1, 4, 7, 10), ints);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testStepException1() {
+    range(1, 10).step(0);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testStepException2() {
+    range(1, 10).step(-1);
+  }
+
+  @Test
   public void testEquals() {
     assertEquals(range(1, 10), range(1, 10));
   }

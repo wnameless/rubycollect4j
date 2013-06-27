@@ -24,6 +24,7 @@ import java.util.Date;
 
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.iter.RangeIterable;
+import net.sf.rubycollect4j.iter.StepIterable;
 import net.sf.rubycollect4j.range.DateSuccessor;
 import net.sf.rubycollect4j.range.DoubleSuccessor;
 import net.sf.rubycollect4j.range.IntegerSuccessor;
@@ -260,6 +261,33 @@ public final class RubyRange<E extends Comparable<E>> extends RubyEnumerable<E> 
   @Override
   public boolean memberʔ(E item) {
     return includeʔ(item);
+  }
+
+  /**
+   * Creates a RubyEnumerator by all nth elements of the range.
+   * 
+   * @param n
+   *          interval to step
+   * @return a RubyEnumerator
+   */
+  public RubyEnumerator<E> step(int n) {
+    return newRubyEnumerator(new StepIterable<E>(iter, n));
+  }
+
+  /**
+   * Iterates over this RubyRange and yields each nth element to the block.
+   * 
+   * @param n
+   *          interval to step
+   * @param block
+   *          to yield each element
+   * @return this RubyRange
+   */
+  public RubyRange<E> step(int n, Block<E> block) {
+    for (E item : step(n)) {
+      block.yield(item);
+    }
+    return this;
   }
 
   /**
