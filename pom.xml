@@ -14,7 +14,7 @@
 
 	<name>rubycollect4j</name>
 	<description>Ruby Collections for Java</description>
-	<url>http://maven.apache.org</url>
+	<url>http://rubycollect4j.sourceforge.net/</url>
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
