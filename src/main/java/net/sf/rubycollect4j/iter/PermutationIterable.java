@@ -45,8 +45,8 @@ public final class PermutationIterable<E> implements Iterable<RubyArray<E>> {
    * @param n
    *          length of each permutation
    */
-  public PermutationIterable(List<E> List, int n) {
-    this.list = List;
+  public PermutationIterable(List<E> list, int n) {
+    this.list = list;
     this.n = n;
   }
 

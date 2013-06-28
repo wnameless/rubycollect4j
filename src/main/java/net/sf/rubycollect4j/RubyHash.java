@@ -845,8 +845,6 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   /**
    * Generates a sequence from start element to end element and so on
    * infinitely.
-   * 
-   * @return a RubyEnumerator
    */
   public void cycle(final EntryBlock<K, V> block) {
     cycle(new Block<Entry<K, V>>() {

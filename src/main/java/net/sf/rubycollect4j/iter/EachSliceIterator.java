@@ -35,8 +35,6 @@ import static net.sf.rubycollect4j.RubyArray.newRubyArray;
  * 
  * @param <E>
  *          the type of the elements
- * @throws IllegalArgumentException
- *           if size less than or equal to 0
  */
 public final class EachSliceIterator<E> implements Iterator<RubyArray<E>> {
 
@@ -50,6 +48,8 @@ public final class EachSliceIterator<E> implements Iterator<RubyArray<E>> {
    *          an Iterabel
    * @param size
    *          of the window
+   * @throws IllegalArgumentException
+   *           if size less than or equal to 0
    */
   public EachSliceIterator(Iterator<E> iter, int size) {
     if (size <= 0) {

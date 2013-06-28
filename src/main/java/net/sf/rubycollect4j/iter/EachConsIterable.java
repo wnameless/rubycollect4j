@@ -31,8 +31,6 @@ import net.sf.rubycollect4j.RubyArray;
  * 
  * @param <E>
  *          the type of the elements
- * @throws IllegalArgumentException
- *           if size less than or equal to 0
  */
 public final class EachConsIterable<E> implements Iterable<RubyArray<E>> {
 
@@ -46,6 +44,8 @@ public final class EachConsIterable<E> implements Iterable<RubyArray<E>> {
    *          an Iterable
    * @param size
    *          of the window
+   * @throws IllegalArgumentException
+   *           if size less than or equal to 0
    */
   public EachConsIterable(Iterable<E> iter, int size) {
     if (size <= 0) {
