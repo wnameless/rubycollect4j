@@ -398,13 +398,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * @param n
    *          number of consecutive elements
    * @return a RubyEnumerator
-   * @throws IllegalArgumentException
-   *           if n less than or equal to 0
    */
   public RubyEnumerator<RubyArray<E>> eachCons(int n) {
-    if (n <= 0) {
-      throw new IllegalArgumentException("invalid size");
-    }
     return newRubyEnumerator(new EachConsIterable<E>(iter, n));
   }
 
@@ -416,13 +411,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
    *          number of consecutive elements
    * @param block
    *          to yield the RubyArray of consecutive elements
-   * @throws IllegalArgumentException
-   *           if n less than or equal to 0
    */
   public void eachCons(int n, Block<RubyArray<E>> block) {
-    if (n <= 0) {
-      throw new IllegalArgumentException("invalid size");
-    }
     for (RubyArray<E> cons : eachCons(n)) {
       block.yield(cons);
     }
@@ -457,13 +447,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * @param n
    *          size of each slice
    * @return a RubyEnumerator
-   * @throws IllegalArgumentException
-   *           if n less than or equal to 0
    */
   public RubyEnumerator<RubyArray<E>> eachSlice(int n) {
-    if (n <= 0) {
-      throw new IllegalArgumentException("invalid slice size");
-    }
     return newRubyEnumerator(new EachSliceIterable<E>(iter, n));
   }
 
@@ -476,9 +461,6 @@ public class RubyEnumerable<E> implements Iterable<E> {
    *          to yield each slice
    */
   public void eachSlice(int n, Block<RubyArray<E>> block) {
-    if (n <= 0) {
-      throw new IllegalArgumentException("invalid slice size");
-    }
     for (RubyArray<E> ra : new EachSliceIterable<E>(iter, n)) {
       block.yield(ra);
     }

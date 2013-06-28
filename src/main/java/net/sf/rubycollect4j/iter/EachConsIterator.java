@@ -30,6 +30,8 @@ import static net.sf.rubycollect4j.RubyArray.newRubyArray;
 /**
  * @param <E>
  *          the type of the elements
+ * @throws IllegalArgumentException
+ *           if size less than or equal to 0
  */
 public final class EachConsIterator<E> implements Iterator<RubyArray<E>> {
 
@@ -38,6 +40,9 @@ public final class EachConsIterator<E> implements Iterator<RubyArray<E>> {
   private final RubyArray<E> bucket = newRubyArray();
 
   public EachConsIterator(Iterator<E> iterator, int size) {
+    if (size <= 0) {
+      throw new IllegalArgumentException("invalid size");
+    }
     this.iterator = iterator;
     this.size = size;
     fillBucket();

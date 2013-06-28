@@ -27,6 +27,8 @@ import net.sf.rubycollect4j.RubyArray;
 /**
  * @param <E>
  *          the type of the elements
+ * @throws IllegalArgumentException
+ *           if size less than or equal to 0
  */
 public final class EachSliceIterable<E> implements Iterable<RubyArray<E>> {
 
@@ -34,6 +36,9 @@ public final class EachSliceIterable<E> implements Iterable<RubyArray<E>> {
   private final int size;
 
   public EachSliceIterable(Iterable<E> iterable, int size) {
+    if (size <= 0) {
+      throw new IllegalArgumentException("invalid slice size");
+    }
     this.iterable = iterable;
     this.size = size;
   }
