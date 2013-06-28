@@ -32,6 +32,9 @@ import static com.google.common.collect.Lists.newArrayList;
 import static net.sf.rubycollect4j.RubyArray.newRubyArray;
 
 /**
+ * 
+ * PermutationIterator generates all permutations of a List with length n.
+ * 
  * @param <E>
  *          the type of the elements
  */
@@ -42,14 +45,26 @@ public class PermutationIterator<E> implements Iterator<RubyArray<E>> {
   private final int[] endStatus;
   private boolean hasMore = true;
 
+  /**
+   * The constructor of the PermutationIterator.
+   * 
+   * @param list
+   *          a List
+   * @param n
+   *          length of each permutation
+   */
   public PermutationIterator(List<E> list, int n) {
     this.list = list;
-    this.counter = new int[n];
-    initCounter();
-    this.endStatus = new int[n];
-    initEndStatus();
-    if (!isLooping() && !Arrays.equals(counter, endStatus)) {
-      hasMore = false;
+    if (n <= 0 || n > list.size()) {
+      counter = new int[0];
+      endStatus = new int[0];
+      if (n != 0)
+        hasMore = false;
+    } else {
+      counter = new int[n];
+      initCounter();
+      endStatus = new int[n];
+      initEndStatus();
     }
   }
 
@@ -63,15 +78,6 @@ public class PermutationIterator<E> implements Iterator<RubyArray<E>> {
     for (int i = 0; i < endStatus.length; i++) {
       endStatus[i] = list.size() - 1 - i;
     }
-  }
-
-  private boolean isLooping() {
-    for (int i = 0; i < counter.length; i++) {
-      if (counter[i] < endStatus[i]) {
-        return true;
-      }
-    }
-    return false;
   }
 
   private RubyArray<E> nextElement() {

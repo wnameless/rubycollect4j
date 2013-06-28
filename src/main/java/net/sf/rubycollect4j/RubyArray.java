@@ -952,18 +952,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return a RubyEnumerator
    */
   public RubyEnumerator<RubyArray<E>> permutation(int n) {
-    RubyArray<RubyArray<E>> perms = newRubyArray();
-    if (n < 0) {
-      return newRubyEnumerator(perms);
-    } else if (n == 0) {
-      RubyArray<E> ra = newRubyArray();
-      perms.push(ra);
-      return newRubyEnumerator(perms);
-    } else if (n > size()) {
-      return newRubyEnumerator(perms);
-    } else {
-      return newRubyEnumerator(new PermutationIterable<E>(list, n));
-    }
+    return newRubyEnumerator(new PermutationIterable<E>(list, n));
   }
 
   /**

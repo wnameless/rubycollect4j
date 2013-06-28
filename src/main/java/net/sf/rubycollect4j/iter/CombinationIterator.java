@@ -54,18 +54,15 @@ public class CombinationIterator<E> implements Iterator<RubyArray<E>> {
   public CombinationIterator(List<E> list, int n) {
     this.list = list;
     if (n <= 0 || n > list.size()) {
-      this.counter = new int[0];
-      this.endStatus = new int[0];
+      counter = new int[0];
+      endStatus = new int[0];
       if (n != 0)
         hasMore = false;
     } else {
-      this.counter = new int[n];
+      counter = new int[n];
       initCounter();
-      this.endStatus = new int[n];
+      endStatus = new int[n];
       initEndStatus();
-    }
-    if (!isLooping() && !Arrays.equals(counter, endStatus)) {
-      hasMore = false;
     }
   }
 
@@ -79,15 +76,6 @@ public class CombinationIterator<E> implements Iterator<RubyArray<E>> {
     for (int i = endStatus.length - 1; i >= 0; i--) {
       endStatus[i] = list.size() - (endStatus.length - i);
     }
-  }
-
-  private boolean isLooping() {
-    for (int i = 0; i < counter.length; i++) {
-      if (counter[i] < endStatus[i]) {
-        return true;
-      }
-    }
-    return false;
   }
 
   private RubyArray<E> nextElement() {
