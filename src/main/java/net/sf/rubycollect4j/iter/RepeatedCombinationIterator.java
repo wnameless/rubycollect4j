@@ -30,6 +30,10 @@ import net.sf.rubycollect4j.RubyArray;
 import static net.sf.rubycollect4j.RubyArray.newRubyArray;
 
 /**
+ * 
+ * RepeatedCombinationIterator generates all repeated combinations of a List
+ * with length n.
+ * 
  * @param <E>
  *          the type of the elements
  */
@@ -42,14 +46,26 @@ public final class RepeatedCombinationIterator<E> implements
   private final int end;
   private boolean hasMore = true;
 
+  /**
+   * The constructor of the RepeatedCombinationIterator.
+   * 
+   * @param list
+   *          a List
+   * @param n
+   *          length of each repeated combination
+   */
   public RepeatedCombinationIterator(List<E> list, int n) {
     this.list = list;
-    this.counter = new int[n];
-    this.endStatus = new int[n];
-    this.end = list.size() - 1;
-    Arrays.fill(endStatus, end);
-    if (Arrays.equals(counter, endStatus)) {
-      hasMore = false;
+    end = list.size() - 1;
+    if (n <= 0) {
+      counter = new int[0];
+      endStatus = new int[0];
+      if (n != 0)
+        hasMore = false;
+    } else {
+      counter = new int[n];
+      endStatus = new int[n];
+      Arrays.fill(endStatus, end);
     }
   }
 

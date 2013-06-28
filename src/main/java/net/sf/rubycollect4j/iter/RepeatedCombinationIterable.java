@@ -26,6 +26,10 @@ import java.util.List;
 import net.sf.rubycollect4j.RubyArray;
 
 /**
+ * 
+ * RepeatedCombinationIterable generates all repeated combinations of a List
+ * with length n.
+ * 
  * @param <E>
  *          the type of the elements
  */
@@ -35,6 +39,14 @@ public final class RepeatedCombinationIterable<E> implements
   private final List<E> list;
   private final int n;
 
+  /**
+   * The constructor of the RepeatedCombinationIterable.
+   * 
+   * @param list
+   *          a List
+   * @param n
+   *          length of each repeated combination
+   */
   public RepeatedCombinationIterable(List<E> list, int n) {
     this.list = list;
     this.n = n;

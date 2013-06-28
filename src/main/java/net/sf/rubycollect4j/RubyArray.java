@@ -1146,14 +1146,6 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return a RubyEnumerator
    */
   public RubyEnumerator<RubyArray<E>> repeatedCombination(int n) {
-    RubyArray<RubyArray<E>> rc = newRubyArray();
-    if (n < 0) {
-      return newRubyEnumerator(rc);
-    }
-    if (n == 0) {
-      RubyArray<E> ra = newRubyArray();
-      return newRubyEnumerator(rc.push(ra));
-    }
     return newRubyEnumerator(new RepeatedCombinationIterable<E>(list, n));
   }
 
@@ -1182,14 +1174,6 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return a RubyEnumerator
    */
   public RubyEnumerator<RubyArray<E>> repeatedPermutation(int n) {
-    RubyArray<RubyArray<E>> rp = newRubyArray();
-    if (n < 0) {
-      return newRubyEnumerator(rp);
-    }
-    if (n == 0) {
-      RubyArray<E> ra = newRubyArray();
-      return newRubyEnumerator(rp.push(ra));
-    }
     return newRubyEnumerator(new RepeatedPermutationIterable<E>(list, n));
   }
 

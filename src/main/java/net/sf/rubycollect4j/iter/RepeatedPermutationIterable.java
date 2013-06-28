@@ -26,6 +26,10 @@ import java.util.List;
 import net.sf.rubycollect4j.RubyArray;
 
 /**
+ * 
+ * RepeatedPermutationIterable generates all repeated permutations of a List
+ * with length n.
+ * 
  * @param <E>
  *          the type of the elements
  */
@@ -35,6 +39,14 @@ public final class RepeatedPermutationIterable<E> implements
   private final List<E> list;
   private final int n;
 
+  /**
+   * The constructor of the RepeatedPermutationIterable.
+   * 
+   * @param list
+   *          a List
+   * @param n
+   *          length of each repeated permutation
+   */
   public RepeatedPermutationIterable(List<E> list, int n) {
     this.list = list;
     this.n = n;
