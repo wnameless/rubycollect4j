@@ -26,6 +26,10 @@ import java.util.NoSuchElementException;
 import net.sf.rubycollect4j.range.Successive;
 
 /**
+ * 
+ * RangeIterator iterates each element within a range defined by 2 Comparable
+ * elements.
+ * 
  * @param <E>
  *          the type of the elements
  */
@@ -36,6 +40,16 @@ public final class RangeIterator<E extends Comparable<E>> implements
   private final E endPoint;
   private E curr;
 
+  /**
+   * The constructor of the RangeIterator.
+   * 
+   * @param successive
+   *          a Successive
+   * @param startPoint
+   *          a element
+   * @param endPoint
+   *          a element
+   */
   public RangeIterator(Successive<E> successive, E startPoint, E endPoint) {
     this.successive = successive;
     this.endPoint = endPoint;

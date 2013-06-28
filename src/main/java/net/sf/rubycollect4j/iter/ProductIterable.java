@@ -29,6 +29,9 @@ import net.sf.rubycollect4j.RubyArray;
 import static com.google.common.collect.Lists.newArrayList;
 
 /**
+ * 
+ * ProductIterable iterates all products by all elements of input Lists.
+ * 
  * @param <E>
  *          the type of the elements
  */
@@ -36,11 +39,27 @@ public final class ProductIterable<E> implements Iterable<RubyArray<E>> {
 
   private final List<List<E>> lists = newArrayList();
 
+  /**
+   * The constructor of the ProductIterable.
+   * 
+   * @param self
+   *          a List
+   * @param others
+   *          a List of Lists
+   */
   public ProductIterable(List<E> self, List<? extends List<E>> others) {
     lists.add(self);
     lists.addAll(others);
   }
 
+  /**
+   * The constructor of the ProductIterable.
+   * 
+   * @param self
+   *          a List
+   * @param others
+   *          an Array of Lists
+   */
   public ProductIterable(List<E> self, List<E>... others) {
     lists.add(self);
     lists.addAll(Arrays.asList(others));

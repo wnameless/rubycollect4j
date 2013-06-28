@@ -30,6 +30,9 @@ import net.sf.rubycollect4j.RubyArray;
 import static net.sf.rubycollect4j.RubyArray.newRubyArray;
 
 /**
+ * 
+ * ProductIterator iterates all products by all elements of input Lists.
+ * 
  * @param <E>
  *          the type of the elements
  */
@@ -38,6 +41,12 @@ public final class ProductIterator<E> implements Iterator<RubyArray<E>> {
   private final List<List<E>> lists;
   private final int[] counter;
 
+  /**
+   * The constructor of the ProductIterator.
+   * 
+   * @param lists
+   *          a List of Lists
+   */
   public ProductIterator(List<List<E>> lists) {
     this.lists = lists;
     counter = new int[lists.size()];
