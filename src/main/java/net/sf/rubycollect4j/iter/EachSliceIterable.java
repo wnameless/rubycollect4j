@@ -25,6 +25,11 @@ import java.util.Iterator;
 import net.sf.rubycollect4j.RubyArray;
 
 /**
+ * 
+ * EachSliceIterable iterates each element by a window of size n. It returns a
+ * RubyArray which includes n consecutive elements within this window, then it
+ * moves the position to the very next element behind the window and so on.
+ * 
  * @param <E>
  *          the type of the elements
  * @throws IllegalArgumentException
@@ -32,20 +37,28 @@ import net.sf.rubycollect4j.RubyArray;
  */
 public final class EachSliceIterable<E> implements Iterable<RubyArray<E>> {
 
-  private final Iterable<E> iterable;
+  private final Iterable<E> iter;
   private final int size;
 
-  public EachSliceIterable(Iterable<E> iterable, int size) {
+  /**
+   * The constructor of the EachSliceIterable.
+   * 
+   * @param iter
+   *          an Iterabel
+   * @param size
+   *          of the window
+   */
+  public EachSliceIterable(Iterable<E> iter, int size) {
     if (size <= 0) {
       throw new IllegalArgumentException("invalid slice size");
     }
-    this.iterable = iterable;
+    this.iter = iter;
     this.size = size;
   }
 
   @Override
   public Iterator<RubyArray<E>> iterator() {
-    return new EachSliceIterator<E>(iterable.iterator(), size);
+    return new EachSliceIterator<E>(iter.iterator(), size);
   }
 
 }

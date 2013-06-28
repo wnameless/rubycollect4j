@@ -27,6 +27,9 @@ import java.util.NoSuchElementException;
 import static net.sf.rubycollect4j.RubyCollections.newPair;
 
 /**
+ * 
+ * EachWithObjectIterator iterates each elements with an object.
+ * 
  * @param <E>the type of the elements
  * @param <O>
  *          the type of the object
@@ -37,6 +40,14 @@ public final class EachWithObjectIterator<E, O> implements
   private final Iterator<E> iter;
   private final O obj;
 
+  /**
+   * The constructor of the EachWithObjectIterator.
+   * 
+   * @param iter
+   *          an Iterator
+   * @param obj
+   *          an Object
+   */
   public EachWithObjectIterator(Iterator<E> iter, O obj) {
     this.iter = iter;
     this.obj = obj;

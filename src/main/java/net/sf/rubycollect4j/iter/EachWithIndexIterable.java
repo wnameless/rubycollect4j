@@ -24,6 +24,9 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 /**
+ * 
+ * EachWithIndexIterable iterates each elements with its index.
+ * 
  * @param <E>
  *          the type of the elements
  */
@@ -32,6 +35,12 @@ public final class EachWithIndexIterable<E> implements
 
   private final Iterable<E> iter;
 
+  /**
+   * The constructor of the EachWithIndexIterable.
+   * 
+   * @param iter
+   *          an Iterable
+   */
   public EachWithIndexIterable(Iterable<E> iter) {
     this.iter = iter;
   }

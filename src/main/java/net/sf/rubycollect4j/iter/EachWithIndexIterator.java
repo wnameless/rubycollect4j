@@ -27,6 +27,9 @@ import java.util.NoSuchElementException;
 import static net.sf.rubycollect4j.RubyCollections.newPair;
 
 /**
+ * 
+ * EachWithIndexIterator iterates each elements with its index.
+ * 
  * @param <E>
  *          the type of the elements
  */
@@ -36,6 +39,12 @@ public final class EachWithIndexIterator<E> implements
   private final Iterator<E> iter;
   private final int[] index = new int[] { 0 };
 
+  /**
+   * The constructor of the EachWithIndexIterator.
+   * 
+   * @param iter
+   *          an Iterator
+   */
   public EachWithIndexIterator(Iterator<E> iter) {
     this.iter = iter;
   }

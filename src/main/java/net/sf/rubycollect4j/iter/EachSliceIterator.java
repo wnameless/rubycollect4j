@@ -28,6 +28,11 @@ import net.sf.rubycollect4j.RubyArray;
 import static net.sf.rubycollect4j.RubyArray.newRubyArray;
 
 /**
+ * 
+ * EachSliceIterator iterates each element by a window of size n. It returns a
+ * RubyArray which includes n consecutive elements within this window, then it
+ * moves the position to the very next element behind the window and so on.
+ * 
  * @param <E>
  *          the type of the elements
  * @throws IllegalArgumentException
@@ -35,28 +40,36 @@ import static net.sf.rubycollect4j.RubyArray.newRubyArray;
  */
 public final class EachSliceIterator<E> implements Iterator<RubyArray<E>> {
 
-  private final Iterator<E> iterator;
+  private final Iterator<E> iter;
   private final int size;
 
-  public EachSliceIterator(Iterator<E> iterator, int size) {
+  /**
+   * The constructor of the EachSliceIterator.
+   * 
+   * @param iter
+   *          an Iterabel
+   * @param size
+   *          of the window
+   */
+  public EachSliceIterator(Iterator<E> iter, int size) {
     if (size <= 0) {
       throw new IllegalArgumentException("invalid slice size");
     }
-    this.iterator = iterator;
+    this.iter = iter;
     this.size = size;
   }
 
   private RubyArray<E> nextElement() {
     RubyArray<E> bucket = newRubyArray();
-    while (iterator.hasNext() && bucket.size() < size) {
-      bucket.add(iterator.next());
+    while (iter.hasNext() && bucket.size() < size) {
+      bucket.add(iter.next());
     }
     return bucket;
   }
 
   @Override
   public boolean hasNext() {
-    return iterator.hasNext();
+    return iter.hasNext();
   }
 
   @Override
