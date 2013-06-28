@@ -23,6 +23,9 @@ package net.sf.rubycollect4j.iter;
 import java.util.Iterator;
 
 /**
+ * 
+ * StepIterable iterates elements by skipping n elements each time.
+ * 
  * @param <E>
  *          the type of the elements
  */
@@ -31,6 +34,14 @@ public final class StepIterable<E> implements Iterable<E> {
   private final Iterable<E> iter;
   private final int step;
 
+  /**
+   * The constructor of the StepIterable.
+   * 
+   * @param iter
+   *          an Iterable
+   * @param step
+   *          number of elements to skip
+   */
   public StepIterable(Iterable<E> iter, int step) {
     if (step == 0) {
       throw new IllegalArgumentException("step can't be 0");

@@ -24,6 +24,9 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
+ * 
+ * StepIterator iterates elements by skipping n elements each time.
+ * 
  * @param <E>
  *          the type of the elements
  */
@@ -34,6 +37,14 @@ public final class StepIterator<E> implements Iterator<E> {
   private E peek;
   private boolean hasMore = false;
 
+  /**
+   * The constructor of the StepIterator.
+   * 
+   * @param iter
+   *          an Iterator
+   * @param step
+   *          number of elements to skip
+   */
   public StepIterator(Iterator<E> iter, int step) {
     if (step == 0) {
       throw new IllegalArgumentException("step can't be 0");

@@ -27,6 +27,10 @@ import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.block.BooleanBlock;
 
 /**
+ * SliceBeforeIterable iterates all elements by slicing elements into different
+ * parts. It performs each slicing when any element is true returned by the
+ * block or matched by the pattern.
+ * 
  * @param <E>
  *          the type of the elements
  */
@@ -36,16 +40,32 @@ public final class SliceBeforeIterable<E> implements Iterable<RubyArray<E>> {
   private final BooleanBlock<E> block;
   private final Pattern pattern;
 
+  /**
+   * The constructor of the SliceBeforeIterable.
+   * 
+   * @param iter
+   *          an Iterable
+   * @param block
+   *          to check elements
+   */
   public SliceBeforeIterable(Iterable<E> iter, BooleanBlock<E> block) {
     this.iter = iter;
     this.block = block;
     pattern = null;
   }
 
-  public SliceBeforeIterable(Iterable<E> iter, String regex) {
+  /**
+   * The constructor of the SliceBeforeIterable.
+   * 
+   * @param iter
+   *          an Iterable
+   * @param pattern
+   *          to match elements
+   */
+  public SliceBeforeIterable(Iterable<E> iter, Pattern pattern) {
     this.iter = iter;
     this.block = null;
-    pattern = Pattern.compile(regex);
+    this.pattern = pattern;
   }
 
   @Override

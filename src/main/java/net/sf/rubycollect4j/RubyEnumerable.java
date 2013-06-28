@@ -1417,7 +1417,8 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * @return a RubyEnumerator
    */
   public RubyEnumerator<RubyArray<E>> sliceBefore(String regex) {
-    return newRubyEnumerator(new SliceBeforeIterable<E>(iter, regex));
+    return newRubyEnumerator(new SliceBeforeIterable<E>(iter,
+        Pattern.compile(regex)));
   }
 
   /**

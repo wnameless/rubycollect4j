@@ -33,6 +33,11 @@ import com.google.common.collect.PeekingIterator;
 import static net.sf.rubycollect4j.RubyArray.newRubyArray;
 
 /**
+ * 
+ * SliceBeforeIterator iterates all elements by slicing elements into different
+ * parts. It performs each slicing when any element is true returned by the
+ * block or matched by the pattern.
+ * 
  * @param <E>
  *          the type of the elements
  */
@@ -42,12 +47,28 @@ public final class SliceBeforeIterator<E> implements Iterator<RubyArray<E>> {
   private final BooleanBlock<E> block;
   private final Pattern pattern;
 
+  /**
+   * The constructor of the SliceBeforeIterator.
+   * 
+   * @param iter
+   *          an Iterable
+   * @param block
+   *          to check elements
+   */
   public SliceBeforeIterator(Iterator<E> iter, BooleanBlock<E> block) {
     pIter = Iterators.peekingIterator(iter);
     this.block = block;
     pattern = null;
   }
 
+  /**
+   * The constructor of the SliceBeforeIterator.
+   * 
+   * @param iter
+   *          an Iterator
+   * @param pattern
+   *          to match elements
+   */
   public SliceBeforeIterator(Iterator<E> iter, Pattern pattern) {
     pIter = Iterators.peekingIterator(iter);
     block = null;
