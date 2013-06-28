@@ -161,4 +161,12 @@ public class RubyIOTest {
         RubyFile.foreach(BASE_DIR + "ruby_io_read_only_mode.txt").toA().join());
   }
 
+  @Test
+  public void testEachLine() {
+    rf = RubyFile.open(BASE_DIR + "ruby_io_read_only_mode.txt");
+    assertEquals("a", rf.eachLine().first());
+    assertEquals("a", rf.eachLine().first());
+    assertEquals(ra("a", "bc", "def"), rf.eachLine().toA());
+  }
+
 }
