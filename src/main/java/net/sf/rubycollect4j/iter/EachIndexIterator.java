@@ -23,18 +23,29 @@ package net.sf.rubycollect4j.iter;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public final class EachIndexIterator implements Iterator<Integer> {
+/**
+ * 
+ * EachIndexIterator iterates indices of elements instead of elements itself.
+ * 
+ */
+public final class EachIndexIterator<E> implements Iterator<Integer> {
 
-  private final int size;
-  private int index;
+  private final Iterator<E> iter;
+  private int index = 0;
 
-  public EachIndexIterator(int size) {
-    this.size = size;
+  /**
+   * The constructor of the EachIndexIterator.
+   * 
+   * @param iter
+   *          an Iterator
+   */
+  public EachIndexIterator(Iterator<E> iter) {
+    this.iter = iter;
   }
 
   @Override
   public boolean hasNext() {
-    return index < size;
+    return iter.hasNext();
   }
 
   @Override
@@ -42,6 +53,7 @@ public final class EachIndexIterator implements Iterator<Integer> {
     if (!hasNext()) {
       throw new NoSuchElementException();
     }
+    iter.next();
     return index++;
   }
 

@@ -22,17 +22,28 @@ package net.sf.rubycollect4j.iter;
 
 import java.util.Iterator;
 
-public final class EachIndexIterable implements Iterable<Integer> {
+/**
+ * 
+ * EachIndexIterable iterates indices of elements instead of elements itself.
+ * 
+ */
+public final class EachIndexIterable<E> implements Iterable<Integer> {
 
-  private final int size;
+  private final Iterable<E> iter;
 
-  public EachIndexIterable(int size) {
-    this.size = size;
+  /**
+   * The constructor of the EachIndexIterable.
+   * 
+   * @param iter
+   *          an Iterable
+   */
+  public EachIndexIterable(Iterable<E> iter) {
+    this.iter = iter;
   }
 
   @Override
   public Iterator<Integer> iterator() {
-    return new EachIndexIterator(size);
+    return new EachIndexIterator<E>(iter.iterator());
   }
 
 }

@@ -429,7 +429,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return a RubyEnumerator
    */
   public RubyEnumerator<Integer> eachIndex() {
-    return newRubyEnumerator(new EachIndexIterable(size()));
+    return newRubyEnumerator(new EachIndexIterable<E>(list));
   }
 
   /**

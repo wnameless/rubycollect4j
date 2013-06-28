@@ -25,6 +25,10 @@ import java.util.Iterator;
 import net.sf.rubycollect4j.RubyArray;
 
 /**
+ * 
+ * EachConsIterable iterates each element by a window of size n. It returns a
+ * RubyArray which includes n consecutive elements within this window.
+ * 
  * @param <E>
  *          the type of the elements
  * @throws IllegalArgumentException
@@ -32,20 +36,28 @@ import net.sf.rubycollect4j.RubyArray;
  */
 public final class EachConsIterable<E> implements Iterable<RubyArray<E>> {
 
-  private final Iterable<E> iterable;
+  private final Iterable<E> iter;
   private final int size;
 
-  public EachConsIterable(Iterable<E> iterable, int size) {
+  /**
+   * The constructor of the EachConsIterable.
+   * 
+   * @param iter
+   *          an Iterable
+   * @param size
+   *          of the window
+   */
+  public EachConsIterable(Iterable<E> iter, int size) {
     if (size <= 0) {
       throw new IllegalArgumentException("invalid size");
     }
-    this.iterable = iterable;
+    this.iter = iter;
     this.size = size;
   }
 
   @Override
   public Iterator<RubyArray<E>> iterator() {
-    return new EachConsIterator<E>(iterable.iterator(), size);
+    return new EachConsIterator<E>(iter.iterator(), size);
   }
 
 }

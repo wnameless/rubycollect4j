@@ -28,6 +28,10 @@ import net.sf.rubycollect4j.RubyArray;
 import static net.sf.rubycollect4j.RubyArray.newRubyArray;
 
 /**
+ * 
+ * EachConsIterator iterates each element by a window of size n. It returns a
+ * RubyArray which includes n consecutive elements within this window.
+ * 
  * @param <E>
  *          the type of the elements
  * @throws IllegalArgumentException
@@ -35,29 +39,37 @@ import static net.sf.rubycollect4j.RubyArray.newRubyArray;
  */
 public final class EachConsIterator<E> implements Iterator<RubyArray<E>> {
 
-  private final Iterator<E> iterator;
+  private final Iterator<E> iter;
   private final int size;
   private final RubyArray<E> bucket = newRubyArray();
 
-  public EachConsIterator(Iterator<E> iterator, int size) {
+  /**
+   * The constructor of the EachConsIterator.
+   * 
+   * @param iter
+   *          an Iterator
+   * @param size
+   *          of the window
+   */
+  public EachConsIterator(Iterator<E> iter, int size) {
     if (size <= 0) {
       throw new IllegalArgumentException("invalid size");
     }
-    this.iterator = iterator;
+    this.iter = iter;
     this.size = size;
     fillBucket();
   }
 
   private void fillBucket() {
-    while (iterator.hasNext() && bucket.size() < size) {
-      bucket.add(iterator.next());
+    while (iter.hasNext() && bucket.size() < size) {
+      bucket.add(iter.next());
     }
   }
 
   private void updateBucket() {
     bucket.deleteAt(0);
-    if (iterator.hasNext()) {
-      bucket.add(iterator.next());
+    if (iter.hasNext()) {
+      bucket.add(iter.next());
     }
   }
 
