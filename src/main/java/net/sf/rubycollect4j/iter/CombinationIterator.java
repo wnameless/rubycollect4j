@@ -30,6 +30,8 @@ import net.sf.rubycollect4j.RubyArray;
 import static net.sf.rubycollect4j.RubyArray.newRubyArray;
 
 /**
+ * CombinationIterator generates all combinations of a List with length n.
+ * 
  * @param <E>
  *          the type of the elements
  */
@@ -40,12 +42,27 @@ public class CombinationIterator<E> implements Iterator<RubyArray<E>> {
   private final int[] endStatus;
   private boolean hasMore = true;
 
+  /**
+   * The constructor of the CombinationIterator.
+   * 
+   * @param list
+   *          a List
+   * @param n
+   *          length of each combination
+   */
   public CombinationIterator(List<E> list, int n) {
     this.list = list;
-    this.counter = new int[n];
-    initCounter();
-    this.endStatus = new int[n];
-    initEndStatus();
+    if (n <= 0 || n > list.size()) {
+      this.counter = new int[0];
+      this.endStatus = new int[0];
+      if (n != 0)
+        hasMore = false;
+    } else {
+      this.counter = new int[n];
+      initCounter();
+      this.endStatus = new int[n];
+      initEndStatus();
+    }
     if (!isLooping() && !Arrays.equals(counter, endStatus)) {
       hasMore = false;
     }
