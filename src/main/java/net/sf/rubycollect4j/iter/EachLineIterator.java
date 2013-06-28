@@ -26,12 +26,29 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * 
+ * EachLineIterator iterates a RandomAccessFile line by line.
+ * 
+ */
 public final class EachLineIterator implements Iterator<String> {
   private RandomAccessFile raFile;
   private String line;
 
+  /**
+   * The constructor of the EachLineIterator.
+   * 
+   * @param raFile
+   *          a RandomAccessFile
+   */
   public EachLineIterator(RandomAccessFile raFile) {
     this.raFile = raFile;
+    try {
+      this.raFile.seek(0L);
+    } catch (IOException ex) {
+      Logger.getLogger(EachLineIterator.class.getName()).log(Level.SEVERE,
+          null, ex);
+    }
     nextLine();
   }
 

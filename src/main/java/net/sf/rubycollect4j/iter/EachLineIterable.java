@@ -23,17 +23,28 @@ package net.sf.rubycollect4j.iter;
 import java.io.RandomAccessFile;
 import java.util.Iterator;
 
+/**
+ * 
+ * EachLineIterable iterates a RandomAccessFile line by line.
+ * 
+ */
 public final class EachLineIterable implements Iterable<String> {
 
-  private final Iterator<String> iter;
+  private final RandomAccessFile raFile;
 
+  /**
+   * The constructor of the EachLineIterable.
+   * 
+   * @param raFile
+   *          a RandomAccessFile
+   */
   public EachLineIterable(RandomAccessFile raFile) {
-    this.iter = new EachLineIterator(raFile);
+    this.raFile = raFile;
   }
 
   @Override
   public Iterator<String> iterator() {
-    return iter;
+    return new EachLineIterator(raFile);
   }
 
 }
