@@ -27,6 +27,7 @@ import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.block.TransformBlock;
 
 /**
+ * 
  * ChunkIterable transforms elements first, and then puts the original elements
  * together if elements which are next to each others have the same transformed
  * value. Chucked elements are placed into an Entry which uses transformed value

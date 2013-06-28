@@ -25,6 +25,10 @@ import java.util.Iterator;
 import com.google.common.collect.Iterables;
 
 /**
+ * 
+ * CycleIterable iterates an Iterable n times. If n is not given, it iterates
+ * the Iterable forever.
+ * 
  * @param <E>
  *          the type of the elements
  */
@@ -33,11 +37,25 @@ public final class CycleIterable<E> implements Iterable<E> {
   private final Iterable<E> iter;
   private final Integer n;
 
+  /**
+   * The constructor of the CycleIterable.
+   * 
+   * @param iter
+   *          an Iterable
+   */
   public CycleIterable(Iterable<E> iter) {
     this.iter = iter;
     n = null;
   }
 
+  /**
+   * The constructor of the CycleIterable.
+   * 
+   * @param iter
+   *          an Iterable
+   * @param n
+   *          times to iterate
+   */
   public CycleIterable(Iterable<E> iter, int n) {
     this.iter = iter;
     this.n = n;
