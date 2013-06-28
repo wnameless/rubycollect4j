@@ -32,7 +32,7 @@ public final class StepIterator<E> implements Iterator<E> {
   private final Iterator<E> iter;
   private final int step;
   private E peek;
-  private boolean hasNext = false;
+  private boolean hasMore = false;
 
   public StepIterator(Iterator<E> iter, int step) {
     if (step == 0) {
@@ -45,7 +45,7 @@ public final class StepIterator<E> implements Iterator<E> {
     this.step = step;
     if (iter.hasNext()) {
       peek = iter.next();
-      hasNext = true;
+      hasMore = true;
     }
   }
 
@@ -57,14 +57,14 @@ public final class StepIterator<E> implements Iterator<E> {
       step--;
     }
     if (step > 0) {
-      hasNext = false;
+      hasMore = false;
     }
     return next;
   }
 
   @Override
   public boolean hasNext() {
-    return hasNext;
+    return hasMore;
   }
 
   @Override
