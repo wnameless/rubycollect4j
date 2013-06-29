@@ -26,7 +26,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ RubyArrayTest.class, RubyCollectionsTest.class,
-    RubyDirTest.class, RubyEnumerableTest.class, RubyEnumeratorTest.class,
-    RubyFileTest.class, RubyHashTest.class, RubyIOTest.class,
-    RubyKernelTest.class, RubyRangeTest.class })
+    RubyDateTest.class, RubyDirTest.class, RubyEnumerableTest.class,
+    RubyEnumeratorTest.class, RubyFileTest.class, RubyHashTest.class,
+    RubyIOTest.class, RubyKernelTest.class, RubyRangeTest.class })
 public class AllTests {}

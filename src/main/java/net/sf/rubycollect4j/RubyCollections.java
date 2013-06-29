@@ -751,32 +751,68 @@ public final class RubyCollections {
     return newRubyRange(start, end);
   }
 
+  /**
+   * Creates a RubyDate by given Date.
+   * 
+   * @param date
+   *          a Date
+   * @return a RubyDate
+   */
   public static RubyDate date(Date date) {
     return new RubyDate(date);
   }
 
+  /**
+   * Creates a RubyDate by given year.
+   * 
+   * @param year
+   *          of a date
+   * @return a RubyDate
+   */
   public static RubyDate date(int year) {
     Calendar c = Calendar.getInstance();
     c.set(Calendar.YEAR, year);
     c.set(Calendar.MONTH, 0);
     c.set(Calendar.DAY_OF_MONTH, 1);
     c.set(Calendar.HOUR_OF_DAY, 0);
+    c.set(Calendar.MINUTE, 0);
     c.set(Calendar.SECOND, 0);
     c.set(Calendar.MILLISECOND, 0);
     return new RubyDate(c.getTime());
   }
 
+  /**
+   * Creates a RubyDate by given year and month.
+   * 
+   * @param year
+   *          of a date
+   * @param month
+   *          of a date
+   * @return a RubyDate
+   */
   public static RubyDate date(int year, int month) {
     Calendar c = Calendar.getInstance();
     c.set(Calendar.YEAR, year);
     c.set(Calendar.MONTH, month - 1);
     c.set(Calendar.DAY_OF_MONTH, 1);
     c.set(Calendar.HOUR_OF_DAY, 0);
+    c.set(Calendar.MINUTE, 0);
     c.set(Calendar.SECOND, 0);
     c.set(Calendar.MILLISECOND, 0);
     return new RubyDate(c.getTime());
   }
 
+  /**
+   * Creates a RubyDate by given year, month and day.
+   * 
+   * @param year
+   *          of a date
+   * @param month
+   *          of a date
+   * @param day
+   *          of a date
+   * @return a RubyDate
+   */
   public static RubyDate date(int year, int month, int day) {
     Calendar c = Calendar.getInstance();
     c.set(Calendar.YEAR, year);
@@ -789,6 +825,19 @@ public final class RubyCollections {
     return new RubyDate(c.getTime());
   }
 
+  /**
+   * Creates a RubyDate by given year, month, day and hour.
+   * 
+   * @param year
+   *          of a date
+   * @param month
+   *          of a date
+   * @param day
+   *          of a date
+   * @param hour
+   *          of a date
+   * @return a RubyDate
+   */
   public static RubyDate date(int year, int month, int day, int hour) {
     Calendar c = Calendar.getInstance();
     c.set(Calendar.YEAR, year);
@@ -801,6 +850,21 @@ public final class RubyCollections {
     return new RubyDate(c.getTime());
   }
 
+  /**
+   * Creates a RubyDate by given year, month, day, hour and minute.
+   * 
+   * @param year
+   *          of a date
+   * @param month
+   *          of a date
+   * @param day
+   *          of a date
+   * @param hour
+   *          of a date
+   * @param min
+   *          of a date
+   * @return a RubyDate
+   */
   public static RubyDate date(int year, int month, int day, int hour, int min) {
     Calendar c = Calendar.getInstance();
     c.set(Calendar.YEAR, year);
@@ -813,6 +877,23 @@ public final class RubyCollections {
     return new RubyDate(c.getTime());
   }
 
+  /**
+   * Creates a RubyDate by given year, month, day, hour, minute and second.
+   * 
+   * @param year
+   *          of a date
+   * @param month
+   *          of a date
+   * @param day
+   *          of a date
+   * @param hour
+   *          of a date
+   * @param min
+   *          of a date
+   * @param sec
+   *          of a date
+   * @return a RubyDate
+   */
   public static RubyDate date(int year, int month, int day, int hour, int min,
       int sec) {
     Calendar c = Calendar.getInstance();
@@ -826,6 +907,26 @@ public final class RubyCollections {
     return new RubyDate(c.getTime());
   }
 
+  /**
+   * Creates a RubyDate by given year, month, day, hour, minute, second and
+   * millisecond.
+   * 
+   * @param year
+   *          of a date
+   * @param month
+   *          of a date
+   * @param day
+   *          of a date
+   * @param hour
+   *          of a date
+   * @param min
+   *          of a date
+   * @param sec
+   *          of a date
+   * @param millisec
+   *          of a date
+   * @return a RubyDate
+   */
   public static RubyDate date(int year, int month, int day, int hour, int min,
       int sec, int millisec) {
     Calendar c = Calendar.getInstance();

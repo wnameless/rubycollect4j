@@ -21,7 +21,9 @@
 package net.sf.rubycollect4j;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -35,6 +37,7 @@ import static com.google.common.collect.Maps.newHashMap;
 import static com.google.common.collect.Sets.newLinkedHashSet;
 import static net.sf.rubycollect4j.RubyArray.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.Hash;
+import static net.sf.rubycollect4j.RubyCollections.date;
 import static net.sf.rubycollect4j.RubyCollections.hp;
 import static net.sf.rubycollect4j.RubyCollections.newPair;
 import static net.sf.rubycollect4j.RubyCollections.qr;
@@ -136,6 +139,105 @@ public class RubyCollectionsTest {
   @Test
   public void testHash() {
     assertEquals(rh(1, 2, 3, 4, 5, 6), Hash(ra(hp(1, 2), hp(3, 4), hp(5, 6))));
+  }
+
+  @Test
+  public void testDate() {
+    Date date = new Date();
+    assertTrue(date(date) instanceof RubyDate);
+    assertTrue(date.equals(date(date)));
+    assertTrue(date(date).equals(date));
+  }
+
+  @Test
+  public void testDate1() {
+    Calendar c = Calendar.getInstance();
+    c.set(Calendar.YEAR, 2013);
+    c.set(Calendar.MONTH, 0);
+    c.set(Calendar.DAY_OF_MONTH, 1);
+    c.set(Calendar.HOUR_OF_DAY, 0);
+    c.set(Calendar.MINUTE, 0);
+    c.set(Calendar.SECOND, 0);
+    c.set(Calendar.MILLISECOND, 0);
+    assertEquals(c.getTime(), date(2013));
+  }
+
+  @Test
+  public void testDate2() {
+    Calendar c = Calendar.getInstance();
+    c.set(Calendar.YEAR, 2013);
+    c.set(Calendar.MONTH, 6);
+    c.set(Calendar.DAY_OF_MONTH, 1);
+    c.set(Calendar.HOUR_OF_DAY, 0);
+    c.set(Calendar.MINUTE, 0);
+    c.set(Calendar.SECOND, 0);
+    c.set(Calendar.MILLISECOND, 0);
+    assertEquals(c.getTime(), date(2013, 7));
+  }
+
+  @Test
+  public void testDate3() {
+    Calendar c = Calendar.getInstance();
+    c.set(Calendar.YEAR, 2013);
+    c.set(Calendar.MONTH, 6);
+    c.set(Calendar.DAY_OF_MONTH, 7);
+    c.set(Calendar.HOUR_OF_DAY, 0);
+    c.set(Calendar.MINUTE, 0);
+    c.set(Calendar.SECOND, 0);
+    c.set(Calendar.MILLISECOND, 0);
+    assertEquals(c.getTime(), date(2013, 7, 7));
+  }
+
+  @Test
+  public void testDate4() {
+    Calendar c = Calendar.getInstance();
+    c.set(Calendar.YEAR, 2013);
+    c.set(Calendar.MONTH, 6);
+    c.set(Calendar.DAY_OF_MONTH, 7);
+    c.set(Calendar.HOUR_OF_DAY, 13);
+    c.set(Calendar.MINUTE, 0);
+    c.set(Calendar.SECOND, 0);
+    c.set(Calendar.MILLISECOND, 0);
+    assertEquals(c.getTime(), date(2013, 7, 7, 13));
+  }
+
+  @Test
+  public void testDate5() {
+    Calendar c = Calendar.getInstance();
+    c.set(Calendar.YEAR, 2013);
+    c.set(Calendar.MONTH, 6);
+    c.set(Calendar.DAY_OF_MONTH, 7);
+    c.set(Calendar.HOUR_OF_DAY, 13);
+    c.set(Calendar.MINUTE, 22);
+    c.set(Calendar.SECOND, 0);
+    c.set(Calendar.MILLISECOND, 0);
+    assertEquals(c.getTime(), date(2013, 7, 7, 13, 22));
+  }
+
+  @Test
+  public void testDate6() {
+    Calendar c = Calendar.getInstance();
+    c.set(Calendar.YEAR, 2013);
+    c.set(Calendar.MONTH, 6);
+    c.set(Calendar.DAY_OF_MONTH, 7);
+    c.set(Calendar.HOUR_OF_DAY, 11);
+    c.set(Calendar.MINUTE, 22);
+    c.set(Calendar.SECOND, 33);
+    c.set(Calendar.MILLISECOND, 0);
+    assertEquals(c.getTime(), date(2013, 7, 7, 11, 22, 33));
+  }
+
+  @Test
+  public void testDate7() {
+    Calendar c = Calendar.getInstance();
+    c.set(Calendar.YEAR, 2013);
+    c.set(Calendar.MONTH, 6);
+    c.set(Calendar.DAY_OF_MONTH, 7);
+    c.set(Calendar.HOUR_OF_DAY, 11);
+    c.set(Calendar.MINUTE, 22);
+    c.set(Calendar.SECOND, 33);
+    c.set(Calendar.MILLISECOND, 999);
+    assertEquals(c.getTime(), date(2013, 7, 7, 11, 22, 33, 999));
   }
 
 }
