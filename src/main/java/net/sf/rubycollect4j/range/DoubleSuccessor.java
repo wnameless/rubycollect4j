@@ -22,37 +22,41 @@ package net.sf.rubycollect4j.range;
 
 /**
  * 
- * DoubleSuccessor generates a successor of any given Double. It's a singleton
- * object.
+ * DoubleSuccessor generates a successor of any given Double. It requires a
+ * precision to determine what is the number to increase on every successor.
  * 
  */
 public final class DoubleSuccessor implements Successive<Double> {
 
-  private static volatile DoubleSuccessor INSTANCE;
+  private final int precision;
 
   /**
-   * Returns the singleton DoubleSuccessor object.
+   * The constructor of the DoubleSuccessor.
    * 
-   * @return a DoubleSuccessor
+   * @param precision
+   *          of each successor
    */
-  public static DoubleSuccessor getInstance() {
-    if (INSTANCE == null) {
-      synchronized (LongSuccessor.class) {
-        if (INSTANCE == null) {
-          INSTANCE = new DoubleSuccessor();
-        }
-      }
+  public DoubleSuccessor(int precision) {
+    if (precision < 0) {
+      throw new IllegalArgumentException("negative precision");
     }
-    return INSTANCE;
+    this.precision = precision;
   }
 
-  private DoubleSuccessor() {}
+  /**
+   * The constructor of the DoubleSuccessor.
+   * 
+   * @param predecessor
+   *          used to define the precision
+   */
+  public DoubleSuccessor(double predecessor) {
+    String doubleStr = String.valueOf(predecessor);
+    precision = doubleStr.length() - doubleStr.lastIndexOf('.') - 1;
+  }
 
   @Override
   public Double succ(Double curr) {
-    String doubleStr = curr.toString();
-    int precision = doubleStr.lastIndexOf('.');
-    return curr + 1.0 / Math.pow(10, doubleStr.length() - precision - 1);
+    return curr + 1.0 / Math.pow(10, precision);
   }
 
   @Override

@@ -30,7 +30,7 @@ public class RubyRangeTest {
         .toA());
     assertEquals(ra("999", "1000", "1001"), range("999", "1001").toA());
     assertEquals(ra("1.2", "1.3", "1.4", "1.5"), range("1.2", "1.5").toA());
-    assertEquals(ra("1.48", "1.49", "1.50"), range("1.48", "1.5").toA());
+    assertEquals(ra("1.49", "1.50", "1.51"), range("1.49", "1.51").toA());
     assertEquals(ra(), range("zzz", "aaa").toA());
     assertEquals(ra("Z", "AA", "AB"), range("Z", "AB").toA());
   }
@@ -48,7 +48,7 @@ public class RubyRangeTest {
 
   @Test
   public void testRangeWithDouble() {
-    assertEquals(ra(1.08, 1.09, 1.10), range(1.08, 1.1).toA());
+    assertEquals(ra(1.08, 1.09, 1.10, 1.11), range(1.08, 1.11).toA());
     assertEquals(ra(), range(-1.0, -2.0).toA());
   }
 
