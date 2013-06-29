@@ -45,17 +45,6 @@ public final class DoubleSuccessor implements Successive<Double> {
     this.precision = precision;
   }
 
-  /**
-   * The constructor of the DoubleSuccessor.
-   * 
-   * @param predecessor
-   *          used to define the precision
-   */
-  public DoubleSuccessor(double predecessor) {
-    String doubleStr = String.valueOf(predecessor);
-    precision = doubleStr.length() - doubleStr.lastIndexOf('.') - 1;
-  }
-
   @Override
   public Double succ(Double curr) {
     return curr + 1.0 / Math.pow(10, precision);

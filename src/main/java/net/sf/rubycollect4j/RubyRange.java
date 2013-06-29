@@ -108,7 +108,9 @@ public final class RubyRange<E extends Comparable<E>> extends RubyEnumerable<E> 
    */
   public static RubyRange<Double> newRubyRange(double startPoint,
       double endPoint) {
-    return new RubyRange<Double>(new DoubleSuccessor(startPoint), startPoint,
+    String doubleStr = String.valueOf(startPoint);
+    int precision = doubleStr.length() - doubleStr.lastIndexOf('.') - 1;
+    return new RubyRange<Double>(new DoubleSuccessor(precision), startPoint,
         endPoint);
   }
 
