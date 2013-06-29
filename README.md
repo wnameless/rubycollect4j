@@ -65,6 +65,11 @@ p( ra(ra(1, 2)) );   // Output: [[1, 2]]
 List<Integer> list = new ArrayList<Integer>();
 list.add(1);
 p( ra(list) );       // Output: [1]
+Map<Integer, String> map = new LinkedHashMap<Integer, String>();
+map.put(1, "a");
+map.put(1, "b");
+// Any Iterable or Iterator object can be converted into RubyArray.
+p( ra(map.values) ); // Output: [a, b]
 ```
 
 ```java
@@ -101,6 +106,20 @@ p( range("Z", "AB").toA );                              // Output: [Z, AA, AB]
 p( range(1.08, 1.1).toA );                              // Output: [1.08, 1.09, 1.10]
 p( range("1.08", "1.1").toA );                          // Output: [1.08, 1.09, 1.10]
 p( range(date(2013, 06, 30), date(2013, 07, 01)).toA ); // Output: [Sun Jun 30 00:00:00 CST 2013, Mon Jul 01 00:00:00 CST 2013]
+```
+
+Demo date():
+```java
+p( date(2013, 7, 1).add(10).days() );             // Output: Thu Jul 11 00:00:00 CST 2013
+p( date(2013, 7, 1, 21).minus(30).minutes() );    // Output: Mon Jul 01 20:30:00 CST 2013
+p( date(2013, 7, 7, 16, 15, 14).beginningOfDay ); // Output: Sun Jul 07 00:00:00 CST 2013
+p( date(2013, 7, 7, 16, 15, 14).endOfDay );       // Output: Sun Jul 07 23:59:59 CST 2013
+p( date(2013, 7, 11).beginningOfWeek );           // Output: Sun Jul 07 00:00:00 CST 2013
+p( RubyDate.today() );                            // Output: date of today
+p( RubyDate.tomorrow() );                         // Output: date of tomorrow
+p( RubyDate.yesterday() );                        // Output: date of yesterday
+p( date(new Date()) instanceof RubyDate );        // Output: true
+p( date(new Date()) instanceof Date );            // Output: true
 ```
 
 Demo qw():

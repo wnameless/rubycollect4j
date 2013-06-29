@@ -29,8 +29,14 @@ import java.util.Date;
  * and adds few useful methods which are inspired by Ruby on Rails.
  * 
  */
-@SuppressWarnings("serial")
 public final class RubyDate extends Date {
+
+  private static final long serialVersionUID = -8002198927043898170L;
+
+  /**
+   * The constructor of the RubyDate.
+   */
+  public RubyDate() {}
 
   /**
    * The constructor of the RubyDate.
@@ -98,7 +104,7 @@ public final class RubyDate extends Date {
 
   /**
    * Returns a new RubyDate with time set to the beginning of week based on this
-   * RubyDate.
+   * RubyDate. The beginning of week is Sunday.
    * 
    * @return a new RubyDate
    */

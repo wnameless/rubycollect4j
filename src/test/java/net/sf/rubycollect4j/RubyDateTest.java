@@ -36,7 +36,7 @@ public class RubyDateTest {
 
   @Before
   public void setUp() throws Exception {
-    rd = new RubyDate(new Date());
+    rd = new RubyDate();
     c = Calendar.getInstance();
     c.setTime(rd);
   }
@@ -45,6 +45,13 @@ public class RubyDateTest {
   public void testConstructor() {
     assertTrue(rd instanceof RubyDate);
     assertTrue(rd instanceof Date);
+  }
+
+  @Test
+  public void testConstructorWithDate() {
+    Date date = new Date();
+    rd = new RubyDate(date);
+    assertEquals(date, rd);
   }
 
   @Test
