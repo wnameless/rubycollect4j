@@ -20,6 +20,8 @@
  */
 package net.sf.rubycollect4j.range;
 
+import com.google.common.base.Objects;
+
 /**
  * 
  * DoubleSuccessor generates a successor of any given Double. It requires a
@@ -62,6 +64,20 @@ public final class DoubleSuccessor implements Successive<Double> {
   @Override
   public int compare(Double arg0, Double arg1) {
     return arg0.compareTo(arg1);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o instanceof DoubleSuccessor) {
+      DoubleSuccessor ds = (DoubleSuccessor) o;
+      return Objects.equal(precision, ds.precision);
+    }
+    return false;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(precision);
   }
 
 }
