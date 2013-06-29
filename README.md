@@ -3,7 +3,7 @@ rubycollect4j
 Ruby Collections for Java.
 
 The rubycollect4j implements all methods refer to Ruby Array, Hash, Enumerable and Range.
-It also implements parts of Ruby Dir & File methods.
+It also implements parts of Ruby Dir, File and Date methods.
 
 For further information, please visit http://ruby-doc.org website.
 
@@ -14,7 +14,7 @@ Installation with Maven:
 <dependency>
   <groupId>net.sf.rubycollect4j</groupId>
 	<artifactId>rubycollect4j</artifactId>
-	<version>1.1.0</version>
+	<version>1.1.1</version>
 </dependency>
 ```
 
@@ -112,14 +112,13 @@ Demo date():
 ```java
 p( date(2013, 7, 1).add(10).days() );             // Output: Thu Jul 11 00:00:00 CST 2013
 p( date(2013, 7, 1, 21).minus(30).minutes() );    // Output: Mon Jul 01 20:30:00 CST 2013
-p( date(2013, 7, 7, 16, 15, 14).beginningOfDay ); // Output: Sun Jul 07 00:00:00 CST 2013
 p( date(2013, 7, 7, 16, 15, 14).endOfDay );       // Output: Sun Jul 07 23:59:59 CST 2013
 p( date(2013, 7, 11).beginningOfWeek );           // Output: Sun Jul 07 00:00:00 CST 2013
 p( RubyDate.today() );                            // Output: date of today
-p( RubyDate.tomorrow() );                         // Output: date of tomorrow
 p( RubyDate.yesterday() );                        // Output: date of yesterday
-p( date(new Date()) instanceof RubyDate );        // Output: true
-p( date(new Date()) instanceof Date );            // Output: true
+Calendar c = Calendar.getInstance();
+c.clear();
+p( date(c.getTime()) );                           // Output: Thu Jan 01 00:00:00 CST 1970
 ```
 
 Demo qw():

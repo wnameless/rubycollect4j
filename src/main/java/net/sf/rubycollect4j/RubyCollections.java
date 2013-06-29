@@ -27,7 +27,6 @@ import java.util.AbstractMap.SimpleEntry;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -37,7 +36,6 @@ import java.util.regex.Pattern;
 
 import static net.sf.rubycollect4j.RubyArray.newRubyArray;
 import static net.sf.rubycollect4j.RubyHash.newRubyHash;
-import static net.sf.rubycollect4j.RubyKernel.p;
 import static net.sf.rubycollect4j.RubyRange.newRubyRange;
 
 /**
@@ -942,12 +940,4 @@ public final class RubyCollections {
     return new RubyDate(c.getTime());
   }
 
-  public static void main(String[] args) {
-    p(ra(new LinkedHashMap<Integer, String>() {
-      {
-        put(1, "a");
-        put(2, "b");
-      }
-    }.values()));
-  }
 }
