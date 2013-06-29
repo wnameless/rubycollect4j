@@ -8,9 +8,15 @@ Version 1.1.0
 + Added RubyRange
 
 
-Version 1.1.1
+Version 1.2.0
 
 + Added RubyDate
+
+- Removed net.sf.rubycollect4j.range package
+
++ Added net.sf.rubycollect4j.succ package
+
+* Moved net.sf.rubycollect4j.range to net.sf.rubycollect4j.succ
 
 * Made constructors of utility classes private
 

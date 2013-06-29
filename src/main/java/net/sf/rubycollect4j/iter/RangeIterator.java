@@ -23,7 +23,7 @@ package net.sf.rubycollect4j.iter;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import net.sf.rubycollect4j.range.Successive;
+import net.sf.rubycollect4j.succ.Successive;
 
 /**
  * 

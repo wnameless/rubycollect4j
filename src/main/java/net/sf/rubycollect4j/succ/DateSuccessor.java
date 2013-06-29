@@ -18,43 +18,49 @@
  * the License.
  *
  */
-package net.sf.rubycollect4j.range;
+package net.sf.rubycollect4j.succ;
+
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * 
- * LongSuccessor generates a successor of any given Long. It's a singleton
+ * DateSuccessor generates a successor of any given Date. It's a singleton
  * object.
  * 
  */
-public final class LongSuccessor implements Successive<Long> {
+public final class DateSuccessor implements Successive<Date> {
 
-  private static volatile LongSuccessor INSTANCE;
+  private static volatile DateSuccessor INSTANCE;
 
   /**
-   * Returns the singleton LongSuccessor object.
+   * Returns the singleton DateSuccessor object.
    * 
-   * @return a LongSuccessor
+   * @return a DateSuccessor
    */
-  public static LongSuccessor getInstance() {
+  public static DateSuccessor getInstance() {
     if (INSTANCE == null) {
-      synchronized (LongSuccessor.class) {
+      synchronized (DateSuccessor.class) {
         if (INSTANCE == null) {
-          INSTANCE = new LongSuccessor();
+          INSTANCE = new DateSuccessor();
         }
       }
     }
     return INSTANCE;
   }
 
-  private LongSuccessor() {}
+  private DateSuccessor() {}
 
   @Override
-  public Long succ(Long curr) {
-    return curr + 1;
+  public Date succ(Date curr) {
+    Calendar c = Calendar.getInstance();
+    c.setTime(curr);
+    c.add(Calendar.DATE, 1);
+    return c.getTime();
   }
 
   @Override
-  public int compare(Long arg0, Long arg1) {
+  public int compare(Date arg0, Date arg1) {
     return arg0.compareTo(arg1);
   }
 

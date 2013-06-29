@@ -25,12 +25,12 @@ import java.util.Date;
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.iter.RangeIterable;
 import net.sf.rubycollect4j.iter.StepIterable;
-import net.sf.rubycollect4j.range.DateSuccessor;
-import net.sf.rubycollect4j.range.DoubleSuccessor;
-import net.sf.rubycollect4j.range.IntegerSuccessor;
-import net.sf.rubycollect4j.range.LongSuccessor;
-import net.sf.rubycollect4j.range.StringSuccessor;
-import net.sf.rubycollect4j.range.Successive;
+import net.sf.rubycollect4j.succ.DateSuccessor;
+import net.sf.rubycollect4j.succ.DoubleSuccessor;
+import net.sf.rubycollect4j.succ.IntegerSuccessor;
+import net.sf.rubycollect4j.succ.LongSuccessor;
+import net.sf.rubycollect4j.succ.StringSuccessor;
+import net.sf.rubycollect4j.succ.Successive;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Strings;

@@ -18,7 +18,7 @@
  * the License.
  *
  */
-package net.sf.rubycollect4j.range;
+package net.sf.rubycollect4j.succ;
 
 import java.util.Comparator;
 
