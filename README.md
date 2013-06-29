@@ -67,6 +67,16 @@ list.add(1);
 p( ra(list) );       // Output: [1]
 ```
 
+```java
+// By default, RubyArray is just a wrapper to an existed List.
+// You can make a defensive copy by following codes.
+import static net.sf.rubycollect4j.RubyArray.newRubyArray;
+
+List<Integer> list = new ArrayList<Integer>();
+list.add(1);
+RubyArray<Integer> ra = newRubyArray(list, true);
+```
+
 Demo rh() & Hash():
 ```java
 p( rh("a", 1, "b" ,2) );               // Output: {a=1, b=2}
@@ -74,13 +84,23 @@ p( rh(hp("a", 1), hp("b" ,2)) );       // Output: {a=1, b=2}
 p( Hash(ra(hp("a", 1), hp("b" ,2))) ); // Output: {a=1, b=2}
 ```
 
+```java
+// By default, RubyHash makes a copy of input Map.
+// You can only wrap a LinkedHashMap up by following codes, because the keys of RubyHash need to be ordered.
+import static net.sf.rubycollect4j.RubyHash.newRubyHash;
+
+LinkedHashMap<Integer, String> map = new LinkedHashMap<Integer, String>();
+map.put(1, "a");
+RubyHash<Integer, String> rh = newRubyHash(map, false);
+```
+
 Demo range():
 ```java
-p( range(1, 5).to_a );                                   // Output: [1, 2, 3, 4, 5]
-p( range("Z", "AB").to_a );                              // Output: [Z, AA, AB]
-p( range(1.08, 1.1).to_a );                              // Output: [1.08, 1.09, 1.10]
-p( range("1.08", "1.1").to_a );                          // Output: [1.08, 1.09, 1.10]
-p( range(date(2013, 06, 30), date(2013, 07, 01)).to_a ); // Output: [Sun Jun 30 00:00:00 CST 2013, Mon Jul 01 00:00:00 CST 2013]
+p( range(1, 5).toA );                                   // Output: [1, 2, 3, 4, 5]
+p( range("Z", "AB").toA );                              // Output: [Z, AA, AB]
+p( range(1.08, 1.1).toA );                              // Output: [1.08, 1.09, 1.10]
+p( range("1.08", "1.1").toA );                          // Output: [1.08, 1.09, 1.10]
+p( range(date(2013, 06, 30), date(2013, 07, 01)).toA ); // Output: [Sun Jun 30 00:00:00 CST 2013, Mon Jul 01 00:00:00 CST 2013]
 ```
 
 Demo qw():
