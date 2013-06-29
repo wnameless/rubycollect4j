@@ -30,6 +30,8 @@ import static java.lang.System.out;
  */
 public final class RubyKernel {
 
+  private RubyKernel() {}
+
   /**
    * Equivalent to System.out.println().
    */

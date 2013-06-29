@@ -301,14 +301,14 @@ public final class RubyRange<E extends Comparable<E>> extends RubyEnumerable<E> 
 
   @Override
   public boolean equals(Object o) {
-    if (!(o instanceof RubyRange)) {
-      return false;
+    if (o instanceof RubyRange) {
+      @SuppressWarnings("rawtypes")
+      RubyRange rr = (RubyRange) o;
+      return Objects.equal(successive, rr.successive)
+          && Objects.equal(startPoint, rr.startPoint)
+          && Objects.equal(endPoint, rr.endPoint);
     }
-    @SuppressWarnings("rawtypes")
-    RubyRange rr = (RubyRange) o;
-    return Objects.equal(successive, rr.successive)
-        && Objects.equal(startPoint, rr.startPoint)
-        && Objects.equal(endPoint, rr.endPoint);
+    return false;
   }
 
   @Override

@@ -2051,8 +2051,6 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
 
   @Override
   public boolean equals(Object o) {
-    if (!(o instanceof List))
-      return false;
     return list.equals(o);
   }
 

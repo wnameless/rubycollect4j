@@ -1464,8 +1464,6 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
 
   @Override
   public boolean equals(Object o) {
-    if (!(o instanceof Map))
-      return false;
     return map.equals(o);
   }
 

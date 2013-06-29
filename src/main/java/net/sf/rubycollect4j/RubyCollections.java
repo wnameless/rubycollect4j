@@ -45,6 +45,8 @@ import static net.sf.rubycollect4j.RubyRange.newRubyRange;
  */
 public final class RubyCollections {
 
+  private RubyCollections() {}
+
   /**
    * Creates a regular expression Pattern.
    * 
