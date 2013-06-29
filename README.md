@@ -52,7 +52,7 @@ p(result);
 // Output: "mpis"
 ```
 
-Please add following line before running examples:
+Please add following lines before running examples:
 ```java
 import static net.sf.rubycollect4j.RubyCollections.*;
 import static net.sf.rubycollect4j.RubyKernel.p;

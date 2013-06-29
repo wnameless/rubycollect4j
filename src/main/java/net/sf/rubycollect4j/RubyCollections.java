@@ -751,22 +751,92 @@ public final class RubyCollections {
     return newRubyRange(start, end);
   }
 
-  /**
-   * Create a Date by given year, month and date.
-   * 
-   * @param year
-   *          of the Date
-   * @param month
-   *          of the Date
-   * @param date
-   *          of the Date
-   * @return a Date
-   */
-  public static Date date(int year, int month, int date) {
+  public static RubyDate date(Date date) {
+    return new RubyDate(date);
+  }
+
+  public static RubyDate date(int year) {
     Calendar c = Calendar.getInstance();
-    c.set(year, month, date, 0, 0, 0);
+    c.set(Calendar.YEAR, year);
+    c.set(Calendar.MONTH, 0);
+    c.set(Calendar.DAY_OF_MONTH, 1);
+    c.set(Calendar.HOUR_OF_DAY, 0);
+    c.set(Calendar.SECOND, 0);
     c.set(Calendar.MILLISECOND, 0);
-    return c.getTime();
+    return new RubyDate(c.getTime());
+  }
+
+  public static RubyDate date(int year, int month) {
+    Calendar c = Calendar.getInstance();
+    c.set(Calendar.YEAR, year);
+    c.set(Calendar.MONTH, month - 1);
+    c.set(Calendar.DAY_OF_MONTH, 1);
+    c.set(Calendar.HOUR_OF_DAY, 0);
+    c.set(Calendar.SECOND, 0);
+    c.set(Calendar.MILLISECOND, 0);
+    return new RubyDate(c.getTime());
+  }
+
+  public static RubyDate date(int year, int month, int day) {
+    Calendar c = Calendar.getInstance();
+    c.set(Calendar.YEAR, year);
+    c.set(Calendar.MONTH, month - 1);
+    c.set(Calendar.DAY_OF_MONTH, day);
+    c.set(Calendar.HOUR_OF_DAY, 0);
+    c.set(Calendar.MINUTE, 0);
+    c.set(Calendar.SECOND, 0);
+    c.set(Calendar.MILLISECOND, 0);
+    return new RubyDate(c.getTime());
+  }
+
+  public static RubyDate date(int year, int month, int day, int hour) {
+    Calendar c = Calendar.getInstance();
+    c.set(Calendar.YEAR, year);
+    c.set(Calendar.MONTH, month - 1);
+    c.set(Calendar.DAY_OF_MONTH, day);
+    c.set(Calendar.HOUR_OF_DAY, hour);
+    c.set(Calendar.MINUTE, 0);
+    c.set(Calendar.SECOND, 0);
+    c.set(Calendar.MILLISECOND, 0);
+    return new RubyDate(c.getTime());
+  }
+
+  public static RubyDate date(int year, int month, int day, int hour, int min) {
+    Calendar c = Calendar.getInstance();
+    c.set(Calendar.YEAR, year);
+    c.set(Calendar.MONTH, month - 1);
+    c.set(Calendar.DAY_OF_MONTH, day);
+    c.set(Calendar.HOUR_OF_DAY, hour);
+    c.set(Calendar.MINUTE, min);
+    c.set(Calendar.SECOND, 0);
+    c.set(Calendar.MILLISECOND, 0);
+    return new RubyDate(c.getTime());
+  }
+
+  public static RubyDate date(int year, int month, int day, int hour, int min,
+      int sec) {
+    Calendar c = Calendar.getInstance();
+    c.set(Calendar.YEAR, year);
+    c.set(Calendar.MONTH, month - 1);
+    c.set(Calendar.DAY_OF_MONTH, day);
+    c.set(Calendar.HOUR_OF_DAY, hour);
+    c.set(Calendar.MINUTE, min);
+    c.set(Calendar.SECOND, sec);
+    c.set(Calendar.MILLISECOND, 0);
+    return new RubyDate(c.getTime());
+  }
+
+  public static RubyDate date(int year, int month, int day, int hour, int min,
+      int sec, int millisec) {
+    Calendar c = Calendar.getInstance();
+    c.set(Calendar.YEAR, year);
+    c.set(Calendar.MONTH, month - 1);
+    c.set(Calendar.DAY_OF_MONTH, day);
+    c.set(Calendar.HOUR_OF_DAY, hour);
+    c.set(Calendar.MINUTE, min);
+    c.set(Calendar.SECOND, sec);
+    c.set(Calendar.MILLISECOND, millisec);
+    return new RubyDate(c.getTime());
   }
 
 }
