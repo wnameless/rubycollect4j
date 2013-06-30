@@ -30,7 +30,7 @@ import java.util.Comparator;
  * @param <E>
  *          the type of the elements
  */
-public interface Successive<E extends Comparable<E>> extends Comparator<E> {
+public interface Successive<E> extends Comparator<E> {
 
   /**
    * Returns the successor of given element.

@@ -12,16 +12,18 @@ Version 1.2.0
 
 + Added RubyDate
 
-- Removed net.sf.rubycollect4j.range package
+* Changed the generic of Successive interface from <E extends Comparable<E>> to <E>
 
 + Added net.sf.rubycollect4j.succ package
 
 * Moved net.sf.rubycollect4j.range to net.sf.rubycollect4j.succ
 
+- Removed net.sf.rubycollect4j.range package
+
 * Made constructors of utility classes private
 
 * Changed RubyCollections::date behavior to close human nature
-  Ex: date(2013, 7, 1) will create RubyDate(2013, Jul, 1) instead of RubyDate(2013, Aug\, 1)
+  Ex: date(2013, 7, 1) will create RubyDate(2013, Jul, 1) instead of RubyDate(2013, Aug, 1)
 
 * Fixed RubyRange::range behavior on the range of double
   range(1.09, 1.11).toA() will generate [1.09, 1.10, 1.11] instead of [1.09, 1.10]
