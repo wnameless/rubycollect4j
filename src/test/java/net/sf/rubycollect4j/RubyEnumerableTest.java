@@ -1301,4 +1301,10 @@ public class RubyEnumerableTest {
     assertTrue(re.iterator() instanceof Iterator);
   }
 
+  @Test
+  public void testToString() {
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
+    assertEquals("RubyEnumerable{[1, 2, 3, 4]}", re.toString());
+  }
+
 }

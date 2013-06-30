@@ -179,9 +179,9 @@ public class RubyFileTest {
 
   @Test
   public void testToString() {
-    rf = RubyFile.open(BASE_DIR + "ruby_file_exist_test.txt");
-    assertEquals("RubyFile{" + BASE_DIR + "ruby_file_exist_test.txt}",
-        rf.toString());
+    rf = RubyFile.open(BASE_DIR + "ruby_file_exist_test.txt", "r");
+    assertEquals("RubyFile{path=" + BASE_DIR
+        + "ruby_file_exist_test.txt, mode=" + "r" + "}", rf.toString());
     rf.close();
   }
 

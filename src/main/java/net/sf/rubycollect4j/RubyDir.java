@@ -349,7 +349,7 @@ public final class RubyDir extends RubyEnumerable<String> {
   @Override
   public String toString() {
     return Objects.toStringHelper(this.getClass())
-        .addValue(directory.getPath()).toString();
+        .add("path", directory.getPath()).toString();
   }
 
 }

@@ -41,8 +41,6 @@ import static net.sf.rubycollect4j.RubyIO.Mode.R;
  */
 public final class RubyFile extends RubyIO {
 
-  private final File file;
-
   /**
    * Creates a RubyFile by given file. Sets the mode to read-only.
    * 
@@ -89,7 +87,6 @@ public final class RubyFile extends RubyIO {
   private RubyFile(File file, Mode mode) throws FileNotFoundException,
       IOException {
     super(file, mode);
-    this.file = file;
   }
 
   /**
@@ -378,8 +375,8 @@ public final class RubyFile extends RubyIO {
 
   @Override
   public String toString() {
-    return Objects.toStringHelper(this.getClass()).addValue(file.getPath())
-        .toString();
+    return Objects.toStringHelper(this.getClass()).add("path", file.getPath())
+        .add("mode", mode).toString();
   }
 
 }

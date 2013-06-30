@@ -24,6 +24,7 @@ import java.util.Iterator;
 
 import net.sf.rubycollect4j.block.Block;
 
+import com.google.common.base.Objects;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.PeekingIterator;
 
@@ -147,6 +148,11 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
   @Override
   public void remove() {
     pIterator.remove();
+  }
+
+  @Override
+  public String toString() {
+    return Objects.toStringHelper(this.getClass()).addValue(iter).toString();
   }
 
 }

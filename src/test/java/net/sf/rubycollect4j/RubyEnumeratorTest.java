@@ -3,16 +3,13 @@ package net.sf.rubycollect4j;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sf.rubycollect4j.RubyEnumerator;
 import net.sf.rubycollect4j.block.Block;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import static net.sf.rubycollect4j.RubyEnumerator.newRubyEnumerator;
-
-
 import static com.google.common.collect.Lists.newArrayList;
+import static net.sf.rubycollect4j.RubyEnumerator.newRubyEnumerator;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -73,6 +70,11 @@ public class RubyEnumeratorTest {
   @Test
   public void testIterator() {
     assertTrue(re.iterator() instanceof Iterator);
+  }
+
+  @Test
+  public void testToString() {
+    assertEquals("RubyEnumerator{[1, 2, 3]}", re.toString());
   }
 
 }

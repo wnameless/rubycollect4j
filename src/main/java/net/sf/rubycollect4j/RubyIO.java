@@ -31,6 +31,8 @@ import java.util.logging.Logger;
 import net.sf.rubycollect4j.block.TransformBlock;
 import net.sf.rubycollect4j.iter.EachLineIterable;
 
+import com.google.common.base.Objects;
+
 import static net.sf.rubycollect4j.RubyCollections.Hash;
 import static net.sf.rubycollect4j.RubyCollections.hp;
 import static net.sf.rubycollect4j.RubyCollections.ra;
@@ -123,6 +125,7 @@ public class RubyIO {
 
   }
 
+  protected final File file;
   protected final RandomAccessFile raFile;
   protected final Mode mode;
 
@@ -137,6 +140,7 @@ public class RubyIO {
    *           if file can't not open
    */
   public RubyIO(File file, Mode mode) throws IOException {
+    this.file = file;
     switch (mode) {
     case RW:
       raFile = new RandomAccessFile(file, "rws");
@@ -281,6 +285,12 @@ public class RubyIO {
       Logger.getLogger(RubyIO.class.getName()).log(Level.SEVERE, null, ex);
     }
     return words.getBytes().length;
+  }
+
+  @Override
+  public String toString() {
+    return Objects.toStringHelper(this.getClass()).add("path", file.getPath())
+        .add("mode", mode).toString();
   }
 
 }

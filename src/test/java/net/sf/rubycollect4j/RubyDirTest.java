@@ -219,7 +219,7 @@ public class RubyDirTest {
 
   @Test
   public void testToString() {
-    assertEquals("RubyDir{" + BASE_DIR.substring(0, BASE_DIR.length() - 1)
+    assertEquals("RubyDir{path=" + BASE_DIR.substring(0, BASE_DIR.length() - 1)
         + "}", RubyDir.open(BASE_DIR).toString());
   }
 

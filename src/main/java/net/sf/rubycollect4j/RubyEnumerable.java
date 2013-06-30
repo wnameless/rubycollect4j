@@ -49,6 +49,7 @@ import net.sf.rubycollect4j.iter.EachWithIndexIterable;
 import net.sf.rubycollect4j.iter.EachWithObjectIterable;
 import net.sf.rubycollect4j.iter.SliceBeforeIterable;
 
+import com.google.common.base.Objects;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -1666,6 +1667,11 @@ public class RubyEnumerable<E> implements Iterable<E> {
   @Override
   public Iterator<E> iterator() {
     return iter.iterator();
+  }
+
+  @Override
+  public String toString() {
+    return Objects.toStringHelper(this.getClass()).addValue(iter).toString();
   }
 
 }

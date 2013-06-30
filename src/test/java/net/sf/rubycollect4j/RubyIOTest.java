@@ -20,6 +20,8 @@
  */
 package net.sf.rubycollect4j;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.NoSuchElementException;
 
 import org.junit.Test;
@@ -167,6 +169,16 @@ public class RubyIOTest {
     assertEquals("a", rf.eachLine().first());
     assertEquals("a", rf.eachLine().first());
     assertEquals(ra("a", "bc", "def"), rf.eachLine().toA());
+  }
+
+  @Test
+  public void testToString() throws IOException {
+    RubyIO rIO =
+        new RubyIO(new File(BASE_DIR + "ruby_io_read_only_mode.txt"),
+            RubyIO.Mode.R);
+    assertEquals("RubyIO{path=" + BASE_DIR
+        + "ruby_io_read_only_mode.txt, mode=" + "r" + "}", rIO.toString());
+    rIO.close();
   }
 
 }
