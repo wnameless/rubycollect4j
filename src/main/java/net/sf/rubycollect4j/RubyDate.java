@@ -25,8 +25,8 @@ import java.util.Date;
 
 /**
  * 
- * RubyDate isn't exact like the Date class of Ruby. It simply extends Java Date
- * and adds few useful methods which are inspired by Ruby on Rails.
+ * RubyDate simply extends Java Date and adds few useful methods which are
+ * inspired by Ruby on Rails.
  * 
  */
 public final class RubyDate extends Date {
