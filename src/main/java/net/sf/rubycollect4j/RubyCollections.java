@@ -40,7 +40,8 @@ import static net.sf.rubycollect4j.RubyRange.newRubyRange;
 
 /**
  * 
- * Provides numerous useful static methods to make rubycollect4j easy to use.
+ * RubyCollections provides numerous useful static methods to make rubycollect4j
+ * easy to use.
  * 
  */
 public final class RubyCollections {

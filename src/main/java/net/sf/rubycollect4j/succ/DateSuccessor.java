@@ -64,4 +64,9 @@ public final class DateSuccessor implements Successive<Date> {
     return arg0.compareTo(arg1);
   }
 
+  @Override
+  public String toString() {
+    return "DateSuccessor";
+  }
+
 }

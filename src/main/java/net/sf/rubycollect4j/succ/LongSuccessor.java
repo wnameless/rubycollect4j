@@ -58,4 +58,9 @@ public final class LongSuccessor implements Successive<Long> {
     return arg0.compareTo(arg1);
   }
 
+  @Override
+  public String toString() {
+    return "LongSuccessor";
+  }
+
 }

@@ -58,4 +58,9 @@ public final class IntegerSuccessor implements Successive<Integer> {
     return arg0.compareTo(arg1);
   }
 
+  @Override
+  public String toString() {
+    return "IntegerSuccessor";
+  }
+
 }

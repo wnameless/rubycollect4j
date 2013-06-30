@@ -69,4 +69,10 @@ public final class DoubleSuccessor implements Successive<Double> {
     return Objects.hashCode(precision);
   }
 
+  @Override
+  public String toString() {
+    return Objects.toStringHelper(this.getClass()).add("precision", precision)
+        .toString();
+  }
+
 }

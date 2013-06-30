@@ -57,9 +57,11 @@ public final class StringSuccessor implements Successive<String> {
 
   @Override
   public String succ(String curr) {
+    if (curr.isEmpty()) {
+      return "";
+    }
     List<List<Character>> parts = partition(curr);
-    if (parts.size() > 1
-        || (parts.size() == 1 && isAlphanumeric(parts.get(0).get(0)))) {
+    if (parts.size() > 1 || isAlphanumeric(parts.get(0).get(0))) {
       nextAlphanumeric(parts);
     } else {
       nextUTF8(parts.get(0));
@@ -162,9 +164,7 @@ public final class StringSuccessor implements Successive<String> {
         chars.add(c);
       }
     }
-    if (!(chars.isEmpty())) {
-      parts.add(chars);
-    }
+    parts.add(chars);
     return parts;
   }
 
@@ -186,6 +186,11 @@ public final class StringSuccessor implements Successive<String> {
       return -1;
     }
     return o1.compareTo(o2);
+  }
+
+  @Override
+  public String toString() {
+    return "StringSuccessor";
   }
 
 }

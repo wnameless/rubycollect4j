@@ -20,6 +20,12 @@
  */
 package net.sf.rubycollect4j;
 
+import net.sf.rubycollect4j.succ.DateSuccessorTest;
+import net.sf.rubycollect4j.succ.DoubleSuccessorTest;
+import net.sf.rubycollect4j.succ.IntegerSuccessorTest;
+import net.sf.rubycollect4j.succ.LongSuccessorTest;
+import net.sf.rubycollect4j.succ.StringSuccessorTest;
+
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
@@ -28,5 +34,8 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({ RubyArrayTest.class, RubyCollectionsTest.class,
     RubyDateTest.class, RubyDirTest.class, RubyEnumerableTest.class,
     RubyEnumeratorTest.class, RubyFileTest.class, RubyHashTest.class,
-    RubyIOTest.class, RubyKernelTest.class, RubyRangeTest.class })
+    RubyIOTest.class, RubyKernelTest.class, RubyRangeTest.class,
+    DateSuccessorTest.class, DoubleSuccessorTest.class,
+    IntegerSuccessorTest.class, LongSuccessorTest.class,
+    StringSuccessorTest.class })
 public class AllTests {}
