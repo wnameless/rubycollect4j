@@ -182,22 +182,22 @@ p( qr("^\\d+$").matcher("123").find() ); // Output: true
 
 Demo RubyDir:
 ```text
-/folder1
-        /folder1-1
-                  /file1-1-1
-                  /file1-1-2
-        /folder1-2
-                  /file1-2-1
-                  /file1-2-2
-                  /file1-2-3
-        /file1-1
-        /file1-2
-        /file1-3
-        /file1-4
+folder1
+       /folder1-1
+                 /file1-1-1
+                 /file1-1-2
+       /folder1-2
+                 /file1-2-1
+                 /file1-2-2
+                 /file1-2-3
+       /file1-1
+       /file1-2
+       /file1-3
+       /file1-4
 ```
 
 ```java
-p( RubyDir.glob("*").sort() );                         // Output: ["folder1", "folder2"]
+p( RubyDir.glob("folder1/*").sort() );                 // Output: ["file1-1", "file1-2", "file1-3", "file1-4", "folder1-1", "folder1-2"]
 p( RubyDir.glob(GLOB_DIR + "**/*1-*-1*").sort() );     // Output: ["folder1/folder1-1/file1-1-1", "folder1/folder1-2/file1-2-1"]
 p( RubyDir.glob(GLOB_DIR + "folder1/*[2,3]").sort() ); // Output: ["file1-2", "file1-3", "folder1-2"]
 ```
