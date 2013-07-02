@@ -218,8 +218,7 @@ public final class RubyRange<E extends Comparable<E>> extends RubyEnumerable<E> 
 
   @Override
   public boolean includeʔ(E item) {
-    return successive.compare(startPoint, item) <= 0
-        && successive.compare(endPoint, item) >= 0;
+    return coverʔ(item);
   }
 
   /**

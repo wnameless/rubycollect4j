@@ -1,6 +1,7 @@
 package net.sf.rubycollect4j;
 
 import net.sf.rubycollect4j.block.Block;
+import net.sf.rubycollect4j.succ.DoubleSuccessor;
 
 import org.junit.Test;
 
@@ -70,6 +71,7 @@ public class RubyRangeTest {
     assertTrue(range(1, 100).coverʔ(1));
     assertTrue(range(1, 100).coverʔ(100));
     assertFalse(range(1, 100).coverʔ(101));
+    assertFalse(range(1, 100).coverʔ(-1));
   }
 
   @Test
@@ -103,6 +105,8 @@ public class RubyRangeTest {
     assertFalse(range(1, 1000).eqlʔ(range(1, 1001)));
     assertFalse(range(1, 1000).eqlʔ(range(2, 1000)));
     assertFalse(range(1, 1000).eqlʔ(null));
+    assertFalse(new RubyRange<Double>(new DoubleSuccessor(1), 1.0, 2.0)
+        .eqlʔ(new RubyRange<Double>(new DoubleSuccessor(2), 1.0, 2.0)));
   }
 
   @Test
@@ -117,6 +121,7 @@ public class RubyRangeTest {
     assertTrue(range(1, 100).includeʔ(1));
     assertTrue(range(1, 100).includeʔ(100));
     assertFalse(range(1, 100).includeʔ(101));
+    assertFalse(range(1, 100).coverʔ(-1));
   }
 
   @Test
@@ -177,7 +182,12 @@ public class RubyRangeTest {
 
   @Test
   public void testEquals() {
-    assertEquals(range(1, 10), range(1, 10));
+    assertTrue(range(1, 1000).equals(range(1, 1000)));
+    assertFalse(range(1, 1000).equals(range(1, 1001)));
+    assertFalse(range(1, 1000).equals(range(2, 1000)));
+    assertFalse(range(1, 1000).equals(null));
+    assertFalse(new RubyRange<Double>(new DoubleSuccessor(1), 1.0, 2.0)
+        .equals(new RubyRange<Double>(new DoubleSuccessor(2), 1.0, 2.0)));
   }
 
   @Test

@@ -541,17 +541,11 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    */
   public RubyHash<K, V>
       mergeǃ(Map<K, V> otherHash, EntryMergeBlock<K, V> block) {
-    for (Entry<K, V> item : entrySet()) {
-      if (containsKey(item.getKey()) && otherHash.containsKey(item.getKey())) {
-        put(item.getKey(),
-            block.yield(item.getKey(), item.getValue(),
-                otherHash.get(item.getKey())));
-      } else {
-        put(item.getKey(), item.getValue());
-      }
-    }
     for (Entry<K, V> item : otherHash.entrySet()) {
-      if (!containsKey(item.getKey())) {
+      if (containsKey(item.getKey())) {
+        put(item.getKey(),
+            block.yield(item.getKey(), get(item.getKey()), item.getValue()));
+      } else {
         put(item.getKey(), item.getValue());
       }
     }
