@@ -32,4 +32,4 @@ Version 1.2.0
 
 Version 1.2.1
 
-* Fixed the bug of RubyDir.glob("**/*") missed to retrieve the first level files
+* Bug fixed: RubyDir.glob("**/*") missed to retrieve the files of the very top level directory
