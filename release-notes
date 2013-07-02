@@ -35,3 +35,5 @@ Version 1.2.1
 * Bug fixed: RubyDir.glob("**/*") missed to retrieve the files of the very top level directory
 
 + Added weeks() to DateShifter which means date(2013, 1, 1).add(7).weeks() is able to use
+
++ Made rh() accept up to 20 pairs
