@@ -71,6 +71,14 @@ public class RubyDateTest {
   }
 
   @Test
+  public void testShiftWeek() {
+    c.add(Calendar.DAY_OF_MONTH, 1 * 7);
+    assertEquals(c.getTime(), rd.add(1).weeks());
+    c.add(Calendar.DAY_OF_MONTH, -2 * 7);
+    assertEquals(c.getTime(), rd.minus(1).weeks());
+  }
+
+  @Test
   public void testShiftDay() {
     c.add(Calendar.DAY_OF_MONTH, 1);
     assertEquals(c.getTime(), rd.add(1).days());

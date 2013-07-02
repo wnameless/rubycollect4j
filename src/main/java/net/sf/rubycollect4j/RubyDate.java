@@ -224,6 +224,18 @@ public final class RubyDate extends Date {
     }
 
     /**
+     * Shifts the time by weeks.
+     * 
+     * @return a RubyDate
+     */
+    public RubyDate weeks() {
+      Calendar c = Calendar.getInstance();
+      c.setTime(date);
+      c.add(Calendar.DAY_OF_MONTH, interval * 7);
+      return new RubyDate(c.getTime());
+    }
+
+    /**
      * Shifts the time by days.
      * 
      * @return a RubyDate
