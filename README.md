@@ -87,8 +87,11 @@ RubyArray<Integer> ra = newRubyArray(list, true);
 Demo rh(), hp() & Hash():
 ```java
 p( rh("a", 1, "b" ,2) );               // Output: {a=1, b=2}
+Map<String, Long> map = new HashMap<String, Long>();
+map.put("abc", 123L);
+// Any Map can be converted into RubyHash.
+p( hp(map) );                          // Output: {abc=123}
 // hp() simply creates an Entry and the word 'hp' means hash pair
-p( rh(hp("a", 1), hp("b" ,2)) );       // Output: {a=1, b=2}
 p( Hash(ra(hp("a", 1), hp("b" ,2))) ); // Output: {a=1, b=2}
 // RubyHash is also a Map.
 p( rh(1, 2, 3, 4) instanceof Map );    // Output: true
