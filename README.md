@@ -60,16 +60,18 @@ import static net.sf.rubycollect4j.RubyKernel.p;
 
 Demo ra():
 ```java
-p( ra(1, 2, 3, 4) ); // Output: [1, 2, 3, 4]
-p( ra(ra(1, 2)) );   // Output: [[1, 2]]
+p( ra(1, 2, 3, 4) );              // Output: [1, 2, 3, 4]
+p( ra(ra(1, 2)) );                // Output: [[1, 2]]
 List<Integer> list = new ArrayList<Integer>();
 list.add(1);
-p( ra(list) );       // Output: [1]
+p( ra(list) );                    // Output: [1]
 Map<Integer, String> map = new LinkedHashMap<Integer, String>();
 map.put(1, "a");
 map.put(1, "b");
 // Any Iterable or Iterator object can be converted into RubyArray.
-p( ra(map.values) ); // Output: [a, b]
+p( ra(map.values) );              // Output: [a, b]
+// RubyArray is also an List.
+p( ra(1, 2, 3) instanceof List ); // Output: true
 ```
 
 ```java
@@ -82,11 +84,14 @@ list.add(1);
 RubyArray<Integer> ra = newRubyArray(list, true);
 ```
 
-Demo rh() & Hash():
+Demo rh(), hp() & Hash():
 ```java
 p( rh("a", 1, "b" ,2) );               // Output: {a=1, b=2}
+// hp() simply creates an Entry and the word 'hp' means hash pair
 p( rh(hp("a", 1), hp("b" ,2)) );       // Output: {a=1, b=2}
 p( Hash(ra(hp("a", 1), hp("b" ,2))) ); // Output: {a=1, b=2}
+// RubyHash is also a Map.
+p( rh(1, 2, 3, 4) instanceof Map );    // Output: true
 ```
 
 ```java
@@ -99,26 +104,65 @@ map.put(1, "a");
 RubyHash<Integer, String> rh = newRubyHash(map, false);
 ```
 
+Demo newRubyEnumerable()
+```java
+import static net.sf.rubycollect4j.RubyEnumerable.newRubyEnumerable;
+
+Map<String, Long> map = new LinkedHashMap<String, Long>() {{ put("a", 1L); put("b", 2L); put("c", 3L); }};
+// Any Iterable object can be wrapped up into RubyEnumerable.
+RubyEnumerable<Entry<String, Long>> re = newRubyEnumerable(map.entrySet());
+p( re.drop(1).toA() );       // Output: [b=2, c=3]
+// RubyEnumerable is also an Iterable.
+p( re instanceof Iterable ); // Output: true
+```
+
+```java
+// You can simply make your class inherit all the methods by extending RubyEnumerable.
+public class YourIterableClass<E> extends RubyEnumerable<E> {
+  public YourIterableClass(Iterable<E> iter) { super(iter); }
+}
+```
+
+Demo newRubyEnumerator()
+```java
+import static net.sf.rubycollect4j.RubyEnumerator.newRubyEnumerator;
+
+Map<String, Long> map = new LinkedHashMap<String, Long>() {{ put("a", 1L); put("b", 2L); put("c", 3L); }};
+// Any Iterable or Iterator object can be converted into RubyEnumerator.
+RubyEnumerator<Entry<String, Long>> re = newRubyEnumerator(map.entrySet());
+re = newRubyEnumerator(map.entrySet().iterator());
+// RubyEnumerator is much like RubyEnumerable, but it is both an Iterator and an Iterable.
+p( re instanceof Iterator ); // Output: true
+p( re instanceof Iterable ); // Output: true
+// It can 'peek' and 'rewind'.
+p( re.peek() );              // Output: a=1
+p( re.next() );              // Output: a=1
+p( re.next() );              // Output: b=2
+p( re.peek() );              // Output: c=3
+re.rewind();
+p( re.next() );              // Output: a=1
+```
+
 Demo range():
 ```java
-p( range(1, 5).toA );                                   // Output: [1, 2, 3, 4, 5]
-p( range("Z", "AB").toA );                              // Output: [Z, AA, AB]
-p( range(1.08, 1.1).toA );                              // Output: [1.08, 1.09, 1.10]
-p( range("1.08", "1.1").toA );                          // Output: [1.08, 1.09, 1.10]
-p( range(date(2013, 06, 30), date(2013, 07, 01)).toA ); // Output: [Sun Jun 30 00:00:00 CST 2013, Mon Jul 01 00:00:00 CST 2013]
+p( range(1, 5).toA() );                                   // Output: [1, 2, 3, 4, 5]
+p( range("Z", "AB").toA() );                              // Output: [Z, AA, AB]
+p( range(1.08, 1.1).toA() );                              // Output: [1.08, 1.09, 1.10]
+p( range("1.08", "1.1").toA() );                          // Output: [1.08, 1.09, 1.10]
+p( range(date(2013, 06, 30), date(2013, 07, 01)).toA() ); // Output: [Sun Jun 30 00:00:00 CST 2013, Mon Jul 01 00:00:00 CST 2013]
 ```
 
 Demo date():
 ```java
-p( date(2013, 7, 1).add(10).days() );             // Output: Thu Jul 11 00:00:00 CST 2013
-p( date(2013, 7, 1, 21).minus(30).minutes() );    // Output: Mon Jul 01 20:30:00 CST 2013
-p( date(2013, 7, 7, 16, 15, 14).endOfDay );       // Output: Sun Jul 07 23:59:59 CST 2013
-p( date(2013, 7, 11).beginningOfWeek );           // Output: Sun Jul 07 00:00:00 CST 2013
-p( RubyDate.today() );                            // Output: date of today
-p( RubyDate.yesterday() );                        // Output: date of yesterday
+p( date(2013, 7, 1).add(10).days() );          // Output: Thu Jul 11 00:00:00 CST 2013
+p( date(2013, 7, 1, 21).minus(30).minutes() ); // Output: Mon Jul 01 20:30:00 CST 2013
+p( date(2013, 7, 7, 16, 15, 14).endOfDay() );  // Output: Sun Jul 07 23:59:59 CST 2013
+p( date(2013, 7, 11).beginningOfWeek );        // Output: Sun Jul 07 00:00:00 CST 2013
+p( RubyDate.today() );                         // Output: date of today
+p( RubyDate.yesterday() );                     // Output: date of yesterday
 Calendar c = Calendar.getInstance();
 c.clear();
-p( date(c.getTime()) );                           // Output: Thu Jan 01 00:00:00 CST 1970
+p( date(c.getTime()) );                          // Output: Thu Jan 01 00:00:00 CST 1970
 ```
 
 Demo qw():
