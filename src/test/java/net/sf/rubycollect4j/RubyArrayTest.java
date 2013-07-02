@@ -27,19 +27,15 @@ import java.util.List;
 
 import javax.xml.bind.TypeConstraintException;
 
-import net.sf.rubycollect4j.RubyArray;
-import net.sf.rubycollect4j.RubyEnumerator;
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.block.BooleanBlock;
 import net.sf.rubycollect4j.block.TransformBlock;
 
 import org.junit.Test;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static net.sf.rubycollect4j.RubyArray.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.ra;
-
-
-import static com.google.common.collect.Lists.newArrayList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -80,12 +76,15 @@ public class RubyArrayTest {
     assertEquals(ra(1, 2, 3, 4, 5, 6), ra.plus(ra(5, 6)));
   }
 
+  @SuppressWarnings("unchecked")
   @Test
   public void testAssoc() {
-    @SuppressWarnings("unchecked")
-    RubyArray<RubyArray<Integer>> ra = ra(ra(1, 2, 3), ra(4, 5, 6));
+    RubyArray<? extends List<Integer>> ra = ra(ra(1, 2, 3), ra(4, 5, 6));
     assertEquals(ra(4, 5, 6), ra.assoc(4));
     assertNull(ra.assoc(7));
+    List<Integer> ints = newArrayList();
+    ra = ra(null, ints, ra(1, 2, 3), ra(4, 5, 6));
+    assertEquals(ra(1, 2, 3), ra.assoc(1));
   }
 
   @Test
@@ -557,6 +556,11 @@ public class RubyArrayTest {
     RubyArray<RubyArray<RubyArray<Integer>>> layer3 =
         ra(ra(ra(1), ra(2, 3)), ra(ra(4, 5, 6)));
     assertEquals(ra(1, 2, 3, 4, 5, 6), layer3.flatten());
+    RubyArray<RubyArray<Integer>> ints = ra();
+    @SuppressWarnings("unchecked")
+    RubyArray<RubyArray<RubyArray<Integer>>> layer3WithNull =
+        ra(null, ints, ra(ra(null, 1), ra(2, 3)), ra(ra(4, 5, 6)));
+    assertEquals(ra(null, null, 1, 2, 3, 4, 5, 6), layer3WithNull.flatten());
   }
 
   @Test
@@ -639,6 +643,8 @@ public class RubyArrayTest {
     assertEquals("1,2,3,4", ra.join(","));
     ra.push(null);
     assertEquals("1\t2\t3\t4\t", ra.join("\t"));
+    ra.clear();
+    assertEquals("", ra.join(":"));
   }
 
   @Test
@@ -825,13 +831,16 @@ public class RubyArrayTest {
     assertEquals(ra(1, 2), ra);
   }
 
+  @SuppressWarnings("unchecked")
   @Test
   public void testRassoc() {
-    @SuppressWarnings("unchecked")
-    RubyArray<RubyArray<Integer>> ra =
+    RubyArray<? extends List<Integer>> ra =
         ra(ra(1, 2), ra(3, 4), ra(4, 4), ra(6, 7));
     assertEquals(ra(3, 4), ra.rassoc(4));
     assertNull(ra.rassoc(6));
+    List<Integer> ints = newArrayList();
+    ra = ra(null, ints, ra(1, 2, 3), ra(4, 5, 6));
+    assertEquals(ra(1, 2, 3), ra.rassoc(3));
   }
 
   @Test
@@ -1192,6 +1201,8 @@ public class RubyArrayTest {
     ra = ra(2, 1, 4, 3);
     assertEquals(ra(1, 2, 3, 4), ra.sortǃ());
     assertEquals(ra(1, 2, 3, 4), ra);
+    ra = ra(1);
+    assertEquals(ra(1), ra.sortǃ());
   }
 
   @Test

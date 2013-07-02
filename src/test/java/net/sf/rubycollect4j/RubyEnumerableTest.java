@@ -39,6 +39,7 @@ import org.junit.Test;
 
 import com.google.common.primitives.Ints;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static net.sf.rubycollect4j.RubyArray.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newPair;
 import static net.sf.rubycollect4j.RubyCollections.ra;
@@ -102,6 +103,9 @@ public class RubyEnumerableTest {
     assertEquals(false, re.anyʔ());
     re = newRubyEnumerable(Arrays.asList(1, 2, null));
     assertEquals(true, re.anyʔ());
+    List<Integer> ints = Arrays.asList(null, null);
+    re = newRubyEnumerable(ints);
+    assertEquals(false, re.anyʔ());
   }
 
   @Test
@@ -305,6 +309,9 @@ public class RubyEnumerableTest {
     re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
     assertEquals(RubyEnumerator.class, re.dropWhile().getClass());
     assertEquals(ra(1), re.dropWhile().toA());
+    List<Integer> ints = newArrayList();
+    re = newRubyEnumerable(ints);
+    assertEquals(ra(), re.dropWhile().toA());
   }
 
   @Test
@@ -963,6 +970,9 @@ public class RubyEnumerableTest {
     assertTrue(re.oneʔ());
     re = newRubyEnumerable(Arrays.asList(1, 2));
     assertFalse(re.oneʔ());
+    List<Integer> ints = newArrayList();
+    re = newRubyEnumerable(ints);
+    assertFalse(re.oneʔ());
   }
 
   @Test
@@ -981,6 +991,16 @@ public class RubyEnumerableTest {
       @Override
       public boolean yield(Integer item) {
         return item > 2;
+      }
+
+    }));
+    List<Integer> ints = newArrayList();
+    re = newRubyEnumerable(ints);
+    assertFalse(re.oneʔ(new BooleanBlock<Integer>() {
+
+      @Override
+      public boolean yield(Integer item) {
+        return item > 6;
       }
 
     }));

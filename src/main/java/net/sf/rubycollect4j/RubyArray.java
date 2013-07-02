@@ -674,17 +674,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
       }
     }
     while (!subLists.isEmpty()) {
-      if (subLists.get(0) instanceof List) {
-        List<?> subList = (List<?>) subLists.remove(0);
-        for (Object item : subList) {
-          if (item instanceof List) {
-            subLists.add(item);
-          } else {
-            rubyArray.add((S) item);
-          }
+      List<?> subList = (List<?>) subLists.remove(0);
+      for (Object item : subList) {
+        if (item instanceof List) {
+          subLists.add(item);
+        } else {
+          rubyArray.add((S) item);
         }
-      } else {
-        rubyArray.add((S) subLists.remove(0));
       }
     }
     return rubyArray;
@@ -814,7 +810,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   public String join(String separator) {
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < size(); i++) {
-      if (i > 0 && i != size()) {
+      System.out.println(i + " " + size());
+      if (i > 0) {
         sb.append(separator);
       }
       E item = get(i);
