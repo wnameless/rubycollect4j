@@ -496,19 +496,12 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @return a new RubyHash
    */
   public RubyHash<K, V> merge(Map<K, V> otherHash, EntryMergeBlock<K, V> block) {
-    RubyHash<K, V> newHash = newRubyHash();
-    for (Entry<K, V> item : entrySet()) {
-      if (containsKey(item.getKey()) && otherHash.containsKey(item.getKey())) {
-        newHash.put(
-            item.getKey(),
-            block.yield(item.getKey(), item.getValue(),
-                otherHash.get(item.getKey())));
-      } else {
-        newHash.put(item);
-      }
-    }
+    RubyHash<K, V> newHash = newRubyHash(map);
     for (Entry<K, V> item : otherHash.entrySet()) {
-      if (!newHash.containsKey(item.getKey())) {
+      if (newHash.containsKey(item.getKey())) {
+        newHash.put(item.getKey(),
+            block.yield(item.getKey(), get(item.getKey()), item.getValue()));
+      } else {
         newHash.put(item);
       }
     }
@@ -546,14 +539,14 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
         put(item.getKey(),
             block.yield(item.getKey(), get(item.getKey()), item.getValue()));
       } else {
-        put(item.getKey(), item.getValue());
+        put(item);
       }
     }
     return this;
   }
 
   /**
-   * Puts an entry into this RubyHash directly.
+   * Puts an Entry into this RubyHash directly.
    * 
    * @param entry
    *          an Entry
@@ -565,7 +558,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Puts an entries into this RubyHash directly.
+   * Puts entries into this RubyHash directly.
    * 
    * @param entry
    *          an Entry

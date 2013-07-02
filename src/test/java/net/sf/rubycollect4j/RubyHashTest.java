@@ -25,9 +25,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import net.sf.rubycollect4j.RubyArray;
-import net.sf.rubycollect4j.RubyEnumerator;
-import net.sf.rubycollect4j.RubyHash;
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.block.EntryBlock;
 import net.sf.rubycollect4j.block.EntryBooleanBlock;
@@ -36,14 +33,12 @@ import net.sf.rubycollect4j.block.EntryTransformBlock;
 
 import org.junit.Test;
 
+import static com.google.common.collect.Maps.newHashMap;
+import static com.google.common.collect.Maps.newLinkedHashMap;
 import static net.sf.rubycollect4j.RubyCollections.hp;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.rh;
 import static net.sf.rubycollect4j.RubyHash.newRubyHash;
-
-
-import static com.google.common.collect.Maps.newHashMap;
-import static com.google.common.collect.Maps.newLinkedHashMap;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
