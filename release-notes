@@ -29,3 +29,7 @@ Version 1.2.0
   range(1.09, 1.11).toA() will generate [1.09, 1.10, 1.11] instead of [1.09, 1.10]
 
 * DoubleSuccessor constructor requires a precision now. It not a singleton anymore.
+
+Version 1.2.1
+
+* Fixed the bug of RubyDir.glob("**/*") missed to retrieve the first level files

@@ -86,6 +86,10 @@ public class RubyDirTest {
   @Test
   public void testGlob() {
     assertEquals(ra(), RubyDir.glob(""));
+    assertEquals(
+        ra("folder2-1", "file2-1", "folder2-1/file2-1-1",
+            "folder2-1/file2-1-2", "folder2-1/file2-1-3").sort(),
+        RubyDir.glob(GLOB_DIR + "folder2/**/*").sort());
     assertEquals(ra("folder1", "folder2").sort(), RubyDir.glob(GLOB_DIR + "*")
         .sort());
     assertEquals(ra("folder1", "folder2").sort(), RubyDir.glob(GLOB_DIR + "**")

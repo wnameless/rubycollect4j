@@ -175,7 +175,7 @@ public final class RubyDir extends RubyEnumerable<String> {
     }
 
     pattern = pattern.replaceAll("\\?", ".{1}");
-    pattern = pattern.replaceAll("\\*\\*/", ".+/");
+    pattern = pattern.replaceAll("\\*\\*/", "(.+/)?");
     pattern = pattern.replaceAll("\\*", "[^/]*");
 
     RubyArray<File> files = ra(traverseFolder(new File(rootPath), recursive));
