@@ -104,7 +104,7 @@ map.put(1, "a");
 RubyHash<Integer, String> rh = newRubyHash(map, false);
 ```
 
-Demo newRubyEnumerable()
+Demo newRubyEnumerable():
 ```java
 import static net.sf.rubycollect4j.RubyEnumerable.newRubyEnumerable;
 
@@ -123,7 +123,7 @@ public class YourIterableClass<E> extends RubyEnumerable<E> {
 }
 ```
 
-Demo newRubyEnumerator()
+Demo newRubyEnumerator():
 ```java
 import static net.sf.rubycollect4j.RubyEnumerator.newRubyEnumerator;
 
@@ -157,7 +157,7 @@ Demo date():
 p( date(2013, 7, 1).add(10).days() );          // Output: Thu Jul 11 00:00:00 CST 2013
 p( date(2013, 7, 1, 21).minus(30).minutes() ); // Output: Mon Jul 01 20:30:00 CST 2013
 p( date(2013, 7, 7, 16, 15, 14).endOfDay() );  // Output: Sun Jul 07 23:59:59 CST 2013
-p( date(2013, 7, 11).beginningOfWeek );        // Output: Sun Jul 07 00:00:00 CST 2013
+p( date(2013, 7, 11).beginningOfWeek() );        // Output: Sun Jul 07 00:00:00 CST 2013
 p( RubyDate.today() );                         // Output: date of today
 p( RubyDate.yesterday() );                     // Output: date of yesterday
 Calendar c = Calendar.getInstance();
@@ -178,4 +178,36 @@ p( qx("echo", "hello") ); // Output: hello
 Demo qr():
 ```java
 p( qr("^\\d+$").matcher("123").find() ); // Output: true
+```
+
+Demo RubyDir:
+```text
+/folder1
+        /folder1-1
+                  /file1-1-1
+                  /file1-1-2
+        /folder1-2
+                  /file1-2-1
+                  /file1-2-2
+                  /file1-2-3
+        /file1-1
+        /file1-2
+        /file1-3
+        /file1-4
+```
+
+```java
+p( RubyDir.glob("*").sort() );                         // Output: ["folder1", "folder2"]
+p( RubyDir.glob(GLOB_DIR + "**/*1-*-1*").sort() );     // Output: ["folder1/folder1-1/file1-1-1", "folder1/folder1-2/file1-2-1"]
+p( RubyDir.glob(GLOB_DIR + "folder1/*[2,3]").sort() ); // Output: ["file1-2", "file1-3", "folder1-2"]
+```
+
+Demo RubyFile:
+```java
+RubyFile rf = RubyFile.open("test.txt", "r+");
+rf.puts("1");
+rf.puts("2");
+rf.puts("3");
+rf.close();
+p( RubyFile.foreach("test.txt").toA() ); // Output: [1, 2, 3]
 ```
