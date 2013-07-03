@@ -150,6 +150,7 @@ Demo range():
 ```java
 p( range(1, 5).toA() );                                   // Output: [1, 2, 3, 4, 5]
 p( range("Z", "AB").toA() );                              // Output: [Z, AA, AB]
+p( range("ZZ-999", "AAA-001").toA() );                    // Output: [ZZ-999, AAA-000, AAA-001]
 p( range(1.08, 1.1).toA() );                              // Output: [1.08, 1.09, 1.10]
 p( range("1.08", "1.1").toA() );                          // Output: [1.08, 1.09, 1.10]
 p( range(date(2013, 06, 30), date(2013, 07, 01)).toA() ); // Output: [Sun Jun 30 00:00:00 CST 2013, Mon Jul 01 00:00:00 CST 2013]
@@ -160,12 +161,12 @@ Demo date():
 p( date(2013, 7, 1).add(10).days() );          // Output: Thu Jul 11 00:00:00 CST 2013
 p( date(2013, 7, 1, 21).minus(30).minutes() ); // Output: Mon Jul 01 20:30:00 CST 2013
 p( date(2013, 7, 7, 16, 15, 14).endOfDay() );  // Output: Sun Jul 07 23:59:59 CST 2013
-p( date(2013, 7, 11).beginningOfWeek() );        // Output: Sun Jul 07 00:00:00 CST 2013
+p( date(2013, 7, 11).beginningOfWeek() );      // Output: Sun Jul 07 00:00:00 CST 2013
 p( RubyDate.today() );                         // Output: date of today
 p( RubyDate.yesterday() );                     // Output: date of yesterday
 Calendar c = Calendar.getInstance();
 c.clear();
-p( date(c.getTime()) );                          // Output: Thu Jan 01 00:00:00 CST 1970
+p( date(c.getTime()) );                        // Output: Thu Jan 01 00:00:00 CST 1970
 ```
 
 Demo qw():
