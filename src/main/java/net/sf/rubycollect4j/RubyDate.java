@@ -31,7 +31,7 @@ import java.util.Date;
  */
 public final class RubyDate extends Date {
 
-  private static final long serialVersionUID = -7493130781357752107L;
+  private static final long serialVersionUID = 6634492638579024503L;
 
   /**
    * The constructor of the RubyDate.
