@@ -26,6 +26,7 @@ import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
 
+import static net.sf.rubycollect4j.RubyCollections.date;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -52,6 +53,61 @@ public class RubyDateTest {
     Date date = new Date();
     rd = new RubyDate(date);
     assertEquals(date, rd);
+  }
+
+  @Test
+  public void testYear() {
+    assertEquals(2013, date(2013).year());
+  }
+
+  @Test
+  public void testMonth() {
+    assertEquals(7, date(2013, 7).month());
+  }
+
+  @Test
+  public void testDay() {
+    assertEquals(4, date(2013, 7, 4).day());
+  }
+
+  @Test
+  public void testDayOfWeek() {
+    assertEquals(4, date(2013, 7, 4).dayOfWeek());
+  }
+
+  @Test
+  public void testDayOfYear() {
+    assertEquals(185, date(2013, 7, 4).dayOfYear());
+  }
+
+  @Test
+  public void testWeek() {
+    assertEquals(27, date(2013, 7, 4).week());
+  }
+
+  @Test
+  public void testWeekOfMonth() {
+    assertEquals(1, date(2013, 7, 4).weekOfMonth());
+  }
+
+  @Test
+  public void testHour() {
+    assertEquals(8, date(2013, 7, 4, 8).hour());
+  }
+
+  @Test
+  public void testMinute() {
+    assertEquals(6, date(2013, 7, 4, 8, 6).minute());
+  }
+
+  @Test
+  public void testSecond() {
+    assertEquals(5, date(2013, 7, 4, 8, 6, 5).second());
+  }
+
+  @Test
+  public void testMillisecond() {
+    assertEquals(999, date(2013, 7, 4, 8, 6, 5, 999).millisecond());
   }
 
   @Test

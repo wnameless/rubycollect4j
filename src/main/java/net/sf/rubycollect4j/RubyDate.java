@@ -49,6 +49,135 @@ public final class RubyDate extends Date {
   }
 
   /**
+   * Returns the year of this RubyDate.
+   * 
+   * @return an int
+   */
+  public int year() {
+    Calendar c = Calendar.getInstance();
+    c.setTime(this);
+    return c.get(Calendar.YEAR);
+  }
+
+  /**
+   * Returns the month(1-12) of this RubyDate.
+   * 
+   * @return an int
+   */
+  public int month() {
+    Calendar c = Calendar.getInstance();
+    c.setTime(this);
+    return c.get(Calendar.MONTH) + 1;
+  }
+
+  /**
+   * Returns the day(1-31) of this RubyDate.
+   * 
+   * @return an int
+   */
+  public int day() {
+    Calendar c = Calendar.getInstance();
+    c.setTime(this);
+    return c.get(Calendar.DAY_OF_MONTH);
+  }
+
+  /**
+   * Returns the day(0-6) of week of this RubyDate.<br>
+   * 
+   * Sun : 0<br>
+   * Mon : 1<br>
+   * Tue : 2<br>
+   * Wed : 3<br>
+   * Thur: 4<br>
+   * Fri : 5<br>
+   * Sat : 6
+   * 
+   * @return an int
+   */
+  public int dayOfWeek() {
+    Calendar c = Calendar.getInstance();
+    c.setTime(this);
+    return c.get(Calendar.DAY_OF_WEEK) - 1;
+  }
+
+  /**
+   * Returns the day of year of this RubyDate.
+   * 
+   * @return an int
+   */
+  public int dayOfYear() {
+    Calendar c = Calendar.getInstance();
+    c.setTime(this);
+    return c.get(Calendar.DAY_OF_YEAR);
+  }
+
+  /**
+   * Returns the week of year of this RubyDate.
+   * 
+   * @return an int
+   */
+  public int week() {
+    Calendar c = Calendar.getInstance();
+    c.setTime(this);
+    return c.get(Calendar.WEEK_OF_YEAR);
+  }
+
+  /**
+   * Returns the week of month of this RubyDate.
+   * 
+   * @return an int
+   */
+  public int weekOfMonth() {
+    Calendar c = Calendar.getInstance();
+    c.setTime(this);
+    return c.get(Calendar.WEEK_OF_MONTH);
+  }
+
+  /**
+   * Returns the hour(0-23) of this RubyDate.
+   * 
+   * @return an int
+   */
+  public int hour() {
+    Calendar c = Calendar.getInstance();
+    c.setTime(this);
+    return c.get(Calendar.HOUR_OF_DAY);
+  }
+
+  /**
+   * Returns the minute of this RubyDate.
+   * 
+   * @return an int
+   */
+  public int minute() {
+    Calendar c = Calendar.getInstance();
+    c.setTime(this);
+    return c.get(Calendar.MINUTE);
+  }
+
+  /**
+   * Returns the second of this RubyDate.
+   * 
+   * @return an int
+   */
+  public int second() {
+    Calendar c = Calendar.getInstance();
+    c.setTime(this);
+    return c.get(Calendar.SECOND);
+  }
+
+  /**
+   * Returns the millisecond of this RubyDate.
+   * 
+   * @return an int
+   */
+  public int millisecond() {
+    Calendar c = Calendar.getInstance();
+    c.setTime(this);
+    return c.get(Calendar.MILLISECOND);
+  }
+
+  /**
    * Increases an interval of time to a date by the DateShifter.
    * 
    * @param interval
