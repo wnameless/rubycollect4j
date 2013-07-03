@@ -242,7 +242,7 @@ public final class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
-   * Finds the present working directory.
+   * Returns the present working directory.
    * 
    * @return the present working directory
    */
@@ -274,7 +274,7 @@ public final class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
-   * Finds the path of this RubyDir.
+   * Returns the path of this RubyDir.
    * 
    * @return the path of this RubyDir
    */
@@ -283,7 +283,7 @@ public final class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
-   * Finds the current position of entries.
+   * Returns the current position of entries.
    * 
    * @return the current position of entries
    */
@@ -338,7 +338,7 @@ public final class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
-   * Finds the current position of entries.
+   * Returns the current position of entries.
    * 
    * @return the current position of entries
    */

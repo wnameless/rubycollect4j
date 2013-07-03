@@ -51,7 +51,7 @@ public final class RubyDate extends Date {
   /**
    * Returns the year of this RubyDate.
    * 
-   * @return an int
+   * @return the year
    */
   public int year() {
     Calendar c = Calendar.getInstance();
@@ -62,7 +62,7 @@ public final class RubyDate extends Date {
   /**
    * Returns the month(1-12) of this RubyDate.
    * 
-   * @return an int
+   * @return the month
    */
   public int month() {
     Calendar c = Calendar.getInstance();
@@ -73,7 +73,7 @@ public final class RubyDate extends Date {
   /**
    * Returns the day(1-31) of this RubyDate.
    * 
-   * @return an int
+   * @return the day
    */
   public int day() {
     Calendar c = Calendar.getInstance();
@@ -92,7 +92,7 @@ public final class RubyDate extends Date {
    * Fri : 5<br>
    * Sat : 6
    * 
-   * @return an int
+   * @return the day of week
    */
   public int dayOfWeek() {
     Calendar c = Calendar.getInstance();
@@ -103,7 +103,7 @@ public final class RubyDate extends Date {
   /**
    * Returns the day of year of this RubyDate.
    * 
-   * @return an int
+   * @return the day of year
    */
   public int dayOfYear() {
     Calendar c = Calendar.getInstance();
@@ -114,7 +114,7 @@ public final class RubyDate extends Date {
   /**
    * Returns the week of year of this RubyDate.
    * 
-   * @return an int
+   * @return the week of year
    */
   public int week() {
     Calendar c = Calendar.getInstance();
@@ -125,7 +125,7 @@ public final class RubyDate extends Date {
   /**
    * Returns the week of month of this RubyDate.
    * 
-   * @return an int
+   * @return the week of month
    */
   public int weekOfMonth() {
     Calendar c = Calendar.getInstance();
@@ -136,7 +136,7 @@ public final class RubyDate extends Date {
   /**
    * Returns the hour(0-23) of this RubyDate.
    * 
-   * @return an int
+   * @return the hour
    */
   public int hour() {
     Calendar c = Calendar.getInstance();
@@ -147,7 +147,7 @@ public final class RubyDate extends Date {
   /**
    * Returns the minute of this RubyDate.
    * 
-   * @return an int
+   * @return the minute
    */
   public int minute() {
     Calendar c = Calendar.getInstance();
@@ -158,7 +158,7 @@ public final class RubyDate extends Date {
   /**
    * Returns the second of this RubyDate.
    * 
-   * @return an int
+   * @return the second
    */
   public int second() {
     Calendar c = Calendar.getInstance();
@@ -169,7 +169,7 @@ public final class RubyDate extends Date {
   /**
    * Returns the millisecond of this RubyDate.
    * 
-   * @return an int
+   * @return the millisecond
    */
   public int millisecond() {
     Calendar c = Calendar.getInstance();

@@ -810,7 +810,6 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   public String join(String separator) {
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < size(); i++) {
-      System.out.println(i + " " + size());
       if (i > 0) {
         sb.append(separator);
       }
