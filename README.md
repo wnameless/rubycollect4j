@@ -13,8 +13,8 @@ Installation with Maven:
 ``` xml
 <dependency>
   <groupId>net.sf.rubycollect4j</groupId>
-	<artifactId>rubycollect4j</artifactId>
-	<version>1.2.0</version>
+  <artifactId>rubycollect4j</artifactId>
+  <version>1.2.1</version>
 </dependency>
 ```
 
