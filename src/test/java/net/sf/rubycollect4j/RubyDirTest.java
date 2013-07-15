@@ -167,10 +167,8 @@ public class RubyDirTest {
 
   @Test
   public void testPath() {
-    assertEquals(
-        BASE_DIR,
-        RubyDir.convertWindowsPathToLinuxPath(RubyDir.open(BASE_DIR).path()
-            + File.separator));
+    assertEquals(normalizePath(BASE_DIR), RubyDir.open(BASE_DIR).path()
+        + File.separator);
   }
 
   @Test
@@ -244,9 +242,19 @@ public class RubyDirTest {
 
   @Test
   public void testToString() {
-    assertEquals("RubyDir{path=" + BASE_DIR.substring(0, BASE_DIR.length() - 1)
-        + "}", RubyDir.convertWindowsPathToLinuxPath(RubyDir.open(BASE_DIR)
-        .toString()));
+    assertEquals(
+        normalizePath("RubyDir{path="
+            + BASE_DIR.substring(0, BASE_DIR.length() - 1) + "}"), RubyDir
+            .open(BASE_DIR).toString());
+  }
+
+  private String normalizePath(String path) {
+    String os = System.getProperty("os.name");
+    if (os.startsWith("Windows")) {
+      return path.replaceAll("/", "\\\\");
+    } else {
+      return path;
+    }
   }
 
 }

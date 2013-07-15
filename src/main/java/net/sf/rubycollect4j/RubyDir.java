@@ -211,7 +211,7 @@ public final class RubyDir extends RubyEnumerable<String> {
     }
   }
 
-  static String convertWindowsPathToLinuxPath(String path) {
+  private static String convertWindowsPathToLinuxPath(String path) {
     String os = System.getProperty("os.name");
     if (os.startsWith("Windows")) {
       return path.replaceAll("\\\\", "/");
