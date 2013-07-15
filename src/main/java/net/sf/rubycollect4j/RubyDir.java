@@ -182,10 +182,10 @@ public final class RubyDir extends RubyEnumerable<String> {
 
     RubyArray<String> paths = ra();
     for (File f : files) {
-      rootPath = convertWindowsPathToLinux(rootPath);
-      String path = convertWindowsPathToLinux(f.getPath());
+      rootPath = convertWindowsPathToLinuxPath(rootPath);
+      String path = convertWindowsPathToLinuxPath(f.getPath());
       String fPath = f.isDirectory() ? f.getPath() + "/" : f.getPath();
-      fPath = convertWindowsPathToLinux(fPath);
+      fPath = convertWindowsPathToLinuxPath(fPath);
       if (path.matches("(\\.[^/]+.*|.*/\\.[^/]+.*)")) {
         continue;
       }
@@ -215,10 +215,10 @@ public final class RubyDir extends RubyEnumerable<String> {
     }
   }
 
-  private static String convertWindowsPathToLinux(String path) {
+  private static String convertWindowsPathToLinuxPath(String path) {
     String os = System.getProperty("os.name");
     if (os.startsWith("Windows")) {
-      return path.replaceAll("\\", "/");
+      return path.replaceAll("\\\\", "/");
     } else {
       return path;
     }
