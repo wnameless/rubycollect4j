@@ -94,12 +94,10 @@ public final class RubyDir extends RubyEnumerable<String> {
   public static RubyArray<String> entries(String path) {
     File file = new File(path);
     return ra(file.listFiles()).map(new TransformBlock<File, String>() {
-
       @Override
       public String yield(File item) {
         return item.getName();
       }
-
     }).unshift("..").unshift(".");
   }
 
@@ -153,17 +151,16 @@ public final class RubyDir extends RubyEnumerable<String> {
     if (pattern.isEmpty()) {
       return ra();
     }
+    pattern = convertWindowsPathToLinuxPath(pattern);
     boolean recursive = pattern.contains("/**/") || pattern.startsWith("**/");
     boolean emptyRoot = false;
 
     String rootPath =
         ra(pattern.split("/")).takeWhile(new BooleanBlock<String>() {
-
           @Override
           public boolean yield(String item) {
             return !item.contains("*");
           }
-
         }).join("/");
 
     if (rootPath.isEmpty()) {
@@ -182,7 +179,6 @@ public final class RubyDir extends RubyEnumerable<String> {
 
     RubyArray<String> paths = ra();
     for (File f : files) {
-      rootPath = convertWindowsPathToLinuxPath(rootPath);
       String path = convertWindowsPathToLinuxPath(f.getPath());
       String fPath = f.isDirectory() ? f.getPath() + "/" : f.getPath();
       fPath = convertWindowsPathToLinuxPath(fPath);
@@ -215,7 +211,7 @@ public final class RubyDir extends RubyEnumerable<String> {
     }
   }
 
-  private static String convertWindowsPathToLinuxPath(String path) {
+  static String convertWindowsPathToLinuxPath(String path) {
     String os = System.getProperty("os.name");
     if (os.startsWith("Windows")) {
       return path.replaceAll("\\\\", "/");

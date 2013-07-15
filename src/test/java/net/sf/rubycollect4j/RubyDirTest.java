@@ -20,6 +20,8 @@
  */
 package net.sf.rubycollect4j;
 
+import java.io.File;
+
 import net.sf.rubycollect4j.block.Block;
 
 import org.junit.Test;
@@ -87,24 +89,33 @@ public class RubyDirTest {
   public void testGlob() {
     assertEquals(ra(), RubyDir.glob(""));
     assertEquals(
-        ra("folder2-1", "file2-1", "folder2-1/file2-1-1",
-            "folder2-1/file2-1-2", "folder2-1/file2-1-3").sort(),
+        ra("folder2-1", "file2-1", "folder2-1" + File.separator + "file2-1-1",
+            "folder2-1" + File.separator + "file2-1-2",
+            "folder2-1" + File.separator + "file2-1-3").sort(),
         RubyDir.glob(GLOB_DIR + "folder2/**/*").sort());
     assertEquals(ra("folder1", "folder2").sort(), RubyDir.glob(GLOB_DIR + "*")
         .sort());
     assertEquals(ra("folder1", "folder2").sort(), RubyDir.glob(GLOB_DIR + "**")
         .sort());
-    assertEquals(ra("folder1/", "folder2/").sort(),
-        RubyDir.glob(GLOB_DIR + "*/").sort());
+    assertEquals(ra("folder1" + File.separator, "folder2" + File.separator)
+        .sort(), RubyDir.glob(GLOB_DIR + "*/").sort());
     assertEquals(
-        ra("folder1/", "folder1/folder1-1/", "folder1/folder1-2/", "folder2/",
-            "folder2/folder2-1/").sort(), RubyDir.glob(GLOB_DIR + "**/").sort());
+        ra("folder1" + File.separator,
+            "folder1" + File.separator + "folder1-1" + File.separator,
+            "folder1" + File.separator + "folder1-2" + File.separator,
+            "folder2" + File.separator,
+            "folder2" + File.separator + "folder2-1" + File.separator).sort(),
+        RubyDir.glob(GLOB_DIR + "**/").sort());
     assertEquals(
         ra("file1-1", "file1-2", "file1-3", "file1-4", "folder1-1", "folder1-2"),
         RubyDir.glob(GLOB_DIR + "folder1/*").sort());
     assertEquals(
-        ra("folder1/folder1-1/file1-1-1", "folder1/folder1-2/file1-2-1").sort(),
-        RubyDir.glob(GLOB_DIR + "**/*1-*-1*").sort());
+        ra(
+            "folder1" + File.separator + "folder1-1" + File.separator
+                + "file1-1-1",
+            "folder1" + File.separator + "folder1-2" + File.separator
+                + "file1-2-1").sort(), RubyDir.glob(GLOB_DIR + "**/*1-*-1*")
+            .sort());
     assertEquals(18, RubyDir.glob(GLOB_DIR + "**/*").count());
     assertEquals(ra("file1-2", "file1-3", "folder1-2").sort(),
         RubyDir.glob(GLOB_DIR + "folder1/*[2,3]").sort());
@@ -112,7 +123,11 @@ public class RubyDirTest {
 
   @Test
   public void testHome() {
-    assertEquals(qx("sh", "-c", "echo ~").trim(), RubyDir.home());
+    if (System.getProperty("os.name").startsWith("Windows")) {
+      assertEquals(System.getProperty("user.home"), RubyDir.home());
+    } else {
+      assertEquals(qx("sh", "-c", "echo ~").trim(), RubyDir.home());
+    }
   }
 
   @Test
@@ -123,7 +138,11 @@ public class RubyDirTest {
 
   @Test
   public void testPwd() {
-    assertEquals(qx("pwd").trim(), RubyDir.pwd());
+    if (System.getProperty("os.name").startsWith("Windows")) {
+      assertEquals(System.getProperty("user.dir"), RubyDir.pwd());
+    } else {
+      assertEquals(qx("pwd").trim(), RubyDir.pwd());
+    }
   }
 
   @Test
@@ -138,19 +157,20 @@ public class RubyDirTest {
   public void testEachWithBlock() {
     final RubyArray<String> entries = ra();
     RubyDir.open(BASE_DIR + "glob_test/folder2").each(new Block<String>() {
-
       @Override
       public void yield(String item) {
         entries.push(item);
       }
-
     });
     assertEquals(ra(".", "..", "folder2-1", "file2-1").sort(), entries);
   }
 
   @Test
   public void testPath() {
-    assertEquals(BASE_DIR, RubyDir.open(BASE_DIR).path() + "/");
+    assertEquals(
+        BASE_DIR,
+        RubyDir.convertWindowsPathToLinuxPath(RubyDir.open(BASE_DIR).path()
+            + File.separator));
   }
 
   @Test
@@ -225,7 +245,8 @@ public class RubyDirTest {
   @Test
   public void testToString() {
     assertEquals("RubyDir{path=" + BASE_DIR.substring(0, BASE_DIR.length() - 1)
-        + "}", RubyDir.open(BASE_DIR).toString());
+        + "}", RubyDir.convertWindowsPathToLinuxPath(RubyDir.open(BASE_DIR)
+        .toString()));
   }
 
 }
