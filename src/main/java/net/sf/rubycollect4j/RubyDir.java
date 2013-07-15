@@ -182,8 +182,10 @@ public final class RubyDir extends RubyEnumerable<String> {
 
     RubyArray<String> paths = ra();
     for (File f : files) {
-      String path = f.getPath();
+      rootPath = convertWindowsPathToLinux(rootPath);
+      String path = convertWindowsPathToLinux(f.getPath());
       String fPath = f.isDirectory() ? f.getPath() + "/" : f.getPath();
+      fPath = convertWindowsPathToLinux(fPath);
       if (path.matches("(\\.[^/]+.*|.*/\\.[^/]+.*)")) {
         continue;
       }
@@ -195,13 +197,31 @@ public final class RubyDir extends RubyEnumerable<String> {
         fPath = fPath.replace(rootPath, "");
       }
       if (path.matches(pattern)) {
-        paths.add(path);
+        paths.add(normalizePath(path));
       } else if (fPath.matches(pattern)) {
-        paths.add(fPath);
+        paths.add(normalizePath(fPath));
       }
     }
 
     return paths;
+  }
+
+  private static String normalizePath(String path) {
+    String os = System.getProperty("os.name");
+    if (os.startsWith("Windows")) {
+      return path.replaceAll("/", "\\");
+    } else {
+      return path;
+    }
+  }
+
+  private static String convertWindowsPathToLinux(String path) {
+    String os = System.getProperty("os.name");
+    if (os.startsWith("Windows")) {
+      return path.replaceAll("\\", "/");
+    } else {
+      return path;
+    }
   }
 
   private static List<File> traverseFolder(File file, boolean recursive) {
