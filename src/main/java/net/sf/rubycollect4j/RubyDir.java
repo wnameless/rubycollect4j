@@ -209,7 +209,7 @@ public final class RubyDir extends RubyEnumerable<String> {
   private static String normalizePath(String path) {
     String os = System.getProperty("os.name");
     if (os.startsWith("Windows")) {
-      return path.replaceAll("/", "\\");
+      return path.replaceAll("/", "\\\\");
     } else {
       return path;
     }
