@@ -76,6 +76,8 @@ public final class RubyCollections {
    * @param cmd
    *          to be executed
    * @return a String
+   * @throws RuntimeException
+   *           if command not found
    */
   public static String qx(String... cmd) {
     StringBuilder sb = new StringBuilder();
@@ -98,7 +100,7 @@ public final class RubyCollections {
     } catch (IOException ex) {
       Logger.getLogger(RubyCollections.class.getName()).log(Level.SEVERE, null,
           ex);
-      sb.append(ex.getMessage());
+      throw new RuntimeException(ex);
     }
 
     return sb.toString();

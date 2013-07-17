@@ -823,6 +823,10 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * @param methodName
    *          method used to reduce elements
    * @return an element S
+   * @throws IllegalArgumentException
+   *           if method not found
+   * @throws RuntimeException
+   *           if invocation failed
    */
   @SuppressWarnings("unchecked")
   public <S> S inject(S init, String methodName) {
@@ -832,23 +836,27 @@ public class RubyEnumerable<E> implements Iterable<E> {
       E curr = iterator.next();
       try {
         Method[] methods = result.getClass().getDeclaredMethods();
+        boolean isInvoked = false;
         for (Method method : methods) {
           if (method.getName().equals(methodName)) {
             result = (S) method.invoke(result, curr);
+            isInvoked = true;
+            break;
           }
         }
-      } catch (SecurityException ex) {
-        Logger.getLogger(RubyEnumerable.class.getName()).log(Level.SEVERE,
-            null, ex);
-      } catch (IllegalArgumentException ex) {
-        Logger.getLogger(RubyEnumerable.class.getName()).log(Level.SEVERE,
-            null, ex);
+        if (!isInvoked) {
+          throw new IllegalArgumentException(
+              "NoMethodError: undefined method `" + methodName + "' for "
+                  + result);
+        }
       } catch (IllegalAccessException ex) {
         Logger.getLogger(RubyEnumerable.class.getName()).log(Level.SEVERE,
             null, ex);
+        throw new RuntimeException(ex);
       } catch (InvocationTargetException ex) {
         Logger.getLogger(RubyEnumerable.class.getName()).log(Level.SEVERE,
             null, ex);
+        throw new RuntimeException(ex);
       }
     }
     return result;
@@ -862,6 +870,10 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * @param methodName
    *          method used to reduce elements
    * @return an element
+   * @throws IllegalArgumentException
+   *           if method not found
+   * @throws RuntimeException
+   *           if invocation failed
    */
   @SuppressWarnings("unchecked")
   public E inject(String methodName) {
@@ -875,23 +887,27 @@ public class RubyEnumerable<E> implements Iterable<E> {
         E curr = iterator.next();
         try {
           Method[] methods = result.getClass().getDeclaredMethods();
+          boolean isInvoked = false;
           for (Method method : methods) {
             if (method.getName().equals(methodName)) {
               result = (E) method.invoke(result, curr);
+              isInvoked = true;
+              break;
             }
           }
-        } catch (SecurityException ex) {
-          Logger.getLogger(RubyEnumerable.class.getName()).log(Level.SEVERE,
-              null, ex);
-        } catch (IllegalArgumentException ex) {
-          Logger.getLogger(RubyEnumerable.class.getName()).log(Level.SEVERE,
-              null, ex);
+          if (!isInvoked) {
+            throw new IllegalArgumentException(
+                "NoMethodError: undefined method `" + methodName + "' for "
+                    + result);
+          }
         } catch (IllegalAccessException ex) {
           Logger.getLogger(RubyEnumerable.class.getName()).log(Level.SEVERE,
               null, ex);
+          throw new RuntimeException(ex);
         } catch (InvocationTargetException ex) {
           Logger.getLogger(RubyEnumerable.class.getName()).log(Level.SEVERE,
               null, ex);
+          throw new RuntimeException(ex);
         }
       }
       i++;

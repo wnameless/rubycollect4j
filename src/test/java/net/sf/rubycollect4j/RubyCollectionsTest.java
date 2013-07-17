@@ -67,6 +67,11 @@ public class RubyCollectionsTest {
     assertEquals("Hello world!\n", qx("echo", "Hello world!"));
   }
 
+  @Test(expected = RuntimeException.class)
+  public void testQxException() {
+    qx("lls");
+  }
+
   @Test
   public void testRa() {
     assertTrue(ra() instanceof RubyArray);

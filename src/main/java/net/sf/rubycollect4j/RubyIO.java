@@ -190,6 +190,7 @@ public class RubyIO {
       io = new RubyIO(new File(path), Mode.R);
     } catch (IOException ex) {
       Logger.getLogger(RubyIO.class.getName()).log(Level.SEVERE, null, ex);
+      throw new RuntimeException(ex);
     }
     return io.eachLine();
   }
@@ -202,6 +203,7 @@ public class RubyIO {
       raFile.close();
     } catch (IOException ex) {
       Logger.getLogger(RubyIO.class.getName()).log(Level.SEVERE, null, ex);
+      throw new RuntimeException(ex);
     }
   }
 
@@ -231,6 +233,7 @@ public class RubyIO {
       raFile.writeBytes(words + "\n");
     } catch (IOException ex) {
       Logger.getLogger(RubyIO.class.getName()).log(Level.SEVERE, null, ex);
+      throw new RuntimeException(ex);
     }
   }
 
@@ -251,6 +254,7 @@ public class RubyIO {
       }
     } catch (IOException ex) {
       Logger.getLogger(RubyIO.class.getName()).log(Level.SEVERE, null, ex);
+      throw new RuntimeException(ex);
     }
     return sb.toString();
   }
@@ -266,6 +270,7 @@ public class RubyIO {
       raFile.seek(pos);
     } catch (IOException ex) {
       Logger.getLogger(RubyIO.class.getName()).log(Level.SEVERE, null, ex);
+      throw new RuntimeException(ex);
     }
   }
 
@@ -284,6 +289,7 @@ public class RubyIO {
       raFile.writeBytes(words);
     } catch (IOException ex) {
       Logger.getLogger(RubyIO.class.getName()).log(Level.SEVERE, null, ex);
+      throw new RuntimeException(ex);
     }
     return words.getBytes().length;
   }

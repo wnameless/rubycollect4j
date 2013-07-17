@@ -163,6 +163,11 @@ public class RubyIOTest {
         RubyFile.foreach(BASE_DIR + "ruby_io_read_only_mode.txt").toA().join());
   }
 
+  @Test(expected = RuntimeException.class)
+  public void testForeachException() {
+    RubyFile.foreach("no such file!");
+  }
+
   @Test
   public void testEachLine() {
     rf = RubyFile.open(BASE_DIR + "ruby_io_read_only_mode.txt");

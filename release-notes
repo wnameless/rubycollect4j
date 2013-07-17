@@ -30,6 +30,7 @@ Version 1.2.0
 
 * DoubleSuccessor constructor requires a precision now and it is not a singleton anymore
 
+
 Version 1.2.1
 
 * Bug fixed: RubyDir.glob("**/*") missed to retrieve the files of the very top level directory
@@ -39,3 +40,10 @@ Version 1.2.1
 + Made rh() accept up to 20 pairs
 
 + Added year(), month(), day(), dayOfWeek(), dayOfYear(), week(), weekOfMonth(), hour(), minute(), second() & millisecond() to RubyDate
+
+
+Version 1.2.2
+
+* Improved RubyDir.glob() compatibility on Windows 
+
++ Throws RuntimeExceptions while Exceptions are caught

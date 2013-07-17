@@ -54,10 +54,9 @@ public final class RubyFile extends RubyIO {
     RubyFile rf = null;
     try {
       rf = new RubyFile(new File(path), Mode.fromString(mode));
-    } catch (FileNotFoundException ex) {
-      Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
     } catch (IOException ex) {
       Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
+      throw new RuntimeException(ex);
     }
     return rf;
   }
@@ -150,16 +149,16 @@ public final class RubyFile extends RubyIO {
         chmodMethod.invoke(null, file.getPath(), modeInt);
       } catch (ClassNotFoundException ex) {
         Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
-      } catch (SecurityException ex) {
-        Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
+        throw new RuntimeException(ex);
       } catch (NoSuchMethodException ex) {
         Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
-      } catch (IllegalArgumentException ex) {
-        Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
+        throw new RuntimeException(ex);
       } catch (IllegalAccessException ex) {
         Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
+        throw new RuntimeException(ex);
       } catch (InvocationTargetException ex) {
         Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
+        throw new RuntimeException(ex);
       }
     }
     return files.length;
@@ -300,10 +299,9 @@ public final class RubyFile extends RubyIO {
       raf = new RandomAccessFile(file, "r");
       size = raf.length();
       raf.close();
-    } catch (FileNotFoundException ex) {
-      Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
     } catch (IOException ex) {
       Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
+      throw new RuntimeException(ex);
     }
     return size == 0L ? null : size;
   }
@@ -360,6 +358,7 @@ public final class RubyFile extends RubyIO {
       size = raFile.length();
     } catch (IOException ex) {
       Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
+      throw new RuntimeException(ex);
     }
     return size;
   }

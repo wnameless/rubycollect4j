@@ -676,6 +676,13 @@ public class RubyEnumerableTest {
     assertEquals(ra(1, 2, 3, 4), re.inject(ra, "push"));
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void testInjectWithInitException() {
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
+    RubyArray<Integer> ra = ra();
+    re.inject(ra, "no push");
+  }
+
   @Test
   public void testInjectWithBlock() {
     re = newRubyEnumerable(Arrays.asList(1, 2, 3, 4));
@@ -708,6 +715,13 @@ public class RubyEnumerableTest {
     RubyEnumerable<Boolean> bools =
         newRubyEnumerable(Arrays.asList(true, true, true));
     assertEquals(Boolean.TRUE, bools.inject("equals"));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testInjectException() {
+    RubyEnumerable<Boolean> bools =
+        newRubyEnumerable(Arrays.asList(true, true, true));
+    bools.inject("not equals");
   }
 
   @Test

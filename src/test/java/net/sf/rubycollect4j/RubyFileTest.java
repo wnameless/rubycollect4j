@@ -16,6 +16,11 @@ public class RubyFileTest {
   private static final String BASE_DIR = "src/test/resources/";
   private RubyFile rf;
 
+  @Test(expected = RuntimeException.class)
+  public void testOpenException() {
+    RubyFile.open("no such file!");
+  }
+
   @Test
   public void testAbsolutePath() {
     assertEquals(qx("pwd").trim(), RubyFile.absolutePath(""));
