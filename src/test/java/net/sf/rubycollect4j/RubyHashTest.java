@@ -69,16 +69,20 @@ public class RubyHashTest {
     assertNull(rh.assoc(7));
   }
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test
   public void testCompareByIdentity() {
-    rh = newRubyHash();
+    RubyHash<String, Integer> rh = newRubyHash();
     rh.compareByIdentity();
+    rh.put("a", 1);
+    rh.put(new String("a"), 1);
+    assertEquals(2, rh.count());
   }
 
   @Test
   public void testCompareByIdentityʔ() {
     rh = newRubyHash();
-    assertFalse(rh.comparedByIdentityʔ());
+    rh.compareByIdentity();
+    assertTrue(rh.comparedByIdentityʔ());
   }
 
   @Test

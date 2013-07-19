@@ -25,6 +25,8 @@ import net.sf.rubycollect4j.succ.DoubleSuccessorTest;
 import net.sf.rubycollect4j.succ.IntegerSuccessorTest;
 import net.sf.rubycollect4j.succ.LongSuccessorTest;
 import net.sf.rubycollect4j.succ.StringSuccessorTest;
+import net.sf.rubycollect4j.util.LinkedIdentityMapTest;
+import net.sf.rubycollect4j.util.ListSetTest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -37,5 +39,5 @@ import org.junit.runners.Suite.SuiteClasses;
     RubyIOTest.class, RubyKernelTest.class, RubyRangeTest.class,
     DateSuccessorTest.class, DoubleSuccessorTest.class,
     IntegerSuccessorTest.class, LongSuccessorTest.class,
-    StringSuccessorTest.class })
+    StringSuccessorTest.class, LinkedIdentityMapTest.class, ListSetTest.class })
 public class AllTests {}

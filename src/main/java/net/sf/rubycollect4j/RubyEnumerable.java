@@ -72,7 +72,7 @@ import static net.sf.rubycollect4j.RubyHash.newRubyHash;
  */
 public class RubyEnumerable<E> implements Iterable<E> {
 
-  protected final Iterable<E> iter;
+  protected Iterable<E> iter;
 
   /**
    * Creates a RubyEnumerable by given Iterable.

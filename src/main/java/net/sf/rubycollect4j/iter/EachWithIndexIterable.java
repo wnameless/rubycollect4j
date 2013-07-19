@@ -25,7 +25,7 @@ import java.util.Map.Entry;
 
 /**
  * 
- * EachWithIndexIterable iterates each elements with its index.
+ * EachWithIndexIterable iterates each element with its index.
  * 
  * @param <E>
  *          the type of the elements

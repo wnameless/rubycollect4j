@@ -28,7 +28,7 @@ import static net.sf.rubycollect4j.RubyCollections.newPair;
 
 /**
  * 
- * EachWithIndexIterator iterates each elements with its index.
+ * EachWithIndexIterator iterates each element with its index.
  * 
  * @param <E>
  *          the type of the elements

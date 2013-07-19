@@ -20,41 +20,38 @@
  */
 package net.sf.rubycollect4j.iter;
 
+import java.util.AbstractMap.SimpleEntry;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Map.Entry;
-import java.util.NoSuchElementException;
-
-import static net.sf.rubycollect4j.RubyCollections.newPair;
 
 /**
  * 
- * EachWithObjectIterator iterates each element with an object.
+ * OrderedEntrySetIterator iterates each Entry by the key ordering of the
+ * Iterator gives.
  * 
- * @param <E>the type of the elements
- * @param <O>
- *          the type of the object
+ * @param <K>
+ *          the type of the key elements
+ * @param <V>
+ *          the type of the value elements
  */
-public final class EachWithObjectIterator<E, O> implements
-    Iterator<Entry<E, O>> {
+public final class OrderedEntrySetIterator<K, V> implements
+    Iterator<Entry<K, V>> {
 
-  private final Iterator<E> iter;
-  private final O obj;
+  private final Iterator<K> iter;
+  private final Map<K, V> map;
 
   /**
-   * The constructor of the EachWithObjectIterator.
+   * The constructor of the OrderedEntrySetIterator.
    * 
    * @param iter
    *          an Iterator
-   * @param obj
-   *          an Object
+   * @param map
+   *          a Map
    */
-  public EachWithObjectIterator(Iterator<E> iter, O obj) {
+  public OrderedEntrySetIterator(Iterator<K> iter, Map<K, V> map) {
     this.iter = iter;
-    this.obj = obj;
-  }
-
-  private Entry<E, O> nextElement() {
-    return newPair(iter.next(), obj);
+    this.map = map;
   }
 
   @Override
@@ -63,11 +60,9 @@ public final class EachWithObjectIterator<E, O> implements
   }
 
   @Override
-  public Entry<E, O> next() {
-    if (!hasNext()) {
-      throw new NoSuchElementException();
-    }
-    return nextElement();
+  public Entry<K, V> next() {
+    K key = iter.next();
+    return new SimpleEntry<K, V>(key, map.get(key));
   }
 
   @Override

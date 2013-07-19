@@ -1631,7 +1631,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   public <S> RubyArray<E> sortByǃ(Comparator<? super S> comp,
       TransformBlock<E, S> block) {
     Multimap<S, E> multimap = ArrayListMultimap.create();
-    for (E item : iter) {
+    for (E item : list) {
       multimap.put(block.yield(item), item);
     }
     List<S> keys = newArrayList(multimap.keySet());

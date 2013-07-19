@@ -47,3 +47,7 @@ Version 1.2.2
 * Improved RubyDir.glob() compatibility on Windows 
 
 + Throws RuntimeExceptions while Exceptions are caught
+
++ The binarySearch() of RubyArray now accepts block
+
++ Added compareByIdentity() feature for RubyHash

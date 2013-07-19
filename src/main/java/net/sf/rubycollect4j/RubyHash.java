@@ -35,6 +35,7 @@ import net.sf.rubycollect4j.block.EntryBooleanBlock;
 import net.sf.rubycollect4j.block.EntryMergeBlock;
 import net.sf.rubycollect4j.block.EntryTransformBlock;
 import net.sf.rubycollect4j.block.TransformBlock;
+import net.sf.rubycollect4j.util.LinkedIdentityMap;
 
 import static com.google.common.collect.Maps.newLinkedHashMap;
 import static net.sf.rubycollect4j.RubyArray.newRubyArray;
@@ -53,7 +54,7 @@ import static net.sf.rubycollect4j.RubyEnumerator.newRubyEnumerator;
 public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     Map<K, V> {
 
-  private final LinkedHashMap<K, V> map;
+  private Map<K, V> map;
   private V defaultValue;
 
   /**
@@ -129,22 +130,24 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Not supported yet!
+   * Turns this RubyHash to compare each elements by their identities instead of
+   * their equalities.
    * 
-   * @return a RubyHash
-   * @throws UnsupportedOperationException
+   * @return this RubyHash
    */
   public RubyHash<K, V> compareByIdentity() {
-    throw new UnsupportedOperationException("Not supported yet.");
+    map = new LinkedIdentityMap<K, V>(map);
+    iter = map.entrySet();
+    return this;
   }
 
   /**
-   * Returns false because compareByIdentity() is not supported yet.
+   * Returns whether this RubyHash is compared by identity.
    * 
-   * @return false
+   * @return true if this RubyHash is compared by identity, false otherwise
    */
   public boolean comparedByIdentityʔ() {
-    return false;
+    return map instanceof LinkedIdentityMap;
   }
 
   /**
