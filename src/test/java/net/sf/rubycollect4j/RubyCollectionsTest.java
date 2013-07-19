@@ -64,7 +64,11 @@ public class RubyCollectionsTest {
 
   @Test
   public void testQx() {
-    assertEquals("Hello world!\n", qx("echo", "Hello world!"));
+    if (System.getProperty("os.name").startsWith("Windows")) {
+      assertEquals("Hello world!\n", qx("cmd", "/C", "echo Hello world!"));
+    } else {
+      assertEquals("Hello world!\n", qx("echo", "Hello world!"));
+    }
   }
 
   @Test(expected = RuntimeException.class)
