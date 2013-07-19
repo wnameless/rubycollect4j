@@ -226,6 +226,36 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   }
 
   /**
+   * Uses binary search and a block to find an element. The block needs to
+   * compare elements by its own definition and returns a Integer to show the
+   * result of comparison (which is much like the result of a Comparator).
+   * BinarySearch will be performed based on the comparison result. Assume this
+   * RubyArray is already sorted.
+   * 
+   * @param block
+   *          to filter elements
+   * @return an element if target found, null otherwise
+   */
+  public E bsearch(TransformBlock<E, Integer> block) {
+    return binarySearch(list, block, 0, list.size() - 1);
+  }
+
+  private E binarySearch(List<E> list, TransformBlock<E, Integer> block,
+      int left, int right) {
+    if (right < left)
+      return null;
+
+    int mid = (left + right) >>> 1;
+    if (block.yield(list.get(mid)) > 0) {
+      return binarySearch(list, block, left, mid - 1);
+    } else if (block.yield(list.get(mid)) < 0) {
+      return binarySearch(list, block, mid + 1, right);
+    } else {
+      return list.get(mid);
+    }
+  }
+
+  /**
    * Generates all combinations with length n of this RubyArray.
    * 
    * @param n

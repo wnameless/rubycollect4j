@@ -128,6 +128,37 @@ public class RubyArrayTest {
     }));
   }
 
+  @Test
+  public void testBsearchWithBlock() {
+    ra = ra(1, 2, 3, 4, 5, 6, 7);
+    assertEquals(Integer.valueOf(6),
+        ra.bsearch(new TransformBlock<Integer, Integer>() {
+
+          @Override
+          public Integer yield(Integer item) {
+            return item - 6;
+          }
+
+        }));
+    assertEquals(Integer.valueOf(3),
+        ra.bsearch(new TransformBlock<Integer, Integer>() {
+
+          @Override
+          public Integer yield(Integer item) {
+            return item - 3;
+          }
+
+        }));
+    assertNull(ra.bsearch(new TransformBlock<Integer, Integer>() {
+
+      @Override
+      public Integer yield(Integer item) {
+        return item - 0;
+      }
+
+    }));
+  }
+
   @SuppressWarnings("unchecked")
   @Test
   public void testCombination() {
