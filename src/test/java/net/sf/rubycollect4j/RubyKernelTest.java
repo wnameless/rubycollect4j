@@ -29,7 +29,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static net.sf.rubycollect4j.RubyKernel.p;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -53,13 +52,21 @@ public class RubyKernelTest {
   @Test
   public void testPutsNothing() {
     p();
-    assertEquals("\n", outContent.toString());
+    if (System.getProperty("os.name").startsWith("Windows")) {
+      assertEquals("\r\n", outContent.toString());
+    } else {
+      assertEquals("\n", outContent.toString());
+    }
   }
 
   @Test
   public void testPutsString() {
     p("");
-    assertEquals("\n", outContent.toString());
+    if (System.getProperty("os.name").startsWith("Windows")) {
+      assertEquals("\r\n", outContent.toString());
+    } else {
+      assertEquals("\n", outContent.toString());
+    }
   }
 
   @Test
@@ -72,43 +79,71 @@ public class RubyKernelTest {
   @Test
   public void testPutsBoolean() {
     p(true);
-    assertEquals("true\n", outContent.toString());
+    if (System.getProperty("os.name").startsWith("Windows")) {
+      assertEquals("true\r\n", outContent.toString());
+    } else {
+      assertEquals("true\n", outContent.toString());
+    }
   }
 
   @Test
   public void testPutsChar() {
     p('x');
-    assertEquals("x\n", outContent.toString());
+    if (System.getProperty("os.name").startsWith("Windows")) {
+      assertEquals("x\r\n", outContent.toString());
+    } else {
+      assertEquals("x\n", outContent.toString());
+    }
   }
 
   @Test
   public void testPutsCharArray() {
     p(new char[] { 'x', 'y', 'z' });
-    assertEquals("xyz\n", outContent.toString());
+    if (System.getProperty("os.name").startsWith("Windows")) {
+      assertEquals("xyz\r\n", outContent.toString());
+    } else {
+      assertEquals("xyz\n", outContent.toString());
+    }
   }
 
   @Test
   public void testPutsDouble() {
     p(1.0);
-    assertEquals("1.0\n", outContent.toString());
+    if (System.getProperty("os.name").startsWith("Windows")) {
+      assertEquals("1.0\r\n", outContent.toString());
+    } else {
+      assertEquals("1.0\n", outContent.toString());
+    }
   }
 
   @Test
   public void testPutsFloat() {
     p(1.0f);
-    assertEquals("1.0\n", outContent.toString());
+    if (System.getProperty("os.name").startsWith("Windows")) {
+      assertEquals("1.0\r\n", outContent.toString());
+    } else {
+      assertEquals("1.0\n", outContent.toString());
+    }
   }
 
   @Test
   public void testPutsInt() {
     p(1);
-    assertEquals("1\n", outContent.toString());
+    if (System.getProperty("os.name").startsWith("Windows")) {
+      assertEquals("1\r\n", outContent.toString());
+    } else {
+      assertEquals("1\n", outContent.toString());
+    }
   }
 
   @Test
   public void testPutsLong() {
     p(1L);
-    assertEquals("1\n", outContent.toString());
+    if (System.getProperty("os.name").startsWith("Windows")) {
+      assertEquals("1\r\n", outContent.toString());
+    } else {
+      assertEquals("1\n", outContent.toString());
+    }
   }
 
 }

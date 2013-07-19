@@ -181,8 +181,14 @@ public class RubyIOTest {
     RubyIO rIO =
         new RubyIO(new File(BASE_DIR + "ruby_io_read_only_mode.txt"),
             RubyIO.Mode.R);
-    assertEquals("RubyIO{path=" + BASE_DIR
-        + "ruby_io_read_only_mode.txt, mode=" + "r" + "}", rIO.toString());
+    if (System.getProperty("os.name").startsWith("Windows")) {
+      assertEquals(
+          ("RubyIO{path=" + BASE_DIR + "ruby_io_read_only_mode.txt, mode="
+              + "r" + "}").replaceAll("/", "\\\\"), rIO.toString());
+    } else {
+      assertEquals("RubyIO{path=" + BASE_DIR
+          + "ruby_io_read_only_mode.txt, mode=" + "r" + "}", rIO.toString());
+    }
     rIO.close();
   }
 

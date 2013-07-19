@@ -23,7 +23,13 @@ public class RubyFileTest {
 
   @Test
   public void testAbsolutePath() {
-    assertEquals(qx("pwd").trim(), RubyFile.absolutePath(""));
+    if (System.getProperty("os.name").startsWith("Windows")) {
+      assertEquals(
+          (qx("cmd", "/C", "echo %cd%").trim()).replaceAll("/", "\\\\"),
+          RubyFile.absolutePath(""));
+    } else {
+      assertEquals(qx("pwd").trim(), RubyFile.absolutePath(""));
+    }
   }
 
   @Test
@@ -108,9 +114,16 @@ public class RubyFileTest {
 
   @Test
   public void testExpandPath() {
-    assertEquals(
-        qx("pwd").trim() + "/" + BASE_DIR + "ruby_file_exist_test.txt",
-        RubyFile.expandPath(BASE_DIR + "ruby_file_exist_test.txt"));
+    if (System.getProperty("os.name").startsWith("Windows")) {
+      assertEquals(
+          (qx("cmd", "/C", "echo %cd%").trim() + "/" + BASE_DIR + "ruby_file_exist_test.txt")
+              .replaceAll("/", "\\\\"), RubyFile.expandPath(BASE_DIR
+              + "ruby_file_exist_test.txt"));
+    } else {
+      assertEquals(qx("pwd").trim() + "/" + BASE_DIR
+          + "ruby_file_exist_test.txt",
+          RubyFile.expandPath(BASE_DIR + "ruby_file_exist_test.txt"));
+    }
   }
 
   @Test
@@ -176,7 +189,13 @@ public class RubyFileTest {
   @Test
   public void testPath() {
     rf = RubyFile.open(BASE_DIR + "ruby_file_exist_test.txt");
-    assertEquals(BASE_DIR + "ruby_file_exist_test.txt", rf.path());
+    if (System.getProperty("os.name").startsWith("Windows")) {
+      assertEquals(
+          (BASE_DIR + "ruby_file_exist_test.txt").replaceAll("/", "\\\\"),
+          rf.path());
+    } else {
+      assertEquals(BASE_DIR + "ruby_file_exist_test.txt", rf.path());
+    }
     rf.close();
   }
 
@@ -190,16 +209,27 @@ public class RubyFileTest {
   @Test
   public void testToPath() {
     rf = RubyFile.open(BASE_DIR + "ruby_file_exist_test.txt");
-    assertEquals(BASE_DIR + "ruby_file_exist_test.txt", rf.toPath());
+    if (System.getProperty("os.name").startsWith("Windows")) {
+      assertEquals(
+          (BASE_DIR + "ruby_file_exist_test.txt").replaceAll("/", "\\\\"),
+          rf.toPath());
+    } else {
+      assertEquals(BASE_DIR + "ruby_file_exist_test.txt", rf.toPath());
+    }
     rf.close();
   }
 
   @Test
   public void testToString() {
     rf = RubyFile.open(BASE_DIR + "ruby_file_exist_test.txt", "r");
-    assertEquals("RubyFile{path=" + BASE_DIR
-        + "ruby_file_exist_test.txt, mode=" + "r" + "}", rf.toString());
-    rf.close();
+    if (System.getProperty("os.name").startsWith("Windows")) {
+      assertEquals(
+          ("RubyFile{path=" + BASE_DIR + "ruby_file_exist_test.txt, mode="
+              + "r" + "}").replaceAll("/", "\\\\"), rf.toString());
+    } else {
+      assertEquals("RubyFile{path=" + BASE_DIR
+          + "ruby_file_exist_test.txt, mode=" + "r" + "}", rf.toString());
+    }
   }
 
 }
