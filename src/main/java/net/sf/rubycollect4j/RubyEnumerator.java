@@ -105,7 +105,7 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
    * @return this RubyEnumerator
    */
   public RubyEnumerator<E> each(Block<E> block) {
-    for (E item : iter) {
+    for (E item : super.getIterable()) {
       block.yield(item);
     }
     return this;
@@ -132,7 +132,7 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
 
   @Override
   public Iterator<E> iterator() {
-    return iter.iterator();
+    return super.getIterable().iterator();
   }
 
   @Override
@@ -152,7 +152,8 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
 
   @Override
   public String toString() {
-    return Objects.toStringHelper(this.getClass()).addValue(iter).toString();
+    return Objects.toStringHelper(this.getClass())
+        .addValue(super.getIterable()).toString();
   }
 
 }

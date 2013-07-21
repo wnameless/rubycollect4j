@@ -64,6 +64,31 @@ public class RubyEnumerableTest {
     assertEquals(RubyEnumerable.class, re.getClass());
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void testConstructorException() {
+    re = newRubyEnumerable(null);
+  }
+
+  @Test
+  public void testSetIterable() {
+    re = newRubyEnumerable(Arrays.asList(1, 2));
+    re.setIterable(Arrays.asList(3, 4));
+    assertEquals(ra(3, 4), re.toA());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testSetIterableException() {
+    re = newRubyEnumerable(Arrays.asList(1, 2));
+    re.setIterable(null);
+  }
+
+  @Test
+  public void testGetIterable() {
+    Iterable<Integer> iter = Arrays.asList(1, 2);
+    re = newRubyEnumerable(iter);
+    assertTrue(iter == re.getIterable());
+  }
+
   @Test
   public void testAllʔ() {
     re = newRubyEnumerable(Arrays.asList(1, 2));

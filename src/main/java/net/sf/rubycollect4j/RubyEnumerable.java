@@ -72,7 +72,7 @@ import static net.sf.rubycollect4j.RubyHash.newRubyHash;
  */
 public class RubyEnumerable<E> implements Iterable<E> {
 
-  protected Iterable<E> iter;
+  private Iterable<E> iter;
 
   /**
    * Creates a RubyEnumerable by given Iterable.
@@ -92,9 +92,38 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * 
    * @param iter
    *          an Iterable
+   * @throws IllegalArgumentException
+   *           when Iterable is null
    */
   public RubyEnumerable(Iterable<E> iter) {
+    if (iter == null)
+      throw new IllegalArgumentException("Iterable can't be null.");
+
     this.iter = iter;
+  }
+
+  /**
+   * Sets the Iterable of this RubyEnumerable.
+   * 
+   * @param iter
+   *          an Iterable
+   * @throws IllegalArgumentException
+   *           when Iterable is null
+   */
+  void setIterable(Iterable<E> iter) {
+    if (iter == null)
+      throw new IllegalArgumentException("Iterable can't be null.");
+
+    this.iter = iter;
+  }
+
+  /**
+   * Gets the Iterable of this RubyEnumerable.
+   * 
+   * @return an Iterable of this RubyEnumerable
+   */
+  Iterable<E> getIterable() {
+    return iter;
   }
 
   /**

@@ -137,7 +137,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    */
   public RubyHash<K, V> compareByIdentity() {
     map = new LinkedIdentityMap<K, V>(map);
-    iter = map.entrySet();
+    super.setIterable(map.entrySet());
     return this;
   }
 

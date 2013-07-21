@@ -172,7 +172,7 @@ public final class RubyRange<E extends Comparable<E>> extends RubyEnumerable<E> 
    * @return a RubyEnumerator
    */
   public RubyEnumerator<E> each() {
-    return newRubyEnumerator(iter);
+    return newRubyEnumerator(super.getIterable());
   }
 
   /**
@@ -246,7 +246,7 @@ public final class RubyRange<E extends Comparable<E>> extends RubyEnumerable<E> 
    */
   public RubyArray<E> last(int n) {
     RubyArray<E> lasts = ra();
-    for (E item : iter) {
+    for (E item : super.getIterable()) {
       if (lasts.size() < n) {
         lasts.add(item);
       } else {
@@ -272,7 +272,7 @@ public final class RubyRange<E extends Comparable<E>> extends RubyEnumerable<E> 
    * @return a RubyEnumerator
    */
   public RubyEnumerator<E> step(int n) {
-    return newRubyEnumerator(new StepIterable<E>(iter, n));
+    return newRubyEnumerator(new StepIterable<E>(super.getIterable(), n));
   }
 
   /**
