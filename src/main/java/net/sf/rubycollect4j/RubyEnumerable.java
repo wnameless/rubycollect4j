@@ -110,7 +110,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * @throws IllegalArgumentException
    *           when Iterable is null
    */
-  void setIterable(Iterable<E> iter) {
+  protected void setIterable(Iterable<E> iter) {
     if (iter == null)
       throw new IllegalArgumentException("Iterable can't be null.");
 
@@ -122,7 +122,7 @@ public class RubyEnumerable<E> implements Iterable<E> {
    * 
    * @return an Iterable of this RubyEnumerable
    */
-  Iterable<E> getIterable() {
+  protected Iterable<E> getIterable() {
     return iter;
   }
 
