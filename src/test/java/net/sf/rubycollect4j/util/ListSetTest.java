@@ -153,4 +153,26 @@ public class ListSetTest {
         set.toArray(new Integer[3])));
   }
 
+  @Test
+  public void testEquals() {
+    ListSet<Integer> ls = new ListSet<Integer>(Arrays.asList(1, 2, 3));
+    assertTrue(set.equals(ls));
+    ls = new ListSet<Integer>(Arrays.asList(1, 2));
+    assertFalse(set.equals(ls));
+    ls = new ListSet<Integer>(newArrayList(1, 2, 3));
+    assertTrue(set.equals(ls));
+    assertFalse(set.equals(null));
+  }
+
+  @Test
+  public void testHashCode() {
+    ListSet<Integer> ls = new ListSet<Integer>(Arrays.asList(1, 2, 3));
+    assertEquals(set.hashCode(), ls.hashCode());
+  }
+
+  @Test
+  public void testToString() {
+    assertEquals("[1, 2, 3]", set.toString());
+  }
+
 }

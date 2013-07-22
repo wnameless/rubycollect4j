@@ -204,4 +204,11 @@ public class LinkedIdentityMapTest {
     assertEquals(ra(3, 2, 1), ra(map.values()));
   }
 
+  @Test
+  public void testToString() {
+    map.put("b", 2);
+    map.put("c", 3);
+    assertEquals("{a=1, a=1, b=2, c=3}", map.toString());
+  }
+
 }

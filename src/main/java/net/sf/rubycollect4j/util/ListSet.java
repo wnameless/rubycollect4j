@@ -25,6 +25,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import com.google.common.base.Objects;
+
 /**
  * 
  * ListSet wraps any List into a Set. It is simply a wrapper and allows
@@ -112,6 +114,26 @@ public final class ListSet<E> implements Set<E> {
   @Override
   public <T> T[] toArray(T[] a) {
     return list.toArray(a);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o instanceof ListSet) {
+      @SuppressWarnings("rawtypes")
+      ListSet ls = (ListSet) o;
+      return Objects.equal(list, ls.list);
+    }
+    return false;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(list);
+  }
+
+  @Override
+  public String toString() {
+    return list.toString();
   }
 
 }
