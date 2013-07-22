@@ -20,6 +20,8 @@
  */
 package net.sf.rubycollect4j.util;
 
+import java.util.IdentityHashMap;
+
 import net.sf.rubycollect4j.RubyArray;
 
 import org.junit.After;
@@ -202,6 +204,33 @@ public class LinkedIdentityMapTest {
     map.put(key2, 2);
     map.put(key3, 1);
     assertEquals(ra(3, 2, 1), ra(map.values()));
+  }
+
+  @Test
+  public void testEquals() {
+    map.clear();
+    String key1 = new String("a");
+    String key2 = new String("b");
+    map.put(key1, 1);
+    map.put(key2, 2);
+    assertTrue(map.equals(rh(key1, 1, key2, 2)));
+    assertTrue(rh(key1, 1, key2, 2).equals(map));
+    assertFalse(map.equals(rh(new String("a"), 1, new String("b"), 2)));
+    assertFalse(rh(new String("a"), 1, new String("b"), 2).equals(map));
+  }
+
+  @Test
+  public void testHashCode() {
+    map.clear();
+    String key1 = "a";
+    String key2 = "b";
+    map.put(key1, 1);
+    map.put(key2, 2);
+    IdentityHashMap<String, Integer> idMap =
+        new IdentityHashMap<String, Integer>();
+    idMap.put(key1, 1);
+    idMap.put(key2, 2);
+    assertEquals(idMap.hashCode(), map.hashCode());
   }
 
   @Test

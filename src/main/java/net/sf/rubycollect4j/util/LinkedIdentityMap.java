@@ -136,6 +136,16 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
   }
 
   @Override
+  public boolean equals(Object o) {
+    return map.equals(o);
+  }
+
+  @Override
+  public int hashCode() {
+    return map.hashCode();
+  }
+
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("{");

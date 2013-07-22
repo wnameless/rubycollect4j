@@ -31,7 +31,7 @@ import com.google.common.base.Objects;
  * 
  * ListSet wraps any List into a Set. It is simply a wrapper and allows
  * duplicate elements within the Set. ListSet will be changed at the same time
- * if the List is modified.
+ * if the backing List is modified.
  * 
  * @param <E>
  *          the type of elements
