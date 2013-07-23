@@ -24,11 +24,14 @@ import java.util.AbstractMap.SimpleEntry;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.NoSuchElementException;
 
 /**
  * 
  * OrderedEntrySetIterator iterates each Entry by the key ordering of the
- * Iterator gives.
+ * Iterator gives. It assumes Iterator contains all the keys of given Map, the
+ * hasNext() and next() may not function properly if Iterator has shortage of
+ * keys.
  * 
  * @param <K>
  *          the type of the key elements
@@ -61,6 +64,9 @@ public final class OrderedEntrySetIterator<K, V> implements
 
   @Override
   public Entry<K, V> next() {
+    if (!hasNext()) {
+      throw new NoSuchElementException();
+    }
     K key = iter.next();
     return new SimpleEntry<K, V>(key, map.get(key));
   }

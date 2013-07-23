@@ -31,7 +31,9 @@ import static net.sf.rubycollect4j.RubyCollections.ra;
 /**
  * 
  * OrderedEntrySetIterable iterates each Entry by the key ordering of the
- * Iterable gives.
+ * Iterable gives. It assumes Iterable contains all the keys of given Map, the
+ * iterator() and toString() may not function properly if Iterable has shortage
+ * of keys.
  * 
  * @param <K>
  *          the type of the key elements
@@ -74,17 +76,17 @@ public final class OrderedEntrySetIterable<K, V> implements
 
   @Override
   public boolean contains(Object arg0) {
-    return map.keySet().contains(arg0);
+    return map.entrySet().contains(arg0);
   }
 
   @Override
   public boolean containsAll(Collection<?> arg0) {
-    return map.keySet().containsAll(arg0);
+    return map.entrySet().containsAll(arg0);
   }
 
   @Override
   public boolean isEmpty() {
-    return map.isEmpty();
+    return map.entrySet().isEmpty();
   }
 
   @Override
@@ -109,7 +111,7 @@ public final class OrderedEntrySetIterable<K, V> implements
 
   @Override
   public int size() {
-    return map.size();
+    return map.entrySet().size();
   }
 
   @Override
@@ -120,6 +122,33 @@ public final class OrderedEntrySetIterable<K, V> implements
   @Override
   public <T> T[] toArray(T[] arg0) {
     return ra(iterator()).toArray(arg0);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    return map.entrySet().equals(o);
+  }
+
+  @Override
+  public int hashCode() {
+    return map.entrySet().hashCode();
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("[");
+    int index = 0;
+    for (K key : iter) {
+      if (index == 0) {
+        sb.append(key).append("=").append(map.get(key));
+      } else {
+        sb.append(", ").append(key).append("=").append(map.get(key));
+      }
+      index++;
+    }
+    sb.append("]");
+    return sb.toString();
   }
 
 }

@@ -20,6 +20,8 @@
  */
 package net.sf.rubycollect4j;
 
+import net.sf.rubycollect4j.iter.OrderedEntrySetIterableTest;
+import net.sf.rubycollect4j.iter.OrderedEntrySetIteratorTest;
 import net.sf.rubycollect4j.succ.DateSuccessorTest;
 import net.sf.rubycollect4j.succ.DoubleSuccessorTest;
 import net.sf.rubycollect4j.succ.IntegerSuccessorTest;
@@ -39,5 +41,6 @@ import org.junit.runners.Suite.SuiteClasses;
     RubyIOTest.class, RubyKernelTest.class, RubyRangeTest.class,
     DateSuccessorTest.class, DoubleSuccessorTest.class,
     IntegerSuccessorTest.class, LongSuccessorTest.class,
-    StringSuccessorTest.class, LinkedIdentityMapTest.class, ListSetTest.class })
+    StringSuccessorTest.class, LinkedIdentityMapTest.class, ListSetTest.class,
+    OrderedEntrySetIterableTest.class, OrderedEntrySetIteratorTest.class })
 public class AllTests {}
