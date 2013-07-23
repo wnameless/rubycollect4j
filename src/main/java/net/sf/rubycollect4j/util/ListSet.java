@@ -25,7 +25,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import com.google.common.base.Objects;
+import com.google.common.collect.HashMultiset;
+
+import static com.google.common.collect.Sets.newHashSet;
+import static net.sf.rubycollect4j.RubyCollections.ra;
 
 /**
  * 
@@ -116,19 +119,28 @@ public final class ListSet<E> implements Set<E> {
     return list.toArray(a);
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public boolean equals(Object o) {
     if (o instanceof ListSet) {
       @SuppressWarnings("rawtypes")
       ListSet ls = (ListSet) o;
-      return Objects.equal(list, ls.list);
+      return HashMultiset.create(list).equals(HashMultiset.create(ls.list));
+    } else if (o instanceof Set) {
+      @SuppressWarnings("rawtypes")
+      Set set = (Set) o;
+      return set.equals(this);
     }
     return false;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(list);
+    if (ra(list).uniq().count() != list.size()) {
+      return HashMultiset.create(list).hashCode();
+    } else {
+      return newHashSet(list).hashCode();
+    }
   }
 
   @Override

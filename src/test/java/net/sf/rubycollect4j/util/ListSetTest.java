@@ -29,9 +29,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Sets.newHashSet;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 public class ListSetTest {
@@ -162,12 +164,28 @@ public class ListSetTest {
     ls = new ListSet<Integer>(newArrayList(1, 2, 3));
     assertTrue(set.equals(ls));
     assertFalse(set.equals(null));
+    Set<Integer> hs = newHashSet(1, 2, 3);
+    assertTrue(hs.equals(set));
+    assertTrue(set.equals(hs));
+    ListSet<Integer> ls1 = new ListSet<Integer>(Arrays.asList(1, 2, 3, 3));
+    ListSet<Integer> ls2 = new ListSet<Integer>(newArrayList(3, 2, 1, 3));
+    assertEquals(ls1, ls2);
+    assertNotEquals(ls1, hs);
+    assertNotEquals(ls2, hs);
   }
 
   @Test
   public void testHashCode() {
-    ListSet<Integer> ls = new ListSet<Integer>(Arrays.asList(1, 2, 3));
-    assertEquals(set.hashCode(), ls.hashCode());
+    ListSet<Integer> ls1 = new ListSet<Integer>(newArrayList(1, 2, 3));
+    ListSet<Integer> ls2 = new ListSet<Integer>(newArrayList(3, 2, 1));
+    Set<Integer> hs = newHashSet(1, 2, 3);
+    assertEquals(ls1.hashCode(), ls2.hashCode());
+    assertEquals(ls2.hashCode(), hs.hashCode());
+    ls1.add(3);
+    ls2.add(3);
+    hs.add(3);
+    assertEquals(ls1.hashCode(), ls2.hashCode());
+    assertNotEquals(ls2.hashCode(), hs.hashCode());
   }
 
   @Test
