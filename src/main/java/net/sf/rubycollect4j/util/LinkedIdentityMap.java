@@ -20,7 +20,6 @@
  */
 package net.sf.rubycollect4j.util;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.IdentityHashMap;
 import java.util.LinkedList;
@@ -31,6 +30,9 @@ import java.util.Set;
 
 import net.sf.rubycollect4j.iter.OrderedEntrySetIterable;
 
+import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Lists.newLinkedList;
+import static com.google.common.collect.Maps.newIdentityHashMap;
 import static java.util.Collections.unmodifiableList;
 
 /**
@@ -45,8 +47,8 @@ import static java.util.Collections.unmodifiableList;
  */
 public final class LinkedIdentityMap<K, V> implements Map<K, V> {
 
-  private final IdentityHashMap<K, V> map = new IdentityHashMap<K, V>();
-  private final LinkedList<K> list = new LinkedList<K>();
+  private final IdentityHashMap<K, V> map = newIdentityHashMap();
+  private final LinkedList<K> list = newLinkedList();
 
   public LinkedIdentityMap() {}
 
@@ -128,7 +130,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
 
   @Override
   public Collection<V> values() {
-    List<V> values = new ArrayList<V>();
+    List<V> values = newArrayList();
     for (K key : list) {
       values.add(map.get(key));
     }

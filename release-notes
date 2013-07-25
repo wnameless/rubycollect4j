@@ -42,7 +42,7 @@ Version 1.2.1
 + Added year(), month(), day(), dayOfWeek(), dayOfYear(), week(), weekOfMonth(), hour(), minute(), second() & millisecond() to RubyDate
 
 
-Version 1.2.2
+Version 1.3.0
 
 * Improved RubyDir.glob() compatibility on Windows 
 
@@ -52,4 +52,4 @@ Version 1.2.2
 
 + Added compareByIdentity() feature for RubyHash
 
-* RubyRange not requires Comparable objects to initialize anymore 
+* RubyRange not requires Comparable objects to initialize anymore
