@@ -42,13 +42,13 @@ import static net.sf.rubycollect4j.RubyEnumerator.newRubyEnumerator;
  * 
  * RubyRange is inspired by the Range class of Ruby. It does not exactly follow
  * the implementation of Ruby, especially on the range of alphanumeric strings.
- * All Comparable objects can use the RubyRange to create a range of interval.
- * As long as it provides the corresponding Successive object.
+ * All objects can use the RubyRange to create a range of interval. As long as
+ * it provides the corresponding Successive object.
  * 
  * @param <E>
  *          the type of elements
  */
-public final class RubyRange<E extends Comparable<E>> extends RubyEnumerable<E> {
+public final class RubyRange<E> extends RubyEnumerable<E> {
 
   private final Successive<E> successive;
   private final E startPoint;

@@ -26,14 +26,12 @@ import net.sf.rubycollect4j.succ.Successive;
 
 /**
  * 
- * RangeIterable iterates each element within a range defined by 2 Comparable
- * elements.
+ * RangeIterable iterates each element within a range derived by 2 objects.
  * 
  * @param <E>
  *          the type of the elements
  */
-public final class RangeIterable<E extends Comparable<E>> implements
-    Iterable<E> {
+public final class RangeIterable<E> implements Iterable<E> {
 
   private final Successive<E> successive;
   private final E startPoint;

@@ -51,3 +51,5 @@ Version 1.2.2
 + The binarySearch() of RubyArray now accepts block
 
 + Added compareByIdentity() feature for RubyHash
+
+* RubyRange not requires Comparable objects to initialize anymore 
