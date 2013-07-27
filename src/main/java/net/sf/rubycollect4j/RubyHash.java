@@ -38,9 +38,10 @@ import net.sf.rubycollect4j.block.TransformBlock;
 import net.sf.rubycollect4j.util.LinkedIdentityMap;
 
 import static com.google.common.collect.Maps.newLinkedHashMap;
-import static net.sf.rubycollect4j.RubyArray.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newPair;
-import static net.sf.rubycollect4j.RubyEnumerator.newRubyEnumerator;
+import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
+import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
+import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
 
 /**
  * RubyHash implements all methods refer to the Hash class of Ruby. RubyHash is
@@ -58,58 +59,20 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   private V defaultValue;
 
   /**
-   * Creates an empty RubyHash.
-   * 
-   * @param <K>
-   *          the type of the key elements
-   * @param <V>
-   *          the type of the value elements
-   * @return a new RubyHash
+   * Creates a RubyHash.
    */
-  public static <K, V> RubyHash<K, V> newRubyHash() {
-    LinkedHashMap<K, V> linkedHashMap = newLinkedHashMap();
-    return new RubyHash<K, V>(linkedHashMap);
+  public RubyHash() {
+    map = newLinkedHashMap();
+    super.setIterable(map.entrySet());
   }
 
   /**
-   * Creates an empty RubyHash by given Map.
+   * Creates a RubyHash by given LinkedHashMap.
    * 
-   * @param <K>
-   *          the type of the key elements
-   * @param <V>
-   *          the type of the value elements
    * @param map
-   *          a Map
-   * @return a new RubyHash
+   *          a LinkedHashMap
    */
-  public static <K, V> RubyHash<K, V> newRubyHash(Map<K, V> map) {
-    LinkedHashMap<K, V> linkedHashMap = newLinkedHashMap(map);
-    return new RubyHash<K, V>(linkedHashMap);
-  }
-
-  /**
-   * Creates an empty RubyHash by given LinkedHashMap.
-   * 
-   * @param <K>
-   *          the type of the key elements
-   * @param <V>
-   *          the type of the value elements
-   * @param map
-   *          a Map
-   * @param defensiveCopy
-   *          it makes a defensive copy if specified
-   * @return a new RubyHash
-   */
-  public static <K, V> RubyHash<K, V> newRubyHash(LinkedHashMap<K, V> map,
-      boolean defensiveCopy) {
-    if (defensiveCopy) {
-      LinkedHashMap<K, V> linkedHashMap = newLinkedHashMap(map);
-      return new RubyHash<K, V>(linkedHashMap);
-    }
-    return new RubyHash<K, V>(map);
-  }
-
-  private RubyHash(LinkedHashMap<K, V> map) {
+  public RubyHash(LinkedHashMap<K, V> map) {
     super(map.entrySet());
     this.map = map;
   }

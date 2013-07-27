@@ -21,7 +21,7 @@
 package net.sf.rubycollect4j;
 
 import java.awt.Point;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -34,7 +34,6 @@ import net.sf.rubycollect4j.block.TransformBlock;
 import org.junit.Test;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static net.sf.rubycollect4j.RubyArray.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -47,27 +46,11 @@ public class RubyArrayTest {
   private RubyArray<Integer> ra;
 
   @Test
-  public void testFactory() {
-    ra = newRubyArray(Arrays.asList(1, 2));
-    assertEquals(RubyArray.class, ra.getClass());
-    ra = newRubyArray(new Integer[] { 1 });
-    assertEquals(RubyArray.class, ra.getClass());
-    ra = newRubyArray(1, 2, 3);
-    assertEquals(RubyArray.class, ra.getClass());
-    ra = newRubyArray(ra.iterator());
-    assertEquals(RubyArray.class, ra.getClass());
-    List<Integer> ints = newArrayList(1, 2, 3);
-    ra = newRubyArray(ints);
-    ints.set(0, 4);
-    assertEquals(ra(4, 2, 3), ra);
-    ints = newArrayList(1, 2, 3);
-    ra = newRubyArray(ints, true);
-    ints.set(0, 4);
-    assertEquals(ra(1, 2, 3), ra);
-    ints = newArrayList(1, 2, 3);
-    ra = newRubyArray(ints, false);
-    ints.set(0, 4);
-    assertEquals(ra(4, 2, 3), ra);
+  public void testConstructor() {
+    ra = new RubyArray<Integer>();
+    assertTrue(ra instanceof RubyArray);
+    ra = new RubyArray<Integer>(new ArrayList<Integer>());
+    assertTrue(ra instanceof RubyArray);
   }
 
   @Test

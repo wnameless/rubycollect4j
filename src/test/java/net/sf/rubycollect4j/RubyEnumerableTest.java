@@ -40,11 +40,11 @@ import org.junit.Test;
 import com.google.common.primitives.Ints;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static net.sf.rubycollect4j.RubyArray.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newPair;
+import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
+import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerable;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.rh;
-import static net.sf.rubycollect4j.RubyEnumerable.newRubyEnumerable;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -56,17 +56,15 @@ public class RubyEnumerableTest {
 
   @Test
   public void testConstructor() {
-    re = newRubyEnumerable(Arrays.asList(1, 2));
-    assertEquals(RubyEnumerable.class, re.getClass());
-    re = newRubyEnumerable(Arrays.asList(0, 1));
-    assertEquals(RubyEnumerable.class, re.getClass());
-    re = newRubyEnumerable(Arrays.asList(1, 2, 3));
-    assertEquals(RubyEnumerable.class, re.getClass());
+    re = new RubyEnumerable<Integer>();
+    assertTrue(re instanceof RubyEnumerable);
+    re = new RubyEnumerable<Integer>(Arrays.asList(1, 2));
+    assertTrue(re instanceof RubyEnumerable);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testConstructorException() {
-    re = newRubyEnumerable(null);
+    re = new RubyEnumerable<Integer>(null);
   }
 
   @Test

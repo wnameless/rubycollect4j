@@ -9,7 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static net.sf.rubycollect4j.RubyEnumerator.newRubyEnumerator;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -21,14 +20,14 @@ public class RubyEnumeratorTest {
   @Before
   public void setUp() throws Exception {
     list = newArrayList(1, 2, 3);
-    re = newRubyEnumerator(list);
+    re = new RubyEnumerator<Integer>(list);
   }
 
   @Test
   public void testConstructor() {
-    assertEquals(RubyEnumerator.class, re.getClass());
-    re = newRubyEnumerator(list.iterator());
-    assertEquals(RubyEnumerator.class, re.getClass());
+    assertTrue(re instanceof RubyEnumerator);
+    re = new RubyEnumerator<Integer>(list.iterator());
+    assertTrue(re instanceof RubyEnumerator);
   }
 
   @Test

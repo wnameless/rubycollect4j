@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -34,12 +35,17 @@ import org.junit.Test;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
+import static com.google.common.collect.Maps.newLinkedHashMap;
 import static com.google.common.collect.Sets.newLinkedHashSet;
-import static net.sf.rubycollect4j.RubyArray.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.Hash;
 import static net.sf.rubycollect4j.RubyCollections.date;
 import static net.sf.rubycollect4j.RubyCollections.hp;
 import static net.sf.rubycollect4j.RubyCollections.newPair;
+import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
+import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerable;
+import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
+import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
+import static net.sf.rubycollect4j.RubyCollections.newRubyRange;
 import static net.sf.rubycollect4j.RubyCollections.qr;
 import static net.sf.rubycollect4j.RubyCollections.qw;
 import static net.sf.rubycollect4j.RubyCollections.qx;
@@ -49,6 +55,75 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class RubyCollectionsTest {
+
+  @Test
+  public void testNewRubyArray() {
+    RubyArray<Integer> ra;
+    ra = newRubyArray(Arrays.asList(1, 2));
+    assertTrue(ra instanceof RubyArray);
+    ra = newRubyArray(new Integer[] { 1 });
+    assertTrue(ra instanceof RubyArray);
+    ra = newRubyArray(1, 2, 3);
+    assertTrue(ra instanceof RubyArray);
+    ra = newRubyArray(ra.iterator());
+    assertTrue(ra instanceof RubyArray);
+    List<Integer> ints = newArrayList(1, 2, 3);
+    ra = newRubyArray(ints);
+    ints.set(0, 4);
+    assertEquals(ra(4, 2, 3), ra);
+    ints = newArrayList(1, 2, 3);
+    ra = newRubyArray(ints, true);
+    ints.set(0, 4);
+    assertEquals(ra(1, 2, 3), ra);
+    ints = newArrayList(1, 2, 3);
+    ra = newRubyArray(ints, false);
+    ints.set(0, 4);
+    assertEquals(ra(4, 2, 3), ra);
+  }
+
+  @Test
+  public void testNewRubyHash() {
+    RubyHash<Integer, Integer> rh;
+    rh = newRubyHash();
+    assertTrue(rh instanceof RubyHash);
+    Map<Integer, Integer> map = newHashMap();
+    rh = newRubyHash(map);
+    assertTrue(rh instanceof RubyHash);
+    LinkedHashMap<Integer, Integer> lhm = newLinkedHashMap();
+    rh = newRubyHash(lhm, true);
+    assertTrue(rh instanceof RubyHash);
+    rh = newRubyHash(lhm, false);
+    assertTrue(rh instanceof RubyHash);
+  }
+
+  @Test
+  public void testNewRubyEnumerable() {
+    RubyEnumerable<Integer> re;
+    re = newRubyEnumerable(Arrays.asList(1, 2));
+    assertEquals(RubyEnumerable.class, re.getClass());
+    re = newRubyEnumerable(Arrays.asList(0, 1));
+    assertEquals(RubyEnumerable.class, re.getClass());
+    re = newRubyEnumerable(Arrays.asList(1, 2, 3));
+    assertEquals(RubyEnumerable.class, re.getClass());
+  }
+
+  @Test
+  public void testNewRubyEnumerator() {
+    RubyEnumerator<Integer> re;
+    re = newRubyEnumerator(Arrays.asList(1, 2, 3));
+    assertTrue(re instanceof RubyEnumerator);
+    re = newRubyEnumerator(Arrays.asList(0, 1).iterator());
+    assertTrue(re instanceof RubyEnumerator);
+  }
+
+  @Test
+  public void testNewRubyRange() {
+    assertTrue(newRubyRange("a", "z") instanceof RubyRange);
+    assertTrue(newRubyRange(1, 9) instanceof RubyRange);
+    assertTrue(newRubyRange(1L, 9L) instanceof RubyRange);
+    assertTrue(newRubyRange(1.0, 9.0) instanceof RubyRange);
+    assertTrue(newRubyRange(RubyDate.today(), RubyDate.today().add(9).days()) instanceof RubyRange);
+  }
 
   @Test
   public void testQr() {

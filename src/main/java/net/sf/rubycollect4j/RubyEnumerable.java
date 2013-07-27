@@ -57,11 +57,11 @@ import com.google.common.collect.Multimap;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Lists.reverse;
-import static net.sf.rubycollect4j.RubyArray.newRubyArray;
-import static net.sf.rubycollect4j.RubyEnumerator.newRubyEnumerator;
-import static net.sf.rubycollect4j.RubyHash.newRubyHash;
-
-;
+import static java.util.Collections.emptyList;
+import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
+import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerable;
+import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
+import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
 
 /**
  * An extension class for any Iterable object. It includes all methods refer to
@@ -75,16 +75,10 @@ public class RubyEnumerable<E> implements Iterable<E> {
   private Iterable<E> iter;
 
   /**
-   * Creates a RubyEnumerable by given Iterable.
-   * 
-   * @param <E>
-   *          the type of the elements
-   * @param iter
-   *          an Iterable
-   * @return a new RubyEnumerable
+   * Creates a RubyEnumerable.
    */
-  public static <E> RubyEnumerable<E> newRubyEnumerable(Iterable<E> iter) {
-    return new RubyEnumerable<E>(iter);
+  public RubyEnumerable() {
+    this.iter = emptyList();
   }
 
   /**

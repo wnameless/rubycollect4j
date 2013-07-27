@@ -49,28 +49,6 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
    * 
    * @param iter
    *          an Iterable
-   * @return a new RubyEnumerator
-   */
-  public static <E> RubyEnumerator<E> newRubyEnumerator(Iterable<E> iter) {
-    return new RubyEnumerator<E>(iter);
-  }
-
-  /**
-   * Creates a RubyEnumerator by given Iterator.
-   * 
-   * @param iter
-   *          an Iterator
-   * @return a new RubyEnumerator
-   */
-  public static <E> RubyEnumerator<E> newRubyEnumerator(Iterator<E> iter) {
-    return new RubyEnumerator<E>(iter);
-  }
-
-  /**
-   * Creates a RubyEnumerator by given Iterable.
-   * 
-   * @param iter
-   *          an Iterable
    */
   public RubyEnumerator(Iterable<E> iter) {
     super(iter);

@@ -20,23 +20,15 @@
  */
 package net.sf.rubycollect4j;
 
-import java.util.Date;
-
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.iter.RangeIterable;
 import net.sf.rubycollect4j.iter.StepIterable;
-import net.sf.rubycollect4j.succ.DateSuccessor;
-import net.sf.rubycollect4j.succ.DoubleSuccessor;
-import net.sf.rubycollect4j.succ.IntegerSuccessor;
-import net.sf.rubycollect4j.succ.LongSuccessor;
-import net.sf.rubycollect4j.succ.StringSuccessor;
 import net.sf.rubycollect4j.succ.Successive;
 
 import com.google.common.base.Objects;
-import com.google.common.base.Strings;
 
+import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.ra;
-import static net.sf.rubycollect4j.RubyEnumerator.newRubyEnumerator;
 
 /**
  * 
@@ -53,80 +45,6 @@ public final class RubyRange<E> extends RubyEnumerable<E> {
   private final Successive<E> successive;
   private final E startPoint;
   private final E endPoint;
-
-  /**
-   * Creates a RubyRange by given Strings.
-   * 
-   * @param startPoint
-   *          where the range begins
-   * @param endPoint
-   *          where the range ends
-   * @return a RubyRange
-   */
-  public static RubyRange<String> newRubyRange(String startPoint,
-      String endPoint) {
-    return new RubyRange<String>(StringSuccessor.getInstance(),
-        Strings.nullToEmpty(startPoint), Strings.nullToEmpty(endPoint));
-  }
-
-  /**
-   * Creates a RubyRange by given ints.
-   * 
-   * @param startPoint
-   *          where the range begins
-   * @param endPoint
-   *          where the range ends
-   * @return a RubyRange
-   */
-  public static RubyRange<Integer> newRubyRange(int startPoint, int endPoint) {
-    return new RubyRange<Integer>(IntegerSuccessor.getInstance(), startPoint,
-        endPoint);
-  }
-
-  /**
-   * Creates a RubyRange by given longs.
-   * 
-   * @param startPoint
-   *          where the range begins
-   * @param endPoint
-   *          where the range ends
-   * @return a RubyRange
-   */
-  public static RubyRange<Long> newRubyRange(long startPoint, long endPoint) {
-    return new RubyRange<Long>(LongSuccessor.getInstance(), startPoint,
-        endPoint);
-  }
-
-  /**
-   * Creates a RubyRange by given doubles.
-   * 
-   * @param startPoint
-   *          where the range begins
-   * @param endPoint
-   *          where the range ends
-   * @return a RubyRange
-   */
-  public static RubyRange<Double> newRubyRange(double startPoint,
-      double endPoint) {
-    String doubleStr = String.valueOf(startPoint);
-    int precision = doubleStr.length() - doubleStr.lastIndexOf('.') - 1;
-    return new RubyRange<Double>(new DoubleSuccessor(precision), startPoint,
-        endPoint);
-  }
-
-  /**
-   * Creates a RubyRange by given Dates.
-   * 
-   * @param startPoint
-   *          where the range begins
-   * @param endPoint
-   *          where the range ends
-   * @return a RubyRange
-   */
-  public static RubyRange<Date> newRubyRange(Date startPoint, Date endPoint) {
-    return new RubyRange<Date>(DateSuccessor.getInstance(), startPoint,
-        endPoint);
-  }
 
   /**
    * Creates a RubyRange of given elements.

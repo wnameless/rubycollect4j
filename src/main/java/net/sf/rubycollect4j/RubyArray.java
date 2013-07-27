@@ -20,6 +20,7 @@
  */
 package net.sf.rubycollect4j;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -48,7 +49,9 @@ import com.google.common.collect.Multimap;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newLinkedHashSet;
-import static net.sf.rubycollect4j.RubyEnumerator.newRubyEnumerator;
+import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
+import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerable;
+import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 
 /**
  * 
@@ -64,90 +67,23 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   private final Random rand = new Random();
 
   /**
-   * Creates an empty RubyArray.
+   * Creates a RubyArray.
    * 
-   * @param <E>
-   *          the type of the elements
-   * @return a new RubyArray
+   * @param list
+   *          any List
    */
-  public static <E> RubyArray<E> newRubyArray() {
-    List<E> list = newArrayList();
-    return new RubyArray<E>(list);
-  }
-
-  /**
-   * Creates a RubyArray by given Iterable.
-   * 
-   * @param <E>
-   *          the type of the elements
-   * @param iter
-   *          an Iterable
-   * @return a new RubyArray
-   */
-  public static <E> RubyArray<E> newRubyArray(Iterable<E> iter) {
-    return new RubyArray<E>(newArrayList(iter));
-  }
-
-  /**
-   * Creates a RubyArray by given Iterator.
-   * 
-   * @param <E>
-   *          the type of the elements
-   * @param iter
-   *          an Iterator
-   * @return a new RubyArray
-   */
-  public static <E> RubyArray<E> newRubyArray(Iterator<E> iter) {
-    return new RubyArray<E>(newArrayList(iter));
+  public RubyArray() {
+    super(new ArrayList<E>());
+    this.list = (List<E>) super.getIterable();
   }
 
   /**
    * Creates a RubyArray by given List.
    * 
-   * @param <E>
-   *          the type of the elements
    * @param list
-   *          a List
-   * @return a new RubyArray
+   *          any List
    */
-  public static <E> RubyArray<E> newRubyArray(List<E> list) {
-    return new RubyArray<E>(list);
-  }
-
-  /**
-   * Creates a RubyArray by given List. It makes a defensive copy if specified.
-   * 
-   * @param <E>
-   *          the type of the elements
-   * @param list
-   *          a List
-   * @param defensiveCopy
-   *          true If defensive copy required and false otherwise
-   * @return a new RubyArray
-   */
-  public static <E> RubyArray<E> newRubyArray(List<E> list,
-      boolean defensiveCopy) {
-    if (defensiveCopy) {
-      return newRubyArray(newArrayList(list));
-    } else {
-      return newRubyArray(list);
-    }
-  }
-
-  /**
-   * Creates a RubyArray by given elements.
-   * 
-   * @param <E>
-   *          the type of the elements
-   * @param elements
-   *          varargs
-   * @return a new RubyArray
-   */
-  public static <E> RubyArray<E> newRubyArray(E... elements) {
-    return new RubyArray<E>(newArrayList(elements));
-  }
-
-  private RubyArray(List<E> list) {
+  public RubyArray(List<E> list) {
     super(list);
     this.list = list;
   }

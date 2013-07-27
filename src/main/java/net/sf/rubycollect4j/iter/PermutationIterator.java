@@ -29,7 +29,7 @@ import java.util.NoSuchElementException;
 import net.sf.rubycollect4j.RubyArray;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static net.sf.rubycollect4j.RubyArray.newRubyArray;
+import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 
 /**
  * 

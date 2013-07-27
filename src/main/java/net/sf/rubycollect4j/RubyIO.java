@@ -35,8 +35,8 @@ import com.google.common.base.Objects;
 
 import static net.sf.rubycollect4j.RubyCollections.Hash;
 import static net.sf.rubycollect4j.RubyCollections.hp;
+import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.ra;
-import static net.sf.rubycollect4j.RubyEnumerator.newRubyEnumerator;
 
 /**
  * 

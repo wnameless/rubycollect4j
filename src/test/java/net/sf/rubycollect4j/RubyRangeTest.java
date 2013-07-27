@@ -2,6 +2,7 @@ package net.sf.rubycollect4j;
 
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.succ.DoubleSuccessor;
+import net.sf.rubycollect4j.succ.StringSuccessor;
 
 import org.junit.Test;
 
@@ -14,6 +15,13 @@ import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 
 public class RubyRangeTest {
+
+  @Test
+  public void testConstructor() {
+    RubyRange<String> range =
+        new RubyRange<String>(StringSuccessor.getInstance(), "a", "z");
+    assertTrue(range instanceof RubyRange);
+  }
 
   @Test
   public void testRangeWithString() {

@@ -31,8 +31,8 @@ import net.sf.rubycollect4j.block.TransformBlock;
 import com.google.common.base.Objects;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.ra;
-import static net.sf.rubycollect4j.RubyEnumerator.newRubyEnumerator;
 
 /**
  * 

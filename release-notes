@@ -53,3 +53,5 @@ Version 1.3.0
 + Added compareByIdentity() feature for RubyHash
 
 * RubyRange not requires Comparable objects to initialize anymore
+
+* Moved newRubyArray(), newRubyHash(), newRubyEnumerable(), newRubyRnumerator(), newRubyRange() to RubyCollections

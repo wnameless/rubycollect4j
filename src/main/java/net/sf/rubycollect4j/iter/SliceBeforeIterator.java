@@ -30,7 +30,7 @@ import net.sf.rubycollect4j.block.BooleanBlock;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.PeekingIterator;
 
-import static net.sf.rubycollect4j.RubyArray.newRubyArray;
+import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 
 /**
  * 

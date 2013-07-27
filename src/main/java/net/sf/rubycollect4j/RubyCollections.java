@@ -27,6 +27,7 @@ import java.util.AbstractMap.SimpleEntry;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -34,9 +35,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
-import static net.sf.rubycollect4j.RubyArray.newRubyArray;
-import static net.sf.rubycollect4j.RubyHash.newRubyHash;
-import static net.sf.rubycollect4j.RubyRange.newRubyRange;
+import net.sf.rubycollect4j.succ.DateSuccessor;
+import net.sf.rubycollect4j.succ.DoubleSuccessor;
+import net.sf.rubycollect4j.succ.IntegerSuccessor;
+import net.sf.rubycollect4j.succ.LongSuccessor;
+import net.sf.rubycollect4j.succ.StringSuccessor;
+
+import com.google.common.base.Strings;
+
+import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Maps.newLinkedHashMap;
 
 /**
  * 
@@ -47,6 +55,251 @@ import static net.sf.rubycollect4j.RubyRange.newRubyRange;
 public final class RubyCollections {
 
   private RubyCollections() {}
+
+  /**
+   * Creates an empty RubyArray.
+   * 
+   * @param <E>
+   *          the type of the elements
+   * @return a new RubyArray
+   */
+  public static <E> RubyArray<E> newRubyArray() {
+    List<E> list = newArrayList();
+    return new RubyArray<E>(list);
+  }
+
+  /**
+   * Creates a RubyArray by given Iterable.
+   * 
+   * @param <E>
+   *          the type of the elements
+   * @param iter
+   *          an Iterable
+   * @return a new RubyArray
+   */
+  public static <E> RubyArray<E> newRubyArray(Iterable<E> iter) {
+    return new RubyArray<E>(newArrayList(iter));
+  }
+
+  /**
+   * Creates a RubyArray by given Iterator.
+   * 
+   * @param <E>
+   *          the type of the elements
+   * @param iter
+   *          an Iterator
+   * @return a new RubyArray
+   */
+  public static <E> RubyArray<E> newRubyArray(Iterator<E> iter) {
+    return new RubyArray<E>(newArrayList(iter));
+  }
+
+  /**
+   * Creates a RubyArray by given List.
+   * 
+   * @param <E>
+   *          the type of the elements
+   * @param list
+   *          a List
+   * @return a new RubyArray
+   */
+  public static <E> RubyArray<E> newRubyArray(List<E> list) {
+    return new RubyArray<E>(list);
+  }
+
+  /**
+   * Creates a RubyArray by given List. It makes a defensive copy if specified.
+   * 
+   * @param <E>
+   *          the type of the elements
+   * @param list
+   *          a List
+   * @param defensiveCopy
+   *          true If defensive copy required and false otherwise
+   * @return a new RubyArray
+   */
+  public static <E> RubyArray<E> newRubyArray(List<E> list,
+      boolean defensiveCopy) {
+    if (defensiveCopy) {
+      return newRubyArray(newArrayList(list));
+    } else {
+      return newRubyArray(list);
+    }
+  }
+
+  /**
+   * Creates a RubyArray by given elements.
+   * 
+   * @param <E>
+   *          the type of the elements
+   * @param elements
+   *          varargs
+   * @return a new RubyArray
+   */
+  public static <E> RubyArray<E> newRubyArray(E... elements) {
+    return new RubyArray<E>(newArrayList(elements));
+  }
+
+  /**
+   * Creates an empty RubyHash.
+   * 
+   * @param <K>
+   *          the type of the key elements
+   * @param <V>
+   *          the type of the value elements
+   * @return a new RubyHash
+   */
+  public static <K, V> RubyHash<K, V> newRubyHash() {
+    LinkedHashMap<K, V> linkedHashMap = newLinkedHashMap();
+    return new RubyHash<K, V>(linkedHashMap);
+  }
+
+  /**
+   * Creates an empty RubyHash by given Map.
+   * 
+   * @param <K>
+   *          the type of the key elements
+   * @param <V>
+   *          the type of the value elements
+   * @param map
+   *          a Map
+   * @return a new RubyHash
+   */
+  public static <K, V> RubyHash<K, V> newRubyHash(Map<K, V> map) {
+    LinkedHashMap<K, V> linkedHashMap = newLinkedHashMap(map);
+    return new RubyHash<K, V>(linkedHashMap);
+  }
+
+  /**
+   * Creates an empty RubyHash by given LinkedHashMap.
+   * 
+   * @param <K>
+   *          the type of the key elements
+   * @param <V>
+   *          the type of the value elements
+   * @param map
+   *          a Map
+   * @param defensiveCopy
+   *          it makes a defensive copy if specified
+   * @return a new RubyHash
+   */
+  public static <K, V> RubyHash<K, V> newRubyHash(LinkedHashMap<K, V> map,
+      boolean defensiveCopy) {
+    if (defensiveCopy) {
+      LinkedHashMap<K, V> linkedHashMap = newLinkedHashMap(map);
+      return new RubyHash<K, V>(linkedHashMap);
+    }
+    return new RubyHash<K, V>(map);
+  }
+
+  /**
+   * Creates a RubyEnumerable by given Iterable.
+   * 
+   * @param <E>
+   *          the type of the elements
+   * @param iter
+   *          an Iterable
+   * @return a new RubyEnumerable
+   */
+  public static <E> RubyEnumerable<E> newRubyEnumerable(Iterable<E> iter) {
+    return new RubyEnumerable<E>(iter);
+  }
+
+  /**
+   * Creates a RubyEnumerator by given Iterable.
+   * 
+   * @param iter
+   *          an Iterable
+   * @return a new RubyEnumerator
+   */
+  public static <E> RubyEnumerator<E> newRubyEnumerator(Iterable<E> iter) {
+    return new RubyEnumerator<E>(iter);
+  }
+
+  /**
+   * Creates a RubyEnumerator by given Iterator.
+   * 
+   * @param iter
+   *          an Iterator
+   * @return a new RubyEnumerator
+   */
+  public static <E> RubyEnumerator<E> newRubyEnumerator(Iterator<E> iter) {
+    return new RubyEnumerator<E>(iter);
+  }
+
+  /**
+   * Creates a RubyRange by given Strings.
+   * 
+   * @param startPoint
+   *          where the range begins
+   * @param endPoint
+   *          where the range ends
+   * @return a RubyRange
+   */
+  public static RubyRange<String> newRubyRange(String startPoint,
+      String endPoint) {
+    return new RubyRange<String>(StringSuccessor.getInstance(),
+        Strings.nullToEmpty(startPoint), Strings.nullToEmpty(endPoint));
+  }
+
+  /**
+   * Creates a RubyRange by given ints.
+   * 
+   * @param startPoint
+   *          where the range begins
+   * @param endPoint
+   *          where the range ends
+   * @return a RubyRange
+   */
+  public static RubyRange<Integer> newRubyRange(int startPoint, int endPoint) {
+    return new RubyRange<Integer>(IntegerSuccessor.getInstance(), startPoint,
+        endPoint);
+  }
+
+  /**
+   * Creates a RubyRange by given longs.
+   * 
+   * @param startPoint
+   *          where the range begins
+   * @param endPoint
+   *          where the range ends
+   * @return a RubyRange
+   */
+  public static RubyRange<Long> newRubyRange(long startPoint, long endPoint) {
+    return new RubyRange<Long>(LongSuccessor.getInstance(), startPoint,
+        endPoint);
+  }
+
+  /**
+   * Creates a RubyRange by given doubles.
+   * 
+   * @param startPoint
+   *          where the range begins
+   * @param endPoint
+   *          where the range ends
+   * @return a RubyRange
+   */
+  public static RubyRange<Double> newRubyRange(double startPoint,
+      double endPoint) {
+    String doubleStr = String.valueOf(startPoint);
+    int precision = doubleStr.length() - doubleStr.lastIndexOf('.') - 1;
+    return new RubyRange<Double>(new DoubleSuccessor(precision), startPoint,
+        endPoint);
+  }
+
+  /**
+   * Creates a RubyRange by given Dates.
+   * 
+   * @param startPoint
+   *          where the range begins
+   * @param endPoint
+   *          where the range ends
+   * @return a RubyRange
+   */
+  public static RubyRange<Date> newRubyRange(Date startPoint, Date endPoint) {
+    return new RubyRange<Date>(DateSuccessor.getInstance(), startPoint,
+        endPoint);
+  }
 
   /**
    * Creates a regular expression Pattern.
