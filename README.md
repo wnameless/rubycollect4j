@@ -77,8 +77,6 @@ p( ra(1, 2, 3) instanceof List ); // Output: true
 ```java
 // By default, RubyArray is just a wrapper to an existed List.
 // You can make a defensive copy by following codes.
-import static net.sf.rubycollect4j.RubyArray.newRubyArray;
-
 List<Integer> list = new ArrayList<Integer>();
 list.add(1);
 RubyArray<Integer> ra = newRubyArray(list, true);
@@ -100,8 +98,6 @@ p( rh(1, 2, 3, 4) instanceof Map );    // Output: true
 ```java
 // By default, RubyHash makes a copy of input Map.
 // You can only wrap a LinkedHashMap up by following codes, because the keys of RubyHash need to be ordered.
-import static net.sf.rubycollect4j.RubyHash.newRubyHash;
-
 LinkedHashMap<Integer, String> map = new LinkedHashMap<Integer, String>();
 map.put(1, "a");
 RubyHash<Integer, String> rh = newRubyHash(map, false);
@@ -109,8 +105,6 @@ RubyHash<Integer, String> rh = newRubyHash(map, false);
 
 Demo newRubyEnumerable():
 ```java
-import static net.sf.rubycollect4j.RubyEnumerable.newRubyEnumerable;
-
 Map<String, Long> map = new LinkedHashMap<String, Long>() {{ put("a", 1L); put("b", 2L); put("c", 3L); }};
 // Any Iterable object can be wrapped up into RubyEnumerable.
 RubyEnumerable<Entry<String, Long>> re = newRubyEnumerable(map.entrySet());
@@ -128,8 +122,6 @@ public class YourIterableClass<E> extends RubyEnumerable<E> {
 
 Demo newRubyEnumerator():
 ```java
-import static net.sf.rubycollect4j.RubyEnumerator.newRubyEnumerator;
-
 Map<String, Long> map = new LinkedHashMap<String, Long>() {{ put("a", 1L); put("b", 2L); put("c", 3L); }};
 // Any Iterable or Iterator object can be converted into RubyEnumerator.
 RubyEnumerator<Entry<String, Long>> re = newRubyEnumerator(map.entrySet());

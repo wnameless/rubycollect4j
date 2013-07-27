@@ -74,7 +74,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    */
   public RubyArray() {
     super(new ArrayList<E>());
-    this.list = (List<E>) super.getIterable();
+    list = (List<E>) super.getIterable();
   }
 
   /**
@@ -1819,82 +1819,15 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     return newRubyArray(values);
   }
 
-  /**
-   * Equivalent to multiply().
-   * 
-   * @param n
-   *          multiply n times
-   * @return a new RubyArray
-   */
-  public RubyArray<E> X(int n) {
-    return multiply(n);
-  }
+  
 
-  /**
-   * Equivalent to join().
-   * 
-   * @param separator
-   *          to join elements
-   * @return a String
-   */
-  public String X(String separator) {
-    return join(separator);
-  }
 
-  /**
-   * Equivalent to union().
-   * 
-   * @param other
-   *          any List
-   * @return a new RubyArray
-   */
-  public RubyArray<E> ǀ(RubyArray<E> other) {
-    return union(other);
-  }
 
-  /**
-   * Equivalent to intersection().
-   * 
-   * @param other
-   *          any List
-   * @return a new RubyArray
-   */
-  public RubyArray<E> Ⴖ(List<E> other) {
-    return intersection(other);
-  }
 
-  /**
-   * Equivalent to push().
-   * 
-   * @param item
-   *          an element
-   * @return this RubyArray
-   */
-  public RubyArray<E> ㄍ(E item) {
-    return push(item);
-  }
 
-  /**
-   * Equivalent to minus().
-   * 
-   * @param other
-   *          any List
-   * @return a new RubyArray
-   */
-  public RubyArray<E> ㄧ(List<E> other) {
-    return minus(other);
-  }
 
-  /**
-   * Equivalent to plus().
-   * 
-   * @param other
-   *          any List
-   * @return a new RubyArray
-   */
-  public RubyArray<E> 十(List<E> other) {
-    return plus(other);
-  }
+
+ 
 
   @Override
   public int size() {

@@ -1325,12 +1325,6 @@ public class RubyArrayTest {
   }
 
   @Test
-  public void testU() {
-    ra = ra(1, 2, 3, 4);
-    assertEquals(ra(1, 2, 3, 4, 6, 7), ra.U(ra(2, 3, 3, 6, 7)));
-  }
-
-  @Test
   public void testUnion() {
     ra = ra(1, 2, 3, 4);
     assertEquals(ra(1, 2, 3, 4, 6, 7), ra.union(ra(2, 3, 3, 6, 7)));
@@ -1399,58 +1393,6 @@ public class RubyArrayTest {
   public void tesetValuesAt() {
     ra = ra(1, 2, 3, 4);
     assertEquals(ra(4, 1, null, null), ra.valuesAt(-1, 0, 5, -6));
-  }
-
-  @Test
-  public void testX() {
-    ra = ra(1, 2, 3);
-    assertEquals(ra(), ra.X(0));
-    assertEquals(ra(1, 2, 3, 1, 2, 3), ra.X(2));
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testXException() {
-    ra = ra(1, 2, 3);
-    ra.X(-1);
-  }
-
-  @Test
-  public void testXWithString() {
-    ra = ra(1, 2, 3);
-    assertEquals("1,2,3", ra.X(","));
-  }
-
-  @Test
-  public void testǀ() {
-    ra = ra(1, 2, 3, 4, 4);
-    assertEquals(ra(1, 2, 3, 4, 5), ra.ǀ(ra(3, 4, 5)));
-  }
-
-  @Test
-  public void testႶ() {
-    ra = ra(1, 2, 3, 4);
-    assertEquals(ra(2, 3), ra.Ⴖ(ra(-1, 2, 3, 6)));
-  }
-
-  @Test
-  public void testㄍ() {
-    ra = ra();
-    assertEquals(ra(1), ra.ㄍ(1));
-    assertEquals(ra(1), ra);
-    assertEquals(ra(1, 2), ra.ㄍ(2));
-    assertEquals(ra(1, 2), ra);
-  }
-
-  @Test
-  public void testㄧ() {
-    ra = ra(1, 2, 3, 4, 4);
-    assertEquals(ra(1, 2), ra.ㄧ(ra(3, 4, 5)));
-  }
-
-  @Test
-  public void test十() {
-    ra = ra(1, 2, 3, 4);
-    assertEquals(ra(1, 2, 3, 4, 5, 6), ra.十(ra(5, 6)));
   }
 
 }
