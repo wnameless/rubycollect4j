@@ -25,9 +25,9 @@ package net.sf.rubycollect4j.block;
  * An interface for lambda expression to yield the key and value of a Map Entry.
  * 
  * @param <K>
- *          key of a Map Entry
+ *          the type of key elements
  * @param <V>
- *          value of a Map Entry
+ *          the type of value elements
  */
 public interface EntryBlock<K, V> {
 

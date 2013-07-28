@@ -26,9 +26,9 @@ package net.sf.rubycollect4j.block;
  * entries and return one of the values.
  * 
  * @param <K>
- *          key of a Map Entry
+ *          the type of key elements
  * @param <V>
- *          value of a Map Entry
+ *          the type of value elements
  */
 public interface EntryMergeBlock<K, V> {
 

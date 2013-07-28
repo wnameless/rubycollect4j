@@ -26,9 +26,12 @@ package net.sf.rubycollect4j.block;
  * and transform them.
  * 
  * @param <K>
- *          key of a Map Entry
+ *          the type of key elements
  * @param <V>
- *          value of a Map Entry
+ *          the type of value elements
+ * @param <S>
+ *          the type of transformed elements
+ * 
  */
 public interface EntryTransformBlock<K, V, S> {
 

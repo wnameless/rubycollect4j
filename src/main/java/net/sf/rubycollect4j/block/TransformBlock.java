@@ -26,6 +26,8 @@ package net.sf.rubycollect4j.block;
  * 
  * @param <E>
  *          the type of the elements
+ * @param <S>
+ *          the type of transformed elements
  */
 public interface TransformBlock<E, S> {
 
