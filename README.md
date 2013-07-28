@@ -104,20 +104,16 @@ map.put(1, "a");
 RubyHash<Integer, String> rh = newRubyHash(map, false);
 ```
 
-Demo newRubyEnumerable():
+Demo abstract RubyEnumerable class:
 ```java
-Map<String, Long> map = new LinkedHashMap<String, Long>() {{ put("a", 1L); put("b", 2L); put("c", 3L); }};
-// Any Iterable object can be wrapped up into RubyEnumerable.
-RubyEnumerable<Entry<String, Long>> re = newRubyEnumerable(map.entrySet());
-p( re.drop(1).toA() );       // Output: [b=2, c=3]
-// RubyEnumerable is also an Iterable.
-p( re instanceof Iterable ); // Output: true
-```
-
-```java
-// You can simply make your class inherit all the methods by extending RubyEnumerable.
+// You can simply make your class inherit all the RubyEnumerable methods by extending it.
 public class YourIterableClass<E> extends RubyEnumerable<E> {
-  public YourIterableClass(Iterable<E> iter) { super(iter); }
+  private final Iterable<E> iter;
+  
+  public YourIterableClass(Iterable<E> iter) { this.iter = iter; }
+  
+  @Override
+  protected Iterable<E> getIterable() { return iter; }
 }
 ```
 

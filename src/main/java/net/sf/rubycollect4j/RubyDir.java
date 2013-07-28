@@ -45,6 +45,11 @@ public final class RubyDir extends RubyEnumerable<String> {
   private final RubyArray<String> entries;
   private int position = 0;
 
+  @Override
+  protected Iterable<String> getIterable() {
+    return entries;
+  }
+
   /**
    * Creates a RubyDir by given path.
    * 
@@ -68,7 +73,6 @@ public final class RubyDir extends RubyEnumerable<String> {
    *          a File
    */
   private RubyDir(File directory) {
-    super(entries(directory.getPath()));
     this.directory = directory;
     entries = entries(directory.getPath());
   }

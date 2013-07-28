@@ -61,6 +61,11 @@ public class RubyHashTest {
     assertTrue(rh instanceof RubyHash);
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void testConstructorException() {
+    rh = new RubyHash<Integer, Integer>(null);
+  }
+
   @Test
   public void testAssoc() {
     assertEquals(hp(3, 4), rh.assoc(3));

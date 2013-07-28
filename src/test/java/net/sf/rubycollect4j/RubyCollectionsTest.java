@@ -42,7 +42,6 @@ import static net.sf.rubycollect4j.RubyCollections.date;
 import static net.sf.rubycollect4j.RubyCollections.hp;
 import static net.sf.rubycollect4j.RubyCollections.newPair;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
-import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerable;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
 import static net.sf.rubycollect4j.RubyCollections.newRubyRange;
@@ -94,17 +93,6 @@ public class RubyCollectionsTest {
     assertTrue(rh instanceof RubyHash);
     rh = newRubyHash(lhm, false);
     assertTrue(rh instanceof RubyHash);
-  }
-
-  @Test
-  public void testNewRubyEnumerable() {
-    RubyEnumerable<Integer> re;
-    re = newRubyEnumerable(Arrays.asList(1, 2));
-    assertEquals(RubyEnumerable.class, re.getClass());
-    re = newRubyEnumerable(Arrays.asList(0, 1));
-    assertEquals(RubyEnumerable.class, re.getClass());
-    re = newRubyEnumerable(Arrays.asList(1, 2, 3));
-    assertEquals(RubyEnumerable.class, re.getClass());
   }
 
   @Test

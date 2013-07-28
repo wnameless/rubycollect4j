@@ -20,7 +20,6 @@
  */
 package net.sf.rubycollect4j;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -50,7 +49,6 @@ import com.google.common.collect.Multimap;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newLinkedHashSet;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
-import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerable;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 
 /**
@@ -66,6 +64,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   private final List<E> list;
   private final Random rand = new Random();
 
+  @Override
+  protected Iterable<E> getIterable() {
+    return list;
+  }
+
   /**
    * Creates a RubyArray.
    * 
@@ -73,8 +76,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    *          any List
    */
   public RubyArray() {
-    super(new ArrayList<E>());
-    list = (List<E>) super.getIterable();
+    list = newArrayList();
   }
 
   /**
@@ -84,7 +86,9 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    *          any List
    */
   public RubyArray(List<E> list) {
-    super(list);
+    if (list == null)
+      throw new IllegalArgumentException("List can't be null.");
+
     this.list = list;
   }
 
@@ -1007,7 +1011,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return a new RubyArray of RubyArrays
    */
   public RubyArray<RubyArray<E>> product(List<E>... others) {
-    return newRubyEnumerable(new ProductIterable<E>(this, others)).toA();
+    return newRubyEnumerator(new ProductIterable<E>(this, others)).toA();
   }
 
   /**
@@ -1018,7 +1022,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return a new RubyArray of RubyArrays
    */
   public RubyArray<RubyArray<E>> product(List<? extends List<E>> others) {
-    return newRubyEnumerable(new ProductIterable<E>(this, others)).toA();
+    return newRubyEnumerator(new ProductIterable<E>(this, others)).toA();
   }
 
   /**
@@ -1599,7 +1603,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
       multimap.put(block.yield(item), item);
     }
     List<S> keys = newArrayList(multimap.keySet());
-    keys = newRubyEnumerable(keys).sort();
+    keys = newRubyEnumerator(keys).sort();
     clear();
     for (S key : keys) {
       Collection<E> coll = multimap.get(key);
@@ -1818,16 +1822,6 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     }
     return newRubyArray(values);
   }
-
-  
-
-
-
-
-
-
-
- 
 
   @Override
   public int size() {

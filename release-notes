@@ -58,6 +58,6 @@ Version 1.3.0
 
 - Removed U(), X(), Ⴖ(), ㄍ(), ㄧ(), 十() from RubyArray
 
-+ Added IterableMap
+* Made RubyEnumerable an abstract class
 
 * Changed constructors of RubyArray & RubyHash to public

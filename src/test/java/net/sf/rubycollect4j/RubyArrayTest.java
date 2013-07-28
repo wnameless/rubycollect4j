@@ -53,6 +53,11 @@ public class RubyArrayTest {
     assertTrue(ra instanceof RubyArray);
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void testConstructorException() {
+    ra = new RubyArray<Integer>(null);
+  }
+
   @Test
   public void testAdd() {
     ra = ra(1, 2, 3, 4);

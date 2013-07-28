@@ -42,9 +42,15 @@ import static net.sf.rubycollect4j.RubyCollections.ra;
  */
 public final class RubyRange<E> extends RubyEnumerable<E> {
 
+  private final RangeIterable<E> iter;
   private final Successive<E> successive;
   private final E startPoint;
   private final E endPoint;
+
+  @Override
+  protected Iterable<E> getIterable() {
+    return iter;
+  }
 
   /**
    * Creates a RubyRange of given elements.
@@ -57,7 +63,7 @@ public final class RubyRange<E> extends RubyEnumerable<E> {
    *          where the range ends
    */
   public RubyRange(Successive<E> successive, E startPoint, E endPoint) {
-    super(new RangeIterable<E>(successive, startPoint, endPoint));
+    iter = new RangeIterable<E>(successive, startPoint, endPoint);
     this.successive = successive;
     this.startPoint = startPoint;
     this.endPoint = endPoint;
@@ -90,7 +96,7 @@ public final class RubyRange<E> extends RubyEnumerable<E> {
    * @return a RubyEnumerator
    */
   public RubyEnumerator<E> each() {
-    return newRubyEnumerator(super.getIterable());
+    return newRubyEnumerator(iter);
   }
 
   /**
@@ -164,7 +170,7 @@ public final class RubyRange<E> extends RubyEnumerable<E> {
    */
   public RubyArray<E> last(int n) {
     RubyArray<E> lasts = ra();
-    for (E item : super.getIterable()) {
+    for (E item : iter) {
       if (lasts.size() < n) {
         lasts.add(item);
       } else {
@@ -190,7 +196,7 @@ public final class RubyRange<E> extends RubyEnumerable<E> {
    * @return a RubyEnumerator
    */
   public RubyEnumerator<E> step(int n) {
-    return newRubyEnumerator(new StepIterable<E>(super.getIterable(), n));
+    return newRubyEnumerator(new StepIterable<E>(iter, n));
   }
 
   /**

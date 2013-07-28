@@ -30,6 +30,18 @@ public class RubyEnumeratorTest {
     assertTrue(re instanceof RubyEnumerator);
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void testConstructorException1() {
+    Iterable<Integer> iter = null;
+    re = new RubyEnumerator<Integer>(iter);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testConstructorException2() {
+    Iterator<Integer> iter = null;
+    re = new RubyEnumerator<Integer>(iter);
+  }
+
   @Test
   public void testEach() {
     assertTrue(re == re.each());

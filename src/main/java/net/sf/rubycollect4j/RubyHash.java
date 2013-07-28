@@ -35,9 +35,9 @@ import net.sf.rubycollect4j.block.EntryBooleanBlock;
 import net.sf.rubycollect4j.block.EntryMergeBlock;
 import net.sf.rubycollect4j.block.EntryTransformBlock;
 import net.sf.rubycollect4j.block.TransformBlock;
-import net.sf.rubycollect4j.util.IterableMap;
 import net.sf.rubycollect4j.util.LinkedIdentityMap;
 
+import static com.google.common.collect.Maps.newLinkedHashMap;
 import static net.sf.rubycollect4j.RubyCollections.newPair;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
@@ -58,13 +58,16 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   private Map<K, V> map;
   private V defaultValue;
 
+  @Override
+  protected Iterable<Entry<K, V>> getIterable() {
+    return map.entrySet();
+  }
+
   /**
    * Creates a RubyHash.
    */
-  @SuppressWarnings("unchecked")
   public RubyHash() {
-    super(new IterableMap<K, V>(new LinkedHashMap<K, V>()));
-    map = (Map<K, V>) super.getIterable();
+    map = newLinkedHashMap();
   }
 
   /**
@@ -74,7 +77,9 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    *          a LinkedHashMap
    */
   public RubyHash(LinkedHashMap<K, V> map) {
-    super(map.entrySet());
+    if (map == null)
+      throw new IllegalArgumentException("Map can't be null.");
+
     this.map = map;
   }
 
@@ -101,7 +106,6 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    */
   public RubyHash<K, V> compareByIdentity() {
     map = new LinkedIdentityMap<K, V>(map);
-    super.setIterable(map.entrySet());
     return this;
   }
 

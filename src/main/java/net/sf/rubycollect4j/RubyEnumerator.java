@@ -42,29 +42,41 @@ import static com.google.common.collect.Lists.newArrayList;
 public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
     Iterable<E>, Iterator<E> {
 
+  private final Iterable<E> iter;
   private PeekingIterator<E> pIterator;
+
+  @Override
+  protected Iterable<E> getIterable() {
+    return iter;
+  }
 
   /**
    * Creates a RubyEnumerator by given Iterable.
    * 
-   * @param iter
+   * @param iterable
    *          an Iterable
    */
-  public RubyEnumerator(Iterable<E> iter) {
-    super(iter);
-    pIterator = Iterators.peekingIterator(super.iterator());
+  public RubyEnumerator(Iterable<E> iterable) {
+    if (iterable == null)
+      throw new IllegalArgumentException("Iterable can't be null.");
+
+    iter = iterable;
+    pIterator = Iterators.peekingIterator(iter.iterator());
   }
 
   /**
    * Creates a RubyEnumerator by given Iterator. This Iterator will be turned
    * into an Iterable. In other words, a copy will be made.
    * 
-   * @param iter
+   * @param iterater
    *          an Iterator
    */
-  public RubyEnumerator(Iterator<E> iter) {
-    super(newArrayList(iter));
-    pIterator = Iterators.peekingIterator(super.iterator());
+  public RubyEnumerator(Iterator<E> iterater) {
+    if (iterater == null)
+      throw new IllegalArgumentException("Iterater can't be null.");
+
+    iter = newArrayList(iterater);
+    pIterator = Iterators.peekingIterator(iter.iterator());
   }
 
   /**
@@ -84,7 +96,7 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
    * @return this RubyEnumerator
    */
   public RubyEnumerator<E> each(Block<E> block) {
-    for (E item : super.getIterable()) {
+    for (E item : iter) {
       block.yield(item);
     }
     return this;
@@ -96,7 +108,7 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
    * @return this RubyEnumerator
    */
   public RubyEnumerator<E> rewind() {
-    pIterator = Iterators.peekingIterator(super.iterator());
+    pIterator = Iterators.peekingIterator(iter.iterator());
     return this;
   }
 
@@ -111,7 +123,7 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
 
   @Override
   public Iterator<E> iterator() {
-    return super.getIterable().iterator();
+    return iter.iterator();
   }
 
   @Override
@@ -131,8 +143,7 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
 
   @Override
   public String toString() {
-    return Objects.toStringHelper(this.getClass())
-        .addValue(super.getIterable()).toString();
+    return Objects.toStringHelper(this.getClass()).addValue(iter).toString();
   }
 
 }

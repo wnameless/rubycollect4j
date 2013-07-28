@@ -193,19 +193,6 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyEnumerable by given Iterable.
-   * 
-   * @param <E>
-   *          the type of the elements
-   * @param iter
-   *          an Iterable
-   * @return a new RubyEnumerable
-   */
-  public static <E> RubyEnumerable<E> newRubyEnumerable(Iterable<E> iter) {
-    return new RubyEnumerable<E>(iter);
-  }
-
-  /**
    * Creates a RubyEnumerator by given Iterable.
    * 
    * @param iter
