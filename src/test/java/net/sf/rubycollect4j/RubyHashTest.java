@@ -30,6 +30,7 @@ import net.sf.rubycollect4j.block.EntryBooleanBlock;
 import net.sf.rubycollect4j.block.EntryMergeBlock;
 import net.sf.rubycollect4j.block.EntryTransformBlock;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static net.sf.rubycollect4j.RubyCollections.hp;
@@ -45,9 +46,16 @@ public class RubyHashTest {
 
   private RubyHash<Integer, Integer> rh;
 
+  @Before
+  public void setUp() {
+    rh = new RubyHash<Integer, Integer>();
+    rh.put(1, 2);
+    rh.put(3, 4);
+    rh.put(5, 6);
+  }
+
   @Test
   public void testConstructor() {
-    rh = new RubyHash<Integer, Integer>();
     assertTrue(rh instanceof RubyHash);
     rh = new RubyHash<Integer, Integer>(new LinkedHashMap<Integer, Integer>());
     assertTrue(rh instanceof RubyHash);
@@ -55,7 +63,6 @@ public class RubyHashTest {
 
   @Test
   public void testAssoc() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertEquals(hp(3, 4), rh.assoc(3));
     assertNull(rh.assoc(7));
   }
@@ -78,7 +85,6 @@ public class RubyHashTest {
 
   @Test
   public void testDelete() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertEquals(Integer.valueOf(4), rh.delete(3));
     assertNull(rh.delete(0));
     rh.setDefault(10);
@@ -88,14 +94,12 @@ public class RubyHashTest {
   @SuppressWarnings("unchecked")
   @Test
   public void testDeleteIf() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertTrue(rh.deleteIf() instanceof RubyEnumerator);
     assertEquals(ra(hp(1, 2), hp(3, 4), hp(5, 6)), rh.deleteIf().toA());
   }
 
   @Test
   public void testDeleteIfWithBlock() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertEquals(rh(3, 4, 5, 6),
         rh.deleteIf(new EntryBooleanBlock<Integer, Integer>() {
 
@@ -111,14 +115,12 @@ public class RubyHashTest {
   @SuppressWarnings("unchecked")
   @Test
   public void testEach() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertTrue(rh.each() instanceof RubyEnumerator);
     assertEquals(ra(hp(1, 2), hp(3, 4), hp(5, 6)), rh.each().toA());
   }
 
   @Test
   public void testEachWithBlock() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     final RubyArray<Integer> ints = ra();
     assertEquals(rh, rh.each(new EntryBlock<Integer, Integer>() {
 
@@ -134,14 +136,12 @@ public class RubyHashTest {
 
   @Test
   public void testEachKey() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertTrue(rh.each() instanceof RubyEnumerator);
     assertEquals(ra(1, 3, 5), rh.eachKey().toA());
   }
 
   @Test
   public void testEachKeyWithBlock() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     final RubyArray<Integer> ints = ra();
     assertEquals(rh, rh.eachKey(new Block<Integer>() {
 
@@ -157,14 +157,12 @@ public class RubyHashTest {
   @SuppressWarnings("unchecked")
   @Test
   public void testEachPair() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertTrue(rh.eachPair() instanceof RubyEnumerator);
     assertEquals(ra(hp(1, 2), hp(3, 4), hp(5, 6)), rh.eachPair().toA());
   }
 
   @Test
   public void testEachPairWithBlock() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     final RubyArray<Integer> ints = ra();
     assertEquals(rh, rh.eachPair(new EntryBlock<Integer, Integer>() {
 
@@ -180,14 +178,12 @@ public class RubyHashTest {
 
   @Test
   public void testEachValue() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertTrue(rh.eachValue() instanceof RubyEnumerator);
     assertEquals(ra(2, 4, 6), rh.eachValue().toA());
   }
 
   @Test
   public void testEachValueWithBlock() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     final RubyArray<Integer> ints = ra();
     assertEquals(rh, rh.eachValue(new Block<Integer>() {
 
@@ -202,7 +198,6 @@ public class RubyHashTest {
 
   @Test
   public void testEmptyʔ() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertFalse(rh.emptyʔ());
     rh = rh();
     assertTrue(rh.emptyʔ());
@@ -212,7 +207,6 @@ public class RubyHashTest {
 
   @Test
   public void testEqlʔ() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertTrue(rh.eqlʔ(rh(1, 2, 3, 4, 5, 6)));
     rh = rh(3, 4, 1, 2, 5, 6);
     assertTrue(rh.eqlʔ(rh(1, 2, 3, 4, 5, 6)));
@@ -223,19 +217,16 @@ public class RubyHashTest {
 
   @Test
   public void testFetch() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertEquals(Integer.valueOf(6), rh.fetch(5));
   }
 
   @Test(expected = NoSuchElementException.class)
   public void testFetchException() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertNull(rh.fetch(7));
   }
 
   @Test
   public void testFetchWithDefaultValue() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertEquals(Integer.valueOf(6), rh.fetch(5, 10));
     assertEquals(Integer.valueOf(10), rh.fetch(7, 10));
   }
@@ -243,26 +234,22 @@ public class RubyHashTest {
   @SuppressWarnings("unchecked")
   @Test
   public void testFlatten() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertEquals(ra(hp(1, 2), hp(3, 4), hp(5, 6)), rh.flatten());
   }
 
   @Test
   public void testHash() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertEquals(rh.hashCode(), rh.hash());
   }
 
   @Test
   public void testInspect() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertEquals("{1=2, 3=4, 5=6}", rh.inspect());
     assertEquals(rh.toString(), rh.inspect());
   }
 
   @Test
   public void testInvert() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertEquals(rh(2, 1, 4, 3, 6, 5), rh.invert());
     rh = rh(1, 2, 3, 5, 4, 5);
     assertEquals(rh(2, 1, 5, 4), rh.invert());
@@ -271,14 +258,12 @@ public class RubyHashTest {
   @SuppressWarnings("unchecked")
   @Test
   public void testKeepIf() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertTrue(rh.keepIf() instanceof RubyEnumerator);
     assertEquals(ra(hp(1, 2), hp(3, 4), hp(5, 6)), rh.keepIf().toA());
   }
 
   @Test
   public void testKeepIfWithBlock() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertEquals(rh(1, 2), rh.keepIf(new EntryBooleanBlock<Integer, Integer>() {
 
       @Override
@@ -292,40 +277,34 @@ public class RubyHashTest {
 
   @Test
   public void testKey() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertEquals(Integer.valueOf(1), rh.key(2));
     assertNull(rh.key(8));
   }
 
   @Test
   public void testKeys() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertEquals(ra(1, 3, 5), rh.keys());
   }
 
   @Test
   public void testKeyʔ() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertTrue(rh.keyʔ(1));
     assertFalse(rh.keyʔ(2));
   }
 
   @Test
   public void testLength() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertEquals(3, rh.length());
     assertEquals(rh.size(), rh.length());
   }
 
   @Test
   public void testMerge() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertEquals(rh(1, 2, 3, 8, 5, 9, 7, 7), rh.merge(rh(3, 8, 5, 9, 7, 7)));
   }
 
   @Test
   public void testMergeWithBlock() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertEquals(rh(1, 3, 3, 4, 5, 6, 0, 1),
         rh.merge(rh(0, 1, 1, 3, 3, 2), new EntryMergeBlock<Integer, Integer>() {
 
@@ -339,14 +318,12 @@ public class RubyHashTest {
 
   @Test
   public void testMergeǃ() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertEquals(rh(1, 2, 3, 8, 5, 9, 7, 7), rh.mergeǃ(rh(3, 8, 5, 9, 7, 7)));
     assertEquals(rh(1, 2, 3, 8, 5, 9, 7, 7), rh);
   }
 
   @Test
   public void testMergeǃWithBlock() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertEquals(rh(1, 3, 3, 4, 5, 6, 0, 1), rh.mergeǃ(rh(0, 1, 1, 3, 3, 2),
         new EntryMergeBlock<Integer, Integer>() {
 
@@ -377,14 +354,12 @@ public class RubyHashTest {
   @SuppressWarnings("unchecked")
   @Test
   public void testRejectǃ() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertTrue(rh.rejectǃ() instanceof RubyEnumerator);
     assertEquals(ra(hp(1, 2), hp(3, 4), hp(5, 6)), rh.rejectǃ().toA());
   }
 
   @Test
   public void testRejectǃWithBlock() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertEquals(rh(1, 2, 5, 6),
         rh.rejectǃ(new EntryBooleanBlock<Integer, Integer>() {
 
@@ -430,33 +405,28 @@ public class RubyHashTest {
 
   @Test
   public void testToH() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertTrue(rh == rh.toH());
   }
 
   @Test
   public void testToHash() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertTrue(rh == rh.toHash());
   }
 
   @Test
   public void testToS() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertEquals("{1=2, 3=4, 5=6}", rh.toS());
     assertEquals(rh.toString(), rh.toS());
   }
 
   @Test
   public void testUpdate() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertEquals(rh(1, 2, 3, 8, 5, 9, 7, 7), rh.update(rh(3, 8, 5, 9, 7, 7)));
     assertEquals(rh(1, 2, 3, 8, 5, 9, 7, 7), rh);
   }
 
   @Test
   public void testUpdateWithBlock() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertEquals(rh(1, 3, 3, 4, 5, 6, 0, 1), rh.update(rh(0, 1, 1, 3, 3, 2),
         new EntryMergeBlock<Integer, Integer>() {
 
@@ -471,20 +441,17 @@ public class RubyHashTest {
 
   @Test
   public void testValues() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertTrue(rh.values() instanceof RubyArray);
     assertEquals(ra(2, 4, 6), rh.values());
   }
 
   @Test
   public void testValuesAt() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertEquals(ra(2, 6, 4, 2, null), rh.valuesAt(1, 5, 3, 1, 7));
   }
 
   @Test
   public void testValueʔ() {
-    rh = rh(1, 2, 3, 4, 5, 6);
     assertTrue(rh.valueʔ(4));
     assertFalse(rh.valueʔ(8));
   }
@@ -492,35 +459,34 @@ public class RubyHashTest {
   // Tests for entry blocks of RubyEnumerable methods
   @Test
   public void testAllʔ() {
-    assertTrue(rh(1, 2, 3, 4, 5, 6).allʔ(
-        new EntryBooleanBlock<Integer, Integer>() {
+    assertTrue(rh.allʔ(new EntryBooleanBlock<Integer, Integer>() {
 
-          @Override
-          public boolean yield(Integer key, Integer value) {
-            return key > 0 && value > 0;
-          }
+      @Override
+      public boolean yield(Integer key, Integer value) {
+        return key > 0 && value > 0;
+      }
 
-        }));
+    }));
   }
 
   @Test
   public void testAnyʔ() {
-    assertTrue(rh(1, 2, 3, 4, 5, 6).anyʔ(
-        new EntryBooleanBlock<Integer, Integer>() {
+    assertTrue(rh.anyʔ(new EntryBooleanBlock<Integer, Integer>() {
 
-          @Override
-          public boolean yield(Integer key, Integer value) {
-            return key > 0 && value > 0;
-          }
+      @Override
+      public boolean yield(Integer key, Integer value) {
+        return key > 0 && value > 0;
+      }
 
-        }));
+    }));
   }
 
   @SuppressWarnings("unchecked")
   @Test
   public void testChunk() {
-    assertEquals(ra(hp(3L, ra(hp(1, 2))), hp(7L, ra(hp(3, 4)))), rh(1, 2, 3, 4)
-        .chunk(new EntryTransformBlock<Integer, Integer, Long>() {
+    assertEquals(
+        ra(hp(3L, ra(hp(1, 2))), hp(7L, ra(hp(3, 4))), hp(11L, ra(hp(5, 6)))),
+        rh.chunk(new EntryTransformBlock<Integer, Integer, Long>() {
 
           @Override
           public Long yield(Integer key, Integer value) {
@@ -532,24 +498,22 @@ public class RubyHashTest {
 
   @Test
   public void testCollect() {
-    assertEquals(
-        ra(3L, 7L, 11L),
-        rh(1, 2, 3, 4, 5, 6).collect(
-            new EntryTransformBlock<Integer, Integer, Long>() {
+    assertEquals(ra(3L, 7L, 11L),
+        rh.collect(new EntryTransformBlock<Integer, Integer, Long>() {
 
-              @Override
-              public Long yield(Integer key, Integer value) {
-                return Long.valueOf(key + value);
-              }
+          @Override
+          public Long yield(Integer key, Integer value) {
+            return Long.valueOf(key + value);
+          }
 
-            }));
+        }));
   }
 
   @Test
   public void testCollectConcat() {
     assertEquals(
-        ra(3L, 7L),
-        rh(1, 2, 3, 4).collectConcat(
+        ra(3L, 7L, 11L),
+        rh.collectConcat(
             new EntryTransformBlock<Integer, Integer, RubyArray<Long>>() {
 
               @Override
@@ -562,21 +526,20 @@ public class RubyHashTest {
 
   @Test
   public void testCount() {
-    assertEquals(1,
-        rh(1, 2, 3, 4).count(new EntryBooleanBlock<Integer, Integer>() {
+    assertEquals(1, rh.count(new EntryBooleanBlock<Integer, Integer>() {
 
-          @Override
-          public boolean yield(Integer key, Integer value) {
-            return key == 1;
-          }
+      @Override
+      public boolean yield(Integer key, Integer value) {
+        return key == 1;
+      }
 
-        }));
+    }));
   }
 
   @Test(expected = IllegalStateException.class)
   public void testCycle() {
     final RubyArray<Integer> ints = ra();
-    rh(1, 2, 3, 4).cycle(new EntryBlock<Integer, Integer>() {
+    rh.cycle(new EntryBlock<Integer, Integer>() {
 
       @Override
       public void yield(Integer key, Integer value) {
@@ -593,7 +556,7 @@ public class RubyHashTest {
   @Test
   public void testCycleWithN() {
     final RubyArray<Integer> ints = ra();
-    rh(1, 2, 3, 4).cycle(2, new EntryBlock<Integer, Integer>() {
+    rh.cycle(2, new EntryBlock<Integer, Integer>() {
 
       @Override
       public void yield(Integer key, Integer value) {
@@ -602,42 +565,39 @@ public class RubyHashTest {
       }
 
     });
-    assertEquals(ra(1, 2, 3, 4, 1, 2, 3, 4), ints);
+    assertEquals(ra(1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6), ints);
   }
 
   @Test
   public void testDetect() {
-    assertEquals(hp(3, 4),
-        rh(1, 2, 3, 4, 5, 6).detect(new EntryBooleanBlock<Integer, Integer>() {
+    assertEquals(hp(3, 4), rh.detect(new EntryBooleanBlock<Integer, Integer>() {
 
-          @Override
-          public boolean yield(Integer key, Integer value) {
-            return value == 4;
-          }
+      @Override
+      public boolean yield(Integer key, Integer value) {
+        return value == 4;
+      }
 
-        }));
+    }));
   }
 
   @SuppressWarnings("unchecked")
   @Test
   public void testDropWhile() {
-    assertEquals(
-        ra(hp(3, 4), hp(5, 6)),
-        rh(1, 2, 3, 4, 5, 6).dropWhile(
-            new EntryBooleanBlock<Integer, Integer>() {
+    assertEquals(ra(hp(3, 4), hp(5, 6)),
+        rh.dropWhile(new EntryBooleanBlock<Integer, Integer>() {
 
-              @Override
-              public boolean yield(Integer key, Integer value) {
-                return key + value <= 4;
-              }
+          @Override
+          public boolean yield(Integer key, Integer value) {
+            return key + value <= 4;
+          }
 
-            }));
+        }));
   }
 
   @Test
   public void testEachEntry() {
     final RubyArray<Integer> ints = ra();
-    rh(1, 2, 3, 4).eachEntry(new EntryBlock<Integer, Integer>() {
+    rh.eachEntry(new EntryBlock<Integer, Integer>() {
 
       @Override
       public void yield(Integer key, Integer value) {
@@ -645,27 +605,26 @@ public class RubyHashTest {
       }
 
     });
-    assertEquals(ra(2, 4), ints);
+    assertEquals(ra(2, 4, 6), ints);
   }
 
   @Test
   public void testFind() {
-    assertEquals(hp(3, 4),
-        rh(1, 2, 3, 4, 5, 6).find(new EntryBooleanBlock<Integer, Integer>() {
+    assertEquals(hp(3, 4), rh.find(new EntryBooleanBlock<Integer, Integer>() {
 
-          @Override
-          public boolean yield(Integer key, Integer value) {
-            return value == 4;
-          }
+      @Override
+      public boolean yield(Integer key, Integer value) {
+        return value == 4;
+      }
 
-        }));
+    }));
   }
 
   @SuppressWarnings("unchecked")
   @Test
   public void testFindAll() {
     assertEquals(ra(hp(1, 2), hp(3, 4)),
-        rh(1, 2, 3, 4, 5, 6).findAll(new EntryBooleanBlock<Integer, Integer>() {
+        rh.findAll(new EntryBooleanBlock<Integer, Integer>() {
 
           @Override
           public boolean yield(Integer key, Integer value) {
@@ -677,24 +636,22 @@ public class RubyHashTest {
 
   @Test
   public void testFindIndex() {
-    assertEquals(
-        Integer.valueOf(0),
-        rh(1, 2, 3, 4, 5, 6).findIndex(
-            new EntryBooleanBlock<Integer, Integer>() {
+    assertEquals(Integer.valueOf(0),
+        rh.findIndex(new EntryBooleanBlock<Integer, Integer>() {
 
-              @Override
-              public boolean yield(Integer key, Integer value) {
-                return key < 4;
-              }
+          @Override
+          public boolean yield(Integer key, Integer value) {
+            return key < 4;
+          }
 
-            }));
+        }));
   }
 
   @Test
   public void testFlatMap() {
     assertEquals(
-        ra(3L, 7L),
-        rh(1, 2, 3, 4).flatMap(
+        ra(3L, 7L, 11L),
+        rh.flatMap(
             new EntryTransformBlock<Integer, Integer, RubyArray<Long>>() {
 
               @Override
@@ -707,48 +664,42 @@ public class RubyHashTest {
 
   @Test
   public void testGrep() {
-    assertEquals(
-        ra(7L),
-        rh(1, 2, 3, 4, 5, 6).grep("4",
-            new EntryTransformBlock<Integer, Integer, Long>() {
+    assertEquals(ra(7L),
+        rh.grep("4", new EntryTransformBlock<Integer, Integer, Long>() {
 
-              @Override
-              public Long yield(Integer key, Integer value) {
-                return Long.valueOf(key + value);
-              }
+          @Override
+          public Long yield(Integer key, Integer value) {
+            return Long.valueOf(key + value);
+          }
 
-            }));
+        }));
   }
 
   @SuppressWarnings("unchecked")
   @Test
   public void testGroupBy() {
-    assertEquals(
-        rh(true, ra(hp(1, 2), hp(3, 4)), false, ra(hp(5, 6))),
-        rh(1, 2, 3, 4, 5, 6).groupBy(
-            new EntryTransformBlock<Integer, Integer, Boolean>() {
+    assertEquals(rh(true, ra(hp(1, 2), hp(3, 4)), false, ra(hp(5, 6))),
+        rh.groupBy(new EntryTransformBlock<Integer, Integer, Boolean>() {
 
-              @Override
-              public Boolean yield(Integer key, Integer value) {
-                return key + value < 10;
-              }
+          @Override
+          public Boolean yield(Integer key, Integer value) {
+            return key + value < 10;
+          }
 
-            }));
+        }));
   }
 
   @Test
   public void testMap() {
-    assertEquals(
-        ra(3L, 7L, 11L),
-        rh(1, 2, 3, 4, 5, 6).map(
-            new EntryTransformBlock<Integer, Integer, Long>() {
+    assertEquals(ra(3L, 7L, 11L),
+        rh.map(new EntryTransformBlock<Integer, Integer, Long>() {
 
-              @Override
-              public Long yield(Integer key, Integer value) {
-                return Long.valueOf(key + value);
-              }
+          @Override
+          public Long yield(Integer key, Integer value) {
+            return Long.valueOf(key + value);
+          }
 
-            }));
+        }));
   }
 
   @Test
@@ -858,35 +809,33 @@ public class RubyHashTest {
 
   @Test
   public void testNoneʔ() {
-    assertTrue(rh(1, 2, 3, 4, 5, 6).noneʔ(
-        new EntryBooleanBlock<Integer, Integer>() {
+    assertTrue(rh.noneʔ(new EntryBooleanBlock<Integer, Integer>() {
 
-          @Override
-          public boolean yield(Integer key, Integer value) {
-            return value > 10;
-          }
+      @Override
+      public boolean yield(Integer key, Integer value) {
+        return value > 10;
+      }
 
-        }));
+    }));
   }
 
   @Test
   public void testOneʔ() {
-    assertFalse(rh(1, 2, 3, 4, 5, 6).oneʔ(
-        new EntryBooleanBlock<Integer, Integer>() {
+    assertFalse(rh.oneʔ(new EntryBooleanBlock<Integer, Integer>() {
 
-          @Override
-          public boolean yield(Integer key, Integer value) {
-            return value > 3;
-          }
+      @Override
+      public boolean yield(Integer key, Integer value) {
+        return value > 3;
+      }
 
-        }));
+    }));
   }
 
   @SuppressWarnings("unchecked")
   @Test
   public void testPartition() {
-    assertEquals(ra(ra(hp(1, 2)), ra(hp(3, 4), hp(5, 6))), rh(1, 2, 3, 4, 5, 6)
-        .partition(new EntryBooleanBlock<Integer, Integer>() {
+    assertEquals(ra(ra(hp(1, 2)), ra(hp(3, 4), hp(5, 6))),
+        rh.partition(new EntryBooleanBlock<Integer, Integer>() {
 
           @Override
           public boolean yield(Integer key, Integer value) {
@@ -900,7 +849,7 @@ public class RubyHashTest {
   @Test
   public void testReject() {
     assertEquals(ra(hp(3, 4), hp(5, 6)),
-        rh(1, 2, 3, 4, 5, 6).reject(new EntryBooleanBlock<Integer, Integer>() {
+        rh.reject(new EntryBooleanBlock<Integer, Integer>() {
 
           @Override
           public boolean yield(Integer key, Integer value) {
@@ -913,7 +862,7 @@ public class RubyHashTest {
   @Test
   public void testReverseEach() {
     final RubyArray<Integer> ints = ra();
-    rh(1, 2, 3, 4, 5, 6).reverseEach(new EntryBlock<Integer, Integer>() {
+    rh.reverseEach(new EntryBlock<Integer, Integer>() {
 
       @Override
       public void yield(Integer key, Integer value) {
@@ -928,7 +877,7 @@ public class RubyHashTest {
   @Test
   public void testSelect() {
     assertEquals(ra(hp(1, 2), hp(3, 4)),
-        rh(1, 2, 3, 4, 5, 6).select(new EntryBooleanBlock<Integer, Integer>() {
+        rh.select(new EntryBooleanBlock<Integer, Integer>() {
 
           @Override
           public boolean yield(Integer key, Integer value) {
@@ -941,8 +890,8 @@ public class RubyHashTest {
   @SuppressWarnings("unchecked")
   @Test
   public void testSliceBefore() {
-    assertEquals(ra(ra(hp(1, 2), hp(3, 4)), ra(hp(5, 6))), rh(1, 2, 3, 4, 5, 6)
-        .sliceBefore(new EntryBooleanBlock<Integer, Integer>() {
+    assertEquals(ra(ra(hp(1, 2), hp(3, 4)), ra(hp(5, 6))),
+        rh.sliceBefore(new EntryBooleanBlock<Integer, Integer>() {
 
           @Override
           public boolean yield(Integer key, Integer value) {
@@ -992,17 +941,15 @@ public class RubyHashTest {
   @SuppressWarnings("unchecked")
   @Test
   public void testTakeWhile() {
-    assertEquals(
-        ra(hp(1, 2), hp(3, 4)),
-        rh(1, 2, 3, 4, 5, 6).takeWhile(
-            new EntryBooleanBlock<Integer, Integer>() {
+    assertEquals(ra(hp(1, 2), hp(3, 4)),
+        rh.takeWhile(new EntryBooleanBlock<Integer, Integer>() {
 
-              @Override
-              public boolean yield(Integer key, Integer value) {
-                return key < 5;
-              }
+          @Override
+          public boolean yield(Integer key, Integer value) {
+            return key < 5;
+          }
 
-            }));
+        }));
   }
 
 }

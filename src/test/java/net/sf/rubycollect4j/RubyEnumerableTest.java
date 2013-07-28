@@ -56,8 +56,6 @@ public class RubyEnumerableTest {
 
   @Test
   public void testConstructor() {
-    re = new RubyEnumerable<Integer>();
-    assertTrue(re instanceof RubyEnumerable);
     re = new RubyEnumerable<Integer>(Arrays.asList(1, 2));
     assertTrue(re instanceof RubyEnumerable);
   }

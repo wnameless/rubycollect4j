@@ -57,7 +57,6 @@ import com.google.common.collect.Multimap;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Lists.reverse;
-import static java.util.Collections.emptyList;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerable;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
@@ -73,13 +72,6 @@ import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
 public class RubyEnumerable<E> implements Iterable<E> {
 
   private Iterable<E> iter;
-
-  /**
-   * Creates a RubyEnumerable.
-   */
-  public RubyEnumerable() {
-    this.iter = emptyList();
-  }
 
   /**
    * Creates a RubyEnumerable by given Iterable.

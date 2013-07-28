@@ -56,7 +56,8 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
   }
 
   /**
-   * Creates a RubyEnumerator by given Iterator.
+   * Creates a RubyEnumerator by given Iterator. This Iterator will be turned
+   * into an Iterable. In other words, a copy will be made.
    * 
    * @param iter
    *          an Iterator

@@ -35,9 +35,9 @@ import net.sf.rubycollect4j.block.EntryBooleanBlock;
 import net.sf.rubycollect4j.block.EntryMergeBlock;
 import net.sf.rubycollect4j.block.EntryTransformBlock;
 import net.sf.rubycollect4j.block.TransformBlock;
+import net.sf.rubycollect4j.util.IterableMap;
 import net.sf.rubycollect4j.util.LinkedIdentityMap;
 
-import static com.google.common.collect.Maps.newLinkedHashMap;
 import static net.sf.rubycollect4j.RubyCollections.newPair;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
@@ -61,9 +61,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   /**
    * Creates a RubyHash.
    */
+  @SuppressWarnings("unchecked")
   public RubyHash() {
-    map = newLinkedHashMap();
-    super.setIterable(map.entrySet());
+    super(new IterableMap<K, V>(new LinkedHashMap<K, V>()));
+    map = (Map<K, V>) super.getIterable();
   }
 
   /**
@@ -526,14 +527,11 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   /**
    * Puts entries into this RubyHash directly.
    * 
-   * @param entry
-   *          an Entry
    * @param entries
-   *          array of entries
+   *          an array of entries
    * @return this RubyHash
    */
-  public RubyHash<K, V> put(Entry<K, V> entry, Entry<K, V>... entries) {
-    put(entry.getKey(), entry.getValue());
+  public RubyHash<K, V> put(Entry<K, V>... entries) {
     for (Entry<K, V> e : entries) {
       put(e.getKey(), e.getValue());
     }

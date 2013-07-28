@@ -2,7 +2,7 @@ rubycollect4j
 =============
 Ruby Collections for Java.
 
-The rubycollect4j implements all methods refer to Ruby Array, Hash, Enumerable and Range.
+The rubycollect4j implements all methods refer to Ruby Array, Hash, Enumerable, Enumerator and Range.
 It also implements parts of Ruby Dir, File and Date methods.
 
 For further information, please visit http://ruby-doc.org website.
@@ -14,7 +14,7 @@ Installation with Maven:
 <dependency>
   <groupId>net.sf.rubycollect4j</groupId>
   <artifactId>rubycollect4j</artifactId>
-  <version>1.2.1</version>
+  <version>1.3.0</version>
 </dependency>
 ```
 
@@ -67,7 +67,7 @@ list.add(1);
 p( ra(list) );                    // Output: [1]
 Map<Integer, String> map = new LinkedHashMap<Integer, String>();
 map.put(1, "a");
-map.put(1, "b");
+map.put(2, "b");
 // Any Iterable or Iterator object can be converted into RubyArray.
 p( ra(map.values) );              // Output: [a, b]
 // RubyArray is also an List.
@@ -91,6 +91,7 @@ map.put("abc", 123L);
 p( hp(map) );                          // Output: {abc=123}
 // hp() simply creates an Entry and the word 'hp' means hash pair
 p( Hash(ra(hp("a", 1), hp("b" ,2))) ); // Output: {a=1, b=2}
+p( Hash(rh("a", 1, "b", 2).toA()) );   // Output: {a=1, b=2}
 // RubyHash is also a Map.
 p( rh(1, 2, 3, 4) instanceof Map );    // Output: true
 ```
