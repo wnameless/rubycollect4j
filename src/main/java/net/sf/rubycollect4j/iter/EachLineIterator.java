@@ -34,6 +34,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 
  */
 public final class EachLineIterator implements Iterator<String> {
+
   private RandomAccessFile raFile;
   private String line;
 

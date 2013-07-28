@@ -190,19 +190,19 @@ folder1
 ```
 
 ```java
-p( RubyDir.glob("folder1/*").sort() );                 // Output: ["file1-1", "file1-2", "file1-3", "file1-4", "folder1-1", "folder1-2"]
-p( RubyDir.glob(GLOB_DIR + "**/*1-*-1*").sort() );     // Output: ["folder1/folder1-1/file1-1-1", "folder1/folder1-2/file1-2-1"]
-p( RubyDir.glob(GLOB_DIR + "folder1/*[2,3]").sort() ); // Output: ["file1-2", "file1-3", "folder1-2"]
+p( RubyDir.glob("folder1/*").sort() );                 // Output: [file1-1, file1-2, file1-3, file1-4, folder1-1, folder1-2]
+p( RubyDir.glob(GLOB_DIR + "**/*1-*-1*").sort() );     // Output: [folder1/folder1-1/file1-1-1, folder1/folder1-2/file1-2-1]
+p( RubyDir.glob(GLOB_DIR + "folder1/*[2,3]").sort() ); // Output: [file1-2, file1-3, folder1-2]
 ```
 
 Demo RubyFile:
 ```java
 RubyFile rf = RubyFile.open("test.txt", "r+");
-rf.puts("1");
-rf.puts("2");
-rf.puts("3");
+rf.puts("a");
+rf.puts("bc");
+rf.puts("def");
 rf.close();
-rf = RubyFile.open("test.txt");
-p( rf.eachLine().toA() ); // Output: [1, 2, 3]
+rf = RubyFile.open("test.txt", "r");
+p( rf.eachLine().toA() ); // Output: [a, bc, def]
 rf.close();
 ```
