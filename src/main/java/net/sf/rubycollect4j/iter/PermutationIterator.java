@@ -28,6 +28,7 @@ import java.util.NoSuchElementException;
 
 import net.sf.rubycollect4j.RubyArray;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.Lists.newArrayList;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 
@@ -54,7 +55,7 @@ public class PermutationIterator<E> implements Iterator<RubyArray<E>> {
    *          length of each permutation
    */
   public PermutationIterator(List<E> list, int n) {
-    this.list = list;
+    this.list = checkNotNull(list);
     if (n <= 0 || n > list.size()) {
       counter = new int[0];
       endStatus = new int[0];

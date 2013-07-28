@@ -37,6 +37,7 @@ import net.sf.rubycollect4j.block.EntryTransformBlock;
 import net.sf.rubycollect4j.block.TransformBlock;
 import net.sf.rubycollect4j.util.LinkedIdentityMap;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.Maps.newLinkedHashMap;
 import static net.sf.rubycollect4j.RubyCollections.newPair;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
@@ -75,13 +76,11 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * 
    * @param map
    *          a LinkedHashMap
-   * @throws IllegalArgumentException
+   * @throws NullPointerException
    *           if map is null
    */
   public RubyHash(LinkedHashMap<K, V> map) {
-    if (map == null)
-      throw new IllegalArgumentException("Map can't be null.");
-
+    checkNotNull(map);
     this.map = map;
   }
 

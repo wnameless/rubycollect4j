@@ -27,6 +27,7 @@ import java.util.NoSuchElementException;
 
 import net.sf.rubycollect4j.RubyArray;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 
 /**
@@ -55,7 +56,7 @@ public final class RepeatedCombinationIterator<E> implements
    *          length of each repeated combination
    */
   public RepeatedCombinationIterator(List<E> list, int n) {
-    this.list = list;
+    this.list = checkNotNull(list);
     end = list.size() - 1;
     if (n <= 0) {
       counter = new int[0];

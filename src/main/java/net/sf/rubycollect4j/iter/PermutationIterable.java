@@ -25,6 +25,8 @@ import java.util.List;
 
 import net.sf.rubycollect4j.RubyArray;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * 
  * PermutationIterable generates all permutations of a List with length n.
@@ -46,7 +48,7 @@ public final class PermutationIterable<E> implements Iterable<RubyArray<E>> {
    *          length of each permutation
    */
   public PermutationIterable(List<E> list, int n) {
-    this.list = list;
+    this.list = checkNotNull(list);
     this.n = n;
   }
 

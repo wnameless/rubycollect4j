@@ -61,7 +61,7 @@ public class RubyHashTest {
     assertTrue(rh instanceof RubyHash);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test(expected = NullPointerException.class)
   public void testConstructorException() {
     rh = new RubyHash<Integer, Integer>(null);
   }

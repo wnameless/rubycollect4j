@@ -25,6 +25,8 @@ import java.util.List;
 
 import net.sf.rubycollect4j.RubyArray;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * 
  * RepeatedCombinationIterable generates all repeated combinations of a List
@@ -48,7 +50,7 @@ public final class RepeatedCombinationIterable<E> implements
    *          length of each repeated combination
    */
   public RepeatedCombinationIterable(List<E> list, int n) {
-    this.list = list;
+    this.list = checkNotNull(list);
     this.n = n;
   }
 

@@ -60,7 +60,7 @@ public class RubyEnumerableTest {
     assertTrue(re instanceof RubyEnumerable);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test(expected = NullPointerException.class)
   public void testConstructorException() {
     List<Integer> ints = null;
     re = newRubyEnumerator(ints);

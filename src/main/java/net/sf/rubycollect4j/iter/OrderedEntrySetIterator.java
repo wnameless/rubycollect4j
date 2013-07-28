@@ -26,6 +26,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * 
  * OrderedEntrySetIterator iterates each Entry by the key ordering of the
@@ -53,8 +55,8 @@ public final class OrderedEntrySetIterator<K, V> implements
    *          a Map
    */
   public OrderedEntrySetIterator(Iterator<K> iter, Map<K, V> map) {
-    this.iter = iter;
-    this.map = map;
+    this.iter = checkNotNull(iter);
+    this.map = checkNotNull(map);
   }
 
   @Override

@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static net.sf.rubycollect4j.RubyCollections.newPair;
 
 /**
@@ -49,8 +50,8 @@ public final class EachWithObjectIterator<E, O> implements
    *          an Object
    */
   public EachWithObjectIterator(Iterator<E> iter, O obj) {
-    this.iter = iter;
-    this.obj = obj;
+    this.iter = checkNotNull(iter);
+    this.obj = checkNotNull(obj);
   }
 
   private Entry<E, O> nextElement() {

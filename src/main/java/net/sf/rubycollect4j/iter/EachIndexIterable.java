@@ -22,6 +22,8 @@ package net.sf.rubycollect4j.iter;
 
 import java.util.Iterator;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * 
  * EachIndexIterable iterates indices of elements instead of elements itself.
@@ -38,7 +40,7 @@ public final class EachIndexIterable<E> implements Iterable<Integer> {
    *          an Iterable
    */
   public EachIndexIterable(Iterable<E> iter) {
-    this.iter = iter;
+    this.iter = checkNotNull(iter);
   }
 
   @Override

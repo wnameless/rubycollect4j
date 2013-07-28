@@ -30,6 +30,7 @@ import net.sf.rubycollect4j.block.TransformBlock;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.PeekingIterator;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static net.sf.rubycollect4j.RubyCollections.newPair;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 
@@ -60,8 +61,8 @@ public final class ChunkIterator<E, K> implements
    *          to transform each element
    */
   public ChunkIterator(Iterator<E> iterator, TransformBlock<E, K> block) {
-    pIterator = Iterators.peekingIterator(iterator);
-    this.block = block;
+    pIterator = Iterators.peekingIterator(checkNotNull(iterator));
+    this.block = checkNotNull(block);
   }
 
   private Entry<K, RubyArray<E>> nextElement() {

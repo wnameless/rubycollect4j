@@ -26,6 +26,8 @@ import java.util.Map.Entry;
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.block.TransformBlock;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * 
  * ChunkIterable transforms elements first, and then puts the original elements
@@ -52,8 +54,8 @@ public final class ChunkIterable<E, K> implements
    *          to transform each element
    */
   public ChunkIterable(Iterable<E> iterable, TransformBlock<E, K> block) {
-    this.iterable = iterable;
-    this.block = block;
+    this.iterable = checkNotNull(iterable);
+    this.block = checkNotNull(block);
   }
 
   @Override

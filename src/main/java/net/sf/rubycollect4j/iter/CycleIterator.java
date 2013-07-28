@@ -23,6 +23,8 @@ package net.sf.rubycollect4j.iter;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * 
  * CycleIterator iterates an Iterable n times. If n is not given, it iterates
@@ -46,7 +48,7 @@ public final class CycleIterator<E> implements Iterator<E> {
    *          times to iterate
    */
   public CycleIterator(Iterable<E> iter, int n) {
-    this.iter = iter;
+    this.iter = checkNotNull(iter);
     this.n = n;
     it = iter.iterator();
   }

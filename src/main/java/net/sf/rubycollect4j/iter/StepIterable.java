@@ -22,6 +22,8 @@ package net.sf.rubycollect4j.iter;
 
 import java.util.Iterator;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * 
  * StepIterable iterates elements by skipping n elements each time.
@@ -43,13 +45,12 @@ public final class StepIterable<E> implements Iterable<E> {
    *          number of elements to skip
    */
   public StepIterable(Iterable<E> iter, int step) {
-    if (step == 0) {
+    if (step == 0)
       throw new IllegalArgumentException("step can't be 0");
-    }
-    if (step < 0) {
+    if (step < 0)
       throw new IllegalArgumentException("step can't be negative");
-    }
-    this.iter = iter;
+
+    this.iter = checkNotNull(iter);
     this.step = step;
   }
 

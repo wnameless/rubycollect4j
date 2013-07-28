@@ -23,6 +23,8 @@ package net.sf.rubycollect4j.iter;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * 
  * EachWithObjectIterable iterates each element with an object.
@@ -47,8 +49,8 @@ public final class EachWithObjectIterable<E, O> implements
    *          an Object
    */
   public EachWithObjectIterable(Iterable<E> iter, O obj) {
-    this.iter = iter;
-    this.obj = obj;
+    this.iter = checkNotNull(iter);
+    this.obj = checkNotNull(obj);
   }
 
   @Override

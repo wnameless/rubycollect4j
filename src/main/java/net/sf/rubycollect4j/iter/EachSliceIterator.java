@@ -25,6 +25,8 @@ import java.util.NoSuchElementException;
 
 import net.sf.rubycollect4j.RubyArray;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 
 /**
@@ -52,10 +54,8 @@ public final class EachSliceIterator<E> implements Iterator<RubyArray<E>> {
    *           if size less than or equal to 0
    */
   public EachSliceIterator(Iterator<E> iter, int size) {
-    if (size <= 0) {
-      throw new IllegalArgumentException("invalid slice size");
-    }
-    this.iter = iter;
+    checkArgument(size > 0);
+    this.iter = checkNotNull(iter);
     this.size = size;
   }
 

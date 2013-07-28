@@ -25,6 +25,8 @@ import java.util.NoSuchElementException;
 
 import net.sf.rubycollect4j.succ.Successive;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * 
  * RangeIterator iterates each element within a range derived by 2 objects.
@@ -49,9 +51,9 @@ public final class RangeIterator<E> implements Iterator<E> {
    *          a element
    */
   public RangeIterator(Successive<E> successive, E startPoint, E endPoint) {
-    this.successive = successive;
-    this.endPoint = endPoint;
-    curr = startPoint;
+    this.successive = checkNotNull(successive);
+    curr = checkNotNull(startPoint);
+    this.endPoint = checkNotNull(endPoint);
   }
 
   @Override

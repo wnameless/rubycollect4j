@@ -23,6 +23,8 @@ package net.sf.rubycollect4j;
 import java.util.Calendar;
 import java.util.Date;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * 
  * RubyDate simply extends Java Date and adds few useful methods which are
@@ -43,13 +45,11 @@ public final class RubyDate extends Date {
    * 
    * @param date
    *          a Date
-   * @throws IllegalArgumentException
+   * @throws NullPointerException
    *           if date is null
    */
   public RubyDate(Date date) {
-    if (date == null)
-      throw new IllegalArgumentException("Date can't be null.");
-
+    checkNotNull(date);
     setTime(date.getTime());
   }
 

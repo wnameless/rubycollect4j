@@ -24,6 +24,9 @@ import java.util.Iterator;
 
 import net.sf.rubycollect4j.RubyArray;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * 
  * EachSliceIterable iterates each element by a window of size n. It returns a
@@ -49,10 +52,8 @@ public final class EachSliceIterable<E> implements Iterable<RubyArray<E>> {
    *           if size less than or equal to 0
    */
   public EachSliceIterable(Iterable<E> iter, int size) {
-    if (size <= 0) {
-      throw new IllegalArgumentException("invalid slice size");
-    }
-    this.iter = iter;
+    checkArgument(size > 0);
+    this.iter = checkNotNull(iter);
     this.size = size;
   }
 

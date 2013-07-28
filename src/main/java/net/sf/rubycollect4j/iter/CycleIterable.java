@@ -24,6 +24,8 @@ import java.util.Iterator;
 
 import com.google.common.collect.Iterables;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * 
  * CycleIterable iterates an Iterable n times. If n is not given, it iterates
@@ -44,7 +46,7 @@ public final class CycleIterable<E> implements Iterable<E> {
    *          an Iterable
    */
   public CycleIterable(Iterable<E> iter) {
-    this.iter = iter;
+    this.iter = checkNotNull(iter);
     n = null;
   }
 
@@ -57,6 +59,7 @@ public final class CycleIterable<E> implements Iterable<E> {
    *          times to iterate
    */
   public CycleIterable(Iterable<E> iter, int n) {
+    checkNotNull(iter);
     this.iter = iter;
     this.n = n;
   }

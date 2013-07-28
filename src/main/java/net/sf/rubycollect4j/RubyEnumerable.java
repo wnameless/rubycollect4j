@@ -55,6 +55,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Lists.reverse;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
@@ -323,9 +324,8 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
    * @return a RubyArray
    */
   public RubyArray<E> drop(int n) {
-    if (n < 0) {
-      throw new IllegalArgumentException("attempt to drop negative size");
-    }
+    checkArgument(n >= 0, "attempt to drop negative size");
+
     RubyArray<E> rubyArray = newRubyArray();
     int i = 0;
     for (E item : getIterable()) {
@@ -627,9 +627,8 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
    * @return a RubyArray
    */
   public RubyArray<E> first(int n) {
-    if (n < 0) {
-      throw new IllegalArgumentException("attempt to take negative size");
-    }
+    checkArgument(n >= 0, "attempt to take negative size");
+
     Iterator<E> it = getIterable().iterator();
     RubyArray<E> rubyArray = newRubyArray();
     for (int i = 0; i < n && it.hasNext(); i++) {
@@ -1545,9 +1544,8 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
    *           if n less than 0
    */
   public RubyArray<E> take(int n) {
-    if (n < 0) {
-      throw new IllegalArgumentException("attempt to take negative size");
-    }
+    checkArgument(n >= 0, "attempt to take negative size");
+
     RubyArray<E> rubyArray = newRubyArray();
     int i = 0;
     for (E item : getIterable()) {

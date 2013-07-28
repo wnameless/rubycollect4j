@@ -27,6 +27,7 @@ import java.util.NoSuchElementException;
 
 import net.sf.rubycollect4j.RubyArray;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 
 /**
@@ -48,7 +49,7 @@ public final class ProductIterator<E> implements Iterator<RubyArray<E>> {
    *          a List of Lists
    */
   public ProductIterator(List<List<E>> lists) {
-    this.lists = lists;
+    this.lists = checkNotNull(lists);
     counter = new int[lists.size()];
   }
 

@@ -23,6 +23,8 @@ package net.sf.rubycollect4j.iter;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * 
  * EachWithIndexIterable iterates each element with its index.
@@ -42,7 +44,7 @@ public final class EachWithIndexIterable<E> implements
    *          an Iterable
    */
   public EachWithIndexIterable(Iterable<E> iter) {
-    this.iter = iter;
+    this.iter = checkNotNull(iter);
   }
 
   @Override

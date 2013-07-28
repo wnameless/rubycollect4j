@@ -56,6 +56,8 @@ public final class RubyDir extends RubyEnumerable<String> {
    * @param path
    *          of a file
    * @return a RubyDir
+   * @throws IllegalArgumentException
+   *           if no such file or directory
    */
   public static RubyDir open(String path) {
     File dir = new File(path);

@@ -20,11 +20,12 @@
  */
 package net.sf.rubycollect4j.iter;
 
+import java.util.AbstractMap.SimpleEntry;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 
-import static net.sf.rubycollect4j.RubyCollections.newPair;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * 
@@ -46,11 +47,12 @@ public final class EachWithIndexIterator<E> implements
    *          an Iterator
    */
   public EachWithIndexIterator(Iterator<E> iter) {
-    this.iter = iter;
+    this.iter = checkNotNull(iter);
   }
 
   private Entry<E, Integer> nextElement() {
-    Entry<E, Integer> element = newPair(iter.next(), index[0]);
+    Entry<E, Integer> element =
+        new SimpleEntry<E, Integer>(iter.next(), index[0]);
     index[0]++;
     return element;
   }

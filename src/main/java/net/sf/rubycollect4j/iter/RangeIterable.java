@@ -24,6 +24,8 @@ import java.util.Iterator;
 
 import net.sf.rubycollect4j.succ.Successive;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * 
  * RangeIterable iterates each element within a range derived by 2 objects.
@@ -48,9 +50,9 @@ public final class RangeIterable<E> implements Iterable<E> {
    *          a element
    */
   public RangeIterable(Successive<E> successive, E startPoint, E endPoint) {
-    this.successive = successive;
-    this.startPoint = startPoint;
-    this.endPoint = endPoint;
+    this.successive = checkNotNull(successive);
+    this.startPoint = checkNotNull(startPoint);
+    this.endPoint = checkNotNull(endPoint);
   }
 
   @Override

@@ -24,6 +24,9 @@ import java.util.Iterator;
 
 import net.sf.rubycollect4j.RubyArray;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * 
  * EachConsIterable iterates each element by a window of size n. It returns a
@@ -48,10 +51,8 @@ public final class EachConsIterable<E> implements Iterable<RubyArray<E>> {
    *           if size less than or equal to 0
    */
   public EachConsIterable(Iterable<E> iter, int size) {
-    if (size <= 0) {
-      throw new IllegalArgumentException("invalid size");
-    }
-    this.iter = iter;
+    checkArgument(size > 0);
+    this.iter = checkNotNull(iter);
     this.size = size;
   }
 

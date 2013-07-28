@@ -46,6 +46,8 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newLinkedHashSet;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
@@ -84,13 +86,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * 
    * @param list
    *          any List
-   * @throws IllegalArgumentException
+   * @throws NullPointerException
    *           if list is null
    */
   public RubyArray(List<E> list) {
-    if (list == null)
-      throw new IllegalArgumentException("List can't be null.");
-
+    checkNotNull(list);
     this.list = list;
   }
 
@@ -867,9 +867,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    *           if n less than 0
    */
   public RubyArray<E> multiply(int n) {
-    if (n < 0) {
-      throw new IllegalArgumentException("negative argument");
-    }
+    checkArgument(n >= 0, "negative argument");
+
     List<E> multiplyList = newArrayList();
     for (int i = 0; i < n; i++) {
       for (E item : list) {
@@ -994,9 +993,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    *           if n less than 0
    */
   public RubyArray<E> pop(int n) {
-    if (n < 0) {
-      throw new IllegalArgumentException("ArgumentError: negative array size");
-    }
+    checkArgument(n >= 0, "ArgumentError: negative array size");
+
     RubyArray<E> rubyArray = newRubyArray();
     while (n > 0 && !isEmpty()) {
       rubyArray.add(0, pop());
@@ -1329,9 +1327,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    *           if n less than 0
    */
   public RubyArray<E> sample(int n) {
-    if (n < 0) {
-      throw new IllegalArgumentException("negative sample number");
-    }
+    checkArgument(n >= 0, "negative sample number");
+
     List<Integer> indices = newArrayList();
     for (int i = 0; i < size(); i++) {
       indices.add(i);
@@ -1393,9 +1390,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    *           if n less than 0
    */
   public RubyArray<E> shift(int n) {
-    if (n < 0) {
-      throw new IllegalArgumentException("negative array size");
-    }
+    checkArgument(n >= 0, "negative array size");
+
     List<E> shiftedList = newArrayList();
     while (!isEmpty() && shiftedList.size() < n) {
       shiftedList.add(remove(0));

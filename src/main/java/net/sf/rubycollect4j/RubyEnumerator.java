@@ -28,6 +28,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.PeekingIterator;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.Lists.newArrayList;
 
 /**
@@ -55,13 +56,11 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
    * 
    * @param iterable
    *          an Iterable
-   * @throws IllegalArgumentException
+   * @throws NullPointerException
    *           if iterable is null
    */
   public RubyEnumerator(Iterable<E> iterable) {
-    if (iterable == null)
-      throw new IllegalArgumentException("Iterable can't be null.");
-
+    checkNotNull(iterable);
     iter = iterable;
     pIterator = Iterators.peekingIterator(iter.iterator());
   }
@@ -72,13 +71,11 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
    * 
    * @param iterater
    *          an Iterator
-   * @throws IllegalArgumentException
+   * @throws NullPointerException
    *           if iterator is null
    */
   public RubyEnumerator(Iterator<E> iterator) {
-    if (iterator == null)
-      throw new IllegalArgumentException("Iterator can't be null.");
-
+    checkNotNull(iterator);
     iter = newArrayList(iterator);
     pIterator = Iterators.peekingIterator(iter.iterator());
   }

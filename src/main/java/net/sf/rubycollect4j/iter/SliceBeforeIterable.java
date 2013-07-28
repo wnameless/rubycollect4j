@@ -26,6 +26,8 @@ import java.util.regex.Pattern;
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.block.BooleanBlock;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * SliceBeforeIterable iterates all elements by slicing elements into different
  * parts. It performs each slicing when any element is true returned by the
@@ -49,8 +51,8 @@ public final class SliceBeforeIterable<E> implements Iterable<RubyArray<E>> {
    *          to check elements
    */
   public SliceBeforeIterable(Iterable<E> iter, BooleanBlock<E> block) {
-    this.iter = iter;
-    this.block = block;
+    this.iter = checkNotNull(iter);
+    this.block = checkNotNull(block);
     pattern = null;
   }
 
@@ -63,9 +65,9 @@ public final class SliceBeforeIterable<E> implements Iterable<RubyArray<E>> {
    *          to match elements
    */
   public SliceBeforeIterable(Iterable<E> iter, Pattern pattern) {
-    this.iter = iter;
+    this.iter = checkNotNull(iter);
     this.block = null;
-    this.pattern = pattern;
+    this.pattern = checkNotNull(pattern);
   }
 
   @Override

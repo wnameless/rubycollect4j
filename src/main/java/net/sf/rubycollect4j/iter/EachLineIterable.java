@@ -23,6 +23,8 @@ package net.sf.rubycollect4j.iter;
 import java.io.RandomAccessFile;
 import java.util.Iterator;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * 
  * EachLineIterable iterates a RandomAccessFile line by line.
@@ -39,7 +41,7 @@ public final class EachLineIterable implements Iterable<String> {
    *          a RandomAccessFile
    */
   public EachLineIterable(RandomAccessFile raFile) {
-    this.raFile = raFile;
+    this.raFile = checkNotNull(raFile);
   }
 
   @Override

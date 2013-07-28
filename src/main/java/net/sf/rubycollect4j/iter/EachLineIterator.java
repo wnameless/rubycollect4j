@@ -26,6 +26,8 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * 
  * EachLineIterator iterates a RandomAccessFile line by line.
@@ -42,7 +44,7 @@ public final class EachLineIterator implements Iterator<String> {
    *          a RandomAccessFile
    */
   public EachLineIterator(RandomAccessFile raFile) {
-    this.raFile = raFile;
+    this.raFile = checkNotNull(raFile);
     try {
       this.raFile.seek(0L);
     } catch (IOException ex) {

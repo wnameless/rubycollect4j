@@ -26,6 +26,7 @@ import java.util.List;
 
 import net.sf.rubycollect4j.RubyArray;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.Lists.newArrayList;
 
 /**
@@ -48,8 +49,8 @@ public final class ProductIterable<E> implements Iterable<RubyArray<E>> {
    *          a List of Lists
    */
   public ProductIterable(List<E> self, List<? extends List<E>> others) {
-    lists.add(self);
-    lists.addAll(others);
+    lists.add(checkNotNull(self));
+    lists.addAll(checkNotNull(others));
   }
 
   /**
@@ -61,7 +62,7 @@ public final class ProductIterable<E> implements Iterable<RubyArray<E>> {
    *          an Array of Lists
    */
   public ProductIterable(List<E> self, List<E>... others) {
-    lists.add(self);
+    lists.add(checkNotNull(self));
     lists.addAll(Arrays.asList(others));
   }
 

@@ -25,6 +25,8 @@ import java.util.List;
 
 import net.sf.rubycollect4j.RubyArray;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * 
  * CombinationIterable generates all combinations of a List with length n.
@@ -46,7 +48,7 @@ public class CombinationIterable<E> implements Iterable<RubyArray<E>> {
    *          length of each combination
    */
   public CombinationIterable(List<E> list, int n) {
-    this.list = list;
+    this.list = checkNotNull(list);
     this.n = n;
   }
 

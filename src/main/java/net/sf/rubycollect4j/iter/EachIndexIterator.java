@@ -23,6 +23,8 @@ package net.sf.rubycollect4j.iter;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * 
  * EachIndexIterator iterates indices of elements instead of elements itself.
@@ -40,7 +42,7 @@ public final class EachIndexIterator<E> implements Iterator<Integer> {
    *          an Iterator
    */
   public EachIndexIterator(Iterator<E> iter) {
-    this.iter = iter;
+    this.iter = checkNotNull(iter);
   }
 
   @Override

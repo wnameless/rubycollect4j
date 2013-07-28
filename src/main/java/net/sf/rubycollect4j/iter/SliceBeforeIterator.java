@@ -30,6 +30,7 @@ import net.sf.rubycollect4j.block.BooleanBlock;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.PeekingIterator;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 
 /**
@@ -56,8 +57,8 @@ public final class SliceBeforeIterator<E> implements Iterator<RubyArray<E>> {
    *          to check elements
    */
   public SliceBeforeIterator(Iterator<E> iter, BooleanBlock<E> block) {
-    pIter = Iterators.peekingIterator(iter);
-    this.block = block;
+    pIter = Iterators.peekingIterator(checkNotNull(iter));
+    this.block = checkNotNull(block);
     pattern = null;
   }
 
@@ -70,9 +71,9 @@ public final class SliceBeforeIterator<E> implements Iterator<RubyArray<E>> {
    *          to match elements
    */
   public SliceBeforeIterator(Iterator<E> iter, Pattern pattern) {
-    pIter = Iterators.peekingIterator(iter);
+    pIter = Iterators.peekingIterator(checkNotNull(iter));
     block = null;
-    this.pattern = pattern;
+    this.pattern = checkNotNull(pattern);
   }
 
   private RubyArray<E> nextElement() {

@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 
 /**
@@ -55,8 +56,8 @@ public final class OrderedEntrySetIterable<K, V> implements
    *          a Map
    */
   public OrderedEntrySetIterable(Iterable<K> iter, Map<K, V> map) {
-    this.iter = iter;
-    this.map = map;
+    this.iter = checkNotNull(iter);
+    this.map = checkNotNull(map);
   }
 
   @Override

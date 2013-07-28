@@ -53,7 +53,7 @@ public class RubyArrayTest {
     assertTrue(ra instanceof RubyArray);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test(expected = NullPointerException.class)
   public void testConstructorException() {
     ra = new RubyArray<Integer>(null);
   }
