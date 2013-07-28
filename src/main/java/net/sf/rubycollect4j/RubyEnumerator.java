@@ -55,6 +55,8 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
    * 
    * @param iterable
    *          an Iterable
+   * @throws IllegalArgumentException
+   *           if iterable is null
    */
   public RubyEnumerator(Iterable<E> iterable) {
     if (iterable == null)
@@ -65,17 +67,19 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
   }
 
   /**
-   * Creates a RubyEnumerator by given Iterator. This Iterator will be turned
+   * Creates a RubyEnumerator by given Iterator. This Iterator will be converted
    * into an Iterable. In other words, a copy will be made.
    * 
    * @param iterater
    *          an Iterator
+   * @throws IllegalArgumentException
+   *           if iterator is null
    */
-  public RubyEnumerator(Iterator<E> iterater) {
-    if (iterater == null)
-      throw new IllegalArgumentException("Iterater can't be null.");
+  public RubyEnumerator(Iterator<E> iterator) {
+    if (iterator == null)
+      throw new IllegalArgumentException("Iterator can't be null.");
 
-    iter = newArrayList(iterater);
+    iter = newArrayList(iterator);
     pIterator = Iterators.peekingIterator(iter.iterator());
   }
 

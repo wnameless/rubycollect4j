@@ -84,6 +84,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * 
    * @param list
    *          any List
+   * @throws IllegalArgumentException
+   *           if list is null
    */
   public RubyArray(List<E> list) {
     if (list == null)

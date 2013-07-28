@@ -68,14 +68,14 @@ import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
  * @param <E>
  *          the type of the elements
  */
-abstract class RubyEnumerable<E> implements Iterable<E> {
+public abstract class RubyEnumerable<E> implements Iterable<E> {
 
   /**
    * Returns the Iterable of this RubyEnumerable.
    * 
    * @return an Iterable of this RubyEnumerable
    */
-  abstract protected Iterable<E> getIterable();
+  protected abstract Iterable<E> getIterable();
 
   /**
    * Checks if null included.

@@ -59,9 +59,8 @@ public final class RubyDir extends RubyEnumerable<String> {
    */
   public static RubyDir open(String path) {
     File dir = new File(path);
-    if (!dir.exists() || !dir.isDirectory()) {
+    if (!dir.exists() || !dir.isDirectory())
       throw new IllegalArgumentException("No such file or directory - " + path);
-    }
 
     return new RubyDir(dir);
   }

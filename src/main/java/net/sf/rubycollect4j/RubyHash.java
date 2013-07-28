@@ -75,6 +75,8 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * 
    * @param map
    *          a LinkedHashMap
+   * @throws IllegalArgumentException
+   *           if map is null
    */
   public RubyHash(LinkedHashMap<K, V> map) {
     if (map == null)

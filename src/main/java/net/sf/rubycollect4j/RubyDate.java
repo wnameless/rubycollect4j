@@ -43,8 +43,13 @@ public final class RubyDate extends Date {
    * 
    * @param date
    *          a Date
+   * @throws IllegalArgumentException
+   *           if date is null
    */
   public RubyDate(Date date) {
+    if (date == null)
+      throw new IllegalArgumentException("Date can't be null.");
+
     setTime(date.getTime());
   }
 

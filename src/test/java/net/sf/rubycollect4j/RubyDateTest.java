@@ -48,6 +48,11 @@ public class RubyDateTest {
     assertTrue(rd instanceof Date);
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void testConstructorException() {
+    new RubyDate(null);
+  }
+
   @Test
   public void testConstructorWithDate() {
     Date date = new Date();
