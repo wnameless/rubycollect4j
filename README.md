@@ -205,4 +205,10 @@ rf.close();
 rf = RubyFile.open("test.txt", "r");
 p( rf.eachLine().toA() ); // Output: [a, bc, def]
 rf.close();
+// The method foreach() closes the stream automatically.
+RubyFile.foreach("test.txt", new Block<String>() {
+  public void yield(String item) {
+    System.out.print( item );
+  }
+});                       // Output: abcdef
 ```

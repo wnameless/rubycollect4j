@@ -62,4 +62,4 @@ Version 1.3.0
 
 * Changed constructors of RubyArray & RubyHash to public
 
-- Removed foreach() from RubyIO due to the stream closing issue
+* Changed foreach() of RubyIO to accept only a block

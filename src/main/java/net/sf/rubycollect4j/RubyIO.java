@@ -28,6 +28,7 @@ import java.util.NoSuchElementException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.block.TransformBlock;
 import net.sf.rubycollect4j.iter.EachLineIterable;
 
@@ -176,6 +177,24 @@ public class RubyIO {
       this.mode = Mode.R;
       break;
     }
+  }
+
+  /**
+   * Iterates a File line by line.
+   * 
+   * @param path
+   *          of a File
+   */
+  public static void foreach(String path, Block<String> block) {
+    RubyIO io = null;
+    try {
+      io = new RubyIO(new File(path), Mode.R);
+    } catch (IOException ex) {
+      Logger.getLogger(RubyIO.class.getName()).log(Level.SEVERE, null, ex);
+      throw new RuntimeException(ex);
+    }
+    io.eachLine().each(block);
+    io.close();
   }
 
   /**

@@ -24,6 +24,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 
+import net.sf.rubycollect4j.block.Block;
+
 import org.junit.Test;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
@@ -155,6 +157,31 @@ public class RubyIOTest {
     rf.seek(0);
     assertEquals("123456\n", rf.read());
     rf.close();
+  }
+
+  @Test
+  public void testForeach() {
+    final RubyArray<String> ra = ra();
+    RubyFile.foreach(BASE_DIR + "ruby_io_read_only_mode.txt",
+        new Block<String>() {
+
+          @Override
+          public void yield(String item) {
+            ra.add(item);
+          }
+
+        });
+    assertEquals("abcdef", ra.join());
+  }
+
+  @Test(expected = RuntimeException.class)
+  public void testForeachException() {
+    RubyFile.foreach("no such file!", new Block<String>() {
+
+      @Override
+      public void yield(String item) {}
+
+    });
   }
 
   @Test
