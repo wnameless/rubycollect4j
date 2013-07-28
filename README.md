@@ -75,7 +75,7 @@ p( ra(1, 2, 3) instanceof List ); // Output: true
 ```
 
 ```java
-// By default, RubyArray is just a wrapper to an existed List.
+// By default, ra() is just a wrapper to an existed List.
 // You can make a defensive copy by following codes.
 List<Integer> list = new ArrayList<Integer>();
 list.add(1);
@@ -97,7 +97,7 @@ p( rh(1, 2, 3, 4) instanceof Map );    // Output: true
 ```
 
 ```java
-// By default, RubyHash makes a copy of input Map.
+// By default, rh() makes a copy of input Map.
 // You can only wrap a LinkedHashMap up by following codes, because the keys of RubyHash need to be ordered.
 LinkedHashMap<Integer, String> map = new LinkedHashMap<Integer, String>();
 map.put(1, "a");
@@ -202,5 +202,7 @@ rf.puts("1");
 rf.puts("2");
 rf.puts("3");
 rf.close();
-p( RubyFile.foreach("test.txt").toA() ); // Output: [1, 2, 3]
+rf = RubyFile.open("test.txt");
+p( rf.eachLine().toA() ); // Output: [1, 2, 3]
+rf.close();
 ```

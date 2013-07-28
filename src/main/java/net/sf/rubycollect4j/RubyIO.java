@@ -33,6 +33,7 @@ import net.sf.rubycollect4j.iter.EachLineIterable;
 
 import com.google.common.base.Objects;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static net.sf.rubycollect4j.RubyCollections.Hash;
 import static net.sf.rubycollect4j.RubyCollections.hp;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
@@ -141,7 +142,7 @@ public class RubyIO {
    *           if file can't not open
    */
   public RubyIO(File file, Mode mode) throws IOException {
-    this.file = file;
+    this.file = checkNotNull(file);
     switch (mode) {
     case RW:
       raFile = new RandomAccessFile(file, "rws");
@@ -178,24 +179,6 @@ public class RubyIO {
   }
 
   /**
-   * Generators a RubyEnumerator of lines in a file.
-   * 
-   * @param path
-   *          of a File
-   * @return a RubyEnumerator
-   */
-  public static RubyEnumerator<String> foreach(String path) {
-    RubyIO io = null;
-    try {
-      io = new RubyIO(new File(path), Mode.R);
-    } catch (IOException ex) {
-      Logger.getLogger(RubyIO.class.getName()).log(Level.SEVERE, null, ex);
-      throw new RuntimeException(ex);
-    }
-    return io.eachLine();
-  }
-
-  /**
    * Closes this IO.
    */
   public void close() {
@@ -214,6 +197,7 @@ public class RubyIO {
    */
   public RubyEnumerator<String> eachLine() {
     if (mode.isReadable() == false) {
+      close();
       throw new UnsupportedOperationException("IOError: not opened for reading");
     }
     return newRubyEnumerator(new EachLineIterable(raFile));
@@ -227,11 +211,13 @@ public class RubyIO {
    */
   public void puts(String words) {
     if (mode.isWritable() == false) {
+      close();
       throw new UnsupportedOperationException("IOError: not opened for writing");
     }
     try {
       raFile.writeBytes(words + "\n");
     } catch (IOException ex) {
+      close();
       Logger.getLogger(RubyIO.class.getName()).log(Level.SEVERE, null, ex);
       throw new RuntimeException(ex);
     }
@@ -244,6 +230,7 @@ public class RubyIO {
    */
   public String read() {
     if (mode.isReadable() == false) {
+      close();
       throw new UnsupportedOperationException("IOError: not opened for reading");
     }
     StringBuilder sb = new StringBuilder();
@@ -253,6 +240,7 @@ public class RubyIO {
         sb.append(line + "\n");
       }
     } catch (IOException ex) {
+      close();
       Logger.getLogger(RubyIO.class.getName()).log(Level.SEVERE, null, ex);
       throw new RuntimeException(ex);
     }
@@ -269,6 +257,7 @@ public class RubyIO {
     try {
       raFile.seek(pos);
     } catch (IOException ex) {
+      close();
       Logger.getLogger(RubyIO.class.getName()).log(Level.SEVERE, null, ex);
       throw new RuntimeException(ex);
     }
@@ -283,11 +272,13 @@ public class RubyIO {
    */
   public int write(String words) {
     if (mode.isWritable() == false) {
+      close();
       throw new UnsupportedOperationException("IOError: not opened for writing");
     }
     try {
       raFile.writeBytes(words);
     } catch (IOException ex) {
+      close();
       Logger.getLogger(RubyIO.class.getName()).log(Level.SEVERE, null, ex);
       throw new RuntimeException(ex);
     }
