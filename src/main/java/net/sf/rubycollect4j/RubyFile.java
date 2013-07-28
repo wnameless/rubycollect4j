@@ -293,7 +293,7 @@ public final class RubyFile extends RubyIO {
     if (!(file.exists())) {
       return null;
     }
-    RandomAccessFile raf;
+    RandomAccessFile raf = null;
     Long size = 0L;
     try {
       raf = new RandomAccessFile(file, "r");
@@ -302,6 +302,16 @@ public final class RubyFile extends RubyIO {
     } catch (IOException ex) {
       Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
       throw new RuntimeException(ex);
+    } finally {
+      if (raf != null) {
+        try {
+          raf.close();
+        } catch (IOException ex) {
+          Logger.getLogger(RubyFile.class.getName())
+              .log(Level.SEVERE, null, ex);
+          throw new RuntimeException(ex);
+        }
+      }
     }
     return size == 0L ? null : size;
   }
@@ -359,6 +369,16 @@ public final class RubyFile extends RubyIO {
     } catch (IOException ex) {
       Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
       throw new RuntimeException(ex);
+    } finally {
+      if (raFile != null) {
+        try {
+          raFile.close();
+        } catch (IOException ex) {
+          Logger.getLogger(RubyFile.class.getName())
+              .log(Level.SEVERE, null, ex);
+          throw new RuntimeException(ex);
+        }
+      }
     }
     return size;
   }
