@@ -21,6 +21,7 @@
 package net.sf.rubycollect4j;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -791,6 +792,23 @@ public class RubyEnumerableTest {
       public int compare(Integer o1, Integer o2) {
         return o2 - o1;
       }
+
+    }, new TransformBlock<String, Integer>() {
+
+      @Override
+      public Integer yield(String item) {
+        return item.length();
+      }
+
+    }));
+    re = newRubyEnumerator(new ArrayList<String>());
+    assertNull(re.maxBy(new Comparator<Integer>() {
+
+      @Override
+      public int compare(Integer o1, Integer o2) {
+        return o2 - o1;
+      }
+
     }, new TransformBlock<String, Integer>() {
 
       @Override
@@ -806,6 +824,15 @@ public class RubyEnumerableTest {
     RubyEnumerable<String> re =
         newRubyEnumerator(Arrays.asList("aaaa", "bbb", "cc", "d"));
     assertEquals("aaaa", re.maxBy(new TransformBlock<String, Integer>() {
+
+      @Override
+      public Integer yield(String item) {
+        return item.length();
+      }
+
+    }));
+    re = newRubyEnumerator(new ArrayList<String>());
+    assertNull(re.maxBy(new TransformBlock<String, Integer>() {
 
       @Override
       public Integer yield(String item) {
@@ -860,6 +887,23 @@ public class RubyEnumerableTest {
       public int compare(Integer o1, Integer o2) {
         return o2 - o1;
       }
+
+    }, new TransformBlock<String, Integer>() {
+
+      @Override
+      public Integer yield(String item) {
+        return item.length();
+      }
+
+    }));
+    re = newRubyEnumerator(new ArrayList<String>());
+    assertNull(re.minBy(new Comparator<Integer>() {
+
+      @Override
+      public int compare(Integer o1, Integer o2) {
+        return o2 - o1;
+      }
+
     }, new TransformBlock<String, Integer>() {
 
       @Override
@@ -875,6 +919,15 @@ public class RubyEnumerableTest {
     RubyEnumerable<String> re =
         newRubyEnumerator(Arrays.asList("aaaa", "bbb", "cc", "d"));
     assertEquals("d", re.minBy(new TransformBlock<String, Integer>() {
+
+      @Override
+      public Integer yield(String item) {
+        return item.length();
+      }
+
+    }));
+    re = newRubyEnumerator(new ArrayList<String>());
+    assertNull(re.minBy(new TransformBlock<String, Integer>() {
 
       @Override
       public Integer yield(String item) {

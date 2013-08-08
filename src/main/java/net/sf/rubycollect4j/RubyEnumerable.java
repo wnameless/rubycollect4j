@@ -968,6 +968,8 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
       src.add(item);
       dst.add(block.yield(item));
     }
+    if (src.isEmpty())
+      return null;
     S maxDst = Collections.max(dst, comp);
     return src.get(dst.indexOf(maxDst));
   }
@@ -989,6 +991,8 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
       src.add(item);
       dst.add(block.yield(item));
     }
+    if (src.isEmpty())
+      return null;
     S maxDst = newRubyEnumerator(dst).max();
     return src.get(dst.indexOf(maxDst));
   }
@@ -1056,6 +1060,8 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
       src.add(item);
       dst.add(block.yield(item));
     }
+    if (src.isEmpty())
+      return null;
     S minDst = Collections.min(dst, comp);
     return src.get(dst.indexOf(minDst));
   }
@@ -1077,6 +1083,8 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
       src.add(item);
       dst.add(block.yield(item));
     }
+    if (src.isEmpty())
+      return null;
     S minDst = newRubyEnumerator(dst).min();
     return src.get(dst.indexOf(minDst));
   }
