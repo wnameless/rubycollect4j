@@ -253,6 +253,16 @@ public class RubyCollectionsTest {
 
   @Test
   public void testDate() {
+    assertTrue(date() instanceof RubyDate);
+    assertEquals(date(new Date()).year(), date().year());
+    assertEquals(date(new Date()).month(), date().month());
+    assertEquals(date(new Date()).day(), date().day());
+    assertEquals(date(new Date()).hour(), date().hour());
+    assertEquals(date(new Date()).minute(), date().minute());
+  }
+
+  @Test
+  public void testDateWithInit() {
     Date date = new Date();
     assertTrue(date(date) instanceof RubyDate);
     assertTrue(date.equals(date(date)));

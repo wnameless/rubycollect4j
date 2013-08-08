@@ -1952,6 +1952,15 @@ public final class RubyCollections {
   }
 
   /**
+   * Creates a RubyDate by current Date.
+   * 
+   * @return a RubyDate
+   */
+  public static RubyDate date() {
+    return new RubyDate(new Date());
+  }
+
+  /**
    * Creates a RubyDate by given Date.
    * 
    * @param date
