@@ -67,6 +67,6 @@ Version 1.3.0
 
 Version 1.3.1
 
-* Fixed the bugs of maxBy() & minBy() of RubyEnumerable
+* Fixed the bugs when max(), maxBy(), min(), minBy(), minmax(), minmaxBy() of RubyEnumerable are called on an empty Iterable
 
 * Added date() to RubyCollections

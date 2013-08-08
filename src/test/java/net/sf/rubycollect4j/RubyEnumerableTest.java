@@ -773,6 +773,15 @@ public class RubyEnumerableTest {
       }
 
     }));
+    re = newRubyEnumerator(new ArrayList<Integer>());
+    assertNull(re.max(new Comparator<Integer>() {
+
+      @Override
+      public int compare(Integer arg0, Integer arg1) {
+        return arg1 - arg0;
+      }
+
+    }));
   }
 
   @Test
@@ -861,6 +870,15 @@ public class RubyEnumerableTest {
   public void testMinWithComparator() {
     re = newRubyEnumerator(Arrays.asList(1, 2, 3, 4));
     assertEquals(Integer.valueOf(4), re.min(new Comparator<Integer>() {
+
+      @Override
+      public int compare(Integer arg0, Integer arg1) {
+        return arg1 - arg0;
+      }
+
+    }));
+    re = newRubyEnumerator(new ArrayList<Integer>());
+    assertNull(re.min(new Comparator<Integer>() {
 
       @Override
       public int compare(Integer arg0, Integer arg1) {
@@ -958,6 +976,15 @@ public class RubyEnumerableTest {
       }
 
     }));
+    re = newRubyEnumerator(new ArrayList<Integer>());
+    assertEquals(ra(null, null), re.minmax(new Comparator<Integer>() {
+
+      @Override
+      public int compare(Integer o1, Integer o2) {
+        return o2 - o1;
+      }
+
+    }));
   }
 
   @Test
@@ -985,6 +1012,21 @@ public class RubyEnumerableTest {
       }
 
     }));
+    re = newRubyEnumerator(new ArrayList<String>());
+    assertEquals(ra(null, null), re.minmaxBy(new Comparator<Integer>() {
+
+      @Override
+      public int compare(Integer o1, Integer o2) {
+        return o2 - o1;
+      }
+    }, new TransformBlock<String, Integer>() {
+
+      @Override
+      public Integer yield(String item) {
+        return item.length();
+      }
+
+    }));
   }
 
   @Test
@@ -992,6 +1034,16 @@ public class RubyEnumerableTest {
     RubyEnumerable<String> re =
         newRubyEnumerator(Arrays.asList("aaaa", "bbb", "cc", "d"));
     assertEquals(ra("d", "aaaa"),
+        re.minmaxBy(new TransformBlock<String, Integer>() {
+
+          @Override
+          public Integer yield(String item) {
+            return item.length();
+          }
+
+        }));
+    re = newRubyEnumerator(new ArrayList<String>());
+    assertEquals(ra(null, null),
         re.minmaxBy(new TransformBlock<String, Integer>() {
 
           @Override
