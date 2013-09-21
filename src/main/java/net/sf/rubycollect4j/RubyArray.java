@@ -20,6 +20,13 @@
  */
 package net.sf.rubycollect4j;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Sets.newLinkedHashSet;
+import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
+import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -45,13 +52,6 @@ import net.sf.rubycollect4j.iter.RepeatedPermutationIterable;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
-
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Sets.newLinkedHashSet;
-import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
-import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 
 /**
  * 
@@ -135,7 +135,6 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     }
   }
 
-  // TODO: Implement bsearch to take code block
   /**
    * Uses binary search to find an element. Assume this RubyArray is already
    * sorted.
