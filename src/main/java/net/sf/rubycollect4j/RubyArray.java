@@ -48,6 +48,7 @@ import net.sf.rubycollect4j.iter.PermutationIterable;
 import net.sf.rubycollect4j.iter.ProductIterable;
 import net.sf.rubycollect4j.iter.RepeatedCombinationIterable;
 import net.sf.rubycollect4j.iter.RepeatedPermutationIterable;
+import net.sf.rubycollect4j.packer.Packer;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
@@ -889,14 +890,15 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   }
 
   /**
-   * Not supported yet!
+   * Packs the contents of this RubyArray into a binary string according to the
+   * directives in aTemplateString.
    * 
    * @param template
    *          a template string
    * @return a binary string
    */
-  public String pack(String template) {
-    throw new UnsupportedOperationException("Not supported yet.");
+  public String pack(String aTemplateString) {
+    return Packer.pack(this, aTemplateString);
   }
 
   /**
