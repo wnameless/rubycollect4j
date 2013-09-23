@@ -23,7 +23,6 @@ package net.sf.rubycollect4j.packer;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -31,6 +30,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.xml.bind.TypeConstraintException;
 
 import net.sf.rubycollect4j.RubyArray;
 
@@ -98,12 +99,12 @@ public final class ByteUtil {
 
   public static byte[] toByteArray(boolean b) {
     return ByteBuffer.allocate(1).order(ByteOrder.nativeOrder())
-        .putInt(b ? 1 : 0).array();
+        .put(b ? (byte) 0x01 : (byte) 0x00).array();
   }
 
   public static byte[] toByteArray(Boolean b) {
     return ByteBuffer.allocate(1).order(ByteOrder.nativeOrder())
-        .putInt(b ? 1 : 0).array();
+        .put(b ? (byte) 0x01 : (byte) 0x00).array();
   }
 
   public static byte[] toByteArray(char c) {
@@ -116,23 +117,12 @@ public final class ByteUtil {
         .array();
   }
 
+  public static byte[] toByteArray(String s) {
+    return s.getBytes();
+  }
+
   public static byte[] toByteArray(Object o) {
     Class<?> c = o.getClass();
-    try {
-      Method m = c.getMethod("getBytes");
-      return (byte[]) m.invoke(o);
-    } catch (Exception e) {
-      e.printStackTrace();
-      Logger.getLogger(ByteUtil.class.getName()).log(Level.INFO, null,
-          e.getMessage());
-    }
-    try {
-      Method m = c.getMethod("toByteArray");
-      return (byte[]) m.invoke(o);
-    } catch (Exception e) {
-      Logger.getLogger(ByteUtil.class.getName()).log(Level.INFO, null,
-          e.getMessage());
-    }
     for (Method m : c.getDeclaredMethods()) {
       if (m.getReturnType() == byte[].class
           && m.getParameterTypes().length == 0) {
@@ -144,7 +134,8 @@ public final class ByteUtil {
         }
       }
     }
-    throw new UnsupportedOperationException();
+    throw new TypeConstraintException("TypeError: no implicit conversion of "
+        + c.getName() + " into byte[]");
   }
 
   public static String toASCII(byte[] bytes, int n) {
@@ -176,7 +167,6 @@ public final class ByteUtil {
       else
         ra.add("\\x" + String.format("%02X", b));
     }
-    System.out.println(ByteOrder.nativeOrder());
     return ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ? ra.join() : ra
         .reverse().join();
   }
@@ -213,11 +203,6 @@ public final class ByteUtil {
 
   public static byte[][] toBytesArray(Object... objs) {
     return toBytesArray(Arrays.asList(objs));
-  }
-
-  public static void main(String[] args) throws UnsupportedEncodingException {
-    System.out.println(new String(ByteBuffer.allocate(4)
-        .order(ByteOrder.BIG_ENDIAN).putInt(123456).array(), "UTF-8"));
   }
 
 }

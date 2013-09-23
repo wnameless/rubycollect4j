@@ -67,8 +67,8 @@ public enum Directive {
     case f:
       return ByteUtil.toASCII(bytes, 4);
     case U:
-      return String.valueOf((char) ByteBuffer.wrap(bytes)
-          .order(ByteOrder.nativeOrder()).getShort());
+      return String.valueOf(ByteBuffer.wrap(bytes)
+          .order(ByteOrder.nativeOrder()).getChar());
     case A:
       return new String(bytes);
     case a:
