@@ -131,8 +131,10 @@ public class ByteUtilTest {
     assertEquals("\\r", ByteUtil.toASCII(new byte[] { (byte) 13 }, 1));
     assertEquals("\\e", ByteUtil.toASCII(new byte[] { (byte) 27 }, 1));
     assertEquals("\\x10", ByteUtil.toASCII(new byte[] { (byte) 16 }, 1));
-    assertEquals(ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ? "\\x00A"
-        : "A\\x00", ByteUtil.toASCII(new byte[] { (byte) 65 }, 2));
+    assertEquals("A\\x00",
+        ByteUtil.toASCII(new byte[] { (byte) 65 }, 2, ByteOrder.LITTLE_ENDIAN));
+    assertEquals("\\x00A",
+        ByteUtil.toASCII(new byte[] { (byte) 65 }, 2, ByteOrder.BIG_ENDIAN));
   }
 
   @Test

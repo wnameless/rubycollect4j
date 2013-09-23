@@ -44,10 +44,22 @@ public enum Directive {
     this.widthAdjustable = widthAdjustable;
   }
 
+  /**
+   * Returns true if the length of packed String is adjustable, false otherwise.
+   * 
+   * @return true if the length of packed String is adjustable, false otherwise
+   */
   public boolean isWidthAdjustable() {
     return widthAdjustable;
   }
 
+  /**
+   * Packs array of byte into a binary String.
+   * 
+   * @param bytes
+   *          array of byte
+   * @return a binary String represented in hex or ASCII format
+   */
   public String pack(byte[] bytes) {
     switch (this) {
     case c:
@@ -101,18 +113,4 @@ public enum Directive {
         .matches();
   }
 
-  public static void main(String[] args) {
-    System.out.println(l.pack(ByteUtil.toBytesArray(12345)[0]));
-    System.out.println(ByteUtil.toASCII("〹".getBytes(), 3));
-    System.out.println(ByteBuffer.wrap(new byte[] { (byte) 0x00, (byte) 0xb9 })
-        .getShort());
-    System.out.println(new String("〹".getBytes()));
-    System.out.println(new String(new byte[] { (byte) 0xb9, (byte) 0x80,
-        (byte) 0xe3 }));
-    System.out.println(new String(new byte[] { (byte) 0xe3, (byte) 0x80,
-        (byte) 0xb9 }));
-    System.out.println(Integer.toHexString(12345));
-    System.out.println((char) 12345);
-    System.out.println(U.pack(ByteUtil.toBytesArray(12345)[0]));
-  }
 }

@@ -27,6 +27,7 @@ import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -278,39 +279,72 @@ public final class ByteUtil {
    *          used to be converted
    * @param n
    *          length of ASCII String
+   * @param bo
+   *          the ByteOrder
+   * @return an ASCII String
+   */
+  public static String toASCII(byte[] bytes, int n, ByteOrder bo) {
+    RubyArray<String> ra = newRubyArray();
+    Collections.reverse(Arrays.asList(bytes));
+    if (bo == ByteOrder.LITTLE_ENDIAN) {
+      for (int i = 0; i < n; i++) {
+        if (i >= bytes.length) {
+          ra.push("\\x00");
+          continue;
+        }
+        byte b = bytes[i];
+        ra.push(byteToASCII(b));
+      }
+      return ra.join();
+    } else {
+      for (int i = bytes.length - 1; n > 0; i--) {
+        if (i < 0) {
+          ra.unshift("\\x00");
+          n--;
+          continue;
+        }
+        byte b = bytes[i];
+        ra.unshift(byteToASCII(b));
+        n--;
+      }
+      return ra.join();
+    }
+  }
+
+  /**
+   * Converts bytes into an ASCII String.
+   * 
+   * @param bytes
+   *          used to be converted
+   * @param n
+   *          length of ASCII String
    * @return an ASCII String
    */
   public static String toASCII(byte[] bytes, int n) {
-    RubyArray<String> ra = newRubyArray();
-    for (int i = n - 1; i >= 0; i--) {
-      if (i >= bytes.length) {
-        ra.add("\\x00");
-        continue;
-      }
-      byte b = bytes[i];
-      if (b >= 32 && b <= 126)
-        ra.add(new String(new byte[] { b }));
-      else if (b == 7)
-        ra.add("\\a");
-      else if (b == 8)
-        ra.add("\\b");
-      else if (b == 9)
-        ra.add("\\t");
-      else if (b == 10)
-        ra.add("\\n");
-      else if (b == 11)
-        ra.add("\\v");
-      else if (b == 12)
-        ra.add("\\f");
-      else if (b == 13)
-        ra.add("\\r");
-      else if (b == 27)
-        ra.add("\\e");
-      else
-        ra.add("\\x" + String.format("%02X", b));
-    }
-    return ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ? ra.join() : ra
-        .reverse().join();
+    return toASCII(bytes, n, ByteOrder.nativeOrder());
+  }
+
+  private static String byteToASCII(byte b) {
+    if (b >= 32 && b <= 126)
+      return new String(new byte[] { b });
+    else if (b == 7)
+      return "\\a";
+    else if (b == 8)
+      return "\\b";
+    else if (b == 9)
+      return "\\t";
+    else if (b == 10)
+      return "\\n";
+    else if (b == 11)
+      return "\\v";
+    else if (b == 12)
+      return "\\f";
+    else if (b == 13)
+      return "\\r";
+    else if (b == 27)
+      return "\\e";
+    else
+      return "\\x" + String.format("%02X", b);
   }
 
   /**
