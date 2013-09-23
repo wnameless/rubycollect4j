@@ -20,6 +20,14 @@
  */
 package net.sf.rubycollect4j;
 
+import static com.google.common.collect.Lists.newArrayList;
+import static net.sf.rubycollect4j.RubyCollections.ra;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -32,14 +40,6 @@ import net.sf.rubycollect4j.block.BooleanBlock;
 import net.sf.rubycollect4j.block.TransformBlock;
 
 import org.junit.Test;
-
-import static com.google.common.collect.Lists.newArrayList;
-import static net.sf.rubycollect4j.RubyCollections.ra;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 public class RubyArrayTest {
 
@@ -728,6 +728,14 @@ public class RubyArrayTest {
   public void testMultiplyWithString() {
     ra = ra(1, 2, 3);
     assertEquals("1,2,3", ra.multiply(","));
+  }
+
+  @Test
+  public void testPack() {
+    assertEquals("a  b  c  ", ra("a", "b", "c").pack("A3A3A3"));
+    assertEquals("a\\x00\\x00b\\x00\\x00c\\x00\\x00",
+        ra("a", "b", "c").pack("a3a3a3"));
+    assertEquals("ABC", ra(65, 66, 67).pack("ccc"));
   }
 
   @SuppressWarnings("unchecked")

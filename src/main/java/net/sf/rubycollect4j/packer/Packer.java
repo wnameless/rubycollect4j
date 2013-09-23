@@ -24,6 +24,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static net.sf.rubycollect4j.RubyCollections.qr;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 
@@ -39,8 +40,30 @@ public final class Packer {
 
   private Packer() {};
 
-  public static String pack(@SuppressWarnings("rawtypes") List objs,
-      String aTemplateString) {
+  /**
+   * Packs a List into a binary String.
+   * 
+   * @param aTemplateString
+   *          a String made by Directive
+   * @param objs
+   *          an array of Object
+   * @return a binary String
+   */
+  public static String pack(String aTemplateString, Object... objs) {
+    return pack(aTemplateString, Arrays.asList(objs));
+  }
+
+  /**
+   * Packs a List into a binary String.
+   * 
+   * @param aTemplateString
+   *          a String made by Directive
+   * @param objs
+   *          a List of Object
+   * @return a binary String
+   */
+  public static String pack(String aTemplateString,
+      @SuppressWarnings("rawtypes") List objs) {
     checkArgument(Directive.verify(aTemplateString), "Invalid template string.");
     StringBuilder sb = new StringBuilder();
     @SuppressWarnings("unchecked")
@@ -111,10 +134,6 @@ public final class Packer {
       }
 
     });
-  }
-
-  public static void main(String[] args) {
-    System.out.println(pack(ra(2220), "l"));
   }
 
 }

@@ -898,7 +898,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return a binary string
    */
   public String pack(String aTemplateString) {
-    return Packer.pack(this, aTemplateString);
+    return Packer.pack(aTemplateString, this);
   }
 
   /**

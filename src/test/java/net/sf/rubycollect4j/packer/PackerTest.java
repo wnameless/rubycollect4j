@@ -21,14 +21,23 @@
 package net.sf.rubycollect4j.packer;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 public class PackerTest {
 
   @Test(expected = IllegalArgumentException.class)
-  public void testPackWithInvalidSymbol() {
-    Packer.pack(newArrayList(), "c0");
+  public void testPackWithInvalidDirective() {
+    Packer.pack("c0", newArrayList());
+  }
+
+  @Test
+  public void testPack() {
+    assertEquals("a  b  c  ", Packer.pack("A3A3A3", "a", "b", "c"));
+    assertEquals("a\\x00\\x00b\\x00\\x00c\\x00\\x00",
+        Packer.pack("a3a3a3", "a", "b", "c"));
+    assertEquals("ABC", Packer.pack("ccc", 65, 66, 67));
   }
 
 }
