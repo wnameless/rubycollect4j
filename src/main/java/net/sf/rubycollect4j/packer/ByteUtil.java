@@ -35,92 +35,225 @@ import javax.xml.bind.TypeConstraintException;
 
 import net.sf.rubycollect4j.RubyArray;
 
+/**
+ * 
+ * ByteUtil provides functions to convert variety Objects into bytes.
+ * 
+ */
 public final class ByteUtil {
 
   private ByteUtil() {};
 
+  /**
+   * Converts a byte into a byte array.
+   * 
+   * @param b
+   *          a byte
+   * @return a byte array
+   */
   public static byte[] toByteArray(byte b) {
     return new byte[] { b };
   }
 
+  /**
+   * Converts a Byte into a byte array.
+   * 
+   * @param b
+   *          a Byte
+   * @return a byte array
+   */
   public static byte[] toByteArray(Byte b) {
     return new byte[] { b };
   }
 
+  /**
+   * Converts a short into a byte array.
+   * 
+   * @param s
+   *          a short
+   * @return a byte array
+   */
   public static byte[] toByteArray(short s) {
     return ByteBuffer.allocate(2).order(ByteOrder.nativeOrder()).putShort(s)
         .array();
   }
 
+  /**
+   * Converts a Short into a byte array.
+   * 
+   * @param s
+   *          a Short
+   * @return a byte array
+   */
   public static byte[] toByteArray(Short s) {
     return ByteBuffer.allocate(2).order(ByteOrder.nativeOrder()).putShort(s)
         .array();
   }
 
+  /**
+   * Converts a int into a byte array.
+   * 
+   * @param i
+   *          a int
+   * @return a byte array
+   */
   public static byte[] toByteArray(int i) {
     return ByteBuffer.allocate(4).order(ByteOrder.nativeOrder()).putInt(i)
         .array();
   }
 
+  /**
+   * Converts a Integer into a byte array.
+   * 
+   * @param i
+   *          a Integer
+   * @return a byte array
+   */
   public static byte[] toByteArray(Integer i) {
     return ByteBuffer.allocate(4).order(ByteOrder.nativeOrder()).putInt(i)
         .array();
   }
 
+  /**
+   * Converts a long into a byte array.
+   * 
+   * @param l
+   *          a long
+   * @return a byte array
+   */
   public static byte[] toByteArray(long l) {
     return ByteBuffer.allocate(8).order(ByteOrder.nativeOrder()).putLong(l)
         .array();
   }
 
+  /**
+   * Converts a Long into a byte array.
+   * 
+   * @param l
+   *          a Long
+   * @return a byte array
+   */
   public static byte[] toByteArray(Long l) {
     return ByteBuffer.allocate(8).order(ByteOrder.nativeOrder()).putLong(l)
         .array();
   }
 
+  /**
+   * Converts a float into a byte array.
+   * 
+   * @param f
+   *          a float
+   * @return a byte array
+   */
   public static byte[] toByteArray(float f) {
     return ByteBuffer.allocate(4).order(ByteOrder.nativeOrder()).putFloat(f)
         .array();
   }
 
+  /**
+   * Converts a Float into a byte array.
+   * 
+   * @param f
+   *          a Float
+   * @return a byte array
+   */
   public static byte[] toByteArray(Float f) {
     return ByteBuffer.allocate(4).order(ByteOrder.nativeOrder()).putFloat(f)
         .array();
   }
 
+  /**
+   * Converts a double into a byte array.
+   * 
+   * @param d
+   *          a double
+   * @return a byte array
+   */
   public static byte[] toByteArray(double d) {
     return ByteBuffer.allocate(8).order(ByteOrder.nativeOrder()).putDouble(d)
         .array();
   }
 
+  /**
+   * Converts a Double into a byte array.
+   * 
+   * @param d
+   *          a Double
+   * @return a byte array
+   */
   public static byte[] toByteArray(Double d) {
     return ByteBuffer.allocate(8).order(ByteOrder.nativeOrder()).putDouble(d)
         .array();
   }
 
+  /**
+   * Converts a boolean into a byte array.
+   * 
+   * @param b
+   *          a boolean
+   * @return a byte array
+   */
   public static byte[] toByteArray(boolean b) {
     return ByteBuffer.allocate(1).order(ByteOrder.nativeOrder())
         .put(b ? (byte) 0x01 : (byte) 0x00).array();
   }
 
+  /**
+   * Converts a Boolean into a byte array.
+   * 
+   * @param b
+   *          a Boolean
+   * @return a byte array
+   */
   public static byte[] toByteArray(Boolean b) {
     return ByteBuffer.allocate(1).order(ByteOrder.nativeOrder())
         .put(b ? (byte) 0x01 : (byte) 0x00).array();
   }
 
+  /**
+   * Converts a char into a byte array.
+   * 
+   * @param c
+   *          a char
+   * @return a byte array
+   */
   public static byte[] toByteArray(char c) {
     return ByteBuffer.allocate(2).order(ByteOrder.nativeOrder()).putChar(c)
         .array();
   }
 
+  /**
+   * Converts a Character into a byte array.
+   * 
+   * @param c
+   *          a Character
+   * @return a byte array
+   */
   public static byte[] toByteArray(Character c) {
     return ByteBuffer.allocate(2).order(ByteOrder.nativeOrder()).putChar(c)
         .array();
   }
 
+  /**
+   * Converts a String into a byte array.
+   * 
+   * @param s
+   *          a String
+   * @return a byte array
+   */
   public static byte[] toByteArray(String s) {
     return s.getBytes();
   }
 
+  /**
+   * Converts an Object into a byte array.
+   * 
+   * @param o
+   *          an Object
+   * @return a byte array
+   * @throws TypeConstraintException
+   *           if the Object can't be converted into bytes
+   */
   public static byte[] toByteArray(Object o) {
     Class<?> c = o.getClass();
     for (Method m : c.getDeclaredMethods()) {
@@ -138,6 +271,15 @@ public final class ByteUtil {
         + c.getName() + " into byte[]");
   }
 
+  /**
+   * Converts bytes into an ASCII String.
+   * 
+   * @param bytes
+   *          used to be converted
+   * @param n
+   *          length of ASCII String
+   * @return an ASCII String
+   */
   public static String toASCII(byte[] bytes, int n) {
     RubyArray<String> ra = newRubyArray();
     for (int i = n - 1; i >= 0; i--) {
@@ -171,6 +313,13 @@ public final class ByteUtil {
         .reverse().join();
   }
 
+  /**
+   * Converts a List of Object into an array of bytes.
+   * 
+   * @param objs
+   *          a List of Object
+   * @return an array of bytes
+   */
   public static byte[][] toBytesArray(List<Object> objs) {
     RubyArray<Object> objects = ra(objs).compact();
     byte[][] bytes = new byte[objects.size()][];
@@ -201,6 +350,13 @@ public final class ByteUtil {
     return bytes;
   }
 
+  /**
+   * Converts an array of Object into an array of bytes.
+   * 
+   * @param objs
+   *          an array of Object
+   * @return an array of bytes
+   */
   public static byte[][] toBytesArray(Object... objs) {
     return toBytesArray(Arrays.asList(objs));
   }
