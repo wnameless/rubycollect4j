@@ -50,6 +50,8 @@ public final class Packer {
     for (String template : templateList) {
       Directive d = Directive.valueOf(String.valueOf(template.charAt(0)));
       if (template.length() == 1) {
+        checkArgument(i < bytesArray.length, "ArgumentError: too few arguments");
+
         sb.append(d.pack(bytesArray[i]));
         i++;
       } else if (String.valueOf(template.charAt(1)) == "*") {
@@ -78,6 +80,9 @@ public final class Packer {
           }
           i++;
         } else {
+          checkArgument(count <= bytesArray.length - i,
+              "ArgumentError: too few arguments");
+
           while (count > 0) {
             sb.append(d.pack(bytesArray[i]));
             count--;
@@ -109,7 +114,7 @@ public final class Packer {
   }
 
   public static void main(String[] args) {
-    System.out.println(pack(ra("a", "b"), "a3A"));
+    System.out.println(pack(ra(2220), "l"));
   }
 
 }

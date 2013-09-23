@@ -1,7 +1,29 @@
+/**
+ *
+ * @author Wei-Ming Wu
+ *
+ *
+ * Copyright 2013 Wei-Ming Wu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ *
+ */
 package net.sf.rubycollect4j.packer;
 
+import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -25,72 +47,72 @@ public final class ByteUtil {
   }
 
   public static byte[] toByteArray(short s) {
-    return ByteBuffer.allocate(2).order(ByteOrder.LITTLE_ENDIAN).putShort(s)
+    return ByteBuffer.allocate(2).order(ByteOrder.nativeOrder()).putShort(s)
         .array();
   }
 
   public static byte[] toByteArray(Short s) {
-    return ByteBuffer.allocate(2).order(ByteOrder.LITTLE_ENDIAN).putShort(s)
+    return ByteBuffer.allocate(2).order(ByteOrder.nativeOrder()).putShort(s)
         .array();
   }
 
   public static byte[] toByteArray(int i) {
-    return ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putInt(i)
+    return ByteBuffer.allocate(4).order(ByteOrder.nativeOrder()).putInt(i)
         .array();
   }
 
   public static byte[] toByteArray(Integer i) {
-    return ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putInt(i)
+    return ByteBuffer.allocate(4).order(ByteOrder.nativeOrder()).putInt(i)
         .array();
   }
 
   public static byte[] toByteArray(long l) {
-    return ByteBuffer.allocate(8).order(ByteOrder.LITTLE_ENDIAN).putLong(l)
+    return ByteBuffer.allocate(8).order(ByteOrder.nativeOrder()).putLong(l)
         .array();
   }
 
   public static byte[] toByteArray(Long l) {
-    return ByteBuffer.allocate(8).order(ByteOrder.LITTLE_ENDIAN).putLong(l)
+    return ByteBuffer.allocate(8).order(ByteOrder.nativeOrder()).putLong(l)
         .array();
   }
 
   public static byte[] toByteArray(float f) {
-    return ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putFloat(f)
+    return ByteBuffer.allocate(4).order(ByteOrder.nativeOrder()).putFloat(f)
         .array();
   }
 
   public static byte[] toByteArray(Float f) {
-    return ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putFloat(f)
+    return ByteBuffer.allocate(4).order(ByteOrder.nativeOrder()).putFloat(f)
         .array();
   }
 
   public static byte[] toByteArray(double d) {
-    return ByteBuffer.allocate(8).order(ByteOrder.LITTLE_ENDIAN).putDouble(d)
+    return ByteBuffer.allocate(8).order(ByteOrder.nativeOrder()).putDouble(d)
         .array();
   }
 
   public static byte[] toByteArray(Double d) {
-    return ByteBuffer.allocate(8).order(ByteOrder.LITTLE_ENDIAN).putDouble(d)
+    return ByteBuffer.allocate(8).order(ByteOrder.nativeOrder()).putDouble(d)
         .array();
   }
 
   public static byte[] toByteArray(boolean b) {
-    return ByteBuffer.allocate(1).order(ByteOrder.LITTLE_ENDIAN)
+    return ByteBuffer.allocate(1).order(ByteOrder.nativeOrder())
         .putInt(b ? 1 : 0).array();
   }
 
   public static byte[] toByteArray(Boolean b) {
-    return ByteBuffer.allocate(1).order(ByteOrder.LITTLE_ENDIAN)
+    return ByteBuffer.allocate(1).order(ByteOrder.nativeOrder())
         .putInt(b ? 1 : 0).array();
   }
 
   public static byte[] toByteArray(char c) {
-    return ByteBuffer.allocate(2).order(ByteOrder.LITTLE_ENDIAN).putChar(c)
+    return ByteBuffer.allocate(2).order(ByteOrder.nativeOrder()).putChar(c)
         .array();
   }
 
   public static byte[] toByteArray(Character c) {
-    return ByteBuffer.allocate(2).order(ByteOrder.LITTLE_ENDIAN).putChar(c)
+    return ByteBuffer.allocate(2).order(ByteOrder.nativeOrder()).putChar(c)
         .array();
   }
 
@@ -126,35 +148,37 @@ public final class ByteUtil {
   }
 
   public static String toASCII(byte[] bytes, int n) {
-    StringBuilder sb = new StringBuilder();
-    for (int i = 0; i < n; i++) {
+    RubyArray<String> ra = newRubyArray();
+    for (int i = n - 1; i >= 0; i--) {
       if (i >= bytes.length) {
-        sb.append("\\x00");
+        ra.add("\\x00");
         continue;
       }
       byte b = bytes[i];
       if (b >= 32 && b <= 126)
-        sb.append(new String(new byte[] { b }));
+        ra.add(new String(new byte[] { b }));
       else if (b == 7)
-        sb.append("\\a");
+        ra.add("\\a");
       else if (b == 8)
-        sb.append("\\b");
+        ra.add("\\b");
       else if (b == 9)
-        sb.append("\\t");
+        ra.add("\\t");
       else if (b == 10)
-        sb.append("\\n");
+        ra.add("\\n");
       else if (b == 11)
-        sb.append("\\v");
+        ra.add("\\v");
       else if (b == 12)
-        sb.append("\\f");
+        ra.add("\\f");
       else if (b == 13)
-        sb.append("\\r");
+        ra.add("\\r");
       else if (b == 27)
-        sb.append("\\e");
+        ra.add("\\e");
       else
-        sb.append("\\x" + String.format("%02X", b));
+        ra.add("\\x" + String.format("%02X", b));
     }
-    return sb.toString();
+    System.out.println(ByteOrder.nativeOrder());
+    return ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ? ra.join() : ra
+        .reverse().join();
   }
 
   public static byte[][] toBytesArray(List<Object> objs) {
@@ -191,10 +215,9 @@ public final class ByteUtil {
     return toBytesArray(Arrays.asList(objs));
   }
 
-  public static void main(String[] args) {
-    System.out.println(toASCII(
-        ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putInt(15)
-            .array(), 6));
+  public static void main(String[] args) throws UnsupportedEncodingException {
+    System.out.println(new String(ByteBuffer.allocate(4)
+        .order(ByteOrder.BIG_ENDIAN).putInt(123456).array(), "UTF-8"));
   }
 
 }

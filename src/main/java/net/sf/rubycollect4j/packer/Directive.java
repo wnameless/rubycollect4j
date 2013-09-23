@@ -22,6 +22,10 @@ package net.sf.rubycollect4j.packer;
 
 import static net.sf.rubycollect4j.RubyCollections.qr;
 import static net.sf.rubycollect4j.RubyCollections.ra;
+
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+
 import net.sf.rubycollect4j.block.TransformBlock;
 
 /**
@@ -32,7 +36,7 @@ import net.sf.rubycollect4j.block.TransformBlock;
 public enum Directive {
 
   c(false), s(false), l(false), q(false), D(false), d(false), F(false),
-  f(false), A(true), a(true), Z(true);
+  f(false), U(false), A(true), a(true), Z(true);
 
   private final boolean widthAdjustable;
 
@@ -62,6 +66,9 @@ public enum Directive {
       return ByteUtil.toASCII(bytes, 4);
     case f:
       return ByteUtil.toASCII(bytes, 4);
+    case U:
+      return String.valueOf((char) ByteBuffer.wrap(bytes)
+          .order(ByteOrder.nativeOrder()).getShort());
     case A:
       return new String(bytes);
     case a:
@@ -95,7 +102,17 @@ public enum Directive {
   }
 
   public static void main(String[] args) {
-    System.out.println(c.pack(ByteUtil.toBytesArray(66, 67, 127)[0]));
+    System.out.println(l.pack(ByteUtil.toBytesArray(12345)[0]));
+    System.out.println(ByteUtil.toASCII("〹".getBytes(), 3));
+    System.out.println(ByteBuffer.wrap(new byte[] { (byte) 0x00, (byte) 0xb9 })
+        .getShort());
+    System.out.println(new String("〹".getBytes()));
+    System.out.println(new String(new byte[] { (byte) 0xb9, (byte) 0x80,
+        (byte) 0xe3 }));
+    System.out.println(new String(new byte[] { (byte) 0xe3, (byte) 0x80,
+        (byte) 0xb9 }));
+    System.out.println(Integer.toHexString(12345));
+    System.out.println((char) 12345);
+    System.out.println(U.pack(ByteUtil.toBytesArray(12345)[0]));
   }
-
 }
