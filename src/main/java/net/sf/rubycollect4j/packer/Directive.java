@@ -20,13 +20,22 @@
  */
 package net.sf.rubycollect4j.packer;
 
+import static java.nio.ByteOrder.BIG_ENDIAN;
+import static java.nio.ByteOrder.LITTLE_ENDIAN;
+import static net.sf.rubycollect4j.RubyCollections.Hash;
+import static net.sf.rubycollect4j.RubyCollections.hp;
 import static net.sf.rubycollect4j.RubyCollections.qr;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import net.sf.rubycollect4j.block.TransformBlock;
+
+import com.google.common.primitives.Bytes;
 
 /**
  * 
@@ -35,8 +44,20 @@ import net.sf.rubycollect4j.block.TransformBlock;
  */
 public enum Directive {
 
-  c(false), s(false), l(false), q(false), D(false), d(false), F(false),
-  f(false), U(false), A(true), a(true), Z(true);
+  c(false), s(false), sb(false), sl(false), l(false), lb(false), ll(false), q(
+      false), qb(false), ql(false), D(false), d(false), E(false), G(false), F(
+      false), f(false), e(false), g(false), U(false), A(true), a(true), Z(true);
+
+  public static final Map<String, Directive> lookup = Collections
+      .unmodifiableMap(Hash(ra(Directive.values()).map(
+          new TransformBlock<Directive, Entry<String, Directive>>() {
+
+            @Override
+            public Entry<String, Directive> yield(Directive item) {
+              return hp(item.toString(), item);
+            }
+
+          })));
 
   private final boolean widthAdjustable;
 
@@ -66,18 +87,58 @@ public enum Directive {
       return ByteUtil.toASCII(bytes, 1);
     case s:
       return ByteUtil.toASCII(bytes, 2);
+    case sb:
+      if (ByteOrder.nativeOrder() != BIG_ENDIAN)
+        Collections.reverse(Bytes.asList(bytes));
+      return ByteUtil.toASCII(bytes, 2, BIG_ENDIAN);
+    case sl:
+      if (ByteOrder.nativeOrder() != LITTLE_ENDIAN)
+        Collections.reverse(Bytes.asList(bytes));
+      return ByteUtil.toASCII(bytes, 2, LITTLE_ENDIAN);
     case l:
       return ByteUtil.toASCII(bytes, 4);
+    case lb:
+      if (ByteOrder.nativeOrder() != BIG_ENDIAN)
+        Collections.reverse(Bytes.asList(bytes));
+      return ByteUtil.toASCII(bytes, 4, BIG_ENDIAN);
+    case ll:
+      if (ByteOrder.nativeOrder() != LITTLE_ENDIAN)
+        Collections.reverse(Bytes.asList(bytes));
+      return ByteUtil.toASCII(bytes, 4, LITTLE_ENDIAN);
     case q:
       return ByteUtil.toASCII(bytes, 8);
+    case qb:
+      if (ByteOrder.nativeOrder() != BIG_ENDIAN)
+        Collections.reverse(Bytes.asList(bytes));
+      return ByteUtil.toASCII(bytes, 8, BIG_ENDIAN);
+    case ql:
+      if (ByteOrder.nativeOrder() != LITTLE_ENDIAN)
+        Collections.reverse(Bytes.asList(bytes));
+      return ByteUtil.toASCII(bytes, 8, LITTLE_ENDIAN);
     case D:
       return ByteUtil.toASCII(bytes, 8);
     case d:
       return ByteUtil.toASCII(bytes, 8);
+    case E:
+      if (ByteOrder.nativeOrder() != LITTLE_ENDIAN)
+        Collections.reverse(Bytes.asList(bytes));
+      return ByteUtil.toASCII(bytes, 8, LITTLE_ENDIAN);
+    case G:
+      if (ByteOrder.nativeOrder() != BIG_ENDIAN)
+        Collections.reverse(Bytes.asList(bytes));
+      return ByteUtil.toASCII(bytes, 8, BIG_ENDIAN);
     case F:
       return ByteUtil.toASCII(bytes, 4);
     case f:
       return ByteUtil.toASCII(bytes, 4);
+    case e:
+      if (ByteOrder.nativeOrder() != LITTLE_ENDIAN)
+        Collections.reverse(Bytes.asList(bytes));
+      return ByteUtil.toASCII(bytes, 4, LITTLE_ENDIAN);
+    case g:
+      if (ByteOrder.nativeOrder() != BIG_ENDIAN)
+        Collections.reverse(Bytes.asList(bytes));
+      return ByteUtil.toASCII(bytes, 4, BIG_ENDIAN);
     case U:
       return String.valueOf(ByteBuffer.wrap(bytes)
           .order(ByteOrder.nativeOrder()).getChar());
@@ -87,8 +148,96 @@ public enum Directive {
       return new String(bytes);
     case Z:
       return new String(bytes);
+    default:
+      throw new UnsupportedOperationException();
     }
-    return "";
+  }
+
+  /**
+   * Casts an Object to corresponding Byte, Short, Integer or Long if the Object
+   * is a Number, Boolean or Character.
+   * 
+   * @param o
+   *          any Object
+   * @return a cast Object
+   */
+  @SuppressWarnings("incomplete-switch")
+  public Object cast(Object o) {
+    switch (this) {
+    case c:
+      if (o instanceof Number)
+        return ((Number) o).byteValue();
+      if (o instanceof Boolean)
+        return ((Boolean) o) ? (byte) 1 : (byte) 0;
+      if (o instanceof Character)
+        return (byte) ((Character) o).charValue();
+      break;
+    case s:
+      if (o instanceof Number)
+        return ((Number) o).shortValue();
+      if (o instanceof Boolean)
+        return ((Boolean) o) ? (short) 1 : (short) 0;
+      if (o instanceof Character)
+        return (short) ((Character) o).charValue();
+      break;
+    case sb:
+      return s.cast(o);
+    case sl:
+      return s.cast(o);
+    case l:
+      if (o instanceof Number)
+        return ((Number) o).intValue();
+      if (o instanceof Boolean)
+        return ((Boolean) o) ? 1 : 0;
+      if (o instanceof Character)
+        return (int) ((Character) o).charValue();
+      break;
+    case lb:
+      return l.cast(o);
+    case ll:
+      return l.cast(o);
+    case q:
+      if (o instanceof Number)
+        return ((Number) o).longValue();
+      if (o instanceof Boolean)
+        return ((Boolean) o) ? 1L : 0L;
+      if (o instanceof Character)
+        return (long) ((Character) o).charValue();
+      break;
+    case qb:
+      return q.cast(o);
+    case ql:
+      return q.cast(o);
+    case D:
+      if (o instanceof Number)
+        return ((Number) o).doubleValue();
+      if (o instanceof Boolean)
+        return ((Boolean) o) ? 1.0 : 0.0;
+      if (o instanceof Character)
+        return (double) ((Character) o).charValue();
+      break;
+    case d:
+      return D.cast(o);
+    case E:
+      return D.cast(o);
+    case G:
+      return D.cast(o);
+    case F:
+      if (o instanceof Number)
+        return ((Number) o).floatValue();
+      if (o instanceof Boolean)
+        return ((Boolean) o) ? 1.0f : 0.0f;
+      if (o instanceof Character)
+        return (float) ((Character) o).charValue();
+      break;
+    case f:
+      return F.cast(o);
+    case e:
+      return F.cast(o);
+    case g:
+      return F.cast(o);
+    }
+    return o;
   }
 
   /**
@@ -100,7 +249,7 @@ public enum Directive {
    */
   public static boolean verify(String template) {
     return qr(
-        "(["
+        "(("
             + ra(Directive.values()).map(
                 new TransformBlock<Directive, String>() {
 
@@ -109,8 +258,28 @@ public enum Directive {
                     return item.toString();
                   }
 
-                }).join() + "](\\*|[1-9]|[1-9]\\d+)?)+").matcher(template)
+                }).join("|") + ")(([1-9]\\d*)?\\*?)?)+").matcher(template)
         .matches();
+  }
+
+  @Override
+  public String toString() {
+    switch (this) {
+    case sb:
+      return "s>";
+    case sl:
+      return "s<";
+    case lb:
+      return "l>";
+    case ll:
+      return "l<";
+    case qb:
+      return "q>";
+    case ql:
+      return "q<";
+    default:
+      return super.toString();
+    }
   }
 
 }

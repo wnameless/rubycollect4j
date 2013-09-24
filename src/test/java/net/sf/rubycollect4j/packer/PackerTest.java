@@ -32,12 +32,28 @@ public class PackerTest {
     Packer.pack("c0", newArrayList());
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void testPackWithShortArguments1() {
+    Packer.pack("ccc", newArrayList(1, 2));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testPackWithShortArguments2() {
+    Packer.pack("c6", newArrayList(1, 2));
+  }
+
   @Test
   public void testPack() {
     assertEquals("a  b  c  ", Packer.pack("A3A3A3", "a", "b", "c"));
     assertEquals("a\\x00\\x00b\\x00\\x00c\\x00\\x00",
         Packer.pack("a3a3a3", "a", "b", "c"));
     assertEquals("ABC", Packer.pack("ccc", 65, 66, 67));
+    assertEquals("ABC", Packer.pack("c3", 65, 66, 67));
+    assertEquals("\\x00{", Packer.pack("s>", 123));
+    assertEquals("{\\x00", Packer.pack("s<", 123));
+    assertEquals("a", Packer.pack("A*", "a"));
+    assertEquals("a\\x00", Packer.pack("Z*", "a"));
+    assertEquals("a\\x00\\x00", Packer.pack("Z3", "a"));
   }
 
 }

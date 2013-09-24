@@ -41,7 +41,7 @@ public final class Packer {
   private Packer() {};
 
   /**
-   * Packs a List into a binary String.
+   * Packs an array of Object into a binary String.
    * 
    * @param aTemplateString
    *          a String made by Directive
@@ -54,7 +54,7 @@ public final class Packer {
   }
 
   /**
-   * Packs a List into a binary String.
+   * Packs a List of Object into a binary String.
    * 
    * @param aTemplateString
    *          a String made by Directive
@@ -66,20 +66,22 @@ public final class Packer {
       @SuppressWarnings("rawtypes") List objs) {
     checkArgument(Directive.verify(aTemplateString), "Invalid template string.");
     StringBuilder sb = new StringBuilder();
-    @SuppressWarnings("unchecked")
-    byte[][] bytesArray = ByteUtil.toBytesArray(objs);
     List<String> templateList = parseTemplate(aTemplateString);
     int i = 0;
     for (String template : templateList) {
-      Directive d = Directive.valueOf(String.valueOf(template.charAt(0)));
-      if (template.length() == 1) {
-        checkArgument(i < bytesArray.length, "ArgumentError: too few arguments");
+      Directive d = parseDirective(template);
+      template = template.replace(d.toString(), "");
+      if (template.length() == 0) {
+        checkArgument(i < objs.size(), "ArgumentError: too few arguments");
 
-        sb.append(d.pack(bytesArray[i]));
+        sb.append(d.pack(ByteUtil.toByteArray(d.cast(objs.get(i)))));
         i++;
-      } else if (String.valueOf(template.charAt(1)) == "*") {
-        while (i < bytesArray.length) {
-          sb.append(d.pack(bytesArray[i]));
+      } else if (d == Directive.Z && template.charAt(0) == '*') {
+        sb.append(d.pack(ByteUtil.toByteArray(d.cast(objs.get(i)))));
+        sb.append("\\x00");
+      } else if (template.charAt(0) == '*') {
+        while (i < objs.size()) {
+          sb.append(d.pack(ByteUtil.toByteArray(d.cast(objs.get(i)))));
           i++;
         }
       } else {
@@ -87,7 +89,7 @@ public final class Packer {
         matcher.find();
         int count = Integer.valueOf(matcher.group());
         if (d.isWidthAdjustable()) {
-          String str = d.pack(bytesArray[i]);
+          String str = d.pack(ByteUtil.toByteArray(d.cast(objs.get(i))));
           if (str.length() >= count) {
             sb.append(str.substring(0, count + 1));
           } else {
@@ -103,11 +105,11 @@ public final class Packer {
           }
           i++;
         } else {
-          checkArgument(count <= bytesArray.length - i,
+          checkArgument(count <= objs.size() - i,
               "ArgumentError: too few arguments");
 
           while (count > 0) {
-            sb.append(d.pack(bytesArray[i]));
+            sb.append(d.pack(ByteUtil.toByteArray(d.cast(objs.get(i)))));
             count--;
             i++;
           }
@@ -115,6 +117,14 @@ public final class Packer {
       }
     }
     return sb.toString();
+  }
+
+  private static Directive parseDirective(String template) {
+    if (template.length() >= 2) {
+      if (Directive.lookup.get(template.substring(0, 2)) != null)
+        return Directive.lookup.get(template.substring(0, 2));
+    }
+    return Directive.lookup.get(template.substring(0, 1));
   }
 
   private static List<String> parseTemplate(String template) {

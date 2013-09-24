@@ -20,15 +20,12 @@
  */
 package net.sf.rubycollect4j.packer;
 
+import static java.nio.ByteOrder.LITTLE_ENDIAN;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
-import static net.sf.rubycollect4j.RubyCollections.ra;
 
 import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -256,6 +253,23 @@ public final class ByteUtil {
    *           if the Object can't be converted into bytes
    */
   public static byte[] toByteArray(Object o) {
+    if (o instanceof Byte)
+      return toByteArray((Byte) o);
+    if (o instanceof Short)
+      return toByteArray((Short) o);
+    if (o instanceof Integer)
+      return toByteArray((Integer) o);
+    if (o instanceof Long)
+      return toByteArray((Long) o);
+    if (o instanceof Float)
+      return toByteArray((Float) o);
+    if (o instanceof Double)
+      return toByteArray((Double) o);
+    if (o instanceof Boolean)
+      return toByteArray((Boolean) o);
+    if (o instanceof Character)
+      return toByteArray((Character) o);
+
     Class<?> c = o.getClass();
     for (Method m : c.getDeclaredMethods()) {
       if (m.getReturnType() == byte[].class
@@ -285,8 +299,7 @@ public final class ByteUtil {
    */
   public static String toASCII(byte[] bytes, int n, ByteOrder bo) {
     RubyArray<String> ra = newRubyArray();
-    Collections.reverse(Arrays.asList(bytes));
-    if (bo == ByteOrder.LITTLE_ENDIAN) {
+    if (bo == LITTLE_ENDIAN) {
       for (int i = 0; i < n; i++) {
         if (i >= bytes.length) {
           ra.push("\\x00");
@@ -345,54 +358,6 @@ public final class ByteUtil {
       return "\\e";
     else
       return "\\x" + String.format("%02X", b);
-  }
-
-  /**
-   * Converts a List of Object into an array of bytes.
-   * 
-   * @param objs
-   *          a List of Object
-   * @return an array of bytes
-   */
-  public static byte[][] toBytesArray(List<Object> objs) {
-    RubyArray<Object> objects = ra(objs).compact();
-    byte[][] bytes = new byte[objects.size()][];
-    for (int i = 0; i < objects.size(); i++) {
-      Object o = objects.get(i);
-      if (o instanceof Byte) {
-        bytes[i] = ByteUtil.toByteArray((Byte) o);
-      } else if (o instanceof Short) {
-        bytes[i] = ByteUtil.toByteArray((Short) o);
-      } else if (o instanceof Integer) {
-        bytes[i] = ByteUtil.toByteArray((Integer) o);
-      } else if (o instanceof Long) {
-        bytes[i] = ByteUtil.toByteArray((Long) o);
-      } else if (o instanceof Float) {
-        bytes[i] = ByteUtil.toByteArray((Float) o);
-      } else if (o instanceof Double) {
-        bytes[i] = ByteUtil.toByteArray((Double) o);
-      } else if (o instanceof Boolean) {
-        bytes[i] = ByteUtil.toByteArray((Boolean) o);
-      } else if (o instanceof Character) {
-        bytes[i] = ByteUtil.toByteArray((Character) o);
-      } else if (o instanceof String) {
-        bytes[i] = ((String) o).getBytes();
-      } else {
-        bytes[i] = ByteUtil.toByteArray(o);
-      }
-    }
-    return bytes;
-  }
-
-  /**
-   * Converts an array of Object into an array of bytes.
-   * 
-   * @param objs
-   *          an array of Object
-   * @return an array of bytes
-   */
-  public static byte[][] toBytesArray(Object... objs) {
-    return toBytesArray(Arrays.asList(objs));
   }
 
 }

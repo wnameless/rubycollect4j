@@ -24,7 +24,6 @@ import static com.google.common.collect.Lists.newArrayList;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
-import java.math.BigInteger;
 import java.nio.ByteOrder;
 
 import javax.xml.bind.TypeConstraintException;
@@ -112,6 +111,24 @@ public class ByteUtilTest {
   public void testToByteArrayWithObject() {
     assertArrayEquals(new byte[] { (byte) 0x41 },
         ByteUtil.toByteArray((Object) "A"));
+    assertArrayEquals(new byte[] { (byte) 0x00 },
+        ByteUtil.toByteArray((Object) Byte.valueOf((byte) 0)));
+    assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x00 },
+        ByteUtil.toByteArray((Object) Short.valueOf((short) 0)));
+    assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x00, (byte) 0x00,
+        (byte) 0x00 }, ByteUtil.toByteArray((Object) Integer.valueOf((int) 0)));
+    assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x00, (byte) 0x00,
+        (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00 },
+        ByteUtil.toByteArray((Object) Long.valueOf((long) 0)));
+    assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x00, (byte) 0x00,
+        (byte) 0x00 }, ByteUtil.toByteArray((Object) Float.valueOf((float) 0)));
+    assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x00, (byte) 0x00,
+        (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00 },
+        ByteUtil.toByteArray((Object) Double.valueOf((double) 0)));
+    assertArrayEquals(new byte[] { (byte) 0x00 },
+        ByteUtil.toByteArray((Object) Boolean.FALSE));
+    assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x00 },
+        ByteUtil.toByteArray((Object) Character.valueOf((char) 0)));
   }
 
   @Test(expected = TypeConstraintException.class)
@@ -135,32 +152,6 @@ public class ByteUtilTest {
         ByteUtil.toASCII(new byte[] { (byte) 65 }, 2, ByteOrder.LITTLE_ENDIAN));
     assertEquals("\\x00A",
         ByteUtil.toASCII(new byte[] { (byte) 65 }, 2, ByteOrder.BIG_ENDIAN));
-  }
-
-  @Test
-  public void testToBytesArray() {
-    assertArrayEquals(new byte[][] { new byte[] { (byte) 65 } },
-        ByteUtil.toBytesArray(((byte) 65)));
-    assertArrayEquals(new byte[][] { new byte[] { (byte) 0, (byte) 0 } },
-        ByteUtil.toBytesArray(((short) 0)));
-    assertArrayEquals(new byte[][] { new byte[] { (byte) 0, (byte) 0, (byte) 0,
-        (byte) 0 } }, ByteUtil.toBytesArray((0)));
-    assertArrayEquals(new byte[][] { new byte[] { (byte) 0, (byte) 0, (byte) 0,
-        (byte) 0, (byte) 0, (byte) 0, (byte) 0, (byte) 0 } },
-        ByteUtil.toBytesArray((0L)));
-    assertArrayEquals(new byte[][] { new byte[] { (byte) 0, (byte) 0, (byte) 0,
-        (byte) 0 } }, ByteUtil.toBytesArray(((float) 0)));
-    assertArrayEquals(new byte[][] { new byte[] { (byte) 0, (byte) 0, (byte) 0,
-        (byte) 0, (byte) 0, (byte) 0, (byte) 0, (byte) 0 } },
-        ByteUtil.toBytesArray((0.0)));
-    assertArrayEquals(new byte[][] { new byte[] { (byte) 0 } },
-        ByteUtil.toBytesArray((false)));
-    assertArrayEquals(new byte[][] { new byte[] { (byte) 0, (byte) 0 } },
-        ByteUtil.toBytesArray(((char) 0)));
-    assertArrayEquals(new byte[][] { new byte[] { (byte) 65 } },
-        ByteUtil.toBytesArray("A"));
-    assertArrayEquals(new byte[][] { new byte[] { (byte) 0 } },
-        ByteUtil.toBytesArray(BigInteger.valueOf(0)));
   }
 
 }
