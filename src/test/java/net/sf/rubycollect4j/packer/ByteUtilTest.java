@@ -24,6 +24,7 @@ import static com.google.common.collect.Lists.newArrayList;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
+import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 import javax.xml.bind.TypeConstraintException;
@@ -152,6 +153,29 @@ public class ByteUtilTest {
         ByteUtil.toASCII(new byte[] { (byte) 65 }, 2, ByteOrder.LITTLE_ENDIAN));
     assertEquals("\\x00A",
         ByteUtil.toASCII(new byte[] { (byte) 65 }, 2, ByteOrder.BIG_ENDIAN));
+  }
+
+  @Test
+  public void testToUTF() {
+    assertEquals("A", ByteUtil.toUTF(ByteBuffer.allocate(4).putInt(65).array()));
+    assertEquals("\\u0000",
+        ByteUtil.toUTF(ByteBuffer.allocate(4).putInt(0).array()));
+    assertEquals("〹",
+        ByteUtil.toUTF(ByteBuffer.allocate(4).putInt(12345).array()));
+    assertEquals("\\uD903",
+        ByteUtil.toUTF(ByteBuffer.allocate(4).putInt(55555).array()));
+    assertEquals("𐀀",
+        ByteUtil.toUTF(ByteBuffer.allocate(4).putInt(65536).array()));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testToUTFException1() {
+    ByteUtil.toUTF(ByteBuffer.allocate(4).putInt(-1).array());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testToUTFException2() {
+    ByteUtil.toUTF(ByteBuffer.allocate(4).putInt(0X10FFFF + 1).array());
   }
 
 }

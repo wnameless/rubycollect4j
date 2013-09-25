@@ -183,6 +183,12 @@ public class DirectiveTest {
     assertEquals((float) 1, Directive.g.cast(true));
     assertEquals((float) 123, Directive.g.cast((char) 123));
     assertEquals("123", Directive.g.cast("123"));
+
+    assertEquals((int) 123, Directive.U.cast(123));
+    assertEquals((int) 0, Directive.U.cast(false));
+    assertEquals((int) 1, Directive.U.cast(true));
+    assertEquals((int) 123, Directive.U.cast((char) 123));
+    assertEquals("123", Directive.U.cast("123"));
   }
 
 }

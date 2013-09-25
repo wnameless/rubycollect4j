@@ -27,7 +27,6 @@ import static net.sf.rubycollect4j.RubyCollections.hp;
 import static net.sf.rubycollect4j.RubyCollections.qr;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 
-import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Collections;
 import java.util.Map;
@@ -140,8 +139,9 @@ public enum Directive {
         Collections.reverse(Bytes.asList(bytes));
       return ByteUtil.toASCII(bytes, 4, BIG_ENDIAN);
     case U:
-      return String.valueOf(ByteBuffer.wrap(bytes)
-          .order(ByteOrder.nativeOrder()).getChar());
+      if (ByteOrder.nativeOrder() != BIG_ENDIAN)
+        Collections.reverse(Bytes.asList(bytes));
+      return ByteUtil.toUTF(bytes);
     case A:
       return new String(bytes);
     case a:
@@ -208,6 +208,8 @@ public enum Directive {
       return q.cast(o);
     case ql:
       return q.cast(o);
+    case U:
+      return l.cast(o);
     case D:
       if (o instanceof Number)
         return ((Number) o).doubleValue();

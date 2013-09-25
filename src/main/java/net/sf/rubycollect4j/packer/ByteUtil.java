@@ -20,14 +20,17 @@
  */
 package net.sf.rubycollect4j.packer;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static java.nio.ByteOrder.LITTLE_ENDIAN;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
+import static net.sf.rubycollect4j.RubyCollections.qr;
 
 import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 import javax.xml.bind.TypeConstraintException;
 
@@ -306,7 +309,7 @@ public final class ByteUtil {
           continue;
         }
         byte b = bytes[i];
-        ra.push(byteToASCII(b));
+        ra.push(byteToASCII(b, true));
       }
       return ra.join();
     } else {
@@ -317,7 +320,7 @@ public final class ByteUtil {
           continue;
         }
         byte b = bytes[i];
-        ra.unshift(byteToASCII(b));
+        ra.unshift(byteToASCII(b, true));
         n--;
       }
       return ra.join();
@@ -337,7 +340,7 @@ public final class ByteUtil {
     return toASCII(bytes, n, ByteOrder.nativeOrder());
   }
 
-  private static String byteToASCII(byte b) {
+  private static String byteToASCII(byte b, boolean hexPrefix) {
     if (b >= 32 && b <= 126)
       return new String(new byte[] { b });
     else if (b == 7)
@@ -357,7 +360,44 @@ public final class ByteUtil {
     else if (b == 27)
       return "\\e";
     else
-      return "\\x" + String.format("%02X", b);
+      return hexPrefix ? "\\x" + String.format("%02X", b) : String.format(
+          "%02X", b);
+  }
+
+  public static String toUTF(byte[] bytes) {
+    int codePoint = ByteBuffer.wrap(bytes).getInt();
+    checkArgument(codePoint >= 0 && codePoint <= 0X10FFFF,
+        "RangeError: pack(U): value out of range");
+
+    if (codePoint <= 126) {
+      String ascii = byteToASCII((byte) codePoint, false);
+      if (ascii.length() == 2 && !ascii.startsWith("\\"))
+        return "\\u00" + ascii;
+      else
+        return ascii;
+    } else if (codePoint <= 65535) {
+      String utf16 = String.valueOf((char) codePoint);
+      Pattern p = qr("(\\p{C})+");
+      if (p.matcher(utf16).matches()) {
+        ByteBuffer bb = ByteBuffer.allocate(2).putChar((char) codePoint);
+        return "\\u" + String.format("%02X", bb.get(0))
+            + String.format("%02X", bb.get(1));
+      } else {
+        return utf16;
+      }
+    } else {
+      char[] chars = Character.toChars(codePoint);
+      String utf16 = String.valueOf(chars);
+      Pattern p = qr("(\\p{C})+");
+      if (p.matcher(utf16).matches()) {
+        ByteBuffer bb = ByteBuffer.allocate(4).putInt(codePoint);
+        return "\\u{" + String.format("%X", bb.get(1))
+            + String.format("%02X", bb.get(2))
+            + String.format("%02X", bb.get(3)) + "}";
+      } else {
+        return utf16;
+      }
+    }
   }
 
 }
