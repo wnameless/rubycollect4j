@@ -300,7 +300,7 @@ public final class ByteUtil {
    *          the ByteOrder
    * @return an ASCII String
    */
-  public static String toASCII(byte[] bytes, int n, ByteOrder bo) {
+  public static String toASCIIs(byte[] bytes, int n, ByteOrder bo) {
     RubyArray<String> ra = newRubyArray();
     if (bo == LITTLE_ENDIAN) {
       for (int i = 0; i < n; i++) {
@@ -309,7 +309,7 @@ public final class ByteUtil {
           continue;
         }
         byte b = bytes[i];
-        ra.push(byteToASCIIs(b, true));
+        ra.push(byteToASCII(b, true));
       }
       return ra.join();
     } else {
@@ -320,7 +320,7 @@ public final class ByteUtil {
           continue;
         }
         byte b = bytes[i];
-        ra.unshift(byteToASCIIs(b, true));
+        ra.unshift(byteToASCII(b, true));
         n--;
       }
       return ra.join();
@@ -337,10 +337,10 @@ public final class ByteUtil {
    * @return an ASCII String
    */
   public static String toASCIIs(byte[] bytes, int n) {
-    return toASCII(bytes, n, ByteOrder.nativeOrder());
+    return toASCIIs(bytes, n, ByteOrder.nativeOrder());
   }
 
-  private static String byteToASCIIs(byte b, boolean hexPrefix) {
+  private static String byteToASCII(byte b, boolean hexPrefix) {
     if (b >= 32 && b <= 126)
       return new String(new byte[] { b });
     else if (b == 7)
@@ -377,7 +377,7 @@ public final class ByteUtil {
         "RangeError: pack(U): value out of range");
 
     if (codePoint <= 126) {
-      String ascii = byteToASCIIs((byte) codePoint, false);
+      String ascii = byteToASCII((byte) codePoint, false);
       if (ascii.length() == 2 && !ascii.startsWith("\\"))
         return "\\u00" + ascii;
       else

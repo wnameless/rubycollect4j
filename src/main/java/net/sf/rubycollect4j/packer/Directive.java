@@ -89,31 +89,31 @@ public enum Directive {
     case sb:
       if (ByteOrder.nativeOrder() != BIG_ENDIAN)
         Collections.reverse(Bytes.asList(bytes));
-      return ByteUtil.toASCII(bytes, 2, BIG_ENDIAN);
+      return ByteUtil.toASCIIs(bytes, 2, BIG_ENDIAN);
     case sl:
       if (ByteOrder.nativeOrder() != LITTLE_ENDIAN)
         Collections.reverse(Bytes.asList(bytes));
-      return ByteUtil.toASCII(bytes, 2, LITTLE_ENDIAN);
+      return ByteUtil.toASCIIs(bytes, 2, LITTLE_ENDIAN);
     case l:
       return ByteUtil.toASCIIs(bytes, 4);
     case lb:
       if (ByteOrder.nativeOrder() != BIG_ENDIAN)
         Collections.reverse(Bytes.asList(bytes));
-      return ByteUtil.toASCII(bytes, 4, BIG_ENDIAN);
+      return ByteUtil.toASCIIs(bytes, 4, BIG_ENDIAN);
     case ll:
       if (ByteOrder.nativeOrder() != LITTLE_ENDIAN)
         Collections.reverse(Bytes.asList(bytes));
-      return ByteUtil.toASCII(bytes, 4, LITTLE_ENDIAN);
+      return ByteUtil.toASCIIs(bytes, 4, LITTLE_ENDIAN);
     case q:
       return ByteUtil.toASCIIs(bytes, 8);
     case qb:
       if (ByteOrder.nativeOrder() != BIG_ENDIAN)
         Collections.reverse(Bytes.asList(bytes));
-      return ByteUtil.toASCII(bytes, 8, BIG_ENDIAN);
+      return ByteUtil.toASCIIs(bytes, 8, BIG_ENDIAN);
     case ql:
       if (ByteOrder.nativeOrder() != LITTLE_ENDIAN)
         Collections.reverse(Bytes.asList(bytes));
-      return ByteUtil.toASCII(bytes, 8, LITTLE_ENDIAN);
+      return ByteUtil.toASCIIs(bytes, 8, LITTLE_ENDIAN);
     case D:
       return ByteUtil.toASCIIs(bytes, 8);
     case d:
@@ -121,11 +121,11 @@ public enum Directive {
     case E:
       if (ByteOrder.nativeOrder() != LITTLE_ENDIAN)
         Collections.reverse(Bytes.asList(bytes));
-      return ByteUtil.toASCII(bytes, 8, LITTLE_ENDIAN);
+      return ByteUtil.toASCIIs(bytes, 8, LITTLE_ENDIAN);
     case G:
       if (ByteOrder.nativeOrder() != BIG_ENDIAN)
         Collections.reverse(Bytes.asList(bytes));
-      return ByteUtil.toASCII(bytes, 8, BIG_ENDIAN);
+      return ByteUtil.toASCIIs(bytes, 8, BIG_ENDIAN);
     case F:
       return ByteUtil.toASCIIs(bytes, 4);
     case f:
@@ -133,11 +133,11 @@ public enum Directive {
     case e:
       if (ByteOrder.nativeOrder() != LITTLE_ENDIAN)
         Collections.reverse(Bytes.asList(bytes));
-      return ByteUtil.toASCII(bytes, 4, LITTLE_ENDIAN);
+      return ByteUtil.toASCIIs(bytes, 4, LITTLE_ENDIAN);
     case g:
       if (ByteOrder.nativeOrder() != BIG_ENDIAN)
         Collections.reverse(Bytes.asList(bytes));
-      return ByteUtil.toASCII(bytes, 4, BIG_ENDIAN);
+      return ByteUtil.toASCIIs(bytes, 4, BIG_ENDIAN);
     case U:
       if (ByteOrder.nativeOrder() != BIG_ENDIAN)
         Collections.reverse(Bytes.asList(bytes));

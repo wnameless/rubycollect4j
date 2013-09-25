@@ -150,9 +150,9 @@ public class ByteUtilTest {
     assertEquals("\\e", ByteUtil.toASCIIs(new byte[] { (byte) 27 }, 1));
     assertEquals("\\x10", ByteUtil.toASCIIs(new byte[] { (byte) 16 }, 1));
     assertEquals("A\\x00",
-        ByteUtil.toASCII(new byte[] { (byte) 65 }, 2, ByteOrder.LITTLE_ENDIAN));
+        ByteUtil.toASCIIs(new byte[] { (byte) 65 }, 2, ByteOrder.LITTLE_ENDIAN));
     assertEquals("\\x00A",
-        ByteUtil.toASCII(new byte[] { (byte) 65 }, 2, ByteOrder.BIG_ENDIAN));
+        ByteUtil.toASCIIs(new byte[] { (byte) 65 }, 2, ByteOrder.BIG_ENDIAN));
   }
 
   @Test
