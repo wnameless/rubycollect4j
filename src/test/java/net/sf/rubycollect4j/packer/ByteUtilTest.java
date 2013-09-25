@@ -138,17 +138,17 @@ public class ByteUtilTest {
   }
 
   @Test
-  public void testToASCII() {
-    assertEquals("A", ByteUtil.toASCII(new byte[] { (byte) 65 }, 1));
-    assertEquals("\\a", ByteUtil.toASCII(new byte[] { (byte) 7 }, 1));
-    assertEquals("\\b", ByteUtil.toASCII(new byte[] { (byte) 8 }, 1));
-    assertEquals("\\t", ByteUtil.toASCII(new byte[] { (byte) 9 }, 1));
-    assertEquals("\\n", ByteUtil.toASCII(new byte[] { (byte) 10 }, 1));
-    assertEquals("\\v", ByteUtil.toASCII(new byte[] { (byte) 11 }, 1));
-    assertEquals("\\f", ByteUtil.toASCII(new byte[] { (byte) 12 }, 1));
-    assertEquals("\\r", ByteUtil.toASCII(new byte[] { (byte) 13 }, 1));
-    assertEquals("\\e", ByteUtil.toASCII(new byte[] { (byte) 27 }, 1));
-    assertEquals("\\x10", ByteUtil.toASCII(new byte[] { (byte) 16 }, 1));
+  public void testToASCIIs() {
+    assertEquals("A", ByteUtil.toASCIIs(new byte[] { (byte) 65 }, 1));
+    assertEquals("\\a", ByteUtil.toASCIIs(new byte[] { (byte) 7 }, 1));
+    assertEquals("\\b", ByteUtil.toASCIIs(new byte[] { (byte) 8 }, 1));
+    assertEquals("\\t", ByteUtil.toASCIIs(new byte[] { (byte) 9 }, 1));
+    assertEquals("\\n", ByteUtil.toASCIIs(new byte[] { (byte) 10 }, 1));
+    assertEquals("\\v", ByteUtil.toASCIIs(new byte[] { (byte) 11 }, 1));
+    assertEquals("\\f", ByteUtil.toASCIIs(new byte[] { (byte) 12 }, 1));
+    assertEquals("\\r", ByteUtil.toASCIIs(new byte[] { (byte) 13 }, 1));
+    assertEquals("\\e", ByteUtil.toASCIIs(new byte[] { (byte) 27 }, 1));
+    assertEquals("\\x10", ByteUtil.toASCIIs(new byte[] { (byte) 16 }, 1));
     assertEquals("A\\x00",
         ByteUtil.toASCII(new byte[] { (byte) 65 }, 2, ByteOrder.LITTLE_ENDIAN));
     assertEquals("\\x00A",

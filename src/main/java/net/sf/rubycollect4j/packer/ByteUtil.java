@@ -309,7 +309,7 @@ public final class ByteUtil {
           continue;
         }
         byte b = bytes[i];
-        ra.push(byteToASCII(b, true));
+        ra.push(byteToASCIIs(b, true));
       }
       return ra.join();
     } else {
@@ -320,7 +320,7 @@ public final class ByteUtil {
           continue;
         }
         byte b = bytes[i];
-        ra.unshift(byteToASCII(b, true));
+        ra.unshift(byteToASCIIs(b, true));
         n--;
       }
       return ra.join();
@@ -336,11 +336,11 @@ public final class ByteUtil {
    *          length of ASCII String
    * @return an ASCII String
    */
-  public static String toASCII(byte[] bytes, int n) {
+  public static String toASCIIs(byte[] bytes, int n) {
     return toASCII(bytes, n, ByteOrder.nativeOrder());
   }
 
-  private static String byteToASCII(byte b, boolean hexPrefix) {
+  private static String byteToASCIIs(byte b, boolean hexPrefix) {
     if (b >= 32 && b <= 126)
       return new String(new byte[] { b });
     else if (b == 7)
@@ -364,13 +364,20 @@ public final class ByteUtil {
           "%02X", b);
   }
 
+  /**
+   * Converts bytes into an UTF String.
+   * 
+   * @param bytes
+   *          used to be converted
+   * @return an UTF String
+   */
   public static String toUTF(byte[] bytes) {
     int codePoint = ByteBuffer.wrap(bytes).getInt();
     checkArgument(codePoint >= 0 && codePoint <= 0X10FFFF,
         "RangeError: pack(U): value out of range");
 
     if (codePoint <= 126) {
-      String ascii = byteToASCII((byte) codePoint, false);
+      String ascii = byteToASCIIs((byte) codePoint, false);
       if (ascii.length() == 2 && !ascii.startsWith("\\"))
         return "\\u00" + ascii;
       else

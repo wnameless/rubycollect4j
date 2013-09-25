@@ -83,9 +83,9 @@ public enum Directive {
   public String pack(byte[] bytes) {
     switch (this) {
     case c:
-      return ByteUtil.toASCII(bytes, 1);
+      return ByteUtil.toASCIIs(bytes, 1);
     case s:
-      return ByteUtil.toASCII(bytes, 2);
+      return ByteUtil.toASCIIs(bytes, 2);
     case sb:
       if (ByteOrder.nativeOrder() != BIG_ENDIAN)
         Collections.reverse(Bytes.asList(bytes));
@@ -95,7 +95,7 @@ public enum Directive {
         Collections.reverse(Bytes.asList(bytes));
       return ByteUtil.toASCII(bytes, 2, LITTLE_ENDIAN);
     case l:
-      return ByteUtil.toASCII(bytes, 4);
+      return ByteUtil.toASCIIs(bytes, 4);
     case lb:
       if (ByteOrder.nativeOrder() != BIG_ENDIAN)
         Collections.reverse(Bytes.asList(bytes));
@@ -105,7 +105,7 @@ public enum Directive {
         Collections.reverse(Bytes.asList(bytes));
       return ByteUtil.toASCII(bytes, 4, LITTLE_ENDIAN);
     case q:
-      return ByteUtil.toASCII(bytes, 8);
+      return ByteUtil.toASCIIs(bytes, 8);
     case qb:
       if (ByteOrder.nativeOrder() != BIG_ENDIAN)
         Collections.reverse(Bytes.asList(bytes));
@@ -115,9 +115,9 @@ public enum Directive {
         Collections.reverse(Bytes.asList(bytes));
       return ByteUtil.toASCII(bytes, 8, LITTLE_ENDIAN);
     case D:
-      return ByteUtil.toASCII(bytes, 8);
+      return ByteUtil.toASCIIs(bytes, 8);
     case d:
-      return ByteUtil.toASCII(bytes, 8);
+      return ByteUtil.toASCIIs(bytes, 8);
     case E:
       if (ByteOrder.nativeOrder() != LITTLE_ENDIAN)
         Collections.reverse(Bytes.asList(bytes));
@@ -127,9 +127,9 @@ public enum Directive {
         Collections.reverse(Bytes.asList(bytes));
       return ByteUtil.toASCII(bytes, 8, BIG_ENDIAN);
     case F:
-      return ByteUtil.toASCII(bytes, 4);
+      return ByteUtil.toASCIIs(bytes, 4);
     case f:
-      return ByteUtil.toASCII(bytes, 4);
+      return ByteUtil.toASCIIs(bytes, 4);
     case e:
       if (ByteOrder.nativeOrder() != LITTLE_ENDIAN)
         Collections.reverse(Bytes.asList(bytes));
