@@ -20,6 +20,8 @@
  */
 package net.sf.rubycollect4j;
 
+import static net.sf.rubycollect4j.RubyIO.Mode.R;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -31,8 +33,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.common.base.Objects;
-
-import static net.sf.rubycollect4j.RubyIO.Mode.R;
 
 /**
  * 
@@ -330,6 +330,8 @@ public final class RubyFile extends RubyIO {
   /**
    * Checks if the file gets 0 length.
    * 
+   * @param path
+   *          of a file
    * @return true if file existed and gets 0 in length, otherwise false
    */
   public static boolean zeroʔ(String path) {

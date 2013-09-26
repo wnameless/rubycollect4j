@@ -20,6 +20,9 @@
  */
 package net.sf.rubycollect4j;
 
+import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Maps.newLinkedHashMap;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -42,9 +45,6 @@ import net.sf.rubycollect4j.succ.LongSuccessor;
 import net.sf.rubycollect4j.succ.StringSuccessor;
 
 import com.google.common.base.Strings;
-
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Maps.newLinkedHashMap;
 
 /**
  * 
@@ -195,6 +195,8 @@ public final class RubyCollections {
   /**
    * Creates a RubyEnumerator by given Iterable.
    * 
+   * @param <E>
+   *          the type of the elements
    * @param iter
    *          an Iterable
    * @return a new RubyEnumerator
@@ -206,6 +208,8 @@ public final class RubyCollections {
   /**
    * Creates a RubyEnumerator by given Iterator.
    * 
+   * @param <E>
+   *          the type of the elements
    * @param iter
    *          an Iterator
    * @return a new RubyEnumerator

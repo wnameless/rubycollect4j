@@ -43,6 +43,7 @@ public final class RubyKernel {
    * Equivalent to System.out.println().
    * 
    * @param x
+   *          any Object
    */
   public static void p(Object x) {
     out.println(x);
@@ -52,6 +53,7 @@ public final class RubyKernel {
    * Equivalent to System.out.println().
    * 
    * @param x
+   *          any String
    */
   public static void p(String x) {
     out.println(x);
@@ -61,6 +63,7 @@ public final class RubyKernel {
    * Equivalent to System.out.println().
    * 
    * @param x
+   *          any boolean
    */
   public static void p(boolean x) {
     out.println(x);
@@ -70,6 +73,7 @@ public final class RubyKernel {
    * Equivalent to System.out.println().
    * 
    * @param x
+   *          any char
    */
   public static void p(char x) {
     out.println(x);
@@ -79,6 +83,7 @@ public final class RubyKernel {
    * Equivalent to System.out.println().
    * 
    * @param x
+   *          any char[]
    */
   public static void p(char[] x) {
     out.println(x);
@@ -88,6 +93,7 @@ public final class RubyKernel {
    * Equivalent to System.out.println().
    * 
    * @param x
+   *          any double
    */
   public static void p(double x) {
     out.println(x);
@@ -97,6 +103,7 @@ public final class RubyKernel {
    * Equivalent to System.out.println().
    * 
    * @param x
+   *          any float
    */
   public static void p(float x) {
     out.println(x);
@@ -106,6 +113,7 @@ public final class RubyKernel {
    * Equivalent to System.out.println().
    * 
    * @param x
+   *          any int
    */
   public static void p(int x) {
     out.println(x);
@@ -115,6 +123,7 @@ public final class RubyKernel {
    * Equivalent to System.out.println().
    * 
    * @param x
+   *          any long
    */
   public static void p(long x) {
     out.println(x);

@@ -20,6 +20,12 @@
  */
 package net.sf.rubycollect4j;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+import static net.sf.rubycollect4j.RubyCollections.Hash;
+import static net.sf.rubycollect4j.RubyCollections.hp;
+import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
+import static net.sf.rubycollect4j.RubyCollections.ra;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -33,12 +39,6 @@ import net.sf.rubycollect4j.block.TransformBlock;
 import net.sf.rubycollect4j.iter.EachLineIterable;
 
 import com.google.common.base.Objects;
-
-import static com.google.common.base.Preconditions.checkNotNull;
-import static net.sf.rubycollect4j.RubyCollections.Hash;
-import static net.sf.rubycollect4j.RubyCollections.hp;
-import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
-import static net.sf.rubycollect4j.RubyCollections.ra;
 
 /**
  * 
@@ -184,6 +184,8 @@ public class RubyIO {
    * 
    * @param path
    *          of a File
+   * @param block
+   *          to process each line
    */
   public static void foreach(String path, Block<String> block) {
     RubyIO io = null;

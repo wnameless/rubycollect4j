@@ -38,14 +38,120 @@ import com.google.common.primitives.Bytes;
 
 /**
  * 
- * Directive defines available symbols for RubyArray#pack.
+ * Directive defines available directives for RubyArray#pack.
  * 
  */
 public enum Directive {
 
-  c(false), s(false), sb(false), sl(false), l(false), lb(false), ll(false), q(
-      false), qb(false), ql(false), D(false), d(false), E(false), G(false), F(
-      false), f(false), e(false), g(false), U(false), A(true), a(true), Z(true);
+  /**
+   * 8-bit char.
+   */
+  c(false),
+
+  /**
+   * 16-bit short, native endian.
+   */
+  s(false),
+
+  /**
+   * 16-bit short, big-endian.
+   */
+  sb(false),
+
+  /**
+   * 16-bit short, little-endian.
+   */
+  sl(false),
+
+  /**
+   * 32-bit int, native endian.
+   */
+  l(false),
+
+  /**
+   * 32-bit int, big-endian.
+   */
+  lb(false),
+
+  /**
+   * 32-bit int, little-endian.
+   */
+  ll(false),
+
+  /**
+   * 64-bit long, native endian.
+   */
+  q(false),
+
+  /**
+   * 64-bit long, big-endian.
+   */
+  qb(false),
+
+  /**
+   * 64-bit long, little-endian.
+   */
+  ql(false),
+
+  /**
+   * 64-bit double, native endian.
+   */
+  D(false),
+
+  /**
+   * 64-bit double, native endian.
+   */
+  d(false),
+
+  /**
+   * 64-bit double, little-endian.
+   */
+  E(false),
+
+  /**
+   * 64-bit double, big-endian.
+   */
+  G(false),
+
+  /**
+   * 32-bit float, native endian.
+   */
+  F(false),
+
+  /**
+   * 32-bit float, native endian.
+   */
+  f(false),
+
+  /**
+   * 32-bit float, little-endian.
+   */
+  e(false),
+
+  /**
+   * 32-bit float, big-endian.
+   */
+  g(false),
+
+  /**
+   * UTF-16 character.
+   */
+  U(false),
+
+  /**
+   * String, space padded with a count.
+   */
+  A(true),
+
+  /**
+   * String, null padded with a count.
+   */
+  a(true),
+
+  /**
+   * String, null padded with a count and null is added with *.
+   */
+  Z(true);
 
   public static final Map<String, Directive> lookup = Collections
       .unmodifiableMap(Hash(ra(Directive.values()).map(

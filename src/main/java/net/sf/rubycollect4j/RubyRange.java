@@ -20,15 +20,14 @@
  */
 package net.sf.rubycollect4j;
 
+import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
+import static net.sf.rubycollect4j.RubyCollections.ra;
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.iter.RangeIterable;
 import net.sf.rubycollect4j.iter.StepIterable;
 import net.sf.rubycollect4j.succ.Successive;
 
 import com.google.common.base.Objects;
-
-import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
-import static net.sf.rubycollect4j.RubyCollections.ra;
 
 /**
  * 
@@ -166,6 +165,8 @@ public final class RubyRange<E> extends RubyEnumerable<E> {
   /**
    * Returns the last n elements of this RubyRange.
    * 
+   * @param n
+   *          number of elements
    * @return a RubyArray
    */
   public RubyArray<E> last(int n) {

@@ -48,6 +48,7 @@ import net.sf.rubycollect4j.iter.PermutationIterable;
 import net.sf.rubycollect4j.iter.ProductIterable;
 import net.sf.rubycollect4j.iter.RepeatedCombinationIterable;
 import net.sf.rubycollect4j.iter.RepeatedPermutationIterable;
+import net.sf.rubycollect4j.packer.Directive;
 import net.sf.rubycollect4j.packer.Packer;
 
 import com.google.common.collect.ArrayListMultimap;
@@ -74,9 +75,6 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
 
   /**
    * Creates a RubyArray.
-   * 
-   * @param list
-   *          any List
    */
   public RubyArray() {
     list = newArrayList();
@@ -893,9 +891,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * Packs the contents of this RubyArray into a binary string according to the
    * directives in aTemplateString.
    * 
-   * @param template
+   * @param aTemplateString
    *          a template string
    * @return a binary string
+   * @see Directive
    */
   public String pack(String aTemplateString) {
     return Packer.pack(aTemplateString, this);

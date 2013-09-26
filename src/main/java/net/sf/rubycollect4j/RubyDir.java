@@ -20,6 +20,10 @@
  */
 package net.sf.rubycollect4j;
 
+import static com.google.common.collect.Lists.newArrayList;
+import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
+import static net.sf.rubycollect4j.RubyCollections.ra;
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
@@ -29,10 +33,6 @@ import net.sf.rubycollect4j.block.BooleanBlock;
 import net.sf.rubycollect4j.block.TransformBlock;
 
 import com.google.common.base.Objects;
-
-import static com.google.common.collect.Lists.newArrayList;
-import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
-import static net.sf.rubycollect4j.RubyCollections.ra;
 
 /**
  * 
@@ -99,6 +99,7 @@ public final class RubyDir extends RubyEnumerable<String> {
   public static RubyArray<String> entries(String path) {
     File file = new File(path);
     return ra(file.listFiles()).map(new TransformBlock<File, String>() {
+
       @Override
       public String yield(File item) {
         return item.getName();
@@ -162,6 +163,7 @@ public final class RubyDir extends RubyEnumerable<String> {
 
     String rootPath =
         ra(pattern.split("/")).takeWhile(new BooleanBlock<String>() {
+
           @Override
           public boolean yield(String item) {
             return !item.contains("*");
@@ -316,6 +318,7 @@ public final class RubyDir extends RubyEnumerable<String> {
    * Sets the current position of entries.
    * 
    * @param position
+   *          the current index of entries to be set
    * @return the current position of entries
    */
   public int pos(int position) {

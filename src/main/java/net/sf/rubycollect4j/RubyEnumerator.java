@@ -20,6 +20,9 @@
  */
 package net.sf.rubycollect4j;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.collect.Lists.newArrayList;
+
 import java.util.Iterator;
 
 import net.sf.rubycollect4j.block.Block;
@@ -27,9 +30,6 @@ import net.sf.rubycollect4j.block.Block;
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.PeekingIterator;
-
-import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.collect.Lists.newArrayList;
 
 /**
  * 
@@ -69,7 +69,7 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
    * Creates a RubyEnumerator by given Iterator. This Iterator will be converted
    * into an Iterable. In other words, a copy will be made.
    * 
-   * @param iterater
+   * @param iterator
    *          an Iterator
    * @throws NullPointerException
    *           if iterator is null

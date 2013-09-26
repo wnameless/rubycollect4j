@@ -20,6 +20,13 @@
  */
 package net.sf.rubycollect4j;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.collect.Maps.newLinkedHashMap;
+import static net.sf.rubycollect4j.RubyCollections.newPair;
+import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
+import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
+import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
+
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -36,13 +43,6 @@ import net.sf.rubycollect4j.block.EntryMergeBlock;
 import net.sf.rubycollect4j.block.EntryTransformBlock;
 import net.sf.rubycollect4j.block.TransformBlock;
 import net.sf.rubycollect4j.util.LinkedIdentityMap;
-
-import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.collect.Maps.newLinkedHashMap;
-import static net.sf.rubycollect4j.RubyCollections.newPair;
-import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
-import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
-import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
 
 /**
  * RubyHash implements all methods refer to the Hash class of Ruby. RubyHash is
@@ -703,6 +703,8 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   /**
    * Checks if any not-null object included.
    * 
+   * @param block
+   *          to check elements
    * @return true if not-null object is found, false otherwise
    */
   public boolean anyʔ(final EntryBooleanBlock<K, V> block) {
@@ -801,6 +803,9 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   /**
    * Generates a sequence from start element to end element and so on
    * infinitely.
+   * 
+   * @param block
+   *          to yield each element
    */
   public void cycle(final EntryBlock<K, V> block) {
     cycle(new Block<Entry<K, V>>() {
