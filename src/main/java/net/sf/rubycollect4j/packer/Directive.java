@@ -54,12 +54,13 @@ public enum Directive {
   s(false),
 
   /**
-   * 16-bit short, big-endian.
+   * 16-bit short, big-endian. It should be used as s&gt; in a template string.
    */
   sb(false),
 
   /**
-   * 16-bit short, little-endian.
+   * 16-bit short, little-endian. It should be used as s&lt; in a template
+   * string.
    */
   sl(false),
 
@@ -69,12 +70,12 @@ public enum Directive {
   l(false),
 
   /**
-   * 32-bit int, big-endian.
+   * 32-bit int, big-endian. It should be used as l&gt; in a template string.
    */
   lb(false),
 
   /**
-   * 32-bit int, little-endian.
+   * 32-bit int, little-endian. It should be used as l&lt; in a template string.
    */
   ll(false),
 
@@ -84,12 +85,13 @@ public enum Directive {
   q(false),
 
   /**
-   * 64-bit long, big-endian.
+   * 64-bit long, big-endian. It should be used as q&gt; in a template string.
    */
   qb(false),
 
   /**
-   * 64-bit long, little-endian.
+   * 64-bit long, little-endian. It should be used as q&lt; in a template
+   * string.
    */
   ql(false),
 
