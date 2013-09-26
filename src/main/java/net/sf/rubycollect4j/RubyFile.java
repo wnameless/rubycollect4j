@@ -20,6 +20,7 @@
  */
 package net.sf.rubycollect4j;
 
+import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyIO.Mode.R;
 
 import java.io.File;
@@ -267,6 +268,23 @@ public final class RubyFile extends RubyIO {
    */
   public static boolean fileʔ(String path) {
     return new File(path).isFile();
+  }
+
+  /**
+   * Returns a joined path by given files.
+   * 
+   * @param files
+   *          name of files
+   * @return a joined path
+   */
+  public static String join(String... files) {
+    RubyArray<String> ra = ra(files);
+    for (int i = 1; i < ra.size(); i++) {
+      ra.set(i - 1, ra.get(i - 1).replaceAll("\\" + File.separator + "+$", ""));
+      ra.set(i,
+          ra.get(i).replaceAll("^\\" + File.separator + "+", File.separator));
+    }
+    return ra.join();
   }
 
   /**

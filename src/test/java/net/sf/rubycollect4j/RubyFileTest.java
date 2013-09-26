@@ -1,15 +1,15 @@
 package net.sf.rubycollect4j;
 
-import java.io.File;
-import java.util.Date;
-
-import org.junit.Test;
-
 import static net.sf.rubycollect4j.RubyCollections.qx;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+
+import java.io.File;
+import java.util.Date;
+
+import org.junit.Test;
 
 public class RubyFileTest {
 
@@ -137,6 +137,16 @@ public class RubyFileTest {
   public void testFileʔ() {
     assertTrue(RubyFile.fileʔ(BASE_DIR + "ruby_file_exist_test.txt"));
     assertFalse(RubyFile.fileʔ(BASE_DIR));
+  }
+
+  @Test
+  public void testJoin() {
+    assertEquals("", RubyFile.join());
+    assertEquals(
+        File.separator + "ab" + File.separator + "c" + File.separator + "def"
+            + File.separator,
+        RubyFile.join(File.separator + "ab" + File.separator + "c"
+            + File.separator, File.separator + "def" + File.separator));
   }
 
   @Test
