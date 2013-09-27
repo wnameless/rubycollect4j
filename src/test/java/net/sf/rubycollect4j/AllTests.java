@@ -32,6 +32,7 @@ import net.sf.rubycollect4j.succ.LongSuccessorTest;
 import net.sf.rubycollect4j.succ.StringSuccessorTest;
 import net.sf.rubycollect4j.util.LinkedIdentityMapTest;
 import net.sf.rubycollect4j.util.ListSetTest;
+import net.sf.rubycollect4j.util.PeekingIteratorTest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -46,5 +47,6 @@ import org.junit.runners.Suite.SuiteClasses;
     IntegerSuccessorTest.class, LongSuccessorTest.class,
     StringSuccessorTest.class, LinkedIdentityMapTest.class, ListSetTest.class,
     OrderedEntrySetIterableTest.class, OrderedEntrySetIteratorTest.class,
-    ByteUtilTest.class, DirectiveTest.class, PackerTest.class })
+    ByteUtilTest.class, DirectiveTest.class, PackerTest.class,
+    PeekingIteratorTest.class })
 public class AllTests {}
