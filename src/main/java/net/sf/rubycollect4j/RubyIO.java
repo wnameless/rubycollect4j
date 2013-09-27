@@ -110,12 +110,12 @@ public class RubyIO {
                 }
 
               }));
-      if (modeHash.keyʔ(mode)) {
+
+      if (modeHash.keyʔ(mode))
         return modeHash.get(mode);
-      } else {
+      else
         throw new NoSuchElementException("ArgumentError: invalid access mode "
             + mode);
-      }
     }
 
     @Override

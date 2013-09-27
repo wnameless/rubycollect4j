@@ -57,9 +57,7 @@ public final class ChunkIterable<E, K> implements
    *           if block is null
    */
   public ChunkIterable(Iterable<E> iterable, TransformBlock<E, K> block) {
-    if (iterable == null)
-      throw new NullPointerException();
-    if (block == null)
+    if (iterable == null || block == null)
       throw new NullPointerException();
 
     this.iterable = iterable;

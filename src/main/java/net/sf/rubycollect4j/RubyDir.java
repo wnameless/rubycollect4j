@@ -102,6 +102,7 @@ public final class RubyDir extends RubyEnumerable<String> {
       public String yield(File item) {
         return item.getName();
       }
+
     }).unshift("..").unshift(".");
   }
 
@@ -152,9 +153,9 @@ public final class RubyDir extends RubyEnumerable<String> {
    * @return a RubyArray
    */
   public static RubyArray<String> glob(String pattern) {
-    if (pattern.isEmpty()) {
+    if (pattern.isEmpty())
       return ra();
-    }
+
     pattern = convertWindowsPathToLinuxPath(pattern);
     boolean recursive = pattern.contains("/**/") || pattern.startsWith("**/");
     boolean emptyRoot = false;
@@ -166,6 +167,7 @@ public final class RubyDir extends RubyEnumerable<String> {
           public boolean yield(String item) {
             return !item.contains("*");
           }
+
         }).join("/");
 
     if (rootPath.isEmpty()) {
@@ -187,9 +189,9 @@ public final class RubyDir extends RubyEnumerable<String> {
       String path = convertWindowsPathToLinuxPath(f.getPath());
       String fPath = f.isDirectory() ? f.getPath() + "/" : f.getPath();
       fPath = convertWindowsPathToLinuxPath(fPath);
-      if (path.matches("(\\.[^/]+.*|.*/\\.[^/]+.*)")) {
+      if (path.matches("(\\.[^/]+.*|.*/\\.[^/]+.*)"))
         continue;
-      }
+
       if (emptyRoot) {
         path = path.replace("./", "");
         fPath = fPath.replace("./", "");
@@ -209,20 +211,18 @@ public final class RubyDir extends RubyEnumerable<String> {
 
   private static String normalizePath(String path) {
     String os = System.getProperty("os.name");
-    if (os.startsWith("Windows")) {
+    if (os.startsWith("Windows"))
       return path.replaceAll("/", "\\\\");
-    } else {
+    else
       return path;
-    }
   }
 
   private static String convertWindowsPathToLinuxPath(String path) {
     String os = System.getProperty("os.name");
-    if (os.startsWith("Windows")) {
+    if (os.startsWith("Windows"))
       return path.replaceAll("\\\\", "/");
-    } else {
+    else
       return path;
-    }
   }
 
   private static List<File> traverseFolder(File file, boolean recursive) {

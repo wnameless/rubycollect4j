@@ -124,11 +124,10 @@ public final class RubyCollections {
    */
   public static <E> RubyArray<E> newRubyArray(List<E> list,
       boolean defensiveCopy) {
-    if (defensiveCopy) {
+    if (defensiveCopy)
       return newRubyArray(new ArrayList<E>(list));
-    } else {
+    else
       return newRubyArray(list);
-    }
   }
 
   /**

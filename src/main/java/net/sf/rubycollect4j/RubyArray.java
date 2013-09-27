@@ -105,9 +105,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
       if (item instanceof List) {
         @SuppressWarnings("unchecked")
         List<S> itemList = (List<S>) item;
-        if (itemList.size() > 0 && itemList.get(0).equals(target)) {
+        if (itemList.size() > 0 && itemList.get(0).equals(target))
           return newRubyArray(itemList, true);
-        }
       }
     }
     return null;
@@ -229,9 +228,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   public RubyArray<E> compact() {
     RubyArray<E> rubyArray = newRubyArray();
     for (E item : list) {
-      if (item != null) {
+      if (item != null)
         rubyArray.add(item);
-      }
     }
     return rubyArray;
   }
@@ -277,9 +275,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   public int count(E target) {
     int count = 0;
     for (E item : list) {
-      if (item.equals(target)) {
+      if (item.equals(target))
         count++;
-      }
     }
     return count;
   }
@@ -368,9 +365,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     ListIterator<E> li = listIterator();
     while (li.hasNext()) {
       E item = li.next();
-      if (block.yield(item)) {
+      if (block.yield(item))
         li.remove();
-      }
     }
     return this;
   }
@@ -444,10 +440,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    *           if index is not found
    */
   public E fetch(int index) {
-    if (index >= size() || index < -size()) {
+    if (index >= size() || index < -size())
       throw new IndexOutOfBoundsException("index " + index
           + " outside of array bounds: " + -size() + "..." + size());
-    }
+
     return at(index);
   }
 
@@ -461,9 +457,9 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return an element
    */
   public E fetch(int index, E defaultValue) {
-    if (index >= size() || index < -size()) {
+    if (index >= size() || index < -size())
       return defaultValue;
-    }
+
     return at(index);
   }
 
@@ -508,12 +504,12 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return this RubyArray
    */
   public RubyArray<E> fill(E item, int start) {
-    if (start <= -size()) {
+    if (start <= -size())
       return fill(item);
-    }
-    if (start < 0) {
+
+    if (start < 0)
       start += size();
-    }
+
     for (int i = start; i < size(); i++) {
       set(i, item);
     }
@@ -534,9 +530,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   public RubyArray<E> fill(E item, int start, int length) {
     if (start < 0) {
       start += size();
-      if (start < 0) {
+      if (start < 0)
         start = 0;
-      }
     }
     if (start > size()) {
       for (int i = size(); i < start; i++) {
@@ -577,12 +572,12 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return this RubyArray
    */
   public RubyArray<E> fill(int start, TransformBlock<Integer, E> block) {
-    if (start <= -size()) {
+    if (start <= -size())
       return fill(block);
-    }
-    if (start < 0) {
+
+    if (start < 0)
       start += size();
-    }
+
     for (int i = start; i < size(); i++) {
       set(i, block.yield(i));
     }
@@ -635,20 +630,18 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     RubyArray<S> rubyArray = newRubyArray();
     List<Object> subLists = new ArrayList<Object>();
     for (E item : list) {
-      if (item instanceof List) {
+      if (item instanceof List)
         subLists.add(item);
-      } else {
+      else
         rubyArray.add((S) item);
-      }
     }
     while (!subLists.isEmpty()) {
       List<?> subList = (List<?>) subLists.remove(0);
       for (Object item : subList) {
-        if (item instanceof List) {
+        if (item instanceof List)
           subLists.add(item);
-        } else {
+        else
           rubyArray.add((S) item);
-        }
       }
     }
     return rubyArray;
@@ -673,9 +666,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   public Integer index(BooleanBlock<E> block) {
     Integer index = null;
     for (int i = 0; i < size(); i++) {
-      if (block.yield(get(i))) {
+      if (block.yield(get(i)))
         return i;
-      }
     }
     return index;
   }
@@ -746,9 +738,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   public RubyArray<E> intersection(List<E> other) {
     List<E> andList = new ArrayList<E>();
     for (E item : this) {
-      if (!andList.contains(item) && contains(item) && other.contains(item)) {
+      if (!andList.contains(item) && contains(item) && other.contains(item))
         andList.add(item);
-      }
     }
     return newRubyArray(andList);
   }
@@ -761,9 +752,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   public String join() {
     StringBuilder sb = new StringBuilder();
     for (E item : list) {
-      if (item != null) {
+      if (item != null)
         sb.append(item.toString());
-      }
     }
     return sb.toString();
   }
@@ -778,13 +768,12 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   public String join(String separator) {
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < size(); i++) {
-      if (i > 0) {
+      if (i > 0)
         sb.append(separator);
-      }
+
       E item = get(i);
-      if (item != null) {
+      if (item != null)
         sb.append(item.toString());
-      }
     }
     return sb.toString();
   }
@@ -809,9 +798,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     ListIterator<E> li = listIterator();
     while (li.hasNext()) {
       E item = li.next();
-      if (!(block.yield(item))) {
+      if (!(block.yield(item)))
         li.remove();
-      }
     }
     return this;
   }
@@ -822,11 +810,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return an element
    */
   public E last() {
-    if (isEmpty()) {
+    if (isEmpty())
       return null;
-    } else {
+    else
       return get(size() - 1);
-    }
   }
 
   /**
@@ -975,11 +962,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return an element or null
    */
   public E pop() {
-    if (isEmpty()) {
+    if (isEmpty())
       return null;
-    } else {
+    else
       return remove(size() - 1);
-    }
   }
 
   /**
@@ -1070,9 +1056,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
         @SuppressWarnings("unchecked")
         List<S> itemList = (List<S>) item;
         if (itemList.size() > 0
-            && itemList.get(itemList.size() - 1).equals(target)) {
+            && itemList.get(itemList.size() - 1).equals(target))
           return newRubyArray(itemList, true);
-        }
       }
     }
     return null;
@@ -1097,11 +1082,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   public RubyArray<E> rejectǃ(BooleanBlock<E> block) {
     int beforeLength = size();
     RubyArray<E> rubyArray = deleteIf(block);
-    if (rubyArray.size() != beforeLength) {
+    if (rubyArray.size() != beforeLength)
       return rubyArray;
-    } else {
+    else
       return null;
-    }
   }
 
   /**
@@ -1218,9 +1202,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   public Integer rindex(BooleanBlock<E> block) {
     Integer index = null;
     for (int i = size() - 1; i >= 0; i--) {
-      if (block.yield(get(i))) {
+      if (block.yield(get(i)))
         return i;
-      }
     }
     return index;
   }
@@ -1244,9 +1227,9 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    */
   public RubyArray<E> rotate() {
     RubyArray<E> rubyArray = newRubyArray(list, true);
-    if (rubyArray.size() > 1) {
+    if (rubyArray.size() > 1)
       rubyArray.add(rubyArray.remove(0));
-    }
+
     return rubyArray;
   }
 
@@ -1256,9 +1239,9 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return this RubyArray
    */
   public RubyArray<E> rotateǃ() {
-    if (size() > 1) {
+    if (size() > 1)
       add(remove(0));
-    }
+
     return this;
   }
 
@@ -1314,11 +1297,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return an element
    */
   public E sample() {
-    if (size() > 0) {
+    if (size() > 0)
       return get(rand.nextInt(size()));
-    } else {
+    else
       return null;
-    }
   }
 
   /**
@@ -1365,11 +1347,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   public RubyArray<E> selectǃ(BooleanBlock<E> block) {
     int beforeSize = size();
     keepIf(block);
-    if (size() == beforeSize) {
+    if (size() == beforeSize)
       return null;
-    } else {
+    else
       return this;
-    }
   }
 
   /**
@@ -1516,9 +1497,9 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    */
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public RubyArray<E> sortǃ() {
-    if (size() <= 1) {
+    if (size() <= 1)
       return this;
-    }
+
     E sample = first();
     if (sample instanceof Comparable) {
       Collections.sort(list, new Comparator() {

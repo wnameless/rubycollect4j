@@ -62,9 +62,7 @@ public final class ChunkIterator<E, K> implements
    *           if block is null
    */
   public ChunkIterator(Iterator<E> iterator, TransformBlock<E, K> block) {
-    if (iterator == null)
-      throw new NullPointerException();
-    if (block == null)
+    if (iterator == null || block == null)
       throw new NullPointerException();
 
     pIterator = new PeekingIterator<E>(iterator);
