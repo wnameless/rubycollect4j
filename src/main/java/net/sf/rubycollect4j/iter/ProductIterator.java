@@ -20,7 +20,6 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 
 import java.util.Arrays;
@@ -47,9 +46,14 @@ public final class ProductIterator<E> implements Iterator<RubyArray<E>> {
    * 
    * @param lists
    *          a List of Lists
+   * @throws NullPointerException
+   *           if lists is null
    */
   public ProductIterator(List<List<E>> lists) {
-    this.lists = checkNotNull(lists);
+    if (lists == null)
+      throw new NullPointerException();
+
+    this.lists = lists;
     counter = new int[lists.size()];
   }
 

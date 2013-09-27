@@ -27,8 +27,6 @@ import net.sf.rubycollect4j.iter.RangeIterable;
 import net.sf.rubycollect4j.iter.StepIterable;
 import net.sf.rubycollect4j.succ.Successive;
 
-import com.google.common.base.Objects;
-
 /**
  * 
  * RubyRange is inspired by the Range class of Ruby. It does not exactly follow
@@ -230,16 +228,19 @@ public final class RubyRange<E> extends RubyEnumerable<E> {
     if (o instanceof RubyRange) {
       @SuppressWarnings("rawtypes")
       RubyRange rr = (RubyRange) o;
-      return Objects.equal(successive, rr.successive)
-          && Objects.equal(startPoint, rr.startPoint)
-          && Objects.equal(endPoint, rr.endPoint);
+      return successive.equals(rr.successive)
+          && startPoint.equals(rr.startPoint) && endPoint.equals(rr.endPoint);
     }
     return false;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(successive, startPoint, endPoint);
+    int hashCode = 27;
+    hashCode = 31 * hashCode + successive.hashCode();
+    hashCode = 31 * hashCode + startPoint.hashCode();
+    hashCode = 31 * hashCode + endPoint.hashCode();
+    return hashCode;
   }
 
   @Override

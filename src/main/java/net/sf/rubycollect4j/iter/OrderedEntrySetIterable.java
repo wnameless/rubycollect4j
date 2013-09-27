@@ -20,7 +20,6 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 
 import java.util.Collection;
@@ -54,10 +53,17 @@ public final class OrderedEntrySetIterable<K, V> implements
    *          an Iterable
    * @param map
    *          a Map
+   * @throws NullPointerException
+   *           if iter is null
+   * @throws NullPointerException
+   *           if map is null
    */
   public OrderedEntrySetIterable(Iterable<K> iter, Map<K, V> map) {
-    this.iter = checkNotNull(iter);
-    this.map = checkNotNull(map);
+    if (iter == null || map == null)
+      throw new NullPointerException();
+
+    this.iter = iter;
+    this.map = map;
   }
 
   @Override

@@ -1,5 +1,10 @@
 package net.sf.rubycollect4j;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -8,10 +13,6 @@ import net.sf.rubycollect4j.block.Block;
 import org.junit.Before;
 import org.junit.Test;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 public class RubyEnumeratorTest {
 
   private RubyEnumerator<Integer> re;
@@ -19,7 +20,7 @@ public class RubyEnumeratorTest {
 
   @Before
   public void setUp() throws Exception {
-    list = newArrayList(1, 2, 3);
+    list = Arrays.asList(1, 2, 3);
     re = new RubyEnumerator<Integer>(list);
   }
 
@@ -49,7 +50,7 @@ public class RubyEnumeratorTest {
 
   @Test
   public void testEachWithBlock() {
-    final List<Integer> ints = newArrayList();
+    final List<Integer> ints = new ArrayList<Integer>();
     assertTrue(re == re.each(new Block<Integer>() {
 
       @Override
@@ -58,7 +59,7 @@ public class RubyEnumeratorTest {
       }
 
     }));
-    assertEquals(newArrayList(1, 2, 3), ints);
+    assertEquals(Arrays.asList(1, 2, 3), ints);
   }
 
   @Test

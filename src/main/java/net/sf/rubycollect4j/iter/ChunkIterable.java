@@ -20,8 +20,6 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import java.util.Iterator;
 import java.util.Map.Entry;
 
@@ -53,10 +51,19 @@ public final class ChunkIterable<E, K> implements
    *          an Iterable
    * @param block
    *          to transform each element
+   * @throws NullPointerException
+   *           if iterable is null
+   * @throws NullPointerException
+   *           if block is null
    */
   public ChunkIterable(Iterable<E> iterable, TransformBlock<E, K> block) {
-    this.iterable = checkNotNull(iterable);
-    this.block = checkNotNull(block);
+    if (iterable == null)
+      throw new NullPointerException();
+    if (block == null)
+      throw new NullPointerException();
+
+    this.iterable = iterable;
+    this.block = block;
   }
 
   @Override

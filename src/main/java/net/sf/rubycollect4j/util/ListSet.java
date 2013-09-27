@@ -20,15 +20,15 @@
  */
 package net.sf.rubycollect4j.util;
 
-import static com.google.common.collect.Sets.newHashSet;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
-
-import com.google.common.collect.HashMultiset;
 
 /**
  * 
@@ -119,13 +119,26 @@ public final class ListSet<E> implements Set<E> {
     return list.toArray(a);
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public boolean equals(Object o) {
     if (o instanceof ListSet) {
       @SuppressWarnings("rawtypes")
       ListSet ls = (ListSet) o;
-      return HashMultiset.create(list).equals(HashMultiset.create(ls.list));
+      Map<E, Integer> thisMap = new HashMap<E, Integer>();
+      Map<Object, Integer> thatMap = new HashMap<Object, Integer>();
+      for (E item : list) {
+        if (thisMap.get(item) == null)
+          thisMap.put(item, 0);
+
+        thisMap.put(item, thisMap.get(item) + 1);
+      }
+      for (Object item : ls.list) {
+        if (thatMap.get(item) == null)
+          thatMap.put(item, 0);
+
+        thatMap.put(item, thatMap.get(item) + 1);
+      }
+      return thisMap.equals(thatMap);
     } else if (o instanceof Set) {
       @SuppressWarnings("rawtypes")
       Set set = (Set) o;
@@ -137,9 +150,16 @@ public final class ListSet<E> implements Set<E> {
   @Override
   public int hashCode() {
     if (ra(list).uniq().count() != list.size()) {
-      return HashMultiset.create(list).hashCode();
+      Map<Object, Integer> thisMap = new HashMap<Object, Integer>();
+      for (E item : list) {
+        if (thisMap.get(item) == null)
+          thisMap.put(item, 0);
+
+        thisMap.put(item, thisMap.get(item) + 1);
+      }
+      return thisMap.hashCode();
     } else {
-      return newHashSet(list).hashCode();
+      return new HashSet<E>(list).hashCode();
     }
   }
 

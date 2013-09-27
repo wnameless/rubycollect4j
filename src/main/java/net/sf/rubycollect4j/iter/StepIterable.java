@@ -20,8 +20,6 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import java.util.Iterator;
 
 /**
@@ -43,14 +41,20 @@ public final class StepIterable<E> implements Iterable<E> {
    *          an Iterable
    * @param step
    *          number of elements to skip
+   * @throws IllegalArgumentException
+   *           if step less or equal 0
+   * @throws NullPointerException
+   *           if iter is null
    */
   public StepIterable(Iterable<E> iter, int step) {
     if (step == 0)
       throw new IllegalArgumentException("step can't be 0");
     if (step < 0)
       throw new IllegalArgumentException("step can't be negative");
+    if (iter == null)
+      throw new NullPointerException();
 
-    this.iter = checkNotNull(iter);
+    this.iter = iter;
     this.step = step;
   }
 

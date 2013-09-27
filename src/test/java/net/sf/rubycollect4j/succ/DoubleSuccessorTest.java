@@ -1,14 +1,12 @@
 package net.sf.rubycollect4j.succ;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import com.google.common.base.Objects;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
+
+import org.junit.Before;
+import org.junit.Test;
 
 public class DoubleSuccessorTest {
 
@@ -56,7 +54,7 @@ public class DoubleSuccessorTest {
   public void testHashCode() {
     assertEquals(new DoubleSuccessor(2).hashCode(), successor.hashCode());
     assertNotEquals(new DoubleSuccessor(3).hashCode(), successor.hashCode());
-    assertEquals(Objects.hashCode(2), successor.hashCode());
+    assertEquals(2, successor.hashCode());
   }
 
   @Test

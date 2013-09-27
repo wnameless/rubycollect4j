@@ -20,19 +20,17 @@
  */
 package net.sf.rubycollect4j;
 
-import static com.google.common.collect.Lists.newArrayList;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.block.BooleanBlock;
 import net.sf.rubycollect4j.block.TransformBlock;
-
-import com.google.common.base.Objects;
 
 /**
  * 
@@ -228,8 +226,8 @@ public final class RubyDir extends RubyEnumerable<String> {
   }
 
   private static List<File> traverseFolder(File file, boolean recursive) {
-    List<File> files = newArrayList();
-    List<File> tempFiles = newArrayList(Arrays.asList(file.listFiles()));
+    List<File> files = new ArrayList<File>();
+    List<File> tempFiles = new ArrayList<File>(Arrays.asList(file.listFiles()));
 
     while (!(tempFiles.isEmpty())) {
       File item = tempFiles.remove(0);
@@ -372,8 +370,7 @@ public final class RubyDir extends RubyEnumerable<String> {
 
   @Override
   public String toString() {
-    return Objects.toStringHelper(this.getClass())
-        .add("path", directory.getPath()).toString();
+    return "RubyDir{path=" + directory.getPath() + "}";
   }
 
 }

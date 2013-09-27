@@ -20,8 +20,6 @@
  */
 package net.sf.rubycollect4j;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import java.util.Calendar;
 import java.util.Date;
 
@@ -49,7 +47,9 @@ public final class RubyDate extends Date {
    *           if date is null
    */
   public RubyDate(Date date) {
-    checkNotNull(date);
+    if (date == null)
+      throw new NullPointerException();
+
     setTime(date.getTime());
   }
 

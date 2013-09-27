@@ -20,8 +20,6 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -45,9 +43,14 @@ public final class EachWithIndexIterator<E> implements
    * 
    * @param iter
    *          an Iterator
+   * @throws NullPointerException
+   *           if iter is null
    */
   public EachWithIndexIterator(Iterator<E> iter) {
-    this.iter = checkNotNull(iter);
+    if (iter == null)
+      throw new NullPointerException();
+
+    this.iter = iter;
   }
 
   private Entry<E, Integer> nextElement() {

@@ -20,13 +20,11 @@
  */
 package net.sf.rubycollect4j;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Maps.newLinkedHashMap;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -43,8 +41,6 @@ import net.sf.rubycollect4j.succ.DoubleSuccessor;
 import net.sf.rubycollect4j.succ.IntegerSuccessor;
 import net.sf.rubycollect4j.succ.LongSuccessor;
 import net.sf.rubycollect4j.succ.StringSuccessor;
-
-import com.google.common.base.Strings;
 
 /**
  * 
@@ -64,7 +60,7 @@ public final class RubyCollections {
    * @return a new RubyArray
    */
   public static <E> RubyArray<E> newRubyArray() {
-    List<E> list = newArrayList();
+    List<E> list = new ArrayList<E>();
     return new RubyArray<E>(list);
   }
 
@@ -78,7 +74,11 @@ public final class RubyCollections {
    * @return a new RubyArray
    */
   public static <E> RubyArray<E> newRubyArray(Iterable<E> iter) {
-    return new RubyArray<E>(newArrayList(iter));
+    List<E> list = new ArrayList<E>();
+    for (E item : iter) {
+      list.add(item);
+    }
+    return new RubyArray<E>(list);
   }
 
   /**
@@ -91,7 +91,11 @@ public final class RubyCollections {
    * @return a new RubyArray
    */
   public static <E> RubyArray<E> newRubyArray(Iterator<E> iter) {
-    return new RubyArray<E>(newArrayList(iter));
+    List<E> list = new ArrayList<E>();
+    while (iter.hasNext()) {
+      list.add(iter.next());
+    }
+    return new RubyArray<E>(list);
   }
 
   /**
@@ -121,7 +125,7 @@ public final class RubyCollections {
   public static <E> RubyArray<E> newRubyArray(List<E> list,
       boolean defensiveCopy) {
     if (defensiveCopy) {
-      return newRubyArray(newArrayList(list));
+      return newRubyArray(new ArrayList<E>(list));
     } else {
       return newRubyArray(list);
     }
@@ -137,7 +141,11 @@ public final class RubyCollections {
    * @return a new RubyArray
    */
   public static <E> RubyArray<E> newRubyArray(E... elements) {
-    return new RubyArray<E>(newArrayList(elements));
+    List<E> list = new ArrayList<E>();
+    for (E item : elements) {
+      list.add(item);
+    }
+    return new RubyArray<E>(list);
   }
 
   /**
@@ -150,7 +158,7 @@ public final class RubyCollections {
    * @return a new RubyHash
    */
   public static <K, V> RubyHash<K, V> newRubyHash() {
-    LinkedHashMap<K, V> linkedHashMap = newLinkedHashMap();
+    LinkedHashMap<K, V> linkedHashMap = new LinkedHashMap<K, V>();
     return new RubyHash<K, V>(linkedHashMap);
   }
 
@@ -166,7 +174,7 @@ public final class RubyCollections {
    * @return a new RubyHash
    */
   public static <K, V> RubyHash<K, V> newRubyHash(Map<K, V> map) {
-    LinkedHashMap<K, V> linkedHashMap = newLinkedHashMap(map);
+    LinkedHashMap<K, V> linkedHashMap = new LinkedHashMap<K, V>(map);
     return new RubyHash<K, V>(linkedHashMap);
   }
 
@@ -186,7 +194,7 @@ public final class RubyCollections {
   public static <K, V> RubyHash<K, V> newRubyHash(LinkedHashMap<K, V> map,
       boolean defensiveCopy) {
     if (defensiveCopy) {
-      LinkedHashMap<K, V> linkedHashMap = newLinkedHashMap(map);
+      LinkedHashMap<K, V> linkedHashMap = new LinkedHashMap<K, V>(map);
       return new RubyHash<K, V>(linkedHashMap);
     }
     return new RubyHash<K, V>(map);
@@ -230,7 +238,7 @@ public final class RubyCollections {
   public static RubyRange<String> newRubyRange(String startPoint,
       String endPoint) {
     return new RubyRange<String>(StringSuccessor.getInstance(),
-        Strings.nullToEmpty(startPoint), Strings.nullToEmpty(endPoint));
+        startPoint == null ? "" : startPoint, endPoint == null ? "" : endPoint);
   }
 
   /**

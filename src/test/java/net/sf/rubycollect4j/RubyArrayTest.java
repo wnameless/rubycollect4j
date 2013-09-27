@@ -20,7 +20,6 @@
  */
 package net.sf.rubycollect4j;
 
-import static com.google.common.collect.Lists.newArrayList;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -30,6 +29,7 @@ import static org.junit.Assert.fail;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -70,7 +70,7 @@ public class RubyArrayTest {
     RubyArray<? extends List<Integer>> ra = ra(ra(1, 2, 3), ra(4, 5, 6));
     assertEquals(ra(4, 5, 6), ra.assoc(4));
     assertNull(ra.assoc(7));
-    List<Integer> ints = newArrayList();
+    List<Integer> ints = new ArrayList<Integer>();
     ra = ra(null, ints, ra(1, 2, 3), ra(4, 5, 6));
     assertEquals(ra(1, 2, 3), ra.assoc(1));
   }
@@ -339,9 +339,9 @@ public class RubyArrayTest {
     ra = ra(1, 2, 3);
     assertTrue(ra.eqlʔ(ra(1, 2, 3)));
     assertFalse(ra.eqlʔ(ra(3, 2, 1)));
-    List<Integer> list = newArrayList(1, 2, 3);
+    List<Integer> list = Arrays.asList(1, 2, 3);
     assertTrue(ra.eqlʔ(list));
-    assertTrue(ra().eqlʔ(newArrayList()));
+    assertTrue(ra().eqlʔ(new ArrayList<Object>()));
     assertFalse(ra.eqlʔ(new Object()));
   }
 
@@ -865,7 +865,7 @@ public class RubyArrayTest {
         ra(ra(1, 2), ra(3, 4), ra(4, 4), ra(6, 7));
     assertEquals(ra(3, 4), ra.rassoc(4));
     assertNull(ra.rassoc(6));
-    List<Integer> ints = newArrayList();
+    List<Integer> ints = new ArrayList<Integer>();
     ra = ra(null, ints, ra(1, 2, 3), ra(4, 5, 6));
     assertEquals(ra(1, 2, 3), ra.rassoc(3));
   }

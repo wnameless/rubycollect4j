@@ -20,8 +20,6 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -40,9 +38,14 @@ public final class EachIndexIterator<E> implements Iterator<Integer> {
    * 
    * @param iter
    *          an Iterator
+   * @throws NullPointerException
+   *           if iter is null
    */
   public EachIndexIterator(Iterator<E> iter) {
-    this.iter = checkNotNull(iter);
+    if (iter == null)
+      throw new NullPointerException();
+
+    this.iter = iter;
   }
 
   @Override

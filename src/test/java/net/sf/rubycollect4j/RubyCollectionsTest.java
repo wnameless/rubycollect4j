@@ -20,23 +20,6 @@
  */
 package net.sf.rubycollect4j;
 
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.regex.Pattern;
-
-import org.junit.Test;
-
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Maps.newHashMap;
-import static com.google.common.collect.Maps.newLinkedHashMap;
-import static com.google.common.collect.Sets.newLinkedHashSet;
 import static net.sf.rubycollect4j.RubyCollections.Hash;
 import static net.sf.rubycollect4j.RubyCollections.date;
 import static net.sf.rubycollect4j.RubyCollections.hp;
@@ -53,6 +36,21 @@ import static net.sf.rubycollect4j.RubyCollections.rh;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.regex.Pattern;
+
+import org.junit.Test;
+
 public class RubyCollectionsTest {
 
   @Test
@@ -66,15 +64,15 @@ public class RubyCollectionsTest {
     assertTrue(ra instanceof RubyArray);
     ra = newRubyArray(ra.iterator());
     assertTrue(ra instanceof RubyArray);
-    List<Integer> ints = newArrayList(1, 2, 3);
+    List<Integer> ints = Arrays.asList(1, 2, 3);
     ra = newRubyArray(ints);
     ints.set(0, 4);
     assertEquals(ra(4, 2, 3), ra);
-    ints = newArrayList(1, 2, 3);
+    ints = Arrays.asList(1, 2, 3);
     ra = newRubyArray(ints, true);
     ints.set(0, 4);
     assertEquals(ra(1, 2, 3), ra);
-    ints = newArrayList(1, 2, 3);
+    ints = Arrays.asList(1, 2, 3);
     ra = newRubyArray(ints, false);
     ints.set(0, 4);
     assertEquals(ra(4, 2, 3), ra);
@@ -85,10 +83,10 @@ public class RubyCollectionsTest {
     RubyHash<Integer, Integer> rh;
     rh = newRubyHash();
     assertTrue(rh instanceof RubyHash);
-    Map<Integer, Integer> map = newHashMap();
+    Map<Integer, Integer> map = new HashMap<Integer, Integer>();
     rh = newRubyHash(map);
     assertTrue(rh instanceof RubyHash);
-    LinkedHashMap<Integer, Integer> lhm = newLinkedHashMap();
+    LinkedHashMap<Integer, Integer> lhm = new LinkedHashMap<Integer, Integer>();
     rh = newRubyHash(lhm, true);
     assertTrue(rh instanceof RubyHash);
     rh = newRubyHash(lhm, false);
@@ -147,19 +145,19 @@ public class RubyCollectionsTest {
 
   @Test
   public void testRaWithIterable() {
-    Set<Integer> set = newLinkedHashSet(Arrays.asList(1, 2, 3));
+    Set<Integer> set = new LinkedHashSet<Integer>(Arrays.asList(1, 2, 3));
     assertEquals(ra(1, 2, 3), ra(set));
   }
 
   @Test
   public void testRaWithIterator() {
-    Set<Integer> set = newLinkedHashSet(Arrays.asList(1, 2, 3));
+    Set<Integer> set = new LinkedHashSet<Integer>(Arrays.asList(1, 2, 3));
     assertEquals(ra(1, 2, 3), ra(set.iterator()));
   }
 
   @Test
   public void testRaWithList() {
-    List<Integer> list = newArrayList(1, 2, 3);
+    List<Integer> list = Arrays.asList(1, 2, 3);
     assertEquals(ra(1, 2, 3), ra(list));
   }
 
@@ -177,7 +175,7 @@ public class RubyCollectionsTest {
 
   @Test
   public void testRhWithMap() {
-    Map<Integer, Integer> map = newHashMap();
+    Map<Integer, Integer> map = new HashMap<Integer, Integer>();
     map.put(1, 2);
     RubyHash<Integer, Integer> rh = rh(map);
     assertEquals(rh(1, 2), rh);

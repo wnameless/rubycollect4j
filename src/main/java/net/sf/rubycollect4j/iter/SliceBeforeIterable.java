@@ -20,8 +20,6 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import java.util.Iterator;
 import java.util.regex.Pattern;
 
@@ -50,10 +48,17 @@ public final class SliceBeforeIterable<E> implements Iterable<RubyArray<E>> {
    *          an Iterable
    * @param block
    *          to check elements
+   * @throws NullPointerException
+   *           if iter is null
+   * @throws NullPointerException
+   *           if block is null
    */
   public SliceBeforeIterable(Iterable<E> iter, BooleanBlock<E> block) {
-    this.iter = checkNotNull(iter);
-    this.block = checkNotNull(block);
+    if (iter == null || block == null)
+      throw new NullPointerException();
+
+    this.iter = iter;
+    this.block = block;
     pattern = null;
   }
 
@@ -64,11 +69,18 @@ public final class SliceBeforeIterable<E> implements Iterable<RubyArray<E>> {
    *          an Iterable
    * @param pattern
    *          to match elements
+   * @throws NullPointerException
+   *           if iter is null
+   * @throws NullPointerException
+   *           if pattern is null
    */
   public SliceBeforeIterable(Iterable<E> iter, Pattern pattern) {
-    this.iter = checkNotNull(iter);
+    if (iter == null || pattern == null)
+      throw new NullPointerException();
+
+    this.iter = iter;
     this.block = null;
-    this.pattern = checkNotNull(pattern);
+    this.pattern = pattern;
   }
 
   @Override

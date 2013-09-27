@@ -20,8 +20,6 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Iterator;
 import java.util.Map;
@@ -53,10 +51,17 @@ public final class OrderedEntrySetIterator<K, V> implements
    *          an Iterator
    * @param map
    *          a Map
+   * @throws NullPointerException
+   *           if iter is null
+   * @throws NullPointerException
+   *           if map is null
    */
   public OrderedEntrySetIterator(Iterator<K> iter, Map<K, V> map) {
-    this.iter = checkNotNull(iter);
-    this.map = checkNotNull(map);
+    if (iter == null || map == null)
+      throw new NullPointerException();
+
+    this.iter = iter;
+    this.map = map;
   }
 
   @Override

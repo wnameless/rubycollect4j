@@ -20,11 +20,7 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import java.util.Iterator;
-
-import com.google.common.collect.Iterables;
 
 /**
  * 
@@ -44,9 +40,14 @@ public final class CycleIterable<E> implements Iterable<E> {
    * 
    * @param iter
    *          an Iterable
+   * @throws NullPointerException
+   *           if iter is null
    */
   public CycleIterable(Iterable<E> iter) {
-    this.iter = checkNotNull(iter);
+    if (iter == null)
+      throw new NullPointerException();
+
+    this.iter = iter;
     n = null;
   }
 
@@ -57,20 +58,23 @@ public final class CycleIterable<E> implements Iterable<E> {
    *          an Iterable
    * @param n
    *          times to iterate
+   * @throws NullPointerException
+   *           if iter is null
    */
   public CycleIterable(Iterable<E> iter, int n) {
-    checkNotNull(iter);
+    if (iter == null)
+      throw new NullPointerException();
+
     this.iter = iter;
     this.n = n;
   }
 
   @Override
   public Iterator<E> iterator() {
-    if (n == null) {
-      return Iterables.cycle(iter).iterator();
-    } else {
+    if (n == null)
+      return new CycleIterator<E>(iter);
+    else
       return new CycleIterator<E>(iter, n);
-    }
   }
 
 }

@@ -20,8 +20,6 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Iterator;
@@ -43,9 +41,14 @@ public final class EachLineIterator implements Iterator<String> {
    * 
    * @param raFile
    *          a RandomAccessFile
+   * @throws NullPointerException
+   *           if raFile is null
    */
   public EachLineIterator(RandomAccessFile raFile) {
-    this.raFile = checkNotNull(raFile);
+    if (raFile == null)
+      throw new NullPointerException();
+
+    this.raFile = raFile;
     try {
       this.raFile.seek(0L);
     } catch (IOException ex) {

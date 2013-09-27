@@ -20,8 +20,6 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import java.util.Iterator;
 import java.util.List;
 
@@ -46,9 +44,14 @@ public final class PermutationIterable<E> implements Iterable<RubyArray<E>> {
    *          a List
    * @param n
    *          length of each permutation
+   * @throws NullPointerException
+   *           if list is null
    */
   public PermutationIterable(List<E> list, int n) {
-    this.list = checkNotNull(list);
+    if (list == null)
+      throw new NullPointerException();
+
+    this.list = list;
     this.n = n;
   }
 

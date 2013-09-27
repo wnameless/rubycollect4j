@@ -20,12 +20,12 @@
  */
 package net.sf.rubycollect4j.packer;
 
-import static com.google.common.collect.Lists.newArrayList;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.ArrayList;
 
 import javax.xml.bind.TypeConstraintException;
 
@@ -134,7 +134,7 @@ public class ByteUtilTest {
 
   @Test(expected = TypeConstraintException.class)
   public void testToByteArrayWithObjectAndException() {
-    ByteUtil.toByteArray(newArrayList());
+    ByteUtil.toByteArray(new ArrayList<Object>());
   }
 
   @Test

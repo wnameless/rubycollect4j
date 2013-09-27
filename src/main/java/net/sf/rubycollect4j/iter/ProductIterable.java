@@ -20,9 +20,7 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.collect.Lists.newArrayList;
-
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -38,7 +36,7 @@ import net.sf.rubycollect4j.RubyArray;
  */
 public final class ProductIterable<E> implements Iterable<RubyArray<E>> {
 
-  private final List<List<E>> lists = newArrayList();
+  private final List<List<E>> lists = new ArrayList<List<E>>();
 
   /**
    * The constructor of the ProductIterable.
@@ -47,10 +45,19 @@ public final class ProductIterable<E> implements Iterable<RubyArray<E>> {
    *          a List
    * @param others
    *          a List of Lists
+   * @throws NullPointerException
+   *           if self is null
+   * @throws NullPointerException
+   *           if others is null
    */
   public ProductIterable(List<E> self, List<? extends List<E>> others) {
-    lists.add(checkNotNull(self));
-    lists.addAll(checkNotNull(others));
+    if (self == null)
+      throw new NullPointerException();
+    if (others == null)
+      throw new NullPointerException();
+
+    lists.add(self);
+    lists.addAll(others);
   }
 
   /**
@@ -60,9 +67,14 @@ public final class ProductIterable<E> implements Iterable<RubyArray<E>> {
    *          a List
    * @param others
    *          an Array of Lists
+   * @throws NullPointerException
+   *           if self is null
    */
   public ProductIterable(List<E> self, List<E>... others) {
-    lists.add(checkNotNull(self));
+    if (self == null)
+      throw new NullPointerException();
+
+    lists.add(self);
     lists.addAll(Arrays.asList(others));
   }
 

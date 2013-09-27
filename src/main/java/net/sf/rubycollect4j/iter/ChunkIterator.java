@@ -20,7 +20,6 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 import static net.sf.rubycollect4j.RubyCollections.newPair;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 
@@ -30,9 +29,7 @@ import java.util.NoSuchElementException;
 
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.block.TransformBlock;
-
-import com.google.common.collect.Iterators;
-import com.google.common.collect.PeekingIterator;
+import net.sf.rubycollect4j.util.PeekingIterator;
 
 /**
  * 
@@ -59,10 +56,19 @@ public final class ChunkIterator<E, K> implements
    *          an Iterator
    * @param block
    *          to transform each element
+   * @throws NullPointerException
+   *           if iterator is null
+   * @throws NullPointerException
+   *           if block is null
    */
   public ChunkIterator(Iterator<E> iterator, TransformBlock<E, K> block) {
-    pIterator = Iterators.peekingIterator(checkNotNull(iterator));
-    this.block = checkNotNull(block);
+    if (iterator == null)
+      throw new NullPointerException();
+    if (block == null)
+      throw new NullPointerException();
+
+    pIterator = new PeekingIterator<E>(iterator);
+    this.block = block;
   }
 
   private Entry<K, RubyArray<E>> nextElement() {
@@ -81,9 +87,9 @@ public final class ChunkIterator<E, K> implements
 
   @Override
   public Entry<K, RubyArray<E>> next() {
-    if (!pIterator.hasNext()) {
+    if (!pIterator.hasNext())
       throw new NoSuchElementException();
-    }
+
     return nextElement();
   }
 

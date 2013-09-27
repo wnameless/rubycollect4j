@@ -20,7 +20,6 @@
  */
 package net.sf.rubycollect4j;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 import static net.sf.rubycollect4j.RubyCollections.Hash;
 import static net.sf.rubycollect4j.RubyCollections.hp;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
@@ -37,8 +36,6 @@ import java.util.logging.Logger;
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.block.TransformBlock;
 import net.sf.rubycollect4j.iter.EachLineIterable;
-
-import com.google.common.base.Objects;
 
 /**
  * 
@@ -139,11 +136,16 @@ public class RubyIO {
    *          a File
    * @param mode
    *          a Mode
+   * @throws NullPointerException
+   *           if file is null
    * @throws IOException
    *           if file can't not open
    */
   public RubyIO(File file, Mode mode) throws IOException {
-    this.file = checkNotNull(file);
+    if (file == null)
+      throw new NullPointerException();
+
+    this.file = file;
     switch (mode) {
     case RW:
       raFile = new RandomAccessFile(file, "rws");
@@ -308,8 +310,7 @@ public class RubyIO {
 
   @Override
   public String toString() {
-    return Objects.toStringHelper(this.getClass()).add("path", file.getPath())
-        .add("mode", mode).toString();
+    return "RubyIO{path=" + file.getPath() + ", mode=" + mode + "}";
   }
 
 }

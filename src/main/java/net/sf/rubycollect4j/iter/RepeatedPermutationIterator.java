@@ -20,7 +20,6 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 
 import java.util.Arrays;
@@ -54,9 +53,14 @@ public final class RepeatedPermutationIterator<E> implements
    *          a List
    * @param n
    *          length of each repeated permutation
+   * @throws NullPointerException
+   *           if list is null
    */
   public RepeatedPermutationIterator(List<E> list, int n) {
-    this.list = checkNotNull(list);
+    if (list == null)
+      throw new NullPointerException();
+
+    this.list = list;
     end = list.size() - 1;
     if (n <= 0) {
       counter = new int[0];

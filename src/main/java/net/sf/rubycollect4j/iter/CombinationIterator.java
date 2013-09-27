@@ -20,7 +20,6 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 
 import java.util.Arrays;
@@ -51,9 +50,14 @@ public class CombinationIterator<E> implements Iterator<RubyArray<E>> {
    *          a List
    * @param n
    *          length of each combination
+   * @throws NullPointerException
+   *           if list is null
    */
   public CombinationIterator(List<E> list, int n) {
-    this.list = checkNotNull(list);
+    if (list == null)
+      throw new NullPointerException();
+
+    this.list = list;
     if (n <= 0 || n > list.size()) {
       counter = new int[0];
       endStatus = new int[0];

@@ -34,8 +34,6 @@ import java.util.Map.Entry;
 
 import net.sf.rubycollect4j.block.TransformBlock;
 
-import com.google.common.primitives.Bytes;
-
 /**
  * 
  * Directive defines available directives for RubyArray#pack.
@@ -196,31 +194,31 @@ public enum Directive {
       return ByteUtil.toASCIIs(bytes, 2);
     case sb:
       if (ByteOrder.nativeOrder() != BIG_ENDIAN)
-        Collections.reverse(Bytes.asList(bytes));
+        reverseBytes(bytes);
       return ByteUtil.toASCIIs(bytes, 2, BIG_ENDIAN);
     case sl:
       if (ByteOrder.nativeOrder() != LITTLE_ENDIAN)
-        Collections.reverse(Bytes.asList(bytes));
+        reverseBytes(bytes);
       return ByteUtil.toASCIIs(bytes, 2, LITTLE_ENDIAN);
     case l:
       return ByteUtil.toASCIIs(bytes, 4);
     case lb:
       if (ByteOrder.nativeOrder() != BIG_ENDIAN)
-        Collections.reverse(Bytes.asList(bytes));
+        reverseBytes(bytes);
       return ByteUtil.toASCIIs(bytes, 4, BIG_ENDIAN);
     case ll:
       if (ByteOrder.nativeOrder() != LITTLE_ENDIAN)
-        Collections.reverse(Bytes.asList(bytes));
+        reverseBytes(bytes);
       return ByteUtil.toASCIIs(bytes, 4, LITTLE_ENDIAN);
     case q:
       return ByteUtil.toASCIIs(bytes, 8);
     case qb:
       if (ByteOrder.nativeOrder() != BIG_ENDIAN)
-        Collections.reverse(Bytes.asList(bytes));
+        reverseBytes(bytes);
       return ByteUtil.toASCIIs(bytes, 8, BIG_ENDIAN);
     case ql:
       if (ByteOrder.nativeOrder() != LITTLE_ENDIAN)
-        Collections.reverse(Bytes.asList(bytes));
+        reverseBytes(bytes);
       return ByteUtil.toASCIIs(bytes, 8, LITTLE_ENDIAN);
     case D:
       return ByteUtil.toASCIIs(bytes, 8);
@@ -228,11 +226,11 @@ public enum Directive {
       return ByteUtil.toASCIIs(bytes, 8);
     case E:
       if (ByteOrder.nativeOrder() != LITTLE_ENDIAN)
-        Collections.reverse(Bytes.asList(bytes));
+        reverseBytes(bytes);
       return ByteUtil.toASCIIs(bytes, 8, LITTLE_ENDIAN);
     case G:
       if (ByteOrder.nativeOrder() != BIG_ENDIAN)
-        Collections.reverse(Bytes.asList(bytes));
+        reverseBytes(bytes);
       return ByteUtil.toASCIIs(bytes, 8, BIG_ENDIAN);
     case F:
       return ByteUtil.toASCIIs(bytes, 4);
@@ -240,15 +238,15 @@ public enum Directive {
       return ByteUtil.toASCIIs(bytes, 4);
     case e:
       if (ByteOrder.nativeOrder() != LITTLE_ENDIAN)
-        Collections.reverse(Bytes.asList(bytes));
+        reverseBytes(bytes);
       return ByteUtil.toASCIIs(bytes, 4, LITTLE_ENDIAN);
     case g:
       if (ByteOrder.nativeOrder() != BIG_ENDIAN)
-        Collections.reverse(Bytes.asList(bytes));
+        reverseBytes(bytes);
       return ByteUtil.toASCIIs(bytes, 4, BIG_ENDIAN);
     case U:
       if (ByteOrder.nativeOrder() != BIG_ENDIAN)
-        Collections.reverse(Bytes.asList(bytes));
+        reverseBytes(bytes);
       return ByteUtil.toUTF(bytes);
     case A:
       return new String(bytes);
@@ -258,6 +256,14 @@ public enum Directive {
       return new String(bytes);
     default:
       throw new UnsupportedOperationException();
+    }
+  }
+
+  private void reverseBytes(byte[] bytes) {
+    for (int i = 0; i < bytes.length / 2; i++) {
+      byte temp = bytes[i];
+      bytes[i] = bytes[bytes.length - 1 - i];
+      bytes[bytes.length - 1 - i] = temp;
     }
   }
 

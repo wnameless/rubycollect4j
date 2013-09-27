@@ -20,8 +20,6 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import java.util.Iterator;
 
 /**
@@ -38,9 +36,14 @@ public final class EachIndexIterable<E> implements Iterable<Integer> {
    * 
    * @param iter
    *          an Iterable
+   * @throws NullPointerException
+   *           if iter is null
    */
   public EachIndexIterable(Iterable<E> iter) {
-    this.iter = checkNotNull(iter);
+    if (iter == null)
+      throw new NullPointerException();
+
+    this.iter = iter;
   }
 
   @Override

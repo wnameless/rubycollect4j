@@ -20,8 +20,6 @@
  */
 package net.sf.rubycollect4j.succ;
 
-import com.google.common.base.Objects;
-
 /**
  * 
  * DoubleSuccessor generates a successor of any given Double. It requires a
@@ -59,20 +57,19 @@ public final class DoubleSuccessor implements Successive<Double> {
   public boolean equals(Object o) {
     if (o instanceof DoubleSuccessor) {
       DoubleSuccessor ds = (DoubleSuccessor) o;
-      return Objects.equal(precision, ds.precision);
+      return precision == ds.precision;
     }
     return false;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(precision);
+    return precision;
   }
 
   @Override
   public String toString() {
-    return Objects.toStringHelper(this.getClass()).add("precision", precision)
-        .toString();
+    return "DoubleSuccessor{precision=" + precision + "}";
   }
 
 }

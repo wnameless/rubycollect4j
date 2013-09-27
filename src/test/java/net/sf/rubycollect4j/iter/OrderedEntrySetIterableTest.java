@@ -1,17 +1,5 @@
 package net.sf.rubycollect4j.iter;
 
-import java.util.AbstractMap.SimpleEntry;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map.Entry;
-import java.util.Set;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import static com.google.common.collect.Sets.newHashSet;
 import static net.sf.rubycollect4j.RubyCollections.hp;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.rh;
@@ -19,6 +7,18 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
+
+import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import org.junit.Before;
+import org.junit.Test;
 
 public class OrderedEntrySetIterableTest {
 
@@ -119,7 +119,7 @@ public class OrderedEntrySetIterableTest {
 
   @Test
   public void testEquals() {
-    Set<Entry<String, Integer>> set = newHashSet();
+    Set<Entry<String, Integer>> set = new HashSet<Entry<String, Integer>>();
     set.add(new SimpleEntry<String, Integer>("a", 1));
     set.add(new SimpleEntry<String, Integer>("b", 2));
     set.add(new SimpleEntry<String, Integer>("c", 3));
@@ -132,7 +132,7 @@ public class OrderedEntrySetIterableTest {
 
   @Test
   public void testHashCode() {
-    Set<Entry<String, Integer>> set = newHashSet();
+    Set<Entry<String, Integer>> set = new HashSet<Entry<String, Integer>>();
     set.add(new SimpleEntry<String, Integer>("a", 1));
     set.add(new SimpleEntry<String, Integer>("b", 2));
     set.add(new SimpleEntry<String, Integer>("c", 3));

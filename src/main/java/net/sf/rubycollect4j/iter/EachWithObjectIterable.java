@@ -20,8 +20,6 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import java.util.Iterator;
 import java.util.Map.Entry;
 
@@ -47,10 +45,17 @@ public final class EachWithObjectIterable<E, O> implements
    *          an Iterable
    * @param obj
    *          an Object
+   * @throws NullPointerException
+   *           if iter is null
+   * @throws NullPointerException
+   *           if obj is null
    */
   public EachWithObjectIterable(Iterable<E> iter, O obj) {
-    this.iter = checkNotNull(iter);
-    this.obj = checkNotNull(obj);
+    if (iter == null || obj == null)
+      throw new NullPointerException();
+
+    this.iter = iter;
+    this.obj = obj;
   }
 
   @Override

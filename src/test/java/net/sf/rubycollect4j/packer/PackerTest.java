@@ -20,8 +20,10 @@
  */
 package net.sf.rubycollect4j.packer;
 
-import static com.google.common.collect.Lists.newArrayList;
 import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.junit.Test;
 
@@ -29,17 +31,17 @@ public class PackerTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testPackWithInvalidDirective() {
-    Packer.pack("c0", newArrayList());
+    Packer.pack("c1", new ArrayList<Object>());
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testPackWithShortArguments1() {
-    Packer.pack("ccc", newArrayList(1, 2));
+    Packer.pack("ccc", Arrays.asList(1, 2));
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testPackWithShortArguments2() {
-    Packer.pack("c6", newArrayList(1, 2));
+    Packer.pack("c6", Arrays.asList(1, 2));
   }
 
   @Test

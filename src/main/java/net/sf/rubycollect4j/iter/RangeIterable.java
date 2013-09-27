@@ -20,8 +20,6 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import java.util.Iterator;
 
 import net.sf.rubycollect4j.succ.Successive;
@@ -48,11 +46,20 @@ public final class RangeIterable<E> implements Iterable<E> {
    *          a element
    * @param endPoint
    *          a element
+   * @throws NullPointerException
+   *           if successive is null
+   * @throws NullPointerException
+   *           if startPoint is null
+   * @throws NullPointerException
+   *           if endPoint is null
    */
   public RangeIterable(Successive<E> successive, E startPoint, E endPoint) {
-    this.successive = checkNotNull(successive);
-    this.startPoint = checkNotNull(startPoint);
-    this.endPoint = checkNotNull(endPoint);
+    if (successive == null || startPoint == null || endPoint == null)
+      throw new NullPointerException();
+
+    this.successive = successive;
+    this.startPoint = startPoint;
+    this.endPoint = endPoint;
   }
 
   @Override

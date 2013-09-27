@@ -20,16 +20,12 @@
  */
 package net.sf.rubycollect4j;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.collect.Lists.newArrayList;
-
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import net.sf.rubycollect4j.block.Block;
-
-import com.google.common.base.Objects;
-import com.google.common.collect.Iterators;
-import com.google.common.collect.PeekingIterator;
+import net.sf.rubycollect4j.util.PeekingIterator;
 
 /**
  * 
@@ -60,9 +56,11 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
    *           if iterable is null
    */
   public RubyEnumerator(Iterable<E> iterable) {
-    checkNotNull(iterable);
+    if (iterable == null)
+      throw new NullPointerException();
+
     iter = iterable;
-    pIterator = Iterators.peekingIterator(iter.iterator());
+    pIterator = new PeekingIterator<E>(iter.iterator());
   }
 
   /**
@@ -75,9 +73,15 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
    *           if iterator is null
    */
   public RubyEnumerator(Iterator<E> iterator) {
-    checkNotNull(iterator);
-    iter = newArrayList(iterator);
-    pIterator = Iterators.peekingIterator(iter.iterator());
+    if (iterator == null)
+      throw new NullPointerException();
+
+    List<E> list = new ArrayList<E>();
+    while (iterator.hasNext()) {
+      list.add(iterator.next());
+    }
+    iter = list;
+    pIterator = new PeekingIterator<E>(iter.iterator());
   }
 
   /**
@@ -109,7 +113,7 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
    * @return this RubyEnumerator
    */
   public RubyEnumerator<E> rewind() {
-    pIterator = Iterators.peekingIterator(iter.iterator());
+    pIterator = new PeekingIterator<E>(iter.iterator());
     return this;
   }
 
@@ -144,7 +148,7 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E> implements
 
   @Override
   public String toString() {
-    return Objects.toStringHelper(this.getClass()).addValue(iter).toString();
+    return "RubyEnumerator{" + iter + "}";
   }
 
 }

@@ -20,7 +20,6 @@
  */
 package net.sf.rubycollect4j.packer;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static net.sf.rubycollect4j.RubyCollections.qr;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 
@@ -61,10 +60,16 @@ public final class Packer {
    * @param objs
    *          a List of Object
    * @return a binary String
+   * @throws IllegalArgumentException
+   *           if template string is invalid
+   * @throws IllegalArgumentException
+   *           if too few arguments
    */
   public static String pack(String aTemplateString,
       @SuppressWarnings("rawtypes") List objs) {
-    checkArgument(Directive.verify(aTemplateString), "Invalid template string.");
+    if (!Directive.verify(aTemplateString))
+      throw new IllegalArgumentException("Invalid template string");
+
     StringBuilder sb = new StringBuilder();
     List<String> templateList = parseTemplate(aTemplateString);
     int i = 0;
@@ -72,7 +77,8 @@ public final class Packer {
       Directive d = parseDirective(template);
       template = template.replace(d.toString(), "");
       if (template.length() == 0) {
-        checkArgument(i < objs.size(), "ArgumentError: too few arguments");
+        if (i > objs.size() - 1)
+          throw new IllegalArgumentException("ArgumentError: too few arguments");
 
         sb.append(d.pack(ByteUtil.toByteArray(d.cast(objs.get(i)))));
         i++;
@@ -105,8 +111,9 @@ public final class Packer {
           }
           i++;
         } else {
-          checkArgument(count <= objs.size() - i,
-              "ArgumentError: too few arguments");
+          if (count > objs.size())
+            throw new IllegalArgumentException(
+                "ArgumentError: too few arguments");
 
           while (count > 0) {
             sb.append(d.pack(ByteUtil.toByteArray(d.cast(objs.get(i)))));

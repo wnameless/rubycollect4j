@@ -20,7 +20,6 @@
  */
 package net.sf.rubycollect4j.packer;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static java.nio.ByteOrder.LITTLE_ENDIAN;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.qr;
@@ -370,11 +369,14 @@ public final class ByteUtil {
    * @param bytes
    *          used to be converted
    * @return an UTF String
+   * @throws IllegalArgumentException
+   *           if codePoint less than 0 or codePoint greater than 0X10FFFF
    */
   public static String toUTF(byte[] bytes) {
     int codePoint = ByteBuffer.wrap(bytes).getInt();
-    checkArgument(codePoint >= 0 && codePoint <= 0X10FFFF,
-        "RangeError: pack(U): value out of range");
+    if (codePoint < 0 || codePoint > 0X10FFFF)
+      throw new IllegalArgumentException(
+          "RangeError: pack(U): value out of range");
 
     if (codePoint <= 126) {
       String ascii = byteToASCII((byte) codePoint, false);

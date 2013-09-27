@@ -20,20 +20,20 @@
  */
 package net.sf.rubycollect4j;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Sets.newLinkedHashSet;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
@@ -50,10 +50,6 @@ import net.sf.rubycollect4j.iter.RepeatedCombinationIterable;
 import net.sf.rubycollect4j.iter.RepeatedPermutationIterable;
 import net.sf.rubycollect4j.packer.Directive;
 import net.sf.rubycollect4j.packer.Packer;
-
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Multimap;
 
 /**
  * 
@@ -77,7 +73,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * Creates a RubyArray.
    */
   public RubyArray() {
-    list = newArrayList();
+    list = new ArrayList<E>();
   }
 
   /**
@@ -89,7 +85,9 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    *           if list is null
    */
   public RubyArray(List<E> list) {
-    checkNotNull(list);
+    if (list == null)
+      throw new NullPointerException();
+
     this.list = list;
   }
 
@@ -635,7 +633,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   @SuppressWarnings("unchecked")
   public <S> RubyArray<S> flatten() {
     RubyArray<S> rubyArray = newRubyArray();
-    List<Object> subLists = newArrayList();
+    List<Object> subLists = new ArrayList<Object>();
     for (E item : list) {
       if (item instanceof List) {
         subLists.add(item);
@@ -746,7 +744,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return a new RubyArray
    */
   public RubyArray<E> intersection(List<E> other) {
-    List<E> andList = newArrayList();
+    List<E> andList = new ArrayList<E>();
     for (E item : this) {
       if (!andList.contains(item) && contains(item) && other.contains(item)) {
         andList.add(item);
@@ -865,9 +863,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    *           if n less than 0
    */
   public RubyArray<E> multiply(int n) {
-    checkArgument(n >= 0, "negative argument");
+    if (n < 0)
+      throw new IllegalArgumentException("negative argument");
 
-    List<E> multiplyList = newArrayList();
+    List<E> multiplyList = new ArrayList<E>();
     for (int i = 0; i < n; i++) {
       for (E item : list) {
         multiplyList.add(item);
@@ -960,7 +959,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return a new RubyArray
    */
   public RubyArray<E> plus(List<E> other) {
-    List<E> addList = newArrayList();
+    List<E> addList = new ArrayList<E>();
     for (E item : list) {
       addList.add(item);
     }
@@ -993,7 +992,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    *           if n less than 0
    */
   public RubyArray<E> pop(int n) {
-    checkArgument(n >= 0, "ArgumentError: negative array size");
+    if (n < 0)
+      throw new IllegalArgumentException("ArgumentError: negative array size");
 
     RubyArray<E> rubyArray = newRubyArray();
     while (n > 0 && !isEmpty()) {
@@ -1179,7 +1179,9 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return a new RubyArray
    */
   public RubyArray<E> reverse() {
-    return newRubyArray(Lists.reverse(list));
+    List<E> reversedList = new ArrayList<E>(list);
+    Collections.reverse(reversedList);
+    return newRubyArray(reversedList);
   }
 
   /**
@@ -1201,7 +1203,9 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return a RubyEnumerator
    */
   public RubyEnumerator<E> rindex() {
-    return newRubyEnumerator(Lists.reverse(list));
+    List<E> reversedList = new ArrayList<E>(list);
+    Collections.reverse(reversedList);
+    return newRubyEnumerator(reversedList);
   }
 
   /**
@@ -1267,7 +1271,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return a new RubyArray
    */
   public RubyArray<E> rotate(int n) {
-    List<E> rotatedList = newArrayList(list);
+    List<E> rotatedList = new ArrayList<E>(list);
     if (rotatedList.size() > 1) {
       while (n != 0) {
         if (n > 0) {
@@ -1327,13 +1331,14 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    *           if n less than 0
    */
   public RubyArray<E> sample(int n) {
-    checkArgument(n >= 0, "negative sample number");
+    if (n < 0)
+      throw new IllegalArgumentException("negative sample number");
 
-    List<Integer> indices = newArrayList();
+    List<Integer> indices = new ArrayList<Integer>();
     for (int i = 0; i < size(); i++) {
       indices.add(i);
     }
-    List<E> samples = newArrayList();
+    List<E> samples = new ArrayList<E>();
     while (samples.size() < size() && samples.size() < n) {
       samples.add(get(indices.remove(rand.nextInt(indices.size()))));
     }
@@ -1390,9 +1395,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    *           if n less than 0
    */
   public RubyArray<E> shift(int n) {
-    checkArgument(n >= 0, "negative array size");
+    if (n < 0)
+      throw new IllegalArgumentException("negative array size");
 
-    List<E> shiftedList = newArrayList();
+    List<E> shiftedList = new ArrayList<E>();
     while (!isEmpty() && shiftedList.size() < n) {
       shiftedList.add(remove(0));
     }
@@ -1405,7 +1411,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return a new RubyArray
    */
   public RubyArray<E> shuffle() {
-    List<E> shuffledList = newArrayList(list);
+    List<E> shuffledList = new ArrayList<E>(list);
     Collections.shuffle(shuffledList);
     return newRubyArray(shuffledList);
   }
@@ -1441,7 +1447,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return a new RubyArray
    */
   public RubyArray<E> slice(int index, int length) {
-    List<E> slicedList = newArrayList();
+    List<E> slicedList = new ArrayList<E>();
     if (index < -size()) {
       return null;
     } else if (index >= size()) {
@@ -1486,7 +1492,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return a new RubyArray
    */
   public RubyArray<E> sliceǃ(int index, int length) {
-    List<E> slicedList = newArrayList();
+    List<E> slicedList = new ArrayList<E>();
     if (index < -size()) {
       return null;
     } else if (index >= size()) {
@@ -1568,15 +1574,19 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    */
   public <S> RubyArray<E> sortByǃ(Comparator<? super S> comp,
       TransformBlock<E, S> block) {
-    Multimap<S, E> multimap = ArrayListMultimap.create();
+    Map<S, List<E>> map = new LinkedHashMap<S, List<E>>();
     for (E item : list) {
-      multimap.put(block.yield(item), item);
+      S key = block.yield(item);
+      if (!map.containsKey(key))
+        map.put(key, new ArrayList<E>());
+
+      map.get(key).add(item);
     }
-    List<S> keys = newArrayList(multimap.keySet());
+    List<S> keys = new ArrayList<S>(map.keySet());
     Collections.sort(keys, comp);
     clear();
     for (S key : keys) {
-      Collection<E> coll = multimap.get(key);
+      Collection<E> coll = map.get(key);
       Iterator<E> iterator = coll.iterator();
       while (iterator.hasNext()) {
         list.add(iterator.next());
@@ -1596,15 +1606,19 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return this RubyArray
    */
   public <S> RubyArray<E> sortByǃ(TransformBlock<E, S> block) {
-    Multimap<S, E> multimap = ArrayListMultimap.create();
+    Map<S, List<E>> map = new LinkedHashMap<S, List<E>>();
     for (E item : list) {
-      multimap.put(block.yield(item), item);
+      S key = block.yield(item);
+      if (!map.containsKey(key))
+        map.put(key, new ArrayList<E>());
+
+      map.get(key).add(item);
     }
-    List<S> keys = newArrayList(multimap.keySet());
+    List<S> keys = new ArrayList<S>(map.keySet());
     keys = newRubyEnumerator(keys).sort();
     clear();
     for (S key : keys) {
-      Collection<E> coll = multimap.get(key);
+      Collection<E> coll = map.get(key);
       Iterator<E> iterator = coll.iterator();
       while (iterator.hasNext()) {
         list.add(iterator.next());
@@ -1621,12 +1635,12 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return a new RubyArray
    */
   public RubyArray<E> minus(List<E> other) {
-    List<E> minusList = newArrayList();
+    List<E> minusList = new ArrayList<E>();
     for (E item : list) {
       minusList.add(item);
     }
     for (E item : other) {
-      List<E> target = newArrayList();
+      List<E> target = new ArrayList<E>();
       target.add(item);
       minusList.removeAll(target);
     }
@@ -1706,7 +1720,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return a new RubyArray
    */
   public RubyArray<E> union(List<E> other) {
-    List<E> unionList = newArrayList();
+    List<E> unionList = new ArrayList<E>();
     for (E item : list) {
       if (!unionList.contains(item)) {
         unionList.add(item);
@@ -1726,7 +1740,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return a new RubyArray
    */
   public RubyArray<E> uniq() {
-    Set<E> uniqSet = newLinkedHashSet();
+    Set<E> uniqSet = new LinkedHashSet<E>();
     for (E item : list) {
       uniqSet.add(item);
     }
@@ -1744,8 +1758,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return a new RubyArray
    */
   public <S> RubyArray<E> uniq(TransformBlock<E, S> block) {
-    List<E> uniqList = newArrayList();
-    Set<S> uniqSet = newLinkedHashSet();
+    List<E> uniqList = new ArrayList<E>();
+    Set<S> uniqSet = new LinkedHashSet<S>();
     for (E item : list) {
       S trans = block.yield(item);
       if (!uniqSet.contains(trans)) {
@@ -1780,8 +1794,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    */
   public <S> RubyArray<E> uniqǃ(TransformBlock<E, S> block) {
     int beforeSize = size();
-    List<E> uniqList = newArrayList();
-    Set<S> uniqSet = newLinkedHashSet();
+    List<E> uniqList = new ArrayList<E>();
+    Set<S> uniqSet = new LinkedHashSet<S>();
     for (E item : list) {
       S trans = block.yield(item);
       if (!uniqSet.contains(trans)) {
@@ -1814,7 +1828,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return a new RubyArray
    */
   public RubyArray<E> valuesAt(int... indices) {
-    List<E> values = newArrayList();
+    List<E> values = new ArrayList<E>();
     for (int index : indices) {
       values.add(this.at(index));
     }

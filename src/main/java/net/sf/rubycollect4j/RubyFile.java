@@ -33,8 +33,6 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.common.base.Objects;
-
 /**
  * 
  * RubyFile implements parts of the methods refer to the File class of Ruby.
@@ -414,8 +412,7 @@ public final class RubyFile extends RubyIO {
 
   @Override
   public String toString() {
-    return Objects.toStringHelper(this.getClass()).add("path", file.getPath())
-        .add("mode", mode).toString();
+    return "RubyFile{path=" + file.getPath() + ", mode=" + mode + "}";
   }
 
 }

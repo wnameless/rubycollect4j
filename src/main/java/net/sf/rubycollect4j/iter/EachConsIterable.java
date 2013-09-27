@@ -20,9 +20,6 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import java.util.Iterator;
 
 import net.sf.rubycollect4j.RubyArray;
@@ -51,8 +48,12 @@ public final class EachConsIterable<E> implements Iterable<RubyArray<E>> {
    *           if size less than or equal to 0
    */
   public EachConsIterable(Iterable<E> iter, int size) {
-    checkArgument(size > 0);
-    this.iter = checkNotNull(iter);
+    if (size <= 0)
+      throw new IllegalArgumentException("ArgumentError: invalid size");
+    if (iter == null)
+      throw new NullPointerException();
+
+    this.iter = iter;
     this.size = size;
   }
 

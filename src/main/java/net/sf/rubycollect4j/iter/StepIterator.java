@@ -20,8 +20,6 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -46,14 +44,20 @@ public final class StepIterator<E> implements Iterator<E> {
    *          an Iterator
    * @param step
    *          number of elements to skip
+   * @throws IllegalArgumentException
+   *           if step less or equal 0
+   * @throws NullPointerException
+   *           if iter is null
    */
   public StepIterator(Iterator<E> iter, int step) {
     if (step == 0)
       throw new IllegalArgumentException("step can't be 0");
     if (step < 0)
       throw new IllegalArgumentException("step can't be negative");
+    if (iter == null)
+      throw new NullPointerException();
 
-    this.iter = checkNotNull(iter);
+    this.iter = iter;
     this.step = step;
     if (iter.hasNext()) {
       peek = iter.next();

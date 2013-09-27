@@ -20,8 +20,6 @@
  */
 package net.sf.rubycollect4j;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.collect.Maps.newLinkedHashMap;
 import static net.sf.rubycollect4j.RubyCollections.newPair;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
@@ -69,7 +67,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * Creates a RubyHash.
    */
   public RubyHash() {
-    map = newLinkedHashMap();
+    map = new LinkedHashMap<K, V>();
   }
 
   /**
@@ -81,7 +79,9 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    *           if map is null
    */
   public RubyHash(LinkedHashMap<K, V> map) {
-    checkNotNull(map);
+    if (map == null)
+      throw new NullPointerException();
+
     this.map = map;
   }
 

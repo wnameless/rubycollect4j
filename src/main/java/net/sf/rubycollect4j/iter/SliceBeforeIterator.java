@@ -20,7 +20,6 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 
 import java.util.Iterator;
@@ -29,9 +28,7 @@ import java.util.regex.Pattern;
 
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.block.BooleanBlock;
-
-import com.google.common.collect.Iterators;
-import com.google.common.collect.PeekingIterator;
+import net.sf.rubycollect4j.util.PeekingIterator;
 
 /**
  * 
@@ -55,10 +52,17 @@ public final class SliceBeforeIterator<E> implements Iterator<RubyArray<E>> {
    *          an Iterable
    * @param block
    *          to check elements
+   * @throws NullPointerException
+   *           if iter is null
+   * @throws NullPointerException
+   *           if block is null
    */
   public SliceBeforeIterator(Iterator<E> iter, BooleanBlock<E> block) {
-    pIter = Iterators.peekingIterator(checkNotNull(iter));
-    this.block = checkNotNull(block);
+    if (iter == null || block == null)
+      throw new NullPointerException();
+
+    pIter = new PeekingIterator<E>(iter);
+    this.block = block;
     pattern = null;
   }
 
@@ -69,11 +73,18 @@ public final class SliceBeforeIterator<E> implements Iterator<RubyArray<E>> {
    *          an Iterator
    * @param pattern
    *          to match elements
+   * @throws NullPointerException
+   *           if iter is null
+   * @throws NullPointerException
+   *           if pattern is null
    */
   public SliceBeforeIterator(Iterator<E> iter, Pattern pattern) {
-    pIter = Iterators.peekingIterator(checkNotNull(iter));
+    if (iter == null || pattern == null)
+      throw new NullPointerException();
+
+    pIter = new PeekingIterator<E>(iter);
     block = null;
-    this.pattern = checkNotNull(pattern);
+    this.pattern = pattern;
   }
 
   private RubyArray<E> nextElement() {

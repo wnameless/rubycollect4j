@@ -20,21 +20,21 @@
  */
 package net.sf.rubycollect4j;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Lists.reverse;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,12 +55,6 @@ import net.sf.rubycollect4j.iter.EachSliceIterable;
 import net.sf.rubycollect4j.iter.EachWithIndexIterable;
 import net.sf.rubycollect4j.iter.EachWithObjectIterable;
 import net.sf.rubycollect4j.iter.SliceBeforeIterable;
-
-import com.google.common.base.Objects;
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Multimap;
 
 /**
  * An extension class for any Iterable object. It includes all methods refer to
@@ -244,7 +238,7 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
    * @return a RubyEnumerator
    */
   public RubyEnumerator<E> cycle() {
-    return newRubyEnumerator(Iterables.cycle(getIterable()));
+    return newRubyEnumerator(new CycleIterable<E>(getIterable()));
   }
 
   /**
@@ -322,9 +316,12 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
    * @param n
    *          number of elements to drop
    * @return a RubyArray
+   * @throws IllegalArgumentException
+   *           if n less than 0
    */
   public RubyArray<E> drop(int n) {
-    checkArgument(n >= 0, "attempt to drop negative size");
+    if (n < 0)
+      throw new IllegalArgumentException("attempt to drop negative size");
 
     RubyArray<E> rubyArray = newRubyArray();
     int i = 0;
@@ -625,9 +622,12 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
    * @param n
    *          number of elements
    * @return a RubyArray
+   * @throws IllegalArgumentException
+   *           if n less than 0
    */
   public RubyArray<E> first(int n) {
-    checkArgument(n >= 0, "attempt to take negative size");
+    if (n < 0)
+      throw new IllegalArgumentException("attempt to take negative size");
 
     Iterator<E> it = getIterable().iterator();
     RubyArray<E> rubyArray = newRubyArray();
@@ -722,10 +722,13 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
    * @return a RubyHash
    */
   public <S> RubyHash<S, RubyArray<E>> groupBy(TransformBlock<E, S> block) {
-    Multimap<S, E> multimap = ArrayListMultimap.create();
+    Map<S, List<E>> multimap = new LinkedHashMap<S, List<E>>();
     for (E item : getIterable()) {
       S key = block.yield(item);
-      multimap.put(key, item);
+      if (!multimap.containsKey(key))
+        multimap.put(key, new ArrayList<E>());
+
+      multimap.get(key).add(item);
     }
     RubyHash<S, RubyArray<E>> map = newRubyHash();
     for (S key : multimap.keySet()) {
@@ -935,7 +938,10 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
    * @return an element or null
    */
   public E max(Comparator<? super E> comp) {
-    List<E> list = newArrayList(getIterable());
+    List<E> list = new ArrayList<E>();
+    for (E item : getIterable()) {
+      list.add(item);
+    }
     if (list.isEmpty())
       return null;
     return Collections.max(list, comp);
@@ -964,8 +970,8 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
    * @return an element or null
    */
   public <S> E maxBy(Comparator<? super S> comp, TransformBlock<E, S> block) {
-    List<E> src = newArrayList();
-    List<S> dst = newArrayList();
+    List<E> src = new ArrayList<E>();
+    List<S> dst = new ArrayList<S>();
     for (E item : getIterable()) {
       src.add(item);
       dst.add(block.yield(item));
@@ -987,8 +993,8 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
    * @return an element or null
    */
   public <S> E maxBy(TransformBlock<E, S> block) {
-    List<E> src = newArrayList();
-    List<S> dst = newArrayList();
+    List<E> src = new ArrayList<E>();
+    List<S> dst = new ArrayList<S>();
     for (E item : getIterable()) {
       src.add(item);
       dst.add(block.yield(item));
@@ -1029,7 +1035,10 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
    * @return an element or null
    */
   public E min(Comparator<? super E> comp) {
-    List<E> list = newArrayList(getIterable());
+    List<E> list = new ArrayList<E>();
+    for (E item : getIterable()) {
+      list.add(item);
+    }
     if (list.isEmpty())
       return null;
     return Collections.min(list, comp);
@@ -1058,8 +1067,8 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
    * @return an element or null
    */
   public <S> E minBy(Comparator<? super S> comp, TransformBlock<E, S> block) {
-    List<E> src = newArrayList();
-    List<S> dst = newArrayList();
+    List<E> src = new ArrayList<E>();
+    List<S> dst = new ArrayList<S>();
     for (E item : getIterable()) {
       src.add(item);
       dst.add(block.yield(item));
@@ -1081,8 +1090,8 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
    * @return an element or null
    */
   public <S> E minBy(TransformBlock<E, S> block) {
-    List<E> src = newArrayList();
-    List<S> dst = newArrayList();
+    List<E> src = new ArrayList<E>();
+    List<S> dst = new ArrayList<S>();
     for (E item : getIterable()) {
       src.add(item);
       dst.add(block.yield(item));
@@ -1372,7 +1381,11 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
    * @return a RubyEnumerator
    */
   public RubyEnumerator<E> reverseEach() {
-    return newRubyEnumerator(Lists.reverse(newArrayList(getIterable())));
+    List<E> list = new ArrayList<E>();
+    for (E item : getIterable()) {
+      list.add(0, item);
+    }
+    return newRubyEnumerator(list);
   }
 
   /**
@@ -1383,8 +1396,7 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
    * @return this RubyEnumerable
    */
   public RubyEnumerable<E> reverseEach(Block<E> block) {
-    List<E> list = newArrayList(getIterable());
-    for (E item : reverse(list)) {
+    for (E item : reverseEach()) {
       block.yield(item);
     }
     return this;
@@ -1507,12 +1519,16 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
    */
   public <S> RubyArray<E> sortBy(Comparator<? super S> comp,
       TransformBlock<E, S> block) {
-    Multimap<S, E> multimap = ArrayListMultimap.create();
+    Map<S, List<E>> multimap = new LinkedHashMap<S, List<E>>();
     RubyArray<E> sortedList = newRubyArray();
     for (E item : getIterable()) {
-      multimap.put(block.yield(item), item);
+      S key = block.yield(item);
+      if (!multimap.containsKey(key))
+        multimap.put(key, new ArrayList<E>());
+
+      multimap.get(key).add(item);
     }
-    List<S> keys = newArrayList(multimap.keySet());
+    List<S> keys = new ArrayList<S>(multimap.keySet());
     Collections.sort(keys, comp);
     for (S key : keys) {
       Collection<E> coll = multimap.get(key);
@@ -1535,12 +1551,16 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
    * @return a RubyArray
    */
   public <S> RubyArray<E> sortBy(TransformBlock<E, S> block) {
-    Multimap<S, E> multimap = ArrayListMultimap.create();
+    Map<S, List<E>> multimap = new LinkedHashMap<S, List<E>>();
     RubyArray<E> sortedList = newRubyArray();
     for (E item : getIterable()) {
-      multimap.put(block.yield(item), item);
+      S key = block.yield(item);
+      if (!multimap.containsKey(key))
+        multimap.put(key, new ArrayList<E>());
+
+      multimap.get(key).add(item);
     }
-    List<S> keys = newArrayList(multimap.keySet());
+    List<S> keys = new ArrayList<S>(multimap.keySet());
     keys = newRubyEnumerator(keys).sort();
     for (S key : keys) {
       Collection<E> coll = multimap.get(key);
@@ -1562,7 +1582,8 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
    *           if n less than 0
    */
   public RubyArray<E> take(int n) {
-    checkArgument(n >= 0, "attempt to take negative size");
+    if (n < 0)
+      throw new IllegalArgumentException("attempt to take negative size");
 
     RubyArray<E> rubyArray = newRubyArray();
     int i = 0;
@@ -1683,8 +1704,7 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
 
   @Override
   public String toString() {
-    return Objects.toStringHelper(this.getClass()).addValue(getIterable())
-        .toString();
+    return "RubyEnumerable{" + getIterable() + "}";
   }
 
 }

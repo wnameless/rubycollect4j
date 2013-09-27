@@ -20,7 +20,6 @@
  */
 package net.sf.rubycollect4j;
 
-import static com.google.common.collect.Lists.newArrayList;
 import static net.sf.rubycollect4j.RubyCollections.newPair;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
@@ -49,8 +48,6 @@ import net.sf.rubycollect4j.block.WithObjectBlock;
 
 import org.junit.Test;
 
-import com.google.common.primitives.Ints;
-
 public class RubyEnumerableTest {
 
   private RubyEnumerable<Integer> re;
@@ -78,7 +75,7 @@ public class RubyEnumerableTest {
   public void testAllʔ() {
     re = newRubyEnumerator(Arrays.asList(1, 2));
     assertEquals(true, re.allʔ());
-    re = newRubyEnumerator(Ints.asList());
+    re = newRubyEnumerator(new ArrayList<Integer>());
     assertEquals(true, re.allʔ());
     re = newRubyEnumerator(Arrays.asList(1, 2, null));
     assertEquals(false, re.allʔ());
@@ -109,7 +106,7 @@ public class RubyEnumerableTest {
   public void testAnyʔ() {
     re = newRubyEnumerator(Arrays.asList(1, 2));
     assertEquals(true, re.anyʔ());
-    re = newRubyEnumerator(Ints.asList());
+    re = newRubyEnumerator(new ArrayList<Integer>());
     assertEquals(false, re.anyʔ());
     re = newRubyEnumerator(Arrays.asList(1, 2, null));
     assertEquals(true, re.anyʔ());
@@ -204,7 +201,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testCount() {
-    re = newRubyEnumerator(Ints.asList());
+    re = newRubyEnumerator(new ArrayList<Integer>());
     assertEquals(0, re.count());
     re = newRubyEnumerator(Arrays.asList(1, 2, 3, 4));
     assertEquals(4, re.count());
@@ -307,10 +304,16 @@ public class RubyEnumerableTest {
     }));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testDrop() {
     re = newRubyEnumerator(Arrays.asList(1, 2, 3, 4));
+    assertEquals(ra(1, 2, 3, 4), re.drop(0));
     assertEquals(ra(3, 4), re.drop(2));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testDropException() {
+    re = newRubyEnumerator(Arrays.asList(1, 2, 3, 4));
     re.drop(-1);
   }
 
@@ -319,7 +322,7 @@ public class RubyEnumerableTest {
     re = newRubyEnumerator(Arrays.asList(1, 2, 3, 4));
     assertEquals(RubyEnumerator.class, re.dropWhile().getClass());
     assertEquals(ra(1), re.dropWhile().toA());
-    List<Integer> ints = newArrayList();
+    List<Integer> ints = new ArrayList<Integer>();
     re = newRubyEnumerator(ints);
     assertEquals(ra(), re.dropWhile().toA());
   }
@@ -592,13 +595,14 @@ public class RubyEnumerableTest {
   public void testFirst() {
     re = newRubyEnumerator(Arrays.asList(1, 2, 3, 4));
     assertEquals(Integer.valueOf(1), re.first());
-    re = newRubyEnumerator(Ints.asList());
+    re = newRubyEnumerator(new ArrayList<Integer>());
     assertNull(re.first());
   }
 
   @Test
   public void testFirstWithN() {
     re = newRubyEnumerator(Arrays.asList(1, 2, 3, 4));
+    assertEquals(ra(), re.first(0));
     assertEquals(ra(1, 2, 3), re.first(3));
     assertEquals(ra(1, 2, 3, 4), re.first(6));
   }
@@ -758,7 +762,7 @@ public class RubyEnumerableTest {
   public void testMax() {
     re = newRubyEnumerator(Arrays.asList(1, 2, 3, 4));
     assertEquals(Integer.valueOf(4), re.max());
-    re = newRubyEnumerator(Ints.asList());
+    re = newRubyEnumerator(new ArrayList<Integer>());
     assertNull(re.max());
   }
 
@@ -862,7 +866,7 @@ public class RubyEnumerableTest {
   public void testMin() {
     re = newRubyEnumerator(Arrays.asList(1, 2, 3, 4));
     assertEquals(Integer.valueOf(1), re.min());
-    re = newRubyEnumerator(Ints.asList());
+    re = newRubyEnumerator(new ArrayList<Integer>());
     assertNull(re.min());
   }
 
@@ -961,7 +965,7 @@ public class RubyEnumerableTest {
     assertEquals(ra(1, 4), re.minmax());
     re = newRubyEnumerator(Arrays.asList(1));
     assertEquals(ra(1, 1), re.minmax());
-    re = newRubyEnumerator(Ints.asList());
+    re = newRubyEnumerator(new ArrayList<Integer>());
     assertEquals(ra(null, null), re.minmax());
   }
 
@@ -1056,7 +1060,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testNoneʔ() {
-    re = newRubyEnumerator(Ints.asList());
+    re = newRubyEnumerator(new ArrayList<Integer>());
     assertTrue(re.noneʔ());
     RubyArray<Integer> ra = ra();
     ra.push(null);
@@ -1097,7 +1101,7 @@ public class RubyEnumerableTest {
     assertTrue(re.oneʔ());
     re = newRubyEnumerator(Arrays.asList(1, 2));
     assertFalse(re.oneʔ());
-    List<Integer> ints = newArrayList();
+    List<Integer> ints = new ArrayList<Integer>();
     re = newRubyEnumerator(ints);
     assertFalse(re.oneʔ());
   }
@@ -1121,7 +1125,7 @@ public class RubyEnumerableTest {
       }
 
     }));
-    List<Integer> ints = newArrayList();
+    List<Integer> ints = new ArrayList<Integer>();
     re = newRubyEnumerator(ints);
     assertFalse(re.oneʔ(new BooleanBlock<Integer>() {
 
@@ -1365,6 +1369,7 @@ public class RubyEnumerableTest {
   @Test
   public void testTake() {
     re = newRubyEnumerator(Arrays.asList(1, 2, 3, 4));
+    assertEquals(ra(), re.take(0));
     assertEquals(ra(1, 2), re.take(2));
     assertEquals(ra(1, 2, 3, 4), re.take(5));
   }
@@ -1457,7 +1462,7 @@ public class RubyEnumerableTest {
         return Arrays.asList(1, 2, 3, 4);
       }
     };
-    assertEquals("{[1, 2, 3, 4]}", re.toString());
+    assertEquals("RubyEnumerable{[1, 2, 3, 4]}", re.toString());
   }
 
 }

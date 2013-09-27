@@ -20,8 +20,6 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 
 import java.util.Iterator;
@@ -50,12 +48,18 @@ public final class EachSliceIterator<E> implements Iterator<RubyArray<E>> {
    *          an Iterabel
    * @param size
    *          of the window
+   * @throws NullPointerException
+   *           if iter is null
    * @throws IllegalArgumentException
    *           if size less than or equal to 0
    */
   public EachSliceIterator(Iterator<E> iter, int size) {
-    checkArgument(size > 0);
-    this.iter = checkNotNull(iter);
+    if (iter == null)
+      throw new NullPointerException();
+    if (size <= 0)
+      throw new IllegalArgumentException("ArgumentError: invalid slice size");
+
+    this.iter = iter;
     this.size = size;
   }
 

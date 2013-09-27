@@ -20,9 +20,8 @@
  */
 package net.sf.rubycollect4j.succ;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import static com.google.common.collect.Lists.newArrayList;
 
 /**
  * 
@@ -152,15 +151,15 @@ public final class StringSuccessor implements Successive<String> {
   }
 
   private List<List<Character>> partition(String curr) {
-    List<List<Character>> parts = newArrayList();
-    List<Character> chars = newArrayList();
+    List<List<Character>> parts = new ArrayList<List<Character>>();
+    List<Character> chars = new ArrayList<Character>();
     for (char c : curr.toCharArray()) {
       if (chars.isEmpty()
           || isAlphanumeric(chars.get(chars.size() - 1)) == isAlphanumeric(c)) {
         chars.add(c);
       } else {
         parts.add(chars);
-        chars = newArrayList();
+        chars = new ArrayList<Character>();
         chars.add(c);
       }
     }
