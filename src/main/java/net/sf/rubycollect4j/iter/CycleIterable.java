@@ -20,11 +20,11 @@
  */
 package net.sf.rubycollect4j.iter;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.Iterator;
 
 import com.google.common.collect.Iterables;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * 

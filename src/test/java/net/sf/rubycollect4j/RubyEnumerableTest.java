@@ -20,6 +20,17 @@
  */
 package net.sf.rubycollect4j;
 
+import static com.google.common.collect.Lists.newArrayList;
+import static net.sf.rubycollect4j.RubyCollections.newPair;
+import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
+import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
+import static net.sf.rubycollect4j.RubyCollections.ra;
+import static net.sf.rubycollect4j.RubyCollections.rh;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,17 +50,6 @@ import net.sf.rubycollect4j.block.WithObjectBlock;
 import org.junit.Test;
 
 import com.google.common.primitives.Ints;
-
-import static com.google.common.collect.Lists.newArrayList;
-import static net.sf.rubycollect4j.RubyCollections.newPair;
-import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
-import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
-import static net.sf.rubycollect4j.RubyCollections.ra;
-import static net.sf.rubycollect4j.RubyCollections.rh;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 public class RubyEnumerableTest {
 
@@ -1451,6 +1451,7 @@ public class RubyEnumerableTest {
   @Test
   public void testToString() {
     re = new RubyEnumerable<Integer>() {
+
       @Override
       protected Iterable<Integer> getIterable() {
         return Arrays.asList(1, 2, 3, 4);

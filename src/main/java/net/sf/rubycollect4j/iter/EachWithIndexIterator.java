@@ -20,12 +20,12 @@
  */
 package net.sf.rubycollect4j.iter;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * 

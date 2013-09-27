@@ -157,6 +157,7 @@ public class RubyDirTest {
   public void testEachWithBlock() {
     final RubyArray<String> entries = ra();
     RubyDir.open(BASE_DIR + "glob_test/folder2").each(new Block<String>() {
+
       @Override
       public void yield(String item) {
         entries.push(item);

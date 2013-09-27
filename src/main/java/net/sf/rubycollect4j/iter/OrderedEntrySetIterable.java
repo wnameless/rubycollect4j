@@ -20,14 +20,14 @@
  */
 package net.sf.rubycollect4j.iter;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+import static net.sf.rubycollect4j.RubyCollections.ra;
+
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-
-import static com.google.common.base.Preconditions.checkNotNull;
-import static net.sf.rubycollect4j.RubyCollections.ra;
 
 /**
  * 

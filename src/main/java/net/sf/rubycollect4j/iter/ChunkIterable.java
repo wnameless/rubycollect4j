@@ -20,13 +20,13 @@
  */
 package net.sf.rubycollect4j.iter;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.Iterator;
 import java.util.Map.Entry;
 
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.block.TransformBlock;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * 
@@ -42,6 +42,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public final class ChunkIterable<E, K> implements
     Iterable<Entry<K, RubyArray<E>>> {
+
   private final Iterable<E> iterable;
   private final TransformBlock<E, K> block;
 

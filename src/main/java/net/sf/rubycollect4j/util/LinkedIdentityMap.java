@@ -20,6 +20,11 @@
  */
 package net.sf.rubycollect4j.util;
 
+import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Lists.newLinkedList;
+import static com.google.common.collect.Maps.newIdentityHashMap;
+import static java.util.Collections.unmodifiableList;
+
 import java.util.Collection;
 import java.util.IdentityHashMap;
 import java.util.LinkedList;
@@ -29,11 +34,6 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sf.rubycollect4j.iter.OrderedEntrySetIterable;
-
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Lists.newLinkedList;
-import static com.google.common.collect.Maps.newIdentityHashMap;
-import static java.util.Collections.unmodifiableList;
 
 /**
  * 

@@ -20,15 +20,16 @@
  */
 package net.sf.rubycollect4j.iter;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.Iterator;
 import java.util.regex.Pattern;
 
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.block.BooleanBlock;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
+ * 
  * SliceBeforeIterable iterates all elements by slicing elements into different
  * parts. It performs each slicing when any element is true returned by the
  * block or matched by the pattern.

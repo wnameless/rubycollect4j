@@ -20,6 +20,10 @@
  */
 package net.sf.rubycollect4j.iter;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.collect.Lists.newArrayList;
+import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
+
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -27,10 +31,6 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import net.sf.rubycollect4j.RubyArray;
-
-import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.collect.Lists.newArrayList;
-import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 
 /**
  * 

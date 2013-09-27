@@ -20,15 +20,15 @@
  */
 package net.sf.rubycollect4j.util;
 
+import static com.google.common.collect.Sets.newHashSet;
+import static net.sf.rubycollect4j.RubyCollections.ra;
+
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import com.google.common.collect.HashMultiset;
-
-import static com.google.common.collect.Sets.newHashSet;
-import static net.sf.rubycollect4j.RubyCollections.ra;
 
 /**
  * 

@@ -20,10 +20,10 @@
  */
 package net.sf.rubycollect4j;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.Calendar;
 import java.util.Date;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * 

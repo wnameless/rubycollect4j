@@ -45,6 +45,7 @@ import net.sf.rubycollect4j.block.TransformBlock;
 import net.sf.rubycollect4j.util.LinkedIdentityMap;
 
 /**
+ * 
  * RubyHash implements all methods refer to the Hash class of Ruby. RubyHash is
  * also a Java Map.
  * 

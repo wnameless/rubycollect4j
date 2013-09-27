@@ -20,14 +20,14 @@
  */
 package net.sf.rubycollect4j.iter;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import net.sf.rubycollect4j.RubyArray;
-
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 
 /**
  * 
