@@ -77,3 +77,5 @@ Version 1.4.0
 + Implemented RubyArray#pack()
 
 + Added RubyFile::join
+
+- Removed google guava dependency
