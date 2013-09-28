@@ -9,7 +9,7 @@
 
 	<groupId>net.sf.rubycollect4j</groupId>
 	<artifactId>rubycollect4j</artifactId>
-	<version>1.4.0</version>
+	<version>1.4.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>rubycollect4j</name>
