@@ -26,7 +26,7 @@ import java.util.NoSuchElementException;
 /**
  * 
  * PeekingIterator is an Iterator which provides a peek() method for user to
- * inspect an element advanced.
+ * peek an element advanced.
  * 
  * @param <E>
  *          the type of elements
@@ -36,6 +36,7 @@ public final class PeekingIterator<E> implements Iterator<E> {
   private final Iterator<E> iterator;
   private E peek;
   private boolean hasPeek;
+  private boolean removable = false;
 
   /**
    * Creates a PeekingIterator.
@@ -55,35 +56,48 @@ public final class PeekingIterator<E> implements Iterator<E> {
 
   @Override
   public boolean hasNext() {
-    return hasPeek;
+    return hasPeek || iterator.hasNext();
   }
 
   @Override
   public E next() {
-    E result = peek;
     if (!hasNext())
       throw new NoSuchElementException();
 
-    if (iterator.hasNext()) {
-      peek = iterator.next();
-      hasPeek = true;
-    } else {
+    if (hasPeek) {
       hasPeek = false;
+      removable = true;
+      return peek;
+    } else {
+      if (iterator.hasNext()) {
+        peek = iterator.next();
+        hasPeek = true;
+      }
+      return next();
     }
-    return result;
   }
 
   @Override
   public void remove() {
-    throw new UnsupportedOperationException();
+    if (!removable)
+      throw new IllegalStateException();
+
+    iterator.remove();
+    removable = false;
   }
 
   /**
-   * Checks an element advanced.
+   * Peeks an element advanced. Warning: remove() is temporarily out of function
+   * after a peek() until a next() is called.
    * 
    * @return an element
    */
   public E peek() {
+    if (!hasPeek && iterator.hasNext()) {
+      peek = iterator.next();
+      hasPeek = true;
+      removable = false;
+    }
     if (!hasPeek)
       throw new NoSuchElementException();
 
