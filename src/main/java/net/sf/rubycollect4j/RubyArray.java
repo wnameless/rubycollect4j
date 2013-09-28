@@ -1808,7 +1808,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   public RubyArray<E> valuesAt(int... indices) {
     List<E> values = new ArrayList<E>();
     for (int index : indices) {
-      values.add(this.at(index));
+      values.add(at(index));
     }
     return newRubyArray(values);
   }
