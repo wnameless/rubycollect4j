@@ -1225,6 +1225,7 @@ public class RubyEnumerableTest {
     re = newRubyEnumerator(Arrays.asList(1, 2, 3, 4));
     assertEquals(RubyEnumerator.class, re.reverseEach().getClass());
     assertEquals(ra(4, 3, 2, 1), re.reverseEach().toA());
+    assertEquals(ra(1, 2, 3, 4).toA(), re.toA());
   }
 
   @Test
@@ -1240,6 +1241,7 @@ public class RubyEnumerableTest {
 
     }));
     assertEquals(ra(4, 3, 2, 1), ra);
+    assertEquals(ra(1, 2, 3, 4), re.toA());
   }
 
   @Test

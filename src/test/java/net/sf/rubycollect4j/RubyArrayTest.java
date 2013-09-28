@@ -978,8 +978,6 @@ public class RubyArrayTest {
     ra = ra(1, 2, 3, 4);
     assertEquals(ra(4, 3, 2, 1), ra.reverseǃ());
     assertEquals(ra(4, 3, 2, 1), ra);
-    ra = ra();
-    assertEquals(ra(), ra.reverseǃ());
   }
 
   @Test

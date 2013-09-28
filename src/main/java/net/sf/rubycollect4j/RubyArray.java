@@ -1163,8 +1163,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return a new RubyArray
    */
   public RubyArray<E> reverse() {
-    List<E> reversedList = new ArrayList<E>(list);
-    Collections.reverse(reversedList);
+    List<E> reversedList = new ArrayList<E>();
+    for (int i = 0; i < size(); i++) {
+      reversedList.add(0, get(i));
+    }
     return newRubyArray(reversedList);
   }
 
@@ -1174,10 +1176,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return this RubyArray
    */
   public RubyArray<E> reverseǃ() {
-    int size = size();
-    for (int i = 0; i < size; i++) {
-      add(i, remove(size - 1));
-    }
+    Collections.reverse(list);
     return this;
   }
 
@@ -1187,9 +1186,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return a RubyEnumerator
    */
   public RubyEnumerator<E> rindex() {
-    List<E> reversedList = new ArrayList<E>(list);
-    Collections.reverse(reversedList);
-    return newRubyEnumerator(reversedList);
+    return newRubyEnumerator(reverse());
   }
 
   /**
