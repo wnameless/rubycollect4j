@@ -35,6 +35,8 @@ public final class RubyKernel {
 
   /**
    * Returns null.
+   * 
+   * @return null
    */
   public static Object p() {
     return null;
