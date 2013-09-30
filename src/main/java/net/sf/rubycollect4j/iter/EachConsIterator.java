@@ -42,22 +42,22 @@ public final class EachConsIterator<E> implements Iterator<RubyArray<E>> {
   private final RubyArray<E> bucket = newRubyArray();
 
   /**
-   * The constructor of the EachConsIterator.
+   * Creates an EachConsIterator.
    * 
    * @param iter
    *          an Iterator
    * @param size
    *          of the window
-   * @throws IllegalArgumentException
-   *           if size less than or equal to 0
    * @throws NullPointerException
    *           if iter is null
+   * @throws IllegalArgumentException
+   *           if size less than or equal to 0
    */
   public EachConsIterator(Iterator<E> iter, int size) {
-    if (size <= 0)
-      throw new IllegalArgumentException("ArgumentError: invalid size");
     if (iter == null)
       throw new NullPointerException();
+    if (size <= 0)
+      throw new IllegalArgumentException("ArgumentError: invalid size");
 
     this.iter = iter;
     this.size = size;
@@ -90,9 +90,9 @@ public final class EachConsIterator<E> implements Iterator<RubyArray<E>> {
 
   @Override
   public RubyArray<E> next() {
-    if (!hasNext()) {
+    if (!hasNext())
       throw new NoSuchElementException();
-    }
+
     return nextElement();
   }
 

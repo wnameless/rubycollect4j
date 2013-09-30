@@ -38,20 +38,22 @@ public final class EachConsIterable<E> implements Iterable<RubyArray<E>> {
   private final int size;
 
   /**
-   * The constructor of the EachConsIterable.
+   * Creates an EachConsIterable.
    * 
    * @param iter
    *          an Iterable
    * @param size
    *          of the window
+   * @throws NullPointerException
+   *           if iter is null
    * @throws IllegalArgumentException
    *           if size less than or equal to 0
    */
   public EachConsIterable(Iterable<E> iter, int size) {
-    if (size <= 0)
-      throw new IllegalArgumentException("ArgumentError: invalid size");
     if (iter == null)
       throw new NullPointerException();
+    if (size <= 0)
+      throw new IllegalArgumentException("ArgumentError: invalid size");
 
     this.iter = iter;
     this.size = size;
