@@ -38,7 +38,7 @@ import net.sf.rubycollect4j.RubyArray;
  * @param <E>
  *          the type of the elements
  */
-public class PermutationIterator<E> implements Iterator<RubyArray<E>> {
+public final class PermutationIterator<E> implements Iterator<RubyArray<E>> {
 
   private final List<E> list;
   private final int[] counter;
@@ -46,7 +46,7 @@ public class PermutationIterator<E> implements Iterator<RubyArray<E>> {
   private boolean hasMore = true;
 
   /**
-   * The constructor of the PermutationIterator.
+   * Creates an PermutationIterator.
    * 
    * @param list
    *          a List
@@ -90,17 +90,15 @@ public class PermutationIterator<E> implements Iterator<RubyArray<E>> {
     for (int i = 0; i < counter.length; i++) {
       c.push(list.get(counter[i]));
     }
-    if (Arrays.equals(counter, endStatus)) {
+    if (Arrays.equals(counter, endStatus))
       hasMore = false;
-    } else {
+    else
       increaseCounter();
-    }
     return c;
   }
 
   private void increaseCounter() {
     for (int i = counter.length - 1; i >= 0; i--) {
-
       int next = getHigherIndex(i);
       if (next != -1) {
         counter[i] = next;
@@ -120,9 +118,9 @@ public class PermutationIterator<E> implements Iterator<RubyArray<E>> {
 
   private int getHigherIndex(int pos) {
     int current = counter[pos];
-    if (current + 1 >= list.size()) {
+    if (current + 1 >= list.size())
       return -1;
-    }
+
     List<Integer> indice = getAllIndice();
     for (int i = 0; i <= pos; i++) {
       indice.remove(Integer.valueOf(counter[i]));
@@ -130,15 +128,13 @@ public class PermutationIterator<E> implements Iterator<RubyArray<E>> {
     ListIterator<Integer> iter = indice.listIterator();
     while (iter.hasNext()) {
       Integer i = iter.next();
-      if (i <= current) {
+      if (i <= current)
         iter.remove();
-      }
     }
-    if (indice.isEmpty()) {
+    if (indice.isEmpty())
       return -1;
-    } else {
+    else
       return indice.get(0);
-    }
   }
 
   private int getLowerIndex(int pos) {
@@ -146,11 +142,10 @@ public class PermutationIterator<E> implements Iterator<RubyArray<E>> {
     for (int i = 0; i < pos; i++) {
       indice.remove(Integer.valueOf(counter[i]));
     }
-    if (indice.isEmpty()) {
+    if (indice.isEmpty())
       return -1;
-    } else {
+    else
       return indice.get(0);
-    }
   }
 
   private List<Integer> getAllIndice() {
@@ -168,9 +163,9 @@ public class PermutationIterator<E> implements Iterator<RubyArray<E>> {
 
   @Override
   public RubyArray<E> next() {
-    if (!hasNext()) {
+    if (!hasNext())
       throw new NoSuchElementException();
-    }
+
     return nextElement();
   }
 

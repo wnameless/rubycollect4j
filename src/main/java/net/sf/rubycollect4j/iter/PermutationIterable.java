@@ -38,7 +38,7 @@ public final class PermutationIterable<E> implements Iterable<RubyArray<E>> {
   private final int n;
 
   /**
-   * The constructor of the PermutationIterable.
+   * Creates an PermutationIterable.
    * 
    * @param list
    *          a List
@@ -58,6 +58,21 @@ public final class PermutationIterable<E> implements Iterable<RubyArray<E>> {
   @Override
   public Iterator<RubyArray<E>> iterator() {
     return new PermutationIterator<E>(list, n);
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder("[");
+    int index = 0;
+    for (RubyArray<E> item : this) {
+      if (index == 0)
+        sb.append(item);
+      else
+        sb.append(", " + item);
+      index++;
+    }
+    sb.append("]");
+    return sb.toString();
   }
 
 }
