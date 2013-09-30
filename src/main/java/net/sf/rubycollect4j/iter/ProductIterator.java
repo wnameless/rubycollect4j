@@ -38,18 +38,18 @@ import net.sf.rubycollect4j.RubyArray;
  */
 public final class ProductIterator<E> implements Iterator<RubyArray<E>> {
 
-  private final List<List<E>> lists;
+  private final List<? extends List<E>> lists;
   private final int[] counter;
 
   /**
-   * The constructor of the ProductIterator.
+   * Creates an ProductIterator.
    * 
    * @param lists
-   *          a List of Lists
+   *          a List of List
    * @throws NullPointerException
    *           if lists is null
    */
-  public ProductIterator(List<List<E>> lists) {
+  public ProductIterator(List<? extends List<E>> lists) {
     if (lists == null)
       throw new NullPointerException();
 
@@ -57,7 +57,7 @@ public final class ProductIterator<E> implements Iterator<RubyArray<E>> {
     counter = new int[lists.size()];
   }
 
-  public RubyArray<E> nextElement() {
+  private RubyArray<E> nextElement() {
     RubyArray<E> combination = newRubyArray();
     for (int i = 0; i < counter.length; i++) {
       combination.add(lists.get(i).get(counter[i]));
@@ -82,9 +82,8 @@ public final class ProductIterator<E> implements Iterator<RubyArray<E>> {
 
   private boolean isLooping() {
     for (int i = 0; i < counter.length; i++) {
-      if (lists.get(i).isEmpty()) {
+      if (lists.get(i).isEmpty())
         return false;
-      }
     }
     return Arrays.binarySearch(counter, -1) == -1;
   }
@@ -96,9 +95,9 @@ public final class ProductIterator<E> implements Iterator<RubyArray<E>> {
 
   @Override
   public RubyArray<E> next() {
-    if (!hasNext()) {
+    if (!hasNext())
       throw new NoSuchElementException();
-    }
+
     return nextElement();
   }
 

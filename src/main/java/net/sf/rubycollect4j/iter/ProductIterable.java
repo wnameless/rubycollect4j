@@ -39,21 +39,17 @@ public final class ProductIterable<E> implements Iterable<RubyArray<E>> {
   private final List<List<E>> lists = new ArrayList<List<E>>();
 
   /**
-   * The constructor of the ProductIterable.
+   * Creates an ProductIterable.
    * 
    * @param self
    *          a List
    * @param others
-   *          a List of Lists
+   *          a List of List
    * @throws NullPointerException
-   *           if self is null
-   * @throws NullPointerException
-   *           if others is null
+   *           if self or others is null
    */
   public ProductIterable(List<E> self, List<? extends List<E>> others) {
-    if (self == null)
-      throw new NullPointerException();
-    if (others == null)
+    if (self == null || others == null)
       throw new NullPointerException();
 
     lists.add(self);
@@ -61,12 +57,12 @@ public final class ProductIterable<E> implements Iterable<RubyArray<E>> {
   }
 
   /**
-   * The constructor of the ProductIterable.
+   * Creates an ProductIterable.
    * 
    * @param self
    *          a List
    * @param others
-   *          an Array of Lists
+   *          an array of List
    * @throws NullPointerException
    *           if self is null
    */
@@ -81,6 +77,21 @@ public final class ProductIterable<E> implements Iterable<RubyArray<E>> {
   @Override
   public Iterator<RubyArray<E>> iterator() {
     return new ProductIterator<E>(lists);
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder("[");
+    int index = 0;
+    for (RubyArray<E> item : this) {
+      if (index == 0)
+        sb.append(item);
+      else
+        sb.append(", " + item);
+      index++;
+    }
+    sb.append("]");
+    return sb.toString();
   }
 
 }
