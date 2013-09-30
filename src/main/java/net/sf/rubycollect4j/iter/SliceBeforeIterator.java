@@ -46,16 +46,14 @@ public final class SliceBeforeIterator<E> implements Iterator<RubyArray<E>> {
   private final Pattern pattern;
 
   /**
-   * The constructor of the SliceBeforeIterator.
+   * Creates a SliceBeforeIterator.
    * 
    * @param iter
    *          an Iterable
    * @param block
    *          to check elements
    * @throws NullPointerException
-   *           if iter is null
-   * @throws NullPointerException
-   *           if block is null
+   *           if iter or block is null
    */
   public SliceBeforeIterator(Iterator<E> iter, BooleanBlock<E> block) {
     if (iter == null || block == null)
@@ -67,16 +65,14 @@ public final class SliceBeforeIterator<E> implements Iterator<RubyArray<E>> {
   }
 
   /**
-   * The constructor of the SliceBeforeIterator.
+   * Creates a SliceBeforeIterator.
    * 
    * @param iter
    *          an Iterator
    * @param pattern
    *          to match elements
    * @throws NullPointerException
-   *           if iter is null
-   * @throws NullPointerException
-   *           if pattern is null
+   *           if iter or pattern is null
    */
   public SliceBeforeIterator(Iterator<E> iter, Pattern pattern) {
     if (iter == null || pattern == null)
@@ -109,9 +105,9 @@ public final class SliceBeforeIterator<E> implements Iterator<RubyArray<E>> {
 
   @Override
   public RubyArray<E> next() {
-    if (!hasNext()) {
+    if (!hasNext())
       throw new NoSuchElementException();
-    }
+
     return nextElement();
   }
 

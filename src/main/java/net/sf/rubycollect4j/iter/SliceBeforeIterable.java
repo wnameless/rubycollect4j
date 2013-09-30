@@ -42,16 +42,14 @@ public final class SliceBeforeIterable<E> implements Iterable<RubyArray<E>> {
   private final Pattern pattern;
 
   /**
-   * The constructor of the SliceBeforeIterable.
+   * Creates a SliceBeforeIterable.
    * 
    * @param iter
    *          an Iterable
    * @param block
    *          to check elements
    * @throws NullPointerException
-   *           if iter is null
-   * @throws NullPointerException
-   *           if block is null
+   *           if iter or block is null
    */
   public SliceBeforeIterable(Iterable<E> iter, BooleanBlock<E> block) {
     if (iter == null || block == null)
@@ -63,16 +61,14 @@ public final class SliceBeforeIterable<E> implements Iterable<RubyArray<E>> {
   }
 
   /**
-   * The constructor of the SliceBeforeIterable.
+   * Creates a SliceBeforeIterable.
    * 
    * @param iter
    *          an Iterable
    * @param pattern
    *          to match elements
    * @throws NullPointerException
-   *           if iter is null
-   * @throws NullPointerException
-   *           if pattern is null
+   *           if iter or pattern is null
    */
   public SliceBeforeIterable(Iterable<E> iter, Pattern pattern) {
     if (iter == null || pattern == null)
@@ -85,11 +81,25 @@ public final class SliceBeforeIterable<E> implements Iterable<RubyArray<E>> {
 
   @Override
   public Iterator<RubyArray<E>> iterator() {
-    if (block != null) {
+    if (block != null)
       return new SliceBeforeIterator<E>(iter.iterator(), block);
-    } else {
+    else
       return new SliceBeforeIterator<E>(iter.iterator(), pattern);
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder("[");
+    int index = 0;
+    for (RubyArray<E> item : this) {
+      if (index == 0)
+        sb.append(item);
+      else
+        sb.append(", " + item);
+      index++;
     }
+    sb.append("]");
+    return sb.toString();
   }
 
 }
