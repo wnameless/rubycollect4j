@@ -41,16 +41,14 @@ public final class EachWithObjectIterator<E, O> implements
   private final O obj;
 
   /**
-   * The constructor of the EachWithObjectIterator.
+   * Creates an EachWithObjectIterator.
    * 
    * @param iter
    *          an Iterator
    * @param obj
    *          an Object
    * @throws NullPointerException
-   *           if iter is null
-   * @throws NullPointerException
-   *           if obj is null
+   *           if iter or obj is null
    */
   public EachWithObjectIterator(Iterator<E> iter, O obj) {
     if (iter == null || obj == null)
@@ -71,9 +69,9 @@ public final class EachWithObjectIterator<E, O> implements
 
   @Override
   public Entry<E, O> next() {
-    if (!hasNext()) {
+    if (!hasNext())
       throw new NoSuchElementException();
-    }
+
     return nextElement();
   }
 

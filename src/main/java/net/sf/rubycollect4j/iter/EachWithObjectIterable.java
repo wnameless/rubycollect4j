@@ -39,16 +39,14 @@ public final class EachWithObjectIterable<E, O> implements
   private final O obj;
 
   /**
-   * The constructor of the EachWithObjectIterable.
+   * Creates an EachWithObjectIterable.
    * 
    * @param iter
    *          an Iterable
    * @param obj
    *          an Object
    * @throws NullPointerException
-   *           if iter is null
-   * @throws NullPointerException
-   *           if obj is null
+   *           if iter or obj is null
    */
   public EachWithObjectIterable(Iterable<E> iter, O obj) {
     if (iter == null || obj == null)
@@ -61,6 +59,21 @@ public final class EachWithObjectIterable<E, O> implements
   @Override
   public Iterator<Entry<E, O>> iterator() {
     return new EachWithObjectIterator<E, O>(iter.iterator(), obj);
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder("[");
+    int index = 0;
+    for (Entry<E, O> item : this) {
+      if (index == 0)
+        sb.append(item);
+      else
+        sb.append(", " + item);
+      index++;
+    }
+    sb.append("]");
+    return sb.toString();
   }
 
 }
