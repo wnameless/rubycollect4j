@@ -1,6 +1,7 @@
 package net.sf.rubycollect4j.iter;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -38,6 +39,11 @@ public class EachConsIterableTest {
   @Test
   public void testIterator() {
     assertTrue(iter.iterator() instanceof EachConsIterator);
+  }
+
+  @Test
+  public void testToString() {
+    assertEquals("[[1, 2], [2, 3], [3, 4], [4, 5]]", iter.toString());
   }
 
 }

@@ -64,4 +64,19 @@ public final class EachConsIterable<E> implements Iterable<RubyArray<E>> {
     return new EachConsIterator<E>(iter.iterator(), size);
   }
 
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder("[");
+    int index = 0;
+    for (RubyArray<E> item : this) {
+      if (index == 0)
+        sb.append(item);
+      else
+        sb.append(", " + item);
+      index++;
+    }
+    sb.append("]");
+    return sb.toString();
+  }
+
 }
