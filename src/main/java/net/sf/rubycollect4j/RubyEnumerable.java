@@ -1651,7 +1651,7 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
         if (i < z.size())
           zip.add(z.get(i));
         else
-          zip.push(null);
+          zip.add(null);
       }
       zippedRubyArray.add(zip);
     }

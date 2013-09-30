@@ -92,3 +92,5 @@ Version 1.4.1
 * Changed UnsupportedOperationException to IllegalStateException in RubyIO
 
 * Overrode toString() methods of all Iterables
+
+* Made RubyArray#push accept varargs

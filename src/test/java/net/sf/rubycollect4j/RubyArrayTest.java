@@ -652,7 +652,7 @@ public class RubyArrayTest {
   public void testJoin() {
     ra = ra(1, 2, 3, 4);
     assertEquals("1234", ra.join());
-    ra.push(null);
+    ra.add(null);
     assertEquals("1234", ra.join());
   }
 
@@ -660,7 +660,7 @@ public class RubyArrayTest {
   public void testJoinWithSeparator() {
     ra = ra(1, 2, 3, 4);
     assertEquals("1,2,3,4", ra.join(","));
-    ra.push(null);
+    ra.add(null);
     assertEquals("1\t2\t3\t4\t", ra.join("\t"));
     ra.clear();
     assertEquals("", ra.join(":"));
@@ -856,6 +856,15 @@ public class RubyArrayTest {
     assertEquals(ra(1), ra);
     assertEquals(ra(1, 2), ra.push(2));
     assertEquals(ra(1, 2), ra);
+  }
+
+  @Test
+  public void testPushWithVarargs() {
+    ra = ra();
+    assertEquals(ra(1, 2, 3), ra.push(1, 2, 3));
+    assertEquals(ra(1, 2, 3), ra);
+    assertEquals(ra(1, 2, 3, 4, null, 6), ra.push(4, null, 6));
+    assertEquals(ra(1, 2, 3, 4, null, 6), ra);
   }
 
   @SuppressWarnings("unchecked")

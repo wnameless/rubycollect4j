@@ -1030,7 +1030,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   }
 
   /**
-   * Equivalent to add().
+   * Adds the item to the end of this RubyArray.
    * 
    * @param item
    *          an element
@@ -1038,6 +1038,20 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    */
   public RubyArray<E> push(E item) {
     add(item);
+    return this;
+  }
+
+  /**
+   * Adds items to the end of this RubyArray.
+   * 
+   * @param items
+   *          an array of element
+   * @return this RubyArray
+   */
+  public RubyArray<E> push(E... items) {
+    for (E item : items) {
+      add(item);
+    }
     return this;
   }
 

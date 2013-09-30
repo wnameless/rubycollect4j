@@ -1063,7 +1063,7 @@ public class RubyEnumerableTest {
     re = newRubyEnumerator(new ArrayList<Integer>());
     assertTrue(re.noneʔ());
     RubyArray<Integer> ra = ra();
-    ra.push(null);
+    ra.add(null);
     re = newRubyEnumerator(ra);
     assertTrue(re.noneʔ());
     re = newRubyEnumerator(Arrays.asList(1, 2, 3, 4));
