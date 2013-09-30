@@ -39,20 +39,16 @@ public final class RangeIterator<E> implements Iterator<E> {
   private E curr;
 
   /**
-   * The constructor of the RangeIterator.
+   * Creates an RangeIterator.
    * 
    * @param successive
    *          a Successive
    * @param startPoint
-   *          a element
+   *          an element
    * @param endPoint
-   *          a element
+   *          an element
    * @throws NullPointerException
-   *           if successive is null
-   * @throws NullPointerException
-   *           if startPoint is null
-   * @throws NullPointerException
-   *           if endPoint is null
+   *           if successive or startPoint or endPoint is null
    */
   public RangeIterator(Successive<E> successive, E startPoint, E endPoint) {
     if (successive == null || startPoint == null || endPoint == null)
@@ -70,9 +66,9 @@ public final class RangeIterator<E> implements Iterator<E> {
 
   @Override
   public E next() {
-    if (!hasNext()) {
+    if (!hasNext())
       throw new NoSuchElementException();
-    }
+
     E next = curr;
     curr = successive.succ(curr);
     return next;

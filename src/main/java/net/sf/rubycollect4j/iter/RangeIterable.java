@@ -38,20 +38,16 @@ public final class RangeIterable<E> implements Iterable<E> {
   private final E endPoint;
 
   /**
-   * The constructor of the RangeIterable.
+   * Creates an RangeIterable.
    * 
    * @param successive
    *          a Successive
    * @param startPoint
-   *          a element
+   *          an element
    * @param endPoint
-   *          a element
+   *          an element
    * @throws NullPointerException
-   *           if successive is null
-   * @throws NullPointerException
-   *           if startPoint is null
-   * @throws NullPointerException
-   *           if endPoint is null
+   *           if successive or startPoint or endPoint is null
    */
   public RangeIterable(Successive<E> successive, E startPoint, E endPoint) {
     if (successive == null || startPoint == null || endPoint == null)
@@ -65,6 +61,21 @@ public final class RangeIterable<E> implements Iterable<E> {
   @Override
   public Iterator<E> iterator() {
     return new RangeIterator<E>(successive, startPoint, endPoint);
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder("[");
+    int index = 0;
+    for (E item : this) {
+      if (index == 0)
+        sb.append(item);
+      else
+        sb.append(", " + item);
+      index++;
+    }
+    sb.append("]");
+    return sb.toString();
   }
 
 }
