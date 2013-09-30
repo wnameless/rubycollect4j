@@ -806,7 +806,7 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
         Method[] methods = result.getClass().getDeclaredMethods();
         boolean isInvoked = false;
         for (Method method : methods) {
-          if (method.getName().equals(methodName)) {
+          if (method.getName().equals(methodName) && !method.isVarArgs()) {
             result = (S) method.invoke(result, curr);
             isInvoked = true;
             break;
@@ -857,7 +857,7 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
           Method[] methods = result.getClass().getDeclaredMethods();
           boolean isInvoked = false;
           for (Method method : methods) {
-            if (method.getName().equals(methodName)) {
+            if (method.getName().equals(methodName) && !method.isVarArgs()) {
               result = (E) method.invoke(result, curr);
               isInvoked = true;
               break;
