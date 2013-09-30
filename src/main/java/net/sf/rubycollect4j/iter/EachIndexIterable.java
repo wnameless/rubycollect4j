@@ -32,7 +32,7 @@ public final class EachIndexIterable<E> implements Iterable<Integer> {
   private final Iterable<E> iter;
 
   /**
-   * The constructor of the EachIndexIterable.
+   * Creates an EachIndexIterable.
    * 
    * @param iter
    *          an Iterable
@@ -49,6 +49,21 @@ public final class EachIndexIterable<E> implements Iterable<Integer> {
   @Override
   public Iterator<Integer> iterator() {
     return new EachIndexIterator<E>(iter.iterator());
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder("[");
+    int index = 0;
+    for (Integer item : this) {
+      if (index == 0)
+        sb.append(item);
+      else
+        sb.append(", " + item);
+      index++;
+    }
+    sb.append("]");
+    return sb.toString();
   }
 
 }

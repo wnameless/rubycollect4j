@@ -34,7 +34,7 @@ public final class EachIndexIterator<E> implements Iterator<Integer> {
   private int index = 0;
 
   /**
-   * The constructor of the EachIndexIterator.
+   * Creates an EachIndexIterator.
    * 
    * @param iter
    *          an Iterator
@@ -55,9 +55,9 @@ public final class EachIndexIterator<E> implements Iterator<Integer> {
 
   @Override
   public Integer next() {
-    if (!hasNext()) {
+    if (!hasNext())
       throw new NoSuchElementException();
-    }
+
     iter.next();
     return index++;
   }
