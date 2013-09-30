@@ -1,11 +1,5 @@
 package net.sf.rubycollect4j;
 
-import net.sf.rubycollect4j.block.Block;
-import net.sf.rubycollect4j.succ.DoubleSuccessor;
-import net.sf.rubycollect4j.succ.StringSuccessor;
-
-import org.junit.Test;
-
 import static net.sf.rubycollect4j.RubyCollections.date;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.range;
@@ -13,6 +7,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
+import net.sf.rubycollect4j.block.Block;
+import net.sf.rubycollect4j.succ.DoubleSuccessor;
+import net.sf.rubycollect4j.succ.StringSuccessor;
+
+import org.junit.Test;
 
 public class RubyRangeTest {
 
@@ -21,6 +20,21 @@ public class RubyRangeTest {
     RubyRange<String> range =
         new RubyRange<String>(StringSuccessor.getInstance(), "a", "z");
     assertTrue(range instanceof RubyRange);
+  }
+
+  @Test(expected = NullPointerException.class)
+  public void testConstructorWithNullSuccessive() {
+    new RubyRange<String>(null, "a", "z");
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testConstructorWithNullStartPoint() {
+    new RubyRange<String>(StringSuccessor.getInstance(), null, "z");
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testConstructorWithNullEndPoint() {
+    new RubyRange<String>(StringSuccessor.getInstance(), "a", null);
   }
 
   @Test

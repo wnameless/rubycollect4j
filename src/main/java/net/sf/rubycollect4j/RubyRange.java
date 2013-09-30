@@ -58,8 +58,17 @@ public final class RubyRange<E> extends RubyEnumerable<E> {
    *          where the range begins
    * @param endPoint
    *          where the range ends
+   * @throws NullPointerException
+   *           if successive is null
+   * @throws IllegalArgumentException
+   *           if startPoint or endPoint is null
    */
   public RubyRange(Successive<E> successive, E startPoint, E endPoint) {
+    if (successive == null)
+      throw new NullPointerException();
+    if (startPoint == null || endPoint == null)
+      throw new IllegalArgumentException("ArgumentError: bad value for range");
+
     iter = new RangeIterable<E>(successive, startPoint, endPoint);
     this.successive = successive;
     this.startPoint = startPoint;

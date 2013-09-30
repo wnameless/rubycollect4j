@@ -162,7 +162,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates an empty RubyHash by given Map.
+   * Creates a RubyHash by given Map.
    * 
    * @param <K>
    *          the type of the key elements
@@ -178,7 +178,8 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates an empty RubyHash by given LinkedHashMap.
+   * Creates an empty RubyHash by given LinkedHashMap. It makes a defensive copy
+   * if specified
    * 
    * @param <K>
    *          the type of the key elements
@@ -236,8 +237,8 @@ public final class RubyCollections {
    */
   public static RubyRange<String> newRubyRange(String startPoint,
       String endPoint) {
-    return new RubyRange<String>(StringSuccessor.getInstance(),
-        startPoint == null ? "" : startPoint, endPoint == null ? "" : endPoint);
+    return new RubyRange<String>(StringSuccessor.getInstance(), startPoint,
+        endPoint);
   }
 
   /**
@@ -435,7 +436,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a empty RubyHash.
+   * Creates an empty RubyHash.
    * 
    * @param <K>
    *          the type of the key elements
@@ -448,7 +449,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a empty RubyHash by given Map.
+   * Creates a RubyHash by given Map.
    * 
    * @param <K>
    *          the type of the key elements
@@ -1890,7 +1891,7 @@ public final class RubyCollections {
    * @return a RubyHash
    */
   public static <K, V> RubyHash<K, V> Hash(List<? extends Entry<K, V>> list) {
-    RubyHash<K, V> rubyHash = rh();
+    RubyHash<K, V> rubyHash = newRubyHash();
     for (Entry<K, V> entry : list) {
       rubyHash.put(entry);
     }
