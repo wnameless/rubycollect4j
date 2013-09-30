@@ -38,7 +38,7 @@ public final class StepIterator<E> implements Iterator<E> {
   private boolean hasMore = false;
 
   /**
-   * The constructor of the StepIterator.
+   * Creates a StepIterator.
    * 
    * @param iter
    *          an Iterator
@@ -50,12 +50,12 @@ public final class StepIterator<E> implements Iterator<E> {
    *           if iter is null
    */
   public StepIterator(Iterator<E> iter, int step) {
+    if (iter == null)
+      throw new NullPointerException();
     if (step == 0)
       throw new IllegalArgumentException("step can't be 0");
     if (step < 0)
       throw new IllegalArgumentException("step can't be negative");
-    if (iter == null)
-      throw new NullPointerException();
 
     this.iter = iter;
     this.step = step;
@@ -72,9 +72,8 @@ public final class StepIterator<E> implements Iterator<E> {
       peek = iter.next();
       step--;
     }
-    if (step > 0) {
+    if (step > 0)
       hasMore = false;
-    }
     return next;
   }
 
@@ -85,9 +84,9 @@ public final class StepIterator<E> implements Iterator<E> {
 
   @Override
   public E next() {
-    if (!hasNext()) {
+    if (!hasNext())
       throw new NoSuchElementException();
-    }
+
     return nextElement();
   }
 

@@ -35,7 +35,7 @@ public final class StepIterable<E> implements Iterable<E> {
   private final int step;
 
   /**
-   * The constructor of the StepIterable.
+   * Creates a StepIterable.
    * 
    * @param iter
    *          an Iterable
@@ -47,12 +47,12 @@ public final class StepIterable<E> implements Iterable<E> {
    *           if iter is null
    */
   public StepIterable(Iterable<E> iter, int step) {
+    if (iter == null)
+      throw new NullPointerException();
     if (step == 0)
       throw new IllegalArgumentException("step can't be 0");
     if (step < 0)
       throw new IllegalArgumentException("step can't be negative");
-    if (iter == null)
-      throw new NullPointerException();
 
     this.iter = iter;
     this.step = step;
@@ -61,6 +61,21 @@ public final class StepIterable<E> implements Iterable<E> {
   @Override
   public Iterator<E> iterator() {
     return new StepIterator<E>(iter.iterator(), step);
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder("[");
+    int index = 0;
+    for (E item : this) {
+      if (index == 0)
+        sb.append(item);
+      else
+        sb.append(", " + item);
+      index++;
+    }
+    sb.append("]");
+    return sb.toString();
   }
 
 }

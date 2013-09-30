@@ -52,6 +52,8 @@ import net.sf.rubycollect4j.iter.RepeatedPermutationIterableTest;
 import net.sf.rubycollect4j.iter.RepeatedPermutationIteratorTest;
 import net.sf.rubycollect4j.iter.SliceBeforeIterableTest;
 import net.sf.rubycollect4j.iter.SliceBeforeIteratorTest;
+import net.sf.rubycollect4j.iter.StepIterableTest;
+import net.sf.rubycollect4j.iter.StepIteratorTest;
 import net.sf.rubycollect4j.packer.ByteUtilTest;
 import net.sf.rubycollect4j.packer.DirectiveTest;
 import net.sf.rubycollect4j.packer.PackerTest;
@@ -93,6 +95,7 @@ import org.junit.runners.Suite.SuiteClasses;
     RepeatedCombinationIteratorTest.class,
     RepeatedPermutationIterableTest.class,
     RepeatedPermutationIteratorTest.class, SliceBeforeIterableTest.class,
-    SliceBeforeIteratorTest.class, ByteUtilTest.class, DirectiveTest.class,
+    SliceBeforeIteratorTest.class, StepIterableTest.class,
+    StepIteratorTest.class, ByteUtilTest.class, DirectiveTest.class,
     PackerTest.class, PeekingIteratorTest.class })
 public class AllTests {}
