@@ -33,7 +33,7 @@ public final class EachLineIterable implements Iterable<String> {
   private final RandomAccessFile raFile;
 
   /**
-   * The constructor of the EachLineIterable.
+   * Creates an EachLineIterable.
    * 
    * @param raFile
    *          a RandomAccessFile
@@ -50,6 +50,21 @@ public final class EachLineIterable implements Iterable<String> {
   @Override
   public Iterator<String> iterator() {
     return new EachLineIterator(raFile);
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder("[");
+    int index = 0;
+    for (String item : this) {
+      if (index == 0)
+        sb.append(item);
+      else
+        sb.append(", " + item);
+      index++;
+    }
+    sb.append("]");
+    return sb.toString();
   }
 
 }

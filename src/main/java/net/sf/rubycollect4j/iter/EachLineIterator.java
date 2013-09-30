@@ -23,6 +23,7 @@ package net.sf.rubycollect4j.iter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,7 +38,7 @@ public final class EachLineIterator implements Iterator<String> {
   private String line;
 
   /**
-   * The constructor of the EachLineIterator.
+   * Creates an EachLineIterator.
    * 
    * @param raFile
    *          a RandomAccessFile
@@ -76,6 +77,9 @@ public final class EachLineIterator implements Iterator<String> {
 
   @Override
   public String next() {
+    if (!hasNext())
+      throw new NoSuchElementException();
+
     String next = line;
     nextLine();
     return next;
