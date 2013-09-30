@@ -39,7 +39,7 @@ public final class ProductIterable<E> implements Iterable<RubyArray<E>> {
   private final List<List<E>> lists = new ArrayList<List<E>>();
 
   /**
-   * Creates an ProductIterable.
+   * Creates a ProductIterable.
    * 
    * @param self
    *          a List
@@ -57,7 +57,7 @@ public final class ProductIterable<E> implements Iterable<RubyArray<E>> {
   }
 
   /**
-   * Creates an ProductIterable.
+   * Creates a ProductIterable.
    * 
    * @param self
    *          a List

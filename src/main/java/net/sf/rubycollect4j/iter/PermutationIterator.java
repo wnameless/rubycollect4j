@@ -46,7 +46,7 @@ public final class PermutationIterator<E> implements Iterator<RubyArray<E>> {
   private boolean hasMore = true;
 
   /**
-   * Creates an PermutationIterator.
+   * Creates a PermutationIterator.
    * 
    * @param list
    *          a List

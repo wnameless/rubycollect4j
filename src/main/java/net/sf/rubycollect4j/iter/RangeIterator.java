@@ -39,7 +39,7 @@ public final class RangeIterator<E> implements Iterator<E> {
   private E curr;
 
   /**
-   * Creates an RangeIterator.
+   * Creates a RangeIterator.
    * 
    * @param successive
    *          a Successive

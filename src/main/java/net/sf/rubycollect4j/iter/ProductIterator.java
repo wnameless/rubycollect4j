@@ -42,7 +42,7 @@ public final class ProductIterator<E> implements Iterator<RubyArray<E>> {
   private final int[] counter;
 
   /**
-   * Creates an ProductIterator.
+   * Creates a ProductIterator.
    * 
    * @param lists
    *          a List of List

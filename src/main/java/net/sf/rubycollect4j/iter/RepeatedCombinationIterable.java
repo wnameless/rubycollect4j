@@ -40,7 +40,7 @@ public final class RepeatedCombinationIterable<E> implements
   private final int n;
 
   /**
-   * The constructor of the RepeatedCombinationIterable.
+   * Creates a RepeatedCombinationIterable.
    * 
    * @param list
    *          a List
@@ -60,6 +60,21 @@ public final class RepeatedCombinationIterable<E> implements
   @Override
   public Iterator<RubyArray<E>> iterator() {
     return new RepeatedCombinationIterator<E>(list, n);
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder("[");
+    int index = 0;
+    for (RubyArray<E> item : this) {
+      if (index == 0)
+        sb.append(item);
+      else
+        sb.append(", " + item);
+      index++;
+    }
+    sb.append("]");
+    return sb.toString();
   }
 
 }

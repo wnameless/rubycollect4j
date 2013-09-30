@@ -38,7 +38,7 @@ public final class RangeIterable<E> implements Iterable<E> {
   private final E endPoint;
 
   /**
-   * Creates an RangeIterable.
+   * Creates a RangeIterable.
    * 
    * @param successive
    *          a Successive

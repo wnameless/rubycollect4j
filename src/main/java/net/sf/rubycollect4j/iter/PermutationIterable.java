@@ -38,7 +38,7 @@ public final class PermutationIterable<E> implements Iterable<RubyArray<E>> {
   private final int n;
 
   /**
-   * Creates an PermutationIterable.
+   * Creates a PermutationIterable.
    * 
    * @param list
    *          a List

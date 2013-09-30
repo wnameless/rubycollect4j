@@ -47,7 +47,7 @@ public final class RepeatedCombinationIterator<E> implements
   private boolean hasMore = true;
 
   /**
-   * The constructor of the RepeatedCombinationIterator.
+   * Creates a RepeatedCombinationIterator.
    * 
    * @param list
    *          a List
@@ -79,11 +79,10 @@ public final class RepeatedCombinationIterator<E> implements
     for (int i = 0; i < counter.length; i++) {
       c.push(list.get(counter[i]));
     }
-    if (Arrays.equals(counter, endStatus)) {
+    if (Arrays.equals(counter, endStatus))
       hasMore = false;
-    } else {
+    else
       increaseCounter();
-    }
     return c;
   }
 
@@ -109,9 +108,9 @@ public final class RepeatedCombinationIterator<E> implements
 
   @Override
   public RubyArray<E> next() {
-    if (!hasNext()) {
+    if (!hasNext())
       throw new NoSuchElementException();
-    }
+
     return nextElement();
   }
 
