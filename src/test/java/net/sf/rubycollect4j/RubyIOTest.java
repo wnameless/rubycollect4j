@@ -20,149 +20,162 @@
  */
 package net.sf.rubycollect4j;
 
+import static net.sf.rubycollect4j.RubyCollections.ra;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 
+import net.sf.rubycollect4j.RubyIO.Mode;
 import net.sf.rubycollect4j.block.Block;
 
 import org.junit.Test;
 
-import static net.sf.rubycollect4j.RubyCollections.ra;
-import static org.junit.Assert.assertEquals;
-
 public class RubyIOTest {
 
   private static final String BASE_DIR = "src/test/resources/";
-  private RubyFile rf;
+  private RubyIO io;
+
+  @Test
+  public void testConstructor() throws Exception {
+    io = new RubyIO(new File(BASE_DIR + "ruby_io_read_only_mode.txt"), Mode.R);
+    assertTrue(io instanceof RubyIO);
+  }
+
+  @Test(expected = NullPointerException.class)
+  public void testConstructorException() throws Exception {
+    new RubyIO(null, Mode.R);
+  }
 
   @Test
   public void testFactory() {
-    rf = RubyFile.open(BASE_DIR + "ruby_io_read_only_mode.txt");
-    assertEquals(RubyFile.class, rf.getClass());
-    rf.close();
+    io = RubyIO.open(BASE_DIR + "ruby_io_read_only_mode.txt");
+    assertEquals(RubyIO.class, io.getClass());
+    io.close();
   }
 
   @Test(expected = NoSuchElementException.class)
   public void testOpenModeWithInvalidString() {
-    rf = RubyFile.open(BASE_DIR + "ruby_io_read_only_mode.txt", "haha");
+    io = RubyIO.open(BASE_DIR + "ruby_io_read_only_mode.txt", "haha");
   }
 
   @Test
   public void testReadOnlyMode() {
-    rf = RubyFile.open(BASE_DIR + "ruby_io_read_only_mode.txt");
-    assertEquals(ra("a", "bc", "def"), rf.eachLine().toA());
-    rf = RubyFile.open(BASE_DIR + "ruby_io_read_only_mode.txt", "r");
-    assertEquals(ra("a", "bc", "def"), rf.eachLine().toA());
+    io = RubyIO.open(BASE_DIR + "ruby_io_read_only_mode.txt");
+    assertEquals(ra("a", "bc", "def"), io.eachLine().toA());
+    io = RubyIO.open(BASE_DIR + "ruby_io_read_only_mode.txt", "r");
+    assertEquals(ra("a", "bc", "def"), io.eachLine().toA());
   }
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test(expected = IllegalStateException.class)
   public void testReadOnlyModeException1() {
-    RubyFile rf = RubyFile.open(BASE_DIR + "ruby_io_read_only_mode.txt");
-    rf.puts("test");
+    RubyIO io = RubyIO.open(BASE_DIR + "ruby_io_read_only_mode.txt");
+    io.puts("test");
   }
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test(expected = IllegalStateException.class)
   public void testReadOnlyModeException2() {
-    RubyFile rf = RubyFile.open(BASE_DIR + "ruby_io_read_only_mode.txt");
-    rf.write("test");
+    RubyIO io = RubyIO.open(BASE_DIR + "ruby_io_read_only_mode.txt");
+    io.write("test");
   }
 
   @Test
   public void testReadWriteMode() {
-    rf = RubyFile.open(BASE_DIR + "ruby_io_read_write_mode.txt", "w");
-    rf.close();
-    rf = RubyFile.open(BASE_DIR + "ruby_io_read_write_mode.txt", "r+");
-    rf.puts("1");
-    rf.puts("2");
-    rf.puts("3");
-    rf.close();
-    rf = RubyFile.open(BASE_DIR + "ruby_io_read_write_mode.txt", "r+");
-    assertEquals(ra("1", "2", "3"), rf.eachLine().toA());
-    rf.close();
-    rf = RubyFile.open(BASE_DIR + "ruby_io_read_write_mode.txt", "r+");
-    rf.puts("4");
-    rf.close();
-    rf = RubyFile.open(BASE_DIR + "ruby_io_read_write_mode.txt", "r+");
-    assertEquals(ra("4", "2", "3"), rf.eachLine().toA());
-    rf.close();
+    io = RubyIO.open(BASE_DIR + "ruby_io_read_write_mode.txt", "w");
+    io.close();
+    io = RubyIO.open(BASE_DIR + "ruby_io_read_write_mode.txt", "r+");
+    io.puts("1");
+    io.puts("2");
+    io.puts("3");
+    io.close();
+    io = RubyIO.open(BASE_DIR + "ruby_io_read_write_mode.txt", "r+");
+    assertEquals(ra("1", "2", "3"), io.eachLine().toA());
+    io.close();
+    io = RubyIO.open(BASE_DIR + "ruby_io_read_write_mode.txt", "r+");
+    io.puts("4");
+    io.close();
+    io = RubyIO.open(BASE_DIR + "ruby_io_read_write_mode.txt", "r+");
+    assertEquals(ra("4", "2", "3"), io.eachLine().toA());
+    io.close();
   }
 
   @Test
   public void testWriteOnlyMode() {
-    rf = RubyFile.open(BASE_DIR + "ruby_io_write_only_mode.txt", "w");
-    rf.puts("1");
-    rf.puts("2");
-    rf.puts("3");
-    rf.close();
-    rf = RubyFile.open(BASE_DIR + "ruby_io_write_only_mode.txt", "r");
-    assertEquals(ra("1", "2", "3"), rf.eachLine().toA());
-    rf.close();
-    rf = RubyFile.open(BASE_DIR + "ruby_io_write_only_mode.txt", "w");
-    rf.close();
-    rf = RubyFile.open(BASE_DIR + "ruby_io_write_only_mode.txt", "r");
-    assertEquals(ra(), rf.eachLine().toA());
-    rf.close();
+    io = RubyIO.open(BASE_DIR + "ruby_io_write_only_mode.txt", "w");
+    io.puts("1");
+    io.puts("2");
+    io.puts("3");
+    io.close();
+    io = RubyIO.open(BASE_DIR + "ruby_io_write_only_mode.txt", "r");
+    assertEquals(ra("1", "2", "3"), io.eachLine().toA());
+    io.close();
+    io = RubyIO.open(BASE_DIR + "ruby_io_write_only_mode.txt", "w");
+    io.close();
+    io = RubyIO.open(BASE_DIR + "ruby_io_write_only_mode.txt", "r");
+    assertEquals(ra(), io.eachLine().toA());
+    io.close();
   }
 
   @Test(expected = UnsupportedOperationException.class)
   public void testWriteOnlyModeException() {
-    rf = RubyFile.open(BASE_DIR + "ruby_io_write_only_mode.txt", "w");
-    rf.read();
+    io = RubyIO.open(BASE_DIR + "ruby_io_write_only_mode.txt", "w");
+    io.read();
   }
 
   @Test
   public void testWriteReadMode() {
-    rf = RubyFile.open(BASE_DIR + "ruby_io_write_read_mode.txt", "w+");
-    rf.write("123");
-    rf.write("456");
-    rf.seek(0);
-    assertEquals("123456\n", rf.read());
-    rf.close();
-    rf = RubyFile.open(BASE_DIR + "ruby_io_write_read_mode.txt", "r");
-    assertEquals("123456\n", rf.read());
-    rf.close();
+    io = RubyIO.open(BASE_DIR + "ruby_io_write_read_mode.txt", "w+");
+    io.write("123");
+    io.write("456");
+    io.seek(0);
+    assertEquals("123456\n", io.read());
+    io.close();
+    io = RubyIO.open(BASE_DIR + "ruby_io_write_read_mode.txt", "r");
+    assertEquals("123456\n", io.read());
+    io.close();
   }
 
   @Test
   public void testAppendOnlyMode() {
-    rf = RubyFile.open(BASE_DIR + "ruby_io_append_only_mode.txt", "w");
-    rf.close();
-    rf = RubyFile.open(BASE_DIR + "ruby_io_append_only_mode.txt", "a");
-    rf.write("123");
-    rf.close();
-    rf = RubyFile.open(BASE_DIR + "ruby_io_append_only_mode.txt", "a");
-    rf.write("456");
-    rf.close();
-    rf = RubyFile.open(BASE_DIR + "ruby_io_append_only_mode.txt", "r");
-    assertEquals("123456\n", rf.read());
-    rf.close();
+    io = RubyIO.open(BASE_DIR + "ruby_io_append_only_mode.txt", "w");
+    io.close();
+    io = RubyIO.open(BASE_DIR + "ruby_io_append_only_mode.txt", "a");
+    io.write("123");
+    io.close();
+    io = RubyIO.open(BASE_DIR + "ruby_io_append_only_mode.txt", "a");
+    io.write("456");
+    io.close();
+    io = RubyIO.open(BASE_DIR + "ruby_io_append_only_mode.txt", "r");
+    assertEquals("123456\n", io.read());
+    io.close();
   }
 
   @Test(expected = UnsupportedOperationException.class)
   public void testAppendOnlyModeException() {
-    rf = RubyFile.open(BASE_DIR + "ruby_io_append_only_mode.txt", "a");
-    rf.read();
+    io = RubyIO.open(BASE_DIR + "ruby_io_append_only_mode.txt", "a");
+    io.read();
   }
 
   @Test
   public void testAppendReadMode() {
-    rf = RubyFile.open(BASE_DIR + "ruby_io_append_read_mode.txt", "w");
-    rf.close();
-    rf = RubyFile.open(BASE_DIR + "ruby_io_append_read_mode.txt", "a+");
-    rf.write("123");
-    rf.close();
-    rf = RubyFile.open(BASE_DIR + "ruby_io_append_read_mode.txt", "a+");
-    rf.write("456");
-    rf.seek(0);
-    assertEquals("123456\n", rf.read());
-    rf.close();
+    io = RubyIO.open(BASE_DIR + "ruby_io_append_read_mode.txt", "w");
+    io.close();
+    io = RubyIO.open(BASE_DIR + "ruby_io_append_read_mode.txt", "a+");
+    io.write("123");
+    io.close();
+    io = RubyIO.open(BASE_DIR + "ruby_io_append_read_mode.txt", "a+");
+    io.write("456");
+    io.seek(0);
+    assertEquals("123456\n", io.read());
+    io.close();
   }
 
   @Test
   public void testForeach() {
     final RubyArray<String> ra = ra();
-    RubyFile.foreach(BASE_DIR + "ruby_io_read_only_mode.txt",
+    RubyIO.foreach(BASE_DIR + "ruby_io_read_only_mode.txt",
         new Block<String>() {
 
           @Override
@@ -176,7 +189,7 @@ public class RubyIOTest {
 
   @Test(expected = RuntimeException.class)
   public void testForeachException() {
-    RubyFile.foreach("no such file!", new Block<String>() {
+    RubyIO.foreach("no such file!", new Block<String>() {
 
       @Override
       public void yield(String item) {}
@@ -186,10 +199,16 @@ public class RubyIOTest {
 
   @Test
   public void testEachLine() {
-    rf = RubyFile.open(BASE_DIR + "ruby_io_read_only_mode.txt");
-    assertEquals("a", rf.eachLine().first());
-    assertEquals("a", rf.eachLine().first());
-    assertEquals(ra("a", "bc", "def"), rf.eachLine().toA());
+    io = RubyIO.open(BASE_DIR + "ruby_io_read_only_mode.txt");
+    assertEquals("a", io.eachLine().first());
+    assertEquals("a", io.eachLine().first());
+    assertEquals(ra("a", "bc", "def"), io.eachLine().toA());
+  }
+
+  @Test(expected = IllegalStateException.class)
+  public void testEachLineException() {
+    io = RubyIO.open(BASE_DIR + "ruby_io_write_only_mode.txt", "w");
+    io.eachLine();
   }
 
   @Test

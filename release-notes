@@ -90,3 +90,5 @@ Version 1.4.1
 * Fixed CycleIterator#hasNext bug
 
 * Fixed EachLineIterator#next bug
+
+* Changed UnsupportedOperationException to IllegalStateException in RubyIO

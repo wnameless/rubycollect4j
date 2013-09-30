@@ -27,7 +27,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.logging.Level;
@@ -41,7 +40,7 @@ import java.util.logging.Logger;
 public final class RubyFile extends RubyIO {
 
   /**
-   * Creates a RubyFile by given file. Sets the mode to read-only.
+   * Creates a RubyFile by given path and mode.
    * 
    * @param path
    *          of a File
@@ -61,7 +60,7 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Creates a RubyFile by given path and mode.
+   * Creates a RubyFile by given file. Sets the mode to read-only.
    * 
    * @param path
    *          of a file
@@ -146,16 +145,7 @@ public final class RubyFile extends RubyIO {
             fspClass.getDeclaredMethod("chmod", String.class, Integer.TYPE);
         chmodMethod.setAccessible(true);
         chmodMethod.invoke(null, file.getPath(), modeInt);
-      } catch (ClassNotFoundException ex) {
-        Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
-        throw new RuntimeException(ex);
-      } catch (NoSuchMethodException ex) {
-        Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
-        throw new RuntimeException(ex);
-      } catch (IllegalAccessException ex) {
-        Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
-        throw new RuntimeException(ex);
-      } catch (InvocationTargetException ex) {
+      } catch (Exception ex) {
         Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
         throw new RuntimeException(ex);
       }

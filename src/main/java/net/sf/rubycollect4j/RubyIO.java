@@ -24,6 +24,7 @@ import static net.sf.rubycollect4j.RubyCollections.Hash;
 import static net.sf.rubycollect4j.RubyCollections.hp;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.ra;
+import static net.sf.rubycollect4j.RubyIO.Mode.R;
 
 import java.io.File;
 import java.io.IOException;
@@ -122,7 +123,38 @@ public class RubyIO {
   protected final Mode mode;
 
   /**
-   * Creates an IO by given File and open mode.
+   * Creates a RubyIO by given path and mode.
+   * 
+   * @param path
+   *          of a File
+   * @param mode
+   *          r, rw, w, w+, a, a+
+   * @return a RubyIO
+   */
+  public static RubyIO open(String path, String mode) {
+    RubyIO io = null;
+    try {
+      io = new RubyIO(new File(path), Mode.fromString(mode));
+    } catch (IOException ex) {
+      Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
+      throw new RuntimeException(ex);
+    }
+    return io;
+  }
+
+  /**
+   * Creates a RubyIO by given file. Sets the mode to read-only.
+   * 
+   * @param path
+   *          of a file
+   * @return a RubyIO
+   */
+  public static RubyIO open(String path) {
+    return open(path, R.toString());
+  }
+
+  /**
+   * Creates an RubyIO by given File and Mode.
    * 
    * @param file
    *          a File
@@ -213,7 +245,7 @@ public class RubyIO {
   public RubyEnumerator<String> eachLine() {
     if (mode.isReadable() == false) {
       close();
-      throw new UnsupportedOperationException("IOError: not opened for reading");
+      throw new IllegalStateException("IOError: not opened for reading");
     }
     return newRubyEnumerator(new EachLineIterable(raFile));
   }
@@ -227,7 +259,7 @@ public class RubyIO {
   public void puts(String words) {
     if (mode.isWritable() == false) {
       close();
-      throw new UnsupportedOperationException("IOError: not opened for writing");
+      throw new IllegalStateException("IOError: not opened for writing");
     }
     try {
       raFile.writeBytes(words + "\n");
@@ -288,7 +320,7 @@ public class RubyIO {
   public int write(String words) {
     if (mode.isWritable() == false) {
       close();
-      throw new UnsupportedOperationException("IOError: not opened for writing");
+      throw new IllegalStateException("IOError: not opened for writing");
     }
     try {
       raFile.writeBytes(words);

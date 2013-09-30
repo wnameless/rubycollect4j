@@ -39,10 +39,10 @@ public final class EachSliceIterable<E> implements Iterable<RubyArray<E>> {
   private final int size;
 
   /**
-   * The constructor of the EachSliceIterable.
+   * Creates an EachSliceIterable.
    * 
    * @param iter
-   *          an Iterabel
+   *          an Iterable
    * @param size
    *          of the window
    * @throws NullPointerException
