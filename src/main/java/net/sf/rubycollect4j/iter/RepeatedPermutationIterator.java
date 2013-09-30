@@ -47,7 +47,7 @@ public final class RepeatedPermutationIterator<E> implements
   private boolean hasMore = true;
 
   /**
-   * The constructor of the RepeatedPermutationIterator.
+   * Creates a RepeatedPermutationIterator.
    * 
    * @param list
    *          a List

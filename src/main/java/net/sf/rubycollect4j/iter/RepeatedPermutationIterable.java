@@ -40,7 +40,7 @@ public final class RepeatedPermutationIterable<E> implements
   private final int n;
 
   /**
-   * The constructor of the RepeatedPermutationIterable.
+   * Creates a RepeatedPermutationIterable.
    * 
    * @param list
    *          a List
@@ -60,6 +60,21 @@ public final class RepeatedPermutationIterable<E> implements
   @Override
   public Iterator<RubyArray<E>> iterator() {
     return new RepeatedPermutationIterator<E>(list, n);
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder("[");
+    int index = 0;
+    for (RubyArray<E> item : this) {
+      if (index == 0)
+        sb.append(item);
+      else
+        sb.append(", " + item);
+      index++;
+    }
+    sb.append("]");
+    return sb.toString();
   }
 
 }
