@@ -69,14 +69,13 @@ public final class ChunkIterable<E, K> implements
 
   @Override
   public String toString() {
-    Iterator<Entry<K, RubyArray<E>>> iter = iterator();
     StringBuilder sb = new StringBuilder("[");
     int index = 0;
-    while (iter.hasNext()) {
+    for (Entry<K, RubyArray<E>> item : this) {
       if (index == 0)
-        sb.append(iter.next());
+        sb.append(item);
       else
-        sb.append(", " + iter.next());
+        sb.append(", " + item);
       index++;
     }
     sb.append("]");

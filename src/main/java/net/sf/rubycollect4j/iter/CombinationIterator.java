@@ -44,7 +44,7 @@ public class CombinationIterator<E> implements Iterator<RubyArray<E>> {
   private boolean hasMore = true;
 
   /**
-   * The constructor of the CombinationIterator.
+   * Creates a CombinationIterator.
    * 
    * @param list
    *          a List

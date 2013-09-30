@@ -58,14 +58,6 @@ public class RubyIO {
     private final boolean isReadable;
     private final boolean isWritable;
 
-    /**
-     * Constructor of Mode enum
-     * 
-     * @param mode
-     *          in String form
-     * @param isReadable
-     * @param isWritable
-     */
     private Mode(String mode, boolean isReadable, boolean isWritable) {
       this.mode = mode;
       this.isReadable = isReadable;

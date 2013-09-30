@@ -45,16 +45,14 @@ public final class OrderedEntrySetIterator<K, V> implements
   private final Map<K, V> map;
 
   /**
-   * The constructor of the OrderedEntrySetIterator.
+   * Creates an OrderedEntrySetIterator.
    * 
    * @param iter
    *          an Iterator
    * @param map
    *          a Map
    * @throws NullPointerException
-   *           if iter is null
-   * @throws NullPointerException
-   *           if map is null
+   *           if iter or map is null
    */
   public OrderedEntrySetIterator(Iterator<K> iter, Map<K, V> map) {
     if (iter == null || map == null)

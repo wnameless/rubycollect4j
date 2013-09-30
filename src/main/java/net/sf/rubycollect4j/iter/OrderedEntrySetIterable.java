@@ -47,16 +47,14 @@ public final class OrderedEntrySetIterable<K, V> implements
   private final Map<K, V> map;
 
   /**
-   * The constructor of the OrderedEntrySetIterable.
+   * Creates an OrderedEntrySetIterable.
    * 
    * @param iter
    *          an Iterable
    * @param map
    *          a Map
    * @throws NullPointerException
-   *           if iter is null
-   * @throws NullPointerException
-   *           if map is null
+   *           if iter or map is null
    */
   public OrderedEntrySetIterable(Iterable<K> iter, Map<K, V> map) {
     if (iter == null || map == null)
@@ -143,8 +141,7 @@ public final class OrderedEntrySetIterable<K, V> implements
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("[");
+    StringBuilder sb = new StringBuilder("[");
     int index = 0;
     for (K key : iter) {
       if (index == 0)

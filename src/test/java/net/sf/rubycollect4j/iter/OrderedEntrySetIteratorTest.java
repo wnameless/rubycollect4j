@@ -1,16 +1,16 @@
 package net.sf.rubycollect4j.iter;
 
-import java.util.NoSuchElementException;
-
-import org.junit.Before;
-import org.junit.Test;
-
 import static net.sf.rubycollect4j.RubyCollections.hp;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.rh;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import java.util.NoSuchElementException;
+
+import org.junit.Before;
+import org.junit.Test;
 
 public class OrderedEntrySetIteratorTest {
 
@@ -42,6 +42,7 @@ public class OrderedEntrySetIteratorTest {
     assertEquals(hp("a", 1), setIter.next());
     assertEquals(hp("b", 2), setIter.next());
     assertEquals(hp("c", 3), setIter.next());
+    assertFalse(setIter.hasNext());
   }
 
   @Test(expected = NoSuchElementException.class)

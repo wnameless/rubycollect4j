@@ -69,11 +69,19 @@ public class ChunkIteratorTest {
     assertFalse(iter.hasNext());
   }
 
-  @Test(expected = NoSuchElementException.class)
+  @Test
   public void testNext() {
     assertEquals(hp("1", ra(1)), iter.next());
     assertEquals(hp("1.0", ra((Number) 1.0, (Number) 1.0f)), iter.next());
     assertEquals(hp("2", ra((Number) 2, (Number) 2L)), iter.next());
+    assertFalse(iter.hasNext());
+  }
+
+  @Test(expected = NoSuchElementException.class)
+  public void testNextException() {
+    while (iter.hasNext()) {
+      iter.next();
+    }
     iter.next();
   }
 
