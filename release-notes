@@ -81,3 +81,10 @@ Version 1.4.0
 + Added RubyFile::join
 
 * Added return value to RubyKernel::p
+
+
+Version 1.4.1
+
++ Overrode toString() methods of all Iterables
+
+* Fixed CycleIterator#hasNext bug

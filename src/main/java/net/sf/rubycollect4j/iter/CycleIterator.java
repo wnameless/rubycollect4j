@@ -38,7 +38,7 @@ public final class CycleIterator<E> implements Iterator<E> {
   private Iterator<E> it;
 
   /**
-   * The constructor of the CycleIterator.
+   * Creates a CycleIterator.
    * 
    * @param iter
    *          an Iterable
@@ -55,7 +55,7 @@ public final class CycleIterator<E> implements Iterator<E> {
   }
 
   /**
-   * The constructor of the CycleIterator.
+   * Creates a CycleIterator.
    * 
    * @param iter
    *          an Iterable
@@ -91,6 +91,8 @@ public final class CycleIterator<E> implements Iterator<E> {
   public boolean hasNext() {
     if (n == null && iter.iterator().hasNext())
       return true;
+    else if (!iter.iterator().hasNext())
+      return false;
     else if (n <= 0)
       return false;
     else

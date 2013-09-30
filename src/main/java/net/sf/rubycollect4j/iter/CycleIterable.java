@@ -36,7 +36,7 @@ public final class CycleIterable<E> implements Iterable<E> {
   private final Integer n;
 
   /**
-   * The constructor of the CycleIterable.
+   * Creates a CycleIterable.
    * 
    * @param iter
    *          an Iterable
@@ -52,7 +52,7 @@ public final class CycleIterable<E> implements Iterable<E> {
   }
 
   /**
-   * The constructor of the CycleIterable.
+   * Creates a CycleIterable.
    * 
    * @param iter
    *          an Iterable
@@ -75,6 +75,33 @@ public final class CycleIterable<E> implements Iterable<E> {
       return new CycleIterator<E>(iter);
     else
       return new CycleIterator<E>(iter, n);
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder("[");
+    if (n != null) {
+      int index = 0;
+      for (E item : this) {
+        if (index == 0)
+          sb.append(item);
+        else
+          sb.append(", " + item);
+        index++;
+      }
+      sb.append("]");
+    } else {
+      int index = 0;
+      for (E item : iter) {
+        if (index == 0)
+          sb.append(item);
+        else
+          sb.append(", " + item);
+        index++;
+      }
+      sb.append("...]");
+    }
+    return sb.toString();
   }
 
 }
