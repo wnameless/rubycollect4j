@@ -147,11 +147,10 @@ public final class OrderedEntrySetIterable<K, V> implements
     sb.append("[");
     int index = 0;
     for (K key : iter) {
-      if (index == 0) {
+      if (index == 0)
         sb.append(key).append("=").append(map.get(key));
-      } else {
+      else
         sb.append(", ").append(key).append("=").append(map.get(key));
-      }
       index++;
     }
     sb.append("]");

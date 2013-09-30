@@ -119,9 +119,9 @@ public class CombinationIterator<E> implements Iterator<RubyArray<E>> {
 
   @Override
   public RubyArray<E> next() {
-    if (!hasNext()) {
+    if (!hasNext())
       throw new NoSuchElementException();
-    }
+
     return nextElement();
   }
 

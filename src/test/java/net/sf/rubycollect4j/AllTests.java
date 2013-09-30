@@ -20,6 +20,8 @@
  */
 package net.sf.rubycollect4j;
 
+import net.sf.rubycollect4j.iter.ChunkIterableTest;
+import net.sf.rubycollect4j.iter.ChunkIteratorTest;
 import net.sf.rubycollect4j.iter.OrderedEntrySetIterableTest;
 import net.sf.rubycollect4j.iter.OrderedEntrySetIteratorTest;
 import net.sf.rubycollect4j.packer.ByteUtilTest;
@@ -46,6 +48,7 @@ import org.junit.runners.Suite.SuiteClasses;
     DateSuccessorTest.class, DoubleSuccessorTest.class,
     IntegerSuccessorTest.class, LongSuccessorTest.class,
     StringSuccessorTest.class, LinkedIdentityMapTest.class, ListSetTest.class,
+    ChunkIterableTest.class, ChunkIteratorTest.class,
     OrderedEntrySetIterableTest.class, OrderedEntrySetIteratorTest.class,
     ByteUtilTest.class, DirectiveTest.class, PackerTest.class,
     PeekingIteratorTest.class })

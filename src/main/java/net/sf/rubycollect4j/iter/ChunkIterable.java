@@ -45,16 +45,14 @@ public final class ChunkIterable<E, K> implements
   private final TransformBlock<E, K> block;
 
   /**
-   * The constructor of the ChunkIterable.
+   * Creates a ChunkIterable.
    * 
    * @param iterable
    *          an Iterable
    * @param block
    *          to transform each element
    * @throws NullPointerException
-   *           if iterable is null
-   * @throws NullPointerException
-   *           if block is null
+   *           if iterable or block is null
    */
   public ChunkIterable(Iterable<E> iterable, TransformBlock<E, K> block) {
     if (iterable == null || block == null)
@@ -67,6 +65,22 @@ public final class ChunkIterable<E, K> implements
   @Override
   public Iterator<Entry<K, RubyArray<E>>> iterator() {
     return new ChunkIterator<E, K>(iterable.iterator(), block);
+  }
+
+  @Override
+  public String toString() {
+    Iterator<Entry<K, RubyArray<E>>> iter = iterator();
+    StringBuilder sb = new StringBuilder("[");
+    int index = 0;
+    while (iter.hasNext()) {
+      if (index == 0)
+        sb.append(iter.next());
+      else
+        sb.append(", " + iter.next());
+      index++;
+    }
+    sb.append("]");
+    return sb.toString();
   }
 
 }

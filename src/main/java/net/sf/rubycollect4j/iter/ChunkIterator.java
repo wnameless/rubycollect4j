@@ -50,16 +50,14 @@ public final class ChunkIterator<E, K> implements
   private final TransformBlock<E, K> block;
 
   /**
-   * The constructor of the ChunkIterator.
+   * Creates a ChunkIterator.
    * 
    * @param iterator
    *          an Iterator
    * @param block
    *          to transform each element
    * @throws NullPointerException
-   *           if iterator is null
-   * @throws NullPointerException
-   *           if block is null
+   *           if iterator or block is null
    */
   public ChunkIterator(Iterator<E> iterator, TransformBlock<E, K> block) {
     if (iterator == null || block == null)
@@ -85,7 +83,7 @@ public final class ChunkIterator<E, K> implements
 
   @Override
   public Entry<K, RubyArray<E>> next() {
-    if (!pIterator.hasNext())
+    if (!hasNext())
       throw new NoSuchElementException();
 
     return nextElement();
