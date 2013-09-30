@@ -39,7 +39,7 @@ public final class EachWithIndexIterator<E> implements
   private final int[] index = new int[] { 0 };
 
   /**
-   * The constructor of the EachWithIndexIterator.
+   * Creates an EachWithIndexIterator.
    * 
    * @param iter
    *          an Iterator
@@ -67,9 +67,9 @@ public final class EachWithIndexIterator<E> implements
 
   @Override
   public Entry<E, Integer> next() {
-    if (!hasNext()) {
+    if (!hasNext())
       throw new NoSuchElementException();
-    }
+
     return nextElement();
   }
 

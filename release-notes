@@ -85,10 +85,10 @@ Version 1.4.0
 
 Version 1.4.1
 
-* Overrode toString() methods of all Iterables
-
 * Fixed CycleIterator#hasNext bug
 
 * Fixed EachLineIterator#next bug
 
 * Changed UnsupportedOperationException to IllegalStateException in RubyIO
+
+* Overrode toString() methods of all Iterables
