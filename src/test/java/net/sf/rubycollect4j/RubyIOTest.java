@@ -56,7 +56,7 @@ public class RubyIOTest {
     io.close();
   }
 
-  @Test(expected = NoSuchElementException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void testOpenModeWithInvalidString() {
     io = RubyIO.open(BASE_DIR + "ruby_io_read_only_mode.txt", "haha");
   }

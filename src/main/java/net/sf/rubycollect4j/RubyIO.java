@@ -107,8 +107,8 @@ public class RubyIO {
       if (modeHash.keyʔ(mode))
         return modeHash.get(mode);
       else
-        throw new NoSuchElementException("ArgumentError: invalid access mode "
-            + mode);
+        throw new IllegalArgumentException(
+            "ArgumentError: invalid access mode " + mode);
     }
 
     @Override
