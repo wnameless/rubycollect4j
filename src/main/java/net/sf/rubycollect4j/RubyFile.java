@@ -341,9 +341,8 @@ public final class RubyFile extends RubyIO {
    * @return true if file existed and gets 0 in length, otherwise false
    */
   public static boolean zeroʔ(String path) {
-    if (!(existʔ(path))) {
+    if (!existʔ(path))
       return false;
-    }
     return sizeʔ(path) == null;
   }
 

@@ -690,7 +690,7 @@ public class RubyEnumerableTest {
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void testInjectWithInitException() {
+  public void testInjectWithInitException1() {
     re = newRubyEnumerator(Arrays.asList(1, 2, 3, 4));
     RubyArray<Integer> ra = ra();
     re.inject(ra, "no push");

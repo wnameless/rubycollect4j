@@ -298,9 +298,8 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
    */
   public E detect(BooleanBlock<E> block) {
     for (E item : getIterable()) {
-      if (block.yield(item)) {
+      if (block.yield(item))
         return item;
-      }
     }
     return null;
   }
@@ -570,6 +569,7 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
     for (E item : getIterable()) {
       if (block.yield(item))
         return index;
+
       index++;
     }
     return null;
@@ -587,6 +587,7 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
     for (E item : getIterable()) {
       if (item.equals(target))
         return index;
+
       index++;
     }
     return null;
@@ -930,6 +931,7 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
     }
     if (list.isEmpty())
       return null;
+
     return Collections.max(list, comp);
   }
 
@@ -964,6 +966,7 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
     }
     if (src.isEmpty())
       return null;
+
     S maxDst = Collections.max(dst, comp);
     return src.get(dst.indexOf(maxDst));
   }
@@ -987,6 +990,7 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
     }
     if (src.isEmpty())
       return null;
+
     S maxDst = newRubyEnumerator(dst).max();
     return src.get(dst.indexOf(maxDst));
   }
@@ -1027,6 +1031,7 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
     }
     if (list.isEmpty())
       return null;
+
     return Collections.min(list, comp);
   }
 
@@ -1061,6 +1066,7 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
     }
     if (src.isEmpty())
       return null;
+
     S minDst = Collections.min(dst, comp);
     return src.get(dst.indexOf(minDst));
   }
@@ -1084,6 +1090,7 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
     }
     if (src.isEmpty())
       return null;
+
     S minDst = newRubyEnumerator(dst).min();
     return src.get(dst.indexOf(minDst));
   }
@@ -1113,6 +1120,7 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
     RubyArray<E> rubyArray = newRubyArray(getIterable());
     if (rubyArray.isEmpty())
       return newRubyArray(null, null);
+
     return newRubyArray(Collections.min(rubyArray, comp),
         Collections.max(rubyArray, comp));
   }
@@ -1150,6 +1158,7 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
     }
     if (src.isEmpty())
       return newRubyArray(null, null);
+
     S minDst = Collections.min(dst, comp);
     S maxDst = Collections.max(dst, comp);
     return newRubyArray(src.get(dst.indexOf(minDst)),
@@ -1176,6 +1185,7 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
     }
     if (src.isEmpty())
       return newRubyArray(null, null);
+
     S minDst = newRubyEnumerator(dst).min();
     S maxDst = newRubyEnumerator(dst).max();
     return newRubyArray(src.get(dst.indexOf(minDst)),

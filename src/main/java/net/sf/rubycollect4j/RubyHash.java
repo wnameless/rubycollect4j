@@ -318,9 +318,9 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @return value of the key or defaultValue
    */
   public V fetch(K key, V defaultValue) {
-    if (!containsKey(key)) {
+    if (!containsKey(key))
       return defaultValue;
-    }
+
     return get(key);
   }
 

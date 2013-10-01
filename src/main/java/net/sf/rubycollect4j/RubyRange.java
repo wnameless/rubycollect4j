@@ -181,11 +181,9 @@ public final class RubyRange<E> extends RubyEnumerable<E> {
     for (E item : iter) {
       if (lasts.size() < n) {
         lasts.add(item);
-      } else {
-        if (lasts.size() > 0) {
-          lasts.remove(0);
-          lasts.add(item);
-        }
+      } else if (lasts.size() > 0) {
+        lasts.remove(0);
+        lasts.add(item);
       }
     }
     return lasts;

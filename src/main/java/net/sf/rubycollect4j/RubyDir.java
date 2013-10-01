@@ -330,9 +330,9 @@ public final class RubyDir extends RubyEnumerable<String> {
    * @return an entry of file
    */
   public String read() {
-    if (position < 0 || position >= entries.size()) {
+    if (position < 0 || position >= entries.size())
       return null;
-    }
+
     return entries.get(position++);
   }
 

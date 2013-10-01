@@ -345,7 +345,6 @@ public final class RubyCollections {
       while ((s = stdInput.readLine()) != null) {
         sb.append(s).append("\n");
       }
-
       while ((s = stdError.readLine()) != null) {
         sb.append(s).append("\n");
       }
