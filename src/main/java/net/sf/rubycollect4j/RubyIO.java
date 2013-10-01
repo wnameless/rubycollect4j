@@ -29,8 +29,9 @@ import static net.sf.rubycollect4j.RubyIO.Mode.R;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.Collections;
+import java.util.Map;
 import java.util.Map.Entry;
-import java.util.NoSuchElementException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -54,6 +55,17 @@ public class RubyIO {
 
     R("r", true, false), RW("r+", true, true), W("w", false, true), WR("w+",
         true, true), A("a", false, true), AR("a+", true, true);
+
+    private static final Map<String, Mode> modeMap = Collections
+        .unmodifiableMap(Hash(ra(values()).map(
+            new TransformBlock<Mode, Entry<String, Mode>>() {
+
+              @Override
+              public Entry<String, Mode> yield(Mode item) {
+                return hp(item.toString(), item);
+              }
+
+            })));
 
     private final String mode;
     private final boolean isReadable;
@@ -89,23 +101,12 @@ public class RubyIO {
      * @param mode
      *          mode in String form
      * @return a Mode
-     * @throws NoSuchElementException
+     * @throws IllegalArgumentException
      *           if the permission is not matched any of the Mode
      */
     public static Mode fromString(String mode) {
-      RubyHash<String, Mode> modeHash =
-          Hash(ra(values()).map(
-              new TransformBlock<Mode, Entry<String, Mode>>() {
-
-                @Override
-                public Entry<String, Mode> yield(Mode item) {
-                  return hp(item.toString(), item);
-                }
-
-              }));
-
-      if (modeHash.keyʔ(mode))
-        return modeHash.get(mode);
+      if (modeMap.containsKey(mode))
+        return modeMap.get(mode);
       else
         throw new IllegalArgumentException(
             "ArgumentError: invalid access mode " + mode);
@@ -230,7 +231,8 @@ public class RubyIO {
    */
   public void close() {
     try {
-      raFile.close();
+      if (raFile != null)
+        raFile.close();
     } catch (IOException ex) {
       Logger.getLogger(RubyIO.class.getName()).log(Level.SEVERE, null, ex);
       throw new RuntimeException(ex);
@@ -241,6 +243,8 @@ public class RubyIO {
    * Generators a RubyEnumerator of lines in the file.
    * 
    * @return a RubyEnumerator
+   * @throws IllegalStateException
+   *           if file is not readable
    */
   public RubyEnumerator<String> eachLine() {
     if (mode.isReadable() == false) {
@@ -255,6 +259,8 @@ public class RubyIO {
    * 
    * @param words
    *          to write a line
+   * @throws IllegalStateException
+   *           if file is not writable
    */
   public void puts(String words) {
     if (mode.isWritable() == false) {
@@ -274,11 +280,13 @@ public class RubyIO {
    * Reads the content of a file.
    * 
    * @return a String
+   * @throws IllegalStateException
+   *           if file is not readable
    */
   public String read() {
     if (mode.isReadable() == false) {
       close();
-      throw new UnsupportedOperationException("IOError: not opened for reading");
+      throw new IllegalStateException("IOError: not opened for reading");
     }
     StringBuilder sb = new StringBuilder();
     String line;
@@ -316,6 +324,8 @@ public class RubyIO {
    * @param words
    *          to write
    * @return the number of written bytes.
+   * @throws IllegalStateException
+   *           if file is not writable
    */
   public int write(String words) {
     if (mode.isWritable() == false) {

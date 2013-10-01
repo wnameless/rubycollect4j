@@ -26,7 +26,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.NoSuchElementException;
 
 import net.sf.rubycollect4j.RubyIO.Mode;
 import net.sf.rubycollect4j.block.Block;
@@ -50,10 +49,15 @@ public class RubyIOTest {
   }
 
   @Test
-  public void testFactory() {
+  public void testOpen() {
     io = RubyIO.open(BASE_DIR + "ruby_io_read_only_mode.txt");
     assertEquals(RubyIO.class, io.getClass());
     io.close();
+  }
+
+  @Test(expected = RuntimeException.class)
+  public void testOpenException() {
+    io = RubyIO.open(BASE_DIR + "no_file.txt");
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -118,7 +122,7 @@ public class RubyIOTest {
     io.close();
   }
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test(expected = IllegalStateException.class)
   public void testWriteOnlyModeException() {
     io = RubyIO.open(BASE_DIR + "ruby_io_write_only_mode.txt", "w");
     io.read();
@@ -152,7 +156,7 @@ public class RubyIOTest {
     io.close();
   }
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test(expected = IllegalStateException.class)
   public void testAppendOnlyModeException() {
     io = RubyIO.open(BASE_DIR + "ruby_io_append_only_mode.txt", "a");
     io.read();
