@@ -105,8 +105,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
       if (item instanceof List) {
         @SuppressWarnings("unchecked")
         List<S> itemList = (List<S>) item;
-        if (itemList.size() > 0 && itemList.get(0).equals(target))
-          return newRubyArray(itemList, true);
+        if (itemList.size() > 0) {
+          if (itemList.get(0) == null && target == null)
+            return newRubyArray(itemList, true);
+          if (itemList.get(0) != null && target != null
+              && itemList.get(0).equals(target))
+            return newRubyArray(itemList, true);
+        }
       }
     }
     return null;
@@ -1039,9 +1044,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
       if (item instanceof List) {
         @SuppressWarnings("unchecked")
         List<S> itemList = (List<S>) item;
-        if (itemList.size() > 0
-            && itemList.get(itemList.size() - 1).equals(target))
-          return newRubyArray(itemList, true);
+        if (itemList.size() > 0) {
+          if (itemList.get(itemList.size() - 1) == null && target == null)
+            return newRubyArray(itemList, true);
+          if (itemList.get(itemList.size() - 1) != null && target != null
+              && itemList.get(itemList.size() - 1).equals(target))
+            return newRubyArray(itemList, true);
+        }
       }
     }
     return null;

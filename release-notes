@@ -98,3 +98,5 @@ Version 1.4.1
 * Made RubyArray#push accept varargs
 
 * Fixed the bug of RubyArray#delete which happens while deleting null objects
+
+* Fixed the bugs of RubyArray#assoc & RubyArray#rassoc while encountering null objects

@@ -70,6 +70,9 @@ public class RubyArrayTest {
     List<Integer> ints = new ArrayList<Integer>();
     ra = ra(null, ints, ra(1, 2, 3), ra(4, 5, 6));
     assertEquals(ra(1, 2, 3), ra.assoc(1));
+    ra = ra(ra(null, 2, 3), ra(4, 5, 6));
+    assertEquals(ra(null, 2, 3), ra.assoc(null));
+    assertEquals(ra(4, 5, 6), ra.assoc(4));
   }
 
   @Test
@@ -900,6 +903,9 @@ public class RubyArrayTest {
     List<Integer> ints = new ArrayList<Integer>();
     ra = ra(null, ints, ra(1, 2, 3), ra(4, 5, 6));
     assertEquals(ra(1, 2, 3), ra.rassoc(3));
+    ra = ra(ra(1, 2, null), ra(4, 5, 6));
+    assertEquals(ra(1, 2, null), ra.rassoc(null));
+    assertEquals(ra(4, 5, 6), ra.rassoc(6));
   }
 
   @Test
