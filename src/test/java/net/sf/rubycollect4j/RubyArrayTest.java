@@ -214,6 +214,9 @@ public class RubyArrayTest {
     assertEquals(Integer.valueOf(3), ra.delete(3));
     assertNull(ra.delete(3));
     assertEquals(ra(1, 2), ra);
+    ra = ra(1, 2, null, null);
+    assertNull(ra.delete(null));
+    assertEquals(ra(1, 2), ra);
   }
 
   @Test
@@ -228,6 +231,7 @@ public class RubyArrayTest {
           }
 
         }));
+    assertEquals(ra(1, 2), ra);
     assertEquals(Integer.valueOf(27),
         ra.delete(9, new TransformBlock<Integer, Integer>() {
 
@@ -237,6 +241,16 @@ public class RubyArrayTest {
           }
 
         }));
+    assertEquals(ra(1, 2), ra);
+    ra = ra(1, 2, null, null);
+    assertNull(ra.delete(null, new TransformBlock<Integer, Integer>() {
+
+      @Override
+      public Integer yield(Integer item) {
+        return item * 3;
+      }
+
+    }));
     assertEquals(ra(1, 2), ra);
   }
 

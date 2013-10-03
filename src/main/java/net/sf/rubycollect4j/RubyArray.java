@@ -287,17 +287,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    *          to be deleted
    * @return the target or null
    */
+  @SuppressWarnings("unchecked")
   public E delete(E target) {
-    boolean isDeleted = false;
-    ListIterator<E> li = listIterator();
-    while (li.hasNext()) {
-      E item = li.next();
-      if (item.equals(target)) {
-        li.remove();
-        isDeleted = true;
-      }
-    }
-    return isDeleted ? target : null;
+    int size = list.size();
+    list.removeAll(Arrays.asList(target));
+    return size != list.size() ? target : null;
   }
 
   /**
@@ -311,16 +305,9 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return an element
    */
   public E delete(E target, TransformBlock<E, E> block) {
-    boolean isDeleted = false;
-    ListIterator<E> li = listIterator();
-    while (li.hasNext()) {
-      E item = li.next();
-      if (item.equals(target)) {
-        li.remove();
-        isDeleted = true;
-      }
-    }
-    return isDeleted ? target : block.yield(target);
+    int size = list.size();
+    delete(target);
+    return size != list.size() ? target : block.yield(target);
   }
 
   /**

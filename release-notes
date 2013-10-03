@@ -96,3 +96,5 @@ Version 1.4.1
 * Overrode toString() methods of all Iterables
 
 * Made RubyArray#push accept varargs
+
+* Fixed the bug of RubyArray#delete which happens while deleting null objects
