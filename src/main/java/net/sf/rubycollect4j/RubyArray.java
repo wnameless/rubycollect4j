@@ -241,7 +241,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   public RubyArray<E> compactǃ() {
     int beforeSize = list.size();
     list.removeAll(Collections.singletonList(null));
-    return beforeSize != list.size() ? this : null;
+    return list.size() == beforeSize ? null : this;
   }
 
   /**
@@ -278,7 +278,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   public E delete(E target) {
     int beforeSize = list.size();
     list.removeAll(Collections.singletonList(target));
-    return beforeSize != list.size() ? target : null;
+    return list.size() == beforeSize ? null : target;
   }
 
   /**
@@ -294,7 +294,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   public E delete(E target, TransformBlock<E, E> block) {
     int beforeSize = list.size();
     delete(target);
-    return beforeSize != list.size() ? target : block.yield(target);
+    return list.size() == beforeSize ? block.yield(target) : target;
   }
 
   /**
@@ -768,7 +768,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     Iterator<E> iter = list.iterator();
     while (iter.hasNext()) {
       E item = iter.next();
-      if (!(block.yield(item)))
+      if (!block.yield(item))
         iter.remove();
     }
     return this;
@@ -1066,10 +1066,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   public RubyArray<E> rejectǃ(BooleanBlock<E> block) {
     int beforeSize = list.size();
     RubyArray<E> rubyArray = deleteIf(block);
-    if (rubyArray.size() != beforeSize)
-      return rubyArray;
-    else
-      return null;
+    return rubyArray.size() != beforeSize ? rubyArray : null;
   }
 
   /**

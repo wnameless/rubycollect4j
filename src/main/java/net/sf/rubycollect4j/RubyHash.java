@@ -572,7 +572,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   public RubyHash<K, V> rejectǃ(EntryBooleanBlock<K, V> block) {
     int beforeSize = size();
     deleteIf(block);
-    return map.size() != beforeSize ? this : null;
+    return map.size() == beforeSize ? null : this;
   }
 
   /**
