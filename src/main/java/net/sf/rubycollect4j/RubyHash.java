@@ -454,8 +454,8 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Merges any Map with self and stores into a new RubyHash. Resolves the key
-   * which is conflict by given block.
+   * Merges any Map with self and stores into a new RubyHash. Resolves the final
+   * value of the key which is conflicted by given block.
    * 
    * @param otherHash
    *          any Map
@@ -467,8 +467,11 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     RubyHash<K, V> newHash = newRubyHash(map);
     for (Entry<K, V> item : otherHash.entrySet()) {
       if (newHash.containsKey(item.getKey()))
-        newHash.put(item.getKey(),
-            block.yield(item.getKey(), get(item.getKey()), item.getValue()));
+        newHash
+            .put(
+                item.getKey(),
+                block.yield(item.getKey(), map.get(item.getKey()),
+                    item.getValue()));
       else
         newHash.put(item);
     }
@@ -476,7 +479,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Merges any Map within self.
+   * Merges any Map into self.
    * 
    * @param otherHash
    *          any Map
@@ -490,8 +493,8 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Merges any Map within self. Resolves the key which is conflict by given
-   * block.
+   * Merges any Map into self. Resolves the final value of the key which is
+   * conflicted by given block.
    * 
    * @param otherHash
    *          any Map
