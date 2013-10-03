@@ -44,9 +44,8 @@ public final class StringSuccessor implements Successive<String> {
   public static StringSuccessor getInstance() {
     if (INSTANCE == null) {
       synchronized (IntegerSuccessor.class) {
-        if (INSTANCE == null) {
+        if (INSTANCE == null)
           INSTANCE = new StringSuccessor();
-        }
       }
     }
     return INSTANCE;
@@ -56,15 +55,15 @@ public final class StringSuccessor implements Successive<String> {
 
   @Override
   public String succ(String curr) {
-    if (curr.isEmpty()) {
+    if (curr.isEmpty())
       return "";
-    }
+
     List<List<Character>> parts = partition(curr);
-    if (parts.size() > 1 || isAlphanumeric(parts.get(0).get(0))) {
+    if (parts.size() > 1 || isAlphanumeric(parts.get(0).get(0)))
       nextAlphanumeric(parts);
-    } else {
+    else
       nextUTF8(parts.get(0));
-    }
+
     StringBuilder sb = new StringBuilder();
     for (List<Character> chars : parts) {
       for (Character c : chars) {
@@ -137,17 +136,15 @@ public final class StringSuccessor implements Successive<String> {
         carry = true;
       }
     }
-    if (carry) {
+    if (carry)
       utf8.add(0, (char) 1);
-    }
   }
 
   private char increaseUTF8(char c) {
-    if ((int) c < 65535) {
+    if ((int) c < 65535)
       return (char) ((int) c + 1);
-    } else {
+    else
       return (char) 1;
-    }
   }
 
   private List<List<Character>> partition(String curr) {
@@ -176,14 +173,14 @@ public final class StringSuccessor implements Successive<String> {
 
   @Override
   public int compare(String o1, String o2) {
-    if (o1.matches("^\\d+(\\.\\d+)?$") && o2.matches("^\\d+(\\.\\d+)?$")) {
+    if (o1.matches("^\\d+(\\.\\d+)?$") && o2.matches("^\\d+(\\.\\d+)?$"))
       return Double.valueOf(o1).compareTo(Double.valueOf(o2));
-    }
-    if (o1.length() > o2.length()) {
+
+    if (o1.length() > o2.length())
       return 1;
-    } else if (o1.length() < o2.length()) {
+    else if (o1.length() < o2.length())
       return -1;
-    }
+
     return o1.compareTo(o2);
   }
 

@@ -38,9 +38,8 @@ public final class LongSuccessor implements Successive<Long> {
   public static LongSuccessor getInstance() {
     if (INSTANCE == null) {
       synchronized (LongSuccessor.class) {
-        if (INSTANCE == null) {
+        if (INSTANCE == null)
           INSTANCE = new LongSuccessor();
-        }
       }
     }
     return INSTANCE;

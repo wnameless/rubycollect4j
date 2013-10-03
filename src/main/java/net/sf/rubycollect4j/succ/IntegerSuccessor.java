@@ -38,9 +38,8 @@ public final class IntegerSuccessor implements Successive<Integer> {
   public static IntegerSuccessor getInstance() {
     if (INSTANCE == null) {
       synchronized (IntegerSuccessor.class) {
-        if (INSTANCE == null) {
+        if (INSTANCE == null)
           INSTANCE = new IntegerSuccessor();
-        }
       }
     }
     return INSTANCE;

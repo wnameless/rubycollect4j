@@ -41,9 +41,8 @@ public final class DateSuccessor implements Successive<Date> {
   public static DateSuccessor getInstance() {
     if (INSTANCE == null) {
       synchronized (DateSuccessor.class) {
-        if (INSTANCE == null) {
+        if (INSTANCE == null)
           INSTANCE = new DateSuccessor();
-        }
       }
     }
     return INSTANCE;
