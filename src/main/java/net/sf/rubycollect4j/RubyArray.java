@@ -1623,7 +1623,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    */
   @SuppressWarnings("rawtypes")
   public <S> RubyArray<RubyArray<S>> transpose() {
-    if (isEmpty())
+    if (list.isEmpty())
       return newRubyArray();
 
     Integer size = null;

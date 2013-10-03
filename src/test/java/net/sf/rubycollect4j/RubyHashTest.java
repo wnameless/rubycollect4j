@@ -20,8 +20,18 @@
  */
 package net.sf.rubycollect4j;
 
+import static net.sf.rubycollect4j.RubyCollections.hp;
+import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
+import static net.sf.rubycollect4j.RubyCollections.ra;
+import static net.sf.rubycollect4j.RubyCollections.rh;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Comparator;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import net.sf.rubycollect4j.block.Block;
@@ -32,15 +42,6 @@ import net.sf.rubycollect4j.block.EntryTransformBlock;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import static net.sf.rubycollect4j.RubyCollections.hp;
-import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
-import static net.sf.rubycollect4j.RubyCollections.ra;
-import static net.sf.rubycollect4j.RubyCollections.rh;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 public class RubyHashTest {
 
@@ -955,6 +956,143 @@ public class RubyHashTest {
           }
 
         }));
+  }
+
+  @Test
+  public void testSize() {
+    Map<Integer, Integer> map = new LinkedHashMap<Integer, Integer>();
+    map.put(1, 2);
+    map.put(3, 4);
+    rh = rh(1, 2, 3, 4);
+    assertEquals(map.size(), rh.size());
+    map.clear();
+    rh.clear();
+    assertEquals(map.size(), rh.size());
+  }
+
+  @Test
+  public void testIsEmpty() {
+    Map<Integer, Integer> map = new LinkedHashMap<Integer, Integer>();
+    map.put(1, 2);
+    map.put(3, 4);
+    rh = rh(1, 2, 3, 4);
+    assertEquals(map.isEmpty(), rh.isEmpty());
+    map.clear();
+    rh.clear();
+    assertEquals(map.isEmpty(), rh.isEmpty());
+  }
+
+  @Test
+  public void testContainsKey() {
+    Map<Integer, Integer> map = new LinkedHashMap<Integer, Integer>();
+    map.put(1, 2);
+    map.put(3, 4);
+    rh = rh(1, 2, 3, 4);
+    assertEquals(map.containsKey(1), rh.containsKey(1));
+    assertEquals(map.containsKey(2), rh.containsKey(2));
+  }
+
+  @Test
+  public void testContainsValue() {
+    Map<Integer, Integer> map = new LinkedHashMap<Integer, Integer>();
+    map.put(1, 2);
+    map.put(3, 4);
+    rh = rh(1, 2, 3, 4);
+    assertEquals(map.containsValue(1), rh.containsValue(1));
+    assertEquals(map.containsValue(2), rh.containsValue(2));
+  }
+
+  @Test
+  public void testGet() {
+    Map<Integer, Integer> map = new LinkedHashMap<Integer, Integer>();
+    map.put(1, 2);
+    map.put(3, 4);
+    rh = rh(1, 2, 3, 4);
+    assertEquals(map.get(1), rh.get(1));
+  }
+
+  @Test
+  public void testRemove() {
+    Map<Integer, Integer> map = new LinkedHashMap<Integer, Integer>();
+    map.put(1, 2);
+    map.put(3, 4);
+    rh = rh(1, 2, 3, 4);
+    map.remove(1);
+    rh.remove(1);
+    assertEquals(map, rh);
+  }
+
+  @Test
+  public void testPutAll() {
+    Map<Integer, Integer> map = new LinkedHashMap<Integer, Integer>();
+    map.put(1, 2);
+    map.put(3, 4);
+    rh = rh(1, 2, 3, 4);
+    Map<Integer, Integer> other = new LinkedHashMap<Integer, Integer>();
+    other.put(5, 6);
+    other.put(7, 8);
+    map.putAll(other);
+    rh.putAll(other);
+    assertEquals(map, rh);
+  }
+
+  @Test
+  public void testClear() {
+    Map<Integer, Integer> map = new LinkedHashMap<Integer, Integer>();
+    map.put(1, 2);
+    map.put(3, 4);
+    rh = rh(1, 2, 3, 4);
+    map.clear();
+    rh.clear();
+    assertEquals(map, rh);
+  }
+
+  @Test
+  public void testKeySet() {
+    Map<Integer, Integer> map = new LinkedHashMap<Integer, Integer>();
+    map.put(1, 2);
+    map.put(3, 4);
+    rh = rh(1, 2, 3, 4);
+    assertEquals(map.keySet(), rh.keySet());
+  }
+
+  @Test
+  public void testEntrySet() {
+    Map<Integer, Integer> map = new LinkedHashMap<Integer, Integer>();
+    map.put(1, 2);
+    map.put(3, 4);
+    rh = rh(1, 2, 3, 4);
+    assertEquals(map.entrySet(), rh.entrySet());
+  }
+
+  @Test
+  public void testEquals() {
+    Map<Integer, Integer> map = new LinkedHashMap<Integer, Integer>();
+    map.put(1, 2);
+    map.put(3, 4);
+    rh = rh(1, 2, 3, 4);
+    Map<Integer, Integer> other = new LinkedHashMap<Integer, Integer>();
+    other.put(1, 2);
+    other.put(3, 4);
+    assertEquals(map.equals(other), rh.equals(other));
+  }
+
+  @Test
+  public void testHashCode() {
+    Map<Integer, Integer> map = new LinkedHashMap<Integer, Integer>();
+    map.put(1, 2);
+    map.put(3, 4);
+    rh = rh(1, 2, 3, 4);
+    assertEquals(map.hashCode(), rh.hashCode());
+  }
+
+  @Test
+  public void testToString() {
+    Map<Integer, Integer> map = new LinkedHashMap<Integer, Integer>();
+    map.put(1, 2);
+    map.put(3, 4);
+    rh = rh(1, 2, 3, 4);
+    assertEquals(map.toString(), rh.toString());
   }
 
 }

@@ -20,7 +20,9 @@
  */
 package net.sf.rubycollect4j;
 
+import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.ra;
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -30,6 +32,7 @@ import static org.junit.Assert.fail;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -56,12 +59,6 @@ public class RubyArrayTest {
   @Test(expected = NullPointerException.class)
   public void testConstructorException() {
     ra = new RubyArray<Integer>(null);
-  }
-
-  @Test
-  public void testAdd() {
-    ra = ra(1, 2, 3, 4);
-    assertEquals(ra(1, 2, 3, 4, 5, 6), ra.plus(ra(5, 6)));
   }
 
   @SuppressWarnings("unchecked")
@@ -726,6 +723,12 @@ public class RubyArrayTest {
   }
 
   @Test
+  public void testMinus() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(1, 3), ra.minus(ra(2, 4)));
+  }
+
+  @Test
   public void testMultiply() {
     ra = ra(1, 2, 3);
     assertEquals(ra(), ra.multiply(0));
@@ -807,6 +810,12 @@ public class RubyArrayTest {
 
     }));
     assertEquals(ra(1, 2, 3, 1, 3, 2, 2, 1, 3, 2, 3, 1, 3, 1, 2, 3, 2, 1), ints);
+  }
+
+  @Test
+  public void testPlus() {
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(1, 2, 3, 4, 5, 6), ra.plus(ra(5, 6)));
   }
 
   @Test
@@ -1424,9 +1433,223 @@ public class RubyArrayTest {
   }
 
   @Test
-  public void tesetValuesAt() {
+  public void testValuesAt() {
     ra = ra(1, 2, 3, 4);
     assertEquals(ra(4, 1, null, null), ra.valuesAt(-1, 0, 5, -6));
+  }
+
+  @Test
+  public void testSize() {
+    List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
+    ra = newRubyArray(ints, true);
+    assertEquals(ints.size(), ra.size());
+    ints.clear();
+    ra.clear();
+    assertEquals(ints.size(), ra.size());
+  }
+
+  @Test
+  public void testIsEmpty() {
+    List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
+    ra = newRubyArray(ints, true);
+    assertEquals(ints.isEmpty(), ra.isEmpty());
+    ints.clear();
+    ra.clear();
+    assertEquals(ints.size(), ra.size());
+  }
+
+  @Test
+  public void testContains() {
+    List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
+    ra = newRubyArray(ints, true);
+    assertEquals(ints.contains(1), ra.contains(1));
+  }
+
+  @Test
+  public void testIterator() {
+    List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
+    ra = newRubyArray(ints, true);
+    assertEquals(ra(ints.iterator()), ra(ra.iterator()));
+  }
+
+  @Test
+  public void testToArray() {
+    List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
+    ra = newRubyArray(ints, true);
+    assertArrayEquals(ints.toArray(), ra.toArray());
+  }
+
+  @Test
+  public void testToArrayWithArgument() {
+    List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
+    ra = newRubyArray(ints, true);
+    assertArrayEquals(ints.toArray(new Integer[4]), ra.toArray(new Integer[4]));
+  }
+
+  @Test
+  public void testAdd() {
+    List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
+    ra = newRubyArray(ints, true);
+    ints.add(5);
+    ra.add(5);
+    assertEquals(ints, ra);
+  }
+
+  @Test
+  public void testRemove() {
+    List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
+    ra = newRubyArray(ints, true);
+    ints.remove(Integer.valueOf(4));
+    ra.remove(Integer.valueOf(4));
+    assertEquals(ints, ra);
+  }
+
+  @Test
+  public void testContainsAll() {
+    List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
+    ra = newRubyArray(ints, true);
+    List<Integer> one = Collections.singletonList(1);
+    assertEquals(ints.containsAll(one), ra.containsAll(one));
+  }
+
+  @Test
+  public void testAddAll() {
+    List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
+    ra = newRubyArray(ints, true);
+    List<Integer> one = Collections.singletonList(1);
+    ints.addAll(one);
+    ra.addAll(one);
+    assertEquals(ints, ra);
+  }
+
+  @Test
+  public void testAddAllWithIndex() {
+    List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
+    ra = newRubyArray(ints, true);
+    List<Integer> one = Collections.singletonList(1);
+    ints.addAll(0, one);
+    ra.addAll(0, one);
+    assertEquals(ints, ra);
+  }
+
+  @Test
+  public void testRemoveAll() {
+    List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
+    ra = newRubyArray(ints, true);
+    List<Integer> one = Collections.singletonList(1);
+    ints.removeAll(one);
+    ra.removeAll(one);
+    assertEquals(ints, ra);
+  }
+
+  @Test
+  public void testRetainAll() {
+    List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
+    ra = newRubyArray(ints, true);
+    List<Integer> one = Collections.singletonList(1);
+    ints.retainAll(one);
+    ra.retainAll(one);
+    assertEquals(ints, ra);
+  }
+
+  @Test
+  public void testClear() {
+    List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
+    ra = newRubyArray(ints, true);
+    ints.clear();
+    ra.clear();
+    assertEquals(ints, ra);
+  }
+
+  @Test
+  public void testGet() {
+    List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
+    ra = newRubyArray(ints, true);
+    assertEquals(ints.get(1), ra.get(1));
+  }
+
+  @Test
+  public void testSet() {
+    List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
+    ra = newRubyArray(ints, true);
+    ints.set(0, 0);
+    ra.set(0, 0);
+    assertEquals(ints, ra);
+  }
+
+  @Test
+  public void testAddWithIndex() {
+    List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
+    ra = newRubyArray(ints, true);
+    ints.add(0, 0);
+    ra.add(0, 0);
+    assertEquals(ints, ra);
+  }
+
+  @Test
+  public void testRemoveWithIndex() {
+    List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
+    ra = newRubyArray(ints, true);
+    ints.remove(0);
+    ra.remove(0);
+    assertEquals(ints, ra);
+  }
+
+  @Test
+  public void testIndexOf() {
+    List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
+    ra = newRubyArray(ints, true);
+    assertEquals(ints.indexOf(1), ra.indexOf(1));
+  }
+
+  @Test
+  public void testLastIndexOf() {
+    List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
+    ra = newRubyArray(ints, true);
+    assertEquals(ints.lastIndexOf(1), ra.lastIndexOf(1));
+  }
+
+  @Test
+  public void testListIterator() {
+    List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
+    ra = newRubyArray(ints, true);
+    assertEquals(ra(ints.listIterator()), ra(ra.listIterator()));
+  }
+
+  @Test
+  public void testListIteratorWithIndex() {
+    List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
+    ra = newRubyArray(ints, true);
+    assertEquals(ra(ints.listIterator(1)), ra(ra.listIterator(1)));
+  }
+
+  @Test
+  public void testSubList() {
+    List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
+    ra = newRubyArray(ints, true);
+    assertEquals(ints.subList(0, 2), ra.subList(0, 2));
+  }
+
+  @Test
+  public void testEquals() {
+    List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
+    ra = newRubyArray(ints, true);
+    assertEquals(ints.equals(Arrays.asList(1, 2, 3, 4)),
+        ra.equals(Arrays.asList(1, 2, 3, 4)));
+  }
+
+  @Test
+  public void testHashCode() {
+    List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
+    ra = newRubyArray(ints, true);
+    assertEquals(ints.hashCode(), ra.hashCode());
+  }
+
+  @Test
+  public void testToString() {
+    List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
+    ra = newRubyArray(ints, true);
+    assertEquals(ints.toString(), ra.toString());
   }
 
 }
