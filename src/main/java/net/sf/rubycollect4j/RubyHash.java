@@ -278,7 +278,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @return true if this RubyHash is empty, false otherwise
    */
   public boolean emptyʔ() {
-    return isEmpty();
+    return map.isEmpty();
   }
 
   /**
@@ -289,7 +289,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @return true if 2 objects are equal, false otherwise
    */
   public boolean eqlʔ(Object other) {
-    return equals(other);
+    return map.equals(other);
   }
 
   /**
