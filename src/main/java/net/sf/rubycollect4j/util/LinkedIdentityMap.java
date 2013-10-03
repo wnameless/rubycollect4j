@@ -151,11 +151,10 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
     sb.append("{");
     for (int i = 0; i < list.size(); i++) {
       K key = list.get(i);
-      if (i == 0) {
+      if (i == 0)
         sb.append(key).append("=").append(map.get(key));
-      } else {
+      else
         sb.append(", ").append(key).append("=").append(map.get(key));
-      }
     }
     sb.append("}");
     return sb.toString();
