@@ -287,6 +287,8 @@ public class RubyHashTest {
   public void testKey() {
     assertEquals(Integer.valueOf(1), rh.key(2));
     assertNull(rh.key(8));
+    rh = rh(1, 2, 3, null);
+    assertEquals(Integer.valueOf(3), rh.key(null));
   }
 
   @Test
