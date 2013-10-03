@@ -100,3 +100,5 @@ Version 1.4.1
 * Fixed the bug of RubyArray#delete which happens while deleting null objects
 
 * Fixed the bugs of RubyArray#assoc & RubyArray#rassoc while encountering null objects
+
+* Fixed the bug of RubyHash#rassoc while encountering null objects

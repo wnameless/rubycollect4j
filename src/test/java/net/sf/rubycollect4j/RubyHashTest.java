@@ -71,6 +71,8 @@ public class RubyHashTest {
   public void testAssoc() {
     assertEquals(hp(3, 4), rh.assoc(3));
     assertNull(rh.assoc(7));
+    rh = rh(1, 2, null, 4);
+    assertEquals(hp(null, 4), rh.assoc(null));
   }
 
   @Test
@@ -355,6 +357,8 @@ public class RubyHashTest {
     rh = rh(1, 2, 3, 6, 5, 6);
     assertEquals(hp(3, 6), rh.rassoc(6));
     assertNull(rh.rassoc(5));
+    rh = rh(1, 2, 3, null);
+    assertEquals(hp(3, null), rh.rassoc(null));
   }
 
   @SuppressWarnings("unchecked")
