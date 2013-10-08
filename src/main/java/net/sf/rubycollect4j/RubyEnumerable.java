@@ -1464,8 +1464,11 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
       return rubyArray;
     } else {
       throw new IllegalArgumentException("ArgumentError: comparison of "
-          + rubyArray.get(0).getClass() + " with "
-          + rubyArray.get(1).getClass() + " failed");
+          + (rubyArray.get(0) == null ? "null" : rubyArray.get(0).getClass()
+              .getName())
+          + " with "
+          + (rubyArray.get(1) == null ? "null" : rubyArray.get(1).getClass()
+              .getName()) + " failed");
     }
   }
 

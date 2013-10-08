@@ -1244,11 +1244,8 @@ public class RubyEnumerableTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testSortException() {
-    assertEquals(
-        ra(new Point(1, 2), new Point(3, 4), new Point(5, 6)),
-        newRubyEnumerator(
-            Arrays.asList(new Point(5, 6), new Point(1, 2), new Point(3, 4)))
-            .sort());
+    newRubyEnumerator(Arrays.asList(new Point(5, 6), null, new Point(3, 4)))
+        .sort();
   }
 
   @Test
