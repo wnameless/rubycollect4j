@@ -1358,7 +1358,7 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
   public RubyArray<E> reject(BooleanBlock<E> block) {
     RubyArray<E> rubyArray = newRubyArray();
     for (E item : getIterable()) {
-      if (!(block.yield(item)))
+      if (!block.yield(item))
         rubyArray.add(item);
     }
     return rubyArray;

@@ -70,9 +70,9 @@ public class RubyArrayTest {
     List<Integer> ints = new ArrayList<Integer>();
     ra = ra(null, ints, ra(1, 2, 3), ra(4, 5, 6));
     assertEquals(ra(1, 2, 3), ra.assoc(1));
-    ra = ra(ra(null, 2, 3), ra(4, 5, 6));
-    assertEquals(ra(null, 2, 3), ra.assoc(null));
-    assertEquals(ra(4, 5, 6), ra.assoc(4));
+    ra = ra(ra(1, 2, 3), ra(null, 5, 6), ra(7, 8, 9));
+    assertEquals(ra(null, 5, 6), ra.assoc(null));
+    assertEquals(ra(7, 8, 9), ra.assoc(7));
   }
 
   @Test
@@ -658,7 +658,7 @@ public class RubyArrayTest {
 
   @Test
   public void testIntersection() {
-    ra = ra(1, 2, 3, 4);
+    ra = ra(1, 2, 2, 3);
     assertEquals(ra(2, 3), ra.intersection(ra(-1, 2, 3, 6)));
   }
 
@@ -903,9 +903,9 @@ public class RubyArrayTest {
     List<Integer> ints = new ArrayList<Integer>();
     ra = ra(null, ints, ra(1, 2, 3), ra(4, 5, 6));
     assertEquals(ra(1, 2, 3), ra.rassoc(3));
-    ra = ra(ra(1, 2, null), ra(4, 5, 6));
-    assertEquals(ra(1, 2, null), ra.rassoc(null));
-    assertEquals(ra(4, 5, 6), ra.rassoc(6));
+    ra = ra(ra(1, 2, 3), ra(4, 5, null), ra(7, 8, 9));
+    assertEquals(ra(4, 5, null), ra.rassoc(null));
+    assertEquals(ra(7, 8, 9), ra.rassoc(9));
   }
 
   @Test
@@ -1375,7 +1375,7 @@ public class RubyArrayTest {
 
   @Test
   public void testUnion() {
-    ra = ra(1, 2, 3, 4);
+    ra = ra(1, 2, 3, 4, 4);
     assertEquals(ra(1, 2, 3, 4, 6, 7), ra.union(ra(2, 3, 3, 6, 7)));
   }
 

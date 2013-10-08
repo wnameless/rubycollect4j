@@ -106,11 +106,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
         @SuppressWarnings("unchecked")
         List<S> itemList = (List<S>) item;
         if (itemList.size() > 0) {
-          if (itemList.get(0) == null && target == null)
-            return newRubyArray(itemList, true);
-          if (itemList.get(0) != null && target != null
-              && itemList.get(0).equals(target))
-            return newRubyArray(itemList, true);
+          if (target == null) {
+            if (itemList.get(0) == null)
+              return newRubyArray(itemList, true);
+          } else {
+            if (target.equals(itemList.get(0)))
+              return newRubyArray(itemList, true);
+          }
         }
       }
     }
@@ -712,8 +714,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    */
   public RubyArray<E> intersection(List<E> other) {
     List<E> andList = new ArrayList<E>();
-    for (E item : this) {
-      if (!andList.contains(item) && contains(item) && other.contains(item))
+    for (E item : list) {
+      if (!andList.contains(item) && other.contains(item))
         andList.add(item);
     }
     return newRubyArray(andList);
@@ -1045,11 +1047,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
         @SuppressWarnings("unchecked")
         List<S> itemList = (List<S>) item;
         if (itemList.size() > 0) {
-          if (itemList.get(itemList.size() - 1) == null && target == null)
-            return newRubyArray(itemList, true);
-          if (itemList.get(itemList.size() - 1) != null && target != null
-              && itemList.get(itemList.size() - 1).equals(target))
-            return newRubyArray(itemList, true);
+          if (target == null) {
+            if (itemList.get(itemList.size() - 1) == null)
+              return newRubyArray(itemList, true);
+          } else {
+            if (target.equals(itemList.get(itemList.size() - 1)))
+              return newRubyArray(itemList, true);
+          }
         }
       }
     }

@@ -554,11 +554,13 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    */
   public Entry<K, V> rassoc(V value) {
     for (Entry<K, V> item : map.entrySet()) {
-      if (item.getValue() == null && value == null)
-        return item;
-      if (item.getValue() != null && value != null
-          && item.getValue().equals(value))
-        return item;
+      if (value == null) {
+        if (item.getValue() == null)
+          return item;
+      } else {
+        if (value.equals(item.getValue()))
+          return item;
+      }
     }
     return null;
   }
