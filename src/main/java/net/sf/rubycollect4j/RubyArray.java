@@ -419,7 +419,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    */
   public E fetch(int index) {
     if (index >= list.size() || index < -list.size())
-      throw new IndexOutOfBoundsException("index " + index
+      throw new IndexOutOfBoundsException("IndexError: index " + index
           + " outside of array bounds: " + -list.size() + "..." + list.size());
 
     return at(index);
@@ -828,7 +828,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    */
   public RubyArray<E> multiply(int n) {
     if (n < 0)
-      throw new IllegalArgumentException("negative argument");
+      throw new IllegalArgumentException("ArgumentError: negative argument");
 
     List<E> multiplyList = new ArrayList<E>();
     for (int i = 0; i < n; i++) {
@@ -1366,7 +1366,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    */
   public RubyArray<E> shift(int n) {
     if (n < 0)
-      throw new IllegalArgumentException("negative array size");
+      throw new IllegalArgumentException("ArgumentError: negative array size");
 
     List<E> shiftedList = new ArrayList<E>();
     while (!list.isEmpty() && shiftedList.size() < n) {
