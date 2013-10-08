@@ -1280,6 +1280,35 @@ public class RubyEnumerableTest {
   }
 
   @Test
+  public void testSortByWith2ComparatorsAndBlock() {
+    RubyEnumerable<String> re =
+        newRubyEnumerator(Arrays.asList("aaaa", "bbb", "cc", "d", "e"));
+    assertEquals(ra("aaaa", "bbb", "cc", "e", "d"),
+        re.sortBy(new Comparator<String>() {
+
+          @Override
+          public int compare(String o1, String o2) {
+            return o2.compareTo(o1);
+          }
+
+        }, new Comparator<Integer>() {
+
+          @Override
+          public int compare(Integer o1, Integer o2) {
+            return o2 - o1;
+          }
+
+        }, new TransformBlock<String, Integer>() {
+
+          @Override
+          public Integer yield(String item) {
+            return item.length();
+          }
+
+        }));
+  }
+
+  @Test
   public void testSortByWithBlock() {
     RubyEnumerable<String> re =
         newRubyEnumerator(Arrays.asList("aaaa", "bbb", "cc", "e", "d"));

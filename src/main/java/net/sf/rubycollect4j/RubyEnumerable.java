@@ -1475,7 +1475,7 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
    *          a Comparator
    * @return a RubyArray
    */
-  public RubyArray<E> sort(Comparator<E> comp) {
+  public RubyArray<E> sort(Comparator<? super E> comp) {
     RubyArray<E> rubyArray = newRubyArray(getIterable());
     if (rubyArray.size() <= 1)
       return rubyArray;
@@ -1521,6 +1521,42 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
     Collections.sort(keys, comp);
     for (S key : keys) {
       for (E item : multimap.get(key).sort()) {
+        sortedList.add(item);
+      }
+    }
+    return sortedList;
+  }
+
+  /**
+   * Sorts elements of this RubyEnumerable by the ordering of elements
+   * transformed by the block induced by the Comparator for S and applies the
+   * Comparator for E again before stores them into a RubyArray.
+   * 
+   * @param <S>
+   *          the type of transformed elements
+   * @param comp1
+   *          a Comparator for E
+   * @param comp2
+   *          a Comparator for S
+   * @param block
+   *          to transform elements
+   * @return a RubyArray
+   */
+  public <S> RubyArray<E> sortBy(Comparator<? super E> comp1,
+      Comparator<? super S> comp2, TransformBlock<E, S> block) {
+    Map<S, RubyArray<E>> multimap = new LinkedHashMap<S, RubyArray<E>>();
+    RubyArray<E> sortedList = newRubyArray();
+    for (E item : getIterable()) {
+      S key = block.yield(item);
+      if (!multimap.containsKey(key))
+        multimap.put(key, new RubyArray<E>());
+
+      multimap.get(key).add(item);
+    }
+    List<S> keys = new ArrayList<S>(multimap.keySet());
+    Collections.sort(keys, comp2);
+    for (S key : keys) {
+      for (E item : multimap.get(key).sort(comp1)) {
         sortedList.add(item);
       }
     }
