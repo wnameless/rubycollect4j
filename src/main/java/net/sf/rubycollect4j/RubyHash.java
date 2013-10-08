@@ -303,7 +303,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    */
   public V fetch(K key) {
     if (!map.containsKey(key))
-      throw new NoSuchElementException("key not found: " + key);
+      throw new NoSuchElementException("KeyError: key not found: " + key);
 
     return map.get(key);
   }

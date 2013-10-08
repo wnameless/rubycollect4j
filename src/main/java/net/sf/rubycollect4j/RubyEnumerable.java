@@ -314,7 +314,8 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
    */
   public RubyArray<E> drop(int n) {
     if (n < 0)
-      throw new IllegalArgumentException("attempt to drop negative size");
+      throw new IllegalArgumentException(
+          "ArgumentError: attempt to drop negative size");
 
     RubyArray<E> rubyArray = newRubyArray();
     int i = 0;
@@ -617,7 +618,8 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
    */
   public RubyArray<E> first(int n) {
     if (n < 0)
-      throw new IllegalArgumentException("attempt to take negative size");
+      throw new IllegalArgumentException(
+          "ArgumentError: attempt to take negative size");
 
     Iterator<E> it = getIterable().iterator();
     RubyArray<E> rubyArray = newRubyArray();
@@ -1604,7 +1606,8 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
    */
   public RubyArray<E> take(int n) {
     if (n < 0)
-      throw new IllegalArgumentException("attempt to take negative size");
+      throw new IllegalArgumentException(
+          "ArgumentError: attempt to take negative size");
 
     RubyArray<E> rubyArray = newRubyArray();
     int i = 0;

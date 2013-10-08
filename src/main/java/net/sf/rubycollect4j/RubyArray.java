@@ -1287,7 +1287,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    */
   public E sample() {
     if (list.size() > 0)
-      return list.get(rand.nextInt(size()));
+      return list.get(rand.nextInt(list.size()));
     else
       return null;
   }
@@ -1303,7 +1303,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    */
   public RubyArray<E> sample(int n) {
     if (n < 0)
-      throw new IllegalArgumentException("negative sample number");
+      throw new IllegalArgumentException(
+          "ArgumentError: negative sample number");
 
     List<Integer> indices = new ArrayList<Integer>();
     for (int i = 0; i < list.size(); i++) {
@@ -1463,13 +1464,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     List<E> slicedList = new ArrayList<E>();
     if (index < -list.size()) {
       return null;
-    } else if (index >= size()) {
+    } else if (index >= list.size()) {
       return null;
     } else {
       if (index < 0)
         index += list.size();
 
-      for (int i = index; i < size() && length > 0;) {
+      for (int i = index; i < list.size() && length > 0;) {
         slicedList.add(list.remove(i));
         length--;
       }
@@ -1500,7 +1501,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
       return this;
     } else {
       throw new IllegalArgumentException("ArgumentError: comparison of "
-          + get(0).getClass() + " with " + get(1).getClass() + " failed");
+          + list.get(0).getClass() + " with " + list.get(1).getClass()
+          + " failed");
     }
   }
 
