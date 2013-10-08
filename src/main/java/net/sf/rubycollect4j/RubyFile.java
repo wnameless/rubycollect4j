@@ -296,9 +296,9 @@ public final class RubyFile extends RubyIO {
    */
   public static Long sizeʔ(String path) {
     File file = new File(path);
-    if (!(file.exists())) {
+    if (!file.exists())
       return null;
-    }
+
     RandomAccessFile raf = null;
     Long size = 0L;
     try {
@@ -343,6 +343,7 @@ public final class RubyFile extends RubyIO {
   public static boolean zeroʔ(String path) {
     if (!existʔ(path))
       return false;
+
     return sizeʔ(path) == null;
   }
 

@@ -53,9 +53,10 @@ public final class StepIterator<E> implements Iterator<E> {
     if (iter == null)
       throw new NullPointerException();
     if (step == 0)
-      throw new IllegalArgumentException("step can't be 0");
+      throw new IllegalArgumentException("ArgumentError: step can't be 0");
     if (step < 0)
-      throw new IllegalArgumentException("step can't be negative");
+      throw new IllegalArgumentException(
+          "ArgumentError: step can't be negative");
 
     this.iter = iter;
     this.step = step;

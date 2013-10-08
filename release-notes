@@ -102,3 +102,5 @@ Version 1.4.1
 * Fixed the bugs of RubyArray#assoc & RubyArray#rassoc while encountering null objects
 
 * Fixed the bugs of RubyHash#rassoc & RubyHash#key while encountering null objects
+
+* Fixed the bug of RubyEnumerable#sortBy ordering

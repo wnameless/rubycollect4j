@@ -329,8 +329,8 @@ public class RubyEnumerableTest {
 
   @Test
   public void testDropWhileWithBlock() {
-    re = newRubyEnumerator(Arrays.asList(1, 2, 3, 4));
-    assertEquals(ra(3, 4), re.dropWhile(new BooleanBlock<Integer>() {
+    re = newRubyEnumerator(Arrays.asList(1, 2, 3, 1));
+    assertEquals(ra(3, 1), re.dropWhile(new BooleanBlock<Integer>() {
 
       @Override
       public boolean yield(Integer item) {
@@ -1335,14 +1335,15 @@ public class RubyEnumerableTest {
   @Test
   public void testSortByWithComparatorAndBlock() {
     RubyEnumerable<String> re =
-        newRubyEnumerator(Arrays.asList("aaaa", "bbb", "cc", "d"));
-    assertEquals(ra("aaaa", "bbb", "cc", "d"),
+        newRubyEnumerator(Arrays.asList("aaaa", "bbb", "cc", "e", "d"));
+    assertEquals(ra("aaaa", "bbb", "cc", "d", "e"),
         re.sortBy(new Comparator<Integer>() {
 
           @Override
           public int compare(Integer o1, Integer o2) {
             return o2 - o1;
           }
+
         }, new TransformBlock<String, Integer>() {
 
           @Override
@@ -1356,8 +1357,8 @@ public class RubyEnumerableTest {
   @Test
   public void testSortByWithBlock() {
     RubyEnumerable<String> re =
-        newRubyEnumerator(Arrays.asList("aaaa", "bbb", "cc", "d"));
-    assertEquals(ra("d", "cc", "bbb", "aaaa"),
+        newRubyEnumerator(Arrays.asList("aaaa", "bbb", "cc", "e", "d"));
+    assertEquals(ra("d", "e", "cc", "bbb", "aaaa"),
         re.sortBy(new TransformBlock<String, Integer>() {
 
           @Override
@@ -1451,7 +1452,14 @@ public class RubyEnumerableTest {
 
   @Test
   public void testIterator() {
-    re = newRubyEnumerator(Arrays.asList(1, 2, 3, 4));
+    re = new RubyEnumerable<Integer>() {
+
+      @Override
+      protected Iterable<Integer> getIterable() {
+        return Arrays.asList(1, 2, 3, 4);
+      }
+
+    };
     assertTrue(re.iterator() instanceof Iterator);
   }
 

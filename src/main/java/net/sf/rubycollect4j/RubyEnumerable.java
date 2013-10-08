@@ -28,7 +28,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -1509,22 +1508,20 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
    */
   public <S> RubyArray<E> sortBy(Comparator<? super S> comp,
       TransformBlock<E, S> block) {
-    Map<S, List<E>> multimap = new LinkedHashMap<S, List<E>>();
+    Map<S, RubyArray<E>> multimap = new LinkedHashMap<S, RubyArray<E>>();
     RubyArray<E> sortedList = newRubyArray();
     for (E item : getIterable()) {
       S key = block.yield(item);
       if (!multimap.containsKey(key))
-        multimap.put(key, new ArrayList<E>());
+        multimap.put(key, new RubyArray<E>());
 
       multimap.get(key).add(item);
     }
     List<S> keys = new ArrayList<S>(multimap.keySet());
     Collections.sort(keys, comp);
     for (S key : keys) {
-      Collection<E> coll = multimap.get(key);
-      Iterator<E> iterator = coll.iterator();
-      while (iterator.hasNext()) {
-        sortedList.add(iterator.next());
+      for (E item : multimap.get(key).sort()) {
+        sortedList.add(item);
       }
     }
     return sortedList;
@@ -1541,22 +1538,20 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
    * @return a RubyArray
    */
   public <S> RubyArray<E> sortBy(TransformBlock<E, S> block) {
-    Map<S, List<E>> multimap = new LinkedHashMap<S, List<E>>();
+    Map<S, RubyArray<E>> multimap = new LinkedHashMap<S, RubyArray<E>>();
     RubyArray<E> sortedList = newRubyArray();
     for (E item : getIterable()) {
       S key = block.yield(item);
       if (!multimap.containsKey(key))
-        multimap.put(key, new ArrayList<E>());
+        multimap.put(key, new RubyArray<E>());
 
       multimap.get(key).add(item);
     }
     List<S> keys = new ArrayList<S>(multimap.keySet());
     keys = newRubyEnumerator(keys).sort();
     for (S key : keys) {
-      Collection<E> coll = multimap.get(key);
-      Iterator<E> iterator = coll.iterator();
-      while (iterator.hasNext()) {
-        sortedList.add(iterator.next());
+      for (E item : multimap.get(key).sort()) {
+        sortedList.add(item);
       }
     }
     return sortedList;

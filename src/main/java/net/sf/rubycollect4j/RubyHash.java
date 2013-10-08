@@ -400,11 +400,13 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    */
   public K key(V value) {
     for (Entry<K, V> item : map.entrySet()) {
-      if (item.getValue() == null && value == null)
-        return item.getKey();
-      if (item.getValue() != null && value != null
-          && item.getValue().equals(value))
-        return item.getKey();
+      if (value == null) {
+        if (item.getValue() == null)
+          return item.getKey();
+      } else {
+        if (value.equals(item.getValue()))
+          return item.getKey();
+      }
     }
     return null;
   }

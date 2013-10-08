@@ -88,11 +88,10 @@ public class CombinationIterator<E> implements Iterator<RubyArray<E>> {
     for (int i = 0; i < counter.length; i++) {
       c.push(list.get(counter[i]));
     }
-    if (Arrays.equals(counter, endStatus)) {
+    if (Arrays.equals(counter, endStatus))
       hasMore = false;
-    } else {
+    else
       increaseCounter();
-    }
     return c;
   }
 

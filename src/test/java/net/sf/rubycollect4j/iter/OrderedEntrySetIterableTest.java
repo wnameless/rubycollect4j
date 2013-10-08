@@ -36,6 +36,19 @@ public class OrderedEntrySetIterableTest {
     assertTrue(setIter instanceof OrderedEntrySetIterable);
   }
 
+  @Test(expected = NullPointerException.class)
+  public void testConstructorException1() {
+    setIter =
+        new OrderedEntrySetIterable<String, Integer>(null, rh("c", 3, "b", 2,
+            "a", 1));
+  }
+
+  @Test(expected = NullPointerException.class)
+  public void testConstructorException2() {
+    setIter =
+        new OrderedEntrySetIterable<String, Integer>(ra("a", "b", "c"), null);
+  }
+
   @Test(expected = UnsupportedOperationException.class)
   public void testAdd() {
     setIter.add(hp("d", 4));

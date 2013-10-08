@@ -20,8 +20,8 @@
  */
 package net.sf.rubycollect4j;
 
+import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
-import static net.sf.rubycollect4j.RubyCollections.ra;
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.iter.RangeIterable;
 import net.sf.rubycollect4j.iter.StepIterable;
@@ -177,7 +177,7 @@ public final class RubyRange<E> extends RubyEnumerable<E> {
    * @return a RubyArray
    */
   public RubyArray<E> last(int n) {
-    RubyArray<E> lasts = ra();
+    RubyArray<E> lasts = newRubyArray();
     for (E item : iter) {
       if (lasts.size() < n) {
         lasts.add(item);

@@ -72,9 +72,8 @@ public final class EachConsIterator<E> implements Iterator<RubyArray<E>> {
 
   private void updateBucket() {
     bucket.deleteAt(0);
-    if (iter.hasNext()) {
+    if (iter.hasNext())
       bucket.add(iter.next());
-    }
   }
 
   private RubyArray<E> nextElement() {

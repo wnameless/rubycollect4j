@@ -1,6 +1,7 @@
 package net.sf.rubycollect4j;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class RubyEnumeratorTest {
 
   @Before
   public void setUp() throws Exception {
-    list = Arrays.asList(1, 2, 3);
+    list = new ArrayList<Integer>(Arrays.asList(1, 2, 3));
     re = new RubyEnumerator<Integer>(list);
   }
 
@@ -82,6 +83,37 @@ public class RubyEnumeratorTest {
   @Test
   public void testIterator() {
     assertTrue(re.iterator() instanceof Iterator);
+  }
+
+  @Test
+  public void testHasNext() {
+    Iterator<Integer> listIt = list.iterator();
+    while (re.hasNext()) {
+      assertTrue(listIt.hasNext());
+      re.next();
+      listIt.next();
+    }
+    assertFalse(listIt.hasNext());
+  }
+
+  @Test
+  public void testNext() {
+    Iterator<Integer> listIt = list.iterator();
+    while (re.hasNext()) {
+      assertEquals(listIt.next(), re.next());
+    }
+    assertFalse(listIt.hasNext());
+  }
+
+  @Test
+  public void testRemove() {
+    List<Integer> ints = new ArrayList<Integer>(list);
+    Iterator<Integer> intsIt = ints.iterator();
+    re.next();
+    re.remove();
+    intsIt.next();
+    intsIt.remove();
+    assertEquals(ints, list);
   }
 
   @Test
