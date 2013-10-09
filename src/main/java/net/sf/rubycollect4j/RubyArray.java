@@ -1501,7 +1501,9 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
       return this;
     } else {
       throw new IllegalArgumentException("ArgumentError: comparison of "
-          + list.get(0).getClass() + " with " + list.get(1).getClass()
+          + (list.get(0) == null ? "null" : list.get(0).getClass().getName())
+          + " with "
+          + (list.get(1) == null ? "null" : list.get(1).getClass().getName())
           + " failed");
     }
   }
