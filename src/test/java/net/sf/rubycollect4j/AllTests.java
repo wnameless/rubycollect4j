@@ -24,6 +24,8 @@ import net.sf.rubycollect4j.iter.ChunkIterableTest;
 import net.sf.rubycollect4j.iter.ChunkIteratorTest;
 import net.sf.rubycollect4j.iter.CombinationIterableTest;
 import net.sf.rubycollect4j.iter.CombinationIteratorTest;
+import net.sf.rubycollect4j.iter.ComparableEntryIterableTest;
+import net.sf.rubycollect4j.iter.ComparableEntryIteratorTest;
 import net.sf.rubycollect4j.iter.CycleIterableTest;
 import net.sf.rubycollect4j.iter.CycleIteratorTest;
 import net.sf.rubycollect4j.iter.EachConsIterableTest;
@@ -98,5 +100,6 @@ import org.junit.runners.Suite.SuiteClasses;
     RepeatedPermutationIteratorTest.class, SliceBeforeIterableTest.class,
     SliceBeforeIteratorTest.class, StepIterableTest.class,
     StepIteratorTest.class, ByteUtilTest.class, DirectiveTest.class,
-    PackerTest.class, PeekingIteratorTest.class, ComparableEntryTest.class })
+    PackerTest.class, PeekingIteratorTest.class, ComparableEntryTest.class,
+    ComparableEntryIterableTest.class, ComparableEntryIteratorTest.class })
 public class AllTests {}
