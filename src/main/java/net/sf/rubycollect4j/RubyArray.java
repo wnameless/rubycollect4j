@@ -1524,7 +1524,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    *          a Comparator
    * @return this RubyArray
    */
-  public RubyArray<E> sortǃ(Comparator<E> comp) {
+  public RubyArray<E> sortǃ(Comparator<? super E> comp) {
     if (list.size() <= 1)
       return this;
 
@@ -1603,7 +1603,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     Collections.sort(keys, comp2);
     list.clear();
     for (S key : keys) {
-      for (E item : map.get(key).sort(comp1)) {
+      for (E item : map.get(key).sortǃ(comp1)) {
         list.add(item);
       }
     }
