@@ -1466,13 +1466,15 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
       if (rubyArray.uniq().count() == 1)
         return rubyArray;
 
-      E sample = rubyArray.first();
+      Iterator<E> iter = rubyArray.iterator();
+      E sample = iter.next();
       E error = null;
-      for (E item : rubyArray) {
+      while (iter.hasNext()) {
+        error = iter.next();
         try {
-          ((Comparable) sample).compareTo(item);
+          ((Comparable) sample).compareTo(error);
         } catch (Exception ex) {
-          error = item;
+          break;
         }
       }
       throw new IllegalArgumentException("ArgumentError: comparison of "

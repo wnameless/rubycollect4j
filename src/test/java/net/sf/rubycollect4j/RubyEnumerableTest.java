@@ -1247,7 +1247,7 @@ public class RubyEnumerableTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testSortException1() {
-    newRubyEnumerator(Arrays.asList(1, null, 3)).sort();
+    newRubyEnumerator(Arrays.asList(1, 2, null)).sort();
   }
 
   @Test(expected = IllegalArgumentException.class)

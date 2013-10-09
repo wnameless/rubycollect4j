@@ -1528,8 +1528,28 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     if (list.size() <= 1)
       return this;
 
-    Collections.sort(list, comp);
-    return this;
+    try {
+      Collections.sort(list, comp);
+      return this;
+    } catch (Exception e) {
+      if (this.uniq().count() == 1)
+        return this;
+
+      Iterator<E> iter = this.iterator();
+      E sample = iter.next();
+      E error = null;
+      while (iter.hasNext()) {
+        error = iter.next();
+        try {
+          comp.compare(sample, error);
+        } catch (Exception ex) {
+          break;
+        }
+      }
+      throw new IllegalArgumentException("ArgumentError: comparison of "
+          + (sample == null ? "null" : sample.getClass().getName()) + " with "
+          + (error == null ? "null" : error.getClass().getName()) + " failed");
+    }
   }
 
   /**

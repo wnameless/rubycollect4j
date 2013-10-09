@@ -1268,6 +1268,16 @@ public class RubyArrayTest {
     assertEquals(ra(null, null, null), ra(null, null, null).sortǃ());
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void testSortǃException1() {
+    ra(null, 2, 3).sortǃ();
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testSortǃException2() {
+    ra(1, null, 3).sortǃ();
+  }
+
   @Test
   public void testSortǃWithComparator() {
     ra = ra(4, 1, 2, 3, 3);
@@ -1288,16 +1298,39 @@ public class RubyArrayTest {
       }
 
     }));
+    assertEquals(ra(null, null, null),
+        ra(null, null, null).sortǃ(new Comparator<Object>() {
+
+          @Override
+          public int compare(Object o1, Object o2) {
+            throw new RuntimeException();
+          }
+
+        }));
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void testSortǃException1() {
-    ra(null, 2, 3).sortǃ();
+  public void testSortǃWithComparatorException1() {
+    ra(1, 2, null).sortǃ(new Comparator<Integer>() {
+
+      @Override
+      public int compare(Integer o1, Integer o2) {
+        return o2 - o1;
+      }
+
+    });
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void testSortǃException2() {
-    ra(1, null, 3).sortǃ();
+  public void testSortǃWithComparatorException2() {
+    ra(null, 2, 3).sortǃ(new Comparator<Integer>() {
+
+      @Override
+      public int compare(Integer o1, Integer o2) {
+        return o2 - o1;
+      }
+
+    });
   }
 
   @Test
