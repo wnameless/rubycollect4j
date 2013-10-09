@@ -24,7 +24,6 @@ import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
 
-import java.util.AbstractMap.SimpleEntry;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -91,11 +90,11 @@ public final class RubyHash<K, V> extends RubyEnumerable<ComparableEntry<K, V>>
    * 
    * @param key
    *          to be found
-   * @return an Entry or null
+   * @return a ComparableEntry or null
    */
-  public Entry<K, V> assoc(K key) {
+  public ComparableEntry<K, V> assoc(K key) {
     if (map.containsKey(key))
-      return new SimpleEntry<K, V>(key, map.get(key));
+      return new ComparableEntry<K, V>(key, map.get(key));
     else
       return null;
   }
@@ -142,8 +141,8 @@ public final class RubyHash<K, V> extends RubyEnumerable<ComparableEntry<K, V>>
    * 
    * @return a RubyEnumerator
    */
-  public RubyEnumerator<Entry<K, V>> deleteIf() {
-    return newRubyEnumerator(map.entrySet());
+  public RubyEnumerator<ComparableEntry<K, V>> deleteIf() {
+    return newRubyEnumerator(new ComparableEntryIterable<K, V>(map.entrySet()));
   }
 
   /**
@@ -189,8 +188,8 @@ public final class RubyHash<K, V> extends RubyEnumerable<ComparableEntry<K, V>>
    * 
    * @return a RubyEnumerator
    */
-  public RubyEnumerator<Entry<K, V>> each() {
-    return newRubyEnumerator(map.entrySet());
+  public RubyEnumerator<ComparableEntry<K, V>> each() {
+    return newRubyEnumerator(new ComparableEntryIterable<K, V>(map.entrySet()));
   }
 
   /**
@@ -235,8 +234,8 @@ public final class RubyHash<K, V> extends RubyEnumerable<ComparableEntry<K, V>>
    * 
    * @return a RubyEnumerator
    */
-  public RubyEnumerator<Entry<K, V>> eachPair() {
-    return newRubyEnumerator(map.entrySet());
+  public RubyEnumerator<ComparableEntry<K, V>> eachPair() {
+    return newRubyEnumerator(new ComparableEntryIterable<K, V>(map.entrySet()));
   }
 
   /**
@@ -330,8 +329,8 @@ public final class RubyHash<K, V> extends RubyEnumerable<ComparableEntry<K, V>>
    * 
    * @return a RubyEnumerator
    */
-  public RubyArray<Entry<K, V>> flatten() {
-    return newRubyArray(map.entrySet());
+  public RubyArray<ComparableEntry<K, V>> flatten() {
+    return newRubyArray(new ComparableEntryIterable<K, V>(map.entrySet()));
   }
 
   /**
@@ -371,8 +370,8 @@ public final class RubyHash<K, V> extends RubyEnumerable<ComparableEntry<K, V>>
    * 
    * @return a RubyEnumerator
    */
-  public RubyEnumerator<Entry<K, V>> keepIf() {
-    return newRubyEnumerator(map.entrySet());
+  public RubyEnumerator<ComparableEntry<K, V>> keepIf() {
+    return newRubyEnumerator(new ComparableEntryIterable<K, V>(map.entrySet()));
   }
 
   /**
@@ -551,16 +550,16 @@ public final class RubyHash<K, V> extends RubyEnumerable<ComparableEntry<K, V>>
    * 
    * @param value
    *          to be found
-   * @return an Entry or null
+   * @return a ComparableEntry or null
    */
-  public Entry<K, V> rassoc(V value) {
+  public ComparableEntry<K, V> rassoc(V value) {
     for (Entry<K, V> item : map.entrySet()) {
       if (value == null) {
         if (item.getValue() == null)
-          return item;
+          return new ComparableEntry<K, V>(item);
       } else {
         if (value.equals(item.getValue()))
-          return item;
+          return new ComparableEntry<K, V>(item);
       }
     }
     return null;
@@ -571,8 +570,8 @@ public final class RubyHash<K, V> extends RubyEnumerable<ComparableEntry<K, V>>
    * 
    * @return a RubyEnumerator
    */
-  public RubyEnumerator<Entry<K, V>> rejectǃ() {
-    return newRubyEnumerator(map.entrySet());
+  public RubyEnumerator<ComparableEntry<K, V>> rejectǃ() {
+    return newRubyEnumerator(new ComparableEntryIterable<K, V>(map.entrySet()));
   }
 
   /**
@@ -605,16 +604,16 @@ public final class RubyHash<K, V> extends RubyEnumerable<ComparableEntry<K, V>>
   /**
    * Removes the first Entry and returns it.
    * 
-   * @return an Entry
+   * @return a ComparableEntry
    */
-  public Entry<K, V> shift() {
+  public ComparableEntry<K, V> shift() {
     if (map.isEmpty()) {
       return null;
     } else {
       Iterator<Entry<K, V>> iter = map.entrySet().iterator();
       Entry<K, V> first = iter.next();
       iter.remove();
-      return first;
+      return new ComparableEntry<K, V>(first);
     }
   }
 
