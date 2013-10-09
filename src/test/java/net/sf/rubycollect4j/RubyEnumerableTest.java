@@ -32,6 +32,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -1341,6 +1342,15 @@ public class RubyEnumerableTest {
   @Test
   public void testTakeWhile() {
     assertEquals(ra(1), re.takeWhile().toA());
+    re = new RubyEnumerable<Integer>() {
+
+      @Override
+      protected Iterable<Integer> getIterable() {
+        return Collections.emptyList();
+      }
+
+    };
+    assertEquals(ra(), re.takeWhile().toA());
   }
 
   @Test
