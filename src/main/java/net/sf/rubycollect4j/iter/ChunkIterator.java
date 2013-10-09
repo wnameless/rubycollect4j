@@ -24,11 +24,11 @@ import static net.sf.rubycollect4j.RubyCollections.newPair;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 
 import java.util.Iterator;
-import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.block.TransformBlock;
+import net.sf.rubycollect4j.util.ComparableEntry;
 import net.sf.rubycollect4j.util.PeekingIterator;
 
 /**
@@ -44,7 +44,7 @@ import net.sf.rubycollect4j.util.PeekingIterator;
  *          the type of the transformed elements
  */
 public final class ChunkIterator<E, K> implements
-    Iterator<Entry<K, RubyArray<E>>> {
+    Iterator<ComparableEntry<K, RubyArray<E>>> {
 
   private final PeekingIterator<E> pIterator;
   private final TransformBlock<E, K> block;
@@ -67,7 +67,7 @@ public final class ChunkIterator<E, K> implements
     this.block = block;
   }
 
-  private Entry<K, RubyArray<E>> nextElement() {
+  private ComparableEntry<K, RubyArray<E>> nextElement() {
     K key = block.yield(pIterator.peek());
     RubyArray<E> bucket = newRubyArray();
     while (pIterator.hasNext() && key.equals(block.yield(pIterator.peek()))) {
@@ -82,7 +82,7 @@ public final class ChunkIterator<E, K> implements
   }
 
   @Override
-  public Entry<K, RubyArray<E>> next() {
+  public ComparableEntry<K, RubyArray<E>> next() {
     if (!hasNext())
       throw new NoSuchElementException();
 

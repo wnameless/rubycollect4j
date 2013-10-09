@@ -54,6 +54,7 @@ import net.sf.rubycollect4j.iter.EachSliceIterable;
 import net.sf.rubycollect4j.iter.EachWithIndexIterable;
 import net.sf.rubycollect4j.iter.EachWithObjectIterable;
 import net.sf.rubycollect4j.iter.SliceBeforeIterable;
+import net.sf.rubycollect4j.util.ComparableEntry;
 
 /**
  * An extension class for any Iterable object. It includes all methods refer to
@@ -138,7 +139,7 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
    *          to chunk elements
    * @return a RubyEnumerator
    */
-  public <S> RubyEnumerator<Entry<S, RubyArray<E>>> chunk(
+  public <S> RubyEnumerator<ComparableEntry<S, RubyArray<E>>> chunk(
       TransformBlock<E, S> block) {
     return newRubyEnumerator(new ChunkIterable<E, S>(getIterable(), block));
   }

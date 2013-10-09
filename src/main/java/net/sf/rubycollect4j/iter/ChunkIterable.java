@@ -25,6 +25,7 @@ import java.util.Map.Entry;
 
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.block.TransformBlock;
+import net.sf.rubycollect4j.util.ComparableEntry;
 
 /**
  * 
@@ -39,7 +40,7 @@ import net.sf.rubycollect4j.block.TransformBlock;
  *          the type of the transformed elements
  */
 public final class ChunkIterable<E, K> implements
-    Iterable<Entry<K, RubyArray<E>>> {
+    Iterable<ComparableEntry<K, RubyArray<E>>> {
 
   private final Iterable<E> iterable;
   private final TransformBlock<E, K> block;
@@ -63,7 +64,7 @@ public final class ChunkIterable<E, K> implements
   }
 
   @Override
-  public Iterator<Entry<K, RubyArray<E>>> iterator() {
+  public Iterator<ComparableEntry<K, RubyArray<E>>> iterator() {
     return new ChunkIterator<E, K>(iterable.iterator(), block);
   }
 

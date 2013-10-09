@@ -24,13 +24,11 @@ import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
 
-import java.util.ArrayList;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
@@ -41,6 +39,7 @@ import net.sf.rubycollect4j.block.EntryBooleanBlock;
 import net.sf.rubycollect4j.block.EntryMergeBlock;
 import net.sf.rubycollect4j.block.EntryTransformBlock;
 import net.sf.rubycollect4j.block.TransformBlock;
+import net.sf.rubycollect4j.iter.ComparableEntryIterable;
 import net.sf.rubycollect4j.util.ComparableEntry;
 import net.sf.rubycollect4j.util.LinkedIdentityMap;
 
@@ -54,19 +53,15 @@ import net.sf.rubycollect4j.util.LinkedIdentityMap;
  * @param <V>
  *          the type of the value elements
  */
-public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
-    Map<K, V> {
+public final class RubyHash<K, V> extends RubyEnumerable<ComparableEntry<K, V>>
+    implements Map<K, V> {
 
   private Map<K, V> map;
   private V defaultValue;
 
   @Override
-  protected Iterable<Entry<K, V>> getIterable() {
-    List<Entry<K, V>> entries = new ArrayList<Entry<K, V>>();
-    for (Entry<K, V> entry : map.entrySet()) {
-      entries.add(new ComparableEntry<K, V>(entry));
-    }
-    return entries;
+  protected Iterable<ComparableEntry<K, V>> getIterable() {
+    return new ComparableEntryIterable<K, V>(map.entrySet());
   }
 
   /**
@@ -100,7 +95,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    */
   public Entry<K, V> assoc(K key) {
     if (map.containsKey(key))
-      return new ComparableEntry<K, V>(key, map.get(key));
+      return new SimpleEntry<K, V>(key, map.get(key));
     else
       return null;
   }
@@ -195,7 +190,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @return a RubyEnumerator
    */
   public RubyEnumerator<Entry<K, V>> each() {
-    return newRubyEnumerator(getIterable());
+    return newRubyEnumerator(map.entrySet());
   }
 
   /**
@@ -241,7 +236,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @return a RubyEnumerator
    */
   public RubyEnumerator<Entry<K, V>> eachPair() {
-    return newRubyEnumerator(getIterable());
+    return newRubyEnumerator(map.entrySet());
   }
 
   /**
@@ -336,7 +331,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @return a RubyEnumerator
    */
   public RubyArray<Entry<K, V>> flatten() {
-    return newRubyArray(getIterable());
+    return newRubyArray(map.entrySet());
   }
 
   /**
@@ -562,10 +557,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     for (Entry<K, V> item : map.entrySet()) {
       if (value == null) {
         if (item.getValue() == null)
-          return new ComparableEntry<K, V>(item);
+          return item;
       } else {
         if (value.equals(item.getValue()))
-          return new ComparableEntry<K, V>(item);
+          return item;
       }
     }
     return null;
@@ -577,7 +572,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @return a RubyEnumerator
    */
   public RubyEnumerator<Entry<K, V>> rejectǃ() {
-    return newRubyEnumerator(getIterable());
+    return newRubyEnumerator(map.entrySet());
   }
 
   /**
@@ -619,7 +614,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
       Iterator<Entry<K, V>> iter = map.entrySet().iterator();
       Entry<K, V> first = iter.next();
       iter.remove();
-      return new ComparableEntry<K, V>(first);
+      return first;
     }
   }
 
@@ -698,10 +693,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @return true if all result are true, false otherwise
    */
   public boolean allʔ(final EntryBooleanBlock<K, V> block) {
-    return allʔ(new BooleanBlock<Entry<K, V>>() {
+    return allʔ(new BooleanBlock<ComparableEntry<K, V>>() {
 
       @Override
-      public boolean yield(Entry<K, V> item) {
+      public boolean yield(ComparableEntry<K, V> item) {
         return block.yield(item.getKey(), item.getValue());
       }
 
@@ -716,10 +711,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @return true if not-null object is found, false otherwise
    */
   public boolean anyʔ(final EntryBooleanBlock<K, V> block) {
-    return anyʔ(new BooleanBlock<Entry<K, V>>() {
+    return anyʔ(new BooleanBlock<ComparableEntry<K, V>>() {
 
       @Override
-      public boolean yield(Entry<K, V> item) {
+      public boolean yield(ComparableEntry<K, V> item) {
         return block.yield(item.getKey(), item.getValue());
       }
 
@@ -737,12 +732,13 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    *          to chunk elements
    * @return a RubyEnumerator
    */
-  public <S> RubyEnumerator<Entry<S, RubyArray<Entry<K, V>>>> chunk(
-      final EntryTransformBlock<K, V, S> block) {
-    return chunk(new TransformBlock<Entry<K, V>, S>() {
+  public <S>
+      RubyEnumerator<ComparableEntry<S, RubyArray<ComparableEntry<K, V>>>>
+      chunk(final EntryTransformBlock<K, V, S> block) {
+    return chunk(new TransformBlock<ComparableEntry<K, V>, S>() {
 
       @Override
-      public S yield(Entry<K, V> item) {
+      public S yield(ComparableEntry<K, V> item) {
         return block.yield(item.getKey(), item.getValue());
       }
 
@@ -759,10 +755,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @return a RubyArray
    */
   public <S> RubyArray<S> collect(final EntryTransformBlock<K, V, S> block) {
-    return collect(new TransformBlock<Entry<K, V>, S>() {
+    return collect(new TransformBlock<ComparableEntry<K, V>, S>() {
 
       @Override
-      public S yield(Entry<K, V> item) {
+      public S yield(ComparableEntry<K, V> item) {
         return block.yield(item.getKey(), item.getValue());
       }
 
@@ -780,10 +776,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    */
   public <S> RubyArray<S> collectConcat(
       final EntryTransformBlock<K, V, RubyArray<S>> block) {
-    return collectConcat(new TransformBlock<Entry<K, V>, RubyArray<S>>() {
+    return collectConcat(new TransformBlock<ComparableEntry<K, V>, RubyArray<S>>() {
 
       @Override
-      public RubyArray<S> yield(Entry<K, V> item) {
+      public RubyArray<S> yield(ComparableEntry<K, V> item) {
         return block.yield(item.getKey(), item.getValue());
       }
 
@@ -798,10 +794,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @return a int
    */
   public int count(final EntryBooleanBlock<K, V> block) {
-    return count(new BooleanBlock<Entry<K, V>>() {
+    return count(new BooleanBlock<ComparableEntry<K, V>>() {
 
       @Override
-      public boolean yield(Entry<K, V> item) {
+      public boolean yield(ComparableEntry<K, V> item) {
         return block.yield(item.getKey(), item.getValue());
       }
 
@@ -816,10 +812,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    *          to yield each element
    */
   public void cycle(final EntryBlock<K, V> block) {
-    cycle(new Block<Entry<K, V>>() {
+    cycle(new Block<ComparableEntry<K, V>>() {
 
       @Override
-      public void yield(Entry<K, V> item) {
+      public void yield(ComparableEntry<K, V> item) {
         block.yield(item.getKey(), item.getValue());
       }
 
@@ -836,10 +832,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    *          to yield each element
    */
   public void cycle(int n, final EntryBlock<K, V> block) {
-    cycle(n, new Block<Entry<K, V>>() {
+    cycle(n, new Block<ComparableEntry<K, V>>() {
 
       @Override
-      public void yield(Entry<K, V> item) {
+      public void yield(ComparableEntry<K, V> item) {
         block.yield(item.getKey(), item.getValue());
       }
 
@@ -855,10 +851,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @return an element or null
    */
   public Entry<K, V> detect(final EntryBooleanBlock<K, V> block) {
-    return detect(new BooleanBlock<Entry<K, V>>() {
+    return detect(new BooleanBlock<ComparableEntry<K, V>>() {
 
       @Override
-      public boolean yield(Entry<K, V> item) {
+      public boolean yield(ComparableEntry<K, V> item) {
         return block.yield(item.getKey(), item.getValue());
       }
 
@@ -873,11 +869,12 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    *          to define which elements to be dropped
    * @return a RubyArray
    */
-  public RubyArray<Entry<K, V>> dropWhile(final EntryBooleanBlock<K, V> block) {
-    return dropWhile(new BooleanBlock<Entry<K, V>>() {
+  public RubyArray<ComparableEntry<K, V>> dropWhile(
+      final EntryBooleanBlock<K, V> block) {
+    return dropWhile(new BooleanBlock<ComparableEntry<K, V>>() {
 
       @Override
-      public boolean yield(Entry<K, V> item) {
+      public boolean yield(ComparableEntry<K, V> item) {
         return block.yield(item.getKey(), item.getValue());
       }
 
@@ -891,11 +888,12 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    *          to yield each element
    * @return this RubyEnumerable
    */
-  public RubyEnumerable<Entry<K, V>> eachEntry(final EntryBlock<K, V> block) {
-    return eachEntry(new Block<Entry<K, V>>() {
+  public RubyEnumerable<ComparableEntry<K, V>> eachEntry(
+      final EntryBlock<K, V> block) {
+    return eachEntry(new Block<ComparableEntry<K, V>>() {
 
       @Override
-      public void yield(Entry<K, V> item) {
+      public void yield(ComparableEntry<K, V> item) {
         block.yield(item.getKey(), item.getValue());
       }
 
@@ -914,11 +912,12 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     return detect(block);
   }
 
-  public RubyArray<Entry<K, V>> findAll(final EntryBooleanBlock<K, V> block) {
-    return findAll(new BooleanBlock<Entry<K, V>>() {
+  public RubyArray<ComparableEntry<K, V>> findAll(
+      final EntryBooleanBlock<K, V> block) {
+    return findAll(new BooleanBlock<ComparableEntry<K, V>>() {
 
       @Override
-      public boolean yield(Entry<K, V> item) {
+      public boolean yield(ComparableEntry<K, V> item) {
         return block.yield(item.getKey(), item.getValue());
       }
 
@@ -933,10 +932,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @return a RubyArray
    */
   public Integer findIndex(final EntryBooleanBlock<K, V> block) {
-    return findIndex(new BooleanBlock<Entry<K, V>>() {
+    return findIndex(new BooleanBlock<ComparableEntry<K, V>>() {
 
       @Override
-      public boolean yield(Entry<K, V> item) {
+      public boolean yield(ComparableEntry<K, V> item) {
         return block.yield(item.getKey(), item.getValue());
       }
 
@@ -971,10 +970,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    */
   public <S> RubyArray<S> grep(String regex,
       final EntryTransformBlock<K, V, S> block) {
-    return grep(regex, new TransformBlock<Entry<K, V>, S>() {
+    return grep(regex, new TransformBlock<ComparableEntry<K, V>, S>() {
 
       @Override
-      public S yield(Entry<K, V> item) {
+      public S yield(ComparableEntry<K, V> item) {
         return block.yield(item.getKey(), item.getValue());
       }
 
@@ -991,12 +990,12 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    *          to group each element
    * @return a RubyHash
    */
-  public <S> RubyHash<S, RubyArray<Entry<K, V>>> groupBy(
+  public <S> RubyHash<S, RubyArray<ComparableEntry<K, V>>> groupBy(
       final EntryTransformBlock<K, V, S> block) {
-    return groupBy(new TransformBlock<Entry<K, V>, S>() {
+    return groupBy(new TransformBlock<ComparableEntry<K, V>, S>() {
 
       @Override
-      public S yield(Entry<K, V> item) {
+      public S yield(ComparableEntry<K, V> item) {
         return block.yield(item.getKey(), item.getValue());
       }
 
@@ -1013,10 +1012,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @return a RubyArray
    */
   public <S> RubyArray<S> map(final EntryTransformBlock<K, V, S> block) {
-    return map(new TransformBlock<Entry<K, V>, S>() {
+    return map(new TransformBlock<ComparableEntry<K, V>, S>() {
 
       @Override
-      public S yield(Entry<K, V> item) {
+      public S yield(ComparableEntry<K, V> item) {
         return block.yield(item.getKey(), item.getValue());
       }
 
@@ -1038,10 +1037,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    */
   public <S> Entry<K, V> maxBy(Comparator<? super S> comp,
       final EntryTransformBlock<K, V, S> block) {
-    return maxBy(comp, new TransformBlock<Entry<K, V>, S>() {
+    return maxBy(comp, new TransformBlock<ComparableEntry<K, V>, S>() {
 
       @Override
-      public S yield(Entry<K, V> item) {
+      public S yield(ComparableEntry<K, V> item) {
         return block.yield(item.getKey(), item.getValue());
       }
 
@@ -1059,10 +1058,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @return an element or null
    */
   public <S> Entry<K, V> maxBy(final EntryTransformBlock<K, V, S> block) {
-    return maxBy(new TransformBlock<Entry<K, V>, S>() {
+    return maxBy(new TransformBlock<ComparableEntry<K, V>, S>() {
 
       @Override
-      public S yield(Entry<K, V> item) {
+      public S yield(ComparableEntry<K, V> item) {
         return block.yield(item.getKey(), item.getValue());
       }
 
@@ -1084,10 +1083,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    */
   public <S> Entry<K, V> minBy(Comparator<? super S> comp,
       final EntryTransformBlock<K, V, S> block) {
-    return minBy(comp, new TransformBlock<Entry<K, V>, S>() {
+    return minBy(comp, new TransformBlock<ComparableEntry<K, V>, S>() {
 
       @Override
-      public S yield(Entry<K, V> item) {
+      public S yield(ComparableEntry<K, V> item) {
         return block.yield(item.getKey(), item.getValue());
       }
 
@@ -1105,10 +1104,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @return an element or null
    */
   public <S> Entry<K, V> minBy(final EntryTransformBlock<K, V, S> block) {
-    return minBy(new TransformBlock<Entry<K, V>, S>() {
+    return minBy(new TransformBlock<ComparableEntry<K, V>, S>() {
 
       @Override
-      public S yield(Entry<K, V> item) {
+      public S yield(ComparableEntry<K, V> item) {
         return block.yield(item.getKey(), item.getValue());
       }
 
@@ -1128,12 +1127,12 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    *          to transform elements
    * @return a RubyArray
    */
-  public <S> RubyArray<Entry<K, V>> minmaxBy(Comparator<? super S> comp,
-      final EntryTransformBlock<K, V, S> block) {
-    return minmaxBy(comp, new TransformBlock<Entry<K, V>, S>() {
+  public <S> RubyArray<ComparableEntry<K, V>> minmaxBy(
+      Comparator<? super S> comp, final EntryTransformBlock<K, V, S> block) {
+    return minmaxBy(comp, new TransformBlock<ComparableEntry<K, V>, S>() {
 
       @Override
-      public S yield(Entry<K, V> item) {
+      public S yield(ComparableEntry<K, V> item) {
         return block.yield(item.getKey(), item.getValue());
       }
 
@@ -1150,12 +1149,12 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    *          to transform elements
    * @return a RubyArray
    */
-  public <S> RubyArray<Entry<K, V>> minmaxBy(
+  public <S> RubyArray<ComparableEntry<K, V>> minmaxBy(
       final EntryTransformBlock<K, V, S> block) {
-    return minmaxBy(new TransformBlock<Entry<K, V>, S>() {
+    return minmaxBy(new TransformBlock<ComparableEntry<K, V>, S>() {
 
       @Override
-      public S yield(Entry<K, V> item) {
+      public S yield(ComparableEntry<K, V> item) {
         return block.yield(item.getKey(), item.getValue());
       }
 
@@ -1171,10 +1170,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @return true if all results of block are false, false otherwise
    */
   public boolean noneʔ(final EntryBooleanBlock<K, V> block) {
-    return noneʔ(new BooleanBlock<Entry<K, V>>() {
+    return noneʔ(new BooleanBlock<ComparableEntry<K, V>>() {
 
       @Override
-      public boolean yield(Entry<K, V> item) {
+      public boolean yield(ComparableEntry<K, V> item) {
         return block.yield(item.getKey(), item.getValue());
       }
 
@@ -1190,22 +1189,22 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @return true if only one result of block is true, false otherwise
    */
   public boolean oneʔ(final EntryBooleanBlock<K, V> block) {
-    return oneʔ(new BooleanBlock<Entry<K, V>>() {
+    return oneʔ(new BooleanBlock<ComparableEntry<K, V>>() {
 
       @Override
-      public boolean yield(Entry<K, V> item) {
+      public boolean yield(ComparableEntry<K, V> item) {
         return block.yield(item.getKey(), item.getValue());
       }
 
     });
   }
 
-  public RubyArray<RubyArray<Entry<K, V>>> partition(
+  public RubyArray<RubyArray<ComparableEntry<K, V>>> partition(
       final EntryBooleanBlock<K, V> block) {
-    return partition(new BooleanBlock<Entry<K, V>>() {
+    return partition(new BooleanBlock<ComparableEntry<K, V>>() {
 
       @Override
-      public boolean yield(Entry<K, V> item) {
+      public boolean yield(ComparableEntry<K, V> item) {
         return block.yield(item.getKey(), item.getValue());
       }
 
@@ -1219,11 +1218,12 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    *          to part elements
    * @return a RubyArray of 2 RubyArrays
    */
-  public RubyArray<Entry<K, V>> reject(final EntryBooleanBlock<K, V> block) {
-    return reject(new BooleanBlock<Entry<K, V>>() {
+  public RubyArray<ComparableEntry<K, V>> reject(
+      final EntryBooleanBlock<K, V> block) {
+    return reject(new BooleanBlock<ComparableEntry<K, V>>() {
 
       @Override
-      public boolean yield(Entry<K, V> item) {
+      public boolean yield(ComparableEntry<K, V> item) {
         return block.yield(item.getKey(), item.getValue());
       }
 
@@ -1237,11 +1237,12 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    *          to yield each element
    * @return this RubyEnumerable
    */
-  public RubyEnumerable<Entry<K, V>> reverseEach(final EntryBlock<K, V> block) {
-    return reverseEach(new Block<Entry<K, V>>() {
+  public RubyEnumerable<ComparableEntry<K, V>> reverseEach(
+      final EntryBlock<K, V> block) {
+    return reverseEach(new Block<ComparableEntry<K, V>>() {
 
       @Override
-      public void yield(Entry<K, V> item) {
+      public void yield(ComparableEntry<K, V> item) {
         block.yield(item.getKey(), item.getValue());
       }
 
@@ -1255,7 +1256,8 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    *          to filter elements
    * @return a RubyArray
    */
-  public RubyArray<Entry<K, V>> select(final EntryBooleanBlock<K, V> block) {
+  public RubyArray<ComparableEntry<K, V>> select(
+      final EntryBooleanBlock<K, V> block) {
     return findAll(block);
   }
 
@@ -1267,12 +1269,12 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    *          to check where to do slice
    * @return a RubyEnumerator
    */
-  public RubyEnumerator<RubyArray<Entry<K, V>>> sliceBefore(
+  public RubyEnumerator<RubyArray<ComparableEntry<K, V>>> sliceBefore(
       final EntryBooleanBlock<K, V> block) {
-    return sliceBefore(new BooleanBlock<Entry<K, V>>() {
+    return sliceBefore(new BooleanBlock<ComparableEntry<K, V>>() {
 
       @Override
-      public boolean yield(Entry<K, V> item) {
+      public boolean yield(ComparableEntry<K, V> item) {
         return block.yield(item.getKey(), item.getValue());
       }
 
@@ -1292,12 +1294,12 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    *          to transform elements
    * @return a RubyArray
    */
-  public <S> RubyArray<Entry<K, V>> sortBy(Comparator<? super S> comp,
-      final EntryTransformBlock<K, V, S> block) {
-    return sortBy(comp, new TransformBlock<Entry<K, V>, S>() {
+  public <S> RubyArray<ComparableEntry<K, V>> sortBy(
+      Comparator<? super S> comp, final EntryTransformBlock<K, V, S> block) {
+    return sortBy(comp, new TransformBlock<ComparableEntry<K, V>, S>() {
 
       @Override
-      public S yield(Entry<K, V> item) {
+      public S yield(ComparableEntry<K, V> item) {
         return block.yield(item.getKey(), item.getValue());
       }
 
@@ -1314,12 +1316,12 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    *          to transform elements
    * @return a RubyArray
    */
-  public <S> RubyArray<Entry<K, V>> sortBy(
+  public <S> RubyArray<ComparableEntry<K, V>> sortBy(
       final EntryTransformBlock<K, V, S> block) {
-    return sortBy(new TransformBlock<Entry<K, V>, S>() {
+    return sortBy(new TransformBlock<ComparableEntry<K, V>, S>() {
 
       @Override
-      public S yield(Entry<K, V> item) {
+      public S yield(ComparableEntry<K, V> item) {
         return block.yield(item.getKey(), item.getValue());
       }
 
@@ -1334,11 +1336,12 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    *          to filter elements
    * @return a RubyArray
    */
-  public RubyArray<Entry<K, V>> takeWhile(final EntryBooleanBlock<K, V> block) {
-    return takeWhile(new BooleanBlock<Entry<K, V>>() {
+  public RubyArray<ComparableEntry<K, V>> takeWhile(
+      final EntryBooleanBlock<K, V> block) {
+    return takeWhile(new BooleanBlock<ComparableEntry<K, V>>() {
 
       @Override
-      public boolean yield(Entry<K, V> item) {
+      public boolean yield(ComparableEntry<K, V> item) {
         return block.yield(item.getKey(), item.getValue());
       }
 

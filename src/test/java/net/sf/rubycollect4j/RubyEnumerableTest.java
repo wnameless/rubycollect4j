@@ -45,6 +45,7 @@ import net.sf.rubycollect4j.block.TransformBlock;
 import net.sf.rubycollect4j.block.WithIndexBlock;
 import net.sf.rubycollect4j.block.WithInitBlock;
 import net.sf.rubycollect4j.block.WithObjectBlock;
+import net.sf.rubycollect4j.util.ComparableEntry;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -141,7 +142,7 @@ public class RubyEnumerableTest {
   @Test
   public void testChunk() {
     re = newRubyEnumerator(Arrays.asList(1, 2, 2, 3));
-    RubyArray<Entry<Boolean, RubyArray<Integer>>> chunk =
+    RubyArray<ComparableEntry<Boolean, RubyArray<Integer>>> chunk =
         re.chunk(new TransformBlock<Integer, Boolean>() {
 
           @Override
