@@ -74,13 +74,29 @@ public class ComparableEntryTest {
     assertTrue(entry.compareTo(new SimpleEntry<Integer, Integer>(0, 1)) == 0);
     assertTrue(entry.compareTo(new SimpleEntry<Integer, Integer>(2, 3)) < 0);
     assertTrue(entry.compareTo(new SimpleEntry<Integer, Integer>(0, 0)) > 0);
+    assertTrue(new ComparableEntry<Integer, Point>(0, new Point(1, 1))
+        .compareTo(new ComparableEntry<Integer, Point>(0, new Point(1, 1))) == 0);
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void testCompareToException() {
+  public void testCompareToException1() {
     ComparableEntry<Point, Integer> entry =
         new ComparableEntry<Point, Integer>(new Point(1, 1), 1);
     entry.compareTo(new ComparableEntry<Point, Integer>(new Point(1, 1), 0));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testCompareToException2() {
+    ComparableEntry<Point, Integer> entry =
+        new ComparableEntry<Point, Integer>(null, 1);
+    entry.compareTo(new ComparableEntry<Point, Integer>(new Point(1, 1), 0));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testCompareToException3() {
+    ComparableEntry<Point, Integer> entry =
+        new ComparableEntry<Point, Integer>(new Point(1, 1), 1);
+    entry.compareTo(new ComparableEntry<Point, Integer>(null, 0));
   }
 
 }
