@@ -19,4 +19,19 @@ public final class ComparableEntryIterable<K, V> implements
     return new ComparableEntryIterator<K, V>(iter.iterator());
   }
 
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder("[");
+    int index = 0;
+    for (ComparableEntry<K, V> item : this) {
+      if (index == 0)
+        sb.append(item);
+      else
+        sb.append(", " + item);
+      index++;
+    }
+    sb.append("]");
+    return sb.toString();
+  }
+
 }
