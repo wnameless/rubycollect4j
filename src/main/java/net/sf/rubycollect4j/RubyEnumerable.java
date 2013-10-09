@@ -1452,8 +1452,8 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
     if (rubyArray.size() <= 1)
       return rubyArray;
 
-    E sample = rubyArray.first();
-    if (sample instanceof Comparable) {
+    if (rubyArray.get(0) instanceof Comparable
+        && rubyArray.get(1) instanceof Comparable) {
       Collections.sort(rubyArray, new Comparator() {
 
         @Override

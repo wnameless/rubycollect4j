@@ -30,7 +30,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -1244,9 +1243,13 @@ public class RubyEnumerableTest {
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void testSortException() {
-    newRubyEnumerator(Arrays.asList(new Point(5, 6), null, new Point(3, 4)))
-        .sort();
+  public void testSortException1() {
+    newRubyEnumerator(Arrays.asList(1, null, 3)).sort();
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testSortException2() {
+    newRubyEnumerator(Arrays.asList(null, 2, 3)).sort();
   }
 
   @Test

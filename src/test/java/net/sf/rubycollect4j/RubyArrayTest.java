@@ -29,7 +29,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -1291,9 +1290,13 @@ public class RubyArrayTest {
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void testSortǃException() {
-    RubyArray<Point> ra = ra(new Point(1, 2), new Point(3, 4));
-    ra.sortǃ();
+  public void testSortǃException1() {
+    ra(null, 2, 3).sortǃ();
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testSortǃException2() {
+    ra(1, null, 3).sortǃ();
   }
 
   @Test

@@ -92,7 +92,11 @@ public final class ComparableEntry<K, V> implements Entry<K, V>,
   @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
   public int compareTo(Entry<K, V> o) {
-    if (!(entry.getKey() instanceof Comparable))
+    if (o == null)
+      throw new IllegalArgumentException("ArgumentError: comparison of "
+          + entry.getClass().getName() + " with null failed");
+    if (!(entry.getKey() instanceof Comparable)
+        || !(o.getKey() instanceof Comparable))
       throw new IllegalArgumentException("ArgumentError: comparison of "
           + (entry.getKey() == null ? "null" : entry.getKey().getClass()
               .getName()) + " with "
@@ -104,7 +108,8 @@ public final class ComparableEntry<K, V> implements Entry<K, V>,
     if (diff != 0)
       return diff;
 
-    if (entry.getValue() instanceof Comparable) {
+    if (entry.getValue() instanceof Comparable
+        && o.getValue() instanceof Comparable) {
       diff = ((Comparable) entry.getValue()).compareTo(o.getValue());
       if (diff != 0)
         return diff;
@@ -112,5 +117,4 @@ public final class ComparableEntry<K, V> implements Entry<K, V>,
 
     return 0;
   }
-
 }

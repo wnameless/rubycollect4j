@@ -14,10 +14,12 @@ import org.junit.Test;
 public class ComparableEntryTest {
 
   private ComparableEntry<Integer, Integer> entry;
+  private ComparableEntry<Integer, Integer> incomparableEntry;
 
   @Before
   public void setUp() throws Exception {
     entry = new ComparableEntry<Integer, Integer>(0, 1);
+    incomparableEntry = new ComparableEntry<Integer, Integer>(null, 1);
   }
 
   @Test
@@ -74,29 +76,29 @@ public class ComparableEntryTest {
     assertTrue(entry.compareTo(new SimpleEntry<Integer, Integer>(0, 1)) == 0);
     assertTrue(entry.compareTo(new SimpleEntry<Integer, Integer>(2, 3)) < 0);
     assertTrue(entry.compareTo(new SimpleEntry<Integer, Integer>(0, 0)) > 0);
+    assertTrue(entry.compareTo(new SimpleEntry<Integer, Integer>(0, null)) == 0);
     assertTrue(new ComparableEntry<Integer, Point>(0, new Point(1, 1))
         .compareTo(new ComparableEntry<Integer, Point>(0, new Point(1, 1))) == 0);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testCompareToException1() {
-    ComparableEntry<Point, Integer> entry =
-        new ComparableEntry<Point, Integer>(new Point(1, 1), 1);
-    entry.compareTo(new ComparableEntry<Point, Integer>(new Point(1, 1), 0));
+    entry.compareTo(null);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testCompareToException2() {
-    ComparableEntry<Point, Integer> entry =
-        new ComparableEntry<Point, Integer>(null, 1);
-    entry.compareTo(new ComparableEntry<Point, Integer>(new Point(1, 1), 0));
+    entry.compareTo(new ComparableEntry<Integer, Integer>(null, 0));
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testCompareToException3() {
-    ComparableEntry<Point, Integer> entry =
-        new ComparableEntry<Point, Integer>(new Point(1, 1), 1);
-    entry.compareTo(new ComparableEntry<Point, Integer>(null, 0));
+    incomparableEntry.compareTo(new ComparableEntry<Integer, Integer>(0, 0));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testCompareToException4() {
+    incomparableEntry.compareTo(new ComparableEntry<Integer, Integer>(null, 0));
   }
 
 }

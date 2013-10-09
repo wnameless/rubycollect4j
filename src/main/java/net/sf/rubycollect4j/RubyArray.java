@@ -1488,8 +1488,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     if (list.size() <= 1)
       return this;
 
-    E sample = first();
-    if (sample instanceof Comparable) {
+    if (list.get(0) instanceof Comparable && list.get(1) instanceof Comparable) {
       Collections.sort(list, new Comparator() {
 
         @Override
