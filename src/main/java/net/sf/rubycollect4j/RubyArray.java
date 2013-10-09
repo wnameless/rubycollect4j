@@ -1555,11 +1555,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    */
   public <S> RubyArray<E> sortByǃ(Comparator<? super S> comp,
       TransformBlock<E, S> block) {
-    Map<S, List<E>> map = new LinkedHashMap<S, List<E>>();
+    Map<S, RubyArray<E>> map = new LinkedHashMap<S, RubyArray<E>>();
     for (E item : list) {
       S key = block.yield(item);
       if (!map.containsKey(key))
-        map.put(key, new ArrayList<E>());
+        map.put(key, new RubyArray<E>());
 
       map.get(key).add(item);
     }
@@ -1567,7 +1567,43 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     Collections.sort(keys, comp);
     list.clear();
     for (S key : keys) {
-      for (E item : map.get(key)) {
+      for (E item : map.get(key).sortǃ()) {
+        list.add(item);
+      }
+    }
+    return this;
+  }
+
+  /**
+   * Sorts elements of this RubyArray by the ordering of elements transformed by
+   * the block induced by the Comparator for S and applies the Comparator for E
+   * again.
+   * 
+   * @param <S>
+   *          the type of transformed elements
+   * @param comp1
+   *          a Comparator for E
+   * @param comp2
+   *          a Comparator for S
+   * @param block
+   *          to transform elements
+   * @return this RubyArray
+   */
+  public <S> RubyArray<E> sortByǃ(Comparator<? super E> comp1,
+      Comparator<? super S> comp2, TransformBlock<E, S> block) {
+    Map<S, RubyArray<E>> map = new LinkedHashMap<S, RubyArray<E>>();
+    for (E item : list) {
+      S key = block.yield(item);
+      if (!map.containsKey(key))
+        map.put(key, new RubyArray<E>());
+
+      map.get(key).add(item);
+    }
+    List<S> keys = new ArrayList<S>(map.keySet());
+    Collections.sort(keys, comp2);
+    list.clear();
+    for (S key : keys) {
+      for (E item : map.get(key).sort(comp1)) {
         list.add(item);
       }
     }
@@ -1585,11 +1621,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
    * @return this RubyArray
    */
   public <S> RubyArray<E> sortByǃ(TransformBlock<E, S> block) {
-    Map<S, List<E>> map = new LinkedHashMap<S, List<E>>();
+    Map<S, RubyArray<E>> map = new LinkedHashMap<S, RubyArray<E>>();
     for (E item : list) {
       S key = block.yield(item);
       if (!map.containsKey(key))
-        map.put(key, new ArrayList<E>());
+        map.put(key, new RubyArray<E>());
 
       map.get(key).add(item);
     }
@@ -1597,10 +1633,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     keys = newRubyEnumerator(keys).sort();
     list.clear();
     for (S key : keys) {
-      Collection<E> coll = map.get(key);
-      Iterator<E> iterator = coll.iterator();
-      while (iterator.hasNext()) {
-        list.add(iterator.next());
+      for (E item : map.get(key).sortǃ()) {
+        list.add(item);
       }
     }
     return this;

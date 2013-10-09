@@ -1534,7 +1534,7 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
     List<S> keys = new ArrayList<S>(multimap.keySet());
     Collections.sort(keys, comp);
     for (S key : keys) {
-      for (E item : multimap.get(key).sort()) {
+      for (E item : multimap.get(key).sortǃ()) {
         sortedList.add(item);
       }
     }
@@ -1600,7 +1600,7 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
     List<S> keys = new ArrayList<S>(multimap.keySet());
     keys = newRubyEnumerator(keys).sort();
     for (S key : keys) {
-      for (E item : multimap.get(key).sort()) {
+      for (E item : multimap.get(key).sortǃ()) {
         sortedList.add(item);
       }
     }

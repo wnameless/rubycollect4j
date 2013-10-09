@@ -107,4 +107,6 @@ Version 1.4.1
 
 * Increased acceptable comparators of RubyEnumerable#sort & RubyEnumerable#sortBy
 
+* Increased acceptable comparators of RubyArray#sortByǃ
+
 * Changed RubyHash entries to ComparableEntry

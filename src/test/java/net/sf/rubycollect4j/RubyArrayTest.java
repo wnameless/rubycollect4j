@@ -1309,14 +1309,15 @@ public class RubyArrayTest {
 
   @Test
   public void testSortByǃWithComparatorAndBlock() {
-    RubyArray<String> ra = ra("aaaa", "bbb", "cc", "d");
-    assertEquals(ra("aaaa", "bbb", "cc", "d"),
+    RubyArray<String> ra = ra("aaaa", "bbb", "ff", "cc", "d");
+    assertEquals(ra("aaaa", "bbb", "cc", "ff", "d"),
         ra.sortByǃ(new Comparator<Integer>() {
 
           @Override
           public int compare(Integer o1, Integer o2) {
             return o2 - o1;
           }
+
         }, new TransformBlock<String, Integer>() {
 
           @Override
@@ -1325,13 +1326,42 @@ public class RubyArrayTest {
           }
 
         }));
-    assertEquals(ra("aaaa", "bbb", "cc", "d"), ra);
+    assertEquals(ra("aaaa", "bbb", "cc", "ff", "d"), ra);
+  }
+
+  @Test
+  public void testSortByǃWith2ComparatorAndBlock() {
+    RubyArray<String> ra = ra("aaaa", "bbb", "cc", "ff", "d");
+    assertEquals(ra("aaaa", "bbb", "ff", "cc", "d"),
+        ra.sortByǃ(new Comparator<String>() {
+
+          @Override
+          public int compare(String o1, String o2) {
+            return o2.compareTo(o1);
+          }
+
+        }, new Comparator<Integer>() {
+
+          @Override
+          public int compare(Integer o1, Integer o2) {
+            return o2 - o1;
+          }
+
+        }, new TransformBlock<String, Integer>() {
+
+          @Override
+          public Integer yield(String item) {
+            return item.length();
+          }
+
+        }));
+    assertEquals(ra("aaaa", "bbb", "ff", "cc", "d"), ra);
   }
 
   @Test
   public void testSortByǃWithBlock() {
-    RubyArray<String> ra = ra("aaaa", "bbb", "cc", "d");
-    assertEquals(ra("d", "cc", "bbb", "aaaa"),
+    RubyArray<String> ra = ra("aaaa", "bbb", "ff", "cc", "d");
+    assertEquals(ra("d", "cc", "ff", "bbb", "aaaa"),
         ra.sortByǃ(new TransformBlock<String, Integer>() {
 
           @Override
@@ -1340,7 +1370,7 @@ public class RubyArrayTest {
           }
 
         }));
-    assertEquals(ra("d", "cc", "bbb", "aaaa"), ra);
+    assertEquals(ra("d", "cc", "ff", "bbb", "aaaa"), ra);
   }
 
   @Test
