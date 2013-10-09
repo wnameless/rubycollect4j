@@ -1488,7 +1488,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
     if (list.size() <= 1)
       return this;
 
-    if (list.get(0) instanceof Comparable && list.get(1) instanceof Comparable) {
+    try {
       Collections.sort(list, new Comparator() {
 
         @Override
@@ -1498,12 +1498,22 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
 
       });
       return this;
-    } else {
+    } catch (Exception e) {
+      if (this.uniq().count() == 1)
+        return this;
+
+      E sample = this.first();
+      E error = null;
+      for (E item : list) {
+        try {
+          ((Comparable) sample).compareTo(item);
+        } catch (Exception ex) {
+          error = item;
+        }
+      }
       throw new IllegalArgumentException("ArgumentError: comparison of "
-          + (list.get(0) == null ? "null" : list.get(0).getClass().getName())
-          + " with "
-          + (list.get(1) == null ? "null" : list.get(1).getClass().getName())
-          + " failed");
+          + (sample == null ? "null" : sample.getClass().getName()) + " with "
+          + (error == null ? "null" : error.getClass().getName()) + " failed");
     }
   }
 

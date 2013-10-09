@@ -1265,6 +1265,7 @@ public class RubyArrayTest {
     assertEquals(ra(1, 2, 3, 4), ra);
     ra = ra(1);
     assertEquals(ra(1), ra.sortǃ());
+    assertEquals(ra(null, null, null), ra(null, null, null).sortǃ());
   }
 
   @Test

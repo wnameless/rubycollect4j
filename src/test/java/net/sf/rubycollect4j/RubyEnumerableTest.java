@@ -1218,6 +1218,8 @@ public class RubyEnumerableTest {
     assertEquals(ra(1, 2, 3, 3, 4), re.sort());
     assertEquals(ra("abc", "b", "cd"),
         newRubyEnumerator(Arrays.asList("b", "cd", "abc")).sort());
+    assertEquals(ra(null, null, null), newRubyEnumerator(ra(null, null, null))
+        .sort());
   }
 
   @Test

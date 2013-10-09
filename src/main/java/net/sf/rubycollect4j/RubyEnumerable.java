@@ -1452,8 +1452,7 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
     if (rubyArray.size() <= 1)
       return rubyArray;
 
-    if (rubyArray.get(0) instanceof Comparable
-        && rubyArray.get(1) instanceof Comparable) {
+    try {
       Collections.sort(rubyArray, new Comparator() {
 
         @Override
@@ -1463,13 +1462,22 @@ public abstract class RubyEnumerable<E> implements Iterable<E> {
 
       });
       return rubyArray;
-    } else {
+    } catch (Exception e) {
+      if (rubyArray.uniq().count() == 1)
+        return rubyArray;
+
+      E sample = rubyArray.first();
+      E error = null;
+      for (E item : rubyArray) {
+        try {
+          ((Comparable) sample).compareTo(item);
+        } catch (Exception ex) {
+          error = item;
+        }
+      }
       throw new IllegalArgumentException("ArgumentError: comparison of "
-          + (rubyArray.get(0) == null ? "null" : rubyArray.get(0).getClass()
-              .getName())
-          + " with "
-          + (rubyArray.get(1) == null ? "null" : rubyArray.get(1).getClass()
-              .getName()) + " failed");
+          + (sample == null ? "null" : sample.getClass().getName()) + " with "
+          + (error == null ? "null" : error.getClass().getName()) + " failed");
     }
   }
 
