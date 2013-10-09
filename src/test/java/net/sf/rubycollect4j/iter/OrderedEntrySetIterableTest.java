@@ -126,8 +126,8 @@ public class OrderedEntrySetIterableTest {
   @Test
   public void testToArrayWithGeneric() {
     assertTrue(Arrays.equals(
-        ra(hp("a", 1), hp("b", 2), hp("c", 3)).toArray(new SimpleEntry[3]),
-        setIter.toArray(new SimpleEntry[3])));
+        ra(hp("a", 1), hp("b", 2), hp("c", 3)).toArray(new Entry[3]),
+        setIter.toArray(new Entry[3])));
   }
 
   @Test

@@ -24,10 +24,11 @@ import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
 
-import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
@@ -40,6 +41,7 @@ import net.sf.rubycollect4j.block.EntryBooleanBlock;
 import net.sf.rubycollect4j.block.EntryMergeBlock;
 import net.sf.rubycollect4j.block.EntryTransformBlock;
 import net.sf.rubycollect4j.block.TransformBlock;
+import net.sf.rubycollect4j.util.ComparableEntry;
 import net.sf.rubycollect4j.util.LinkedIdentityMap;
 
 /**
@@ -60,7 +62,11 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
 
   @Override
   protected Iterable<Entry<K, V>> getIterable() {
-    return map.entrySet();
+    List<Entry<K, V>> entries = new ArrayList<Entry<K, V>>();
+    for (Entry<K, V> entry : map.entrySet()) {
+      entries.add(new ComparableEntry<K, V>(entry));
+    }
+    return entries;
   }
 
   /**
@@ -94,7 +100,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    */
   public Entry<K, V> assoc(K key) {
     if (map.containsKey(key))
-      return new SimpleEntry<K, V>(key, map.get(key));
+      return new ComparableEntry<K, V>(key, map.get(key));
     else
       return null;
   }
@@ -189,7 +195,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @return a RubyEnumerator
    */
   public RubyEnumerator<Entry<K, V>> each() {
-    return newRubyEnumerator(map.entrySet());
+    return newRubyEnumerator(getIterable());
   }
 
   /**
@@ -235,7 +241,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @return a RubyEnumerator
    */
   public RubyEnumerator<Entry<K, V>> eachPair() {
-    return newRubyEnumerator(map.entrySet());
+    return newRubyEnumerator(getIterable());
   }
 
   /**
@@ -330,7 +336,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @return a RubyEnumerator
    */
   public RubyArray<Entry<K, V>> flatten() {
-    return newRubyArray(map.entrySet());
+    return newRubyArray(getIterable());
   }
 
   /**
@@ -556,10 +562,10 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     for (Entry<K, V> item : map.entrySet()) {
       if (value == null) {
         if (item.getValue() == null)
-          return item;
+          return new ComparableEntry<K, V>(item);
       } else {
         if (value.equals(item.getValue()))
-          return item;
+          return new ComparableEntry<K, V>(item);
       }
     }
     return null;
@@ -571,7 +577,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @return a RubyEnumerator
    */
   public RubyEnumerator<Entry<K, V>> rejectǃ() {
-    return newRubyEnumerator(map.entrySet());
+    return newRubyEnumerator(getIterable());
   }
 
   /**
@@ -613,7 +619,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
       Iterator<Entry<K, V>> iter = map.entrySet().iterator();
       Entry<K, V> first = iter.next();
       iter.remove();
-      return first;
+      return new ComparableEntry<K, V>(first);
     }
   }
 

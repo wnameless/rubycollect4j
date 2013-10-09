@@ -23,7 +23,6 @@ package net.sf.rubycollect4j;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -41,6 +40,7 @@ import net.sf.rubycollect4j.succ.DoubleSuccessor;
 import net.sf.rubycollect4j.succ.IntegerSuccessor;
 import net.sf.rubycollect4j.succ.LongSuccessor;
 import net.sf.rubycollect4j.succ.StringSuccessor;
+import net.sf.rubycollect4j.util.ComparableEntry;
 
 /**
  * 
@@ -1845,7 +1845,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a hash pair by the SimpleEntry.
+   * Creates a hash pair by the ComparableEntry.
    * 
    * @param <K>
    *          the type of the key
@@ -1858,11 +1858,11 @@ public final class RubyCollections {
    * @return a SimpleEntry
    */
   public static <K, V> Entry<K, V> newPair(K key, V value) {
-    return new SimpleEntry<K, V>(key, value);
+    return new ComparableEntry<K, V>(key, value);
   }
 
   /**
-   * Creates a hash pair by the SimpleEntry.
+   * Creates a hash pair by the ComparableEntry.
    * 
    * @param <K>
    *          the type of the key
