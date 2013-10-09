@@ -62,6 +62,7 @@ import net.sf.rubycollect4j.succ.DoubleSuccessorTest;
 import net.sf.rubycollect4j.succ.IntegerSuccessorTest;
 import net.sf.rubycollect4j.succ.LongSuccessorTest;
 import net.sf.rubycollect4j.succ.StringSuccessorTest;
+import net.sf.rubycollect4j.util.ComparableEntryTest;
 import net.sf.rubycollect4j.util.LinkedIdentityMapTest;
 import net.sf.rubycollect4j.util.ListSetTest;
 import net.sf.rubycollect4j.util.PeekingIteratorTest;
@@ -97,5 +98,5 @@ import org.junit.runners.Suite.SuiteClasses;
     RepeatedPermutationIteratorTest.class, SliceBeforeIterableTest.class,
     SliceBeforeIteratorTest.class, StepIterableTest.class,
     StepIteratorTest.class, ByteUtilTest.class, DirectiveTest.class,
-    PackerTest.class, PeekingIteratorTest.class })
+    PackerTest.class, PeekingIteratorTest.class, ComparableEntryTest.class })
 public class AllTests {}
