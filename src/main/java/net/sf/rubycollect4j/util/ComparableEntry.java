@@ -1,17 +1,60 @@
+/**
+ *
+ * @author Wei-Ming Wu
+ *
+ *
+ * Copyright 2013 Wei-Ming Wu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ *
+ */
 package net.sf.rubycollect4j.util;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
 
+/**
+ * 
+ * ComparableEntry is comparable if and only if the key is comparable.
+ * 
+ * @param <K>
+ *          the type of the key elements
+ * @param <V>
+ *          the type of the value elements
+ */
 public final class ComparableEntry<K, V> implements Entry<K, V>,
     Comparable<Entry<K, V>> {
 
   private final Entry<K, V> entry;
 
+  /**
+   * Creates a ComparableEntry.
+   * 
+   * @param key
+   *          of the entry
+   * @param value
+   *          of the entry
+   */
   public ComparableEntry(K key, V value) {
     entry = new SimpleEntry<K, V>(key, value);
   }
 
+  /**
+   * Creates a ComparableEntry.
+   * 
+   * @param entry
+   *          any Entry
+   */
   public ComparableEntry(Entry<K, V> entry) {
     this.entry = entry;
   }
