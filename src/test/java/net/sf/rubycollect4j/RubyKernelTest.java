@@ -130,7 +130,7 @@ public class RubyKernelTest {
 
   @Test
   public void testPutsDouble() {
-    assertTrue(1.0 == p(1.0));
+    assertEquals(1.0, p(1.0), 0.0);
     assertEquals("1.0" + lineSeparator, outContent.toString());
   }
 
@@ -143,7 +143,7 @@ public class RubyKernelTest {
 
   @Test
   public void testPutsFloat() {
-    assertTrue(1.0f == p(1.0f));
+    assertEquals(1.0f, p(1.0f), 0.0f);
     assertEquals("1.0" + lineSeparator, outContent.toString());
   }
 
@@ -156,7 +156,7 @@ public class RubyKernelTest {
 
   @Test
   public void testPutsInt() {
-    assertTrue(1 == p(1));
+    assertEquals(1, p(1));
     assertEquals("1" + lineSeparator, outContent.toString());
   }
 
@@ -168,7 +168,7 @@ public class RubyKernelTest {
 
   @Test
   public void testPutsLong() {
-    assertTrue(1L == p(1L));
+    assertEquals(1L, p(1L));
     assertEquals("1" + lineSeparator, outContent.toString());
   }
 

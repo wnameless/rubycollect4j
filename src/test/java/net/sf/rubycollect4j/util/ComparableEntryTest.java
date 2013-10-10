@@ -93,12 +93,13 @@ public class ComparableEntryTest {
 
   @Test
   public void testCompareTo() {
-    assertTrue(entry.compareTo(new SimpleEntry<Integer, Integer>(0, 1)) == 0);
+    assertEquals(0, entry.compareTo(new SimpleEntry<Integer, Integer>(0, 1)));
     assertTrue(entry.compareTo(new SimpleEntry<Integer, Integer>(2, 3)) < 0);
     assertTrue(entry.compareTo(new SimpleEntry<Integer, Integer>(0, 0)) > 0);
-    assertTrue(entry.compareTo(new SimpleEntry<Integer, Integer>(0, null)) == 0);
-    assertTrue(new ComparableEntry<Integer, Point>(0, new Point(1, 1))
-        .compareTo(new ComparableEntry<Integer, Point>(0, new Point(1, 1))) == 0);
+    assertEquals(0, entry.compareTo(new SimpleEntry<Integer, Integer>(0, null)));
+    assertEquals(0,
+        new ComparableEntry<Integer, Point>(0, new Point(1, 1))
+            .compareTo(new ComparableEntry<Integer, Point>(0, new Point(1, 1))));
   }
 
   @Test(expected = IllegalArgumentException.class)

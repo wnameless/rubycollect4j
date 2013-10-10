@@ -1365,15 +1365,13 @@ public class RubyArrayTest {
 
   @Test(expected = TypeConstraintException.class)
   public void testTransposeException1() {
-    RubyArray<Integer> ra = ra(1, 2, 3);
     ra.transpose();
   }
 
+  @SuppressWarnings("unchecked")
   @Test(expected = IndexOutOfBoundsException.class)
   public void testTransposeException2() {
-    @SuppressWarnings("unchecked")
-    RubyArray<RubyArray<Integer>> ra = ra(ra(1, 2, 3), ra(4, 5));
-    ra.transpose();
+    ra(ra(1, 2, 3), ra(4, 5)).transpose();
   }
 
   @Test

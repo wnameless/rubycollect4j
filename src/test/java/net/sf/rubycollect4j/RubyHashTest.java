@@ -27,6 +27,7 @@ import static net.sf.rubycollect4j.RubyCollections.rh;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Comparator;
@@ -417,12 +418,12 @@ public class RubyHashTest {
 
   @Test
   public void testToH() {
-    assertTrue(rh == rh.toH());
+    assertSame(rh, rh.toH());
   }
 
   @Test
   public void testToHash() {
-    assertTrue(rh == rh.toHash());
+    assertSame(rh, rh.toHash());
   }
 
   @Test

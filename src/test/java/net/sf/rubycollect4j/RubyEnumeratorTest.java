@@ -22,6 +22,7 @@ package net.sf.rubycollect4j;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -66,13 +67,13 @@ public class RubyEnumeratorTest {
 
   @Test
   public void testEach() {
-    assertTrue(re == re.each());
+    assertSame(re, re.each());
   }
 
   @Test
   public void testEachWithBlock() {
     final List<Integer> ints = new ArrayList<Integer>();
-    assertTrue(re == re.each(new Block<Integer>() {
+    assertSame(re, re.each(new Block<Integer>() {
 
       @Override
       public void yield(Integer item) {

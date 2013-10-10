@@ -645,8 +645,7 @@ public class RubyEnumerableTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testInjectWithInitException1() {
-    RubyArray<Integer> ra = ra();
-    re.inject(ra, "no push");
+    re.inject(new RubyArray<Integer>(), "no push");
   }
 
   @Test
@@ -683,9 +682,7 @@ public class RubyEnumerableTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testInjectException() {
-    RubyEnumerable<Boolean> bools =
-        newRubyEnumerator(Arrays.asList(true, true, true));
-    bools.inject("not equals");
+    newRubyEnumerator(Arrays.asList(true, true, true)).inject("not equals");
   }
 
   @Test
@@ -725,14 +722,7 @@ public class RubyEnumerableTest {
 
     }));
     re = newRubyEnumerator(new ArrayList<Integer>());
-    assertNull(re.max(new Comparator<Integer>() {
-
-      @Override
-      public int compare(Integer arg0, Integer arg1) {
-        return arg1 - arg0;
-      }
-
-    }));
+    assertNull(re.max(null));
   }
 
   @Test
@@ -761,21 +751,7 @@ public class RubyEnumerableTest {
 
     }));
     re = newRubyEnumerator(new ArrayList<String>());
-    assertNull(re.maxBy(new Comparator<Integer>() {
-
-      @Override
-      public int compare(Integer o1, Integer o2) {
-        return o2 - o1;
-      }
-
-    }, new TransformBlock<String, Integer>() {
-
-      @Override
-      public Integer yield(String item) {
-        return item.length();
-      }
-
-    }));
+    assertNull(re.maxBy(null, null));
   }
 
   @Test
@@ -791,14 +767,7 @@ public class RubyEnumerableTest {
 
     }));
     re = newRubyEnumerator(new ArrayList<String>());
-    assertNull(re.maxBy(new TransformBlock<String, Integer>() {
-
-      @Override
-      public Integer yield(String item) {
-        return item.length();
-      }
-
-    }));
+    assertNull(re.maxBy(null));
   }
 
   @Test
@@ -825,14 +794,7 @@ public class RubyEnumerableTest {
 
     }));
     re = newRubyEnumerator(new ArrayList<Integer>());
-    assertNull(re.min(new Comparator<Integer>() {
-
-      @Override
-      public int compare(Integer arg0, Integer arg1) {
-        return arg1 - arg0;
-      }
-
-    }));
+    assertNull(re.min(null));
   }
 
   @Test
@@ -861,21 +823,7 @@ public class RubyEnumerableTest {
 
     }));
     re = newRubyEnumerator(new ArrayList<String>());
-    assertNull(re.minBy(new Comparator<Integer>() {
-
-      @Override
-      public int compare(Integer o1, Integer o2) {
-        return o2 - o1;
-      }
-
-    }, new TransformBlock<String, Integer>() {
-
-      @Override
-      public Integer yield(String item) {
-        return item.length();
-      }
-
-    }));
+    assertNull(re.minBy(null, null));
   }
 
   @Test
@@ -891,14 +839,7 @@ public class RubyEnumerableTest {
 
     }));
     re = newRubyEnumerator(new ArrayList<String>());
-    assertNull(re.minBy(new TransformBlock<String, Integer>() {
-
-      @Override
-      public Integer yield(String item) {
-        return item.length();
-      }
-
-    }));
+    assertNull(re.minBy(null));
   }
 
   @Test
@@ -921,14 +862,7 @@ public class RubyEnumerableTest {
 
     }));
     re = newRubyEnumerator(new ArrayList<Integer>());
-    assertEquals(ra(null, null), re.minmax(new Comparator<Integer>() {
-
-      @Override
-      public int compare(Integer o1, Integer o2) {
-        return o2 - o1;
-      }
-
-    }));
+    assertEquals(ra(null, null), re.minmax(null));
   }
 
   @Test
@@ -956,20 +890,7 @@ public class RubyEnumerableTest {
 
     }));
     re = newRubyEnumerator(new ArrayList<String>());
-    assertEquals(ra(null, null), re.minmaxBy(new Comparator<Integer>() {
-
-      @Override
-      public int compare(Integer o1, Integer o2) {
-        return o2 - o1;
-      }
-    }, new TransformBlock<String, Integer>() {
-
-      @Override
-      public Integer yield(String item) {
-        return item.length();
-      }
-
-    }));
+    assertEquals(ra(null, null), re.minmaxBy(null, null));
   }
 
   @Test
@@ -986,15 +907,7 @@ public class RubyEnumerableTest {
 
         }));
     re = newRubyEnumerator(new ArrayList<String>());
-    assertEquals(ra(null, null),
-        re.minmaxBy(new TransformBlock<String, Integer>() {
-
-          @Override
-          public Integer yield(String item) {
-            return item.length();
-          }
-
-        }));
+    assertEquals(ra(null, null), re.minmaxBy(null));
   }
 
   @Test
@@ -1062,16 +975,8 @@ public class RubyEnumerableTest {
       }
 
     }));
-    List<Integer> ints = new ArrayList<Integer>();
-    re = newRubyEnumerator(ints);
-    assertFalse(re.oneʔ(new BooleanBlock<Integer>() {
-
-      @Override
-      public boolean yield(Integer item) {
-        return item > 6;
-      }
-
-    }));
+    re = newRubyEnumerator(new ArrayList<Integer>());
+    assertFalse(re.oneʔ(null));
   }
 
   @Test
@@ -1234,15 +1139,7 @@ public class RubyEnumerableTest {
       }
 
     }));
-    assertEquals(ra(1),
-        newRubyEnumerator(Arrays.asList(1)).sort(new Comparator<Integer>() {
-
-          @Override
-          public int compare(Integer o1, Integer o2) {
-            return o2 - o1;
-          }
-
-        }));
+    assertEquals(ra(1), newRubyEnumerator(Arrays.asList(1)).sort(null));
   }
 
   @Test(expected = IllegalArgumentException.class)
