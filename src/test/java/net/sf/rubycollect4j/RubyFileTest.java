@@ -147,6 +147,11 @@ public class RubyFileTest {
             + File.separator,
         RubyFile.join(File.separator + "ab" + File.separator + "c"
             + File.separator, File.separator + "def" + File.separator));
+    assertEquals(
+        File.separator + "home" + File.separator + "ruby" + File.separator
+            + "collect",
+        RubyFile.join(File.separator + "home" + File.separator, File.separator
+            + "ruby", "collect"));
   }
 
   @Test

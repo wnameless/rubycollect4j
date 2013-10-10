@@ -270,7 +270,7 @@ public final class RubyFile extends RubyIO {
     for (int i = 1; i < ra.size(); i++) {
       ra.set(i - 1, ra.get(i - 1).replaceAll("\\" + File.separator + "+$", ""));
       ra.set(i,
-          ra.get(i).replaceAll("^\\" + File.separator + "+", File.separator));
+          ra.get(i).replaceAll("^\\" + File.separator + "*", File.separator));
     }
     return ra.join();
   }
