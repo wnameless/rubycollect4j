@@ -112,3 +112,5 @@ Version 1.4.1
 * Changed RubyHash entries to ComparableEntry
 
 * Fixed the bug of RubyFile#join
+
+* Made RubyArray Comparable

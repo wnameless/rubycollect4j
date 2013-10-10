@@ -59,7 +59,8 @@ import net.sf.rubycollect4j.packer.Packer;
  * @param <E>
  *          the type of the elements
  */
-public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
+public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
+    Comparable<RubyArray<E>> {
 
   private final List<E> list;
   private final Random rand = new Random();
@@ -1982,6 +1983,35 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E> {
   @Override
   public String toString() {
     return list.toString();
+  }
+
+  @Override
+  public int compareTo(RubyArray<E> arg0) {
+    if (arg0 == null)
+      throw new IllegalArgumentException("ArgumentError: comparison of "
+          + list.getClass().getName() + " with " + "null" + " failed");
+    if (list.isEmpty())
+      return arg0.isEmpty() ? 0 : -1;
+
+    for (int i = 0; i < list.size() && i < arg0.size(); i++) {
+      try {
+        @SuppressWarnings({ "unchecked", "rawtypes" })
+        int diff = ((Comparable) list.get(i)).compareTo(arg0.get(i));
+        if (diff != 0)
+          return diff;
+      } catch (Exception e) {
+        throw new IllegalArgumentException("ArgumentError: comparison of "
+            + list.getClass().getName() + " with " + list.getClass().getName()
+            + " failed");
+      }
+    }
+
+    if (list.size() > arg0.size())
+      return 1;
+    else if (list.size() < arg0.size())
+      return -1;
+
+    return 0;
   }
 
 }

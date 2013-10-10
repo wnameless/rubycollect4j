@@ -60,18 +60,20 @@ import static net.sf.rubycollect4j.RubyKernel.p;
 
 Demo ra():
 ```java
-p( ra(1, 2, 3, 4) );              // Output: [1, 2, 3, 4]
-p( ra(ra(1, 2)) );                // Output: [[1, 2]]
+p( ra(1, 2, 3, 4) );                // Output: [1, 2, 3, 4]
+p( ra(ra(1, 2)) );                  // Output: [[1, 2]]
 List<Integer> list = new ArrayList<Integer>();
 list.add(1);
-p( ra(list) );                    // Output: [1]
+p( ra(list) );                      // Output: [1]
 Map<Integer, String> map = new LinkedHashMap<Integer, String>();
 map.put(1, "a");
 map.put(2, "b");
 // Any Iterable or Iterator object can be converted into RubyArray.
-p( ra(map.values) );              // Output: [a, b]
+p( ra(map.values) );                // Output: [a, b]
+// RubyArray is Comparable if the elements are Comparable.
+p( ra(ra(3, 4), ra(1, 2)).sort() ); // Output: [[1, 2], [3, 4]]
 // RubyArray is also an List.
-p( ra(1, 2, 3) instanceof List ); // Output: true
+p( ra(1, 2, 3) instanceof List );   // Output: true
 ```
 
 ```java

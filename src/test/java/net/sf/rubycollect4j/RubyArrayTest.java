@@ -1725,4 +1725,25 @@ public class RubyArrayTest {
     assertEquals(ints.toString(), ra.toString());
   }
 
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testCompareTo() {
+    assertEquals(
+        ra(ra(), ra(), ra(1), ra(1), ra(1, 1), ra(1, 1), ra(2, 3), ra(4, 5)),
+        ra(ra(4, 5), ra(1), ra(), ra(1, 1), ra(), ra(1), ra(1, 1), ra(2, 3))
+            .sort());
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test(expected = IllegalArgumentException.class)
+  public void testCompareToException1() {
+    ra(ra(4, 5), ra(1), null).sort();
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test(expected = IllegalArgumentException.class)
+  public void testCompareToException2() {
+    ra(ra(4, 5), ra(1), ra(null, 2, 3)).sort();
+  }
+
 }
