@@ -14,7 +14,7 @@ Installation with Maven:
 <dependency>
   <groupId>net.sf.rubycollect4j</groupId>
   <artifactId>rubycollect4j</artifactId>
-  <version>1.4.1</version>
+  <version>1.4.2</version>
 </dependency>
 ```
 
@@ -58,7 +58,7 @@ import static net.sf.rubycollect4j.RubyCollections.*;
 import static net.sf.rubycollect4j.RubyKernel.p;
 ```
 
-Demo ra():
+Demo ra() & newRubyArray():
 ```java
 p( ra(1, 2, 3, 4) );                // Output: [1, 2, 3, 4]
 p( ra(ra(1, 2)) );                  // Output: [[1, 2]]
@@ -84,7 +84,7 @@ list.add(1);
 RubyArray<Integer> ra = newRubyArray(list, true);
 ```
 
-Demo rh(), hp() & Hash():
+Demo rh(), hp(), Hash() & newRubyHash():
 ```java
 p( rh("a", 1, "b" ,2) );               // Output: {a=1, b=2}
 Map<String, Long> map = new HashMap<String, Long>();
