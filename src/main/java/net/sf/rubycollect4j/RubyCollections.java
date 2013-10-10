@@ -1855,7 +1855,7 @@ public final class RubyCollections {
    *          of entry
    * @param value
    *          of entry
-   * @return a SimpleEntry
+   * @return a ComparableEntry
    */
   public static <K, V> ComparableEntry<K, V> newPair(K key, V value) {
     return new ComparableEntry<K, V>(key, value);
@@ -1872,7 +1872,7 @@ public final class RubyCollections {
    *          of entry
    * @param value
    *          of entry
-   * @return a SimpleEntry
+   * @return a ComparableEntry
    */
   public static <K, V> ComparableEntry<K, V> hp(K key, V value) {
     return newPair(key, value);
