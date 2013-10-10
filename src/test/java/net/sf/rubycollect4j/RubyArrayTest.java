@@ -41,15 +41,20 @@ import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.block.BooleanBlock;
 import net.sf.rubycollect4j.block.TransformBlock;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class RubyArrayTest {
 
   private RubyArray<Integer> ra;
 
+  @Before
+  public void setUp() throws Exception {
+    ra = ra(1, 2, 3, 4);
+  }
+
   @Test
   public void testConstructor() {
-    ra = new RubyArray<Integer>();
     assertTrue(ra instanceof RubyArray);
     ra = new RubyArray<Integer>(new ArrayList<Integer>());
     assertTrue(ra instanceof RubyArray);
@@ -76,7 +81,6 @@ public class RubyArrayTest {
 
   @Test
   public void testAt() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(Integer.valueOf(1), ra.at(0));
     assertEquals(Integer.valueOf(4), ra.at(-1));
     assertNull(ra.at(4));
@@ -86,7 +90,6 @@ public class RubyArrayTest {
 
   @Test
   public void testBsearch() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(Integer.valueOf(3), ra.bsearch(3));
     ra = ra(4, 1, 3, 2);
     assertNull(ra.bsearch(4));
@@ -95,7 +98,6 @@ public class RubyArrayTest {
 
   @Test
   public void testBsearchWithComparator() {
-    ra = ra(1, 2, 3, 4);
     assertNull(ra.bsearch(3, new Comparator<Integer>() {
 
       @Override
@@ -149,7 +151,6 @@ public class RubyArrayTest {
   @SuppressWarnings("unchecked")
   @Test
   public void testCombination() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(RubyEnumerator.class, ra.combination(0).getClass());
     assertEquals(ra(), ra.combination(-1).toA());
     assertEquals(ra(ra()), ra.combination(0).toA());
@@ -165,7 +166,6 @@ public class RubyArrayTest {
 
   @Test
   public void testCombinationWithBlock() {
-    ra = ra(1, 2, 3, 4);
     final RubyArray<Integer> ints = ra();
     assertEquals(ra, ra.combination(3, new Block<RubyArray<Integer>>() {
 
@@ -196,9 +196,8 @@ public class RubyArrayTest {
 
   @Test
   public void testConcat() {
-    ra = ra(1, 2, 3);
-    ra.concat(ra(4, 5, 6));
-    assertEquals(ra(1, 2, 3, 4, 5, 6), ra);
+    ra.concat(ra(5, 6, 7, 8));
+    assertEquals(ra(1, 2, 3, 4, 5, 6, 7, 8), ra);
   }
 
   @Test
@@ -255,7 +254,6 @@ public class RubyArrayTest {
 
   @Test
   public void testDeteleAt() {
-    ra = ra(1, 2, 3, 4);
     assertNull(ra.deleteAt(4));
     assertNull(ra.deleteAt(-5));
     assertEquals(Integer.valueOf(1), ra.deleteAt(0));
@@ -267,14 +265,12 @@ public class RubyArrayTest {
 
   @Test
   public void testDeleteIf() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(RubyEnumerator.class, ra.deleteIf().getClass());
     assertEquals(ra(1, 2, 3, 4), ra.deleteIf().toA());
   }
 
   @Test
   public void testDeleteIfWithBlock() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(ra(1, 2, 3, 4), ra.deleteIf(new BooleanBlock<Integer>() {
 
       @Override
@@ -297,14 +293,12 @@ public class RubyArrayTest {
 
   @Test
   public void testEach() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(RubyEnumerator.class, ra.each().getClass());
     assertEquals(ra(1, 2, 3, 4), ra.each().toA());
   }
 
   @Test
   public void testEachWithBlock() {
-    ra = ra(1, 2, 3, 4);
     final RubyArray<Integer> ints = ra();
     assertEquals(ra, ra.each(new Block<Integer>() {
 
@@ -319,14 +313,12 @@ public class RubyArrayTest {
 
   @Test
   public void testEachIndex() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(RubyEnumerator.class, ra.eachIndex().getClass());
     assertEquals(ra(0, 1, 2, 3), ra.eachIndex().toA());
   }
 
   @Test
   public void testEachIndexWithBlock() {
-    ra = ra(1, 2, 3, 4);
     final RubyArray<Integer> ints = ra();
     assertEquals(ra, ra.eachIndex(new Block<Integer>() {
 
@@ -349,10 +341,9 @@ public class RubyArrayTest {
 
   @Test
   public void testEqlʔ() {
-    ra = ra(1, 2, 3);
-    assertTrue(ra.eqlʔ(ra(1, 2, 3)));
-    assertFalse(ra.eqlʔ(ra(3, 2, 1)));
-    List<Integer> list = Arrays.asList(1, 2, 3);
+    assertTrue(ra.eqlʔ(ra(1, 2, 3, 4)));
+    assertFalse(ra.eqlʔ(ra(4, 3, 2, 1)));
+    List<Integer> list = Arrays.asList(1, 2, 3, 4);
     assertTrue(ra.eqlʔ(list));
     assertTrue(ra().eqlʔ(new ArrayList<Object>()));
     assertFalse(ra.eqlʔ(new Object()));
@@ -360,13 +351,11 @@ public class RubyArrayTest {
 
   @Test
   public void testFetch() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(Integer.valueOf(3), ra.fetch(2));
   }
 
   @Test(expected = IndexOutOfBoundsException.class)
   public void testFetchException() {
-    ra = ra(1, 2, 3, 4);
     try {
       ra.fetch(4);
       fail();
@@ -376,7 +365,6 @@ public class RubyArrayTest {
 
   @Test
   public void testFetchWithDefaultValue() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(Integer.valueOf(3), ra.fetch(2, 10));
     assertEquals(Integer.valueOf(10), ra.fetch(4, 10));
     assertEquals(Integer.valueOf(10), ra.fetch(-5, 10));
@@ -384,7 +372,6 @@ public class RubyArrayTest {
 
   @Test
   public void testFetchWithBlock() {
-    ra = ra(1, 2, 3, 4);
     final RubyArray<Integer> ints = ra();
     assertEquals(Integer.valueOf(3), ra.fetch(2, new Block<Integer>() {
 
@@ -417,14 +404,12 @@ public class RubyArrayTest {
 
   @Test
   public void testFill() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(ra(5, 5, 5, 5), ra.fill(5));
     assertEquals(ra(5, 5, 5, 5), ra);
   }
 
   @Test
   public void testFillWithStart() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(ra(1, 2, 5, 5), ra.fill(5, 2));
     assertEquals(ra(1, 2, 5, 5), ra);
     ra = ra(1, 2, 3, 4);
@@ -440,7 +425,6 @@ public class RubyArrayTest {
 
   @Test
   public void testFillWithStartAndLength() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(ra(1, 2, 5, 4), ra.fill(5, 2, 1));
     assertEquals(ra(1, 2, 5, 4), ra);
     ra = ra(1, 2, 3, 4);
@@ -459,7 +443,6 @@ public class RubyArrayTest {
 
   @Test
   public void testFillWithBlock() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(ra(0, 1, 2, 3),
         ra.fill(new TransformBlock<Integer, Integer>() {
 
@@ -474,7 +457,6 @@ public class RubyArrayTest {
 
   @Test
   public void testFillWithBlockAndStart() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(ra(1, 2, 2, 3),
         ra.fill(2, new TransformBlock<Integer, Integer>() {
 
@@ -522,7 +504,6 @@ public class RubyArrayTest {
 
   @Test
   public void testFillWithBlockAndStartAndLength() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(ra(1, 2, 2, 4),
         ra.fill(2, 1, new TransformBlock<Integer, Integer>() {
 
@@ -597,13 +578,11 @@ public class RubyArrayTest {
 
   @Test
   public void testHash() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(ra.hashCode(), ra.hash());
   }
 
   @Test
   public void testIndexWithBlock() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(Integer.valueOf(1), ra.index(new BooleanBlock<Integer>() {
 
       @Override
@@ -624,14 +603,12 @@ public class RubyArrayTest {
 
   @Test
   public void testIndex() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(Integer.valueOf(2), ra.index(3));
     assertNull(ra.index(5));
   }
 
   @Test
   public void testInsert() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(ra(1, 2, 3, 5, 6, 4), ra.insert(-2, 5, 6));
     assertEquals(ra(1, 2, 3, 5, 6, 4), ra);
     ra = ra(1, 2, 3, 4);
@@ -644,13 +621,11 @@ public class RubyArrayTest {
 
   @Test(expected = IndexOutOfBoundsException.class)
   public void testInsertException() {
-    ra = ra(1, 2, 3, 4);
     ra.insert(-5, 0);
   }
 
   @Test
   public void testInspect() {
-    ra = ra(1, 2, 3, 4);
     assertEquals("[1, 2, 3, 4]", ra.inspect());
     assertEquals(ra.toString(), ra.inspect());
   }
@@ -663,7 +638,6 @@ public class RubyArrayTest {
 
   @Test
   public void testJoin() {
-    ra = ra(1, 2, 3, 4);
     assertEquals("1234", ra.join());
     ra.add(null);
     assertEquals("1234", ra.join());
@@ -671,7 +645,6 @@ public class RubyArrayTest {
 
   @Test
   public void testJoinWithSeparator() {
-    ra = ra(1, 2, 3, 4);
     assertEquals("1,2,3,4", ra.join(","));
     ra.add(null);
     assertEquals("1\t2\t3\t4\t", ra.join("\t"));
@@ -681,14 +654,12 @@ public class RubyArrayTest {
 
   @Test
   public void testKeepIf() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(RubyEnumerator.class, ra.keepIf().getClass());
     assertEquals(ra(1, 2, 3, 4), ra.keepIf().toA());
   }
 
   @Test
   public void testKeepIfWithBlock() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(ra(1, 3), ra.keepIf(new BooleanBlock<Integer>() {
 
       @Override
@@ -702,7 +673,6 @@ public class RubyArrayTest {
 
   @Test
   public void testLast() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(Integer.valueOf(4), ra.last());
     ra = ra();
     assertNull(ra.last());
@@ -710,7 +680,6 @@ public class RubyArrayTest {
 
   @Test
   public void testLastWithN() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(ra(2, 3, 4), ra.last(3));
     assertEquals(ra(1, 2, 3, 4), ra.last(6));
     ra = ra();
@@ -719,34 +688,29 @@ public class RubyArrayTest {
 
   @Test
   public void testLength() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(4, ra.length());
     assertEquals(ra.size(), ra.length());
   }
 
   @Test
   public void testMinus() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(ra(1, 3), ra.minus(ra(2, 4)));
   }
 
   @Test
   public void testMultiply() {
-    ra = ra(1, 2, 3);
     assertEquals(ra(), ra.multiply(0));
-    assertEquals(ra(1, 2, 3, 1, 2, 3), ra.multiply(2));
+    assertEquals(ra(1, 2, 3, 4, 1, 2, 3, 4), ra.multiply(2));
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testMultiplyException() {
-    ra = ra(1, 2, 3);
     ra.multiply(-1);
   }
 
   @Test
   public void testMultiplyWithString() {
-    ra = ra(1, 2, 3);
-    assertEquals("1,2,3", ra.multiply(","));
+    assertEquals("1,2,3,4", ra.multiply(","));
   }
 
   @Test
@@ -816,32 +780,28 @@ public class RubyArrayTest {
 
   @Test
   public void testPlus() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(ra(1, 2, 3, 4, 5, 6), ra.plus(ra(5, 6)));
   }
 
   @Test
   public void testPop() {
+    assertEquals(Integer.valueOf(4), ra.pop());
     ra = ra();
     assertNull(ra.pop());
-    ra = ra(1, 2, 3, 4);
-    assertEquals(Integer.valueOf(4), ra.pop());
   }
 
   @Test
   public void testPopWithN() {
-    ra = ra();
-    assertEquals(ra(), ra.pop(3));
-    ra = ra(1, 2, 3, 4);
     assertEquals(ra(), ra.pop(0));
     assertEquals(ra(3, 4), ra.pop(2));
     assertEquals(ra(1, 2), ra);
     assertEquals(ra(1, 2), ra.pop(3));
+    ra = ra();
+    assertEquals(ra(), ra.pop(3));
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testPopException() {
-    ra = ra(1, 2, 3, 4);
     ra.pop(-1);
   }
 
@@ -909,14 +869,12 @@ public class RubyArrayTest {
 
   @Test
   public void testRejectǃ() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(RubyEnumerator.class, ra.rejectǃ().getClass());
     assertEquals(ra(1, 2, 3, 4), ra.rejectǃ().toA());
   }
 
   @Test
   public void testRejectǃWithBlock() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(ra(1, 2), ra.rejectǃ(new BooleanBlock<Integer>() {
 
       @Override
@@ -998,35 +956,30 @@ public class RubyArrayTest {
 
   @Test
   public void testReplace() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(ra(4, 5, 6, 7), ra.replace(ra(4, 5, 6, 7)));
     assertEquals(ra(4, 5, 6, 7), ra);
   }
 
   @Test
   public void testReverse() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(ra(4, 3, 2, 1), ra.reverse());
     assertEquals(ra(1, 2, 3, 4), ra);
   }
 
   @Test
   public void testReverseǃ() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(ra(4, 3, 2, 1), ra.reverseǃ());
     assertEquals(ra(4, 3, 2, 1), ra);
   }
 
   @Test
   public void testRindex() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(RubyEnumerator.class, ra.rindex().getClass());
     assertEquals(ra(4, 3, 2, 1), ra.rindex().toA());
   }
 
   @Test
   public void testRindexWithBlock() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(Integer.valueOf(3), ra.rindex(new BooleanBlock<Integer>() {
 
       @Override
@@ -1054,7 +1007,6 @@ public class RubyArrayTest {
 
   @Test
   public void testRotate() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(ra(2, 3, 4, 1), ra.rotate());
     assertEquals(ra(1, 2, 3, 4), ra);
     assertEquals(ra(), ra().rotate());
@@ -1062,7 +1014,6 @@ public class RubyArrayTest {
 
   @Test
   public void testRotateWithN() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(ra(1, 2, 3, 4), ra.rotate(0));
     assertEquals(ra(2, 3, 4, 1), ra.rotate(1));
     assertEquals(ra(4, 1, 2, 3), ra.rotate(-1));
@@ -1081,7 +1032,6 @@ public class RubyArrayTest {
 
   @Test
   public void testRotateǃWithN() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(ra(1, 2, 3, 4), ra.rotateǃ(0));
     assertEquals(ra(1, 2, 3, 4), ra);
     ra = ra(1, 2, 3, 4);
@@ -1101,14 +1051,12 @@ public class RubyArrayTest {
 
   @Test
   public void testSample() {
-    ra = ra(1, 2, 3, 4);
     assertTrue(ra.includeʔ(ra.sample()));
     assertNull(ra().sample());
   }
 
   @Test
   public void testSampleWithN() {
-    ra = ra(1, 2, 3, 4);
     RubyArray<Integer> samples = ra.sample(3);
     assertEquals(3, samples.uniq().count());
     assertEquals(4, ra.sample(5).uniq().count());
@@ -1117,20 +1065,17 @@ public class RubyArrayTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testSampleException() {
-    ra = ra(1, 2, 3, 4);
     ra.sample(-1);
   }
 
   @Test
   public void testSelectǃ() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(RubyEnumerator.class, ra.selectǃ().getClass());
     assertEquals(ra(1, 2, 3, 4), ra.selectǃ().toA());
   }
 
   @Test
   public void testSelectǃWithBlock() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(ra(1, 3), ra.selectǃ(new BooleanBlock<Integer>() {
 
       @Override
@@ -1152,7 +1097,6 @@ public class RubyArrayTest {
 
   @Test
   public void testShift() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(Integer.valueOf(1), ra.shift());
     assertEquals(ra(2, 3, 4), ra);
     ra = ra();
@@ -1161,7 +1105,6 @@ public class RubyArrayTest {
 
   @Test
   public void testShiftWithN() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(ra(1, 2), ra.shift(2));
     assertEquals(ra(3, 4), ra);
     assertEquals(ra(3, 4), ra.shift(5));
@@ -1170,7 +1113,6 @@ public class RubyArrayTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testShiftException() {
-    ra = ra(1, 2, 3, 4);
     ra.shift(-1);
   }
 
@@ -1218,7 +1160,6 @@ public class RubyArrayTest {
 
   @Test
   public void testSlice() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(Integer.valueOf(1), ra.slice(0));
     assertEquals(Integer.valueOf(4), ra.slice(-1));
     assertNull(ra.slice(4));
@@ -1227,7 +1168,6 @@ public class RubyArrayTest {
 
   @Test
   public void testSliceWithLength() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(ra(1, 2, 3, 4), ra.slice(0, 5));
     assertEquals(ra(3), ra.slice(-2, 1));
     assertNull(ra.slice(4, 2));
@@ -1236,7 +1176,6 @@ public class RubyArrayTest {
 
   @Test
   public void testSliceǃ() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(Integer.valueOf(1), ra.sliceǃ(0));
     assertEquals(ra(2, 3, 4), ra);
     assertEquals(Integer.valueOf(4), ra.sliceǃ(-1));
@@ -1248,7 +1187,6 @@ public class RubyArrayTest {
 
   @Test
   public void testSliceǃWithLength() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(ra(1, 2, 3, 4), ra.sliceǃ(0, 5));
     assertEquals(ra(), ra);
     ra = ra(1, 2, 3, 4);
@@ -1335,7 +1273,6 @@ public class RubyArrayTest {
 
   @Test
   public void testSortByǃ() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(RubyEnumerator.class, ra.sortByǃ().getClass());
     assertEquals(ra(1, 2, 3, 4), ra.sortByǃ().toA());
   }
@@ -1414,7 +1351,6 @@ public class RubyArrayTest {
 
   @Test
   public void testToS() {
-    ra = ra(1, 2, 3, 4);
     assertEquals("[1, 2, 3, 4]", ra.toS());
     assertEquals(ra.toString(), ra.toS());
   }
@@ -1501,13 +1437,11 @@ public class RubyArrayTest {
 
   @Test
   public void testUnshift() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(ra(0, 1, 2, 3, 4), ra.unshift(0));
   }
 
   @Test
   public void testValuesAt() {
-    ra = ra(1, 2, 3, 4);
     assertEquals(ra(4, 1, null, null), ra.valuesAt(-1, 0, 5, -6));
   }
 
