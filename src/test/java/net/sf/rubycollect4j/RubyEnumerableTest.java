@@ -20,7 +20,7 @@
  */
 package net.sf.rubycollect4j;
 
-import static net.sf.rubycollect4j.RubyCollections.newPair;
+import static net.sf.rubycollect4j.RubyCollections.hp;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.ra;
@@ -45,7 +45,6 @@ import net.sf.rubycollect4j.block.TransformBlock;
 import net.sf.rubycollect4j.block.WithIndexBlock;
 import net.sf.rubycollect4j.block.WithInitBlock;
 import net.sf.rubycollect4j.block.WithObjectBlock;
-import net.sf.rubycollect4j.util.ComparableEntry;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -142,7 +141,7 @@ public class RubyEnumerableTest {
   @Test
   public void testChunk() {
     re = newRubyEnumerator(Arrays.asList(1, 2, 2, 3));
-    RubyArray<ComparableEntry<Boolean, RubyArray<Integer>>> chunk =
+    RubyArray<Entry<Boolean, RubyArray<Integer>>> chunk =
         re.chunk(new TransformBlock<Integer, Boolean>() {
 
           @Override
@@ -151,12 +150,10 @@ public class RubyEnumerableTest {
           }
 
         }).toA();
-    assertEquals(newPair(false, newRubyArray(1)).toString(), chunk.get(0)
+    assertEquals(hp(false, newRubyArray(1)).toString(), chunk.get(0).toString());
+    assertEquals(hp(true, newRubyArray(2, 2)).toString(), chunk.get(1)
         .toString());
-    assertEquals(newPair(true, newRubyArray(2, 2)).toString(), chunk.get(1)
-        .toString());
-    assertEquals(newPair(false, newRubyArray(3)).toString(), chunk.get(2)
-        .toString());
+    assertEquals(hp(false, newRubyArray(3)).toString(), chunk.get(2).toString());
     assertEquals(3, chunk.size());
   }
 
@@ -433,7 +430,7 @@ public class RubyEnumerableTest {
     assertEquals(RubyEnumerator.class, re.eachWithIndex().getClass());
     @SuppressWarnings("unchecked")
     RubyArray<? extends Entry<Integer, Integer>> ra =
-        ra(newPair(1, 0), newPair(2, 1), newPair(3, 2), newPair(4, 3));
+        ra(hp(1, 0), hp(2, 1), hp(3, 2), hp(4, 3));
     assertEquals(ra, re.eachWithIndex().toA());
   }
 
@@ -457,7 +454,7 @@ public class RubyEnumerableTest {
     assertEquals(RubyEnumerator.class, re.eachWithObject(obj).getClass());
     @SuppressWarnings("unchecked")
     RubyArray<? extends Entry<Integer, Long>> ra =
-        ra(newPair(1, obj), newPair(2, obj), newPair(3, obj), newPair(4, obj));
+        ra(hp(1, obj), hp(2, obj), hp(3, obj), hp(4, obj));
     assertEquals(ra, re.eachWithObject(obj).toA());
   }
 

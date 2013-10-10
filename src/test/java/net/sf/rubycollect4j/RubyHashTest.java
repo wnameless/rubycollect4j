@@ -40,6 +40,7 @@ import net.sf.rubycollect4j.block.EntryBlock;
 import net.sf.rubycollect4j.block.EntryBooleanBlock;
 import net.sf.rubycollect4j.block.EntryMergeBlock;
 import net.sf.rubycollect4j.block.EntryTransformBlock;
+import net.sf.rubycollect4j.util.ComparableEntry;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -1100,6 +1101,23 @@ public class RubyHashTest {
     map.put(3, 4);
     rh = rh(1, 2, 3, 4);
     assertEquals(map.toString(), rh.toString());
+  }
+
+  @Test
+  public void testComparableEntry() {
+    assertEquals(rh(1, 2, 3, 4, 5, 6).toA(), rh.sort());
+    assertEquals(hp(1, 2), rh.min());
+    assertEquals(hp(5, 6), rh.max());
+    assertTrue(rh.getIterable().iterator().next() instanceof ComparableEntry);
+    assertTrue(rh.assoc(1) instanceof ComparableEntry);
+    assertTrue(rh.rassoc(6) instanceof ComparableEntry);
+    assertTrue(rh.deleteIf().iterator().next() instanceof ComparableEntry);
+    assertTrue(rh.each().iterator().next() instanceof ComparableEntry);
+    assertTrue(rh.eachPair().iterator().next() instanceof ComparableEntry);
+    assertTrue(rh.flatten().iterator().next() instanceof ComparableEntry);
+    assertTrue(rh.keepIf().iterator().next() instanceof ComparableEntry);
+    assertTrue(rh.rejectǃ().iterator().next() instanceof ComparableEntry);
+    assertTrue(rh.shift() instanceof ComparableEntry);
   }
 
 }

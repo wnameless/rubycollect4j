@@ -23,8 +23,6 @@ package net.sf.rubycollect4j.iter;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
-import net.sf.rubycollect4j.util.ComparableEntry;
-
 /**
  * 
  * ComparableEntryIterable iterates an Iterable of Entry and wraps each Entry
@@ -36,7 +34,7 @@ import net.sf.rubycollect4j.util.ComparableEntry;
  *          the type of the value elements
  */
 public final class ComparableEntryIterable<K, V> implements
-    Iterable<ComparableEntry<K, V>> {
+    Iterable<Entry<K, V>> {
 
   private final Iterable<Entry<K, V>> iter;
 
@@ -51,7 +49,7 @@ public final class ComparableEntryIterable<K, V> implements
   }
 
   @Override
-  public Iterator<ComparableEntry<K, V>> iterator() {
+  public Iterator<Entry<K, V>> iterator() {
     return new ComparableEntryIterator<K, V>(iter.iterator());
   }
 
@@ -59,7 +57,7 @@ public final class ComparableEntryIterable<K, V> implements
   public String toString() {
     StringBuilder sb = new StringBuilder("[");
     int index = 0;
-    for (ComparableEntry<K, V> item : this) {
+    for (Entry<K, V> item : this) {
       if (index == 0)
         sb.append(item);
       else

@@ -1855,27 +1855,10 @@ public final class RubyCollections {
    *          of entry
    * @param value
    *          of entry
-   * @return a ComparableEntry
+   * @return an Entry
    */
-  public static <K, V> ComparableEntry<K, V> newPair(K key, V value) {
+  public static <K, V> Entry<K, V> hp(K key, V value) {
     return new ComparableEntry<K, V>(key, value);
-  }
-
-  /**
-   * Creates a hash pair by the ComparableEntry.
-   * 
-   * @param <K>
-   *          the type of the key
-   * @param <V>
-   *          the type of the value
-   * @param key
-   *          of entry
-   * @param value
-   *          of entry
-   * @return a ComparableEntry
-   */
-  public static <K, V> ComparableEntry<K, V> hp(K key, V value) {
-    return newPair(key, value);
   }
 
   /**

@@ -36,7 +36,7 @@ import net.sf.rubycollect4j.util.ComparableEntry;
  *          the type of the value elements
  */
 public final class ComparableEntryIterator<K, V> implements
-    Iterator<ComparableEntry<K, V>> {
+    Iterator<Entry<K, V>> {
 
   private final Iterator<Entry<K, V>> iter;
 
@@ -56,7 +56,7 @@ public final class ComparableEntryIterator<K, V> implements
   }
 
   @Override
-  public ComparableEntry<K, V> next() {
+  public Entry<K, V> next() {
     return new ComparableEntry<K, V>(iter.next());
   }
 

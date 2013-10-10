@@ -20,7 +20,7 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static net.sf.rubycollect4j.RubyCollections.newPair;
+import static net.sf.rubycollect4j.RubyCollections.hp;
 
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -59,7 +59,7 @@ public final class EachWithObjectIterator<E, O> implements
   }
 
   private Entry<E, O> nextElement() {
-    return newPair(iter.next(), obj);
+    return hp(iter.next(), obj);
   }
 
   @Override

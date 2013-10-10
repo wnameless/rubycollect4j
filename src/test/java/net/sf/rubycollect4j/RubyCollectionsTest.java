@@ -23,7 +23,6 @@ package net.sf.rubycollect4j;
 import static net.sf.rubycollect4j.RubyCollections.Hash;
 import static net.sf.rubycollect4j.RubyCollections.date;
 import static net.sf.rubycollect4j.RubyCollections.hp;
-import static net.sf.rubycollect4j.RubyCollections.newPair;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
@@ -48,6 +47,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Pattern;
+
+import net.sf.rubycollect4j.util.ComparableEntry;
 
 import org.junit.Test;
 
@@ -240,7 +241,7 @@ public class RubyCollectionsTest {
   @Test
   public void testHp() {
     assertTrue(hp(1, 1) instanceof Entry);
-    assertEquals(newPair(1, 1), hp(1, 1));
+    assertEquals(new ComparableEntry<Integer, Integer>(1, 1), hp(1, 1));
   }
 
   @SuppressWarnings("unchecked")
