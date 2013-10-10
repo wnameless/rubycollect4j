@@ -92,6 +92,8 @@ p( hp(map) );                          // Output: {abc=123}
 // hp() simply creates an Entry and the word 'hp' means hash pair
 p( Hash(ra(hp("a", 1), hp("b" ,2))) ); // Output: {a=1, b=2}
 p( Hash(rh("a", 1, "b", 2).toA()) );   // Output: {a=1, b=2}
+// The Entry of RubyHash is Comparable if the type of the key elements is Comparable.
+p( rh(4, 3, 2, 1).sort() );            // Output: [2=1, 4=3]
 // RubyHash is also a Map.
 p( rh(1, 2, 3, 4) instanceof Map );    // Output: true
 ```
@@ -203,12 +205,13 @@ rf.puts("bc");
 rf.puts("def");
 rf.close();
 rf = RubyFile.open("test.txt", "r");
-p( rf.eachLine().toA() ); // Output: [a, bc, def]
+p( rf.eachLine().toA() );                         // Output: [a, bc, def]
 rf.close();
 // The method foreach() closes the stream automatically.
 RubyFile.foreach("test.txt", new Block<String>() {
   public void yield(String item) {
     System.out.print( item );
   }
-});                       // Output: abcdef
+});                                               // Output: abcdef
+p( RubyFile.join("/home/", "/ruby", "collect") ); // Output: "/home/ruby/collect"
 ```
