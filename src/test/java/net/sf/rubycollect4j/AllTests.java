@@ -28,6 +28,8 @@ import net.sf.rubycollect4j.iter.ComparableEntryIterableTest;
 import net.sf.rubycollect4j.iter.ComparableEntryIteratorTest;
 import net.sf.rubycollect4j.iter.CycleIterableTest;
 import net.sf.rubycollect4j.iter.CycleIteratorTest;
+import net.sf.rubycollect4j.iter.DropIterableTest;
+import net.sf.rubycollect4j.iter.DropIteratorTest;
 import net.sf.rubycollect4j.iter.EachConsIterableTest;
 import net.sf.rubycollect4j.iter.EachConsIteratorTest;
 import net.sf.rubycollect4j.iter.EachIndexIterableTest;
@@ -56,6 +58,8 @@ import net.sf.rubycollect4j.iter.SliceBeforeIterableTest;
 import net.sf.rubycollect4j.iter.SliceBeforeIteratorTest;
 import net.sf.rubycollect4j.iter.StepIterableTest;
 import net.sf.rubycollect4j.iter.StepIteratorTest;
+import net.sf.rubycollect4j.iter.TransformIterableTest;
+import net.sf.rubycollect4j.iter.TransformIteratorTest;
 import net.sf.rubycollect4j.packer.ByteUtilTest;
 import net.sf.rubycollect4j.packer.DirectiveTest;
 import net.sf.rubycollect4j.packer.PackerTest;
@@ -83,23 +87,24 @@ import org.junit.runners.Suite.SuiteClasses;
     StringSuccessorTest.class, LinkedIdentityMapTest.class, ListSetTest.class,
     ChunkIterableTest.class, ChunkIteratorTest.class,
     CombinationIterableTest.class, CombinationIteratorTest.class,
-    CycleIterableTest.class, CycleIteratorTest.class,
-    EachConsIterableTest.class, EachConsIteratorTest.class,
-    EachIndexIterableTest.class, EachIndexIteratorTest.class,
-    EachLineIterableTest.class, EachLineIteratorTest.class,
-    EachSliceIterableTest.class, EachSliceIteratorTest.class,
-    EachWithIndexIterableTest.class, EachWithIndexIteratorTest.class,
-    EachWithObjectIterableTest.class, EachWithObjectIteratorTest.class,
-    OrderedEntrySetIterableTest.class, OrderedEntrySetIteratorTest.class,
-    PermutationIterableTest.class, PermutationIteratorTest.class,
-    RangeIterableTest.class, RangeIteratorTest.class,
-    ProductIterableTest.class, ProductIteratorTest.class,
-    RepeatedCombinationIterableTest.class,
+    CycleIterableTest.class, CycleIteratorTest.class, DropIterableTest.class,
+    DropIteratorTest.class, EachConsIterableTest.class,
+    EachConsIteratorTest.class, EachIndexIterableTest.class,
+    EachIndexIteratorTest.class, EachLineIterableTest.class,
+    EachLineIteratorTest.class, EachSliceIterableTest.class,
+    EachSliceIteratorTest.class, EachWithIndexIterableTest.class,
+    EachWithIndexIteratorTest.class, EachWithObjectIterableTest.class,
+    EachWithObjectIteratorTest.class, OrderedEntrySetIterableTest.class,
+    OrderedEntrySetIteratorTest.class, PermutationIterableTest.class,
+    PermutationIteratorTest.class, RangeIterableTest.class,
+    RangeIteratorTest.class, ProductIterableTest.class,
+    ProductIteratorTest.class, RepeatedCombinationIterableTest.class,
     RepeatedCombinationIteratorTest.class,
     RepeatedPermutationIterableTest.class,
     RepeatedPermutationIteratorTest.class, SliceBeforeIterableTest.class,
     SliceBeforeIteratorTest.class, StepIterableTest.class,
-    StepIteratorTest.class, ByteUtilTest.class, DirectiveTest.class,
+    StepIteratorTest.class, TransformIterableTest.class,
+    TransformIteratorTest.class, ByteUtilTest.class, DirectiveTest.class,
     PackerTest.class, PeekingIteratorTest.class, ComparableEntryTest.class,
     ComparableEntryIterableTest.class, ComparableEntryIteratorTest.class })
 public class AllTests {}
