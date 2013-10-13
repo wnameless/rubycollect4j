@@ -37,13 +37,16 @@ import net.sf.rubycollect4j.iter.EachWithObjectIterable;
 import net.sf.rubycollect4j.iter.FindAllIterable;
 import net.sf.rubycollect4j.iter.FlattenIterable;
 import net.sf.rubycollect4j.iter.GrepIterable;
+import net.sf.rubycollect4j.iter.RejectIterable;
 import net.sf.rubycollect4j.iter.SliceBeforeIterable;
 import net.sf.rubycollect4j.iter.TakeIterable;
 import net.sf.rubycollect4j.iter.TakeWhileIterable;
 import net.sf.rubycollect4j.iter.TransformIterable;
+import net.sf.rubycollect4j.iter.ZipIterable;
 import net.sf.rubycollect4j.util.PeekingIterator;
 
-public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
+public final class LazyRubyEnumerator<E> implements
+    RubyEnumerableEagerMethods<E>, Iterable<E>, Iterator<E> {
 
   private final Iterable<E> iter;
   private PeekingIterator<E> pIterator;
@@ -53,11 +56,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     pIterator = new PeekingIterator<E>(iter.iterator());
   }
 
-  /**
-   * Checks if null included.
-   * 
-   * @return true if null is found, false otherwise
-   */
+  @Override
   public boolean allʔ() {
     for (E item : iter) {
       if (item == null)
@@ -66,13 +65,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return true;
   }
 
-  /**
-   * Checks if any result returned by the block is false.
-   * 
-   * @param block
-   *          to check elements
-   * @return true if all result are true, false otherwise
-   */
+  @Override
   public boolean allʔ(BooleanBlock<E> block) {
     for (E item : iter) {
       if (block.yield(item) == false)
@@ -81,11 +74,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return true;
   }
 
-  /**
-   * Checks if any not-null object included.
-   * 
-   * @return true if not-null object is found, false otherwise
-   */
+  @Override
   public boolean anyʔ() {
     for (E item : iter) {
       if (item != null)
@@ -94,13 +83,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return false;
   }
 
-  /**
-   * Checks if any result returned by the block is true.
-   * 
-   * @param block
-   *          to check elements
-   * @return true if any result are true, false otherwise
-   */
+  @Override
   public boolean anyʔ(BooleanBlock<E> block) {
     for (E item : iter) {
       if (block.yield(item))
@@ -162,11 +145,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return new LazyRubyEnumerator<S>(new FlattenIterable<E, S>(iter, block));
   }
 
-  /**
-   * Counts the elements.
-   * 
-   * @return a int
-   */
+  @Override
   public int count() {
     int count = 0;
     for (@SuppressWarnings("unused")
@@ -176,13 +155,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return count;
   }
 
-  /**
-   * Counts the elements which are true returned by the block.
-   * 
-   * @param block
-   *          to define elements to be counted
-   * @return a int
-   */
+  @Override
   public int count(BooleanBlock<E> block) {
     int count = 0;
     for (E item : iter) {
@@ -213,15 +186,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return new LazyRubyEnumerator<E>(new CycleIterable<E>(iter, n));
   }
 
-  /**
-   * Generates a sequence from start element to end element, repeat n times.
-   * Yields each element to the block.
-   * 
-   * @param n
-   *          times to repeat
-   * @param block
-   *          to yield each element
-   */
+  @Override
   public void cycle(int n, Block<E> block) {
     for (int i = 0; i < n; i++) {
       for (E item : iter) {
@@ -230,40 +195,12 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     }
   }
 
-  /**
-   * Generates a sequence from start element to end element and so on
-   * infinitely. Yields each element to the block.
-   * 
-   * @param block
-   *          to yield each element
-   */
+  @Override
   public void cycle(Block<E> block) {
     while (true) {
       for (E item : iter) {
         block.yield(item);
       }
-    }
-  }
-
-  /**
-   * Returns a LazyRubyEnumerator which is self.
-   * 
-   * @return this LazyRubyEnumerator
-   */
-  public LazyRubyEnumerator<E> each() {
-    return this;
-  }
-
-  /**
-   * Yields each element to the block.
-   * 
-   * @param block
-   *          to yield each element
-   * @return this LazyRubyEnumerator
-   */
-  public void each(Block<E> block) {
-    for (E item : iter) {
-      block.yield(item);
     }
   }
 
@@ -276,14 +213,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return this;
   }
 
-  /**
-   * Finds the first element which gets true returned by the block. Returns null
-   * if element is not found.
-   * 
-   * @param block
-   *          to filter elements
-   * @return an element or null
-   */
+  @Override
   public E detect(BooleanBlock<E> block) {
     for (E item : iter) {
       if (block.yield(item))
@@ -316,6 +246,28 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
   }
 
   /**
+   * Returns a LazyRubyEnumerator which is self.
+   * 
+   * @return this LazyRubyEnumerator
+   */
+  public LazyRubyEnumerator<E> each() {
+    return this;
+  }
+
+  /**
+   * Yields each element to the block.
+   * 
+   * @param block
+   *          to yield each element
+   * @return this LazyRubyEnumerator
+   */
+  public void each(Block<E> block) {
+    for (E item : iter) {
+      block.yield(item);
+    }
+  }
+
+  /**
    * Iterates each element and stores the element with n - 1 consecutive
    * elements into a RubyArray.
    * 
@@ -328,15 +280,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
         new EachConsIterable<E>(iter, n));
   }
 
-  /**
-   * Iterates each element and yields the element with n - 1 consecutive
-   * elements to the block.
-   * 
-   * @param n
-   *          number of consecutive elements
-   * @param block
-   *          to yield the RubyArray of consecutive elements
-   */
+  @Override
   public void eachCons(int n, Block<RubyArray<E>> block) {
     for (RubyArray<E> cons : eachCons(n)) {
       block.yield(cons);
@@ -378,14 +322,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
         n));
   }
 
-  /**
-   * Slices elements into RubyArrays with length n and yield them to the block.
-   * 
-   * @param n
-   *          size of each slice
-   * @param block
-   *          to yield each slice
-   */
+  @Override
   public void eachSlice(int n, Block<RubyArray<E>> block) {
     for (RubyArray<E> ra : new EachSliceIterable<E>(iter, n)) {
       block.yield(ra);
@@ -434,17 +371,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
         new EachWithObjectIterable<E, S>(iter, o));
   }
 
-  /**
-   * Iterates elements with the Object S and yield them to the block.
-   * 
-   * @param <S>
-   *          the type of transformed elements
-   * @param o
-   *          any Object
-   * @param block
-   *          to yield each Entry
-   * @return the Object S
-   */
+  @Override
   public <S> S eachWithObject(S o, WithObjectBlock<E, S> block) {
     for (E item : iter) {
       block.yield(item, o);
@@ -452,11 +379,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return o;
   }
 
-  /**
-   * Stores each element into a RubyArray.
-   * 
-   * @return a RubyArray
-   */
+  @Override
   public RubyArray<E> entries() {
     return newRubyArray(iter);
   }
@@ -470,13 +393,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return detect();
   }
 
-  /**
-   * Equivalent to detect().
-   * 
-   * @param block
-   *          to filter elements
-   * @return an element or null
-   */
+  @Override
   public E find(BooleanBlock<E> block) {
     return detect(block);
   }
@@ -501,14 +418,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return new LazyRubyEnumerator<E>(iter);
   }
 
-  /**
-   * Finds the index of a element which is true returned by the block. Returns
-   * null if nothing found.
-   * 
-   * @param block
-   *          to check elements
-   * @return an Integer or null
-   */
+  @Override
   public Integer findIndex(BooleanBlock<E> block) {
     int index = 0;
     for (E item : iter) {
@@ -520,13 +430,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return null;
   }
 
-  /**
-   * Finds the index of the target element. Returns null if target not found.
-   * 
-   * @param target
-   *          to be found
-   * @return an Integer or null
-   */
+  @Override
   public Integer findIndex(E target) {
     int index = 0;
     for (E item : iter) {
@@ -538,12 +442,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return null;
   }
 
-  /**
-   * Gets the first element of this RubyEnumerable. Returns null if this
-   * RubyEnumerable is empty.
-   * 
-   * @return an element or null
-   */
+  @Override
   public E first() {
     Iterator<E> iterator = iter.iterator();
     if (iterator.hasNext())
@@ -552,15 +451,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
       return null;
   }
 
-  /**
-   * Gets the first n element of this RubyEnumerable.
-   * 
-   * @param n
-   *          number of elements
-   * @return a RubyArray
-   * @throws IllegalArgumentException
-   *           if n less than 0
-   */
+  @Override
   public RubyArray<E> first(int n) {
     if (n < 0)
       throw new IllegalArgumentException(
@@ -626,16 +517,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return new LazyRubyEnumerator<E>(iter);
   }
 
-  /**
-   * Puts elements with the same result S returned by the block into a
-   * Entry&#60;S, RubyArray&#60;E&#62;&#62;y of a RubyHash.
-   * 
-   * @param <S>
-   *          the type of transformed elements
-   * @param block
-   *          to group each element
-   * @return a RubyHash
-   */
+  @Override
   public <S> RubyHash<S, RubyArray<E>> groupBy(TransformBlock<E, S> block) {
     Map<S, List<E>> multimap = new LinkedHashMap<S, List<E>>();
     for (E item : iter) {
@@ -652,13 +534,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return map;
   }
 
-  /**
-   * Checks if target element included.
-   * 
-   * @param target
-   *          to be searched
-   * @return true if target is found,false otherwise
-   */
+  @Override
   public boolean includeʔ(E target) {
     for (E item : iter) {
       if (item.equals(target))
@@ -667,14 +543,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return false;
   }
 
-  /**
-   * Assigns the first element as the initial value. Reduces each element with
-   * block, then assigns the result back to initial value and so on.
-   * 
-   * @param block
-   *          to reduce each element
-   * @return an element
-   */
+  @Override
   public E inject(ReduceBlock<E> block) {
     E result = null;
     int i = 0;
@@ -688,18 +557,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return result;
   }
 
-  /**
-   * Reduces each element with block, then assigns the result back to initial
-   * value and so on.
-   * 
-   * @param <S>
-   *          the type of transformed elements
-   * @param init
-   *          initial value
-   * @param block
-   *          to reduce each element
-   * @return an element S
-   */
+  @Override
   public <S> S inject(S init, WithInitBlock<E, S> block) {
     for (E item : iter) {
       init = block.yield(init, item);
@@ -707,22 +565,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return init;
   }
 
-  /**
-   * Reduces each element with initial value by a method of S, then assigns the
-   * result back to initial value and so on.
-   * 
-   * @param <S>
-   *          the type of transformed elements
-   * @param init
-   *          initial value
-   * @param methodName
-   *          method used to reduce elements
-   * @return an element S
-   * @throws IllegalArgumentException
-   *           if method not found
-   * @throws RuntimeException
-   *           if invocation failed
-   */
+  @Override
   @SuppressWarnings("unchecked")
   public <S> S inject(S init, String methodName) {
     S result = init;
@@ -757,19 +600,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return result;
   }
 
-  /**
-   * Assigns the first element as the initial value. Reduces each element with
-   * initial value by a method of S, then assigns the result back to initial
-   * value and so on.
-   * 
-   * @param methodName
-   *          method used to reduce elements
-   * @return an element
-   * @throws IllegalArgumentException
-   *           if method not found
-   * @throws RuntimeException
-   *           if invocation failed
-   */
+  @Override
   @SuppressWarnings("unchecked")
   public E inject(String methodName) {
     E result = null;
@@ -841,24 +672,12 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return collect(block);
   }
 
-  /**
-   * Finds the max element of this RubyEnumerable. Returns null if this
-   * RubyEnumerable is empty.
-   * 
-   * @return an element or null
-   */
+  @Override
   public E max() {
     return sort().last();
   }
 
-  /**
-   * Finds the max element induced by the Comparator of this RubyEnumerable.
-   * Returns null if this RubyEnumerable is empty.
-   * 
-   * @param comp
-   *          a Comparator
-   * @return an element or null
-   */
+  @Override
   public E max(Comparator<? super E> comp) {
     List<E> list = new ArrayList<E>();
     for (E item : iter) {
@@ -879,19 +698,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return new LazyRubyEnumerator<E>(iter);
   }
 
-  /**
-   * Finds the element which is the max element induced by the Comparator
-   * transformed by the block of this RubyEnumerable. Returns null if this
-   * RubyEnumerable is empty.
-   * 
-   * @param <S>
-   *          the type of transformed elements
-   * @param comp
-   *          a Comparator
-   * @param block
-   *          to transform elements
-   * @return an element or null
-   */
+  @Override
   public <S> E maxBy(Comparator<? super S> comp, TransformBlock<E, S> block) {
     List<E> src = new ArrayList<E>();
     List<S> dst = new ArrayList<S>();
@@ -906,16 +713,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return src.get(dst.indexOf(maxDst));
   }
 
-  /**
-   * Finds the element which is the max element transformed by the block of this
-   * RubyEnumerable. Returns null if this RubyEnumerable is empty.
-   * 
-   * @param <S>
-   *          the type of transformed elements
-   * @param block
-   *          to transform elements
-   * @return an element or null
-   */
+  @Override
   public <S> E maxBy(TransformBlock<E, S> block) {
     List<E> src = new ArrayList<E>();
     List<S> dst = new ArrayList<S>();
@@ -930,35 +728,17 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return src.get(dst.indexOf(maxDst));
   }
 
-  /**
-   * Equivalent to includeʔ().
-   * 
-   * @param target
-   *          to be found
-   * @return an element or null
-   */
+  @Override
   public boolean memberʔ(E target) {
     return includeʔ(target);
   }
 
-  /**
-   * Finds the min element of this RubyEnumerable. Returns null if this
-   * RubyEnumerable is empty.
-   * 
-   * @return an element or null
-   */
+  @Override
   public E min() {
     return sort().first();
   }
 
-  /**
-   * Finds the min element induced by the Comparator of this RubyEnumerable.
-   * Returns null if this RubyEnumerable is empty.
-   * 
-   * @param comp
-   *          a Comparator
-   * @return an element or null
-   */
+  @Override
   public E min(Comparator<? super E> comp) {
     List<E> list = new ArrayList<E>();
     for (E item : iter) {
@@ -979,19 +759,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return new LazyRubyEnumerator<E>(iter);
   }
 
-  /**
-   * Finds the element which is the min element induced by the Comparator
-   * transformed by the block of this RubyEnumerable. Returns null if this
-   * RubyEnumerable is empty.
-   * 
-   * @param <S>
-   *          the type of transformed elements
-   * @param comp
-   *          a Comparator
-   * @param block
-   *          to transform elements
-   * @return an element or null
-   */
+  @Override
   public <S> E minBy(Comparator<? super S> comp, TransformBlock<E, S> block) {
     List<E> src = new ArrayList<E>();
     List<S> dst = new ArrayList<S>();
@@ -1006,16 +774,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return src.get(dst.indexOf(minDst));
   }
 
-  /**
-   * Finds the element which is the min element transformed by the block of this
-   * RubyEnumerable. Returns null if this RubyEnumerable is empty.
-   * 
-   * @param <S>
-   *          the type of transformed elements
-   * @param block
-   *          to transform elements
-   * @return an element or null
-   */
+  @Override
   public <S> E minBy(TransformBlock<E, S> block) {
     List<E> src = new ArrayList<E>();
     List<S> dst = new ArrayList<S>();
@@ -1030,26 +789,14 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return src.get(dst.indexOf(minDst));
   }
 
-  /**
-   * Finds the min and max elements of this RubyEnumerable and stores them into
-   * a RubyArray.
-   * 
-   * @return a RubyArray
-   */
+  @Override
   @SuppressWarnings("unchecked")
   public RubyArray<E> minmax() {
     RubyArray<E> rubyArray = sort();
     return newRubyArray(rubyArray.first(), rubyArray.last());
   }
 
-  /**
-   * Finds the min and max elements induced by the Comparator of this
-   * RubyEnumerable and stores them into a RubyArray.
-   * 
-   * @param comp
-   *          a Comparator
-   * @return a RubyArray
-   */
+  @Override
   @SuppressWarnings("unchecked")
   public RubyArray<E> minmax(Comparator<? super E> comp) {
     RubyArray<E> rubyArray = newRubyArray(iter);
@@ -1069,19 +816,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return new LazyRubyEnumerator<E>(iter);
   }
 
-  /**
-   * Finds elements which are the min and max elements induced by the Comparator
-   * transformed by the block of this RubyEnumerable and stores them into a
-   * RubyArray.
-   * 
-   * @param <S>
-   *          the type of transformed elements
-   * @param comp
-   *          a Comparator
-   * @param block
-   *          to transform elements
-   * @return a RubyArray
-   */
+  @Override
   @SuppressWarnings("unchecked")
   public <S> RubyArray<E> minmaxBy(Comparator<? super S> comp,
       TransformBlock<E, S> block) {
@@ -1100,16 +835,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
         src.get(dst.indexOf(maxDst)));
   }
 
-  /**
-   * Finds elements which is the min and max elements transformed by the block
-   * of this RubyEnumerable and stores them into a RubyArray.
-   * 
-   * @param <S>
-   *          the type of transformed elements
-   * @param block
-   *          to transform elements
-   * @return a RubyArray
-   */
+  @Override
   @SuppressWarnings("unchecked")
   public <S> RubyArray<E> minmaxBy(TransformBlock<E, S> block) {
     RubyArray<E> src = newRubyArray();
@@ -1127,11 +853,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
         src.get(dst.indexOf(maxDst)));
   }
 
-  /**
-   * Checks if this RubyEnumerable contains only null objects.
-   * 
-   * @return true if all elements are null, false otherwise
-   */
+  @Override
   public boolean noneʔ() {
     for (E item : iter) {
       if (item != null)
@@ -1140,14 +862,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return true;
   }
 
-  /**
-   * Checks if this RubyEnumerable contains only elements which are false
-   * returned by the block.
-   * 
-   * @param block
-   *          to check elements
-   * @return true if all results of block are false, false otherwise
-   */
+  @Override
   public boolean noneʔ(BooleanBlock<E> block) {
     for (E item : iter) {
       if (block.yield(item))
@@ -1156,12 +871,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return true;
   }
 
-  /**
-   * Checks if this RubyEnumerable contains only one element beside null
-   * objects.
-   * 
-   * @return true if only one element and nulls are found, false otherwise
-   */
+  @Override
   public boolean oneʔ() {
     int count = 0;
     for (E item : iter) {
@@ -1174,14 +884,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return count == 1;
   }
 
-  /**
-   * Checks if this RubyEnumerable contains only one element which are true
-   * returned by the block.
-   * 
-   * @param block
-   *          to check elements
-   * @return true if only one result of block is true, false otherwise
-   */
+  @Override
   public boolean oneʔ(BooleanBlock<E> block) {
     int count = 0;
     for (E item : iter) {
@@ -1203,13 +906,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return new LazyRubyEnumerator<E>(iter);
   }
 
-  /**
-   * Divides elements into 2 groups by the given block.
-   * 
-   * @param block
-   *          to part elements
-   * @return a RubyArray of 2 RubyArrays
-   */
+  @Override
   @SuppressWarnings("unchecked")
   public RubyArray<RubyArray<E>> partition(BooleanBlock<E> block) {
     RubyArray<E> trueList = newRubyArray();
@@ -1223,81 +920,35 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return newRubyArray(trueList, falseList);
   }
 
-  /**
-   * Equivalent to inject().
-   * 
-   * @param block
-   *          to reduce each element
-   * @return an element
-   */
+  @Override
   public E reduce(ReduceBlock<E> block) {
     return inject(block);
   }
 
-  /**
-   * Equivalent to inject().
-   * 
-   * @param <S>
-   *          the type of transformed elements
-   * @param init
-   *          initial value
-   * @param block
-   *          to reduce each element
-   * @return an element S
-   */
+  @Override
   public <S> S reduce(S init, WithInitBlock<E, S> block) {
     return inject(init, block);
   }
 
-  /**
-   * Equivalent to inject().
-   * 
-   * @param <S>
-   *          the type of transformed elements
-   * @param init
-   *          initial value
-   * @param methodName
-   *          method used to reduce elements
-   * @return an element S
-   */
+  @Override
   public <S> S reduce(S init, String methodName) {
     return inject(init, methodName);
   }
 
-  /**
-   * Equivalent to inject().
-   * 
-   * @param methodName
-   *          method used to reduce elements
-   * @return an element
-   */
+  @Override
   public E reduce(String methodName) {
     return inject(methodName);
   }
 
   /**
-   * Returns a LazyRubyEnumerator.
-   * 
-   * @return a LazyRubyEnumerator
-   */
-  public LazyRubyEnumerator<E> reject() {
-    return new LazyRubyEnumerator<E>(iter);
-  }
-
-  /**
-   * Deletes elements which are true returned by the block.
+   * Filters all elements which are true returned by the block.
    * 
    * @param block
    *          to filter elements
-   * @return a RubyArray
+   * @return a LazyRubyEnumerator
    */
-  public RubyArray<E> reject(BooleanBlock<E> block) {
-    RubyArray<E> rubyArray = newRubyArray();
-    for (E item : iter) {
-      if (!block.yield(item))
-        rubyArray.add(item);
-    }
-    return rubyArray;
+  public LazyRubyEnumerator<E> reject(BooleanBlock<E> block) {
+    return new LazyRubyEnumerator<E>(new RejectIterable<E>(iter, block));
   }
 
   /**
@@ -1364,13 +1015,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
         iter, Pattern.compile(regex)));
   }
 
-  /**
-   * Sorts elements of this RubyEnumerable and stores them into a RubyArray.
-   * 
-   * @return a RubyArray
-   * @throws IllegalArgumentException
-   *           when any 2 elements are not comparable
-   */
+  @Override
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public RubyArray<E> sort() {
     RubyArray<E> rubyArray = newRubyArray(iter);
@@ -1408,14 +1053,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     }
   }
 
-  /**
-   * Sorts elements of this RubyEnumerable by given Comparator and stores them
-   * into a RubyArray.
-   * 
-   * @param comp
-   *          a Comparator
-   * @return a RubyArray
-   */
+  @Override
   public RubyArray<E> sort(Comparator<? super E> comp) {
     RubyArray<E> rubyArray = newRubyArray(iter);
     if (rubyArray.size() <= 1)
@@ -1434,19 +1072,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return new LazyRubyEnumerator<E>(iter);
   }
 
-  /**
-   * Sorts elements of this RubyEnumerable by the ordering of elements
-   * transformed by the block induced by the Comparator and stores them into a
-   * RubyArray.
-   * 
-   * @param <S>
-   *          the type of transformed elements
-   * @param comp
-   *          a Comparator
-   * @param block
-   *          to transform elements
-   * @return a RubyArray
-   */
+  @Override
   public <S> RubyArray<E> sortBy(Comparator<? super S> comp,
       TransformBlock<E, S> block) {
     Map<S, RubyArray<E>> multimap = new LinkedHashMap<S, RubyArray<E>>();
@@ -1468,21 +1094,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return sortedList;
   }
 
-  /**
-   * Sorts elements of this RubyEnumerable by the ordering of elements
-   * transformed by the block induced by the Comparator for S and applies the
-   * Comparator for E again before stores them into a RubyArray.
-   * 
-   * @param <S>
-   *          the type of transformed elements
-   * @param comp1
-   *          a Comparator for E
-   * @param comp2
-   *          a Comparator for S
-   * @param block
-   *          to transform elements
-   * @return a RubyArray
-   */
+  @Override
   public <S> RubyArray<E> sortBy(Comparator<? super E> comp1,
       Comparator<? super S> comp2, TransformBlock<E, S> block) {
     Map<S, RubyArray<E>> multimap = new LinkedHashMap<S, RubyArray<E>>();
@@ -1504,16 +1116,7 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return sortedList;
   }
 
-  /**
-   * Sorts elements of this RubyEnumerable by the ordering of elements
-   * transformed by the block and stores them into a RubyArray.
-   * 
-   * @param <S>
-   *          the type of transformed elements
-   * @param block
-   *          to transform elements
-   * @return a RubyArray
-   */
+  @Override
   public <S> RubyArray<E> sortBy(TransformBlock<E, S> block) {
     Map<S, RubyArray<E>> multimap = new LinkedHashMap<S, RubyArray<E>>();
     RubyArray<E> sortedList = newRubyArray();
@@ -1556,64 +1159,41 @@ public final class LazyRubyEnumerator<E> implements Iterable<E>, Iterator<E> {
     return new LazyRubyEnumerator<E>(new TakeWhileIterable<E>(iter, block));
   }
 
-  /**
-   * Converts this RubyEnumerable to a RubyArray.
-   * 
-   * @return a RubyArray
-   */
+  @Override
   public RubyArray<E> toA() {
     return newRubyArray(iter);
   }
 
   /**
-   * Groups elements which get the same indices among all other Lists into
-   * RubyArrays.
+   * Groups elements which get the same indices among all other Lists into a
+   * LazyRubyEnumerator.
    * 
    * @param others
-   *          Lists
-   * @return a RubyArray of RubyArrays
+   *          an array of Iterable
+   * @return a LazyRubyEnumerator
    */
-  public RubyArray<RubyArray<E>> zip(List<E>... others) {
+  public LazyRubyEnumerator<RubyArray<E>> zip(Iterable<E>... others) {
     return zip(Arrays.asList(others));
   }
 
   /**
-   * Groups elements which get the same indices among all other Lists into
-   * RubyArrays.
+   * Groups elements which get the same indices among all other Lists into a
+   * LazyRubyEnumerator.
    * 
    * @param others
-   *          List of Lists
-   * @return a RubyArray of RubyArrays
+   *          a List of Iterable
+   * @return a LazyRubyEnumerator
    */
-  public RubyArray<RubyArray<E>> zip(List<? extends List<E>> others) {
-    RubyArray<E> rubyArray = newRubyArray(iter);
-    RubyArray<RubyArray<E>> zippedRubyArray = newRubyArray();
-    for (int i = 0; i < rubyArray.size(); i++) {
-      RubyArray<E> zip = newRubyArray();
-      zip.add(rubyArray.at(i));
-      for (int j = 0; j < others.size(); j++) {
-        List<E> z = others.get(j);
-        if (i < z.size())
-          zip.add(z.get(i));
-        else
-          zip.add(null);
-      }
-      zippedRubyArray.add(zip);
-    }
-    return zippedRubyArray;
+  public LazyRubyEnumerator<RubyArray<E>>
+      zip(List<? extends Iterable<E>> others) {
+    return new LazyRubyEnumerator<RubyArray<E>>(
+        new ZipIterable<E>(iter, others));
   }
 
-  /**
-   * Groups elements which get the same indices among all other Lists into
-   * RubyArrays and yields them to the block.
-   * 
-   * @param others
-   *          List of Lists
-   * @param block
-   *          to yield zipped elements
-   */
-  public void zip(List<? extends List<E>> others, Block<RubyArray<E>> block) {
-    RubyArray<RubyArray<E>> zippedRubyArray = zip(others);
+  @Override
+  public void
+      zip(List<? extends Iterable<E>> others, Block<RubyArray<E>> block) {
+    LazyRubyEnumerator<RubyArray<E>> zippedRubyArray = zip(others);
     for (RubyArray<E> item : zippedRubyArray) {
       block.yield(item);
     }

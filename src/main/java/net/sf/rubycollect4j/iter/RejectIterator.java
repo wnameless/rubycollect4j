@@ -22,43 +22,43 @@ package net.sf.rubycollect4j.iter;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.regex.Pattern;
 
+import net.sf.rubycollect4j.block.BooleanBlock;
 import net.sf.rubycollect4j.util.PeekingIterator;
 
 /**
  * 
- * GrepIterator iterates elements which are matched by the regular expression.
+ * RejectIterator filters all elements which is true returned by the block.
  * 
  * @param <E>
  *          the type of the elements
  */
-public final class GrepIterator<E> implements Iterator<E> {
+public final class RejectIterator<E> implements Iterator<E> {
 
   private final PeekingIterator<E> pIter;
-  private final Pattern pattern;
+  private final BooleanBlock<E> block;
   private boolean isRemovable = false;
 
   /**
-   * Creates a GrepIterator.
+   * Creates a FindAllIterators.
    * 
    * @param iter
    *          an Iterator
-   * @param regex
-   *          regular expression
+   * @param block
+   *          to check elements
    * @throws NullPointerException
-   *           if iter or regex is null
+   *           if iter or block is null
    */
-  public GrepIterator(Iterator<E> iter, String regex) {
-    if (iter == null || regex == null)
+  public RejectIterator(Iterator<E> iter, BooleanBlock<E> block) {
+    if (iter == null || block == null)
       throw new NullPointerException();
 
     pIter = new PeekingIterator<E>(iter);
-    pattern = Pattern.compile(regex);
+    this.block = block;
   }
 
   private void advanceCursor() {
-    while (pIter.hasNext() && !pattern.matcher(pIter.peek().toString()).find()) {
+    while (pIter.hasNext() && block.yield(pIter.peek())) {
       pIter.next();
     }
   }
