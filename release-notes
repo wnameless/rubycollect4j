@@ -123,3 +123,8 @@ Version 1.4.2
 * Changed all Iterable<ComparableEntry<K, V>> to Iterable<Entry<K, V>> 
 
 * Changed all Iterator<ComparableEntry<K, V>> to Iterator<Entry<K, V>> 
+
+
+Version 1.5.0
+
++ Implements RubyEnumerable#lazy
