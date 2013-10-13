@@ -1,3 +1,23 @@
+/**
+ *
+ * @author Wei-Ming Wu
+ *
+ *
+ * Copyright 2013 Wei-Ming Wu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ *
+ */
 package net.sf.rubycollect4j;
 
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
@@ -45,14 +65,34 @@ import net.sf.rubycollect4j.iter.TransformIterable;
 import net.sf.rubycollect4j.iter.ZipIterable;
 import net.sf.rubycollect4j.util.PeekingIterator;
 
+/**
+ * 
+ * LazyRubyEnumerator implements most of the methods refer to the
+ * Enumerator::Lazy of Ruby language. LazyRubyEnumerator is both Iterable and
+ * Iterator and it's also a peeking iterator.
+ * 
+ * @param <E>
+ *          the type of the elements
+ */
 public final class LazyRubyEnumerator<E> implements
     RubyEnumerableEagerMethods<E>, Iterable<E>, Iterator<E> {
 
   private final Iterable<E> iter;
   private PeekingIterator<E> pIterator;
 
-  public LazyRubyEnumerator(Iterable<E> iter) {
-    this.iter = iter;
+  /**
+   * Creates a LazyRubyEnumerator by given Iterable.
+   * 
+   * @param iterable
+   *          an Iterable
+   * @throws NullPointerException
+   *           if iterable is null
+   */
+  public LazyRubyEnumerator(Iterable<E> iterable) {
+    if (iterable == null)
+      throw new NullPointerException();
+
+    iter = iterable;
     pIterator = new PeekingIterator<E>(iter.iterator());
   }
 

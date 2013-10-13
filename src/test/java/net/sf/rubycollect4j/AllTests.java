@@ -75,10 +75,10 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ RubyArrayTest.class, RubyCollectionsTest.class,
-    RubyDateTest.class, RubyDirTest.class, RubyEnumerableTest.class,
-    RubyEnumeratorTest.class, RubyFileTest.class, RubyHashTest.class,
-    RubyIOTest.class, RubyKernelTest.class, RubyRangeTest.class,
-    DateSuccessorTest.class, DoubleSuccessorTest.class,
+    RubyDateTest.class, RubyDirTest.class, LazyRubyEnumeratorTest.class,
+    RubyEnumerableTest.class, RubyEnumeratorTest.class, RubyFileTest.class,
+    RubyHashTest.class, RubyIOTest.class, RubyKernelTest.class,
+    RubyRangeTest.class, DateSuccessorTest.class, DoubleSuccessorTest.class,
     IntegerSuccessorTest.class, LongSuccessorTest.class,
     StringSuccessorTest.class, LinkedIdentityMapTest.class, ListSetTest.class,
     ChunkIterableTest.class, ChunkIteratorTest.class,
