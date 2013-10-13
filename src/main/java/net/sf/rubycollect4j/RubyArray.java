@@ -34,7 +34,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 
 import javax.xml.bind.TypeConstraintException;
@@ -64,7 +63,6 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
 
   private List<E> list;
   private boolean isFrozen = false;
-  private final Random rand = new Random();
 
   @Override
   protected Iterable<E> getIterable() {
@@ -1311,7 +1309,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    */
   public E sample() {
     if (list.size() > 0)
-      return list.get(rand.nextInt(list.size()));
+      return list.get((int) Math.random() * list.size());
     else
       return null;
   }
@@ -1336,7 +1334,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
     }
     List<E> samples = new ArrayList<E>();
     while (samples.size() < list.size() && samples.size() < n) {
-      samples.add(list.get(indices.remove(rand.nextInt(indices.size()))));
+      samples
+          .add(list.get(indices.remove((int) Math.random() * indices.size())));
     }
     return newRubyArray(samples);
   }
