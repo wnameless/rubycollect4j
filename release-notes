@@ -127,4 +127,6 @@ Version 1.4.2
 
 Version 1.5.0
 
-+ Implements RubyEnumerable#lazy
++ Implemented RubyEnumerable#lazy
+
++ Added freeze() & frozen?() to RubyArray & RubyHash
