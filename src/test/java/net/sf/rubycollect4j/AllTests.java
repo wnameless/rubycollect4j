@@ -48,6 +48,8 @@ import net.sf.rubycollect4j.iter.FindAllIterableTest;
 import net.sf.rubycollect4j.iter.FindAllIteratorTest;
 import net.sf.rubycollect4j.iter.FlattenIterableTest;
 import net.sf.rubycollect4j.iter.FlattenIteratorTest;
+import net.sf.rubycollect4j.iter.GrepIterableTest;
+import net.sf.rubycollect4j.iter.GrepIteratorTest;
 import net.sf.rubycollect4j.iter.OrderedEntrySetIterableTest;
 import net.sf.rubycollect4j.iter.OrderedEntrySetIteratorTest;
 import net.sf.rubycollect4j.iter.PermutationIterableTest;
@@ -103,6 +105,7 @@ import org.junit.runners.Suite.SuiteClasses;
     EachWithIndexIteratorTest.class, EachWithObjectIterableTest.class,
     FindAllIterableTest.class, FindAllIteratorTest.class,
     FlattenIterableTest.class, FlattenIteratorTest.class,
+    GrepIterableTest.class, GrepIteratorTest.class,
     EachWithObjectIteratorTest.class, OrderedEntrySetIterableTest.class,
     OrderedEntrySetIteratorTest.class, PermutationIterableTest.class,
     PermutationIteratorTest.class, RangeIterableTest.class,
