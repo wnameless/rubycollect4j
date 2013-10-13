@@ -40,14 +40,14 @@ public final class FlattenIterable<E, S> implements Iterable<S> {
   private final TransformBlock<E, RubyArray<S>> block;
 
   /**
-   * Creates an FlattenIterable.
+   * Creates a FlattenIterable.
    * 
    * @param iter
    *          an Iterable
    * @param block
    *          to transform elements
    * @throws NullPointerException
-   *           if iter is null
+   *           if iter or block is null
    */
   public FlattenIterable(Iterable<E> iter, TransformBlock<E, RubyArray<S>> block) {
     if (iter == null || block == null)

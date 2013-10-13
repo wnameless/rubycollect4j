@@ -44,12 +44,12 @@ public final class FlattenIterator<E, S> implements Iterator<S> {
   private final RubyArray<S> buffer = newRubyArray();
 
   /**
-   * Creates an FlattenIterator.
+   * Creates a FlattenIterator.
    * 
    * @param iter
    *          an Iterator
    * @throws NullPointerException
-   *           if iter is null
+   *           if iter or block is null
    */
   public FlattenIterator(Iterator<E> iter, TransformBlock<E, RubyArray<S>> block) {
     if (iter == null || block == null)

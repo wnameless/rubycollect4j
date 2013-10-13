@@ -23,52 +23,53 @@ package net.sf.rubycollect4j.iter;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import net.sf.rubycollect4j.block.BooleanBlock;
+import net.sf.rubycollect4j.RubyArray;
+import net.sf.rubycollect4j.block.TransformBlock;
 
 import org.junit.Before;
 import org.junit.Test;
 
-public class DropWhileIterableTest {
+public class FlattenIterableTest {
 
-  private DropWhileIterable<Integer> iter;
-  private BooleanBlock<Integer> block;
+  private FlattenIterable<Integer, Double> iter;
+  private TransformBlock<Integer, RubyArray<Double>> block;
 
   @Before
   public void setUp() throws Exception {
-    block = new BooleanBlock<Integer>() {
+    block = new TransformBlock<Integer, RubyArray<Double>>() {
 
       @Override
-      public boolean yield(Integer item) {
-        return item < 3;
+      public RubyArray<Double> yield(Integer item) {
+        return ra(item.doubleValue(), item.doubleValue());
       }
 
     };
-    iter = new DropWhileIterable<Integer>(ra(1, 2, 3, 4, 5), block);
+    iter = new FlattenIterable<Integer, Double>(ra(1, 2, 3), block);
   }
 
   @Test
   public void testConstructor() {
-    assertTrue(iter instanceof DropWhileIterable);
+    assertTrue(iter instanceof FlattenIterable);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException1() {
-    new DropWhileIterable<Integer>(null, block);
+    new FlattenIterable<Integer, Double>(null, block);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testConstructorException2() {
-    new DropWhileIterable<Integer>(ra(1, 2, 3, 4, 5), null);
+    new FlattenIterable<Integer, Double>(ra(1, 2, 3), null);
   }
 
   @Test
   public void testIterator() {
-    assertTrue(iter.iterator() instanceof DropWhileIterator);
+    assertTrue(iter.iterator() instanceof FlattenIterator);
   }
 
   @Test
   public void testToString() {
-    assertEquals("[3, 4, 5]", iter.toString());
+    assertEquals("[1.0, 1.0, 2.0, 2.0, 3.0, 3.0]", iter.toString());
   }
 
 }

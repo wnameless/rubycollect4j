@@ -25,47 +25,45 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.NoSuchElementException;
 
-import net.sf.rubycollect4j.block.BooleanBlock;
+import net.sf.rubycollect4j.RubyArray;
+import net.sf.rubycollect4j.block.TransformBlock;
 
 import org.junit.Before;
 import org.junit.Test;
 
-public class DropWhileIteratorTest {
+public class FlattenIteratorTest {
 
-  private DropWhileIterator<Integer> iter;
-  private List<Integer> list;
-  private BooleanBlock<Integer> block;
+  private FlattenIterator<Integer, Double> iter;
+  private TransformBlock<Integer, RubyArray<Double>> block;
 
   @Before
   public void setUp() throws Exception {
-    list = ra(1, 2, 3, 4, 5);
-    block = new BooleanBlock<Integer>() {
+    block = new TransformBlock<Integer, RubyArray<Double>>() {
 
       @Override
-      public boolean yield(Integer item) {
-        return item < 3;
+      public RubyArray<Double> yield(Integer item) {
+        return ra(item.doubleValue(), item.doubleValue());
       }
 
     };
-    iter = new DropWhileIterator<Integer>(list.iterator(), block);
+    iter = new FlattenIterator<Integer, Double>(ra(1, 2, 3).iterator(), block);
   }
 
   @Test
   public void testConstructor() {
-    assertTrue(iter instanceof DropWhileIterator);
+    assertTrue(iter instanceof FlattenIterator);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException1() {
-    new DropWhileIterator<Integer>(list.iterator(), null);
+    new FlattenIterator<Integer, Double>(null, block);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void testConstructorException2() {
-    new DropWhileIterator<Integer>(null, block);
+    new FlattenIterator<Integer, Double>(ra(1, 2, 3).iterator(), null);
   }
 
   @Test
@@ -79,24 +77,31 @@ public class DropWhileIteratorTest {
 
   @Test
   public void testNext() {
-    assertEquals(Integer.valueOf(3), iter.next());
-    assertEquals(Integer.valueOf(4), iter.next());
-    assertEquals(Integer.valueOf(5), iter.next());
-    assertFalse(iter.hasNext());
-    iter =
-        new DropWhileIterator<Integer>(new ArrayList<Integer>().iterator(),
-            block);
+    assertEquals(Double.valueOf(1.0), iter.next());
+    assertEquals(Double.valueOf(1.0), iter.next());
+    assertEquals(Double.valueOf(2.0), iter.next());
+    assertEquals(Double.valueOf(2.0), iter.next());
+    assertEquals(Double.valueOf(3.0), iter.next());
+    assertEquals(Double.valueOf(3.0), iter.next());
     assertFalse(iter.hasNext());
   }
 
   @Test
-  public void testRemove() {
-    iter.next();
-    iter.remove();
-    assertEquals(ra(1, 2, 4, 5), list);
+  public void testNextWithNullValue() {
+    iter =
+        new FlattenIterator<Integer, Double>(ra(1, null, 3).iterator(), block);
+    assertEquals(ra(1.0, 1.0, null, 3.0, 3.0), ra(iter));
   }
 
-  @Test(expected = IllegalStateException.class)
+  @Test(expected = NoSuchElementException.class)
+  public void testNextException() {
+    while (iter.hasNext()) {
+      iter.next();
+    }
+    iter.next();
+  }
+
+  @Test(expected = UnsupportedOperationException.class)
   public void testRemoveException() {
     iter.remove();
   }
