@@ -30,6 +30,8 @@ import net.sf.rubycollect4j.iter.CycleIterableTest;
 import net.sf.rubycollect4j.iter.CycleIteratorTest;
 import net.sf.rubycollect4j.iter.DropIterableTest;
 import net.sf.rubycollect4j.iter.DropIteratorTest;
+import net.sf.rubycollect4j.iter.DropWhileIterableTest;
+import net.sf.rubycollect4j.iter.DropWhileIteratorTest;
 import net.sf.rubycollect4j.iter.EachConsIterableTest;
 import net.sf.rubycollect4j.iter.EachConsIteratorTest;
 import net.sf.rubycollect4j.iter.EachIndexIterableTest;
@@ -90,7 +92,8 @@ import org.junit.runners.Suite.SuiteClasses;
     ChunkIterableTest.class, ChunkIteratorTest.class,
     CombinationIterableTest.class, CombinationIteratorTest.class,
     CycleIterableTest.class, CycleIteratorTest.class, DropIterableTest.class,
-    DropIteratorTest.class, EachConsIterableTest.class,
+    DropIteratorTest.class, DropWhileIterableTest.class,
+    DropWhileIteratorTest.class, EachConsIterableTest.class,
     EachConsIteratorTest.class, EachIndexIterableTest.class,
     EachIndexIteratorTest.class, EachLineIterableTest.class,
     EachLineIteratorTest.class, EachSliceIterableTest.class,
