@@ -28,6 +28,7 @@ import static net.sf.rubycollect4j.RubyCollections.rh;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -74,7 +75,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testGetIterable() {
-    assertTrue(iter == re.getIterable());
+    assertSame(iter, re.getIterable());
   }
 
   @Test
@@ -84,6 +85,7 @@ public class RubyEnumerableTest {
     assertEquals(true, re.allʔ());
     re = newRubyEnumerator(Arrays.asList(1, 2, null));
     assertEquals(false, re.allʔ());
+    assertEquals(false, ra(false).allʔ());
   }
 
   @Test

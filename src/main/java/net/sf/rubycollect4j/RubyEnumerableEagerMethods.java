@@ -13,9 +13,9 @@ import net.sf.rubycollect4j.block.WithObjectBlock;
 public interface RubyEnumerableEagerMethods<E> {
 
   /**
-   * Checks if null included.
+   * Checks if null or false included.
    * 
-   * @return true if null is found, false otherwise
+   * @return true if null or false is found, false otherwise
    */
   public boolean allʔ();
 
