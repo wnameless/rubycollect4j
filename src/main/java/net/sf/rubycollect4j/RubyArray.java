@@ -62,7 +62,8 @@ import net.sf.rubycollect4j.packer.Packer;
 public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
     Comparable<RubyArray<E>> {
 
-  private final List<E> list;
+  private List<E> list;
+  private boolean isFrozen = false;
   private final Random rand = new Random();
 
   @Override
@@ -623,6 +624,28 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
       }
     }
     return rubyArray;
+  }
+
+  /**
+   * Freezes this RubyArray.
+   * 
+   * @return this RubyArray
+   */
+  public RubyArray<E> freeze() {
+    if (!isFrozen) {
+      list = Collections.unmodifiableList(list);
+      isFrozen = true;
+    }
+    return this;
+  }
+
+  /**
+   * Checks if this RubyArray is frozen.
+   * 
+   * @return true if this RubyArray is frozen, false otherwise
+   */
+  public boolean frozenʔ() {
+    return isFrozen;
   }
 
   /**

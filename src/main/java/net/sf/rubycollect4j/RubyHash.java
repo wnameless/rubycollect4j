@@ -24,6 +24,7 @@ import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -58,6 +59,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
 
   private Map<K, V> map;
   private V defaultValue;
+  private boolean isFrozen = false;
 
   @Override
   protected Iterable<Entry<K, V>> getIterable() {
@@ -332,6 +334,28 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    */
   public RubyArray<Entry<K, V>> flatten() {
     return newRubyArray(new ComparableEntryIterable<K, V>(map.entrySet()));
+  }
+
+  /**
+   * Freezes this RubyHash.
+   * 
+   * @return this RubyHash
+   */
+  public RubyHash<K, V> freeze() {
+    if (!isFrozen) {
+      map = Collections.unmodifiableMap(map);
+      isFrozen = true;
+    }
+    return this;
+  }
+
+  /**
+   * Checks if this RubyHash is frozen.
+   * 
+   * @return true if this RubyHash is frozen, false otherwise
+   */
+  public boolean frozenʔ() {
+    return isFrozen;
   }
 
   /**

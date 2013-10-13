@@ -683,6 +683,11 @@ public class RubyEnumerableTest {
   }
 
   @Test
+  public void testLazy() {
+    assertTrue(re.lazy() instanceof LazyRubyEnumerator);
+  }
+
+  @Test
   public void testMap() {
     assertEquals(RubyEnumerator.class, re.map().getClass());
     assertEquals(ra(1, 2, 3, 4), re.map().toA());

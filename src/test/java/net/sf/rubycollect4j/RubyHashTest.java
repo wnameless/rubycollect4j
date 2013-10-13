@@ -247,6 +247,20 @@ public class RubyHashTest {
     assertEquals(ra(hp(1, 2), hp(3, 4), hp(5, 6)), rh.flatten());
   }
 
+  @Test(expected = UnsupportedOperationException.class)
+  public void testFreeze() {
+    rh.freeze();
+    rh.shift();
+  }
+
+  @Test
+  public void testFrozenʔ() {
+    assertFalse(rh.frozenʔ());
+    rh.freeze();
+    rh.freeze();
+    assertTrue(rh.frozenʔ());
+  }
+
   @Test
   public void testHash() {
     assertEquals(rh.hashCode(), rh.hash());
