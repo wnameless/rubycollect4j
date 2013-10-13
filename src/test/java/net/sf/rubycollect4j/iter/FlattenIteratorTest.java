@@ -61,7 +61,7 @@ public class FlattenIteratorTest {
     new FlattenIterator<Integer, Double>(null, block);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
     new FlattenIterator<Integer, Double>(ra(1, 2, 3).iterator(), null);
   }

@@ -56,7 +56,7 @@ public class DropWhileIterableTest {
     new DropWhileIterable<Integer>(null, block);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
     new DropWhileIterable<Integer>(ra(1, 2, 3, 4, 5), null);
   }

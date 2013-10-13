@@ -57,7 +57,7 @@ public class FlattenIterableTest {
     new FlattenIterable<Integer, Double>(null, block);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
     new FlattenIterable<Integer, Double>(ra(1, 2, 3), null);
   }

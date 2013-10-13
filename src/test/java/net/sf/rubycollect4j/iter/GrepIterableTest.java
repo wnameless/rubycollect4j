@@ -43,7 +43,7 @@ public class GrepIterableTest {
     assertTrue(iter instanceof GrepIterable);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test(expected = NullPointerException.class)
   public void testConstructorException1() {
     new GrepIterable<Integer>(ra(1, 2, 3), null);
   }
