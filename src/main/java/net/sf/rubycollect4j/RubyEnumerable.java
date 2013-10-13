@@ -54,7 +54,7 @@ import net.sf.rubycollect4j.iter.SliceBeforeIterable;
  *          the type of the elements
  */
 public abstract class RubyEnumerable<E> implements
-    RubyEnumerableEagerMethods<E>, Iterable<E> {
+    RubyEnumerableBase<E>, Iterable<E> {
 
   /**
    * Returns the Iterable of this RubyEnumerable.

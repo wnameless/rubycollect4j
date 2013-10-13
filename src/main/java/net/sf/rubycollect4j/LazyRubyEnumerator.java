@@ -75,7 +75,7 @@ import net.sf.rubycollect4j.util.PeekingIterator;
  *          the type of the elements
  */
 public final class LazyRubyEnumerator<E> implements
-    RubyEnumerableEagerMethods<E>, Iterable<E>, Iterator<E> {
+    RubyEnumerableBase<E>, Iterable<E>, Iterator<E> {
 
   private final Iterable<E> iter;
   private PeekingIterator<E> pIterator;
