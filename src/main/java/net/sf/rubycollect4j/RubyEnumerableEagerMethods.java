@@ -29,9 +29,9 @@ public interface RubyEnumerableEagerMethods<E> {
   public boolean allʔ(BooleanBlock<E> block);
 
   /**
-   * Checks if any not-null object included.
+   * Checks if any non-null or not-false object included.
    * 
-   * @return true if not-null object is found, false otherwise
+   * @return true if non-null or not-false object is found, false otherwise
    */
   public boolean anyʔ();
 

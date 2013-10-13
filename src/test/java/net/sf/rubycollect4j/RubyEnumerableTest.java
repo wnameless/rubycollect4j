@@ -118,6 +118,7 @@ public class RubyEnumerableTest {
     List<Integer> ints = Arrays.asList(null, null);
     re = newRubyEnumerator(ints);
     assertEquals(false, re.anyʔ());
+    assertEquals(false, ra(false).anyʔ());
   }
 
   @Test

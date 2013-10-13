@@ -117,7 +117,7 @@ public final class LazyRubyEnumerator<E> implements
   @Override
   public boolean anyʔ() {
     for (E item : iter) {
-      if (item != null)
+      if (item != null && !Boolean.FALSE.equals(item))
         return true;
     }
     return false;
