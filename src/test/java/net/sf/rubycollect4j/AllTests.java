@@ -74,6 +74,8 @@ import net.sf.rubycollect4j.iter.TakeWhileIterableTest;
 import net.sf.rubycollect4j.iter.TakeWhileIteratorTest;
 import net.sf.rubycollect4j.iter.TransformIterableTest;
 import net.sf.rubycollect4j.iter.TransformIteratorTest;
+import net.sf.rubycollect4j.iter.ZipIterableTest;
+import net.sf.rubycollect4j.iter.ZipIteratorTest;
 import net.sf.rubycollect4j.packer.ByteUtilTest;
 import net.sf.rubycollect4j.packer.DirectiveTest;
 import net.sf.rubycollect4j.packer.PackerTest;
@@ -101,6 +103,7 @@ import org.junit.runners.Suite.SuiteClasses;
     StringSuccessorTest.class, LinkedIdentityMapTest.class, ListSetTest.class,
     ChunkIterableTest.class, ChunkIteratorTest.class,
     CombinationIterableTest.class, CombinationIteratorTest.class,
+    ComparableEntryIterableTest.class, ComparableEntryIteratorTest.class,
     CycleIterableTest.class, CycleIteratorTest.class, DropIterableTest.class,
     DropIteratorTest.class, DropWhileIterableTest.class,
     DropWhileIteratorTest.class, EachConsIterableTest.class,
@@ -125,7 +128,7 @@ import org.junit.runners.Suite.SuiteClasses;
     StepIteratorTest.class, TakeIterableTest.class, TakeIteratorTest.class,
     TakeWhileIterableTest.class, TakeWhileIteratorTest.class,
     TransformIterableTest.class, TransformIteratorTest.class,
-    ByteUtilTest.class, DirectiveTest.class, PackerTest.class,
-    PeekingIteratorTest.class, ComparableEntryTest.class,
-    ComparableEntryIterableTest.class, ComparableEntryIteratorTest.class })
+    ZipIterableTest.class, ZipIteratorTest.class, ByteUtilTest.class,
+    DirectiveTest.class, PackerTest.class, PeekingIteratorTest.class,
+    ComparableEntryTest.class })
 public class AllTests {}

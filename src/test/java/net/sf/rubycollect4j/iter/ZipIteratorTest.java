@@ -22,64 +22,62 @@ package net.sf.rubycollect4j.iter;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Iterator;
 import java.util.List;
-
-import net.sf.rubycollect4j.block.TransformBlock;
 
 import org.junit.Before;
 import org.junit.Test;
 
-public class TransformIterableTest {
+public class ZipIteratorTest {
 
-  private TransformIterable<Integer, Double> iter;
-  private List<Integer> list;
+  private ZipIterator<Integer> iter;
+  private List<? extends Iterator<Integer>> others;
 
+  @SuppressWarnings("unchecked")
   @Before
   public void setUp() throws Exception {
-    list = ra(1, 2, 3, 4);
-    iter =
-        new TransformIterable<Integer, Double>(list,
-            new TransformBlock<Integer, Double>() {
-
-              @Override
-              public Double yield(Integer item) {
-                return item.doubleValue();
-              }
-            });
+    others = ra(ra(4, 5).iterator(), ra(6).iterator());
+    iter = new ZipIterator<Integer>(ra(1, 2, 3).iterator(), others);
   }
 
   @Test
   public void testConstructor() {
-    assertTrue(iter instanceof TransformIterable);
+    assertTrue(iter instanceof ZipIterator);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException1() {
-    new TransformIterable<Integer, String>(null,
-        new TransformBlock<Integer, String>() {
-
-          @Override
-          public String yield(Integer item) {
-            return item.toString();
-          }
-        });
+    new ZipIterator<Integer>(null, others);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    new TransformIterable<Integer, String>(list, null);
+    new ZipIterator<Integer>(ra(1, 2, 3).iterator(), null);
   }
 
   @Test
-  public void testIterator() {
-    assertTrue(iter.iterator() instanceof TransformIterator);
+  public void testHasNext() {
+    assertTrue(iter.hasNext());
+    while (iter.hasNext()) {
+      iter.next();
+    }
+    assertFalse(iter.hasNext());
   }
 
   @Test
-  public void testToString() {
-    assertEquals("[1.0, 2.0, 3.0, 4.0]", iter.toString());
+  public void testNext() {
+    assertEquals(ra(1, 4, 6), iter.next());
+    assertEquals(ra(2, 5, null), iter.next());
+    assertEquals(ra(3, null, null), iter.next());
+    assertFalse(iter.hasNext());
+  }
+
+  @Test(expected = UnsupportedOperationException.class)
+  public void testRemove() {
+    iter.remove();
   }
 
 }

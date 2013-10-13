@@ -44,19 +44,6 @@ public class TransformIterable<E, S> implements Iterable<S> {
    *          of any type
    * @param block
    *          to transform elements
-   */
-  public static <E, S> TransformIterable<E, S> of(Iterable<E> iterable,
-      TransformBlock<E, S> block) {
-    return new TransformIterable<E, S>(iterable, block);
-  }
-
-  /**
-   * Create a TransformIterable by given Iterable and TransformBlock.
-   * 
-   * @param iter
-   *          of any type
-   * @param block
-   *          to transform elements
    * @throws NullPointerException
    *           if iterable or block is null
    */

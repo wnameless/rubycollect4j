@@ -26,60 +26,44 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import net.sf.rubycollect4j.block.TransformBlock;
-
 import org.junit.Before;
 import org.junit.Test;
 
-public class TransformIterableTest {
+public class ZipIterableTest {
 
-  private TransformIterable<Integer, Double> iter;
-  private List<Integer> list;
+  private ZipIterable<Integer> iter;
+  private List<? extends Iterable<Integer>> others;
 
+  @SuppressWarnings("unchecked")
   @Before
   public void setUp() throws Exception {
-    list = ra(1, 2, 3, 4);
-    iter =
-        new TransformIterable<Integer, Double>(list,
-            new TransformBlock<Integer, Double>() {
-
-              @Override
-              public Double yield(Integer item) {
-                return item.doubleValue();
-              }
-            });
+    others = ra(ra(4, 5), ra(6));
+    iter = new ZipIterable<Integer>(ra(1, 2, 3), others);
   }
 
   @Test
   public void testConstructor() {
-    assertTrue(iter instanceof TransformIterable);
+    assertTrue(iter instanceof ZipIterable);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException1() {
-    new TransformIterable<Integer, String>(null,
-        new TransformBlock<Integer, String>() {
-
-          @Override
-          public String yield(Integer item) {
-            return item.toString();
-          }
-        });
+    new ZipIterable<Integer>(null, others);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    new TransformIterable<Integer, String>(list, null);
+    new ZipIterable<Integer>(ra(1, 2, 3), null);
   }
 
   @Test
   public void testIterator() {
-    assertTrue(iter.iterator() instanceof TransformIterator);
+    assertTrue(iter.iterator() instanceof ZipIterator);
   }
 
   @Test
   public void testToString() {
-    assertEquals("[1.0, 2.0, 3.0, 4.0]", iter.toString());
+    assertEquals("[[1, 4, 6], [2, 5, null], [3, null, null]]", iter.toString());
   }
 
 }
