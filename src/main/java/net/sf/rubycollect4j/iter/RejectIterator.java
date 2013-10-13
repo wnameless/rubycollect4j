@@ -28,7 +28,7 @@ import net.sf.rubycollect4j.util.PeekingIterator;
 
 /**
  * 
- * RejectIterator filters all elements which is true returned by the block.
+ * RejectIterator filters all elements which are true returned by the block.
  * 
  * @param <E>
  *          the type of the elements
@@ -40,7 +40,7 @@ public final class RejectIterator<E> implements Iterator<E> {
   private boolean isRemovable = false;
 
   /**
-   * Creates a FindAllIterators.
+   * Creates a RejectIterator.
    * 
    * @param iter
    *          an Iterator

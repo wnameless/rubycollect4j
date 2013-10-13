@@ -33,9 +33,9 @@ import net.sf.rubycollect4j.block.BooleanBlock;
 import org.junit.Before;
 import org.junit.Test;
 
-public class FindAllIteratorTest {
+public class RejectIteratorTest {
 
-  private FindAllIterator<Integer> iter;
+  private RejectIterator<Integer> iter;
   private List<Integer> list;
   private BooleanBlock<Integer> block;
 
@@ -46,26 +46,26 @@ public class FindAllIteratorTest {
 
       @Override
       public boolean yield(Integer item) {
-        return item % 2 == 1;
+        return item % 2 == 0;
       }
 
     };
-    iter = new FindAllIterator<Integer>(list.iterator(), block);
+    iter = new RejectIterator<Integer>(list.iterator(), block);
   }
 
   @Test
   public void testConstructor() {
-    assertTrue(iter instanceof FindAllIterator);
+    assertTrue(iter instanceof RejectIterator);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException1() {
-    new FindAllIterator<Integer>(null, block);
+    new RejectIterator<Integer>(null, block);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    new FindAllIterator<Integer>(ra(1, 2, 3).iterator(), null);
+    new RejectIterator<Integer>(ra(1, 2, 3).iterator(), null);
   }
 
   @Test

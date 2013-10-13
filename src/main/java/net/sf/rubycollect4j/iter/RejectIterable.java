@@ -26,7 +26,7 @@ import net.sf.rubycollect4j.block.BooleanBlock;
 
 /**
  * 
- * RejectIterable filters all elements which is true returned by the block.
+ * RejectIterable filters all elements which are true returned by the block.
  * 
  * @param <E>
  *          the type of the elements

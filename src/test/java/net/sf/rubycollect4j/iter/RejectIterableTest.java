@@ -22,86 +22,53 @@ package net.sf.rubycollect4j.iter;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
-import java.util.List;
-import java.util.NoSuchElementException;
-
 import net.sf.rubycollect4j.block.BooleanBlock;
 
 import org.junit.Before;
 import org.junit.Test;
 
-public class FindAllIteratorTest {
+public class RejectIterableTest {
 
-  private FindAllIterator<Integer> iter;
-  private List<Integer> list;
+  private RejectIterable<Integer> iter;
   private BooleanBlock<Integer> block;
 
   @Before
   public void setUp() throws Exception {
-    list = ra(1, 2, 3);
     block = new BooleanBlock<Integer>() {
 
       @Override
       public boolean yield(Integer item) {
-        return item % 2 == 1;
+        return item % 2 == 0;
       }
 
     };
-    iter = new FindAllIterator<Integer>(list.iterator(), block);
+    iter = new RejectIterable<Integer>(ra(1, 2, 3), block);
   }
 
   @Test
   public void testConstructor() {
-    assertTrue(iter instanceof FindAllIterator);
+    assertTrue(iter instanceof RejectIterable);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException1() {
-    new FindAllIterator<Integer>(null, block);
+    new RejectIterable<Integer>(null, block);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    new FindAllIterator<Integer>(ra(1, 2, 3).iterator(), null);
+    new RejectIterable<Integer>(ra(1, 2, 3), null);
   }
 
   @Test
-  public void testHasNext() {
-    assertTrue(iter.hasNext());
-    while (iter.hasNext()) {
-      iter.next();
-    }
-    assertFalse(iter.hasNext());
+  public void testIterator() {
+    assertTrue(iter.iterator() instanceof RejectIterator);
   }
 
   @Test
-  public void testNext() {
-    assertEquals(Integer.valueOf(1), iter.next());
-    assertEquals(Integer.valueOf(3), iter.next());
-    assertFalse(iter.hasNext());
-  }
-
-  @Test(expected = NoSuchElementException.class)
-  public void testNextException() {
-    while (iter.hasNext()) {
-      iter.next();
-    }
-    iter.next();
-  }
-
-  @Test
-  public void testRemove() {
-    iter.next();
-    iter.remove();
-    assertEquals(ra(2, 3), list);
-  }
-
-  @Test(expected = IllegalStateException.class)
-  public void testRemoveException() {
-    iter.remove();
+  public void testToString() {
+    assertEquals("[1, 3]", iter.toString());
   }
 
 }

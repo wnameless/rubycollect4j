@@ -28,7 +28,7 @@ import net.sf.rubycollect4j.util.PeekingIterator;
 
 /**
  * 
- * FindAllIterator finds all elements which is true returned by the block.
+ * FindAllIterator finds all elements which are true returned by the block.
  * 
  * @param <E>
  *          the type of the elements
@@ -40,7 +40,7 @@ public final class FindAllIterator<E> implements Iterator<E> {
   private boolean isRemovable = false;
 
   /**
-   * Creates a FindAllIterators.
+   * Creates a FindAllIterator.
    * 
    * @param iter
    *          an Iterator
