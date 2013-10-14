@@ -64,6 +64,8 @@ import net.sf.rubycollect4j.iter.RepeatedCombinationIterableTest;
 import net.sf.rubycollect4j.iter.RepeatedCombinationIteratorTest;
 import net.sf.rubycollect4j.iter.RepeatedPermutationIterableTest;
 import net.sf.rubycollect4j.iter.RepeatedPermutationIteratorTest;
+import net.sf.rubycollect4j.iter.ReverseEachIterableTest;
+import net.sf.rubycollect4j.iter.ReverseEachIteratorTest;
 import net.sf.rubycollect4j.iter.SliceBeforeIterableTest;
 import net.sf.rubycollect4j.iter.SliceBeforeIteratorTest;
 import net.sf.rubycollect4j.iter.StepIterableTest;
@@ -123,7 +125,8 @@ import org.junit.runners.Suite.SuiteClasses;
     ProductIteratorTest.class, RepeatedCombinationIterableTest.class,
     RepeatedCombinationIteratorTest.class,
     RepeatedPermutationIterableTest.class,
-    RepeatedPermutationIteratorTest.class, SliceBeforeIterableTest.class,
+    RepeatedPermutationIteratorTest.class, ReverseEachIterableTest.class,
+    ReverseEachIteratorTest.class, SliceBeforeIterableTest.class,
     SliceBeforeIteratorTest.class, StepIterableTest.class,
     StepIteratorTest.class, TakeIterableTest.class, TakeIteratorTest.class,
     TakeWhileIterableTest.class, TakeWhileIteratorTest.class,

@@ -24,7 +24,6 @@ import static net.sf.rubycollect4j.RubyCollections.newLazyRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -44,6 +43,7 @@ import net.sf.rubycollect4j.iter.EachConsIterable;
 import net.sf.rubycollect4j.iter.EachSliceIterable;
 import net.sf.rubycollect4j.iter.EachWithIndexIterable;
 import net.sf.rubycollect4j.iter.EachWithObjectIterable;
+import net.sf.rubycollect4j.iter.ReverseEachIterable;
 import net.sf.rubycollect4j.iter.SliceBeforeIterable;
 
 /**
@@ -697,15 +697,11 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
    * @return a RubyEnumerator
    */
   public RubyEnumerator<E> reverseEach() {
-    List<E> list = new ArrayList<E>();
-    for (E item : getIterable()) {
-      list.add(0, item);
-    }
-    return newRubyEnumerator(list);
+    return newRubyEnumerator(new ReverseEachIterable<E>(getIterable()));
   }
 
   /**
-   * Iterates each element reversed by given block.
+   * Iterates each element reversely by given block.
    * 
    * @param block
    *          to yield each element

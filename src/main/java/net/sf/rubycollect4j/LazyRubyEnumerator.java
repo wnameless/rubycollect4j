@@ -58,6 +58,7 @@ import net.sf.rubycollect4j.iter.FindAllIterable;
 import net.sf.rubycollect4j.iter.FlattenIterable;
 import net.sf.rubycollect4j.iter.GrepIterable;
 import net.sf.rubycollect4j.iter.RejectIterable;
+import net.sf.rubycollect4j.iter.ReverseEachIterable;
 import net.sf.rubycollect4j.iter.SliceBeforeIterable;
 import net.sf.rubycollect4j.iter.TakeIterable;
 import net.sf.rubycollect4j.iter.TakeWhileIterable;
@@ -987,16 +988,11 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
    * @return a LazyRubyEnumerator
    */
   public LazyRubyEnumerator<E> reverseEach() {
-    List<E> list = new ArrayList<E>();
-    for (E item : iter) {
-      list.add(0, item);
-    }
-    return new LazyRubyEnumerator<E>(list);
+    return new LazyRubyEnumerator<E>(new ReverseEachIterable<E>(iter));
   }
 
   /**
-   * Iterates each element reversed by given block. Lazy loading by a
-   * LazyRubyEnumerator.
+   * Iterates each element reversely by given block.
    * 
    * @param block
    *          to yield each element
