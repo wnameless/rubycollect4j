@@ -590,7 +590,7 @@ public interface RubyEnumerableBase<E> {
   public RubyArray<E> toA();
 
   /**
-   * Groups elements which get the same indices among all other Lists into
+   * Groups elements which get the same indices among all other Iterables into
    * RubyArrays and yields them to the block.
    * 
    * @param others

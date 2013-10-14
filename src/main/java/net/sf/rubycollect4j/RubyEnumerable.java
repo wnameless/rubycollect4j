@@ -154,7 +154,7 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Generates a sequence from start element to end element and so on
+   * Generates a sequence from first element to last element and so on
    * infinitely.
    * 
    * @return a RubyEnumerator
@@ -164,7 +164,7 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Generates a sequence from start element to end element, repeat n times.
+   * Generates a sequence from first element to last element, repeat n times.
    * 
    * @param n
    *          times to repeat
@@ -199,7 +199,7 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Drops the first n elements and store rest to a RubyArray.
+   * Drops the first n elements and stores the rest into a RubyArray.
    * 
    * @param n
    *          number of elements to drop
@@ -320,7 +320,7 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Iterates elements with the Object S.
+   * Iterates elements with the object S.
    * 
    * @param <S>
    *          the type of transformed elements
@@ -828,8 +828,8 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Stores element into a RubyArray from beginning until the result returned by
-   * the block is false.
+   * Stores elements into a RubyArray until a element gets false returned by the
+   * block.
    * 
    * @param block
    *          to filter elements
@@ -845,7 +845,7 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Groups elements which get the same indices among all other Lists into
+   * Groups elements which get the same indices among all other Iterables into
    * RubyArrays.
    * 
    * @param others
@@ -857,7 +857,7 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Groups elements which get the same indices among all other Lists into
+   * Groups elements which get the same indices among all other Iterables into
    * RubyArrays.
    * 
    * @param others

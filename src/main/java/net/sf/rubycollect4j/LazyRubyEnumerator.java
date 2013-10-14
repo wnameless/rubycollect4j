@@ -135,7 +135,8 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
   /**
    * Chunks elements to entries. Keys of entries are the result returned by the
    * block. Values of entries are RubyArrays of elements which get the same
-   * result returned by the block and aside to each other.
+   * result returned by the block and aside to each other. Lazy loading by a
+   * LazyRubyEnumerator.
    * 
    * @param <S>
    *          the type of transformed elements
@@ -150,16 +151,7 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Returns a RubyEnumerator of this RubyEnumerable.
-   * 
-   * @return a LazyRubyEnumerator
-   */
-  public LazyRubyEnumerator<E> collect() {
-    return new LazyRubyEnumerator<E>(iter);
-  }
-
-  /**
-   * Transforms each element by the block lazily to a LazyRubyEnumerator.
+   * Transforms each element by the block. Lazy loading by a LazyRubyEnumerator.
    * 
    * @param <S>
    *          the type of transformed elements
@@ -172,7 +164,8 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Turns each element into a RubyArray and then flattens it.
+   * Turns each element into a RubyArray and then flattens it. Lazy loading by a
+   * LazyRubyEnumerator.
    * 
    * @param <S>
    *          the type of transformed elements
@@ -206,8 +199,8 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Generates a sequence from start element to end element and so on
-   * infinitely.
+   * Generates a sequence from first element to last element and so on
+   * infinitely. Lazy loading by a LazyRubyEnumerator.
    * 
    * @return a LazyRubyEnumerator
    */
@@ -216,7 +209,8 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Generates a sequence from start element to end element, repeat n times.
+   * Generates a sequence from first element to last element, repeats n times.
+   * Lazy loading by a LazyRubyEnumerator.
    * 
    * @param n
    *          times to repeat
@@ -263,11 +257,11 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Drops the first n elements and store rest to a RubyArray.
+   * Drops the first n elements. Lazy loading by a LazyRubyEnumerator.
    * 
    * @param n
    *          number of elements to drop
-   * @return a RubyArray
+   * @return a LazyRubyEnumerator
    */
   public LazyRubyEnumerator<E> drop(int n) {
     return new LazyRubyEnumerator<E>(new DropIterable<E>(iter, n));
@@ -275,7 +269,7 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
 
   /**
    * Drops the first n elements until a element gets false returned by the
-   * block.
+   * block. Lazy loading by a LazyRubyEnumerator.
    * 
    * @param block
    *          to define which elements to be dropped
@@ -286,7 +280,7 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Returns a LazyRubyEnumerator which is self.
+   * Returns a LazyRubyEnumerator.
    * 
    * @return this LazyRubyEnumerator
    */
@@ -299,7 +293,6 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
    * 
    * @param block
    *          to yield each element
-   * @return this LazyRubyEnumerator
    */
   public void each(Block<E> block) {
     for (E item : iter) {
@@ -309,7 +302,7 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
 
   /**
    * Iterates each element and stores the element with n - 1 consecutive
-   * elements into a RubyArray.
+   * elements into a RubyArray. Lazy loading by a LazyRubyEnumerator.
    * 
    * @param n
    *          number of consecutive elements
@@ -330,10 +323,10 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
   /**
    * Returns a LazyRubyEnumerator.
    * 
-   * @return a LazyRubyEnumerator
+   * @return this LazyRubyEnumerator
    */
   public LazyRubyEnumerator<E> eachEntry() {
-    return new LazyRubyEnumerator<E>(iter);
+    return this;
   }
 
   /**
@@ -351,7 +344,8 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Slices elements into RubyArrays with length n.
+   * Slices elements into RubyArrays with length n. Lazy loading by a
+   * LazyRubyEnumerator.
    * 
    * @param n
    *          size of each slice
@@ -370,9 +364,10 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Iterates elements with their indices by Entry.
+   * Iterates elements with their indices by Entry. Lazy loading by a
+   * LazyRubyEnumerator.
    * 
-   * @return a RubyEnumerator
+   * @return a LazyRubyEnumerator
    */
   public LazyRubyEnumerator<Entry<E, Integer>> eachWithIndex() {
     return new LazyRubyEnumerator<Entry<E, Integer>>(
@@ -398,7 +393,7 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Iterates elements with the Object S.
+   * Iterates elements with the object S. Lazy loading by a LazyRubyEnumerator.
    * 
    * @param <S>
    *          the type of transformed elements
@@ -439,7 +434,8 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Finds all elements which are true returned by the block.
+   * Finds all elements which are true returned by the block. Lazy loading by a
+   * LazyRubyEnumerator.
    * 
    * @param block
    *          to filter elements
@@ -452,10 +448,10 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
   /**
    * Returns a LazyRubyEnumerator.
    * 
-   * @return a LazyRubyEnumerator
+   * @return this LazyRubyEnumerator
    */
   public LazyRubyEnumerator<E> findIndex() {
-    return new LazyRubyEnumerator<E>(iter);
+    return this;
   }
 
   @Override
@@ -520,7 +516,8 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Finds all elements which are matched by the regular expression.
+   * Finds all elements which are matched by the regular expression. Lazy
+   * loading by a LazyRubyEnumerator.
    * 
    * @param regex
    *          regular expression
@@ -532,7 +529,7 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
 
   /**
    * Finds all elements which are matched by the regular expression and
-   * transforms them.
+   * transforms them. Lazy loading by a LazyRubyEnumerator.
    * 
    * @param <S>
    *          the type of transformed elements
@@ -551,10 +548,10 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
   /**
    * Returns a LazyRubyEnumerator.
    * 
-   * @return a LazyRubyEnumerator
+   * @return this LazyRubyEnumerator
    */
   public LazyRubyEnumerator<E> groupBy() {
-    return new LazyRubyEnumerator<E>(iter);
+    return this;
   }
 
   @Override
@@ -684,19 +681,10 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
   /**
    * Returns a LazyRubyEnumerator.
    * 
-   * @return a LazyRubyEnumerator
+   * @return this LazyRubyEnumerator
    */
   public LazyRubyEnumerator<E> lazy() {
-    return new LazyRubyEnumerator<E>(iter);
-  }
-
-  /**
-   * Returns a LazyRubyEnumerator.
-   * 
-   * @return a LazyRubyEnumerator
-   */
-  public LazyRubyEnumerator<E> map() {
-    return collect();
+    return this;
   }
 
   /**
@@ -732,10 +720,10 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
   /**
    * Returns a LazyRubyEnumerator.
    * 
-   * @return a LazyRubyEnumerator
+   * @return this LazyRubyEnumerator
    */
   public LazyRubyEnumerator<E> maxBy() {
-    return new LazyRubyEnumerator<E>(iter);
+    return this;
   }
 
   @Override
@@ -793,10 +781,10 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
   /**
    * Returns a LazyRubyEnumerator.
    * 
-   * @return a LazyRubyEnumerator
+   * @return this LazyRubyEnumerator
    */
   public LazyRubyEnumerator<E> minBy() {
-    return new LazyRubyEnumerator<E>(iter);
+    return this;
   }
 
   @Override
@@ -850,10 +838,10 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
   /**
    * Returns a LazyRubyEnumerator.
    * 
-   * @return a LazyRubyEnumerator
+   * @return this LazyRubyEnumerator
    */
   public LazyRubyEnumerator<E> minmaxBy() {
-    return new LazyRubyEnumerator<E>(iter);
+    return this;
   }
 
   @Override
@@ -940,10 +928,10 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
   /**
    * Returns a LazyRubyEnumerator.
    * 
-   * @return a LazyRubyEnumerator
+   * @return this LazyRubyEnumerator
    */
   public LazyRubyEnumerator<E> partition() {
-    return new LazyRubyEnumerator<E>(iter);
+    return this;
   }
 
   @Override
@@ -981,7 +969,8 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Filters all elements which are true returned by the block.
+   * Filters all elements which are true returned by the block. Lazy loading by
+   * a LazyRubyEnumerator.
    * 
    * @param block
    *          to filter elements
@@ -992,7 +981,8 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Returns a reversed LazyRubyEnumerator.
+   * Returns a reversed LazyRubyEnumerator. Lazy loading by a
+   * LazyRubyEnumerator.
    * 
    * @return a LazyRubyEnumerator
    */
@@ -1005,7 +995,8 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Iterates each element reversed by given block.
+   * Iterates each element reversed by given block. Lazy loading by a
+   * LazyRubyEnumerator.
    * 
    * @param block
    *          to yield each element
@@ -1031,7 +1022,8 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
 
   /**
    * Groups elements into RubyArrays and the first element of each RubyArray
-   * should get true returned by the block.
+   * should get true returned by the block. Lazy loading by a
+   * LazyRubyEnumerator.
    * 
    * @param block
    *          to check where to do slice
@@ -1044,7 +1036,7 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
 
   /**
    * Groups elements into RubyArrays and the first element of each RubyArray
-   * should be matched by the regex.
+   * should be matched by the regex. Lazy loading by a LazyRubyEnumerator.
    * 
    * @param regex
    *          to check where to do slice
@@ -1106,10 +1098,10 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
   /**
    * Returns a LazyRubyEnumerator.
    * 
-   * @return a LazyRubyEnumerator
+   * @return this LazyRubyEnumerator
    */
   public LazyRubyEnumerator<E> sortBy() {
-    return new LazyRubyEnumerator<E>(iter);
+    return this;
   }
 
   @Override
@@ -1178,7 +1170,7 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Takes the first n elements.
+   * Takes the first n elements. Lazy loading by a LazyRubyEnumerator.
    * 
    * @param n
    *          number of elements
@@ -1189,7 +1181,8 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Takes elements until the result returned by the block is false.
+   * Takes elements until a element gets false returned by the block. Lazy
+   * loading by a LazyRubyEnumerator.
    * 
    * @param block
    *          to filter elements
@@ -1205,8 +1198,8 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Groups elements which get the same indices among all other Lists into a
-   * LazyRubyEnumerator.
+   * Groups elements which get the same indices among all other Iterables into
+   * RubyArrays. Lazy loading by a LazyRubyEnumerator.
    * 
    * @param others
    *          an array of Iterable
@@ -1217,8 +1210,8 @@ public final class LazyRubyEnumerator<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Groups elements which get the same indices among all other Lists into a
-   * LazyRubyEnumerator.
+   * Groups elements which get the same indices among all other Lists into
+   * RubyArrays. Lazy loading by a LazyRubyEnumerator.
    * 
    * @param others
    *          a List of Iterable

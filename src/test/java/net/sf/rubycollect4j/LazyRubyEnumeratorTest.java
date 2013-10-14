@@ -84,11 +84,6 @@ public class LazyRubyEnumeratorTest {
   }
 
   @Test
-  public void testCollect() {
-    assertTrue(lre.collect() instanceof LazyRubyEnumerator);
-  }
-
-  @Test
   public void testCycle() {
     assertTrue(lre.cycle() instanceof LazyRubyEnumerator);
   }
@@ -214,11 +209,6 @@ public class LazyRubyEnumeratorTest {
   @Test
   public void testLazy() {
     assertTrue(lre.lazy() instanceof LazyRubyEnumerator);
-  }
-
-  @Test
-  public void testMap() {
-    assertTrue(lre.map() instanceof LazyRubyEnumerator);
   }
 
   @Test
