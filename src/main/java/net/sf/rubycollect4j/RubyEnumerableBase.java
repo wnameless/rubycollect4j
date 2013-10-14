@@ -32,7 +32,8 @@ import net.sf.rubycollect4j.block.WithObjectBlock;
 
 /**
  * 
- * RubyEnumerableBase defines all eager methods of a RubyRnumerable should have.
+ * RubyEnumerableBase defines all common eager methods of a RubyRnumerable
+ * should have.
  * 
  * @param <E>
  *          the type of the elements
