@@ -29,7 +29,7 @@ import net.sf.rubycollect4j.RubyArray;
 
 /**
  * 
- * ProductIterable iterates all products by all elements of input Lists.
+ * ProductIterable iterates all products of input Lists.
  * 
  * @param <E>
  *          the type of the elements

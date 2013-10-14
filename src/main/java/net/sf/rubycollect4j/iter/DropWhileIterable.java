@@ -26,7 +26,7 @@ import net.sf.rubycollect4j.block.BooleanBlock;
 
 /**
  * 
- * DropWhileIterable drops elements until the returned value og the block is
+ * DropWhileIterable drops elements until the returned value of the block is
  * false before iterating elements.
  * 
  * @param <E>

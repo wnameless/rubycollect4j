@@ -27,7 +27,7 @@ import net.sf.rubycollect4j.RubyArray;
 
 /**
  * 
- * RepeatedPermutationIterable generates all repeated permutations of a List
+ * RepeatedPermutationIterable generates all repeated permutations into a List
  * with length n.
  * 
  * @param <E>

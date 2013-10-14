@@ -24,7 +24,7 @@ import java.util.Iterator;
 
 /**
  * 
- * ReverseEachIterable iterates elements reversely.
+ * ReverseEachIterable iterates each element reversely.
  * 
  * @param <E>
  *          the type of the elements
@@ -38,6 +38,8 @@ public final class ReverseEachIterable<E> implements Iterable<E> {
    * 
    * @param iter
    *          an Iterable
+   * @throws NullPointerException
+   *           if iter or block is null
    */
   public ReverseEachIterable(Iterable<E> iter) {
     if (iter == null)

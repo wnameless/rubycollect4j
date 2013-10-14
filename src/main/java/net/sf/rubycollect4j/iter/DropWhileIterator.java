@@ -27,7 +27,7 @@ import net.sf.rubycollect4j.util.PeekingIterator;
 
 /**
  * 
- * DropWhileIterator drops elements until the returned value og the block is
+ * DropWhileIterator drops elements until the returned value of the block is
  * false before iterating elements.
  * 
  * @param <E>

@@ -38,14 +38,14 @@ public final class TransformIterator<E, S> implements Iterator<S> {
   private final TransformBlock<E, S> block;
 
   /**
-   * Create a TransformIterator by given Iterator and TransformBlock.
+   * Create a TransformIterator.
    * 
    * @param iter
-   *          of any type
+   *          an Iterator
    * @param block
    *          to transform elements
    * @throws NullPointerException
-   *           if iterable or block is null
+   *           if iter or block is null
    */
   public TransformIterator(Iterator<E> iter, TransformBlock<E, S> block) {
     if (iter == null || block == null)

@@ -43,7 +43,7 @@ public final class ZipIterator<E> implements Iterator<RubyArray<E>> {
    * Creates a ZipIterator.
    * 
    * @param iter
-   *          any Iterator
+   *          an Iterator
    * @param others
    *          a List of Iterator
    */

@@ -41,30 +41,30 @@ import net.sf.rubycollect4j.block.TransformBlock;
 public final class ChunkIterable<E, K> implements
     Iterable<Entry<K, RubyArray<E>>> {
 
-  private final Iterable<E> iterable;
+  private final Iterable<E> iter;
   private final TransformBlock<E, K> block;
 
   /**
    * Creates a ChunkIterable.
    * 
-   * @param iterable
+   * @param iter
    *          an Iterable
    * @param block
    *          to transform each element
    * @throws NullPointerException
    *           if iterable or block is null
    */
-  public ChunkIterable(Iterable<E> iterable, TransformBlock<E, K> block) {
-    if (iterable == null || block == null)
+  public ChunkIterable(Iterable<E> iter, TransformBlock<E, K> block) {
+    if (iter == null || block == null)
       throw new NullPointerException();
 
-    this.iterable = iterable;
+    this.iter = iter;
     this.block = block;
   }
 
   @Override
   public Iterator<Entry<K, RubyArray<E>>> iterator() {
-    return new ChunkIterator<E, K>(iterable.iterator(), block);
+    return new ChunkIterator<E, K>(iter.iterator(), block);
   }
 
   @Override

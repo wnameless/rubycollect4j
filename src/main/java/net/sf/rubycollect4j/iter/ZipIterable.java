@@ -42,7 +42,7 @@ public final class ZipIterable<E> implements Iterable<RubyArray<E>> {
    * Creates a ZipIterable.
    * 
    * @param iter
-   *          any Iterable
+   *          an Iterable
    * @param others
    *          a List of Iterable
    */

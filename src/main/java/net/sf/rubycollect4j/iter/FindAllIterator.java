@@ -28,7 +28,7 @@ import net.sf.rubycollect4j.util.PeekingIterator;
 
 /**
  * 
- * FindAllIterator finds all elements which are true returned by the block.
+ * FindAllIterator iterates elements which are true returned by the block.
  * 
  * @param <E>
  *          the type of the elements

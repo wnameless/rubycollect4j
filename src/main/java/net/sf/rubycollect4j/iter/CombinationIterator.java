@@ -31,7 +31,7 @@ import net.sf.rubycollect4j.RubyArray;
 
 /**
  * 
- * CombinationIterator generates all combinations of a List with length n.
+ * CombinationIterator generates all combinations into a List with length n.
  * 
  * @param <E>
  *          the type of the elements

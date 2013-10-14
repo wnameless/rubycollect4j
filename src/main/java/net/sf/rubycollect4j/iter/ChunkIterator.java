@@ -46,39 +46,39 @@ import net.sf.rubycollect4j.util.PeekingIterator;
 public final class ChunkIterator<E, K> implements
     Iterator<Entry<K, RubyArray<E>>> {
 
-  private final PeekingIterator<E> pIterator;
+  private final PeekingIterator<E> pIter;
   private final TransformBlock<E, K> block;
 
   /**
    * Creates a ChunkIterator.
    * 
-   * @param iterator
+   * @param iter
    *          an Iterator
    * @param block
    *          to transform each element
    * @throws NullPointerException
    *           if iterator or block is null
    */
-  public ChunkIterator(Iterator<E> iterator, TransformBlock<E, K> block) {
-    if (iterator == null || block == null)
+  public ChunkIterator(Iterator<E> iter, TransformBlock<E, K> block) {
+    if (iter == null || block == null)
       throw new NullPointerException();
 
-    pIterator = new PeekingIterator<E>(iterator);
+    pIter = new PeekingIterator<E>(iter);
     this.block = block;
   }
 
   private Entry<K, RubyArray<E>> nextElement() {
-    K key = block.yield(pIterator.peek());
+    K key = block.yield(pIter.peek());
     RubyArray<E> bucket = newRubyArray();
-    while (pIterator.hasNext() && key.equals(block.yield(pIterator.peek()))) {
-      bucket.add(pIterator.next());
+    while (pIter.hasNext() && key.equals(block.yield(pIter.peek()))) {
+      bucket.add(pIter.next());
     }
     return hp(key, bucket);
   }
 
   @Override
   public boolean hasNext() {
-    return pIterator.hasNext();
+    return pIter.hasNext();
   }
 
   @Override

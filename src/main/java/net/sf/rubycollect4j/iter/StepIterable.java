@@ -41,10 +41,10 @@ public final class StepIterable<E> implements Iterable<E> {
    *          an Iterable
    * @param step
    *          number of elements to skip
-   * @throws IllegalArgumentException
-   *           if step less or equal 0
    * @throws NullPointerException
    *           if iter is null
+   * @throws IllegalArgumentException
+   *           if step less or equal 0
    */
   public StepIterable(Iterable<E> iter, int step) {
     if (iter == null)
