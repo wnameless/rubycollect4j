@@ -34,6 +34,7 @@ import java.util.List;
 public final class ReverseEachIterator<E> implements Iterator<E> {
 
   private final Iterator<E> iter;
+  private Iterator<E> reversedIter;
 
   /**
    * Creates a ReverseEachIterator.
@@ -45,21 +46,29 @@ public final class ReverseEachIterator<E> implements Iterator<E> {
     if (iter == null)
       throw new NullPointerException();
 
+    this.iter = iter;
+  }
+
+  private void initReversedIter() {
     List<E> list = new ArrayList<E>();
     while (iter.hasNext()) {
       list.add(0, iter.next());
     }
-    this.iter = list.iterator();
+    reversedIter = list.iterator();
   }
 
   @Override
   public boolean hasNext() {
-    return iter.hasNext();
+    if (reversedIter == null)
+      initReversedIter();
+    return reversedIter.hasNext();
   }
 
   @Override
   public E next() {
-    return iter.next();
+    if (reversedIter == null)
+      initReversedIter();
+    return reversedIter.next();
   }
 
   @Override

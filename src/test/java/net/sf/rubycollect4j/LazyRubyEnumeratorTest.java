@@ -233,7 +233,7 @@ public class LazyRubyEnumeratorTest {
 
   @Test
   public void testReverseEach() {
-    assertTrue(lre.reverseEach() instanceof LazyRubyEnumerator);
+    assertTrue(lre.cycle().reverseEach() instanceof LazyRubyEnumerator);
   }
 
   @Test
@@ -286,6 +286,8 @@ public class LazyRubyEnumeratorTest {
 
   @Test
   public void testRewind() {
+    lre.rewind();
+    lre = new LazyRubyEnumerator<Integer>(list);
     while (lre.hasNext()) {
       lre.next();
     }
@@ -299,6 +301,8 @@ public class LazyRubyEnumeratorTest {
       Integer peeking = lre.peek();
       assertEquals(peeking, lre.next());
     }
+    lre = new LazyRubyEnumerator<Integer>(list);
+    assertEquals(Integer.valueOf(1), lre.peek());
   }
 
   @Test
@@ -310,6 +314,11 @@ public class LazyRubyEnumeratorTest {
     intsIt.next();
     intsIt.remove();
     assertEquals(ints, list);
+  }
+
+  @Test(expected = IllegalStateException.class)
+  public void testRemoveException() {
+    lre.remove();
   }
 
   @Test
