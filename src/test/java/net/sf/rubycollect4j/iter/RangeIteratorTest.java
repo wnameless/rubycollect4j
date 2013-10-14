@@ -37,7 +37,7 @@ public class RangeIteratorTest {
 
   @Before
   public void setUp() throws Exception {
-    iter = new RangeIterator<Integer>(IntegerSuccessor.getInstance(), 1, 3);
+    iter = new RangeIterator<Integer>(IntegerSuccessor.INSTANCE, 1, 3);
   }
 
   @Test
@@ -52,12 +52,12 @@ public class RangeIteratorTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    new RangeIterator<Integer>(IntegerSuccessor.getInstance(), null, 3);
+    new RangeIterator<Integer>(IntegerSuccessor.INSTANCE, null, 3);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException3() {
-    new RangeIterator<Integer>(IntegerSuccessor.getInstance(), 1, null);
+    new RangeIterator<Integer>(IntegerSuccessor.INSTANCE, 1, null);
   }
 
   @Test
@@ -75,7 +75,7 @@ public class RangeIteratorTest {
     assertEquals(Integer.valueOf(2), iter.next());
     assertEquals(Integer.valueOf(3), iter.next());
     assertFalse(iter.hasNext());
-    iter = new RangeIterator<Integer>(IntegerSuccessor.getInstance(), 1, 0);
+    iter = new RangeIterator<Integer>(IntegerSuccessor.INSTANCE, 1, 0);
     assertFalse(iter.hasNext());
   }
 

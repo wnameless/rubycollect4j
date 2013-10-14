@@ -131,10 +131,7 @@ public final class PermutationIterator<E> implements Iterator<RubyArray<E>> {
       if (i <= current)
         iter.remove();
     }
-    if (indice.isEmpty())
-      return -1;
-    else
-      return indice.get(0);
+    return indice.isEmpty() ? -1 : indice.get(0);
   }
 
   private int getLowerIndex(int pos) {
@@ -142,10 +139,7 @@ public final class PermutationIterator<E> implements Iterator<RubyArray<E>> {
     for (int i = 0; i < pos; i++) {
       indice.remove(Integer.valueOf(counter[i]));
     }
-    if (indice.isEmpty())
-      return -1;
-    else
-      return indice.get(0);
+    return indice.get(0);
   }
 
   private List<Integer> getAllIndice() {

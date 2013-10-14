@@ -28,11 +28,11 @@ import org.junit.Test;
 
 public class DateSuccessorTest {
 
-  private DateSuccessor successor = DateSuccessor.getInstance();
+  private DateSuccessor successor = DateSuccessor.INSTANCE;
 
   @Test
   public void testSingleton() {
-    assertSame(successor, DateSuccessor.getInstance());
+    assertSame(DateSuccessor.INSTANCE, successor);
   }
 
   @Test

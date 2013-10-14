@@ -29,26 +29,9 @@ import java.util.Date;
  * object.
  * 
  */
-public final class DateSuccessor implements Successive<Date> {
+public enum DateSuccessor implements Successive<Date> {
 
-  private static volatile DateSuccessor INSTANCE;
-
-  /**
-   * Returns the singleton DateSuccessor object.
-   * 
-   * @return a DateSuccessor
-   */
-  public static DateSuccessor getInstance() {
-    if (INSTANCE == null) {
-      synchronized (DateSuccessor.class) {
-        if (INSTANCE == null)
-          INSTANCE = new DateSuccessor();
-      }
-    }
-    return INSTANCE;
-  }
-
-  private DateSuccessor() {}
+  INSTANCE;
 
   @Override
   public Date succ(Date curr) {

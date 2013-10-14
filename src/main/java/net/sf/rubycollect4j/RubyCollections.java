@@ -251,8 +251,7 @@ public final class RubyCollections {
    */
   public static RubyRange<String> newRubyRange(String startPoint,
       String endPoint) {
-    return new RubyRange<String>(StringSuccessor.getInstance(), startPoint,
-        endPoint);
+    return new RubyRange<String>(StringSuccessor.INSTANCE, startPoint, endPoint);
   }
 
   /**
@@ -265,7 +264,7 @@ public final class RubyCollections {
    * @return a RubyRange
    */
   public static RubyRange<Integer> newRubyRange(int startPoint, int endPoint) {
-    return new RubyRange<Integer>(IntegerSuccessor.getInstance(), startPoint,
+    return new RubyRange<Integer>(IntegerSuccessor.INSTANCE, startPoint,
         endPoint);
   }
 
@@ -279,8 +278,7 @@ public final class RubyCollections {
    * @return a RubyRange
    */
   public static RubyRange<Long> newRubyRange(long startPoint, long endPoint) {
-    return new RubyRange<Long>(LongSuccessor.getInstance(), startPoint,
-        endPoint);
+    return new RubyRange<Long>(LongSuccessor.INSTANCE, startPoint, endPoint);
   }
 
   /**
@@ -310,8 +308,7 @@ public final class RubyCollections {
    * @return a RubyRange
    */
   public static RubyRange<Date> newRubyRange(Date startPoint, Date endPoint) {
-    return new RubyRange<Date>(DateSuccessor.getInstance(), startPoint,
-        endPoint);
+    return new RubyRange<Date>(DateSuccessor.INSTANCE, startPoint, endPoint);
   }
 
   /**

@@ -26,26 +26,9 @@ package net.sf.rubycollect4j.succ;
  * object.
  * 
  */
-public final class IntegerSuccessor implements Successive<Integer> {
+public enum IntegerSuccessor implements Successive<Integer> {
 
-  private static volatile IntegerSuccessor INSTANCE;
-
-  /**
-   * Returns the singleton IntegerSuccessor object.
-   * 
-   * @return a IntegerSuccessor
-   */
-  public static IntegerSuccessor getInstance() {
-    if (INSTANCE == null) {
-      synchronized (IntegerSuccessor.class) {
-        if (INSTANCE == null)
-          INSTANCE = new IntegerSuccessor();
-      }
-    }
-    return INSTANCE;
-  }
-
-  private IntegerSuccessor() {}
+  INSTANCE;
 
   @Override
   public Integer succ(Integer curr) {

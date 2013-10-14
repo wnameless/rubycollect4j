@@ -32,26 +32,9 @@ import java.util.List;
  * on those numeric values.
  * 
  */
-public final class StringSuccessor implements Successive<String> {
+public enum StringSuccessor implements Successive<String> {
 
-  private static volatile StringSuccessor INSTANCE;
-
-  /**
-   * Returns the singleton StringSuccessor object.
-   * 
-   * @return a StringSuccessor
-   */
-  public static StringSuccessor getInstance() {
-    if (INSTANCE == null) {
-      synchronized (IntegerSuccessor.class) {
-        if (INSTANCE == null)
-          INSTANCE = new StringSuccessor();
-      }
-    }
-    return INSTANCE;
-  }
-
-  private StringSuccessor() {}
+  INSTANCE;
 
   @Override
   public String succ(String curr) {
