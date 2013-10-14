@@ -36,7 +36,7 @@ public final class PeekingIterator<E> implements Iterator<E> {
   private final Iterator<E> iterator;
   private E peek;
   private boolean hasPeek;
-  private boolean removable = false;
+  private boolean isRemovable = false;
 
   /**
    * Creates a PeekingIterator.
@@ -66,24 +66,22 @@ public final class PeekingIterator<E> implements Iterator<E> {
 
     if (hasPeek) {
       hasPeek = false;
-      removable = true;
+      isRemovable = true;
       return peek;
     } else {
-      if (iterator.hasNext()) {
-        peek = iterator.next();
-        hasPeek = true;
-      }
+      peek = iterator.next();
+      hasPeek = true;
       return next();
     }
   }
 
   @Override
   public void remove() {
-    if (!removable)
+    if (!isRemovable)
       throw new IllegalStateException();
 
     iterator.remove();
-    removable = false;
+    isRemovable = false;
   }
 
   /**
@@ -96,7 +94,7 @@ public final class PeekingIterator<E> implements Iterator<E> {
     if (!hasPeek && iterator.hasNext()) {
       peek = iterator.next();
       hasPeek = true;
-      removable = false;
+      isRemovable = false;
     }
     if (!hasPeek)
       throw new NoSuchElementException();

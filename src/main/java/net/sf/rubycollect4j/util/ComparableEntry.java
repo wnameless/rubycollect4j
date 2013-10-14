@@ -25,7 +25,7 @@ import java.util.Map.Entry;
 
 /**
  * 
- * ComparableEntry is comparable if and only if the key is comparable.
+ * ComparableEntry is Comparable if and only if the key is Comparable.
  * 
  * @param <K>
  *          the type of the key elements
@@ -117,4 +117,5 @@ public final class ComparableEntry<K, V> implements Entry<K, V>,
 
     return 0;
   }
+
 }
