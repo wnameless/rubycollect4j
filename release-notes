@@ -132,3 +132,5 @@ Version 1.5.0
 + Added freeze() & frozen?() to RubyArray & RubyHash
 
 * Checked 'false' in RubyEnumerable#all? & RubyEnumerable#any?
+
++ Added RubyArray#collectǃ & RubyArray#mapǃ

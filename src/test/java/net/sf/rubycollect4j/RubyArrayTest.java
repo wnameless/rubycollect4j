@@ -26,6 +26,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -146,6 +147,19 @@ public class RubyArrayTest {
       }
 
     }));
+  }
+
+  @Test
+  public void testCollectǃ() {
+    assertSame(ra, ra.collectǃ(new TransformBlock<Integer, Integer>() {
+
+      @Override
+      public Integer yield(Integer item) {
+        return item * 2;
+      }
+
+    }));
+    assertEquals(ra(2, 4, 6, 8), ra);
   }
 
   @SuppressWarnings("unchecked")
@@ -704,6 +718,19 @@ public class RubyArrayTest {
   public void testLength() {
     assertEquals(4, ra.length());
     assertEquals(ra.size(), ra.length());
+  }
+
+  @Test
+  public void testMapǃ() {
+    assertSame(ra, ra.mapǃ(new TransformBlock<Integer, Integer>() {
+
+      @Override
+      public Integer yield(Integer item) {
+        return item * 2;
+      }
+
+    }));
+    assertEquals(ra(2, 4, 6, 8), ra);
   }
 
   @Test

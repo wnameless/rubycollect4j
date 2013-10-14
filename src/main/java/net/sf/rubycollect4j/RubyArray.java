@@ -198,6 +198,21 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
+   * Transforms each element in self.
+   * 
+   * @param block
+   *          to transform elements
+   * @return this RubyArray
+   */
+  public RubyArray<E> collectǃ(TransformBlock<E, E> block) {
+    ListIterator<E> li = list.listIterator();
+    while (li.hasNext()) {
+      li.set(block.yield(li.next()));
+    }
+    return this;
+  }
+
+  /**
    * Generates all combinations with length n of this RubyArray.
    * 
    * @param n
@@ -837,6 +852,17 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    */
   public int length() {
     return list.size();
+  }
+
+  /**
+   * Equivalent to collectǃ().
+   * 
+   * @param block
+   *          to transform elements
+   * @return this RubyArray
+   */
+  public RubyArray<E> mapǃ(TransformBlock<E, E> block) {
+    return collectǃ(block);
   }
 
   /**
