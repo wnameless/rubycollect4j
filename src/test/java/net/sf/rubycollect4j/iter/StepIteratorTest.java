@@ -26,6 +26,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.junit.Before;
@@ -34,10 +35,12 @@ import org.junit.Test;
 public class StepIteratorTest {
 
   private StepIterator<Integer> iter;
+  private List<Integer> list;
 
   @Before
   public void setUp() throws Exception {
-    iter = new StepIterator<Integer>(ra(1, 2, 3, 4, 5).iterator(), 2);
+    list = ra(1, 2, 3, 4, 5);
+    iter = new StepIterator<Integer>(list.iterator(), 2);
   }
 
   @Test
@@ -90,8 +93,17 @@ public class StepIteratorTest {
     iter.next();
   }
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test
   public void testRemove() {
+    while (iter.hasNext()) {
+      iter.next();
+      iter.remove();
+    }
+    assertEquals(ra(2, 4), list);
+  }
+
+  @Test(expected = IllegalStateException.class)
+  public void testRemoveExceotion() {
     iter.remove();
   }
 

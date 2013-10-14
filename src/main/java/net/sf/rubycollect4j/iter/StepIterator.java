@@ -36,6 +36,7 @@ public final class StepIterator<E> implements Iterator<E> {
   private final int step;
   private E peek;
   private boolean hasMore = false;
+  private boolean isRemovable = false;
 
   /**
    * Creates a StepIterator.
@@ -66,20 +67,26 @@ public final class StepIterator<E> implements Iterator<E> {
     }
   }
 
-  private E nextElement() {
-    E next = peek;
-    int step = this.step;
-    while (step > 0 && iter.hasNext()) {
-      peek = iter.next();
-      step--;
+  private void advanceCursor() {
+    if (!hasMore) {
+      int step = this.step;
+      while (step > 0 && iter.hasNext()) {
+        peek = iter.next();
+        step--;
+      }
+      if (step == 0)
+        hasMore = true;
     }
-    if (step > 0)
-      hasMore = false;
-    return next;
+  }
+
+  private E nextElement() {
+    hasMore = false;
+    return peek;
   }
 
   @Override
   public boolean hasNext() {
+    advanceCursor();
     return hasMore;
   }
 
@@ -88,12 +95,16 @@ public final class StepIterator<E> implements Iterator<E> {
     if (!hasNext())
       throw new NoSuchElementException();
 
+    isRemovable = true;
     return nextElement();
   }
 
   @Override
   public void remove() {
-    throw new UnsupportedOperationException();
-  }
+    if (!isRemovable)
+      throw new IllegalStateException();
 
+    isRemovable = false;
+    iter.remove();
+  }
 }
