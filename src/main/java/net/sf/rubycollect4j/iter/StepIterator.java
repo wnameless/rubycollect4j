@@ -107,4 +107,5 @@ public final class StepIterator<E> implements Iterator<E> {
     isRemovable = false;
     iter.remove();
   }
+
 }
