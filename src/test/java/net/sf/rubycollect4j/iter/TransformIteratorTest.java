@@ -35,20 +35,20 @@ import org.junit.Test;
 public class TransformIteratorTest {
 
   private TransformIterator<Integer, Double> iter;
+  private TransformBlock<Integer, Double> block;
   private List<Integer> list;
 
   @Before
   public void setUp() throws Exception {
     list = ra(1, 2, 3, 4);
-    iter =
-        new TransformIterator<Integer, Double>(list.iterator(),
-            new TransformBlock<Integer, Double>() {
+    block = new TransformBlock<Integer, Double>() {
 
-              @Override
-              public Double yield(Integer item) {
-                return item.doubleValue();
-              }
-            });
+      @Override
+      public Double yield(Integer item) {
+        return item.doubleValue();
+      }
+    };
+    iter = new TransformIterator<Integer, Double>(list.iterator(), block);
   }
 
   @Test
@@ -58,19 +58,12 @@ public class TransformIteratorTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException1() {
-    new TransformIterator<Integer, String>(null,
-        new TransformBlock<Integer, String>() {
-
-          @Override
-          public String yield(Integer item) {
-            return item.toString();
-          }
-        });
+    new TransformIterator<Integer, Double>(null, block);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    new TransformIterator<Integer, String>(list.iterator(), null);
+    new TransformIterator<Integer, Double>(list.iterator(), null);
   }
 
   @Test

@@ -36,31 +36,18 @@ import org.junit.Test;
 public class PeekingIteratorTest {
 
   private PeekingIterator<Integer> pIterater;
+  private PeekingIterator<Integer> emptyIterater;
 
   @Before
   public void setUp() {
     pIterater = new PeekingIterator<Integer>(ra(1, 2, 3, 4).iterator());
+    emptyIterater =
+        new PeekingIterator<Integer>(new ArrayList<Integer>().iterator());
   }
 
   @Test
   public void testIterface() {
     assertTrue(pIterater instanceof Iterator);
-  }
-
-  @Test(expected = NoSuchElementException.class)
-  public void testConstructorWithEmptyIterator1() {
-    pIterater =
-        new PeekingIterator<Integer>(new ArrayList<Integer>().iterator());
-    assertFalse(pIterater.hasNext());
-    pIterater.next();
-  }
-
-  @Test(expected = NoSuchElementException.class)
-  public void testConstructorWithEmptyIterator2() {
-    pIterater =
-        new PeekingIterator<Integer>(new ArrayList<Integer>().iterator());
-    assertFalse(pIterater.hasNext());
-    pIterater.peek();
   }
 
   @Test
@@ -75,6 +62,7 @@ public class PeekingIteratorTest {
   @Test
   public void testHasNext() {
     assertTrue(pIterater.hasNext());
+    assertFalse(emptyIterater.hasNext());
   }
 
   @Test
@@ -85,6 +73,11 @@ public class PeekingIteratorTest {
     assertEquals(Integer.valueOf(4), pIterater.next());
   }
 
+  @Test(expected = NoSuchElementException.class)
+  public void testNextException() {
+    emptyIterater.next();
+  }
+
   @Test
   public void testPeek() {
     assertEquals(Integer.valueOf(1), pIterater.peek());
@@ -92,14 +85,19 @@ public class PeekingIteratorTest {
     assertEquals(Integer.valueOf(2), pIterater.peek());
   }
 
-  @Test(expected = IllegalStateException.class)
+  @Test(expected = NoSuchElementException.class)
   public void testPeekException1() {
+    emptyIterater.peek();
+  }
+
+  @Test(expected = IllegalStateException.class)
+  public void testPeekException2() {
     pIterater.peek();
     pIterater.remove();
   }
 
   @Test(expected = IllegalStateException.class)
-  public void testPeekException2() {
+  public void testPeekException3() {
     pIterater.next();
     pIterater.remove();
     pIterater.remove();

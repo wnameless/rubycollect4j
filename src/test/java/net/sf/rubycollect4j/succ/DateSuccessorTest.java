@@ -22,7 +22,7 @@ package net.sf.rubycollect4j.succ;
 
 import static net.sf.rubycollect4j.RubyCollections.date;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertSame;
 
 import org.junit.Test;
 
@@ -32,7 +32,7 @@ public class DateSuccessorTest {
 
   @Test
   public void testSingleton() {
-    assertTrue(successor == DateSuccessor.getInstance());
+    assertSame(successor, DateSuccessor.getInstance());
   }
 
   @Test

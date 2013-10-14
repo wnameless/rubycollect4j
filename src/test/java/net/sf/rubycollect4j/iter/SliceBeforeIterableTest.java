@@ -35,19 +35,19 @@ import org.junit.Test;
 public class SliceBeforeIterableTest {
 
   private SliceBeforeIterable<Integer> iter;
+  private BooleanBlock<Integer> block;
 
   @Before
   public void setUp() throws Exception {
-    iter =
-        new SliceBeforeIterable<Integer>(ra(1, 2, 3, 4, 5),
-            new BooleanBlock<Integer>() {
+    block = new BooleanBlock<Integer>() {
 
-              @Override
-              public boolean yield(Integer item) {
-                return item % 2 == 0;
-              }
+      @Override
+      public boolean yield(Integer item) {
+        return item % 2 == 0;
+      }
 
-            });
+    };
+    iter = new SliceBeforeIterable<Integer>(ra(1, 2, 3, 4, 5), block);
   }
 
   @Test
@@ -59,20 +59,13 @@ public class SliceBeforeIterableTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException1() {
-    new SliceBeforeIterable<Integer>(null, new BooleanBlock<Integer>() {
-
-      @Override
-      public boolean yield(Integer item) {
-        return item % 2 == 0;
-      }
-
-    });
+    new SliceBeforeIterable<Integer>(null, block);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    BooleanBlock<Integer> block = null;
-    new SliceBeforeIterable<Integer>(ra(1, 2, 3, 4, 5), block);
+    new SliceBeforeIterable<Integer>(ra(1, 2, 3, 4, 5),
+        (BooleanBlock<Integer>) null);
   }
 
   @Test(expected = NullPointerException.class)
@@ -82,8 +75,7 @@ public class SliceBeforeIterableTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException4() {
-    Pattern pattern = null;
-    iter = new SliceBeforeIterable<Integer>(ra(1, 2, 3, 4, 5), pattern);
+    iter = new SliceBeforeIterable<Integer>(ra(1, 2, 3, 4, 5), (Pattern) null);
   }
 
   @Test

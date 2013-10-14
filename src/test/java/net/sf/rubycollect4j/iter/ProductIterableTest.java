@@ -57,8 +57,7 @@ public class ProductIterableTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    List<List<Integer>> others = null;
-    new ProductIterable<Integer>(ra(1, 2, 3), others);
+    new ProductIterable<Integer>(ra(1, 2, 3), (List<List<Integer>>) null);
   }
 
   @SuppressWarnings("unchecked")

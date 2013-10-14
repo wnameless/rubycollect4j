@@ -26,6 +26,7 @@ import static net.sf.rubycollect4j.RubyCollections.rh;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.util.IdentityHashMap;
@@ -96,9 +97,9 @@ public class LinkedIdentityMapTest {
     map.put(key2, 2);
     map.put(key3, 3);
     assertEquals(ra(hp(key1, 1), hp(key2, 2), hp(key3, 3)), ra(map.entrySet()));
-    assertTrue(key1 == ra(map.entrySet()).get(0).getKey());
-    assertTrue(key2 == ra(map.entrySet()).get(1).getKey());
-    assertTrue(key3 == ra(map.entrySet()).get(2).getKey());
+    assertSame(key1, ra(map.entrySet()).get(0).getKey());
+    assertSame(key2, ra(map.entrySet()).get(1).getKey());
+    assertSame(key3, ra(map.entrySet()).get(2).getKey());
   }
 
   @Test
@@ -128,9 +129,9 @@ public class LinkedIdentityMapTest {
     map.put(key2, 2);
     map.put(key3, 3);
     RubyArray<String> ra = ra(map.keySet());
-    assertTrue(key1 == ra.get(0));
-    assertTrue(key2 == ra.get(1));
-    assertTrue(key3 == ra.get(2));
+    assertSame(key1, ra.get(0));
+    assertSame(key2, ra.get(1));
+    assertSame(key3, ra.get(2));
   }
 
   @Test
@@ -160,11 +161,11 @@ public class LinkedIdentityMapTest {
     map.putAll(rh(key2, 3));
     map.putAll(rh(key3, 4));
     assertEquals(ra(hp(key1, 2), hp(key2, 3), hp(key3, 4)), ra(map.entrySet()));
-    assertTrue(key1 == ra(map.entrySet()).get(0).getKey());
+    assertSame(key1, ra(map.entrySet()).get(0).getKey());
     assertEquals(Integer.valueOf(2), ra(map.entrySet()).get(0).getValue());
-    assertTrue(key2 == ra(map.entrySet()).get(1).getKey());
+    assertSame(key2, ra(map.entrySet()).get(1).getKey());
     assertEquals(Integer.valueOf(3), ra(map.entrySet()).get(1).getValue());
-    assertTrue(key3 == ra(map.entrySet()).get(2).getKey());
+    assertSame(key3, ra(map.entrySet()).get(2).getKey());
     assertEquals(Integer.valueOf(4), ra(map.entrySet()).get(2).getValue());
     assertEquals(3, map.size());
   }

@@ -32,21 +32,21 @@ import org.junit.Test;
 public class ChunkIterableTest {
 
   private ChunkIterable<Number, String> iter;
+  private TransformBlock<Number, String> block;
 
   @Before
   public void setUp() throws Exception {
+    block = new TransformBlock<Number, String>() {
+
+      @Override
+      public String yield(Number item) {
+        return item.toString();
+      }
+
+    };
     RubyArray<Number> nums =
         ra((Number) 1, (Number) 1.0, (Number) 1.0f, (Number) 2, (Number) 2L);
-    iter =
-        new ChunkIterable<Number, String>(nums,
-            new TransformBlock<Number, String>() {
-
-              @Override
-              public String yield(Number item) {
-                return item.toString();
-              }
-
-            });
+    iter = new ChunkIterable<Number, String>(nums, block);
   }
 
   @Test
@@ -56,16 +56,7 @@ public class ChunkIterableTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException1() {
-    iter =
-        new ChunkIterable<Number, String>(null,
-            new TransformBlock<Number, String>() {
-
-              @Override
-              public String yield(Number item) {
-                return item.toString();
-              }
-
-            });
+    iter = new ChunkIterable<Number, String>(null, block);
   }
 
   @Test(expected = NullPointerException.class)

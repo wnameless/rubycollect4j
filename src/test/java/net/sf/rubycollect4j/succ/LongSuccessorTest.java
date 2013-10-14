@@ -21,7 +21,7 @@
 package net.sf.rubycollect4j.succ;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertSame;
 
 import org.junit.Test;
 
@@ -31,7 +31,7 @@ public class LongSuccessorTest {
 
   @Test
   public void testSingleton() {
-    assertTrue(successor == LongSuccessor.getInstance());
+    assertSame(successor, LongSuccessor.getInstance());
   }
 
   @Test
