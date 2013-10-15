@@ -139,6 +139,14 @@ re.rewind();
 p( re.next() );              // Output: a=1
 ```
 
+Demo newLazyRubyEnumerator():
+```java
+p( newLazyRubyEnumerator(Arrays.asList(1, 2, 3, 4)).drop(1) instanceof LazyRubyEnumerator ) // Output: true
+p( newLazyRubyEnumerator(Arrays.asList(1, 2, 3, 4)).drop(1).toA() )                         // Output: [2, 3, 4]
+// A LazyRubyEnumerator can also be created by RubyArray#lazy.
+p( ra(1 ,2, 3, 4).lazy().cycle().first() )                                                  // Output: 1
+```
+
 Demo range():
 ```java
 p( range(1, 5).toA() );                                   // Output: [1, 2, 3, 4, 5]
