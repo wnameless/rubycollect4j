@@ -32,6 +32,7 @@ import static net.sf.rubycollect4j.RubyCollections.qr;
 import static net.sf.rubycollect4j.RubyCollections.qw;
 import static net.sf.rubycollect4j.RubyCollections.qx;
 import static net.sf.rubycollect4j.RubyCollections.ra;
+import static net.sf.rubycollect4j.RubyCollections.range;
 import static net.sf.rubycollect4j.RubyCollections.rh;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -256,6 +257,31 @@ public class RubyCollectionsTest {
   @Test
   public void testHash() {
     assertEquals(rh(1, 2, 3, 4, 5, 6), Hash(ra(hp(1, 2), hp(3, 4), hp(5, 6))));
+  }
+
+  @Test
+  public void testRange1() {
+    assertTrue(range("A", "Z") instanceof RubyRange);
+  }
+
+  @Test
+  public void testRange2() {
+    assertTrue(range(1, 100) instanceof RubyRange);
+  }
+
+  @Test
+  public void testRange3() {
+    assertTrue(range(1L, 100L) instanceof RubyRange);
+  }
+
+  @Test
+  public void testRange4() {
+    assertTrue(range(1.0, 100.0) instanceof RubyRange);
+  }
+
+  @Test
+  public void testRange5() {
+    assertTrue(range(RubyDate.yesterday(), RubyDate.tomorrow()) instanceof RubyRange);
   }
 
   @Test
