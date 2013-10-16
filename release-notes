@@ -134,3 +134,8 @@ Version 1.5.0
 * Checked 'false' in RubyEnumerable#all? & RubyEnumerable#any?
 
 + Added RubyArray#collectǃ & RubyArray#mapǃ
+
+
+Version 1.5.1
+
+* Changed LazyRubyEnumerator to RubyLazyEnumerator

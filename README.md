@@ -14,7 +14,7 @@ Installation with Maven:
 <dependency>
   <groupId>net.sf.rubycollect4j</groupId>
   <artifactId>rubycollect4j</artifactId>
-  <version>1.5.0</version>
+  <version>1.5.1</version>
 </dependency>
 ```
 
@@ -139,11 +139,11 @@ re.rewind();
 p( re.next() );              // Output: a=1
 ```
 
-Demo newLazyRubyEnumerator():
+Demo newRubyLazyEnumerator():
 ```java
-p( newLazyRubyEnumerator(Arrays.asList(1, 2, 3, 4)).drop(1) instanceof LazyRubyEnumerator ) // Output: true
-p( newLazyRubyEnumerator(Arrays.asList(1, 2, 3, 4)).drop(1).toA() )                         // Output: [2, 3, 4]
-// A LazyRubyEnumerator can also be created by RubyArray#lazy.
+p( newRubyLazyEnumerator(Arrays.asList(1, 2, 3, 4)).drop(1) instanceof RubyLazyEnumerator ) // Output: true
+p( newRubyLazyEnumerator(Arrays.asList(1, 2, 3, 4)).drop(1).toA() )                         // Output: [2, 3, 4]
+// A RubyLazyEnumerator can also be created by RubyArray#lazy.
 p( ra(1 ,2, 3, 4).lazy().cycle().first() )                                                  // Output: 1
 ```
 
