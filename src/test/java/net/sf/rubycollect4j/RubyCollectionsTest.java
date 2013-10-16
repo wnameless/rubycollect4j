@@ -23,10 +23,10 @@ package net.sf.rubycollect4j;
 import static net.sf.rubycollect4j.RubyCollections.Hash;
 import static net.sf.rubycollect4j.RubyCollections.date;
 import static net.sf.rubycollect4j.RubyCollections.hp;
-import static net.sf.rubycollect4j.RubyCollections.newLazyRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
+import static net.sf.rubycollect4j.RubyCollections.newRubyLazyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.newRubyRange;
 import static net.sf.rubycollect4j.RubyCollections.qr;
 import static net.sf.rubycollect4j.RubyCollections.qw;
@@ -97,10 +97,10 @@ public class RubyCollectionsTest {
   }
 
   @Test
-  public void testNewLazyRubyEnumerator() {
-    LazyRubyEnumerator<Integer> lre;
-    lre = newLazyRubyEnumerator(Arrays.asList(1, 2, 3));
-    assertTrue(lre instanceof LazyRubyEnumerator);
+  public void testNewRubyLazyEnumerator() {
+    RubyLazyEnumerator<Integer> lre;
+    lre = newRubyLazyEnumerator(Arrays.asList(1, 2, 3));
+    assertTrue(lre instanceof RubyLazyEnumerator);
   }
 
   @Test

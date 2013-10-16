@@ -201,17 +201,17 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a LazyRubyEnumerator by given Iterable.
+   * Creates a RubyLazyEnumerator by given Iterable.
    * 
    * @param <E>
    *          the type of the elements
    * @param iter
    *          an Iterable
-   * @return a new LazyRubyEnumerator
+   * @return a new RubyLazyEnumerator
    */
-  public static <E> LazyRubyEnumerator<E>
-      newLazyRubyEnumerator(Iterable<E> iter) {
-    return new LazyRubyEnumerator<E>(iter);
+  public static <E> RubyLazyEnumerator<E>
+      newRubyLazyEnumerator(Iterable<E> iter) {
+    return new RubyLazyEnumerator<E>(iter);
   }
 
   /**

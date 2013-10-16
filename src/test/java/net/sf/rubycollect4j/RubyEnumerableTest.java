@@ -687,7 +687,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testLazy() {
-    assertTrue(re.lazy() instanceof LazyRubyEnumerator);
+    assertTrue(re.lazy() instanceof RubyLazyEnumerator);
   }
 
   @Test

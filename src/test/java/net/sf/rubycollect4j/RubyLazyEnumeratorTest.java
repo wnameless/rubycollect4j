@@ -21,7 +21,7 @@
 package net.sf.rubycollect4j;
 
 import static net.sf.rubycollect4j.RubyCollections.hp;
-import static net.sf.rubycollect4j.RubyCollections.newLazyRubyEnumerator;
+import static net.sf.rubycollect4j.RubyCollections.newRubyLazyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -39,25 +39,25 @@ import net.sf.rubycollect4j.block.WithIndexBlock;
 import org.junit.Before;
 import org.junit.Test;
 
-public class LazyRubyEnumeratorTest {
+public class RubyLazyEnumeratorTest {
 
-  private LazyRubyEnumerator<Integer> lre;
+  private RubyLazyEnumerator<Integer> lre;
   private List<Integer> list;
 
   @Before
   public void setUp() throws Exception {
     list = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
-    lre = new LazyRubyEnumerator<Integer>(list);
+    lre = new RubyLazyEnumerator<Integer>(list);
   }
 
   @Test
   public void testConstructor() {
-    assertTrue(lre instanceof LazyRubyEnumerator);
+    assertTrue(lre instanceof RubyLazyEnumerator);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException() {
-    lre = newLazyRubyEnumerator(null);
+    lre = newRubyLazyEnumerator(null);
   }
 
   @SuppressWarnings("unchecked")
@@ -70,8 +70,8 @@ public class LazyRubyEnumeratorTest {
         return item % 3;
       }
 
-    }) instanceof LazyRubyEnumerator);
-    lre = newLazyRubyEnumerator(Arrays.asList(1, 2, 2, 3));
+    }) instanceof RubyLazyEnumerator);
+    lre = newRubyLazyEnumerator(Arrays.asList(1, 2, 2, 3));
     assertEquals(ra(hp(false, ra(1)), hp(true, ra(2, 2)), hp(false, ra(3))),
         lre.chunk(new TransformBlock<Integer, Boolean>() {
 
@@ -85,22 +85,22 @@ public class LazyRubyEnumeratorTest {
 
   @Test
   public void testCycle() {
-    assertTrue(lre.cycle() instanceof LazyRubyEnumerator);
+    assertTrue(lre.cycle() instanceof RubyLazyEnumerator);
   }
 
   @Test
   public void testCycleWithN() {
-    assertTrue(lre.cycle(3) instanceof LazyRubyEnumerator);
+    assertTrue(lre.cycle(3) instanceof RubyLazyEnumerator);
   }
 
   @Test
   public void testDetect() {
-    assertTrue(lre.detect() instanceof LazyRubyEnumerator);
+    assertTrue(lre.detect() instanceof RubyLazyEnumerator);
   }
 
   @Test
   public void testEach() {
-    assertTrue(lre.each() instanceof LazyRubyEnumerator);
+    assertTrue(lre.each() instanceof RubyLazyEnumerator);
   }
 
   @Test
@@ -119,7 +119,7 @@ public class LazyRubyEnumeratorTest {
 
   @Test
   public void testEachCons() {
-    assertTrue(lre.eachCons(3) instanceof LazyRubyEnumerator);
+    assertTrue(lre.eachCons(3) instanceof RubyLazyEnumerator);
   }
 
   @SuppressWarnings("unchecked")
@@ -139,7 +139,7 @@ public class LazyRubyEnumeratorTest {
 
   @Test
   public void testEachEntry() {
-    assertTrue(lre.eachEntry() instanceof LazyRubyEnumerator);
+    assertTrue(lre.eachEntry() instanceof RubyLazyEnumerator);
   }
 
   @Test
@@ -152,18 +152,18 @@ public class LazyRubyEnumeratorTest {
         ints.add(item);
       }
 
-    }) instanceof LazyRubyEnumerator);
+    }) instanceof RubyLazyEnumerator);
     assertEquals(ra(1, 2, 3, 4), ints);
   }
 
   @Test
   public void testEachSlice() {
-    assertTrue(lre.eachSlice(3) instanceof LazyRubyEnumerator);
+    assertTrue(lre.eachSlice(3) instanceof RubyLazyEnumerator);
   }
 
   @Test
   public void testEachWithIndex() {
-    assertTrue(lre.eachWithIndex() instanceof LazyRubyEnumerator);
+    assertTrue(lre.eachWithIndex() instanceof RubyLazyEnumerator);
   }
 
   @Test
@@ -183,7 +183,7 @@ public class LazyRubyEnumeratorTest {
 
   @Test
   public void testEachWithObject() {
-    assertTrue(lre.eachWithObject(1L) instanceof LazyRubyEnumerator);
+    assertTrue(lre.eachWithObject(1L) instanceof RubyLazyEnumerator);
   }
 
   @Test
@@ -193,47 +193,47 @@ public class LazyRubyEnumeratorTest {
 
   @Test
   public void testFind() {
-    assertTrue(lre.find() instanceof LazyRubyEnumerator);
+    assertTrue(lre.find() instanceof RubyLazyEnumerator);
   }
 
   @Test
   public void testFindIndex() {
-    assertTrue(lre.findIndex() instanceof LazyRubyEnumerator);
+    assertTrue(lre.findIndex() instanceof RubyLazyEnumerator);
   }
 
   @Test
   public void testGroupBy() {
-    assertTrue(lre.groupBy() instanceof LazyRubyEnumerator);
+    assertTrue(lre.groupBy() instanceof RubyLazyEnumerator);
   }
 
   @Test
   public void testLazy() {
-    assertTrue(lre.lazy() instanceof LazyRubyEnumerator);
+    assertTrue(lre.lazy() instanceof RubyLazyEnumerator);
   }
 
   @Test
   public void testMaxBy() {
-    assertTrue(lre.maxBy() instanceof LazyRubyEnumerator);
+    assertTrue(lre.maxBy() instanceof RubyLazyEnumerator);
   }
 
   @Test
   public void testMinBy() {
-    assertTrue(lre.minBy() instanceof LazyRubyEnumerator);
+    assertTrue(lre.minBy() instanceof RubyLazyEnumerator);
   }
 
   @Test
   public void testMinmaxBy() {
-    assertTrue(lre.minmaxBy() instanceof LazyRubyEnumerator);
+    assertTrue(lre.minmaxBy() instanceof RubyLazyEnumerator);
   }
 
   @Test
   public void testPartition() {
-    assertTrue(lre.partition() instanceof LazyRubyEnumerator);
+    assertTrue(lre.partition() instanceof RubyLazyEnumerator);
   }
 
   @Test
   public void testReverseEach() {
-    assertTrue(lre.cycle().reverseEach() instanceof LazyRubyEnumerator);
+    assertTrue(lre.cycle().reverseEach() instanceof RubyLazyEnumerator);
   }
 
   @Test
@@ -246,7 +246,7 @@ public class LazyRubyEnumeratorTest {
         ints.add(item);
       }
 
-    }) instanceof LazyRubyEnumerator);
+    }) instanceof RubyLazyEnumerator);
     assertEquals(ra(4, 3, 2, 1), ints);
   }
 
@@ -259,7 +259,7 @@ public class LazyRubyEnumeratorTest {
         return false;
       }
 
-    }) instanceof LazyRubyEnumerator);
+    }) instanceof RubyLazyEnumerator);
   }
 
   @Test
@@ -271,23 +271,23 @@ public class LazyRubyEnumeratorTest {
         return false;
       }
 
-    }) instanceof LazyRubyEnumerator);
+    }) instanceof RubyLazyEnumerator);
   }
 
   @Test
   public void testSliceBeforeWithRegex() {
-    assertTrue(lre.sliceBefore("") instanceof LazyRubyEnumerator);
+    assertTrue(lre.sliceBefore("") instanceof RubyLazyEnumerator);
   }
 
   @Test
   public void testSortBy() {
-    assertTrue(lre.sortBy() instanceof LazyRubyEnumerator);
+    assertTrue(lre.sortBy() instanceof RubyLazyEnumerator);
   }
 
   @Test
   public void testRewind() {
     lre.rewind();
-    lre = new LazyRubyEnumerator<Integer>(list);
+    lre = new RubyLazyEnumerator<Integer>(list);
     while (lre.hasNext()) {
       lre.next();
     }
@@ -301,7 +301,7 @@ public class LazyRubyEnumeratorTest {
       Integer peeking = lre.peek();
       assertEquals(peeking, lre.next());
     }
-    lre = new LazyRubyEnumerator<Integer>(list);
+    lre = new RubyLazyEnumerator<Integer>(list);
     assertEquals(Integer.valueOf(1), lre.peek());
   }
 
@@ -323,7 +323,7 @@ public class LazyRubyEnumeratorTest {
 
   @Test
   public void testToString() {
-    assertEquals("LazyRubyEnumerator{[1, 2, 3, 4]}", lre.toString());
+    assertEquals("RubyLazyEnumerator{[1, 2, 3, 4]}", lre.toString());
   }
 
 }
