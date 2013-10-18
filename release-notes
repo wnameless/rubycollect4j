@@ -146,3 +146,5 @@ Version 1.5.2
 - Removed RubyEnumerable#sort(Comparator comp) to adapt new Java8 List Interface
 
 * Fixed the bug of RubyIO UTF reading & writing
+
+* Fixed RubyFile#join bug on Windows

@@ -20,7 +20,7 @@
  */
 package net.sf.rubycollect4j;
 
-import static net.sf.rubycollect4j.RubyCollections.ra;
+import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyIO.Mode.R;
 
 import java.io.File;
@@ -266,11 +266,21 @@ public final class RubyFile extends RubyIO {
    * @return a joined path
    */
   public static String join(String... files) {
-    RubyArray<String> ra = ra(files);
+    String fileSeprator;
+    if (System.getProperty("os.name").startsWith("Windows"))
+      fileSeprator = "\\";
+    else
+      fileSeprator = "/";
+
+    RubyArray<String> ra = newRubyArray(files);
     for (int i = 1; i < ra.size(); i++) {
-      ra.set(i - 1, ra.get(i - 1).replaceAll("\\" + File.separator + "+$", ""));
-      ra.set(i,
-          ra.get(i).replaceAll("^\\" + File.separator + "*", File.separator));
+      while (ra.get(i - 1).endsWith(fileSeprator)) {
+        ra.set(i - 1, ra.get(i - 1).substring(0, ra.get(i - 1).length() - 1));
+      }
+      while (ra.get(i).startsWith(fileSeprator)) {
+        ra.set(i, ra.get(i).substring(1, ra.get(i).length()));
+      }
+      ra.set(i, fileSeprator + ra.get(i));
     }
     return ra.join();
   }
