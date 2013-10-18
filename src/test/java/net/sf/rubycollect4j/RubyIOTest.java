@@ -97,11 +97,18 @@ public class RubyIOTest {
     io = RubyIO.open(BASE_DIR + "ruby_io_read_write_mode.txt", "r+");
     assertEquals(ra("一", "二三", "四五六"), io.eachLine().toA());
     io.close();
+    io = RubyIO.open(BASE_DIR + "ruby_io_read_write_mode.txt", "w");
+    io.close();
+    io = RubyIO.open(BASE_DIR + "ruby_io_read_write_mode.txt", "r+");
+    io.puts("1");
+    io.puts("2");
+    io.puts("3");
+    io.close();
     io = RubyIO.open(BASE_DIR + "ruby_io_read_write_mode.txt", "r+");
     io.puts("4");
     io.close();
     io = RubyIO.open(BASE_DIR + "ruby_io_read_write_mode.txt", "r+");
-    assertEquals(ra("4", "�", "二三", "四五六"), io.eachLine().toA());
+    assertEquals(ra("4", "2", "3"), io.eachLine().toA());
     io.close();
   }
 
@@ -188,7 +195,7 @@ public class RubyIOTest {
           }
 
         });
-    assertEquals("abcdef", ra.join());
+    assertEquals("a" + "bc" + "def", ra.join());
   }
 
   @Test(expected = RuntimeException.class)
