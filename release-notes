@@ -145,4 +145,4 @@ Version 1.5.2
 
 - Removed RubyEnumerable#sort(Comparator comp) to adapt new Java8 List Interface
 
-* Fixed RubyIO UTF read & write bug
+* Fixed the bug of RubyIO UTF reading & writing

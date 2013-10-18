@@ -25,7 +25,7 @@ import java.util.Iterator;
 
 /**
  * 
- * EachLineIterable iterates a RandomAccessFile line by line.
+ * EachLineIterable iterates a File line by line.
  * 
  */
 public final class EachLineIterable implements Iterable<String> {

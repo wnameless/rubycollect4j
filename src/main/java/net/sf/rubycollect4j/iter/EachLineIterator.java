@@ -32,7 +32,7 @@ import java.util.logging.Logger;
 
 /**
  * 
- * EachLineIterator iterates a RandomAccessFile line by line.
+ * EachLineIterator iterates a File line by line.
  * 
  */
 public final class EachLineIterator implements Iterator<String> {
