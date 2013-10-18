@@ -134,10 +134,10 @@ public class RubyIOTest {
     io.write("123");
     io.write("456");
     io.seek(0);
-    assertEquals("123456\n", io.read());
+    assertEquals("123456", io.read());
     io.close();
     io = RubyIO.open(BASE_DIR + "ruby_io_write_read_mode.txt", "r");
-    assertEquals("123456\n", io.read());
+    assertEquals("123456", io.read());
     io.close();
   }
 
@@ -152,7 +152,7 @@ public class RubyIOTest {
     io.write("456");
     io.close();
     io = RubyIO.open(BASE_DIR + "ruby_io_append_only_mode.txt", "r");
-    assertEquals("123456\n", io.read());
+    assertEquals("123456", io.read());
     io.close();
   }
 
@@ -172,7 +172,7 @@ public class RubyIOTest {
     io = RubyIO.open(BASE_DIR + "ruby_io_append_read_mode.txt", "a+");
     io.write("456");
     io.seek(0);
-    assertEquals("123456\n", io.read());
+    assertEquals("123456", io.read());
     io.close();
   }
 

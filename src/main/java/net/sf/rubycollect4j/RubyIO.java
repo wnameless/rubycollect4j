@@ -26,7 +26,9 @@ import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyIO.Mode.R;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Collections;
@@ -292,11 +294,14 @@ public class RubyIO {
       throw new IllegalStateException("IOError: not opened for reading");
     }
     StringBuilder sb = new StringBuilder();
-    String line;
     try {
-      while ((line = raFile.readLine()) != null) {
-        sb.append(line + "\n");
+      BufferedReader reader = new BufferedReader(new FileReader(file));
+      char[] buf = new char[1024];
+      int numOfChars = 0;
+      while ((numOfChars = reader.read(buf)) != -1) {
+        sb.append(String.valueOf(buf, 0, numOfChars));
       }
+      reader.close();
     } catch (IOException ex) {
       close();
       Logger.getLogger(RubyIO.class.getName()).log(Level.SEVERE, null, ex);

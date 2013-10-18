@@ -139,3 +139,10 @@ Version 1.5.0
 Version 1.5.1
 
 * Changed LazyRubyEnumerator to RubyLazyEnumerator
+
+
+Version 1.5.2
+
+- Removed RubyEnumerable#sort(Comparator comp) to adapt new Java8 List Interface
+
+* Fixed RubyIO UTF read & write bug
