@@ -1080,15 +1080,15 @@ public final class RubyLazyEnumerator<E> implements RubyEnumerableBase<E>,
     }
   }
 
-  @Override
-  public RubyArray<E> sort(Comparator<? super E> comp) {
-    RubyArray<E> rubyArray = newRubyArray(iter);
-    if (rubyArray.size() <= 1)
-      return rubyArray;
-
-    Collections.sort(rubyArray, comp);
-    return rubyArray;
-  }
+  // @Override
+  // public RubyArray<E> sort(Comparator<? super E> comp) {
+  // RubyArray<E> rubyArray = newRubyArray(iter);
+  // if (rubyArray.size() <= 1)
+  // return rubyArray;
+  //
+  // Collections.sort(rubyArray, comp);
+  // return rubyArray;
+  // }
 
   /**
    * Returns a RubyLazyEnumerator.

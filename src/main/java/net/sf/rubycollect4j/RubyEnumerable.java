@@ -764,10 +764,10 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
     return newRubyLazyEnumerator(getIterable()).sort();
   }
 
-  @Override
-  public RubyArray<E> sort(Comparator<? super E> comp) {
-    return newRubyLazyEnumerator(getIterable()).sort(comp);
-  }
+  // @Override
+  // public RubyArray<E> sort(Comparator<? super E> comp) {
+  // return newRubyLazyEnumerator(getIterable()).sort(comp);
+  // }
 
   /**
    * Returns a RubyEnumerator of this RubyEnumerable.

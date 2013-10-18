@@ -1133,19 +1133,19 @@ public class RubyEnumerableTest {
         .sort());
   }
 
-  @Test
-  public void testSortWithComparator() {
-    re = newRubyEnumerator(Arrays.asList(4, 1, 2, 3, 3));
-    assertEquals(ra(4, 3, 3, 2, 1), re.sort(new Comparator<Integer>() {
-
-      @Override
-      public int compare(Integer o1, Integer o2) {
-        return o2 - o1;
-      }
-
-    }));
-    assertEquals(ra(1), newRubyEnumerator(Arrays.asList(1)).sort(null));
-  }
+  // @Test
+  // public void testSortWithComparator() {
+  // re = newRubyEnumerator(Arrays.asList(4, 1, 2, 3, 3));
+  // assertEquals(ra(4, 3, 3, 2, 1), re.sort(new Comparator<Integer>() {
+  //
+  // @Override
+  // public int compare(Integer o1, Integer o2) {
+  // return o2 - o1;
+  // }
+  //
+  // }));
+  // assertEquals(ra(1), newRubyEnumerator(Arrays.asList(1)).sort(null));
+  // }
 
   @Test(expected = IllegalArgumentException.class)
   public void testSortException1() {

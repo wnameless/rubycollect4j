@@ -526,15 +526,15 @@ public interface RubyEnumerableBase<E> {
    */
   public RubyArray<E> sort();
 
-  /**
-   * Sorts elements of this RubyEnumerable by given Comparator and stores them
-   * into a RubyArray.
-   * 
-   * @param comp
-   *          a Comparator
-   * @return a RubyArray
-   */
-  public RubyArray<E> sort(Comparator<? super E> comp);
+  // /**
+  // * Sorts elements of this RubyEnumerable by given Comparator and stores them
+  // * into a RubyArray.
+  // *
+  // * @param comp
+  // * a Comparator
+  // * @return a RubyArray
+  // */
+  // public RubyArray<E> sort(Comparator<? super E> comp);
 
   /**
    * Sorts elements of this RubyEnumerable by the ordering of elements
