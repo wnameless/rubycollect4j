@@ -133,4 +133,4 @@ import org.junit.runners.Suite.SuiteClasses;
     ZipIterableTest.class, ZipIteratorTest.class, ByteUtilTest.class,
     DirectiveTest.class, PackerTest.class, PeekingIteratorTest.class,
     ComparableEntryTest.class })
-public class AllTests {}
+public class RubyCollect4JTests {}

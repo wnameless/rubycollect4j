@@ -20,7 +20,7 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import java.io.RandomAccessFile;
+import java.io.File;
 import java.util.Iterator;
 
 /**
@@ -30,26 +30,26 @@ import java.util.Iterator;
  */
 public final class EachLineIterable implements Iterable<String> {
 
-  private final RandomAccessFile raFile;
+  private final File file;
 
   /**
    * Creates an EachLineIterable.
    * 
-   * @param raFile
-   *          a RandomAccessFile
+   * @param file
+   *          a File
    * @throws NullPointerException
-   *           if raFile is null
+   *           if file is null
    */
-  public EachLineIterable(RandomAccessFile raFile) {
-    if (raFile == null)
+  public EachLineIterable(File file) {
+    if (file == null)
       throw new NullPointerException();
 
-    this.raFile = raFile;
+    this.file = file;
   }
 
   @Override
   public Iterator<String> iterator() {
-    return new EachLineIterator(raFile);
+    return new EachLineIterator(file);
   }
 
   @Override

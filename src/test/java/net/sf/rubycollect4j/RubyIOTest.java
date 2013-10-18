@@ -90,18 +90,18 @@ public class RubyIOTest {
     io = RubyIO.open(BASE_DIR + "ruby_io_read_write_mode.txt", "w");
     io.close();
     io = RubyIO.open(BASE_DIR + "ruby_io_read_write_mode.txt", "r+");
-    io.puts("1");
-    io.puts("2");
-    io.puts("3");
+    io.puts("一");
+    io.puts("二三");
+    io.puts("四五六");
     io.close();
     io = RubyIO.open(BASE_DIR + "ruby_io_read_write_mode.txt", "r+");
-    assertEquals(ra("1", "2", "3"), io.eachLine().toA());
+    assertEquals(ra("一", "二三", "四五六"), io.eachLine().toA());
     io.close();
     io = RubyIO.open(BASE_DIR + "ruby_io_read_write_mode.txt", "r+");
     io.puts("4");
     io.close();
     io = RubyIO.open(BASE_DIR + "ruby_io_read_write_mode.txt", "r+");
-    assertEquals(ra("4", "2", "3"), io.eachLine().toA());
+    assertEquals(ra("4", "�", "二三", "四五六"), io.eachLine().toA());
     io.close();
   }
 

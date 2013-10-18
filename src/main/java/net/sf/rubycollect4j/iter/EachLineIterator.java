@@ -20,8 +20,11 @@
  */
 package net.sf.rubycollect4j.iter;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.logging.Level;
@@ -34,35 +37,33 @@ import java.util.logging.Logger;
  */
 public final class EachLineIterator implements Iterator<String> {
 
-  private RandomAccessFile raFile;
+  private final BufferedReader reader;
   private String line;
 
   /**
    * Creates an EachLineIterator.
    * 
-   * @param raFile
-   *          a RandomAccessFile
+   * @param file
+   *          a File
    * @throws NullPointerException
-   *           if raFile is null
+   *           if file is null
    */
-  public EachLineIterator(RandomAccessFile raFile) {
-    if (raFile == null)
+  public EachLineIterator(File file) {
+    if (file == null)
       throw new NullPointerException();
 
-    this.raFile = raFile;
     try {
-      this.raFile.seek(0L);
-    } catch (IOException ex) {
-      Logger.getLogger(EachLineIterator.class.getName()).log(Level.SEVERE,
-          null, ex);
-      throw new RuntimeException(ex);
+      reader = new BufferedReader(new FileReader(file));
+    } catch (FileNotFoundException e) {
+      throw new RuntimeException("Errno::ENOENT: No such file or directory - "
+          + file.getName());
     }
     nextLine();
   }
 
   private void nextLine() {
     try {
-      line = raFile.readLine();
+      line = reader.readLine();
     } catch (IOException ex) {
       Logger.getLogger(EachLineIterator.class.getName()).log(Level.SEVERE,
           null, ex);

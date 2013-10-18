@@ -24,7 +24,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.io.RandomAccessFile;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -37,8 +36,7 @@ public class EachLineIterableTest {
   @Before
   public void setUp() throws Exception {
     iter =
-        new EachLineIterable(new RandomAccessFile(new File(BASE_DIR
-            + "ruby_io_read_only_mode.txt"), "r"));
+        new EachLineIterable(new File(BASE_DIR + "ruby_io_read_only_mode.txt"));
   }
 
   @Test
