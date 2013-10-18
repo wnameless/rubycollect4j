@@ -270,9 +270,7 @@ public class RubyIO {
       throw new IllegalStateException("IOError: not opened for writing");
     }
     try {
-      for (byte b : words.getBytes()) {
-        raFile.writeByte(b);
-      }
+      raFile.write(words.getBytes());
       raFile.writeBytes(System.getProperty("line.separator"));
     } catch (IOException ex) {
       close();
@@ -341,9 +339,7 @@ public class RubyIO {
       throw new IllegalStateException("IOError: not opened for writing");
     }
     try {
-      for (byte b : words.getBytes()) {
-        raFile.writeByte(b);
-      }
+      raFile.write(words.getBytes());
     } catch (IOException ex) {
       close();
       Logger.getLogger(RubyIO.class.getName()).log(Level.SEVERE, null, ex);
