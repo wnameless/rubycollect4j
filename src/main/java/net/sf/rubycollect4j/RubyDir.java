@@ -89,7 +89,7 @@ public final class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
-   * Stores a entries of a folder into a RubyArray.
+   * Puts entries of a folder into a RubyArray.
    * 
    * @param path
    *          of a file

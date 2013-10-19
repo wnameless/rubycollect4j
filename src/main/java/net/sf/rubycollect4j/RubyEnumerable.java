@@ -109,7 +109,7 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Stores elements which are transformed by the block into a RubyArray.
+   * Puts elements which are transformed by the block into a RubyArray.
    * 
    * @param <S>
    *          the type of transformed elements
@@ -199,7 +199,7 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Drops the first n elements and stores the rest into a RubyArray.
+   * Drops the first n elements and puts the rest into a RubyArray.
    * 
    * @param n
    *          number of elements to drop
@@ -239,8 +239,8 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Iterates each element and stores the element with n - 1 consecutive
-   * elements into a RubyArray.
+   * Iterates each element and puts the element with n - 1 consecutive elements
+   * into a RubyArray.
    * 
    * @param n
    *          number of consecutive elements
@@ -304,10 +304,10 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Iterates elements with their indices by Entry and yields them to the block.
+   * Iterates elements with their indices and yields them to the block.
    * 
    * @param block
-   *          to yield each Entry
+   *          to yield each element and index
    * @return this RubyEnumerable
    */
   public RubyEnumerable<E> eachWithIndex(WithIndexBlock<E> block) {
@@ -325,7 +325,7 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
    * @param <S>
    *          the type of transformed elements
    * @param o
-   *          any Object
+   *          an Object
    * @return a RubyEnumerator
    */
   public <S> RubyEnumerator<Entry<E, S>> eachWithObject(S o) {
@@ -366,7 +366,7 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Stores elements which are true returned by the block into a RubyArray.
+   * Puts elements which are true returned by the block into a RubyArray.
    * 
    * @param block
    *          to filter elements
@@ -428,7 +428,7 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Stores elements which are matched by regex into a RubyArray.
+   * Puts elements which are matched by regex into a RubyArray.
    * 
    * @param regex
    *          regular expression
@@ -439,7 +439,7 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Stores elements which are matched by regex transformed by the block into a
+   * Puts elements which are matched by regex transformed by the block into a
    * RubyArray.
    * 
    * @param <S>
@@ -796,7 +796,7 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Stores the first n elements into a RubyArray.
+   * Puts the first n elements into a RubyArray.
    * 
    * @param n
    *          number of elements
@@ -824,7 +824,7 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Stores elements into a RubyArray until a element gets false returned by the
+   * Puts elements into a RubyArray until a element gets false returned by the
    * block.
    * 
    * @param block

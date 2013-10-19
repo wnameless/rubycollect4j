@@ -466,7 +466,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Merges any Map with self and stores into a new RubyHash.
+   * Merges any Map with self and puts into a new RubyHash.
    * 
    * @param otherHash
    *          any Map
@@ -484,7 +484,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Merges any Map with self and stores into a new RubyHash. Resolves the final
+   * Merges any Map with self and puts into a new RubyHash. Resolves the final
    * value of the key which is conflicted by given block.
    * 
    * @param otherHash
@@ -643,7 +643,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Stores a key-value pair and returns the value.
+   * Puts a key-value pair and returns the value.
    * 
    * @param key
    *          of Entry
@@ -769,7 +769,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Stores elements which are transformed by the block into a RubyArray.
+   * Puts elements which are transformed by the block into a RubyArray.
    * 
    * @param <S>
    *          the type of transformed elements
@@ -945,7 +945,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Stores elements which are true returned by the block into a RubyArray.
+   * Puts elements which are true returned by the block into a RubyArray.
    * 
    * @param block
    *          to filter elements
@@ -977,7 +977,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Stores elements which are matched by regex transformed by the block into a
+   * Puts elements which are matched by regex transformed by the block into a
    * RubyArray.
    * 
    * @param <S>
@@ -1136,7 +1136,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
 
   /**
    * Finds elements which are the min and max elements induced by the Comparator
-   * transformed by the block of this RubyEnumerable and stores them into a
+   * transformed by the block of this RubyEnumerable and puts them into a
    * RubyArray.
    * 
    * @param <S>
@@ -1161,7 +1161,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
 
   /**
    * Finds elements which is the min and max elements transformed by the block
-   * of this RubyEnumerable and stores them into a RubyArray.
+   * of this RubyEnumerable and puts them into a RubyArray.
    * 
    * @param <S>
    *          the type of transformed elements
@@ -1300,7 +1300,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
 
   /**
    * Sorts elements of this RubyEnumerable by the ordering of elements
-   * transformed by the block induced by the Comparator and stores them into a
+   * transformed by the block induced by the Comparator and puts them into a
    * RubyArray.
    * 
    * @param <S>
@@ -1325,7 +1325,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
 
   /**
    * Sorts elements of this RubyEnumerable by the ordering of elements
-   * transformed by the block and stores them into a RubyArray.
+   * transformed by the block and puts them into a RubyArray.
    * 
    * @param <S>
    *          the type of transformed elements
@@ -1346,7 +1346,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Stores element into a RubyArray from beginning until the result returned by
+   * Puts element into a RubyArray from beginning until the result returned by
    * the block is false.
    * 
    * @param block

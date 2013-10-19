@@ -153,7 +153,7 @@ public interface RubyEnumerableBase<E> {
   public <S> S eachWithObject(S o, WithObjectBlock<E, S> block);
 
   /**
-   * Stores each element into a RubyArray.
+   * Puts each element into a RubyArray.
    * 
    * @return a RubyArray
    */
@@ -384,8 +384,8 @@ public interface RubyEnumerableBase<E> {
   public <S> E minBy(TransformBlock<E, S> block);
 
   /**
-   * Finds the min and max elements of this RubyEnumerable and stores them into
-   * a RubyArray.
+   * Finds the min and max elements of this RubyEnumerable and puts them into a
+   * RubyArray.
    * 
    * @return a RubyArray
    */
@@ -393,7 +393,7 @@ public interface RubyEnumerableBase<E> {
 
   /**
    * Finds the min and max elements induced by the Comparator of this
-   * RubyEnumerable and stores them into a RubyArray.
+   * RubyEnumerable and puts them into a RubyArray.
    * 
    * @param comp
    *          a Comparator
@@ -403,7 +403,7 @@ public interface RubyEnumerableBase<E> {
 
   /**
    * Finds elements which are the min and max elements induced by the Comparator
-   * transformed by the block of this RubyEnumerable and stores them into a
+   * transformed by the block of this RubyEnumerable and puts them into a
    * RubyArray.
    * 
    * @param <S>
@@ -419,7 +419,7 @@ public interface RubyEnumerableBase<E> {
 
   /**
    * Finds elements which is the min and max elements transformed by the block
-   * of this RubyEnumerable and stores them into a RubyArray.
+   * of this RubyEnumerable and puts them into a RubyArray.
    * 
    * @param <S>
    *          the type of transformed elements
@@ -518,7 +518,7 @@ public interface RubyEnumerableBase<E> {
   public E reduce(String methodName);
 
   /**
-   * Sorts elements of this RubyEnumerable and stores them into a RubyArray.
+   * Sorts elements of this RubyEnumerable and puts them into a RubyArray.
    * 
    * @return a RubyArray
    * @throws IllegalArgumentException
@@ -527,7 +527,7 @@ public interface RubyEnumerableBase<E> {
   public RubyArray<E> sort();
 
   // /**
-  // * Sorts elements of this RubyEnumerable by given Comparator and stores them
+  // * Sorts elements of this RubyEnumerable by given Comparator and puts them
   // * into a RubyArray.
   // *
   // * @param comp
@@ -538,7 +538,7 @@ public interface RubyEnumerableBase<E> {
 
   /**
    * Sorts elements of this RubyEnumerable by the ordering of elements
-   * transformed by the block induced by the Comparator and stores them into a
+   * transformed by the block induced by the Comparator and puts them into a
    * RubyArray.
    * 
    * @param <S>
@@ -555,7 +555,7 @@ public interface RubyEnumerableBase<E> {
   /**
    * Sorts elements of this RubyEnumerable by the ordering of elements
    * transformed by the block induced by the Comparator for S and applies the
-   * Comparator for E again before stores them into a RubyArray.
+   * Comparator for E again before puts them into a RubyArray.
    * 
    * @param <S>
    *          the type of transformed elements
@@ -572,7 +572,7 @@ public interface RubyEnumerableBase<E> {
 
   /**
    * Sorts elements of this RubyEnumerable by the ordering of elements
-   * transformed by the block and stores them into a RubyArray.
+   * transformed by the block and puts them into a RubyArray.
    * 
    * @param <S>
    *          the type of transformed elements

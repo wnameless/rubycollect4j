@@ -301,8 +301,8 @@ public final class RubyLazyEnumerator<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Iterates each element and stores the element with n - 1 consecutive
-   * elements into a RubyArray. Lazy loading by a RubyLazyEnumerator.
+   * Iterates each element and puts the element with n - 1 consecutive elements
+   * into a RubyArray. Lazy loading by a RubyLazyEnumerator.
    * 
    * @param n
    *          number of consecutive elements

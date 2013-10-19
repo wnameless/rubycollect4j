@@ -80,7 +80,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * Creates a RubyArray by given List.
    * 
    * @param list
-   *          any List
+   *          a List
    * @throws NullPointerException
    *           if list is null
    */
@@ -241,7 +241,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Removes all null elements and stores the rest in a new RubyArray.
+   * Removes all null elements and puts the rest into a new RubyArray.
    * 
    * @return a new RubyArray
    */
@@ -416,7 +416,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * Equivalent to equals().
    * 
    * @param o
-   *          any Object
+   *          an Object
    * @return true if 2 objects are equal, false otherwise
    */
   public boolean eqlʔ(Object o) {
@@ -424,7 +424,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Returns the element at any index. -1 represents the last index and so on.
+   * Returns the element at an index. -1 represents the last index and so on.
    * 
    * @param index
    *          of an element
@@ -441,7 +441,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Returns the element at any index. -1 represents the last index and so on.
+   * Returns the element at an index. -1 represents the last index and so on.
    * 
    * @param index
    *          of an element
@@ -457,7 +457,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Returns the element at any index. -1 represents the last index and so on.
+   * Returns the element at an index. -1 represents the last index and so on.
    * 
    * @param index
    *          of an element
@@ -488,7 +488,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Starts to fill the RubyArray from an index with the element.
+   * Starts to fill this RubyArray from an index with the element.
    * 
    * @param item
    *          to be filled
@@ -510,14 +510,14 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Starts to fill part of the RubyArray from an index with the element.
+   * Starts to fill part of this RubyArray from an index with the element.
    * 
    * @param item
    *          to be filled
    * @param start
    *          where to begin
    * @param length
-   *          define the interval to be filled
+   *          of the interval to be filled
    * @return this RubyArray
    */
   public RubyArray<E> fill(E item, int start, int length) {
@@ -555,7 +555,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Starts to fill the RubyArray from an index with the element returned by the
+   * Starts to fill this RubyArray from an index with elements returned by the
    * block.
    * 
    * @param start
@@ -578,13 +578,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Starts to fill part of the RubyArray from an index with the element
-   * returned by the block.
+   * Starts to fill part of this RubyArray from an index with elements returned
+   * by the block.
    * 
    * @param start
    *          where to begin
    * @param length
-   *          define the interval to be filled
+   *          of the interval to be filled
    * @param block
    *          to transform elements to be filled
    * @return this RubyArray
@@ -687,7 +687,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Finds the index of the target element.
+   * Finds the index of an element.
    * 
    * @param target
    *          to be found
@@ -699,10 +699,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Startss to insert elements to this RubyArray from the index.
+   * Starts to insert elements to this RubyArray from the index.
    * 
    * @param index
-   *          to insert from
+   *          where to begin
    * @param args
    *          elements to be inserted
    * @return this RubyArray
@@ -743,10 +743,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Stores all common elements into a new RubyArray.
+   * Puts all common elements into a new RubyArray.
    * 
    * @param other
-   *          any List
+   *          a List
    * @return a new RubyArray
    */
   public RubyArray<E> intersection(List<E> other) {
@@ -759,7 +759,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Transforms each element to a String, then join them.
+   * Transforms each element to a String, then joins them.
    * 
    * @return a String
    */
@@ -773,10 +773,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Transforms each element to a String, then join them by the separator.
+   * Transforms each element to a String, then joins them by the separator.
    * 
    * @param separator
-   *          to join elements
+   *          used to join elements
    * @return a String
    */
   public String join(String separator) {
@@ -802,7 +802,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Keeps elements which are false returned by the block.
+   * Keeps elements which are true returned by the block.
    * 
    * @param block
    *          to filter elements
@@ -967,7 +967,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * Appends other List to self into a new RubyArray.
    * 
    * @param other
-   *          any List
+   *          a List
    * @return a new RubyArray
    */
   public RubyArray<E> plus(List<E> other) {
@@ -1190,7 +1190,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * Replaces all elements of self with other List
    * 
    * @param other
-   *          any List
+   *          a List
    * @return this RubyArray
    */
   public RubyArray<E> replace(List<E> other) {
@@ -1200,7 +1200,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Reverses this RubyArray and store into a new RubyArray.
+   * Reverses this RubyArray and puts the result into a new RubyArray.
    * 
    * @return a new RubyArray
    */
@@ -1260,7 +1260,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Moves the first element to the last and store them to a new RubyArray.
+   * Moves the first element to the last and puts them into a new RubyArray.
    * 
    * @return a new RubyArray
    */
@@ -1283,7 +1283,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Moves the first element to the last n times and store them to a new
+   * Moves the first element to the last n times and puts them into a new
    * RubyArray.
    * 
    * @param n
@@ -1425,7 +1425,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Shuffles this RubyArray and store into a new RubyArray.
+   * Shuffles this RubyArray and puts the result into a new RubyArray.
    * 
    * @return a new RubyArray
    */
@@ -1460,7 +1460,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * Slices an interval of this RubyArray into a new RubyArray.
    * 
    * @param index
-   *          where to start
+   *          where to begin
    * @param length
    *          size of returned RubyArray
    * @return a new RubyArray
@@ -1504,7 +1504,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * Slices an interval of this RubyArray out of self.
    * 
    * @param index
-   *          where to start
+   *          where to begin
    * @param length
    *          size of returned RubyArray
    * @return a new RubyArray
@@ -1710,10 +1710,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Eliminate all elements from other List and store into a new RubyArray.
+   * Eliminates all elements from other List and puts the result into a new
+   * RubyArray.
    * 
    * @param other
-   *          any List
+   *          a List
    * @return a new RubyArray
    */
   public RubyArray<E> minus(List<E> other) {
@@ -1783,10 +1784,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Store all distinct elements into a new RubyArray.
+   * Puts all distinct elements into a new RubyArray.
    * 
    * @param other
-   *          any List
+   *          a List
    * @return a new RubyArray
    */
   public RubyArray<E> union(List<E> other) {
@@ -1803,7 +1804,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Unique this RubyArray and store the result to a new RubyArray.
+   * Filters elements uniquely and puts the result into a new RubyArray.
    * 
    * @return a new RubyArray
    */
@@ -1816,8 +1817,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Unique this RubyArray by the result returned by the block and store the
-   * result to a new RubyArray.
+   * Filters elements by the result returned by the block uniquely and puts the
+   * result into a new RubyArray.
    * 
    * @param <S>
    *          the type of transformed elements
@@ -1839,7 +1840,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Unique this RubyArray. Return null if unchanged.
+   * Filters elements uniquely. Returns null if unchanged.
    * 
    * @return this RubyArray or null
    */
@@ -1852,7 +1853,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Unique this RubyArray by the result returned by the block.
+   * Filters elements by the result returned by the block uniquely.
    * 
    * @param <S>
    *          the type of transformed elements
@@ -1877,7 +1878,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Put an element at beginning of this RubyArray
+   * Puts an element at beginning of this RubyArray
    * 
    * @param item
    *          an element
@@ -1889,7 +1890,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Store all elements from indices in a RubyArray.
+   * Puts all elements from given indices into a RubyArray.
    * 
    * @param indices
    *          where elements to be found
