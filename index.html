@@ -47,7 +47,7 @@ It also implements parts of Ruby Dir, File and Date methods.</p>
 <div class="highlight highlight-xml"><pre><span class="nt">&lt;dependency&gt;</span>
   <span class="nt">&lt;groupId&gt;</span>net.sf.rubycollect4j<span class="nt">&lt;/groupId&gt;</span>
   <span class="nt">&lt;artifactId&gt;</span>rubycollect4j<span class="nt">&lt;/artifactId&gt;</span>
-  <span class="nt">&lt;version&gt;</span>1.5.1<span class="nt">&lt;/version&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.5.2<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 
@@ -175,7 +175,7 @@ It also implements parts of Ruby Dir, File and Date methods.</p>
 <div class="highlight highlight-java"><pre><span class="n">p</span><span class="o">(</span> <span class="n">newRubyLazyEnumerator</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">)).</span><span class="na">drop</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span> <span class="k">instanceof</span> <span class="n">RubyLazyEnumerator</span> <span class="o">)</span> <span class="c1">// Output: true</span>
 <span class="n">p</span><span class="o">(</span> <span class="n">newRubyLazyEnumerator</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">)).</span><span class="na">drop</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="na">toA</span><span class="o">()</span> <span class="o">)</span>                         <span class="c1">// Output: [2, 3, 4]</span>
 <span class="c1">// A RubyLazyEnumerator can also be created by RubyArray#lazy.</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">ra</span><span class="o">(</span><span class="mi">1</span> <span class="o">,</span><span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">).</span><span class="na">lazy</span><span class="o">().</span><span class="na">cycle</span><span class="o">().</span><span class="na">first</span><span class="o">()</span> <span class="o">)</span>                                                  <span class="c1">// Output: 1</span>
+<span class="n">p</span><span class="o">(</span> <span class="n">ra</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">).</span><span class="na">lazy</span><span class="o">().</span><span class="na">cycle</span><span class="o">().</span><span class="na">drop</span><span class="o">(</span><span class="mi">6</span><span class="o">).</span><span class="na">first</span><span class="o">()</span> <span class="o">)</span>                                          <span class="c1">// Output: 3</span>
 </pre></div>
 
 <p>Demo range():</p>
