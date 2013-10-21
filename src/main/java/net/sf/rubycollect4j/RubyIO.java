@@ -209,7 +209,18 @@ public class RubyIO {
   }
 
   /**
-   * Iterates a File line by line.
+   * Returns a RubyEnumerator of lines in given file.
+   * 
+   * @param path
+   *          of a File
+   * @return a RubyEnumerator
+   */
+  public static RubyEnumerator<String> foreach(String path) {
+    return newRubyEnumerator(new EachLineIterable(new File(path)));
+  }
+
+  /**
+   * Iterates a file line by line.
    * 
    * @param path
    *          of a File
@@ -217,15 +228,7 @@ public class RubyIO {
    *          to process each line
    */
   public static void foreach(String path, Block<String> block) {
-    RubyIO io = null;
-    try {
-      io = new RubyIO(new File(path), Mode.R);
-    } catch (IOException ex) {
-      Logger.getLogger(RubyIO.class.getName()).log(Level.SEVERE, null, ex);
-      throw new RuntimeException(ex);
-    }
-    io.eachLine().each(block);
-    io.close();
+    newRubyEnumerator(new EachLineIterable(new File(path))).each(block);
   }
 
   /**
@@ -242,17 +245,16 @@ public class RubyIO {
   }
 
   /**
-   * Generators a RubyEnumerator of lines in the file.
+   * Returns a RubyEnumerator of lines in the file.
    * 
    * @return a RubyEnumerator
    * @throws IllegalStateException
    *           if file is not readable
    */
   public RubyEnumerator<String> eachLine() {
-    if (mode.isReadable() == false) {
-      close();
+    if (mode.isReadable() == false)
       throw new IllegalStateException("IOError: not opened for reading");
-    }
+
     return newRubyEnumerator(new EachLineIterable(file));
   }
 
@@ -265,10 +267,9 @@ public class RubyIO {
    *           if file is not writable
    */
   public void puts(String words) {
-    if (mode.isWritable() == false) {
-      close();
+    if (mode.isWritable() == false)
       throw new IllegalStateException("IOError: not opened for writing");
-    }
+
     try {
       raFile.write(words.getBytes());
       raFile.writeBytes(System.getProperty("line.separator"));
@@ -287,10 +288,9 @@ public class RubyIO {
    *           if file is not readable
    */
   public String read() {
-    if (mode.isReadable() == false) {
-      close();
+    if (mode.isReadable() == false)
       throw new IllegalStateException("IOError: not opened for reading");
-    }
+
     StringBuilder sb = new StringBuilder();
     try {
       BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -334,10 +334,9 @@ public class RubyIO {
    *           if file is not writable
    */
   public int write(String words) {
-    if (mode.isWritable() == false) {
-      close();
+    if (mode.isWritable() == false)
       throw new IllegalStateException("IOError: not opened for writing");
-    }
+
     try {
       raFile.write(words.getBytes());
     } catch (IOException ex) {

@@ -64,6 +64,8 @@ public final class EachLineIterator implements Iterator<String> {
   private void nextLine() {
     try {
       line = reader.readLine();
+      if (line == null)
+        reader.close();
     } catch (IOException ex) {
       Logger.getLogger(EachLineIterator.class.getName()).log(Level.SEVERE,
           null, ex);
