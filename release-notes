@@ -157,3 +157,5 @@ Version 1.5.3
 * RubyIO#foreach can now take no block and return a RubyEnumerator
 
 * RubyEnumerable#collect & RubyEnumerable#map can now take method name
+
+* RubyArray#valuesAt & RubyHash#valuesAt can now take Iterable

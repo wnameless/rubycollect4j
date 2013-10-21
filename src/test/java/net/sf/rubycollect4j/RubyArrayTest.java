@@ -1482,6 +1482,7 @@ public class RubyArrayTest {
   @Test
   public void testValuesAt() {
     assertEquals(ra(4, 1, null, null), ra.valuesAt(-1, 0, 5, -6));
+    assertEquals(ra(4, 1, null, null), ra.valuesAt(Arrays.asList(-1, 0, 5, -6)));
   }
 
   @Test

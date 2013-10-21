@@ -24,6 +24,7 @@ import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -1377,6 +1378,17 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @return a RubyArray
    */
   public RubyArray<V> valuesAt(K... keys) {
+    return valuesAt(Arrays.asList(keys));
+  }
+
+  /**
+   * Finds all the values by given keys.
+   * 
+   * @param keys
+   *          to access values
+   * @return a RubyArray
+   */
+  public RubyArray<V> valuesAt(Iterable<K> keys) {
     RubyArray<V> values = newRubyArray();
     for (K key : keys) {
       values.add(map.get(key));

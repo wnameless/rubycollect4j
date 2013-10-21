@@ -30,6 +30,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -476,6 +477,8 @@ public class RubyHashTest {
   @Test
   public void testValuesAt() {
     assertEquals(ra(2, 6, 4, 2, null), rh.valuesAt(1, 5, 3, 1, 7));
+    assertEquals(ra(2, 6, 4, 2, null),
+        rh.valuesAt(Arrays.asList(1, 5, 3, 1, 7)));
   }
 
   @Test

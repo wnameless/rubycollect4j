@@ -1904,6 +1904,21 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
     return newRubyArray(values);
   }
 
+  /**
+   * Puts all elements from given indices into a RubyArray.
+   * 
+   * @param indices
+   *          where elements to be found
+   * @return a new RubyArray
+   */
+  public RubyArray<E> valuesAt(Iterable<Integer> indices) {
+    List<E> values = new ArrayList<E>();
+    for (int index : indices) {
+      values.add(at(index));
+    }
+    return newRubyArray(values);
+  }
+
   @Override
   public int size() {
     return list.size();
