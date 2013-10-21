@@ -22,43 +22,41 @@ package net.sf.rubycollect4j.iter;
 
 import java.util.Iterator;
 
-import net.sf.rubycollect4j.block.TransformBlock;
-
 /**
- * TransformIterable converts any type of Iterable to another type by given
- * TransformBlock.
+ * TransformByMethodIterable converts any type of Iterable to another type by
+ * given method.
  * 
  * @param <E>
  *          the type of the elements
  * @param <S>
  *          the type of transformed elements
  */
-public class TransformIterable<E, S> implements Iterable<S> {
+public final class TransformByMethodIterable<E, S> implements Iterable<S> {
 
   private final Iterable<E> iter;
-  private final TransformBlock<E, S> block;
+  private final String methodName;
 
   /**
-   * Creates a TransformIterable.
+   * Creates a TransformByMethodIterable.
    * 
    * @param iter
    *          an Iterable
-   * @param block
-   *          to transform elements
+   * @param methodName
+   *          name of a Method
    * @throws NullPointerException
-   *           if iter or block is null
+   *           if iter or methodName is null
    */
-  public TransformIterable(Iterable<E> iter, TransformBlock<E, S> block) {
-    if (iter == null || block == null)
+  public TransformByMethodIterable(Iterable<E> iter, String methodName) {
+    if (iter == null || methodName == null)
       throw new NullPointerException();
 
     this.iter = iter;
-    this.block = block;
+    this.methodName = methodName;
   }
 
   @Override
   public Iterator<S> iterator() {
-    return new TransformIterator<E, S>(iter.iterator(), block);
+    return new TransformByMethodIterator<E, S>(iter.iterator(), methodName);
   }
 
   @Override

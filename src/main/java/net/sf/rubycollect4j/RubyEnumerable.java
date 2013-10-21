@@ -45,6 +45,7 @@ import net.sf.rubycollect4j.iter.EachWithIndexIterable;
 import net.sf.rubycollect4j.iter.EachWithObjectIterable;
 import net.sf.rubycollect4j.iter.ReverseEachIterable;
 import net.sf.rubycollect4j.iter.SliceBeforeIterable;
+import net.sf.rubycollect4j.iter.TransformByMethodIterable;
 
 /**
  * An extension class for any Iterable object. It includes all methods refer to
@@ -109,7 +110,7 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
   }
 
   /**
-   * Puts elements which are transformed by the block into a RubyArray.
+   * Puts elements which are transformed by given block into a RubyArray.
    * 
    * @param <S>
    *          the type of transformed elements
@@ -119,6 +120,20 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
    */
   public <S> RubyArray<S> collect(TransformBlock<E, S> block) {
     return newRubyLazyEnumerator(getIterable()).collect(block).toA();
+  }
+
+  /**
+   * Puts elements which are transformed by given method into a RubyArray.
+   * 
+   * @param <S>
+   *          the type of transformed elements
+   * @param methodName
+   *          name of a Method
+   * @return a RubyArray
+   */
+  public <S> RubyArray<S> collect(String methodName) {
+    return newRubyLazyEnumerator(
+        new TransformByMethodIterable<E, S>(getIterable(), methodName)).toA();
   }
 
   /**
@@ -522,6 +537,19 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
    */
   public <S> RubyArray<S> map(TransformBlock<E, S> block) {
     return newRubyLazyEnumerator(getIterable()).map(block).toA();
+  }
+
+  /**
+   * Equivalent to collect().
+   * 
+   * @param <S>
+   *          the type of transformed elements
+   * @param methodName
+   *          name of a Method
+   * @return a RubyArray
+   */
+  public <S> RubyArray<S> map(String methodName) {
+    return collect(methodName);
   }
 
   @Override

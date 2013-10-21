@@ -180,6 +180,11 @@ public class RubyEnumerableTest {
   }
 
   @Test
+  public void testCollectWithMethodName() {
+    assertEquals(ra("a", "b", "c"), ra(" a ", " b ", " c ").collect("trim"));
+  }
+
+  @Test
   public void testCollectConcat() {
     assertEquals(RubyEnumerator.class, re.collectConcat().getClass());
     assertEquals(ra(1, 2, 3, 4), re.collectConcat().toA());
@@ -707,6 +712,11 @@ public class RubyEnumerableTest {
           }
 
         }));
+  }
+
+  @Test
+  public void testMapWithMethodName() {
+    assertEquals(ra("a", "b", "c"), ra(" a ", " b ", " c ").map("trim"));
   }
 
   @Test

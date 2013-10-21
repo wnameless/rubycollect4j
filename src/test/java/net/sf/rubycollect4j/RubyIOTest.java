@@ -185,6 +185,13 @@ public class RubyIOTest {
 
   @Test
   public void testForeach() {
+    String file = BASE_DIR + "ruby_io_read_only_mode.txt";
+    assertTrue(RubyFile.foreach(file) instanceof RubyEnumerator);
+    assertEquals(ra("a", "bc", "def"), RubyFile.foreach(file).toA());
+  }
+
+  @Test
+  public void testForeachWithBlock() {
     final RubyArray<String> ra = ra();
     RubyIO.foreach(BASE_DIR + "ruby_io_read_only_mode.txt",
         new Block<String>() {
@@ -211,6 +218,7 @@ public class RubyIOTest {
   @Test
   public void testEachLine() {
     io = RubyIO.open(BASE_DIR + "ruby_io_read_only_mode.txt");
+    assertTrue(io.eachLine() instanceof RubyEnumerator);
     assertEquals("a", io.eachLine().first());
     assertEquals("a", io.eachLine().first());
     assertEquals(ra("a", "bc", "def"), io.eachLine().toA());

@@ -155,3 +155,5 @@ Version 1.5.3
 * Auto close the InputStream if an EachLineIterator reaches to the end
 
 * RubyIO#foreach can now take no block and return a RubyEnumerator
+
+* RubyEnumerable#collect & RubyEnumerable#map can now take method name

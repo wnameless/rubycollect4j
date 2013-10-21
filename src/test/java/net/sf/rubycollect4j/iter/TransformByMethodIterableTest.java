@@ -26,56 +26,38 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import net.sf.rubycollect4j.block.TransformBlock;
-
 import org.junit.Before;
 import org.junit.Test;
 
-public class TransformIterableTest {
+public class TransformByMethodIterableTest {
 
-  private TransformIterable<Integer, Double> iter;
+  private TransformByMethodIterable<Integer, Double> iter;
   private List<Integer> list;
 
   @Before
   public void setUp() throws Exception {
     list = ra(1, 2, 3, 4);
-    iter =
-        new TransformIterable<Integer, Double>(list,
-            new TransformBlock<Integer, Double>() {
-
-              @Override
-              public Double yield(Integer item) {
-                return item.doubleValue();
-              }
-
-            });
+    iter = new TransformByMethodIterable<Integer, Double>(list, "doubleValue");
   }
 
   @Test
   public void testConstructor() {
-    assertTrue(iter instanceof TransformIterable);
+    assertTrue(iter instanceof TransformByMethodIterable);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException1() {
-    new TransformIterable<Integer, String>(null,
-        new TransformBlock<Integer, String>() {
-
-          @Override
-          public String yield(Integer item) {
-            return item.toString();
-          }
-        });
+    new TransformByMethodIterable<Integer, String>(null, "doubleValue");
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    new TransformIterable<Integer, String>(list, null);
+    new TransformByMethodIterable<Integer, String>(list, null);
   }
 
   @Test
   public void testIterator() {
-    assertTrue(iter.iterator() instanceof TransformIterator);
+    assertTrue(iter.iterator() instanceof TransformByMethodIterator);
   }
 
   @Test

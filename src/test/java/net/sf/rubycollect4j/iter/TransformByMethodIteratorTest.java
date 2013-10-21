@@ -25,46 +25,52 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import net.sf.rubycollect4j.block.TransformBlock;
 
 import org.junit.Before;
 import org.junit.Test;
 
-public class TransformIteratorTest {
+public class TransformByMethodIteratorTest {
 
-  private TransformIterator<Integer, Double> iter;
-  private TransformBlock<Integer, Double> block;
+  private TransformByMethodIterator<Integer, Double> iter;
   private List<Integer> list;
 
   @Before
   public void setUp() throws Exception {
     list = ra(1, 2, 3, 4);
-    block = new TransformBlock<Integer, Double>() {
-
-      @Override
-      public Double yield(Integer item) {
-        return item.doubleValue();
-      }
-
-    };
-    iter = new TransformIterator<Integer, Double>(list.iterator(), block);
+    iter =
+        new TransformByMethodIterator<Integer, Double>(list.iterator(),
+            "doubleValue");
   }
 
   @Test
   public void testConstructor() {
-    assertTrue(iter instanceof TransformIterator);
+    assertTrue(iter instanceof TransformByMethodIterator);
+    assertTrue(new TransformByMethodIterator<Integer, Double>(
+        new ArrayList<Integer>().iterator(), "doubleValue") instanceof TransformByMethodIterator);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException1() {
-    new TransformIterator<Integer, Double>(null, block);
+    new TransformByMethodIterator<Integer, Double>(null, "doubleValue");
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    new TransformIterator<Integer, Double>(list.iterator(), null);
+    new TransformByMethodIterator<Integer, Double>(list.iterator(), null);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testConstructorException3() {
+    new TransformByMethodIterator<Integer, Double>(
+        ra(null, 2, 3, 4).iterator(), "doubleValue");
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testConstructorException4() {
+    new TransformByMethodIterator<Integer, Double>(ra(1, 2, 3, 4).iterator(),
+        "no method");
   }
 
   @Test
@@ -83,6 +89,15 @@ public class TransformIteratorTest {
     assertEquals(Double.valueOf(3.0), iter.next());
     assertEquals(Double.valueOf(4.0), iter.next());
     assertFalse(iter.hasNext());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testNextException() {
+    iter =
+        new TransformByMethodIterator<Integer, Double>(ra(1, null, 3, 4)
+            .iterator(), "doubleValue");
+    iter.next();
+    iter.next();
   }
 
   @Test

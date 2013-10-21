@@ -23,6 +23,7 @@ package net.sf.rubycollect4j;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
+import static net.sf.rubycollect4j.RubyCollections.newRubyLazyEnumerator;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -62,6 +63,7 @@ import net.sf.rubycollect4j.iter.ReverseEachIterable;
 import net.sf.rubycollect4j.iter.SliceBeforeIterable;
 import net.sf.rubycollect4j.iter.TakeIterable;
 import net.sf.rubycollect4j.iter.TakeWhileIterable;
+import net.sf.rubycollect4j.iter.TransformByMethodIterable;
 import net.sf.rubycollect4j.iter.TransformIterable;
 import net.sf.rubycollect4j.iter.ZipIterable;
 import net.sf.rubycollect4j.util.PeekingIterator;
@@ -161,6 +163,21 @@ public final class RubyLazyEnumerator<E> implements RubyEnumerableBase<E>,
    */
   public <S> RubyLazyEnumerator<S> collect(TransformBlock<E, S> block) {
     return new RubyLazyEnumerator<S>(new TransformIterable<E, S>(iter, block));
+  }
+
+  /**
+   * Transforms each element by given method. Lazy loading by a
+   * RubyLazyEnumerator.
+   * 
+   * @param <S>
+   *          the type of transformed elements
+   * @param methodName
+   *          name of a Method
+   * @return a RubyLazyEnumerator
+   */
+  public <S> RubyLazyEnumerator<S> collect(String methodName) {
+    return newRubyLazyEnumerator(new TransformByMethodIterable<E, S>(iter,
+        methodName));
   }
 
   /**
@@ -698,6 +715,19 @@ public final class RubyLazyEnumerator<E> implements RubyEnumerableBase<E>,
    */
   public <S> RubyLazyEnumerator<S> map(TransformBlock<E, S> block) {
     return collect(block);
+  }
+
+  /**
+   * Equivalent to collect().
+   * 
+   * @param <S>
+   *          the type of transformed elements
+   * @param methodName
+   *          name of a Method
+   * @return a RubyLazyEnumerator
+   */
+  public <S> RubyLazyEnumerator<S> map(String methodName) {
+    return collect(methodName);
   }
 
   @Override
