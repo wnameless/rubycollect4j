@@ -31,7 +31,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.util.Collections;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
@@ -50,24 +49,50 @@ public class RubyIO {
 
   /**
    * 
-   * This Mode enum contains all kinds of open modes of RubyIO.
+   * This Mode enum contains all open modes of RubyIO.
    * 
    */
   public enum Mode {
 
-    R("r", true, false), RW("r+", true, true), W("w", false, true), WR("w+",
-        true, true), A("a", false, true), AR("a+", true, true);
+    /**
+     * Read.
+     */
+    R("r", true, false),
 
-    private static final Map<String, Mode> modeMap = Collections
-        .unmodifiableMap(Hash(ra(values()).map(
-            new TransformBlock<Mode, Entry<String, Mode>>() {
+    /**
+     * Read and Write.
+     */
+    RW("r+", true, true),
 
-              @Override
-              public Entry<String, Mode> yield(Mode item) {
-                return hp(item.toString(), item);
-              }
+    /**
+     * Write.
+     */
+    W("w", false, true),
 
-            })));
+    /**
+     * Write and Read.
+     */
+    WR("w+", true, true),
+
+    /**
+     * Append.
+     */
+    A("a", false, true),
+
+    /**
+     * Append and Read.
+     */
+    AR("a+", true, true);
+
+    private static final Map<String, Mode> modeMap = Hash(
+        ra(values()).map(new TransformBlock<Mode, Entry<String, Mode>>() {
+
+          @Override
+          public Entry<String, Mode> yield(Mode item) {
+            return hp(item.toString(), item);
+          }
+
+        })).freeze();
 
     private final String mode;
     private final boolean isReadable;
