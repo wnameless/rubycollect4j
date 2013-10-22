@@ -159,3 +159,5 @@ Version 1.5.3
 * RubyEnumerable#collect & RubyEnumerable#map can now take method name
 
 * RubyArray#valuesAt & RubyHash#valuesAt can now take Iterable
+
+* RubyCollections#Hash can now take RubyArray of List

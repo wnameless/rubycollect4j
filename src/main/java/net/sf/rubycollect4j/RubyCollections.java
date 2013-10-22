@@ -1892,6 +1892,27 @@ public final class RubyCollections {
   }
 
   /**
+   * Turns a List of List into a RubyHash.
+   * 
+   * @param <E>
+   *          the type of the elements
+   * @param lists
+   *          a RubyArray of List
+   * @return a RubyHash
+   */
+  public static <E> RubyHash<E, E> Hash(RubyArray<? extends List<E>> lists) {
+    RubyHash<E, E> rubyHash = newRubyHash();
+    for (List<E> list : lists) {
+      if (list.size() < 1 || list.size() > 2)
+        throw new IllegalArgumentException(
+            "ArgumentError: invalid number of elements (" + list.size()
+                + " for 1..2)");
+      rubyHash.put(list.get(0), ra(list).at(1));
+    }
+    return rubyHash;
+  }
+
+  /**
    * Creates a RubyRange by given strings.
    * 
    * @param start

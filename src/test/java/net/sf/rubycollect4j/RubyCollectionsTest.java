@@ -257,6 +257,19 @@ public class RubyCollectionsTest {
   @Test
   public void testHash() {
     assertEquals(rh(1, 2, 3, 4, 5, 6), Hash(ra(hp(1, 2), hp(3, 4), hp(5, 6))));
+    assertEquals(rh(1, 2, 3, 4, 5, 6), Hash(ra(ra(1, 2), ra(3, 4), ra(5, 6))));
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test(expected = IllegalArgumentException.class)
+  public void testHashException1() {
+    Hash(ra(ra(1, 2), ra(3, 4), ra(5, 6, 7)));
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test(expected = IllegalArgumentException.class)
+  public void testHashException2() {
+    Hash(ra(ra(1, 2), ra(3, 4), new RubyArray<Integer>()));
   }
 
   @Test
