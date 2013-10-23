@@ -50,16 +50,14 @@ public class OrderedEntrySetIteratorTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException1() {
-    setIter =
-        new OrderedEntrySetIterator<String, Integer>(null, rh("c", 3, "b", 2,
-            "a", 1));
+    new OrderedEntrySetIterator<String, Integer>(null, rh("c", 3, "b", 2, "a",
+        1));
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    setIter =
-        new OrderedEntrySetIterator<String, Integer>(ra("a", "b", "c")
-            .iterator(), null);
+    new OrderedEntrySetIterator<String, Integer>(ra("a", "b", "c").iterator(),
+        null);
   }
 
   @Test

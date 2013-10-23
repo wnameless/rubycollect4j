@@ -56,14 +56,13 @@ public class ChunkIterableTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException1() {
-    iter = new ChunkIterable<Number, String>(null, block);
+    new ChunkIterable<Number, String>(null, block);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    iter =
-        new ChunkIterable<Number, String>(ra((Number) 1, (Number) 1.0,
-            (Number) 1.0f, (Number) 2, (Number) 2L), null);
+    new ChunkIterable<Number, String>(ra((Number) 1, (Number) 1.0,
+        (Number) 1.0f, (Number) 2, (Number) 2L), null);
   }
 
   @Test

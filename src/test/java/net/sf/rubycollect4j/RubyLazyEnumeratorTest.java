@@ -75,14 +75,7 @@ public class RubyLazyEnumeratorTest {
     assertTrue(lre.chunk(block) instanceof RubyLazyEnumerator);
     lre = newRubyLazyEnumerator(Arrays.asList(1, 2, 2, 3));
     assertEquals(ra(hp(false, ra(1)), hp(true, ra(2, 2)), hp(false, ra(3))),
-        lre.chunk(new TransformBlock<Integer, Boolean>() {
-
-          @Override
-          public Boolean yield(Integer item) {
-            return item % 2 == 0;
-          }
-
-        }).toA());
+        lre.chunk(block).toA());
   }
 
   @Test

@@ -1632,13 +1632,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
 
       map.get(key).add(item);
     }
-    List<S> keys = new ArrayList<S>(map.keySet());
-    Collections.sort(keys, comp);
+    List<S> keys = newRubyArray(map.keySet()).sortǃ(comp);
     list.clear();
     for (S key : keys) {
-      for (E item : map.get(key).sortǃ()) {
-        list.add(item);
-      }
+      list.addAll(map.get(key).sortǃ());
     }
     return this;
   }
@@ -1668,13 +1665,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
 
       map.get(key).add(item);
     }
-    List<S> keys = new ArrayList<S>(map.keySet());
-    Collections.sort(keys, comp2);
+    List<S> keys = newRubyArray(map.keySet()).sortǃ(comp2);
     list.clear();
     for (S key : keys) {
-      for (E item : map.get(key).sortǃ(comp1)) {
-        list.add(item);
-      }
+      list.addAll(map.get(key).sortǃ(comp1));
     }
     return this;
   }
@@ -1698,13 +1692,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
 
       map.get(key).add(item);
     }
-    List<S> keys = new ArrayList<S>(map.keySet());
-    keys = newRubyEnumerator(keys).sort();
+    List<S> keys = newRubyArray(map.keySet()).sortǃ();
     list.clear();
     for (S key : keys) {
-      for (E item : map.get(key).sortǃ()) {
-        list.add(item);
-      }
+      list.addAll(map.get(key).sortǃ());
     }
     return this;
   }

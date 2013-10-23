@@ -361,12 +361,7 @@ public class RubyEnumerableTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testEachConsWithBlockException() {
-    re.eachCons(0, new Block<RubyArray<Integer>>() {
-
-      @Override
-      public void yield(RubyArray<Integer> item) {}
-
-    });
+    re.eachCons(0, null);
   }
 
   @Test
@@ -425,12 +420,7 @@ public class RubyEnumerableTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testEachSliceWithBlockException() {
-    re.eachSlice(0, new Block<RubyArray<Integer>>() {
-
-      @Override
-      public void yield(RubyArray<Integer> item) {}
-
-    });
+    re.eachSlice(0, null);
   }
 
   @Test

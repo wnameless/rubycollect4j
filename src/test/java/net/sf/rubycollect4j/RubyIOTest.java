@@ -57,12 +57,12 @@ public class RubyIOTest {
 
   @Test(expected = RuntimeException.class)
   public void testOpenException() {
-    io = RubyIO.open(BASE_DIR + "no_file.txt");
+    RubyIO.open(BASE_DIR + "no_file.txt");
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testOpenModeWithInvalidString() {
-    io = RubyIO.open(BASE_DIR + "ruby_io_read_only_mode.txt", "haha");
+    RubyIO.open(BASE_DIR + "ruby_io_read_only_mode.txt", "haha");
   }
 
   @Test
@@ -207,12 +207,7 @@ public class RubyIOTest {
 
   @Test(expected = RuntimeException.class)
   public void testForeachException() {
-    RubyIO.foreach("no such file!", new Block<String>() {
-
-      @Override
-      public void yield(String item) {}
-
-    });
+    RubyIO.foreach("no such file!", null);
   }
 
   @Test

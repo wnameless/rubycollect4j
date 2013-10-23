@@ -50,17 +50,17 @@ public class StepIteratorTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException1() {
-    iter = new StepIterator<Integer>(null, 2);
+    new StepIterator<Integer>(null, 2);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testConstructorException2() {
-    iter = new StepIterator<Integer>(ra(1, 2, 3, 4, 5).iterator(), 0);
+    new StepIterator<Integer>(ra(1, 2, 3, 4, 5).iterator(), 0);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testConstructorException3() {
-    iter = new StepIterator<Integer>(ra(1, 2, 3, 4, 5).iterator(), -1);
+    new StepIterator<Integer>(ra(1, 2, 3, 4, 5).iterator(), -1);
   }
 
   @Test

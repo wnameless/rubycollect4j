@@ -573,19 +573,19 @@ public final class RubyLazyEnumerator<E> implements RubyEnumerableBase<E>,
 
   @Override
   public <S> RubyHash<S, RubyArray<E>> groupBy(TransformBlock<E, S> block) {
-    Map<S, List<E>> multimap = new LinkedHashMap<S, List<E>>();
+    Map<S, List<E>> map = new LinkedHashMap<S, List<E>>();
     for (E item : iter) {
       S key = block.yield(item);
-      if (!multimap.containsKey(key))
-        multimap.put(key, new ArrayList<E>());
+      if (!map.containsKey(key))
+        map.put(key, new ArrayList<E>());
 
-      multimap.get(key).add(item);
+      map.get(key).add(item);
     }
-    RubyHash<S, RubyArray<E>> map = newRubyHash();
-    for (S key : multimap.keySet()) {
-      map.put(key, newRubyArray(multimap.get(key)));
+    RubyHash<S, RubyArray<E>> rubyHash = newRubyHash();
+    for (S key : map.keySet()) {
+      rubyHash.put(key, newRubyArray(map.get(key)));
     }
-    return map;
+    return rubyHash;
   }
 
   @Override
@@ -1132,21 +1132,18 @@ public final class RubyLazyEnumerator<E> implements RubyEnumerableBase<E>,
   @Override
   public <S> RubyArray<E> sortBy(Comparator<? super S> comp,
       TransformBlock<E, S> block) {
-    Map<S, RubyArray<E>> multimap = new LinkedHashMap<S, RubyArray<E>>();
+    Map<S, RubyArray<E>> map = new LinkedHashMap<S, RubyArray<E>>();
     RubyArray<E> sortedList = newRubyArray();
     for (E item : iter) {
       S key = block.yield(item);
-      if (!multimap.containsKey(key))
-        multimap.put(key, new RubyArray<E>());
+      if (!map.containsKey(key))
+        map.put(key, new RubyArray<E>());
 
-      multimap.get(key).add(item);
+      map.get(key).add(item);
     }
-    List<S> keys = new ArrayList<S>(multimap.keySet());
-    Collections.sort(keys, comp);
+    List<S> keys = newRubyArray(map.keySet()).sortǃ(comp);
     for (S key : keys) {
-      for (E item : multimap.get(key).sortǃ()) {
-        sortedList.add(item);
-      }
+      sortedList.addAll(map.get(key).sortǃ());
     }
     return sortedList;
   }
@@ -1154,42 +1151,36 @@ public final class RubyLazyEnumerator<E> implements RubyEnumerableBase<E>,
   @Override
   public <S> RubyArray<E> sortBy(Comparator<? super E> comp1,
       Comparator<? super S> comp2, TransformBlock<E, S> block) {
-    Map<S, RubyArray<E>> multimap = new LinkedHashMap<S, RubyArray<E>>();
+    Map<S, RubyArray<E>> map = new LinkedHashMap<S, RubyArray<E>>();
     RubyArray<E> sortedList = newRubyArray();
     for (E item : iter) {
       S key = block.yield(item);
-      if (!multimap.containsKey(key))
-        multimap.put(key, new RubyArray<E>());
+      if (!map.containsKey(key))
+        map.put(key, new RubyArray<E>());
 
-      multimap.get(key).add(item);
+      map.get(key).add(item);
     }
-    List<S> keys = new ArrayList<S>(multimap.keySet());
-    Collections.sort(keys, comp2);
+    List<S> keys = newRubyArray(map.keySet()).sortǃ(comp2);
     for (S key : keys) {
-      for (E item : multimap.get(key).sortǃ(comp1)) {
-        sortedList.add(item);
-      }
+      sortedList.addAll(map.get(key).sortǃ(comp1));
     }
     return sortedList;
   }
 
   @Override
   public <S> RubyArray<E> sortBy(TransformBlock<E, S> block) {
-    Map<S, RubyArray<E>> multimap = new LinkedHashMap<S, RubyArray<E>>();
+    Map<S, RubyArray<E>> map = new LinkedHashMap<S, RubyArray<E>>();
     RubyArray<E> sortedList = newRubyArray();
     for (E item : iter) {
       S key = block.yield(item);
-      if (!multimap.containsKey(key))
-        multimap.put(key, new RubyArray<E>());
+      if (!map.containsKey(key))
+        map.put(key, new RubyArray<E>());
 
-      multimap.get(key).add(item);
+      map.get(key).add(item);
     }
-    List<S> keys = new ArrayList<S>(multimap.keySet());
-    keys = newRubyEnumerator(keys).sort();
+    List<S> keys = newRubyArray(map.keySet()).sortǃ();
     for (S key : keys) {
-      for (E item : multimap.get(key).sortǃ()) {
-        sortedList.add(item);
-      }
+      sortedList.addAll(map.get(key).sortǃ());
     }
     return sortedList;
   }

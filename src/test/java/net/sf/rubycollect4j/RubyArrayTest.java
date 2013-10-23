@@ -48,10 +48,29 @@ import org.junit.Test;
 public class RubyArrayTest {
 
   private RubyArray<Integer> ra;
+  private TransformBlock<Integer, Integer> block;
+  private Comparator<Integer> comp;
 
   @Before
   public void setUp() throws Exception {
     ra = ra(1, 2, 3, 4);
+    block = new TransformBlock<Integer, Integer>() {
+
+      @Override
+      public Integer yield(Integer item) {
+        return item * 2;
+      }
+
+    };
+    comp = new Comparator<Integer>() {
+
+      @Override
+      public int compare(Integer o1, Integer o2) {
+        return o2 - o1;
+      }
+
+    };
+
   }
 
   @Test
@@ -63,7 +82,7 @@ public class RubyArrayTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException() {
-    ra = new RubyArray<Integer>(null);
+    new RubyArray<Integer>(null);
   }
 
   @SuppressWarnings("unchecked")
@@ -151,14 +170,7 @@ public class RubyArrayTest {
 
   @Test
   public void testCollectǃ() {
-    assertSame(ra, ra.collectǃ(new TransformBlock<Integer, Integer>() {
-
-      @Override
-      public Integer yield(Integer item) {
-        return item * 2;
-      }
-
-    }));
+    assertSame(ra, ra.collectǃ(block));
     assertEquals(ra(2, 4, 6, 8), ra);
   }
 
@@ -234,15 +246,7 @@ public class RubyArrayTest {
   @Test
   public void testDeleteWithBlock() {
     ra = ra(1, 2, 3, 3);
-    assertEquals(Integer.valueOf(3),
-        ra.delete(3, new TransformBlock<Integer, Integer>() {
-
-          @Override
-          public Integer yield(Integer item) {
-            return item * 3;
-          }
-
-        }));
+    assertEquals(Integer.valueOf(3), ra.delete(3, block));
     assertEquals(ra(1, 2), ra);
     assertEquals(Integer.valueOf(27),
         ra.delete(9, new TransformBlock<Integer, Integer>() {
@@ -255,14 +259,7 @@ public class RubyArrayTest {
         }));
     assertEquals(ra(1, 2), ra);
     ra = ra(1, 2, null, null);
-    assertNull(ra.delete(null, new TransformBlock<Integer, Integer>() {
-
-      @Override
-      public Integer yield(Integer item) {
-        return item * 3;
-      }
-
-    }));
+    assertNull(ra.delete(null, block));
     assertEquals(ra(1, 2), ra);
   }
 
@@ -387,22 +384,16 @@ public class RubyArrayTest {
   @Test
   public void testFetchWithBlock() {
     final RubyArray<Integer> ints = ra();
-    assertEquals(Integer.valueOf(3), ra.fetch(2, new Block<Integer>() {
+    Block<Integer> block = new Block<Integer>() {
 
       @Override
       public void yield(Integer index) {
         ints.push(index);
       }
 
-    }));
-    assertEquals(null, ra.fetch(4, new Block<Integer>() {
-
-      @Override
-      public void yield(Integer index) {
-        ints.push(index);
-      }
-
-    }));
+    };
+    assertEquals(Integer.valueOf(3), ra.fetch(2, block));
+    assertEquals(null, ra.fetch(4, block));
     assertEquals(ra(4), ints);
     ints.clear();
     assertEquals(null, ra.fetch(-5, new Block<Integer>() {
@@ -504,15 +495,7 @@ public class RubyArrayTest {
         }));
     assertEquals(ra(0, 1, 2, 3), ra);
     ra = ra(1, 2, 3, 4);
-    assertEquals(ra(1, 2, 3, 4),
-        ra.fill(4, new TransformBlock<Integer, Integer>() {
-
-          @Override
-          public Integer yield(Integer index) {
-            return index;
-          }
-
-        }));
+    assertEquals(ra(1, 2, 3, 4), ra.fill(4, block));
     assertEquals(ra(1, 2, 3, 4), ra);
   }
 
@@ -1260,56 +1243,20 @@ public class RubyArrayTest {
   @Test
   public void testSortǃWithComparator() {
     ra = ra(4, 1, 2, 3, 3);
-    assertEquals(ra(4, 3, 3, 2, 1), ra.sortǃ(new Comparator<Integer>() {
-
-      @Override
-      public int compare(Integer o1, Integer o2) {
-        return o2 - o1;
-      }
-
-    }));
+    assertEquals(ra(4, 3, 3, 2, 1), ra.sortǃ(comp));
     assertEquals(ra(4, 3, 3, 2, 1), ra);
-    assertEquals(ra(1), ra(1).sortǃ(new Comparator<Integer>() {
-
-      @Override
-      public int compare(Integer o1, Integer o2) {
-        return o2 - o1;
-      }
-
-    }));
-    assertEquals(ra(null, null, null),
-        ra(null, null, null).sortǃ(new Comparator<Object>() {
-
-          @Override
-          public int compare(Object o1, Object o2) {
-            throw new RuntimeException();
-          }
-
-        }));
+    assertEquals(ra(1), ra(1).sortǃ(comp));
+    assertEquals(ra(null, null, null), ra(null, null, null).sortǃ(null));
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testSortǃWithComparatorException1() {
-    ra(1, 2, null).sortǃ(new Comparator<Integer>() {
-
-      @Override
-      public int compare(Integer o1, Integer o2) {
-        return o2 - o1;
-      }
-
-    });
+    ra(1, 2, null).sortǃ(comp);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testSortǃWithComparatorException2() {
-    ra(null, 2, 3).sortǃ(new Comparator<Integer>() {
-
-      @Override
-      public int compare(Integer o1, Integer o2) {
-        return o2 - o1;
-      }
-
-    });
+    ra(null, 2, 3).sortǃ(comp);
   }
 
   @Test
@@ -1322,14 +1269,7 @@ public class RubyArrayTest {
   public void testSortByǃWithComparatorAndBlock() {
     RubyArray<String> ra = ra("aaaa", "bbb", "ff", "cc", "d");
     assertEquals(ra("aaaa", "bbb", "cc", "ff", "d"),
-        ra.sortByǃ(new Comparator<Integer>() {
-
-          @Override
-          public int compare(Integer o1, Integer o2) {
-            return o2 - o1;
-          }
-
-        }, new TransformBlock<String, Integer>() {
+        ra.sortByǃ(comp, new TransformBlock<String, Integer>() {
 
           @Override
           public Integer yield(String item) {
@@ -1351,14 +1291,7 @@ public class RubyArrayTest {
             return o2.compareTo(o1);
           }
 
-        }, new Comparator<Integer>() {
-
-          @Override
-          public int compare(Integer o1, Integer o2) {
-            return o2 - o1;
-          }
-
-        }, new TransformBlock<String, Integer>() {
+        }, comp, new TransformBlock<String, Integer>() {
 
           @Override
           public Integer yield(String item) {

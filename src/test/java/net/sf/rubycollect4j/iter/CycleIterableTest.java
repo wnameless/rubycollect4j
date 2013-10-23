@@ -45,12 +45,12 @@ public class CycleIterableTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException1() {
-    iter = new CycleIterable<Integer>(null);
+    new CycleIterable<Integer>(null);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    iter = new CycleIterable<Integer>(null, 2);
+    new CycleIterable<Integer>(null, 2);
   }
 
   @Test

@@ -67,7 +67,7 @@ public class RubyHashTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException() {
-    rh = new RubyHash<Integer, Integer>(null);
+    new RubyHash<Integer, Integer>(null);
   }
 
   @Test
@@ -233,7 +233,7 @@ public class RubyHashTest {
 
   @Test(expected = NoSuchElementException.class)
   public void testFetchException() {
-    assertNull(rh.fetch(7));
+    rh.fetch(7);
   }
 
   @Test

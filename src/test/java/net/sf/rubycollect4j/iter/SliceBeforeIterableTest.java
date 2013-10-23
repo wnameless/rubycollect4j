@@ -70,12 +70,12 @@ public class SliceBeforeIterableTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException3() {
-    iter = new SliceBeforeIterable<Integer>(null, qr("3"));
+    new SliceBeforeIterable<Integer>(null, qr("3"));
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException4() {
-    iter = new SliceBeforeIterable<Integer>(ra(1, 2, 3, 4, 5), (Pattern) null);
+    new SliceBeforeIterable<Integer>(ra(1, 2, 3, 4, 5), (Pattern) null);
   }
 
   @Test
