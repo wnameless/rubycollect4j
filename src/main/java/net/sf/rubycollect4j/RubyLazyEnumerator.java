@@ -25,8 +25,6 @@ import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
 import static net.sf.rubycollect4j.RubyCollections.newRubyLazyEnumerator;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -36,8 +34,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 import net.sf.rubycollect4j.block.Block;
@@ -626,30 +622,7 @@ public final class RubyLazyEnumerator<E> implements RubyEnumerableBase<E>,
     Iterator<E> iterator = iter.iterator();
     while (iterator.hasNext()) {
       E curr = iterator.next();
-      try {
-        Method[] methods = result.getClass().getDeclaredMethods();
-        boolean isInvoked = false;
-        for (Method method : methods) {
-          if (method.getName().equals(methodName) && !method.isVarArgs()) {
-            result = (S) method.invoke(result, curr);
-            isInvoked = true;
-            break;
-          }
-        }
-        if (!isInvoked) {
-          throw new IllegalArgumentException(
-              "NoMethodError: undefined method `" + methodName + "' for "
-                  + result);
-        }
-      } catch (IllegalAccessException ex) {
-        Logger.getLogger(RubyEnumerable.class.getName()).log(Level.SEVERE,
-            null, ex);
-        throw new RuntimeException(ex);
-      } catch (InvocationTargetException ex) {
-        Logger.getLogger(RubyEnumerable.class.getName()).log(Level.SEVERE,
-            null, ex);
-        throw new RuntimeException(ex);
-      }
+      result = (S) RubyObject.send(result, methodName, curr);
     }
     return result;
   }
@@ -665,30 +638,7 @@ public final class RubyLazyEnumerator<E> implements RubyEnumerableBase<E>,
         result = iterator.next();
       } else {
         E curr = iterator.next();
-        try {
-          Method[] methods = result.getClass().getDeclaredMethods();
-          boolean isInvoked = false;
-          for (Method method : methods) {
-            if (method.getName().equals(methodName) && !method.isVarArgs()) {
-              result = (E) method.invoke(result, curr);
-              isInvoked = true;
-              break;
-            }
-          }
-          if (!isInvoked) {
-            throw new IllegalArgumentException(
-                "NoMethodError: undefined method `" + methodName + "' for "
-                    + result);
-          }
-        } catch (IllegalAccessException ex) {
-          Logger.getLogger(RubyEnumerable.class.getName()).log(Level.SEVERE,
-              null, ex);
-          throw new RuntimeException(ex);
-        } catch (InvocationTargetException ex) {
-          Logger.getLogger(RubyEnumerable.class.getName()).log(Level.SEVERE,
-              null, ex);
-          throw new RuntimeException(ex);
-        }
+        result = (E) RubyObject.send(result, methodName, curr);
       }
       i++;
     }
