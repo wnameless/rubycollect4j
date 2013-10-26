@@ -154,7 +154,8 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
    *          to take element and generate a RubyArray
    * @return a RubyArray
    */
-  public <S> RubyArray<S> collectConcat(TransformBlock<E, RubyArray<S>> block) {
+  public <S> RubyArray<S> collectConcat(
+      TransformBlock<E, ? extends List<S>> block) {
     return newRubyLazyEnumerator(getIterable()).collectConcat(block).toA();
   }
 
@@ -438,7 +439,7 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
    *          to take element and generate a RubyArray
    * @return a RubyArray
    */
-  public <S> RubyArray<S> flatMap(TransformBlock<E, RubyArray<S>> block) {
+  public <S> RubyArray<S> flatMap(TransformBlock<E, ? extends List<S>> block) {
     return newRubyLazyEnumerator(getIterable()).flatMap(block).toA();
   }
 

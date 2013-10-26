@@ -161,3 +161,8 @@ Version 1.5.3
 * RubyArray#valuesAt & RubyHash#valuesAt can now take Iterable
 
 * RubyCollections#Hash can now take RubyArray of List
+
+
+Version 1.5.4
+
+* Made RubyEnumerable#collectConcat & RubyEnumerable#flatMap more generic

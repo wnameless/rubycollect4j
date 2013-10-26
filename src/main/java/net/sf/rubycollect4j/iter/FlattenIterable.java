@@ -21,8 +21,8 @@
 package net.sf.rubycollect4j.iter;
 
 import java.util.Iterator;
+import java.util.List;
 
-import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.block.TransformBlock;
 
 /**
@@ -37,7 +37,7 @@ import net.sf.rubycollect4j.block.TransformBlock;
 public final class FlattenIterable<E, S> implements Iterable<S> {
 
   private final Iterable<E> iter;
-  private final TransformBlock<E, RubyArray<S>> block;
+  private final TransformBlock<E, ? extends List<S>> block;
 
   /**
    * Creates a FlattenIterable.
@@ -49,7 +49,8 @@ public final class FlattenIterable<E, S> implements Iterable<S> {
    * @throws NullPointerException
    *           if iter or block is null
    */
-  public FlattenIterable(Iterable<E> iter, TransformBlock<E, RubyArray<S>> block) {
+  public FlattenIterable(Iterable<E> iter,
+      TransformBlock<E, ? extends List<S>> block) {
     if (iter == null || block == null)
       throw new NullPointerException();
 

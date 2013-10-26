@@ -191,7 +191,7 @@ public final class RubyLazyEnumerator<E> implements RubyEnumerableBase<E>,
    * @return a RubyLazyEnumerator
    */
   public <S> RubyLazyEnumerator<S> collectConcat(
-      TransformBlock<E, RubyArray<S>> block) {
+      TransformBlock<E, ? extends List<S>> block) {
     return new RubyLazyEnumerator<S>(new FlattenIterable<E, S>(iter, block));
   }
 
@@ -527,8 +527,8 @@ public final class RubyLazyEnumerator<E> implements RubyEnumerableBase<E>,
    *          to take element and generate a RubyArray
    * @return a RubyLazyEnumerator
    */
-  public <S> RubyLazyEnumerator<S>
-      flatMap(TransformBlock<E, RubyArray<S>> block) {
+  public <S> RubyLazyEnumerator<S> flatMap(
+      TransformBlock<E, ? extends List<S>> block) {
     return collectConcat(block);
   }
 
