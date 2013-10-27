@@ -54,8 +54,8 @@ public final class RubyObject {
             if (args[i] == null)
               continue;
 
-            if (!method.getParameterTypes()[i].isAssignableFrom(args[i]
-                .getClass()))
+            if (!isConvertable(method.getParameterTypes()[i],
+                args[i].getClass()))
               isArgsMatched = false;
           }
           if (isArgsMatched)
@@ -66,11 +66,32 @@ public final class RubyObject {
     } catch (NoSuchMethodException ex) {
       Logger.getLogger(RubyObject.class.getName()).log(Level.SEVERE, null, ex);
       throw new IllegalArgumentException("NoMethodError: undefined method `"
-          + methodName + "' for " + o);
+          + methodName + "' for " + o + ":" + o.getClass().getName());
     } catch (Exception ex) {
       Logger.getLogger(RubyObject.class.getName()).log(Level.SEVERE, null, ex);
       throw new RuntimeException(ex);
     }
+  }
+
+  private static boolean isConvertable(Class<?> klass1, Class<?> klass2) {
+    if (klass1 == byte.class)
+      return klass2 == Byte.class;
+    else if (klass1 == short.class)
+      return klass2 == Short.class;
+    else if (klass1 == int.class)
+      return klass2 == Integer.class;
+    else if (klass1 == long.class)
+      return klass2 == Long.class;
+    else if (klass1 == float.class)
+      return klass2 == Float.class;
+    else if (klass1 == double.class)
+      return klass2 == Double.class;
+    else if (klass1 == boolean.class)
+      return klass2 == Boolean.class;
+    else if (klass1 == char.class)
+      return klass2 == Character.class;
+    else
+      return klass1.isAssignableFrom(klass2);
   }
 
 }
