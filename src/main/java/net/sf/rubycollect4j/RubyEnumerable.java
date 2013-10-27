@@ -45,7 +45,7 @@ import net.sf.rubycollect4j.iter.EachWithIndexIterable;
 import net.sf.rubycollect4j.iter.EachWithObjectIterable;
 import net.sf.rubycollect4j.iter.ReverseEachIterable;
 import net.sf.rubycollect4j.iter.SliceBeforeIterable;
-import net.sf.rubycollect4j.iter.TransformByMethodIterable;
+import net.sf.rubycollect4j.iter.TransformIterable;
 
 /**
  * An extension class for any Iterable object. It includes all methods refer to
@@ -133,10 +133,17 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
    *          arguments of a Method
    * @return a RubyArray
    */
-  public <S> RubyArray<S> collect(String methodName, Object... args) {
+  public <S> RubyArray<S>
+      collect(final String methodName, final Object... args) {
     return newRubyLazyEnumerator(
-        new TransformByMethodIterable<E, S>(getIterable(), methodName, args))
-        .toA();
+        new TransformIterable<E, S>(getIterable(), new TransformBlock<E, S>() {
+
+          @Override
+          public S yield(E item) {
+            return RubyObject.send(item, methodName, args);
+          }
+
+        })).toA();
   }
 
   /**

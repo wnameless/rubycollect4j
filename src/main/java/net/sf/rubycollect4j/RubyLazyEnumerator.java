@@ -23,7 +23,6 @@ package net.sf.rubycollect4j;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
-import static net.sf.rubycollect4j.RubyCollections.newRubyLazyEnumerator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,7 +58,6 @@ import net.sf.rubycollect4j.iter.ReverseEachIterable;
 import net.sf.rubycollect4j.iter.SliceBeforeIterable;
 import net.sf.rubycollect4j.iter.TakeIterable;
 import net.sf.rubycollect4j.iter.TakeWhileIterable;
-import net.sf.rubycollect4j.iter.TransformByMethodIterable;
 import net.sf.rubycollect4j.iter.TransformIterable;
 import net.sf.rubycollect4j.iter.ZipIterable;
 import net.sf.rubycollect4j.util.PeekingIterator;
@@ -173,9 +171,16 @@ public final class RubyLazyEnumerator<E> implements RubyEnumerableBase<E>,
    *          arguments of a Method
    * @return a RubyLazyEnumerator
    */
-  public <S> RubyLazyEnumerator<S> collect(String methodName, Object... args) {
-    return newRubyLazyEnumerator(new TransformByMethodIterable<E, S>(iter,
-        methodName, args));
+  public <S> RubyLazyEnumerator<S> collect(final String methodName,
+      final Object... args) {
+    return collect(new TransformBlock<E, S>() {
+
+      @Override
+      public S yield(E item) {
+        return RubyObject.send(item, methodName, args);
+      }
+
+    });
   }
 
   /**

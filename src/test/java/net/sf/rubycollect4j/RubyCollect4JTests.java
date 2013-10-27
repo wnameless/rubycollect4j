@@ -74,8 +74,6 @@ import net.sf.rubycollect4j.iter.TakeIterableTest;
 import net.sf.rubycollect4j.iter.TakeIteratorTest;
 import net.sf.rubycollect4j.iter.TakeWhileIterableTest;
 import net.sf.rubycollect4j.iter.TakeWhileIteratorTest;
-import net.sf.rubycollect4j.iter.TransformByMethodIterableTest;
-import net.sf.rubycollect4j.iter.TransformByMethodIteratorTest;
 import net.sf.rubycollect4j.iter.TransformIterableTest;
 import net.sf.rubycollect4j.iter.TransformIteratorTest;
 import net.sf.rubycollect4j.iter.ZipIterableTest;
@@ -132,7 +130,6 @@ import org.junit.runners.Suite.SuiteClasses;
     SliceBeforeIteratorTest.class, StepIterableTest.class,
     StepIteratorTest.class, TakeIterableTest.class, TakeIteratorTest.class,
     TakeWhileIterableTest.class, TakeWhileIteratorTest.class,
-    TransformByMethodIterableTest.class, TransformByMethodIteratorTest.class,
     TransformIterableTest.class, TransformIteratorTest.class,
     ZipIterableTest.class, ZipIteratorTest.class, ByteUtilTest.class,
     DirectiveTest.class, PackerTest.class, PeekingIteratorTest.class,
