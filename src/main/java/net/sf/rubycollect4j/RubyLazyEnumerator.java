@@ -592,6 +592,19 @@ public final class RubyLazyEnumerator<E> implements RubyEnumerableBase<E>,
   }
 
   @Override
+  public <S> RubyHash<S, RubyArray<E>> groupBy(final String methodName,
+      final Object... args) {
+    return groupBy(new TransformBlock<E, S>() {
+
+      @Override
+      public S yield(E item) {
+        return RubyObject.send(item, methodName, args);
+      }
+
+    });
+  }
+
+  @Override
   public boolean includeʔ(E target) {
     for (E item : iter) {
       if (item.equals(target))
@@ -746,6 +759,18 @@ public final class RubyLazyEnumerator<E> implements RubyEnumerableBase<E>,
   }
 
   @Override
+  public <S> E maxBy(final String methodName, final Object... args) {
+    return maxBy(new TransformBlock<E, S>() {
+
+      @Override
+      public S yield(E item) {
+        return RubyObject.send(item, methodName, args);
+      }
+
+    });
+  }
+
+  @Override
   public boolean memberʔ(E target) {
     return includeʔ(target);
   }
@@ -804,6 +829,18 @@ public final class RubyLazyEnumerator<E> implements RubyEnumerableBase<E>,
 
     S minDst = newRubyEnumerator(dst).min();
     return src.get(dst.indexOf(minDst));
+  }
+
+  @Override
+  public <S> E minBy(final String methodName, final Object... args) {
+    return minBy(new TransformBlock<E, S>() {
+
+      @Override
+      public S yield(E item) {
+        return RubyObject.send(item, methodName, args);
+      }
+
+    });
   }
 
   @Override
@@ -868,6 +905,19 @@ public final class RubyLazyEnumerator<E> implements RubyEnumerableBase<E>,
     S maxDst = newRubyEnumerator(dst).max();
     return newRubyArray(src.get(dst.indexOf(minDst)),
         src.get(dst.indexOf(maxDst)));
+  }
+
+  @Override
+  public <S> RubyArray<E> minmaxBy(final String methodName,
+      final Object... args) {
+    return minmaxBy(new TransformBlock<E, S>() {
+
+      @Override
+      public S yield(E item) {
+        return RubyObject.send(item, methodName, args);
+      }
+
+    });
   }
 
   @Override
@@ -1142,6 +1192,18 @@ public final class RubyLazyEnumerator<E> implements RubyEnumerableBase<E>,
       sortedList.addAll(map.get(key).sortǃ());
     }
     return sortedList;
+  }
+
+  @Override
+  public <S> RubyArray<E> sortBy(final String methodName, final Object... args) {
+    return sortBy(new TransformBlock<E, S>() {
+
+      @Override
+      public S yield(E item) {
+        return RubyObject.send(item, methodName, args);
+      }
+
+    });
   }
 
   /**

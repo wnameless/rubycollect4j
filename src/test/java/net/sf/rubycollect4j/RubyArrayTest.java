@@ -174,6 +174,12 @@ public class RubyArrayTest {
     assertEquals(ra(2, 4, 6, 8), ra);
   }
 
+  @Test
+  public void testCollectǃWithMethodName() {
+    assertSame(ra, ra.collectǃ("intValue"));
+    assertEquals(ra(1, 2, 3, 4), ra);
+  }
+
   @SuppressWarnings("unchecked")
   @Test
   public void testCombination() {
@@ -714,6 +720,12 @@ public class RubyArrayTest {
 
     }));
     assertEquals(ra(2, 4, 6, 8), ra);
+  }
+
+  @Test
+  public void testMapǃWithMethodName() {
+    assertSame(ra, ra.mapǃ("intValue"));
+    assertEquals(ra(1, 2, 3, 4), ra);
   }
 
   @Test
@@ -1318,6 +1330,13 @@ public class RubyArrayTest {
   }
 
   @Test
+  public void testSortByǃWithMethodName() {
+    RubyArray<String> ra = ra("aaaa", "bbb", "ff", "cc", "d");
+    assertEquals(ra("d", "cc", "ff", "bbb", "aaaa"), ra.sortByǃ("length"));
+    assertEquals(ra("d", "cc", "ff", "bbb", "aaaa"), ra);
+  }
+
+  @Test
   public void testSubtract() {
     ra = ra(1, 2, 3, 4, 4);
     assertEquals(ra(1, 2), ra.minus(ra(3, 4, 5)));
@@ -1375,6 +1394,12 @@ public class RubyArrayTest {
   }
 
   @Test
+  public void testUniqWithMethodName() {
+    RubyArray<String> ra = ra("aa", "bb", "ccc", "ddd", "f");
+    assertEquals(ra("aa", "ccc", "f"), ra.uniq("length"));
+  }
+
+  @Test
   public void testUniqǃ() {
     ra = ra(1, 1, 2, 2, 3, 3, 4, 4);
     assertEquals(ra(1, 2, 3, 4), ra.uniqǃ());
@@ -1405,6 +1430,15 @@ public class RubyArrayTest {
       }
 
     }));
+  }
+
+  @Test
+  public void testUniqǃWithMethodName() {
+    RubyArray<String> ra = ra("aa", "bb", "ccc", "ddd", "f");
+    assertEquals(ra("aa", "ccc", "f"), ra.uniqǃ("length"));
+    assertEquals(ra("aa", "ccc", "f"), ra);
+    ra = ra("a", "bb", "ccc", "dddd");
+    assertNull(ra.uniqǃ("length"));
   }
 
   @Test

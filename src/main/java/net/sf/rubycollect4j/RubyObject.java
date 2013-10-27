@@ -51,14 +51,14 @@ public final class RubyObject {
         if (method.getName().equals(methodName)) {
           boolean isArgsMatched = true;
           for (int i = 0; i < method.getParameterTypes().length; i++) {
-            if (args[i] == null)
+            if (i >= args.length || args[i] == null)
               continue;
 
             if (!isConvertable(method.getParameterTypes()[i],
                 args[i].getClass()))
               isArgsMatched = false;
           }
-          if (isArgsMatched)
+          if (isArgsMatched && method.getParameterTypes().length == args.length)
             return (E) method.invoke(o, args);
         }
       }

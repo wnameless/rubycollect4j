@@ -219,6 +219,21 @@ public interface RubyEnumerableBase<E> {
   public <S> RubyHash<S, RubyArray<E>> groupBy(TransformBlock<E, S> block);
 
   /**
+   * Puts elements with the same result S invoked by given method name into a
+   * Entry&#60;S, RubyArray&#60;E&#62;&#62;y of a RubyHash.
+   * 
+   * @param <S>
+   *          the type of transformed elements
+   * @param methodName
+   *          name of a Method
+   * @param args
+   *          arguments of a Method
+   * @return a RubyHash
+   */
+  public <S> RubyHash<S, RubyArray<E>> groupBy(String methodName,
+      Object... args);
+
+  /**
    * Checks if target element included.
    * 
    * @param target
@@ -330,6 +345,20 @@ public interface RubyEnumerableBase<E> {
   public <S> E maxBy(TransformBlock<E, S> block);
 
   /**
+   * Finds the element which is the max element invoked by given method name of
+   * this RubyEnumerable. Returns null if this RubyEnumerable is empty.
+   * 
+   * @param <S>
+   *          the type of transformed elements
+   * @param methodName
+   *          name of a Method
+   * @param args
+   *          arguments of a Method
+   * @return an element or null
+   */
+  public <S> E maxBy(String methodName, Object... args);
+
+  /**
    * Equivalent to includeʔ().
    * 
    * @param target
@@ -384,6 +413,20 @@ public interface RubyEnumerableBase<E> {
   public <S> E minBy(TransformBlock<E, S> block);
 
   /**
+   * Finds the element which is the min element invoked by given method name of
+   * this RubyEnumerable. Returns null if this RubyEnumerable is empty.
+   * 
+   * @param <S>
+   *          the type of transformed elements
+   * @param methodName
+   *          name of a Method
+   * @param args
+   *          arguments of a Method
+   * @return an element or null
+   */
+  public <S> E minBy(String methodName, Object... args);
+
+  /**
    * Finds the min and max elements of this RubyEnumerable and puts them into a
    * RubyArray.
    * 
@@ -428,6 +471,21 @@ public interface RubyEnumerableBase<E> {
    * @return a RubyArray
    */
   public <S> RubyArray<E> minmaxBy(TransformBlock<E, S> block);
+
+  /**
+   * Finds the element which is the min and max elements element invoked by
+   * given method name of this RubyEnumerable. Returns null if this
+   * RubyEnumerable is empty.
+   * 
+   * @param <S>
+   *          the type of transformed elements
+   * @param methodName
+   *          name of a Method
+   * @param args
+   *          arguments of a Method
+   * @return a RubyArray
+   */
+  public <S> RubyArray<E> minmaxBy(String methodName, Object... args);
 
   /**
    * Checks if this RubyEnumerable contains only null objects.
@@ -581,6 +639,18 @@ public interface RubyEnumerableBase<E> {
    * @return a RubyArray
    */
   public <S> RubyArray<E> sortBy(TransformBlock<E, S> block);
+
+  /**
+   * Sorts elements of this RubyEnumerable by the ordering of elements invoked
+   * by given method name and puts them into a RubyArray.
+   * 
+   * @param methodName
+   *          name of a Method
+   * @param args
+   *          arguments of a Method
+   * @return a RubyArray
+   */
+  public <S> RubyArray<E> sortBy(String methodName, Object... args);
 
   /**
    * Converts this RubyEnumerable into a RubyArray.

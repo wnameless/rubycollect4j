@@ -213,6 +213,26 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
+   * Transforms each element by given method name in self.
+   * 
+   * @param methodName
+   *          name of a Method
+   * @param args
+   *          arguments of a Method
+   * @return this RubyArray
+   */
+  public RubyArray<E> collectǃ(final String methodName, final Object... args) {
+    return collectǃ(new TransformBlock<E, E>() {
+
+      @Override
+      public E yield(E item) {
+        return RubyObject.send(item, methodName, args);
+      }
+
+    });
+  }
+
+  /**
    * Generates all combinations with length n of this RubyArray.
    * 
    * @param n
@@ -870,6 +890,19 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    */
   public RubyArray<E> mapǃ(TransformBlock<E, E> block) {
     return collectǃ(block);
+  }
+
+  /**
+   * Equivalent to collectǃ().
+   * 
+   * @param methodName
+   *          name of a Method
+   * @param args
+   *          arguments of a Method
+   * @return this RubyArray
+   */
+  public RubyArray<E> mapǃ(String methodName, Object... args) {
+    return collectǃ(methodName, args);
   }
 
   /**
@@ -1708,6 +1741,28 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
+   * Sorts elements of this RubyArray by the ordering of elements invoked by
+   * given method name.
+   * 
+   * @param methodName
+   *          name of a Method
+   * @param args
+   *          arguments of a Method
+   * @return this RubyArray
+   */
+  public <S> RubyArray<E>
+      sortByǃ(final String methodName, final Object... args) {
+    return sortByǃ(new TransformBlock<E, S>() {
+
+      @Override
+      public S yield(E item) {
+        return RubyObject.send(item, methodName, args);
+      }
+
+    });
+  }
+
+  /**
    * Eliminates all elements from other List and puts the result into a new
    * RubyArray.
    * 
@@ -1838,6 +1893,27 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
+   * Filters elements by the result invoked by given method name uniquely and
+   * puts the result into a new RubyArray.
+   * 
+   * @param methodName
+   *          name of a Method
+   * @param args
+   *          arguments of a Method
+   * @return a new RubyArray
+   */
+  public <S> RubyArray<E> uniq(final String methodName, final Object... args) {
+    return uniq(new TransformBlock<E, S>() {
+
+      @Override
+      public S yield(E item) {
+        return RubyObject.send(item, methodName, args);
+      }
+
+    });
+  }
+
+  /**
    * Filters elements uniquely. Returns null if unchanged.
    * 
    * @return this RubyArray or null
@@ -1848,6 +1924,27 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
     list.clear();
     list.addAll(uniqList);
     return list.size() == beforeSize ? null : this;
+  }
+
+  /**
+   * Filters elements by the result invoked by given method name uniquely and
+   * puts the result into a new RubyArray.
+   * 
+   * @param methodName
+   *          name of a Method
+   * @param args
+   *          arguments of a Method
+   * @return this RubyArray or null
+   */
+  public <S> RubyArray<E> uniqǃ(final String methodName, final Object... args) {
+    return uniqǃ(new TransformBlock<E, S>() {
+
+      @Override
+      public S yield(E item) {
+        return RubyObject.send(item, methodName, args);
+      }
+
+    });
   }
 
   /**

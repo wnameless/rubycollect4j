@@ -47,16 +47,21 @@ public class RubyObjectTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testSendException1() {
-    RubyObject.send(tester, "set");
+    RubyObject.send(Integer.valueOf(1), "toString", 1, 2, 3);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testSendException2() {
+    RubyObject.send(Integer.valueOf(1), "compareTo");
   }
 
   @Test(expected = RuntimeException.class)
-  public void testSendException2() {
+  public void testSendException3() {
     RubyObject.send(tester, "setBytes", null, Byte.MAX_VALUE);
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void testSendException3() {
+  public void testSendException4() {
     RubyObject.send(tester, "setBytes", "", "");
   }
 

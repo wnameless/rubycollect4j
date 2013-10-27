@@ -101,6 +101,32 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
   }
 
   /**
+   * Chunks elements to entries. Keys of entries are the result invoked by the
+   * given method name. Values of entries are RubyArrays of elements which get
+   * the same result returned by the block and aside to each other.
+   * 
+   * @param <S>
+   *          the type of transformed elements
+   * @param methodName
+   *          name of a Method
+   * @param args
+   *          arguments of a Method
+   * @return a RubyEnumerator
+   */
+  public <S> RubyEnumerator<Entry<S, RubyArray<E>>> chunk(
+      final String methodName, final Object... args) {
+    return newRubyEnumerator(new ChunkIterable<E, S>(getIterable(),
+        new TransformBlock<E, S>() {
+
+          @Override
+          public S yield(E item) {
+            return RubyObject.send(item, methodName, args);
+          }
+
+        }));
+  }
+
+  /**
    * Returns a RubyEnumerator of this RubyEnumerable.
    * 
    * @return a RubyEnumerator
@@ -481,6 +507,32 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
   }
 
   /**
+   * Puts elements which are matched by regex invoked by given method name into
+   * a RubyArray.
+   * 
+   * @param <S>
+   *          the type of transformed elements
+   * @param regex
+   *          regular expression
+   * @param methodName
+   *          name of a Method
+   * @param args
+   *          arguments of a Method
+   * @return a RubyArray
+   */
+  public <S> RubyArray<S> grep(String regex, final String methodName,
+      final Object... args) {
+    return grep(regex, new TransformBlock<E, S>() {
+
+      @Override
+      public S yield(E item) {
+        return RubyObject.send(item, methodName, args);
+      }
+
+    });
+  }
+
+  /**
    * Returns a RubyEnumerator of this RubyEnumerable.
    * 
    * @return a RubyEnumerator
@@ -492,6 +544,12 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
   @Override
   public <S> RubyHash<S, RubyArray<E>> groupBy(TransformBlock<E, S> block) {
     return newRubyLazyEnumerator(getIterable()).groupBy(block);
+  }
+
+  @Override
+  public <S> RubyHash<S, RubyArray<E>> groupBy(final String methodName,
+      final Object... args) {
+    return newRubyLazyEnumerator(getIterable()).groupBy(methodName, args);
   }
 
   @Override
@@ -595,6 +653,11 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
   }
 
   @Override
+  public <S> E maxBy(String methodName, Object... args) {
+    return newRubyLazyEnumerator(getIterable()).maxBy(methodName, args);
+  }
+
+  @Override
   public boolean memberʔ(E target) {
     return newRubyLazyEnumerator(getIterable()).memberʔ(target);
   }
@@ -629,6 +692,11 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
   }
 
   @Override
+  public <S> E minBy(String methodName, Object... args) {
+    return newRubyLazyEnumerator(getIterable()).minBy(methodName, args);
+  }
+
+  @Override
   public RubyArray<E> minmax() {
     return newRubyLazyEnumerator(getIterable()).minmax();
   }
@@ -656,6 +724,11 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
   @Override
   public <S> RubyArray<E> minmaxBy(TransformBlock<E, S> block) {
     return newRubyLazyEnumerator(getIterable()).minmaxBy(block);
+  }
+
+  @Override
+  public <S> RubyArray<E> minmaxBy(String methodName, Object... args) {
+    return newRubyLazyEnumerator(getIterable()).minmaxBy(methodName, args);
   }
 
   @Override
@@ -834,6 +907,11 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
   @Override
   public <S> RubyArray<E> sortBy(TransformBlock<E, S> block) {
     return newRubyLazyEnumerator(getIterable()).sortBy(block);
+  }
+
+  @Override
+  public <S> RubyArray<E> sortBy(String methodName, Object... args) {
+    return newRubyLazyEnumerator(getIterable()).sortBy(methodName, args);
   }
 
   /**

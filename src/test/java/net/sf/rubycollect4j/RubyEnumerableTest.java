@@ -160,6 +160,18 @@ public class RubyEnumerableTest {
     assertEquals(3, chunk.size());
   }
 
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testChunkWithMethodName() {
+    RubyEnumerator<String> re =
+        newRubyEnumerator(Arrays.asList("aa", "bb", "bc", "cd"));
+    RubyEnumerator<Entry<Character, RubyArray<String>>> chunk =
+        re.chunk("charAt", 0);
+    assertEquals(
+        ra(hp('a', ra("aa")), hp('b', ra("bb", "bc")), hp('c', ra("cd"))),
+        chunk.toA());
+  }
+
   @Test
   public void testCollect() {
     assertEquals(RubyEnumerator.class, re.collect().getClass());
@@ -608,6 +620,11 @@ public class RubyEnumerableTest {
   }
 
   @Test
+  public void testGrepWithMethodName() {
+    assertEquals(ra("2", "4"), re.grep("[24]", "toString"));
+  }
+
+  @Test
   public void testGroupBy() {
     assertEquals(RubyEnumerator.class, re.groupBy().getClass());
     assertEquals(ra(1, 2, 3, 4), re.groupBy().toA());
@@ -624,6 +641,14 @@ public class RubyEnumerableTest {
           }
 
         }));
+  }
+
+  @Test
+  public void testGroupByWithMethodName() {
+    RubyEnumerator<String> re =
+        newRubyEnumerator(Arrays.asList("ab", "ba", "ac", "bc"));
+    assertEquals(rh('a', ra("ab", "ac"), 'b', ra("ba", "bc")),
+        re.groupBy("charAt", 0));
   }
 
   @Test
@@ -756,7 +781,8 @@ public class RubyEnumerableTest {
 
     }));
     re = newRubyEnumerator(new ArrayList<String>());
-    assertNull(re.maxBy(null, null));
+    Comparator<Integer> comp = null;
+    assertNull(re.maxBy(comp, null));
   }
 
   @Test
@@ -773,6 +799,13 @@ public class RubyEnumerableTest {
     }));
     re = newRubyEnumerator(new ArrayList<String>());
     assertNull(re.maxBy(null));
+  }
+
+  @Test
+  public void testMaxByWithMethodName() {
+    RubyEnumerable<String> re =
+        newRubyEnumerator(Arrays.asList("aaaa", "bbb", "cc", "d"));
+    assertEquals("aaaa", re.maxBy("length"));
   }
 
   @Test
@@ -828,7 +861,8 @@ public class RubyEnumerableTest {
 
     }));
     re = newRubyEnumerator(new ArrayList<String>());
-    assertNull(re.minBy(null, null));
+    Comparator<Integer> comp = null;
+    assertNull(re.minBy(comp, null));
   }
 
   @Test
@@ -845,6 +879,13 @@ public class RubyEnumerableTest {
     }));
     re = newRubyEnumerator(new ArrayList<String>());
     assertNull(re.minBy(null));
+  }
+
+  @Test
+  public void testMinByWithMethodName() {
+    RubyEnumerable<String> re =
+        newRubyEnumerator(Arrays.asList("aaaa", "bbb", "cc", "d"));
+    assertEquals("d", re.minBy("length"));
   }
 
   @Test
@@ -895,7 +936,8 @@ public class RubyEnumerableTest {
 
     }));
     re = newRubyEnumerator(new ArrayList<String>());
-    assertEquals(ra(null, null), re.minmaxBy(null, null));
+    Comparator<Integer> comp = null;
+    assertEquals(ra(null, null), re.minmaxBy(comp, null));
   }
 
   @Test
@@ -913,6 +955,13 @@ public class RubyEnumerableTest {
         }));
     re = newRubyEnumerator(new ArrayList<String>());
     assertEquals(ra(null, null), re.minmaxBy(null));
+  }
+
+  @Test
+  public void testMinmaxByWithMethodName() {
+    RubyEnumerable<String> re =
+        newRubyEnumerator(Arrays.asList("aaaa", "bbb", "cc", "d"));
+    assertEquals(ra("d", "aaaa"), re.minmaxBy("length"));
   }
 
   @Test
@@ -1227,6 +1276,13 @@ public class RubyEnumerableTest {
           }
 
         }));
+  }
+
+  @Test
+  public void testSortByWithMethodName() {
+    RubyEnumerable<String> re =
+        newRubyEnumerator(Arrays.asList("aaaa", "bbb", "cc", "e", "d"));
+    assertEquals(ra("d", "e", "cc", "bbb", "aaaa"), re.sortBy("length"));
   }
 
   @Test
