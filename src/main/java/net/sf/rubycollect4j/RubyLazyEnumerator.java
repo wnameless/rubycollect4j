@@ -169,11 +169,13 @@ public final class RubyLazyEnumerator<E> implements RubyEnumerableBase<E>,
    *          the type of transformed elements
    * @param methodName
    *          name of a Method
+   * @param args
+   *          arguments of a Method
    * @return a RubyLazyEnumerator
    */
-  public <S> RubyLazyEnumerator<S> collect(String methodName) {
+  public <S> RubyLazyEnumerator<S> collect(String methodName, Object... args) {
     return newRubyLazyEnumerator(new TransformByMethodIterable<E, S>(iter,
-        methodName));
+        methodName, args));
   }
 
   /**
@@ -674,10 +676,12 @@ public final class RubyLazyEnumerator<E> implements RubyEnumerableBase<E>,
    *          the type of transformed elements
    * @param methodName
    *          name of a Method
+   * @param args
+   *          arguments of a Method
    * @return a RubyLazyEnumerator
    */
-  public <S> RubyLazyEnumerator<S> map(String methodName) {
-    return collect(methodName);
+  public <S> RubyLazyEnumerator<S> map(String methodName, Object... args) {
+    return collect(methodName, args);
   }
 
   @Override

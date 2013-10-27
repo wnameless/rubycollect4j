@@ -166,3 +166,5 @@ Version 1.5.3
 Version 1.5.4
 
 * Made RubyEnumerable#collectConcat & RubyEnumerable#flatMap more generic
+
++ Added RubyObject#send

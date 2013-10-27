@@ -63,14 +63,8 @@ public class TransformByMethodIteratorTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testConstructorException3() {
-    new TransformByMethodIterator<Integer, Double>(
-        ra(null, 2, 3, 4).iterator(), "doubleValue");
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testConstructorException4() {
     new TransformByMethodIterator<Integer, Double>(ra(1, 2, 3, 4).iterator(),
-        "no method");
+        "no method").next();
   }
 
   @Test
@@ -91,7 +85,7 @@ public class TransformByMethodIteratorTest {
     assertFalse(iter.hasNext());
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test(expected = RuntimeException.class)
   public void testNextException() {
     iter =
         new TransformByMethodIterator<Integer, Double>(ra(1, null, 3, 4)

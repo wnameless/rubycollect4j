@@ -35,6 +35,7 @@ public final class TransformByMethodIterable<E, S> implements Iterable<S> {
 
   private final Iterable<E> iter;
   private final String methodName;
+  private final Object[] args;
 
   /**
    * Creates a TransformByMethodIterable.
@@ -43,20 +44,25 @@ public final class TransformByMethodIterable<E, S> implements Iterable<S> {
    *          an Iterable
    * @param methodName
    *          name of a Method
+   * @param args
+   *          arguments of a Method
    * @throws NullPointerException
    *           if iter or methodName is null
    */
-  public TransformByMethodIterable(Iterable<E> iter, String methodName) {
+  public TransformByMethodIterable(Iterable<E> iter, String methodName,
+      Object... args) {
     if (iter == null || methodName == null)
       throw new NullPointerException();
 
     this.iter = iter;
     this.methodName = methodName;
+    this.args = args;
   }
 
   @Override
   public Iterator<S> iterator() {
-    return new TransformByMethodIterator<E, S>(iter.iterator(), methodName);
+    return new TransformByMethodIterator<E, S>(iter.iterator(), methodName,
+        args);
   }
 
   @Override

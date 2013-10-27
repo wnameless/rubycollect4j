@@ -20,11 +20,9 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import java.lang.reflect.Method;
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import net.sf.rubycollect4j.RubyObject;
 import net.sf.rubycollect4j.util.PeekingIterator;
 
 /**
@@ -40,7 +38,7 @@ public final class TransformByMethodIterator<E, S> implements Iterator<S> {
 
   private final PeekingIterator<E> pIter;
   private final String methodName;
-  private Method method;
+  private final Object[] args;
 
   /**
    * Creates a TransformByMethodIterator.
@@ -49,30 +47,19 @@ public final class TransformByMethodIterator<E, S> implements Iterator<S> {
    *          an Iterator
    * @param methodName
    *          name of a Method
+   * @param args
+   *          arguments of a Method
    * @throws NullPointerException
    *           if iter or methodName is null
    */
-  public TransformByMethodIterator(Iterator<E> iter, String methodName) {
+  public TransformByMethodIterator(Iterator<E> iter, String methodName,
+      Object... args) {
     if (iter == null || methodName == null)
       throw new NullPointerException();
 
     pIter = new PeekingIterator<E>(iter);
     this.methodName = methodName;
-    if (pIter.hasNext()) {
-      E item = pIter.peek();
-      try {
-        method = item.getClass().getMethod(methodName);
-      } catch (Exception e) {
-        Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, e);
-        throw new IllegalArgumentException("NoMethodError: undefined method `"
-            + methodName
-            + "' for "
-            + pIter.peek()
-            + ":"
-            + (pIter.peek() == null ? pIter.peek() : pIter.peek().getClass()
-                .getName()));
-      }
-    }
+    this.args = args;
   }
 
   @Override
@@ -80,20 +67,9 @@ public final class TransformByMethodIterator<E, S> implements Iterator<S> {
     return pIter.hasNext();
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public S next() {
-    E item = pIter.next();
-    S next = null;
-    try {
-      next = (S) method.invoke(item);
-    } catch (Exception e) {
-      Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, e);
-      throw new IllegalArgumentException("NoMethodError: undefined method `"
-          + methodName + "' for " + item + ":"
-          + (item == null ? item : item.getClass().getName()));
-    }
-    return next;
+    return RubyObject.send(pIter.next(), methodName, args);
   }
 
   @Override

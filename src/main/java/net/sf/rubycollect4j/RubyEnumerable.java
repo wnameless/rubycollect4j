@@ -129,11 +129,14 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
    *          the type of transformed elements
    * @param methodName
    *          name of a Method
+   * @param args
+   *          arguments of a Method
    * @return a RubyArray
    */
-  public <S> RubyArray<S> collect(String methodName) {
+  public <S> RubyArray<S> collect(String methodName, Object... args) {
     return newRubyLazyEnumerator(
-        new TransformByMethodIterable<E, S>(getIterable(), methodName)).toA();
+        new TransformByMethodIterable<E, S>(getIterable(), methodName, args))
+        .toA();
   }
 
   /**
@@ -547,10 +550,12 @@ public abstract class RubyEnumerable<E> implements RubyEnumerableBase<E>,
    *          the type of transformed elements
    * @param methodName
    *          name of a Method
+   * @param args
+   *          arguments of a Method
    * @return a RubyArray
    */
-  public <S> RubyArray<S> map(String methodName) {
-    return collect(methodName);
+  public <S> RubyArray<S> map(String methodName, Object... args) {
+    return collect(methodName, args);
   }
 
   @Override
