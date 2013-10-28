@@ -85,21 +85,13 @@ public class RubyEnumerator<E> extends RubyEnumerable<E> implements
   }
 
   /**
-   * Returns a RubyEnumerator which is self.
-   * 
-   * @return this RubyEnumerator
-   */
-  public RubyEnumerator<E> each() {
-    return this;
-  }
-
-  /**
    * Yields each element to the block.
    * 
    * @param block
    *          to yield each element
    * @return this RubyEnumerator
    */
+  @Override
   public RubyEnumerator<E> each(Block<E> block) {
     for (E item : iter) {
       block.yield(item);

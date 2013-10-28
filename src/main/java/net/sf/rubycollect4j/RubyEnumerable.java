@@ -55,7 +55,7 @@ import net.sf.rubycollect4j.iter.TransformIterable;
  *          the type of the elements
  */
 public abstract class RubyEnumerable<E> implements
-    RubyEnumerableBase<E, RubyEnumerator<?>, RubyArray<?>>, Iterable<E> {
+    RubyEnumerableBase<E, RubyEnumerator<?>, RubyArray<?>> {
 
   /**
    * Returns the Iterable of this RubyEnumerable.

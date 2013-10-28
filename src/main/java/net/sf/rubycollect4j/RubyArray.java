@@ -391,6 +391,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    *          to yield each element
    * @return this RubyArray
    */
+  @Override
   public RubyArray<E> each(Block<E> block) {
     for (E item : list) {
       block.yield(item);

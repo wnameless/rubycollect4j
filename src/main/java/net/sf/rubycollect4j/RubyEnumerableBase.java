@@ -39,7 +39,8 @@ import net.sf.rubycollect4j.block.WithObjectBlock;
  * @param <E>
  *          the type of the elements
  */
-public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z extends RubyEnumerableBase<?, ?, ?>> {
+public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z extends RubyEnumerableBase<?, ?, ?>>
+    extends Iterable<E> {
 
   /**
    * Checks if null or false included.
@@ -82,7 +83,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
    *          the type of transformed elements
    * @param block
    *          to chunk elements
-   * @return a {@link I RubyEnumeratorBase}
+   * @return a RubyEnumeratorBase
    */
   public <S> I chunk(TransformBlock<E, S> block);
 
@@ -97,14 +98,14 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
    *          name of a Method
    * @param args
    *          arguments of a Method
-   * @return a {@link I RubyEnumeratorBase}
+   * @return a RubyEnumeratorBase
    */
   public <S> I chunk(final String methodName, final Object... args);
 
   /**
    * Returns a RubyEnumeratorBase of this RubyEnumerableBase.
    * 
-   * @return a {@link I RubyEnumeratorBase}
+   * @return a RubyEnumeratorBase
    */
   public I collect();
 
@@ -115,7 +116,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
    *          the type of transformed elements
    * @param block
    *          to transform elements
-   * @return a {@link Z RubyEnumerableBase}
+   * @return a RubyEnumerableBase
    */
   public <S> Z collect(TransformBlock<E, S> block);
 
@@ -128,14 +129,14 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
    *          name of a Method
    * @param args
    *          arguments of a Method
-   * @return a {@link Z RubyEnumerableBase}
+   * @return a RubyEnumerableBase
    */
   public <S> Z collect(final String methodName, final Object... args);
 
   /**
    * Returns a RubyEnumeratorBase of this RubyEnumerableBase.
    * 
-   * @return a {@link I RubyEnumeratorBase}
+   * @return a RubyEnumeratorBase
    */
   public I collectConcat();
 
@@ -146,7 +147,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
    *          the type of transformed elements
    * @param block
    *          to take element and generate a RubyArray
-   * @return a {@link Z RubyEnumerableBase}
+   * @return a RubyEnumerableBase
    */
   public <S> Z collectConcat(TransformBlock<E, ? extends List<S>> block);
 
@@ -170,7 +171,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
    * Generates a sequence from first element to last element and so on
    * infinitely.
    * 
-   * @return a {@link I RubyEnumeratorBase}
+   * @return a RubyEnumeratorBase
    */
   public I cycle();
 
@@ -179,7 +180,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
    * 
    * @param n
    *          times to repeat
-   * @return a {@link I RubyEnumeratorBase}
+   * @return a RubyEnumeratorBase
    */
   public I cycle(int n);
 
@@ -206,7 +207,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
   /**
    * Returns a RubyEnumeratorBase of this RubyEnumerableBase.
    * 
-   * @return a {@link I RubyEnumeratorBase}
+   * @return a RubyEnumeratorBase
    */
   public I detect();
 
@@ -225,7 +226,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
    * 
    * @param n
    *          number of elements to drop
-   * @return a {@link I RubyEnumeratorBase}
+   * @return a RubyEnumeratorBase
    */
   public Z drop(int n);
 
@@ -233,7 +234,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
    * Returns a RubyEnumeratorBase which contains the first element of this
    * RubyEnumerableBase.
    * 
-   * @return a {@link I RubyEnumeratorBase}
+   * @return a RubyEnumeratorBase
    */
   public I dropWhile();
 
@@ -243,14 +244,14 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
    * 
    * @param block
    *          to define which elements to be dropped
-   * @return a {@link Z RubyEnumerableBase}
+   * @return a RubyEnumerableBase
    */
   public Z dropWhile(BooleanBlock<E> block);
 
   /**
    * Returns a RubyEnumeratorBase of this RubyEnumerableBase.
    * 
-   * @return a {@link I RubyEnumeratorBase}
+   * @return a RubyEnumeratorBase
    */
   public I each();
 
@@ -269,7 +270,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
    * 
    * @param n
    *          number of consecutive elements
-   * @return a {@link I RubyEnumeratorBase}
+   * @return a RubyEnumeratorBase
    */
   public I eachCons(int n);
 
@@ -287,7 +288,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
   /**
    * Returns a RubyEnumeratorBase of this RubyEnumerableBase.
    * 
-   * @return a {@link I RubyEnumeratorBase}
+   * @return a RubyEnumeratorBase
    */
   public I eachEntry();
 
@@ -305,7 +306,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
    * 
    * @param n
    *          size of each slice
-   * @return a {@link I RubyEnumeratorBase}
+   * @return a RubyEnumeratorBase
    */
   public I eachSlice(int n);
 
@@ -322,7 +323,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
   /**
    * Iterates elements with their indices by Entry.
    * 
-   * @return a {@link I RubyEnumeratorBase}
+   * @return a RubyEnumeratorBase
    */
   public I eachWithIndex();
 
@@ -342,7 +343,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
    *          the type of transformed elements
    * @param o
    *          an Object
-   * @return a {@link I RubyEnumeratorBase}
+   * @return a RubyEnumeratorBase
    */
   public <S> I eachWithObject(S o);
 
@@ -369,7 +370,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
   /**
    * Equivalent to detect().
    * 
-   * @return a {@link I RubyEnumeratorBase}
+   * @return a RubyEnumeratorBase
    */
   public I find();
 
@@ -385,7 +386,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
   /**
    * Returns a RubyEnumeratorBase of this RubyEnumerableBase.
    * 
-   * @return a {@link I RubyEnumeratorBase}
+   * @return a RubyEnumeratorBase
    */
   public I findAll();
 
@@ -394,14 +395,14 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
    * 
    * @param block
    *          to filter elements
-   * @return a {@link Z RubyEnumerableBase}
+   * @return a RubyEnumerableBase
    */
   public Z findAll(BooleanBlock<E> block);
 
   /**
    * Returns a RubyEnumeratorBase of this RubyEnumerableBase.
    * 
-   * @return a {@link I RubyEnumeratorBase}
+   * @return a RubyEnumeratorBase
    */
   public I findIndex();
 
@@ -446,7 +447,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
   /**
    * Equivalent to collectConcat().
    * 
-   * @return a {@link I RubyEnumeratorBase}
+   * @return a RubyEnumeratorBase
    */
   public I flatMap();
 
@@ -457,7 +458,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
    *          the type of transformed elements
    * @param block
    *          to take element and generate a RubyArray
-   * @return a {@link Z RubyEnumerableBase}
+   * @return a RubyEnumerableBase
    */
   public <S> Z flatMap(TransformBlock<E, ? extends List<S>> block);
 
@@ -466,7 +467,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
    * 
    * @param regex
    *          regular expression
-   * @return a {@link Z RubyEnumerableBase}
+   * @return a RubyEnumerableBase
    */
   public Z grep(String regex);
 
@@ -480,7 +481,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
    *          regular expression
    * @param block
    *          to transform elements
-   * @return a {@link Z RubyEnumerableBase}
+   * @return a RubyEnumerableBase
    */
   public <S> Z grep(String regex, TransformBlock<E, S> block);
 
@@ -496,7 +497,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
    *          name of a Method
    * @param args
    *          arguments of a Method
-   * @return a {@link Z RubyEnumerableBase}
+   * @return a RubyEnumerableBase
    */
   public <S> Z
       grep(String regex, final String methodName, final Object... args);
@@ -504,7 +505,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
   /**
    * Returns a RubyEnumeratorBase of this RubyEnumerableBase.
    * 
-   * @return a {@link I RubyEnumeratorBase}
+   * @return a RubyEnumeratorBase
    */
   public I groupBy();
 
@@ -611,7 +612,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
   /**
    * Returns a RubyEnumeratorBase of this RubyEnumerableBase.
    * 
-   * @return a {@link I RubyEnumeratorBase}
+   * @return a RubyEnumeratorBase
    */
   public I map();
 
@@ -622,7 +623,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
    *          the type of transformed elements
    * @param block
    *          to transform elements
-   * @return a {@link Z RubyEnumerableBase}
+   * @return a RubyEnumerableBase
    */
   public <S> Z map(TransformBlock<E, S> block);
 
@@ -635,7 +636,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
    *          name of a Method
    * @param args
    *          arguments of a Method
-   * @return a {@link Z RubyEnumerableBase}
+   * @return a RubyEnumerableBase
    */
   public <S> Z map(String methodName, Object... args);
 
@@ -660,7 +661,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
   /**
    * Returns a RubyEnumeratorBase of this RubyEnumerableBase.
    * 
-   * @return a {@link I RubyEnumeratorBase}
+   * @return a RubyEnumeratorBase
    */
   public I maxBy();
 
@@ -735,7 +736,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
   /**
    * Returns a RubyEnumeratorBase of this RubyEnumerableBase.
    * 
-   * @return a {@link I RubyEnumeratorBase}
+   * @return a RubyEnumeratorBase
    */
   public I minBy();
 
@@ -801,7 +802,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
   /**
    * Returns a RubyEnumeratorBase of this RubyEnumerableBase.
    * 
-   * @return a {@link I RubyEnumeratorBase}
+   * @return a RubyEnumeratorBase
    */
   public I minmaxBy();
 
@@ -886,7 +887,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
   /**
    * Returns a RubyEnumeratorBase of this RubyEnumerableBase.
    * 
-   * @return a {@link I RubyEnumeratorBase}
+   * @return a RubyEnumeratorBase
    */
   public I partition();
 
@@ -946,7 +947,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
   /**
    * Returns a RubyEnumeratorBase of this RubyEnumerableBase.
    * 
-   * @return a {@link I RubyEnumeratorBase}
+   * @return a RubyEnumeratorBase
    */
   public I reject();
 
@@ -955,14 +956,14 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
    * 
    * @param block
    *          to filter elements
-   * @return a {@link Z RubyEnumerableBase}
+   * @return a RubyEnumerableBase
    */
   public Z reject(BooleanBlock<E> block);
 
   /**
    * Returns a reversed RubyEnumeratorBase of this RubyEnumerableBase.
    * 
-   * @return a {@link I RubyEnumeratorBase}
+   * @return a RubyEnumeratorBase
    */
   public I reverseEach();
 
@@ -978,7 +979,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
   /**
    * Returns a RubyEnumeratorBase of this RubyEnumerableBase.
    * 
-   * @return a {@link I RubyEnumeratorBase}
+   * @return a RubyEnumeratorBase
    */
   public I select();
 
@@ -987,7 +988,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
    * 
    * @param block
    *          to filter elements
-   * @return a {@link Z RubyEnumerableBase}
+   * @return a RubyEnumerableBase
    */
   public Z select(BooleanBlock<E> block);
 
@@ -997,7 +998,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
    * 
    * @param block
    *          to check where to do slice
-   * @return a {@link I RubyEnumeratorBase}
+   * @return a RubyEnumeratorBase
    */
   public I sliceBefore(BooleanBlock<E> block);
 
@@ -1007,7 +1008,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
    * 
    * @param regex
    *          to check where to do slice
-   * @return a {@link I RubyEnumeratorBase}
+   * @return a RubyEnumeratorBase
    */
   public I sliceBefore(String regex);
 
@@ -1033,7 +1034,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
   /**
    * Returns a RubyEnumeratorBase of this RubyEnumerableBase.
    * 
-   * @return a {@link I RubyEnumeratorBase}
+   * @return a RubyEnumeratorBase
    */
   public I sortBy();
 
@@ -1100,7 +1101,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
    * 
    * @param n
    *          number of elements
-   * @return a {@link Z RubyEnumerableBase}
+   * @return a RubyEnumerableBase
    */
   public Z take(int n);
 
@@ -1108,7 +1109,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
    * Returns a RubyEnumeratorBase which contains the first element of this
    * RubyEnumerableBase.
    * 
-   * @return a {@link I RubyEnumeratorBase}
+   * @return a RubyEnumeratorBase
    */
   public I takeWhile();
 
@@ -1117,7 +1118,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
    * 
    * @param block
    *          to filter elements
-   * @return a {@link Z RubyEnumerableBase}
+   * @return a RubyEnumerableBase
    */
   public Z takeWhile(BooleanBlock<E> block);
 
@@ -1134,7 +1135,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
    * 
    * @param others
    *          an array of Iterable
-   * @return a {@link Z RubyEnumerableBase}
+   * @return a RubyEnumerableBase
    */
   public Z zip(Iterable<E>... others);
 
@@ -1144,7 +1145,7 @@ public interface RubyEnumerableBase<E, I extends RubyEnumeratorBase<?, ?, ?>, Z 
    * 
    * @param others
    *          a List of Iterable
-   * @return a {@link Z RubyEnumerableBase}
+   * @return a RubyEnumerableBase
    */
   public Z zip(List<? extends Iterable<E>> others);
 
