@@ -20,7 +20,7 @@ Installation with Maven:
 
 Java 8 with rubycollect4j:
 ```java
-// Sort the characters by its frequency based on the word 'Mississippi' case-insensitively
+// Sorts the characters by its frequency based on the word 'Mississippi' case-insensitively.
 RubyArray<String> word = ra("Mississippi".split("(?!^)"));
 
 String result = word.map((c) -> {
@@ -35,7 +35,7 @@ p(result);
 
 Java 6 with rubycollect4j:
 ```java
-// Finds 2 words which get the least and the most unique letters in upper case
+// Finds 2 words which get the least and the most unique letters in upper case.
 List<String> words =
   RubyFile.foreach("/usr/share/dict/web2") // Dictionary of Mac OS
     .minmaxBy(new TransformBlock<String, Integer>() {
@@ -168,9 +168,8 @@ p( date(c.getTime()) );                        // Output: Thu Jan 01 00:00:00 CS
 
 Demo RubyObject.send():
 ```java
-// Assumes RubyHash<String, String> profile =
-//   rh("Name", "John Doe", "Gender", "Male", "Birthday", "2001/10/01")
-// and Object person gets 3 setters: setName, setGender, setBirthday.
+RubyHash<String, String> profile = rh("Name", "John Doe", "Gender", "Male", "Birthday", "2001/10/01");
+// Assumes Object person gets 3 setters: setName, setGender, setBirthday.
 profile.each(new EntryBlock<String, String>() {
   public void yield(String key, String value) {
     RubyObject.send(person, "set" + key, value);
