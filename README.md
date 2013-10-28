@@ -14,12 +14,12 @@ Installation with Maven:
 <dependency>
   <groupId>net.sf.rubycollect4j</groupId>
   <artifactId>rubycollect4j</artifactId>
-  <version>1.5.3</version>
+  <version>1.6.0</version>
 </dependency>
 ```
 
 Java 8 with rubycollect4j:
-``` java
+```java
 // Sort the characters by its frequency based on the word 'Mississippi' case-insensitively
 RubyArray<String> word = ra("Mississippi".split("(?!^)"));
 
@@ -34,22 +34,18 @@ p(result);
 ```
 
 Java 6 with rubycollect4j:
-``` java
-// Sort the characters by its frequency based on the word 'Mississippi' case-insensitively
-final RubyArray<String> word = newRubyArray("Mississippi".split("(?!^)"));
+```java
+// Finds 2 words which get the least and the most unique letters in upper case
+List<String> words =
+  RubyFile.foreach("/usr/share/dict/web2") // Dictionary of Mac OS
+    .minmaxBy(new TransformBlock<String, Integer>() {
+      public Integer yield(String item) {
+        return newRubyArray(item.split("(?!^)")).uniq().count();
+      }
+    }).mapǃ("toUpperCase");
 
-String result = word.map(new TransformBlock<String, String>() {
-  public String yield(String c) {
-    return c.toLowerCase();
-  }
-}).sortBy(new TransformBlock<String, Integer>() {
-  public Integer yield(String c) {
-    return word.count(c);
-  }
-}).uniq().join();
-
-p(result);
-// Output: "mpis"
+p(words);
+// Output: [A, BLEPHAROCONJUNCTIVITIS]
 ```
 
 Please add following lines before running examples:
@@ -168,6 +164,19 @@ p( RubyDate.yesterday() );                     // Output: date of yesterday
 Calendar c = Calendar.getInstance();
 c.clear();
 p( date(c.getTime()) );                        // Output: Thu Jan 01 00:00:00 CST 1970
+```
+
+Demo RubyObject.send():
+```java
+// Assumes RubyHash<String, String> profile =
+//   rh("Name", "John Doe", "Gender", "Male", "Birthday", "2001/10/01")
+// and Object person gets 3 setters: setName, setGender, setBirthday.
+profile.each(new EntryBlock<String, String>() {
+  public void yield(String key, String value) {
+    RubyObject.send(person, "set" + key, value);
+  }
+});
+// As you can see, RubyObject.send() is a wrapper to Java Reflection.
 ```
 
 Demo qw():
