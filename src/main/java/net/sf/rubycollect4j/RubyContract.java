@@ -41,6 +41,8 @@ import net.sf.rubycollect4j.block.WithObjectBlock;
  */
 public final class RubyContract {
 
+  private RubyContract() {}
+
   /**
    * 
    * Enumerable defines all methods of a RubyEnumerable should have.
