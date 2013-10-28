@@ -97,15 +97,6 @@ public final class RubyRange<E> extends RubyEnumerable<E> {
   }
 
   /**
-   * Returns a RubyEnumerator of this RubyRange.
-   * 
-   * @return a RubyEnumerator
-   */
-  public RubyEnumerator<E> each() {
-    return newRubyEnumerator(iter);
-  }
-
-  /**
    * Yields each element of this RubyRange to the block.
    * 
    * @param block

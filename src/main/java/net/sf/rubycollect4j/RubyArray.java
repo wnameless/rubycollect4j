@@ -385,15 +385,6 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Returns a RubyEnumerator of this RubyArray.
-   * 
-   * @return a RubyEnumerator
-   */
-  public RubyEnumerator<E> each() {
-    return newRubyEnumerator(list);
-  }
-
-  /**
    * Yields each element to the block.
    * 
    * @param block

@@ -24,6 +24,7 @@ import static net.sf.rubycollect4j.RubyCollections.hp;
 import static net.sf.rubycollect4j.RubyCollections.newRubyLazyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -200,15 +201,14 @@ public class RubyLazyEnumeratorTest {
   @Test
   public void testEachWithIndexWithBlock() {
     final RubyArray<Integer> ints = ra();
-    assertEquals(ra(1, 2, 3, 4),
-        lre.eachWithIndex(new WithIndexBlock<Integer>() {
+    assertSame(lre, lre.eachWithIndex(new WithIndexBlock<Integer>() {
 
-          @Override
-          public void yield(Integer item, int index) {
-            ints.push(item, index);
-          }
+      @Override
+      public void yield(Integer item, int index) {
+        ints.push(item, index);
+      }
 
-        }));
+    }));
     assertEquals(ra(1, 0, 2, 1, 3, 2, 4, 3), ints);
   }
 

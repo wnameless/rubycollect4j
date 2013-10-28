@@ -170,3 +170,5 @@ Version 1.6.0
 + Added RubyObject#send
 
 + Most of the TransformBlocks in RubyArray & RubyEnumerable can now be replaced with method name and arguments
+
+* Refactor by RubyEnumerableBase & RubyEnumeratorBase interfaces

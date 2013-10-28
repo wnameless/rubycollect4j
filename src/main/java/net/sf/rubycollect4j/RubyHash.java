@@ -188,15 +188,6 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Returns a RubyEnumerator of entries of this RubyHash.
-   * 
-   * @return a RubyEnumerator
-   */
-  public RubyEnumerator<Entry<K, V>> each() {
-    return newRubyEnumerator(new ComparableEntryIterable<K, V>(map.entrySet()));
-  }
-
-  /**
    * Yields each element to given block.
    * 
    * @param block

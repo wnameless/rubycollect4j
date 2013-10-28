@@ -37,7 +37,7 @@ import net.sf.rubycollect4j.util.PeekingIterator;
  *          the type of the elements
  */
 public class RubyEnumerator<E> extends RubyEnumerable<E> implements
-    Iterable<E>, Iterator<E> {
+    RubyEnumeratorBase<E, RubyEnumerator<?>, RubyArray<?>> {
 
   private final Iterable<E> iter;
   private PeekingIterator<E> pIterator;
