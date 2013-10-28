@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
+import net.sf.rubycollect4j.RubyContract.Enumerable;
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.block.BooleanBlock;
 import net.sf.rubycollect4j.block.ReduceBlock;
@@ -55,7 +56,7 @@ import net.sf.rubycollect4j.iter.TransformIterable;
  *          the type of the elements
  */
 public abstract class RubyEnumerable<E> implements
-    RubyEnumerableBase<E, RubyEnumerator<?>, RubyArray<?>> {
+    Enumerable<E, RubyEnumerator<?>, RubyArray<?>> {
 
   /**
    * Returns the Iterable of this RubyEnumerable.

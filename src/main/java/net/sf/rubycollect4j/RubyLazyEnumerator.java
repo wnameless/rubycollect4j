@@ -35,6 +35,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
+import net.sf.rubycollect4j.RubyContract.Enumerator;
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.block.BooleanBlock;
 import net.sf.rubycollect4j.block.ReduceBlock;
@@ -72,7 +73,7 @@ import net.sf.rubycollect4j.util.PeekingIterator;
  *          the type of the elements
  */
 public final class RubyLazyEnumerator<E> implements
-    RubyEnumeratorBase<E, RubyLazyEnumerator<?>, RubyLazyEnumerator<?>> {
+    Enumerator<E, RubyLazyEnumerator<?>, RubyLazyEnumerator<?>> {
 
   private final Iterable<E> iter;
   private PeekingIterator<E> pIterator;

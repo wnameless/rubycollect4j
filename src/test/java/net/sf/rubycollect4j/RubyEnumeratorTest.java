@@ -65,7 +65,7 @@ public class RubyEnumeratorTest {
 
   @Test
   public void testEach() {
-    assertSame(re, re.each());
+    assertEquals(re.toA(), re.each().toA());
   }
 
   @Test

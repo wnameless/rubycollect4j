@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sf.rubycollect4j.RubyContract.Enumerator;
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.util.PeekingIterator;
 
@@ -37,7 +38,7 @@ import net.sf.rubycollect4j.util.PeekingIterator;
  *          the type of the elements
  */
 public class RubyEnumerator<E> extends RubyEnumerable<E> implements
-    RubyEnumeratorBase<E, RubyEnumerator<?>, RubyArray<?>> {
+    Enumerator<E, RubyEnumerator<?>, RubyArray<?>> {
 
   private final Iterable<E> iter;
   private PeekingIterator<E> pIterator;
