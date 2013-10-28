@@ -79,23 +79,48 @@ public class RubyLazyEnumeratorTest {
         lre.chunk(block).toA());
   }
 
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testChunkWithMethodName() {
+    lre = newRubyLazyEnumerator(Arrays.asList(1, 2, 2, 3));
+    assertTrue(lre.chunk("toString") instanceof RubyLazyEnumerator);
+    assertEquals(ra(hp("1", ra(1)), hp("2", ra(2, 2)), hp("3", ra(3))), lre
+        .chunk("toString").toA());
+  }
+
   @Test
   public void testCollect() {
+    assertSame(lre, lre.collect());
+  }
+
+  @Test
+  public void testCollectWithBlock() {
     assertTrue(lre.collect(block) instanceof RubyLazyEnumerator);
-    assertTrue(lre.collect("toString") instanceof RubyLazyEnumerator);
+  }
+
+  @Test
+  public void testCollectWithMethodName() {
+    assertEquals(ra("1", "2", "3", "4"), lre.collect("toString").toA());
   }
 
   @Test
   public void testCollectConcat() {
-    assertTrue(lre
-        .collectConcat(new TransformBlock<Integer, RubyArray<Integer>>() {
+    assertSame(lre, lre.collectConcat());
+  }
+
+  @Test
+  public void testCollectConcatWithBlock() {
+    TransformBlock<Integer, RubyArray<Integer>> block =
+        new TransformBlock<Integer, RubyArray<Integer>>() {
 
           @Override
           public RubyArray<Integer> yield(Integer item) {
             return ra(item, item);
           }
 
-        }) instanceof RubyLazyEnumerator);
+        };
+    assertTrue(lre.collectConcat(block) instanceof RubyLazyEnumerator);
+    assertEquals(ra(1, 1, 2, 2, 3, 3, 4, 4), lre.collectConcat(block).toA());
   }
 
   @Test
@@ -120,14 +145,21 @@ public class RubyLazyEnumeratorTest {
 
   @Test
   public void testDropWhile() {
-    assertTrue(lre.dropWhile(new BooleanBlock<Integer>() {
+    assertEquals(ra(1), lre.dropWhile().toA());
+  }
+
+  @Test
+  public void testDropWhileWithBlock() {
+    BooleanBlock<Integer> block = new BooleanBlock<Integer>() {
 
       @Override
       public boolean yield(Integer item) {
-        return item < 100;
+        return item < 3;
       }
 
-    }) instanceof RubyLazyEnumerator);
+    };
+    assertTrue(lre.dropWhile(block) instanceof RubyLazyEnumerator);
+    assertEquals(ra(3, 4), lre.dropWhile(block).toA());
   }
 
   @Test
@@ -228,13 +260,29 @@ public class RubyLazyEnumeratorTest {
   }
 
   @Test
+  public void testFindAll() {
+    assertTrue(lre.findAll() instanceof RubyLazyEnumerator);
+  }
+
+  @Test
   public void testFindIndex() {
     assertTrue(lre.findIndex() instanceof RubyLazyEnumerator);
   }
 
   @Test
+  public void testFlatMap() {
+    assertTrue(lre.flatMap() instanceof RubyLazyEnumerator);
+  }
+
+  @Test
   public void testGroupBy() {
     assertTrue(lre.groupBy() instanceof RubyLazyEnumerator);
+  }
+
+  @Test
+  public void testGrepWithMethodName() {
+    assertTrue(lre.grep("2|3", "toString") instanceof RubyLazyEnumerator);
+    assertEquals(ra("2", "3"), lre.grep("2|3", "toString").toA());
   }
 
   @Test
@@ -244,7 +292,16 @@ public class RubyLazyEnumeratorTest {
 
   @Test
   public void testMap() {
+    assertTrue(lre.map() instanceof RubyLazyEnumerator);
+  }
+
+  @Test
+  public void testMapWithBlock() {
     assertTrue(lre.map(block) instanceof RubyLazyEnumerator);
+  }
+
+  @Test
+  public void testMapWithMethodName() {
     assertTrue(lre.map("toString") instanceof RubyLazyEnumerator);
   }
 
@@ -269,6 +326,11 @@ public class RubyLazyEnumeratorTest {
   }
 
   @Test
+  public void testReject() {
+    assertSame(lre, lre.reject());
+  }
+
+  @Test
   public void testReverseEach() {
     assertTrue(lre.cycle().reverseEach() instanceof RubyLazyEnumerator);
   }
@@ -289,26 +351,42 @@ public class RubyLazyEnumeratorTest {
 
   @Test
   public void testSelect() {
-    assertTrue(lre.select(new BooleanBlock<Integer>() {
-
-      @Override
-      public boolean yield(Integer item) {
-        return false;
-      }
-
-    }) instanceof RubyLazyEnumerator);
+    assertSame(lre, lre.select());
   }
 
   @Test
-  public void testSliceBefore() {
-    assertTrue(lre.sliceBefore(new BooleanBlock<Integer>() {
+  public void testSelectWithBlock() {
+    BooleanBlock<Integer> block = new BooleanBlock<Integer>() {
 
       @Override
       public boolean yield(Integer item) {
-        return false;
+        return item == 3;
       }
 
-    }) instanceof RubyLazyEnumerator);
+    };
+    assertTrue(lre.select(block) instanceof RubyLazyEnumerator);
+    assertEquals(ra(3), lre.select(block).toA());
+  }
+
+  @Test
+  public void testTakeWhile() {
+    assertTrue(lre.takeWhile() instanceof RubyLazyEnumerator);
+    assertEquals(ra(1), lre.takeWhile().toA());
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testSliceBefore() {
+    BooleanBlock<Integer> block = new BooleanBlock<Integer>() {
+
+      @Override
+      public boolean yield(Integer item) {
+        return item == 3;
+      }
+
+    };
+    assertTrue(lre.sliceBefore(block) instanceof RubyLazyEnumerator);
+    assertEquals(ra(ra(1, 2), ra(3, 4)), lre.sliceBefore(block).toA());
   }
 
   @Test

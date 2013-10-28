@@ -345,6 +345,26 @@ public class RubyEnumerableTest {
   }
 
   @Test
+  public void testEach() {
+    assertTrue(re.each() instanceof RubyEnumerator);
+    assertEquals(re.toA(), re.each().toA());
+  }
+
+  @Test
+  public void testEachWithBlock() {
+    final RubyArray<Integer> ints = ra();
+    assertEquals(re.toA(), re.each(new Block<Integer>() {
+
+      @Override
+      public void yield(Integer item) {
+        ints.push(item * 2);
+      }
+
+    }).toA());
+    assertEquals(ra(2, 4, 6, 8), ints);
+  }
+
+  @Test
   public void testEachCons() {
     assertEquals(RubyEnumerator.class, re.eachCons(2).getClass());
     @SuppressWarnings("unchecked")
