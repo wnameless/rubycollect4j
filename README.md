@@ -169,7 +169,7 @@ p( date(c.getTime()) );                        // Output: Thu Jan 01 00:00:00 CS
 Demo RubyObject.send():
 ```java
 RubyHash<String, String> profile = rh("Name", "John Doe", "Gender", "Male", "Birthday", "2001/10/01");
-// Assumes Object person gets 3 setters: setName, setGender, setBirthday.
+// Assumes Object person has 3 setters: setName, setGender, setBirthday.
 profile.each(new EntryBlock<String, String>() {
   public void yield(String key, String value) {
     RubyObject.send(person, "set" + key, value);
