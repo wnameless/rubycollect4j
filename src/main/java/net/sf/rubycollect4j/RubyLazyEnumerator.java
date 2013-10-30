@@ -21,7 +21,6 @@
 package net.sf.rubycollect4j;
 
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
-import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
 
 import java.util.ArrayList;
@@ -578,21 +577,35 @@ public final class RubyLazyEnumerator<E> implements
     return collect(methodName, args);
   }
 
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
   public E max() {
-    return sort().last();
+    if (!iter.iterator().hasNext())
+      return null;
+
+    Iterator<E> elements = iter.iterator();
+    E max = elements.next();
+    while (elements.hasNext()) {
+      E item = elements.next();
+      if (((Comparable) max).compareTo(item) < 0)
+        max = item;
+    }
+    return max;
   }
 
   @Override
   public E max(Comparator<? super E> comp) {
-    List<E> list = new ArrayList<E>();
-    for (E item : iter) {
-      list.add(item);
-    }
-    if (list.isEmpty())
+    if (!iter.iterator().hasNext())
       return null;
 
-    return Collections.max(list, comp);
+    Iterator<E> elements = iter.iterator();
+    E max = elements.next();
+    while (elements.hasNext()) {
+      E item = elements.next();
+      if (comp.compare(max, item) < 0)
+        max = item;
+    }
+    return max;
   }
 
   @Override
@@ -602,32 +615,33 @@ public final class RubyLazyEnumerator<E> implements
 
   @Override
   public <S> E maxBy(Comparator<? super S> comp, TransformBlock<E, S> block) {
-    List<E> src = new ArrayList<E>();
-    List<S> dst = new ArrayList<S>();
-    for (E item : iter) {
-      src.add(item);
-      dst.add(block.yield(item));
-    }
-    if (src.isEmpty())
+    if (!iter.iterator().hasNext())
       return null;
 
-    S maxDst = Collections.max(dst, comp);
-    return src.get(dst.indexOf(maxDst));
+    Iterator<E> elements = iter.iterator();
+    E max = elements.next();
+    while (elements.hasNext()) {
+      E item = elements.next();
+      if (comp.compare(block.yield(max), block.yield(item)) < 0)
+        max = item;
+    }
+    return max;
   }
 
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
   public <S> E maxBy(TransformBlock<E, S> block) {
-    List<E> src = new ArrayList<E>();
-    List<S> dst = new ArrayList<S>();
-    for (E item : iter) {
-      src.add(item);
-      dst.add(block.yield(item));
-    }
-    if (src.isEmpty())
+    if (!iter.iterator().hasNext())
       return null;
 
-    S maxDst = newRubyEnumerator(dst).max();
-    return src.get(dst.indexOf(maxDst));
+    Iterator<E> elements = iter.iterator();
+    E max = elements.next();
+    while (elements.hasNext()) {
+      E item = elements.next();
+      if (((Comparable) block.yield(max)).compareTo(block.yield(item)) < 0)
+        max = item;
+    }
+    return max;
   }
 
   @Override
@@ -647,21 +661,35 @@ public final class RubyLazyEnumerator<E> implements
     return includeʔ(target);
   }
 
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
   public E min() {
-    return sort().first();
+    if (!iter.iterator().hasNext())
+      return null;
+
+    Iterator<E> elements = iter.iterator();
+    E min = elements.next();
+    while (elements.hasNext()) {
+      E item = elements.next();
+      if (((Comparable) min).compareTo(item) > 0)
+        min = item;
+    }
+    return min;
   }
 
   @Override
   public E min(Comparator<? super E> comp) {
-    List<E> list = new ArrayList<E>();
-    for (E item : iter) {
-      list.add(item);
-    }
-    if (list.isEmpty())
+    if (!iter.iterator().hasNext())
       return null;
 
-    return Collections.min(list, comp);
+    Iterator<E> elements = iter.iterator();
+    E min = elements.next();
+    while (elements.hasNext()) {
+      E item = elements.next();
+      if (comp.compare(min, item) > 0)
+        min = item;
+    }
+    return min;
   }
 
   @Override
@@ -671,32 +699,33 @@ public final class RubyLazyEnumerator<E> implements
 
   @Override
   public <S> E minBy(Comparator<? super S> comp, TransformBlock<E, S> block) {
-    List<E> src = new ArrayList<E>();
-    List<S> dst = new ArrayList<S>();
-    for (E item : iter) {
-      src.add(item);
-      dst.add(block.yield(item));
-    }
-    if (src.isEmpty())
+    if (!iter.iterator().hasNext())
       return null;
 
-    S minDst = Collections.min(dst, comp);
-    return src.get(dst.indexOf(minDst));
+    Iterator<E> elements = iter.iterator();
+    E min = elements.next();
+    while (elements.hasNext()) {
+      E item = elements.next();
+      if (comp.compare(block.yield(min), block.yield(item)) > 0)
+        min = item;
+    }
+    return min;
   }
 
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
   public <S> E minBy(TransformBlock<E, S> block) {
-    List<E> src = new ArrayList<E>();
-    List<S> dst = new ArrayList<S>();
-    for (E item : iter) {
-      src.add(item);
-      dst.add(block.yield(item));
-    }
-    if (src.isEmpty())
+    if (!iter.iterator().hasNext())
       return null;
 
-    S minDst = newRubyEnumerator(dst).min();
-    return src.get(dst.indexOf(minDst));
+    Iterator<E> elements = iter.iterator();
+    E min = elements.next();
+    while (elements.hasNext()) {
+      E item = elements.next();
+      if (((Comparable) block.yield(min)).compareTo(block.yield(item)) > 0)
+        min = item;
+    }
+    return min;
   }
 
   @Override
@@ -711,22 +740,42 @@ public final class RubyLazyEnumerator<E> implements
     });
   }
 
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
-  @SuppressWarnings("unchecked")
   public RubyArray<E> minmax() {
-    RubyArray<E> rubyArray = sort();
-    return newRubyArray(rubyArray.first(), rubyArray.last());
-  }
-
-  @Override
-  @SuppressWarnings("unchecked")
-  public RubyArray<E> minmax(Comparator<? super E> comp) {
-    RubyArray<E> rubyArray = newRubyArray(iter);
-    if (rubyArray.isEmpty())
+    if (!iter.iterator().hasNext())
       return newRubyArray(null, null);
 
-    return newRubyArray(Collections.min(rubyArray, comp),
-        Collections.max(rubyArray, comp));
+    Iterator<E> elements = iter.iterator();
+    E max = elements.next();
+    E min = max;
+    while (elements.hasNext()) {
+      E item = elements.next();
+      if (((Comparable) max).compareTo(item) < 0)
+        max = item;
+      if (((Comparable) min).compareTo(item) > 0)
+        min = item;
+    }
+    return newRubyArray(min, max);
+  }
+
+  @SuppressWarnings("unchecked")
+  @Override
+  public RubyArray<E> minmax(Comparator<? super E> comp) {
+    if (!iter.iterator().hasNext())
+      return newRubyArray(null, null);
+
+    Iterator<E> elements = iter.iterator();
+    E max = elements.next();
+    E min = max;
+    while (elements.hasNext()) {
+      E item = elements.next();
+      if (comp.compare(max, item) < 0)
+        max = item;
+      if (comp.compare(min, item) > 0)
+        min = item;
+    }
+    return newRubyArray(min, max);
   }
 
   @Override
@@ -734,41 +783,43 @@ public final class RubyLazyEnumerator<E> implements
     return this;
   }
 
-  @Override
   @SuppressWarnings("unchecked")
+  @Override
   public <S> RubyArray<E> minmaxBy(Comparator<? super S> comp,
       TransformBlock<E, S> block) {
-    RubyArray<E> src = newRubyArray();
-    RubyArray<S> dst = newRubyArray();
-    for (E item : iter) {
-      src.add(item);
-      dst.add(block.yield(item));
-    }
-    if (src.isEmpty())
+    if (!iter.iterator().hasNext())
       return newRubyArray(null, null);
 
-    S minDst = Collections.min(dst, comp);
-    S maxDst = Collections.max(dst, comp);
-    return newRubyArray(src.get(dst.indexOf(minDst)),
-        src.get(dst.indexOf(maxDst)));
+    Iterator<E> elements = iter.iterator();
+    E max = elements.next();
+    E min = max;
+    while (elements.hasNext()) {
+      E item = elements.next();
+      if (comp.compare(block.yield(max), block.yield(item)) < 0)
+        max = item;
+      if (comp.compare(block.yield(min), block.yield(item)) > 0)
+        min = item;
+    }
+    return newRubyArray(min, max);
   }
 
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
-  @SuppressWarnings("unchecked")
   public <S> RubyArray<E> minmaxBy(TransformBlock<E, S> block) {
-    RubyArray<E> src = newRubyArray();
-    RubyArray<S> dst = newRubyArray();
-    for (E item : iter) {
-      src.add(item);
-      dst.add(block.yield(item));
-    }
-    if (src.isEmpty())
+    if (!iter.iterator().hasNext())
       return newRubyArray(null, null);
 
-    S minDst = newRubyEnumerator(dst).min();
-    S maxDst = newRubyEnumerator(dst).max();
-    return newRubyArray(src.get(dst.indexOf(minDst)),
-        src.get(dst.indexOf(maxDst)));
+    Iterator<E> elements = iter.iterator();
+    E max = elements.next();
+    E min = max;
+    while (elements.hasNext()) {
+      E item = elements.next();
+      if (((Comparable) block.yield(max)).compareTo(block.yield(item)) < 0)
+        max = item;
+      if (((Comparable) block.yield(min)).compareTo(block.yield(item)) > 0)
+        min = item;
+    }
+    return newRubyArray(min, max);
   }
 
   @Override

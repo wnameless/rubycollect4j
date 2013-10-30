@@ -756,6 +756,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testMax() {
+    re = ra(3, 4, 1, 2);
     assertEquals(Integer.valueOf(4), re.max());
     re = newRubyEnumerator(new ArrayList<Integer>());
     assertNull(re.max());
@@ -763,6 +764,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testMaxWithComparator() {
+    re = ra(3, 4, 1, 2);
     assertEquals(Integer.valueOf(1), re.max(new Comparator<Integer>() {
 
       @Override
@@ -784,7 +786,7 @@ public class RubyEnumerableTest {
   @Test
   public void testMaxByWithComparatorAndBlock() {
     RubyEnumerable<String> re =
-        newRubyEnumerator(Arrays.asList("aaaa", "bbb", "cc", "d"));
+        newRubyEnumerator(Arrays.asList("aaaa", "cc", "bbb", "d"));
     assertEquals("d", re.maxBy(new Comparator<Integer>() {
 
       @Override
@@ -808,7 +810,7 @@ public class RubyEnumerableTest {
   @Test
   public void testMaxByWithBlock() {
     RubyEnumerable<String> re =
-        newRubyEnumerator(Arrays.asList("aaaa", "bbb", "cc", "d"));
+        newRubyEnumerator(Arrays.asList("bbb", "aaaa", "cc", "d"));
     assertEquals("aaaa", re.maxBy(new TransformBlock<String, Integer>() {
 
       @Override
@@ -843,6 +845,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testMinWithComparator() {
+    re = ra(1, 2, 4, 3);
     assertEquals(Integer.valueOf(4), re.min(new Comparator<Integer>() {
 
       @Override
@@ -864,7 +867,7 @@ public class RubyEnumerableTest {
   @Test
   public void testMinByWithComparatorAndBlock() {
     RubyEnumerable<String> re =
-        newRubyEnumerator(Arrays.asList("aaaa", "bbb", "cc", "d"));
+        newRubyEnumerator(Arrays.asList("cc", "aaaa", "bbb", "d"));
     assertEquals("aaaa", re.minBy(new Comparator<Integer>() {
 
       @Override
@@ -888,7 +891,7 @@ public class RubyEnumerableTest {
   @Test
   public void testMinByWithBlock() {
     RubyEnumerable<String> re =
-        newRubyEnumerator(Arrays.asList("aaaa", "bbb", "cc", "d"));
+        newRubyEnumerator(Arrays.asList("bbb", "aaaa", "cc", "d"));
     assertEquals("d", re.minBy(new TransformBlock<String, Integer>() {
 
       @Override
@@ -910,6 +913,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testMinmax() {
+    re = ra(2, 1, 4, 3);
     assertEquals(ra(1, 4), re.minmax());
     re = newRubyEnumerator(Arrays.asList(1));
     assertEquals(ra(1, 1), re.minmax());
@@ -919,6 +923,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testMinmaxWithComparator() {
+    re = ra(2, 1, 4, 3);
     assertEquals(ra(4, 1), re.minmax(new Comparator<Integer>() {
 
       @Override
@@ -940,7 +945,7 @@ public class RubyEnumerableTest {
   @Test
   public void testMinmaxByWithComparatorAndBlock() {
     RubyEnumerable<String> re =
-        newRubyEnumerator(Arrays.asList("aaaa", "bbb", "cc", "d"));
+        newRubyEnumerator(Arrays.asList("bbb", "aaaa", "d", "cc"));
     assertEquals(ra("aaaa", "d"), re.minmaxBy(new Comparator<Integer>() {
 
       @Override
@@ -963,7 +968,7 @@ public class RubyEnumerableTest {
   @Test
   public void testMinmaxByWithBlock() {
     RubyEnumerable<String> re =
-        newRubyEnumerator(Arrays.asList("aaaa", "bbb", "cc", "d"));
+        newRubyEnumerator(Arrays.asList("bbb", "aaaa", "d", "cc"));
     assertEquals(ra("d", "aaaa"),
         re.minmaxBy(new TransformBlock<String, Integer>() {
 
@@ -1200,6 +1205,8 @@ public class RubyEnumerableTest {
         newRubyEnumerator(Arrays.asList("b", "cd", "abc")).sort());
     assertEquals(ra(null, null, null), newRubyEnumerator(ra(null, null, null))
         .sort());
+    re = newRubyEnumerator(Arrays.asList(1));
+    assertEquals(ra(1), re.sort());
   }
 
   // @Test
