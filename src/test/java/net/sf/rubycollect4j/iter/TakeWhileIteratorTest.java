@@ -84,9 +84,4 @@ public class TakeWhileIteratorTest {
     assertEquals(ra(2, 3, 4, 5), list);
   }
 
-  @Test(expected = IllegalStateException.class)
-  public void testRemoveException() {
-    iter.remove();
-  }
-
 }

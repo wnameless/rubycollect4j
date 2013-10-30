@@ -32,10 +32,16 @@ import org.junit.Test;
 public class ProductIterableTest {
 
   private ProductIterable<Integer> iter;
+  private List<Integer> list1;
+  private List<Integer> list2;
+  private List<? extends List<Integer>> lists;
 
   @Before
   public void setUp() throws Exception {
-    iter = new ProductIterable<Integer>(ra(1, 2, 3), ra(ra(4, 5, 6)));
+    list1 = ra(1, 2, 3);
+    list2 = ra(4, 5, 6);
+    lists = ra(ra(4, 5, 6));
+    iter = new ProductIterable<Integer>(list1, lists);
   }
 
   @Test
@@ -46,24 +52,24 @@ public class ProductIterableTest {
   @SuppressWarnings("unchecked")
   @Test
   public void testConstructorWithVarargs() {
-    iter = new ProductIterable<Integer>(ra(1, 2, 3), ra(4, 5, 6));
+    iter = new ProductIterable<Integer>(list1, list2);
     assertTrue(iter instanceof ProductIterable);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException1() {
-    new ProductIterable<Integer>(null, ra(ra(4, 5, 6)));
+    new ProductIterable<Integer>(null, lists);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    new ProductIterable<Integer>(ra(1, 2, 3), (List<List<Integer>>) null);
+    new ProductIterable<Integer>(list1, (List<List<Integer>>) null);
   }
 
   @SuppressWarnings("unchecked")
   @Test(expected = NullPointerException.class)
   public void testConstructorException3() {
-    new ProductIterable<Integer>(null, ra(4, 5, 6));
+    new ProductIterable<Integer>(null, list2);
   }
 
   @Test

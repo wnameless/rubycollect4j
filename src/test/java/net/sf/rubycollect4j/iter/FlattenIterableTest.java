@@ -23,6 +23,9 @@ package net.sf.rubycollect4j.iter;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+import java.util.List;
+
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.block.TransformBlock;
 
@@ -32,10 +35,12 @@ import org.junit.Test;
 public class FlattenIterableTest {
 
   private FlattenIterable<Integer, Double> iter;
+  private List<Integer> list;
   private TransformBlock<Integer, RubyArray<Double>> block;
 
   @Before
   public void setUp() throws Exception {
+    list = ra(1, 2, 3);
     block = new TransformBlock<Integer, RubyArray<Double>>() {
 
       @Override
@@ -44,7 +49,7 @@ public class FlattenIterableTest {
       }
 
     };
-    iter = new FlattenIterable<Integer, Double>(ra(1, 2, 3), block);
+    iter = new FlattenIterable<Integer, Double>(list, block);
   }
 
   @Test
@@ -59,7 +64,7 @@ public class FlattenIterableTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    new FlattenIterable<Integer, Double>(ra(1, 2, 3), null);
+    new FlattenIterable<Integer, Double>(list, null);
   }
 
   @Test

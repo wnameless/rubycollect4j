@@ -23,6 +23,9 @@ package net.sf.rubycollect4j.iter;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+import java.util.List;
+
 import net.sf.rubycollect4j.block.BooleanBlock;
 
 import org.junit.Before;
@@ -31,10 +34,12 @@ import org.junit.Test;
 public class FindAllIterableTest {
 
   private FindAllIterable<Integer> iter;
+  private List<Integer> list;
   private BooleanBlock<Integer> block;
 
   @Before
   public void setUp() throws Exception {
+    list = ra(1, 2, 3);
     block = new BooleanBlock<Integer>() {
 
       @Override
@@ -43,7 +48,7 @@ public class FindAllIterableTest {
       }
 
     };
-    iter = new FindAllIterable<Integer>(ra(1, 2, 3), block);
+    iter = new FindAllIterable<Integer>(list, block);
   }
 
   @Test
@@ -58,7 +63,7 @@ public class FindAllIterableTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    new FindAllIterable<Integer>(ra(1, 2, 3), null);
+    new FindAllIterable<Integer>(list, null);
   }
 
   @Test

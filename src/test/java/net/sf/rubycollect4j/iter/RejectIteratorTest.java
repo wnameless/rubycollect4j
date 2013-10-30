@@ -65,7 +65,7 @@ public class RejectIteratorTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    new RejectIterator<Integer>(ra(1, 2, 3).iterator(), null);
+    new RejectIterator<Integer>(list.iterator(), null);
   }
 
   @Test

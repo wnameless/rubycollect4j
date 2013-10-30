@@ -34,11 +34,13 @@ import org.junit.Test;
 public class ZipIteratorTest {
 
   private ZipIterator<Integer> iter;
+  private List<Integer> list;
   private List<? extends Iterator<Integer>> others;
 
   @SuppressWarnings("unchecked")
   @Before
   public void setUp() throws Exception {
+    list = ra(1, 2, 3);
     others = ra(ra(4, 5).iterator(), ra(6).iterator());
     iter = new ZipIterator<Integer>(ra(1, 2, 3).iterator(), others);
   }
@@ -55,7 +57,7 @@ public class ZipIteratorTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    new ZipIterator<Integer>(ra(1, 2, 3).iterator(), null);
+    new ZipIterator<Integer>(list.iterator(), null);
   }
 
   @Test

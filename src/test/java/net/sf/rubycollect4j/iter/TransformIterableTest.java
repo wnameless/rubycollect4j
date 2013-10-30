@@ -35,20 +35,20 @@ public class TransformIterableTest {
 
   private TransformIterable<Integer, Double> iter;
   private List<Integer> list;
+  private TransformBlock<Integer, Double> block;
 
   @Before
   public void setUp() throws Exception {
     list = ra(1, 2, 3, 4);
-    iter =
-        new TransformIterable<Integer, Double>(list,
-            new TransformBlock<Integer, Double>() {
+    block = new TransformBlock<Integer, Double>() {
 
-              @Override
-              public Double yield(Integer item) {
-                return item.doubleValue();
-              }
+      @Override
+      public Double yield(Integer item) {
+        return item.doubleValue();
+      }
 
-            });
+    };
+    iter = new TransformIterable<Integer, Double>(list, block);
   }
 
   @Test
@@ -58,19 +58,12 @@ public class TransformIterableTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException1() {
-    new TransformIterable<Integer, String>(null,
-        new TransformBlock<Integer, String>() {
-
-          @Override
-          public String yield(Integer item) {
-            return item.toString();
-          }
-        });
+    new TransformIterable<Integer, Double>(null, block);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    new TransformIterable<Integer, String>(list, null);
+    new TransformIterable<Integer, Double>(list, null);
   }
 
   @Test

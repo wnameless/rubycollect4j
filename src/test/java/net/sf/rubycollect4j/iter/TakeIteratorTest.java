@@ -55,7 +55,7 @@ public class TakeIteratorTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testConstructorException2() {
-    new TakeIterator<Integer>(ra(1, 2, 3, 4, 5).iterator(), -1);
+    new TakeIterator<Integer>(list.iterator(), -1);
   }
 
   @Test
@@ -90,11 +90,6 @@ public class TakeIteratorTest {
     iter.next();
     iter.remove();
     assertEquals(ra(2, 3, 4, 5), list);
-  }
-
-  @Test(expected = IllegalStateException.class)
-  public void testRemoveException() {
-    iter.remove();
   }
 
 }

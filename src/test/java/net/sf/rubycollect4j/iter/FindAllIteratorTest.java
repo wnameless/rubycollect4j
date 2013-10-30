@@ -65,7 +65,7 @@ public class FindAllIteratorTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    new FindAllIterator<Integer>(ra(1, 2, 3).iterator(), null);
+    new FindAllIterator<Integer>(list.iterator(), null);
   }
 
   @Test

@@ -24,16 +24,20 @@ import static net.sf.rubycollect4j.RubyCollections.ra;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
 public class StepIterableTest {
 
   private StepIterable<Integer> iter;
+  private List<Integer> list;
 
   @Before
   public void setUp() throws Exception {
-    iter = new StepIterable<Integer>(ra(1, 2, 3, 4, 5), 2);
+    list = ra(1, 2, 3, 4, 5);
+    iter = new StepIterable<Integer>(list, 2);
   }
 
   @Test
@@ -48,12 +52,12 @@ public class StepIterableTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testConstructorException2() {
-    new StepIterable<Integer>(ra(1, 2, 3, 4, 5), 0);
+    new StepIterable<Integer>(list, 0);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testConstructorException3() {
-    new StepIterable<Integer>(ra(1, 2, 3, 4, 5), -1);
+    new StepIterable<Integer>(list, -1);
   }
 
   @Test

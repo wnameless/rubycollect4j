@@ -24,16 +24,20 @@ import static net.sf.rubycollect4j.RubyCollections.ra;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
 public class EachSliceIterableTest {
 
   private EachSliceIterable<Integer> iter;
+  private List<Integer> list;
 
   @Before
   public void setUp() throws Exception {
-    iter = new EachSliceIterable<Integer>(ra(1, 2, 3, 4, 5), 2);
+    list = ra(1, 2, 3, 4, 5);
+    iter = new EachSliceIterable<Integer>(list, 2);
   }
 
   @Test
@@ -48,12 +52,12 @@ public class EachSliceIterableTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testConstructorException2() {
-    new EachSliceIterable<Integer>(ra(1, 2, 3, 4, 5), 0);
+    new EachSliceIterable<Integer>(list, 0);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testConstructorException3() {
-    new EachSliceIterable<Integer>(ra(1, 2, 3, 4, 5), -1);
+    new EachSliceIterable<Integer>(list, -1);
   }
 
   @Test

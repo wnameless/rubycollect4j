@@ -25,6 +25,7 @@ import static net.sf.rubycollect4j.RubyCollections.ra;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 import net.sf.rubycollect4j.block.BooleanBlock;
@@ -35,10 +36,13 @@ import org.junit.Test;
 public class SliceBeforeIterableTest {
 
   private SliceBeforeIterable<Integer> iter;
+  private List<Integer> list;
   private BooleanBlock<Integer> block;
+  private Pattern pattern;
 
   @Before
   public void setUp() throws Exception {
+    list = ra(1, 2, 3, 4, 5);
     block = new BooleanBlock<Integer>() {
 
       @Override
@@ -47,13 +51,14 @@ public class SliceBeforeIterableTest {
       }
 
     };
-    iter = new SliceBeforeIterable<Integer>(ra(1, 2, 3, 4, 5), block);
+    pattern = qr("3");
+    iter = new SliceBeforeIterable<Integer>(list, block);
   }
 
   @Test
   public void testConstructor() {
     assertTrue(iter instanceof SliceBeforeIterable);
-    iter = new SliceBeforeIterable<Integer>(ra(1, 2, 3, 4, 5), qr("3"));
+    iter = new SliceBeforeIterable<Integer>(list, pattern);
     assertTrue(iter instanceof SliceBeforeIterable);
   }
 
@@ -64,24 +69,23 @@ public class SliceBeforeIterableTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    new SliceBeforeIterable<Integer>(ra(1, 2, 3, 4, 5),
-        (BooleanBlock<Integer>) null);
+    new SliceBeforeIterable<Integer>(list, (BooleanBlock<Integer>) null);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException3() {
-    new SliceBeforeIterable<Integer>(null, qr("3"));
+    new SliceBeforeIterable<Integer>(null, pattern);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException4() {
-    new SliceBeforeIterable<Integer>(ra(1, 2, 3, 4, 5), (Pattern) null);
+    new SliceBeforeIterable<Integer>(list, (Pattern) null);
   }
 
   @Test
   public void testIterator() {
     assertTrue(iter.iterator() instanceof SliceBeforeIterator);
-    iter = new SliceBeforeIterable<Integer>(ra(1, 2, 3, 4, 5), qr("3"));
+    iter = new SliceBeforeIterable<Integer>(list, pattern);
     assertTrue(iter.iterator() instanceof SliceBeforeIterator);
   }
 

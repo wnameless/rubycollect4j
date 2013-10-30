@@ -55,12 +55,12 @@ public class StepIteratorTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testConstructorException2() {
-    new StepIterator<Integer>(ra(1, 2, 3, 4, 5).iterator(), 0);
+    new StepIterator<Integer>(list.iterator(), 0);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testConstructorException3() {
-    new StepIterator<Integer>(ra(1, 2, 3, 4, 5).iterator(), -1);
+    new StepIterator<Integer>(list.iterator(), -1);
   }
 
   @Test

@@ -20,9 +20,10 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import java.util.AbstractMap.SimpleEntry;
 import java.util.Iterator;
 import java.util.Map.Entry;
+
+import net.sf.rubycollect4j.util.ComparableEntry;
 
 /**
  * 
@@ -59,7 +60,7 @@ public final class EachWithIndexIterator<E> implements
 
   @Override
   public Entry<E, Integer> next() {
-    return new SimpleEntry<E, Integer>(iter.next(), index++);
+    return new ComparableEntry<E, Integer>(iter.next(), index++);
   }
 
   @Override

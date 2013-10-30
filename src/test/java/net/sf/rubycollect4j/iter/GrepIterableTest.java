@@ -24,18 +24,22 @@ import static net.sf.rubycollect4j.RubyCollections.ra;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
 public class GrepIterableTest {
 
   private GrepIterable<Integer> iter;
+  private List<Integer> list;
   private String regex;
 
   @Before
   public void setUp() throws Exception {
+    list = ra(1, 2, 3);
     regex = "2|3";
-    iter = new GrepIterable<Integer>(ra(1, 2, 3), regex);
+    iter = new GrepIterable<Integer>(list, regex);
   }
 
   @Test
@@ -45,7 +49,7 @@ public class GrepIterableTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException1() {
-    new GrepIterable<Integer>(ra(1, 2, 3), null);
+    new GrepIterable<Integer>(list, null);
   }
 
   @Test(expected = NullPointerException.class)

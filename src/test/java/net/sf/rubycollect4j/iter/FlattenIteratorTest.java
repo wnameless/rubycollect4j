@@ -25,6 +25,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import net.sf.rubycollect4j.RubyArray;
@@ -36,10 +37,12 @@ import org.junit.Test;
 public class FlattenIteratorTest {
 
   private FlattenIterator<Integer, Double> iter;
+  private List<Integer> list;
   private TransformBlock<Integer, RubyArray<Double>> block;
 
   @Before
   public void setUp() throws Exception {
+    list = ra(1, 2, 3);
     block = new TransformBlock<Integer, RubyArray<Double>>() {
 
       @Override
@@ -48,7 +51,7 @@ public class FlattenIteratorTest {
       }
 
     };
-    iter = new FlattenIterator<Integer, Double>(ra(1, 2, 3).iterator(), block);
+    iter = new FlattenIterator<Integer, Double>(list.iterator(), block);
   }
 
   @Test
@@ -63,7 +66,7 @@ public class FlattenIteratorTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    new FlattenIterator<Integer, Double>(ra(1, 2, 3).iterator(), null);
+    new FlattenIterator<Integer, Double>(list.iterator(), null);
   }
 
   @Test

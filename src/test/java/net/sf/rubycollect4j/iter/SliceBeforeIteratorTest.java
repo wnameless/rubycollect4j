@@ -26,6 +26,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
 
@@ -37,10 +38,13 @@ import org.junit.Test;
 public class SliceBeforeIteratorTest {
 
   private SliceBeforeIterator<Integer> iter;
+  private List<Integer> list;
   private BooleanBlock<Integer> block;
+  private Pattern pattern;
 
   @Before
   public void setUp() throws Exception {
+    list = ra(1, 2, 3, 4, 5);
     block = new BooleanBlock<Integer>() {
 
       @Override
@@ -49,15 +53,14 @@ public class SliceBeforeIteratorTest {
       }
 
     };
-    iter =
-        new SliceBeforeIterator<Integer>(ra(1, 2, 3, 4, 5).iterator(), block);
+    pattern = qr("3");
+    iter = new SliceBeforeIterator<Integer>(list.iterator(), block);
   }
 
   @Test
   public void testConstructor() {
     assertTrue(iter instanceof SliceBeforeIterator);
-    iter =
-        new SliceBeforeIterator<Integer>(ra(1, 2, 3, 4, 5).iterator(), qr("3"));
+    iter = new SliceBeforeIterator<Integer>(list.iterator(), pattern);
     assertTrue(iter instanceof SliceBeforeIterator);
   }
 
@@ -68,19 +71,18 @@ public class SliceBeforeIteratorTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    new SliceBeforeIterator<Integer>(ra(1, 2, 3, 4, 5).iterator(),
+    new SliceBeforeIterator<Integer>(list.iterator(),
         (BooleanBlock<Integer>) null);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException3() {
-    new SliceBeforeIterator<Integer>(null, qr("3"));
+    new SliceBeforeIterator<Integer>(null, pattern);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException4() {
-    new SliceBeforeIterator<Integer>(ra(1, 2, 3, 4, 5).iterator(),
-        (Pattern) null);
+    new SliceBeforeIterator<Integer>(list.iterator(), (Pattern) null);
   }
 
   @Test
@@ -97,8 +99,7 @@ public class SliceBeforeIteratorTest {
     assertEquals(ra(1, 2), iter.next());
     assertEquals(ra(3, 4, 5), iter.next());
     assertFalse(iter.hasNext());
-    iter =
-        new SliceBeforeIterator<Integer>(ra(1, 2, 3, 4, 5).iterator(), qr("3"));
+    iter = new SliceBeforeIterator<Integer>(list.iterator(), pattern);
     assertEquals(ra(1, 2), iter.next());
     assertEquals(ra(3, 4, 5), iter.next());
     assertFalse(iter.hasNext());

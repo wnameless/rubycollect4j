@@ -51,7 +51,7 @@ public class GrepIteratorTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException1() {
-    new GrepIterator<Integer>(ra(1, 2, 3).iterator(), null);
+    new GrepIterator<Integer>(list.iterator(), null);
   }
 
   @Test(expected = NullPointerException.class)

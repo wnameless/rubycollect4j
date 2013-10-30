@@ -20,11 +20,12 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import java.util.AbstractMap.SimpleEntry;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
+
+import net.sf.rubycollect4j.util.ComparableEntry;
 
 /**
  * 
@@ -69,11 +70,11 @@ public final class OrderedEntrySetIterator<K, V> implements
 
   @Override
   public Entry<K, V> next() {
-    if (!hasNext()) {
+    if (!hasNext())
       throw new NoSuchElementException();
-    }
+
     K key = iter.next();
-    return new SimpleEntry<K, V>(key, map.get(key));
+    return new ComparableEntry<K, V>(key, map.get(key));
   }
 
   @Override

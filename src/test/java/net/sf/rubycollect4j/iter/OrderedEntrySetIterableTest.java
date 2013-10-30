@@ -34,6 +34,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -43,12 +44,14 @@ import org.junit.Test;
 public class OrderedEntrySetIterableTest {
 
   private OrderedEntrySetIterable<String, Integer> setIter;
+  private List<String> list;
 
   @Before
-  public void setUp() {
+  public void setUp() throws Exception {
+    list = ra("a", "b", "c");
     setIter =
-        new OrderedEntrySetIterable<String, Integer>(ra("a", "b", "c"), rh("c",
-            3, "b", 2, "a", 1));
+        new OrderedEntrySetIterable<String, Integer>(list, rh("c", 3, "b", 2,
+            "a", 1));
   }
 
   @Test
@@ -64,7 +67,7 @@ public class OrderedEntrySetIterableTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    new OrderedEntrySetIterable<String, Integer>(ra("a", "b", "c"), null);
+    new OrderedEntrySetIterable<String, Integer>(list, null);
   }
 
   @Test(expected = UnsupportedOperationException.class)
