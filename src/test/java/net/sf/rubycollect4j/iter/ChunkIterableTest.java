@@ -32,6 +32,7 @@ import org.junit.Test;
 public class ChunkIterableTest {
 
   private ChunkIterable<Number, String> iter;
+  private RubyArray<Number> nums;
   private TransformBlock<Number, String> block;
 
   @Before
@@ -44,8 +45,7 @@ public class ChunkIterableTest {
       }
 
     };
-    RubyArray<Number> nums =
-        ra((Number) 1, (Number) 1.0, (Number) 1.0f, (Number) 2, (Number) 2L);
+    nums = ra((Number) 1, (Number) 1.0, (Number) 1.0f, (Number) 2, (Number) 2L);
     iter = new ChunkIterable<Number, String>(nums, block);
   }
 
@@ -61,8 +61,7 @@ public class ChunkIterableTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    new ChunkIterable<Number, String>(ra((Number) 1, (Number) 1.0,
-        (Number) 1.0f, (Number) 2, (Number) 2L), null);
+    new ChunkIterable<Number, String>(nums, null);
   }
 
   @Test

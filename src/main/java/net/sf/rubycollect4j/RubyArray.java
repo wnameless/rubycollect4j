@@ -92,6 +92,19 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
+   * Creates a RubyArray by given Iterable.
+   * 
+   * @param iter
+   *          an Iterable
+   */
+  public RubyArray(Iterable<E> iter) {
+    list = new ArrayList<E>();
+    for (E item : iter) {
+      list.add(item);
+    }
+  }
+
+  /**
    * Finds a List element which contains the target as the first element.
    * 
    * @param <S>

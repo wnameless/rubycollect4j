@@ -78,6 +78,9 @@ public class RubyArrayTest {
     assertTrue(ra instanceof RubyArray);
     ra = new RubyArray<Integer>(new ArrayList<Integer>());
     assertTrue(ra instanceof RubyArray);
+    Iterable<Integer> iter = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
+    ra = new RubyArray<Integer>(iter);
+    assertEquals(ra(1, 2, 3, 4), ra);
   }
 
   @Test(expected = NullPointerException.class)

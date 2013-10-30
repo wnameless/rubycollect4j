@@ -74,11 +74,7 @@ public final class RubyCollections {
    * @return a new RubyArray
    */
   public static <E> RubyArray<E> newRubyArray(Iterable<E> iter) {
-    List<E> list = new ArrayList<E>();
-    for (E item : iter) {
-      list.add(item);
-    }
-    return new RubyArray<E>(list);
+    return new RubyArray<E>(iter);
   }
 
   /**

@@ -58,7 +58,7 @@ public class DropIteratorTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testConstructorException2() {
-    new DropIterator<Integer>(ra(1, 2, 3, 4, 5).iterator(), -1);
+    new DropIterator<Integer>(list.iterator(), -1);
   }
 
   @Test

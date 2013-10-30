@@ -25,6 +25,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.junit.Before;
@@ -33,10 +34,12 @@ import org.junit.Test;
 public class EachConsIteratorTest {
 
   private EachConsIterator<Integer> iter;
+  private List<Integer> list;
 
   @Before
   public void setUp() throws Exception {
-    iter = new EachConsIterator<Integer>(ra(1, 2, 3, 4, 5).iterator(), 2);
+    list = ra(1, 2, 3, 4, 5);
+    iter = new EachConsIterator<Integer>(list.iterator(), 2);
   }
 
   @Test
@@ -51,12 +54,12 @@ public class EachConsIteratorTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testConstructorException2() {
-    new EachConsIterator<Integer>(ra(1, 2, 3, 4, 5).iterator(), 0);
+    new EachConsIterator<Integer>(list.iterator(), 0);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testConstructorException3() {
-    new EachConsIterator<Integer>(ra(1, 2, 3, 4, 5).iterator(), -1);
+    new EachConsIterator<Integer>(list.iterator(), -1);
   }
 
   @Test

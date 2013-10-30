@@ -23,6 +23,9 @@ package net.sf.rubycollect4j.iter;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+import java.util.List;
+
 import net.sf.rubycollect4j.block.BooleanBlock;
 
 import org.junit.Before;
@@ -31,6 +34,7 @@ import org.junit.Test;
 public class DropWhileIterableTest {
 
   private DropWhileIterable<Integer> iter;
+  private List<Integer> list;
   private BooleanBlock<Integer> block;
 
   @Before
@@ -43,7 +47,8 @@ public class DropWhileIterableTest {
       }
 
     };
-    iter = new DropWhileIterable<Integer>(ra(1, 2, 3, 4, 5), block);
+    list = ra(1, 2, 3, 4, 5);
+    iter = new DropWhileIterable<Integer>(list, block);
   }
 
   @Test
@@ -58,7 +63,7 @@ public class DropWhileIterableTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    new DropWhileIterable<Integer>(ra(1, 2, 3, 4, 5), null);
+    new DropWhileIterable<Integer>(list, null);
   }
 
   @Test

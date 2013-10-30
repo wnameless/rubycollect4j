@@ -24,15 +24,19 @@ import static net.sf.rubycollect4j.RubyCollections.ra;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
 public class DropIterableTest {
 
   private DropIterable<Integer> iter;
+  private List<Integer> list;
 
   @Before
   public void setUp() throws Exception {
+    list = ra(1, 2, 3, 4, 5);
     iter = new DropIterable<Integer>(ra(1, 2, 3, 4, 5), 2);
   }
 
@@ -48,7 +52,7 @@ public class DropIterableTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testConstructorException2() {
-    new DropIterable<Integer>(ra(1, 2, 3, 4, 5), -1);
+    new DropIterable<Integer>(list, -1);
   }
 
   @Test
