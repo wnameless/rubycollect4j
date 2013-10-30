@@ -4,3 +4,4 @@
 .project
 .settings/*
 /doc
+.README.md.html
