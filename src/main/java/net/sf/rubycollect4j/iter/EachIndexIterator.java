@@ -21,7 +21,6 @@
 package net.sf.rubycollect4j.iter;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 /**
  * 
@@ -55,16 +54,13 @@ public final class EachIndexIterator<E> implements Iterator<Integer> {
 
   @Override
   public Integer next() {
-    if (!hasNext())
-      throw new NoSuchElementException();
-
     iter.next();
     return index++;
   }
 
   @Override
   public void remove() {
-    throw new UnsupportedOperationException();
+    iter.remove();
   }
 
 }
