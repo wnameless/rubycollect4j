@@ -27,7 +27,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
 import java.util.NoSuchElementException;
+
+import net.sf.rubycollect4j.util.ComparableEntry;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -35,12 +38,14 @@ import org.junit.Test;
 public class OrderedEntrySetIteratorTest {
 
   private OrderedEntrySetIterator<String, Integer> setIter;
+  private List<String> list;
 
   @Before
-  public void setUp() {
+  public void setUp() throws Exception {
+    list = ra("a", "b", "c");
     setIter =
-        new OrderedEntrySetIterator<String, Integer>(ra("a", "b", "c")
-            .iterator(), rh("c", 3, "b", 2, "a", 1));
+        new OrderedEntrySetIterator<String, Integer>(list.iterator(), rh("c",
+            3, "b", 2, "a", 1));
   }
 
   @Test
@@ -56,8 +61,7 @@ public class OrderedEntrySetIteratorTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    new OrderedEntrySetIterator<String, Integer>(ra("a", "b", "c").iterator(),
-        null);
+    new OrderedEntrySetIterator<String, Integer>(list.iterator(), null);
   }
 
   @Test
@@ -75,6 +79,11 @@ public class OrderedEntrySetIteratorTest {
     assertEquals(hp("b", 2), setIter.next());
     assertEquals(hp("c", 3), setIter.next());
     assertFalse(setIter.hasNext());
+  }
+
+  @Test
+  public void testComparableEntry() {
+    assertTrue(setIter.next() instanceof ComparableEntry);
   }
 
   @Test(expected = NoSuchElementException.class)
