@@ -838,6 +838,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testMin() {
+    re = ra(3, 4, 1, 2);
     assertEquals(Integer.valueOf(1), re.min());
     re = newRubyEnumerator(new ArrayList<Integer>());
     assertNull(re.min());
@@ -845,7 +846,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testMinWithComparator() {
-    re = ra(1, 2, 4, 3);
+    re = ra(3, 4, 1, 2);
     assertEquals(Integer.valueOf(4), re.min(new Comparator<Integer>() {
 
       @Override

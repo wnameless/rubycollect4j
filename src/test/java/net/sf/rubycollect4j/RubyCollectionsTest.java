@@ -136,9 +136,13 @@ public class RubyCollectionsTest {
   @Test
   public void testQx() {
     if (System.getProperty("os.name").startsWith("Windows")) {
-      assertEquals("Hello world!\n", qx("cmd", "/C", "echo Hello world!"));
+      assertEquals("Hello world!" + System.getProperty("line.separator"),
+          qx("cmd", "/C", "echo Hello world!"));
     } else {
-      assertEquals("Hello world!\n", qx("echo", "Hello world!"));
+      assertEquals("Hello world!" + System.getProperty("line.separator"),
+          qx("echo", "Hello world!"));
+      assertEquals("Hello world!" + System.getProperty("line.separator"),
+          qx(new String[] { "sh", "-c", "echo Hello world! 1>&2" }));
     }
   }
 

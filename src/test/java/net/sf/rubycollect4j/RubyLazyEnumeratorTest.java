@@ -146,6 +146,8 @@ public class RubyLazyEnumeratorTest {
   @Test
   public void testDropWhile() {
     assertEquals(ra(1), lre.dropWhile().toA());
+    lre = new RubyLazyEnumerator<Integer>(new ArrayList<Integer>());
+    assertEquals(ra(), lre.dropWhile().toA());
   }
 
   @Test
@@ -372,6 +374,8 @@ public class RubyLazyEnumeratorTest {
   public void testTakeWhile() {
     assertTrue(lre.takeWhile() instanceof RubyLazyEnumerator);
     assertEquals(ra(1), lre.takeWhile().toA());
+    lre = new RubyLazyEnumerator<Integer>(new ArrayList<Integer>());
+    assertEquals(ra(), lre.takeWhile().toA());
   }
 
   @SuppressWarnings("unchecked")

@@ -350,10 +350,10 @@ public final class RubyCollections {
 
       String s;
       while ((s = stdInput.readLine()) != null) {
-        sb.append(s).append("\n");
+        sb.append(s).append(System.getProperty("line.separator"));
       }
       while ((s = stdError.readLine()) != null) {
-        sb.append(s).append("\n");
+        sb.append(s).append(System.getProperty("line.separator"));
       }
     } catch (IOException ex) {
       Logger.getLogger(RubyCollections.class.getName()).log(Level.SEVERE, null,
