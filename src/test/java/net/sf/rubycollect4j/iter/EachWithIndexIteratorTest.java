@@ -28,6 +28,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import net.sf.rubycollect4j.util.ComparableEntry;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -67,6 +69,11 @@ public class EachWithIndexIteratorTest {
     assertEquals(hp(2, 1), iter.next());
     assertEquals(hp(3, 2), iter.next());
     assertFalse(iter.hasNext());
+  }
+
+  @Test
+  public void testComparableEntry() {
+    assertTrue(iter.next() instanceof ComparableEntry);
   }
 
   @Test
