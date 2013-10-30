@@ -20,18 +20,19 @@
  */
 package net.sf.rubycollect4j;
 
-import java.io.File;
-
-import net.sf.rubycollect4j.block.Block;
-
-import org.junit.Test;
-
 import static net.sf.rubycollect4j.RubyCollections.qx;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+
+import java.io.File;
+
+import net.sf.rubycollect4j.block.Block;
+import net.sf.rubycollect4j.block.BooleanBlock;
+
+import org.junit.Test;
 
 public class RubyDirTest {
 
@@ -93,10 +94,10 @@ public class RubyDirTest {
             "folder2-1" + File.separator + "file2-1-2",
             "folder2-1" + File.separator + "file2-1-3").sort(),
         RubyDir.glob(GLOB_DIR + "folder2/**/*").sort());
-    assertEquals(ra("folder1", "folder2").sort(), RubyDir.glob(GLOB_DIR + "*")
-        .sort());
-    assertEquals(ra("folder1", "folder2").sort(), RubyDir.glob(GLOB_DIR + "**")
-        .sort());
+    assertEquals(ra("folder1", "folder2", "rbc4j").sort(),
+        RubyDir.glob(GLOB_DIR + "*").sort());
+    assertEquals(ra("folder1", "folder2", "rbc4j").sort(),
+        RubyDir.glob(GLOB_DIR + "**").sort());
     assertEquals(ra("folder1" + File.separator, "folder2" + File.separator)
         .sort(), RubyDir.glob(GLOB_DIR + "*/").sort());
     assertEquals(
@@ -116,9 +117,18 @@ public class RubyDirTest {
             "folder1" + File.separator + "folder1-2" + File.separator
                 + "file1-2-1").sort(), RubyDir.glob(GLOB_DIR + "**/*1-*-1*")
             .sort());
-    assertEquals(18, RubyDir.glob(GLOB_DIR + "**/*").count());
+    assertEquals(19, RubyDir.glob(GLOB_DIR + "**/*").count());
     assertEquals(ra("file1-2", "file1-3", "folder1-2").sort(),
         RubyDir.glob(GLOB_DIR + "folder1/*[2,3]").sort());
+    assertEquals(ra(GLOB_DIR + "rbc4j"),
+        RubyDir.glob("**/*c4j").select(new BooleanBlock<String>() {
+
+          @Override
+          public boolean yield(String item) {
+            return item.startsWith("src");
+          }
+
+        }));
   }
 
   @Test
