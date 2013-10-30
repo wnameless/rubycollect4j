@@ -37,12 +37,12 @@ public final class RubyObject {
    * Executes a method of any Object by Java reflection.
    * 
    * @param o
-   *          any Object
+   *          an Object
    * @param methodName
-   *          name of a method
+   *          name of the method
    * @param args
-   *          arguments of a method
-   * @return the result of a method;
+   *          arguments of the method
+   * @return the result of the method called
    */
   @SuppressWarnings("unchecked")
   public static <E> E send(Object o, String methodName, Object... args) {
@@ -92,6 +92,294 @@ public final class RubyObject {
       return klass2 == Character.class;
     else
       return klass1.isAssignableFrom(klass2);
+  }
+
+  /**
+   * Executes a method of any Object by Java reflection.
+   * 
+   * @param o
+   *          an Object
+   * @param methodName
+   *          name of the method
+   * @param arg
+   *          a Byte
+   * @return the result of the method called
+   */
+  public static <E> E send(Object o, String methodName, Byte arg) {
+    return send(o, methodName, (Object) arg);
+  }
+
+  /**
+   * Executes a method of any Object by Java reflection.
+   * 
+   * @param o
+   *          an Object
+   * @param methodName
+   *          name of the method
+   * @param arg
+   *          a byte
+   * @return the result of the method called
+   */
+  @SuppressWarnings("unchecked")
+  public static <E> E send(Object o, String methodName, byte arg) {
+    try {
+      Method method = o.getClass().getMethod(methodName, byte.class);
+      return (E) method.invoke(o, arg);
+    } catch (Exception e) {
+      return send(o, methodName, (Object) arg);
+    }
+  }
+
+  /**
+   * Executes a method of any Object by Java reflection.
+   * 
+   * @param o
+   *          an Object
+   * @param methodName
+   *          name of the method
+   * @param arg
+   *          a Short
+   * @return the result of the method called
+   */
+  public static <E> E send(Object o, String methodName, Short arg) {
+    return send(o, methodName, (Object) arg);
+  }
+
+  /**
+   * Executes a method of any Object by Java reflection.
+   * 
+   * @param o
+   *          an Object
+   * @param methodName
+   *          name of the method
+   * @param arg
+   *          a short
+   * @return the result of the method called
+   */
+  @SuppressWarnings("unchecked")
+  public static <E> E send(Object o, String methodName, short arg) {
+    try {
+      Method method = o.getClass().getMethod(methodName, short.class);
+      return (E) method.invoke(o, arg);
+    } catch (Exception e) {
+      return send(o, methodName, (Object) arg);
+    }
+  }
+
+  /**
+   * Executes a method of any Object by Java reflection.
+   * 
+   * @param o
+   *          an Object
+   * @param methodName
+   *          name of the method
+   * @param arg
+   *          an Integer
+   * @return the result of the method called
+   */
+  public static <E> E send(Object o, String methodName, Integer arg) {
+    return send(o, methodName, (Object) arg);
+  }
+
+  /**
+   * Executes a method of any Object by Java reflection.
+   * 
+   * @param o
+   *          an Object
+   * @param methodName
+   *          name of the method
+   * @param arg
+   *          an int
+   * @return the result of the method called
+   */
+  @SuppressWarnings("unchecked")
+  public static <E> E send(Object o, String methodName, int arg) {
+    try {
+      Method method = o.getClass().getMethod(methodName, int.class);
+      return (E) method.invoke(o, arg);
+    } catch (Exception e) {
+      return send(o, methodName, (Object) arg);
+    }
+  }
+
+  /**
+   * Executes a method of any Object by Java reflection.
+   * 
+   * @param o
+   *          an Object
+   * @param methodName
+   *          name of the method
+   * @param arg
+   *          a Long
+   * @return the result of the method called
+   */
+  public static <E> E send(Object o, String methodName, Long arg) {
+    return send(o, methodName, (Object) arg);
+  }
+
+  /**
+   * Executes a method of any Object by Java reflection.
+   * 
+   * @param o
+   *          an Object
+   * @param methodName
+   *          name of the method
+   * @param arg
+   *          a long
+   * @return the result of the method called
+   */
+  @SuppressWarnings("unchecked")
+  public static <E> E send(Object o, String methodName, long arg) {
+    try {
+      Method method = o.getClass().getMethod(methodName, long.class);
+      return (E) method.invoke(o, arg);
+    } catch (Exception e) {
+      return send(o, methodName, (Object) arg);
+    }
+  }
+
+  /**
+   * Executes a method of any Object by Java reflection.
+   * 
+   * @param o
+   *          an Object
+   * @param methodName
+   *          name of the method
+   * @param arg
+   *          a Float
+   * @return the result of the method called
+   */
+  public static <E> E send(Object o, String methodName, Float arg) {
+    return send(o, methodName, (Object) arg);
+  }
+
+  /**
+   * Executes a method of any Object by Java reflection.
+   * 
+   * @param o
+   *          an Object
+   * @param methodName
+   *          name of the method
+   * @param arg
+   *          a float
+   * @return the result of the method called
+   */
+  @SuppressWarnings("unchecked")
+  public static <E> E send(Object o, String methodName, float arg) {
+    try {
+      Method method = o.getClass().getMethod(methodName, float.class);
+      return (E) method.invoke(o, arg);
+    } catch (Exception e) {
+      return send(o, methodName, (Object) arg);
+    }
+  }
+
+  /**
+   * Executes a method of any Object by Java reflection.
+   * 
+   * @param o
+   *          an Object
+   * @param methodName
+   *          name of the method
+   * @param arg
+   *          a Double
+   * @return the result of the method called
+   */
+  public static <E> E send(Object o, String methodName, Double arg) {
+    return send(o, methodName, (Object) arg);
+  }
+
+  /**
+   * Executes a method of any Object by Java reflection.
+   * 
+   * @param o
+   *          an Object
+   * @param methodName
+   *          name of the method
+   * @param arg
+   *          a double
+   * @return the result of the method called
+   */
+  @SuppressWarnings("unchecked")
+  public static <E> E send(Object o, String methodName, double arg) {
+    try {
+      Method method = o.getClass().getMethod(methodName, double.class);
+      return (E) method.invoke(o, arg);
+    } catch (Exception e) {
+      return send(o, methodName, (Object) arg);
+    }
+  }
+
+  /**
+   * Executes a method of any Object by Java reflection.
+   * 
+   * @param o
+   *          an Object
+   * @param methodName
+   *          name of the method
+   * @param arg
+   *          a Boolean
+   * @return the result of the method called
+   */
+  public static <E> E send(Object o, String methodName, Boolean arg) {
+    return send(o, methodName, (Object) arg);
+  }
+
+  /**
+   * Executes a method of any Object by Java reflection.
+   * 
+   * @param o
+   *          an Object
+   * @param methodName
+   *          name of the method
+   * @param arg
+   *          a boolean
+   * @return the result of the method called
+   */
+  @SuppressWarnings("unchecked")
+  public static <E> E send(Object o, String methodName, boolean arg) {
+    try {
+      Method method = o.getClass().getMethod(methodName, boolean.class);
+      return (E) method.invoke(o, arg);
+    } catch (Exception e) {
+      return send(o, methodName, (Object) arg);
+    }
+  }
+
+  /**
+   * Executes a method of any Object by Java reflection.
+   * 
+   * @param o
+   *          an Object
+   * @param methodName
+   *          name of the method
+   * @param arg
+   *          a Character
+   * @return the result of the method called
+   */
+  public static <E> E send(Object o, String methodName, Character arg) {
+    return send(o, methodName, (Object) arg);
+  }
+
+  /**
+   * Executes a method of any Object by Java reflection.
+   * 
+   * @param o
+   *          an Object
+   * @param methodName
+   *          name of the method
+   * @param arg
+   *          a char
+   * @return the result of the method called
+   */
+  @SuppressWarnings("unchecked")
+  public static <E> E send(Object o, String methodName, char arg) {
+    try {
+      Method method = o.getClass().getMethod(methodName, char.class);
+      return (E) method.invoke(o, arg);
+    } catch (Exception e) {
+      return send(o, methodName, (Object) arg);
+    }
   }
 
 }
