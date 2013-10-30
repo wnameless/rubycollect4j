@@ -577,35 +577,14 @@ public final class RubyLazyEnumerator<E> implements
     return collect(methodName, args);
   }
 
-  @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
   public E max() {
-    Iterator<E> elements = iter.iterator();
-    if (!elements.hasNext())
-      return null;
-
-    E max = elements.next();
-    while (elements.hasNext()) {
-      E item = elements.next();
-      if (((Comparable) max).compareTo(item) < 0)
-        max = item;
-    }
-    return max;
+    return minmax().last();
   }
 
   @Override
   public E max(Comparator<? super E> comp) {
-    Iterator<E> elements = iter.iterator();
-    if (!elements.hasNext())
-      return null;
-
-    E max = elements.next();
-    while (elements.hasNext()) {
-      E item = elements.next();
-      if (comp.compare(max, item) < 0)
-        max = item;
-    }
-    return max;
+    return minmax(comp).last();
   }
 
   @Override
@@ -615,33 +594,12 @@ public final class RubyLazyEnumerator<E> implements
 
   @Override
   public <S> E maxBy(Comparator<? super S> comp, TransformBlock<E, S> block) {
-    Iterator<E> elements = iter.iterator();
-    if (!elements.hasNext())
-      return null;
-
-    E max = elements.next();
-    while (elements.hasNext()) {
-      E item = elements.next();
-      if (comp.compare(block.yield(max), block.yield(item)) < 0)
-        max = item;
-    }
-    return max;
+    return minmaxBy(comp, block).last();
   }
 
-  @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
   public <S> E maxBy(TransformBlock<E, S> block) {
-    Iterator<E> elements = iter.iterator();
-    if (!elements.hasNext())
-      return null;
-
-    E max = elements.next();
-    while (elements.hasNext()) {
-      E item = elements.next();
-      if (((Comparable) block.yield(max)).compareTo(block.yield(item)) < 0)
-        max = item;
-    }
-    return max;
+    return minmaxBy(block).last();
   }
 
   @Override
@@ -661,35 +619,14 @@ public final class RubyLazyEnumerator<E> implements
     return includeʔ(target);
   }
 
-  @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
   public E min() {
-    Iterator<E> elements = iter.iterator();
-    if (!elements.hasNext())
-      return null;
-
-    E min = elements.next();
-    while (elements.hasNext()) {
-      E item = elements.next();
-      if (((Comparable) min).compareTo(item) > 0)
-        min = item;
-    }
-    return min;
+    return minmax().first();
   }
 
   @Override
   public E min(Comparator<? super E> comp) {
-    Iterator<E> elements = iter.iterator();
-    if (!elements.hasNext())
-      return null;
-
-    E min = elements.next();
-    while (elements.hasNext()) {
-      E item = elements.next();
-      if (comp.compare(min, item) > 0)
-        min = item;
-    }
-    return min;
+    return minmax(comp).first();
   }
 
   @Override
@@ -699,33 +636,12 @@ public final class RubyLazyEnumerator<E> implements
 
   @Override
   public <S> E minBy(Comparator<? super S> comp, TransformBlock<E, S> block) {
-    Iterator<E> elements = iter.iterator();
-    if (!elements.hasNext())
-      return null;
-
-    E min = elements.next();
-    while (elements.hasNext()) {
-      E item = elements.next();
-      if (comp.compare(block.yield(min), block.yield(item)) > 0)
-        min = item;
-    }
-    return min;
+    return minmaxBy(comp, block).first();
   }
 
-  @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
   public <S> E minBy(TransformBlock<E, S> block) {
-    Iterator<E> elements = iter.iterator();
-    if (!elements.hasNext())
-      return null;
-
-    E min = elements.next();
-    while (elements.hasNext()) {
-      E item = elements.next();
-      if (((Comparable) block.yield(min)).compareTo(block.yield(item)) > 0)
-        min = item;
-    }
-    return min;
+    return minmaxBy(block).first();
   }
 
   @Override
