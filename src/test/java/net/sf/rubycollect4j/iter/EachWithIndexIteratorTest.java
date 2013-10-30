@@ -26,7 +26,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.NoSuchElementException;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -34,10 +34,12 @@ import org.junit.Test;
 public class EachWithIndexIteratorTest {
 
   private EachWithIndexIterator<Integer> iter;
+  private List<Integer> list;
 
   @Before
   public void setUp() throws Exception {
-    iter = new EachWithIndexIterator<Integer>(ra(1, 2, 3).iterator());
+    list = ra(1, 2, 3);
+    iter = new EachWithIndexIterator<Integer>(list.iterator());
   }
 
   @Test
@@ -67,17 +69,12 @@ public class EachWithIndexIteratorTest {
     assertFalse(iter.hasNext());
   }
 
-  @Test(expected = NoSuchElementException.class)
-  public void testNextException() {
-    while (iter.hasNext()) {
-      iter.next();
-    }
-    iter.next();
-  }
-
-  @Test(expected = UnsupportedOperationException.class)
+  @Test
   public void testRemove() {
+    iter.next();
+    iter.next();
     iter.remove();
+    assertEquals(ra(1, 3), list);
   }
 
 }

@@ -23,7 +23,6 @@ package net.sf.rubycollect4j.iter;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Iterator;
 import java.util.Map.Entry;
-import java.util.NoSuchElementException;
 
 /**
  * 
@@ -36,7 +35,7 @@ public final class EachWithIndexIterator<E> implements
     Iterator<Entry<E, Integer>> {
 
   private final Iterator<E> iter;
-  private final int[] index = new int[] { 0 };
+  private int index = 0;
 
   /**
    * Creates an EachWithIndexIterator.
@@ -53,13 +52,6 @@ public final class EachWithIndexIterator<E> implements
     this.iter = iter;
   }
 
-  private Entry<E, Integer> nextElement() {
-    Entry<E, Integer> element =
-        new SimpleEntry<E, Integer>(iter.next(), index[0]);
-    index[0]++;
-    return element;
-  }
-
   @Override
   public boolean hasNext() {
     return iter.hasNext();
@@ -67,15 +59,12 @@ public final class EachWithIndexIterator<E> implements
 
   @Override
   public Entry<E, Integer> next() {
-    if (!hasNext())
-      throw new NoSuchElementException();
-
-    return nextElement();
+    return new SimpleEntry<E, Integer>(iter.next(), index++);
   }
 
   @Override
   public void remove() {
-    throw new UnsupportedOperationException();
+    iter.remove();
   }
 
 }
