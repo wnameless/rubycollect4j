@@ -28,7 +28,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -36,12 +35,14 @@ import org.junit.Test;
 public class EachWithObjectIteratorTest {
 
   private EachWithObjectIterator<Integer, List<Integer>> iter;
+  private List<Integer> list;
 
   @Before
   public void setUp() throws Exception {
+    list = ra(1, 2, 3);
     iter =
-        new EachWithObjectIterator<Integer, List<Integer>>(ra(1, 2, 3)
-            .iterator(), new ArrayList<Integer>());
+        new EachWithObjectIterator<Integer, List<Integer>>(list.iterator(),
+            new ArrayList<Integer>());
   }
 
   @Test
@@ -57,8 +58,7 @@ public class EachWithObjectIteratorTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    new EachWithObjectIterator<Integer, List<Integer>>(ra(1, 2, 3).iterator(),
-        null);
+    new EachWithObjectIterator<Integer, List<Integer>>(list.iterator(), null);
   }
 
   @Test
@@ -78,17 +78,12 @@ public class EachWithObjectIteratorTest {
     assertFalse(iter.hasNext());
   }
 
-  @Test(expected = NoSuchElementException.class)
-  public void testNextException() {
-    while (iter.hasNext()) {
-      iter.next();
-    }
-    iter.next();
-  }
-
-  @Test(expected = UnsupportedOperationException.class)
+  @Test
   public void testRemove() {
+    iter.next();
+    iter.next();
     iter.remove();
+    assertEquals(ra(1, 3), list);
   }
 
 }

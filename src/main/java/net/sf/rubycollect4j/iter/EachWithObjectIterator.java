@@ -20,11 +20,10 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static net.sf.rubycollect4j.RubyCollections.hp;
-
 import java.util.Iterator;
 import java.util.Map.Entry;
-import java.util.NoSuchElementException;
+
+import net.sf.rubycollect4j.util.ComparableEntry;
 
 /**
  * 
@@ -46,7 +45,7 @@ public final class EachWithObjectIterator<E, O> implements
    * @param iter
    *          an Iterator
    * @param obj
-   *          an Object
+   *          an object
    * @throws NullPointerException
    *           if iter or obj is null
    */
@@ -58,10 +57,6 @@ public final class EachWithObjectIterator<E, O> implements
     this.obj = obj;
   }
 
-  private Entry<E, O> nextElement() {
-    return hp(iter.next(), obj);
-  }
-
   @Override
   public boolean hasNext() {
     return iter.hasNext();
@@ -69,15 +64,12 @@ public final class EachWithObjectIterator<E, O> implements
 
   @Override
   public Entry<E, O> next() {
-    if (!hasNext())
-      throw new NoSuchElementException();
-
-    return nextElement();
+    return new ComparableEntry<E, O>(iter.next(), obj);
   }
 
   @Override
   public void remove() {
-    throw new UnsupportedOperationException();
+    iter.remove();
   }
 
 }

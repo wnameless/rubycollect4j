@@ -33,11 +33,13 @@ import org.junit.Test;
 public class EachWithObjectIterableTest {
 
   private EachWithObjectIterable<Integer, List<Integer>> iter;
+  private List<Integer> list;
 
   @Before
   public void setUp() throws Exception {
+    list = ra(1, 2, 3);
     iter =
-        new EachWithObjectIterable<Integer, List<Integer>>(ra(1, 2, 3),
+        new EachWithObjectIterable<Integer, List<Integer>>(list,
             new ArrayList<Integer>());
   }
 
@@ -54,7 +56,7 @@ public class EachWithObjectIterableTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    new EachWithObjectIterable<Integer, List<Integer>>(ra(1, 2, 3), null);
+    new EachWithObjectIterable<Integer, List<Integer>>(list, null);
   }
 
   @Test
