@@ -47,13 +47,13 @@ It also implements parts of Ruby Dir, File and Date methods.</p>
 <div class="highlight highlight-xml"><pre><span class="nt">&lt;dependency&gt;</span>
   <span class="nt">&lt;groupId&gt;</span>net.sf.rubycollect4j<span class="nt">&lt;/groupId&gt;</span>
   <span class="nt">&lt;artifactId&gt;</span>rubycollect4j<span class="nt">&lt;/artifactId&gt;</span>
-  <span class="nt">&lt;version&gt;</span>1.5.3<span class="nt">&lt;/version&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.6.0<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 
 <p>Java 8 with rubycollect4j:</p>
 
-<div class="highlight highlight-java"><pre><span class="c1">// Sort the characters by its frequency based on the word 'Mississippi' case-insensitively</span>
+<div class="highlight highlight-java"><pre><span class="c1">// Sorts the characters by its frequency based on the word 'Mississippi' case-insensitively.</span>
 <span class="n">RubyArray</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">word</span> <span class="o">=</span> <span class="n">ra</span><span class="o">(</span><span class="s">"Mississippi"</span><span class="o">.</span><span class="na">split</span><span class="o">(</span><span class="s">"(?!^)"</span><span class="o">));</span>
 
 <span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="n">word</span><span class="o">.</span><span class="na">map</span><span class="o">((</span><span class="n">c</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
@@ -68,21 +68,17 @@ It also implements parts of Ruby Dir, File and Date methods.</p>
 
 <p>Java 6 with rubycollect4j:</p>
 
-<div class="highlight highlight-java"><pre><span class="c1">// Sort the characters by its frequency based on the word 'Mississippi' case-insensitively</span>
-<span class="kd">final</span> <span class="n">RubyArray</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">word</span> <span class="o">=</span> <span class="n">newRubyArray</span><span class="o">(</span><span class="s">"Mississippi"</span><span class="o">.</span><span class="na">split</span><span class="o">(</span><span class="s">"(?!^)"</span><span class="o">));</span>
+<div class="highlight highlight-java"><pre><span class="c1">// Finds 2 words which get the least and the most unique letters in upper case.</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">words</span> <span class="o">=</span>
+  <span class="n">RubyFile</span><span class="o">.</span><span class="na">foreach</span><span class="o">(</span><span class="s">"/usr/share/dict/web2"</span><span class="o">)</span> <span class="c1">// Dictionary of Mac OS</span>
+    <span class="o">.</span><span class="na">minmaxBy</span><span class="o">(</span><span class="k">new</span> <span class="n">TransformBlock</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;()</span> <span class="o">{</span>
+      <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">yield</span><span class="o">(</span><span class="n">String</span> <span class="n">item</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nf">newRubyArray</span><span class="o">(</span><span class="n">item</span><span class="o">.</span><span class="na">split</span><span class="o">(</span><span class="s">"(?!^)"</span><span class="o">)).</span><span class="na">uniq</span><span class="o">().</span><span class="na">count</span><span class="o">();</span>
+      <span class="o">}</span>
+    <span class="o">}).</span><span class="na">map</span><span class="err">ǃ</span><span class="o">(</span><span class="s">"toUpperCase"</span><span class="o">);</span>
 
-<span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="n">word</span><span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="k">new</span> <span class="n">TransformBlock</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
-  <span class="kd">public</span> <span class="n">String</span> <span class="nf">yield</span><span class="o">(</span><span class="n">String</span> <span class="n">c</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="na">toLowerCase</span><span class="o">();</span>
-  <span class="o">}</span>
-<span class="o">}).</span><span class="na">sortBy</span><span class="o">(</span><span class="k">new</span> <span class="n">TransformBlock</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;()</span> <span class="o">{</span>
-  <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">yield</span><span class="o">(</span><span class="n">String</span> <span class="n">c</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">return</span> <span class="n">word</span><span class="o">.</span><span class="na">count</span><span class="o">(</span><span class="n">c</span><span class="o">);</span>
-  <span class="o">}</span>
-<span class="o">}).</span><span class="na">uniq</span><span class="o">().</span><span class="na">join</span><span class="o">();</span>
-
-<span class="n">p</span><span class="o">(</span><span class="n">result</span><span class="o">);</span>
-<span class="c1">// Output: "mpis"</span>
+<span class="n">p</span><span class="o">(</span><span class="n">words</span><span class="o">);</span>
+<span class="c1">// Output: [A, BLEPHAROCONJUNCTIVITIS]</span>
 </pre></div>
 
 <p>Please add following lines before running examples:</p>
@@ -199,6 +195,18 @@ It also implements parts of Ruby Dir, File and Date methods.</p>
 <span class="n">Calendar</span> <span class="n">c</span> <span class="o">=</span> <span class="n">Calendar</span><span class="o">.</span><span class="na">getInstance</span><span class="o">();</span>
 <span class="n">c</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span>
 <span class="n">p</span><span class="o">(</span> <span class="n">date</span><span class="o">(</span><span class="n">c</span><span class="o">.</span><span class="na">getTime</span><span class="o">())</span> <span class="o">);</span>                        <span class="c1">// Output: Thu Jan 01 00:00:00 CST 1970</span>
+</pre></div>
+
+<p>Demo RubyObject.send():</p>
+
+<div class="highlight highlight-java"><pre><span class="n">RubyHash</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">profile</span> <span class="o">=</span> <span class="n">rh</span><span class="o">(</span><span class="s">"Name"</span><span class="o">,</span> <span class="s">"John Doe"</span><span class="o">,</span> <span class="s">"Gender"</span><span class="o">,</span> <span class="s">"Male"</span><span class="o">,</span> <span class="s">"Birthday"</span><span class="o">,</span> <span class="s">"2001/10/01"</span><span class="o">);</span>
+<span class="c1">// Assumes Object person has 3 setters: setName, setGender, setBirthday.</span>
+<span class="n">profile</span><span class="o">.</span><span class="na">each</span><span class="o">(</span><span class="k">new</span> <span class="n">EntryBlock</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">yield</span><span class="o">(</span><span class="n">String</span> <span class="n">key</span><span class="o">,</span> <span class="n">String</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">RubyObject</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">person</span><span class="o">,</span> <span class="s">"set"</span> <span class="o">+</span> <span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">});</span>
+<span class="c1">// As you can see, RubyObject.send() is a wrapper to Java Reflection.</span>
 </pre></div>
 
 <p>Demo qw():</p>
