@@ -20,11 +20,8 @@
  */
 package net.sf.rubycollect4j;
 
-import static net.sf.rubycollect4j.RubyCollections.ra;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -49,14 +46,6 @@ public class RubyObjectTest {
     RubyObject.send(tester, "setBooleans", Boolean.TRUE, false);
     RubyObject.send(tester, "setCharacters", Character.valueOf(' '),
         (char) 0x00);
-  }
-
-  @Test
-  public void testSendWithIntegerList() {
-    List<Integer> ints = ra(1, 2, 3, 4);
-    RubyObject.send(ints, "remove", Integer.valueOf(1));
-    RubyObject.send(ints, "remove", 1);
-    assertEquals(ra(2, 4), ints);
   }
 
   @Test(expected = IllegalArgumentException.class)
