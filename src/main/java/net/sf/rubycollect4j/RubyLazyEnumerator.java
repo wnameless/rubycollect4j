@@ -87,6 +87,7 @@ public final class RubyLazyEnumerator<E> implements
       throw new NullPointerException();
 
     iter = iterable;
+    pIterator = new PeekingIterator<E>(iter.iterator());
   }
 
   @Override
@@ -1023,8 +1024,6 @@ public final class RubyLazyEnumerator<E> implements
    * @return this RubyLazyEnumerator
    */
   public RubyLazyEnumerator<E> rewind() {
-    if (pIterator == null)
-      pIterator = new PeekingIterator<E>(iter.iterator());
     pIterator = new PeekingIterator<E>(iter.iterator());
     return this;
   }
@@ -1035,8 +1034,6 @@ public final class RubyLazyEnumerator<E> implements
    * @return an element
    */
   public E peek() {
-    if (pIterator == null)
-      pIterator = new PeekingIterator<E>(iter.iterator());
     return pIterator.peek();
   }
 
@@ -1047,22 +1044,16 @@ public final class RubyLazyEnumerator<E> implements
 
   @Override
   public boolean hasNext() {
-    if (pIterator == null)
-      pIterator = new PeekingIterator<E>(iter.iterator());
     return pIterator.hasNext();
   }
 
   @Override
   public E next() {
-    if (pIterator == null)
-      pIterator = new PeekingIterator<E>(iter.iterator());
     return pIterator.next();
   }
 
   @Override
   public void remove() {
-    if (pIterator == null)
-      pIterator = new PeekingIterator<E>(iter.iterator());
     pIterator.remove();
   }
 
