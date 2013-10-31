@@ -23,14 +23,11 @@ package net.sf.rubycollect4j;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
@@ -467,18 +464,13 @@ public final class RubyLazyEnumerator<E> implements
 
   @Override
   public <S> RubyHash<S, RubyArray<E>> groupBy(TransformBlock<E, S> block) {
-    Map<S, List<E>> map = new LinkedHashMap<S, List<E>>();
-    for (E item : iter) {
-
-      S key = block.yield(item);
-      if (!map.containsKey(key))
-        map.put(key, new ArrayList<E>());
-
-      map.get(key).add(item);
-    }
     RubyHash<S, RubyArray<E>> rubyHash = newRubyHash();
-    for (S key : map.keySet()) {
-      rubyHash.put(key, newRubyArray(map.get(key)));
+    for (E item : iter) {
+      S key = block.yield(item);
+      if (!rubyHash.containsKey(key))
+        rubyHash.put(key, new RubyArray<E>());
+
+      rubyHash.get(key).add(item);
     }
     return rubyHash;
   }
@@ -935,18 +927,11 @@ public final class RubyLazyEnumerator<E> implements
   @Override
   public <S> RubyArray<E> sortBy(Comparator<? super S> comp,
       TransformBlock<E, S> block) {
-    Map<S, RubyArray<E>> map = new LinkedHashMap<S, RubyArray<E>>();
+    RubyHash<S, RubyArray<E>> rubyHash = groupBy(block);
     RubyArray<E> sortedList = newRubyArray();
-    for (E item : iter) {
-      S key = block.yield(item);
-      if (!map.containsKey(key))
-        map.put(key, new RubyArray<E>());
-
-      map.get(key).add(item);
-    }
-    List<S> keys = newRubyArray(map.keySet()).sortǃ(comp);
+    List<S> keys = newRubyArray(rubyHash.keySet()).sortǃ(comp);
     for (S key : keys) {
-      sortedList.addAll(map.get(key).sortǃ());
+      sortedList.addAll(rubyHash.get(key).sortǃ());
     }
     return sortedList;
   }
@@ -954,36 +939,22 @@ public final class RubyLazyEnumerator<E> implements
   @Override
   public <S> RubyArray<E> sortBy(Comparator<? super E> comp1,
       Comparator<? super S> comp2, TransformBlock<E, S> block) {
-    Map<S, RubyArray<E>> map = new LinkedHashMap<S, RubyArray<E>>();
+    RubyHash<S, RubyArray<E>> rubyHash = groupBy(block);
     RubyArray<E> sortedList = newRubyArray();
-    for (E item : iter) {
-      S key = block.yield(item);
-      if (!map.containsKey(key))
-        map.put(key, new RubyArray<E>());
-
-      map.get(key).add(item);
-    }
-    List<S> keys = newRubyArray(map.keySet()).sortǃ(comp2);
+    List<S> keys = newRubyArray(rubyHash.keySet()).sortǃ(comp2);
     for (S key : keys) {
-      sortedList.addAll(map.get(key).sortǃ(comp1));
+      sortedList.addAll(rubyHash.get(key).sortǃ(comp1));
     }
     return sortedList;
   }
 
   @Override
   public <S> RubyArray<E> sortBy(TransformBlock<E, S> block) {
-    Map<S, RubyArray<E>> map = new LinkedHashMap<S, RubyArray<E>>();
+    RubyHash<S, RubyArray<E>> rubyHash = groupBy(block);
     RubyArray<E> sortedList = newRubyArray();
-    for (E item : iter) {
-      S key = block.yield(item);
-      if (!map.containsKey(key))
-        map.put(key, new RubyArray<E>());
-
-      map.get(key).add(item);
-    }
-    List<S> keys = newRubyArray(map.keySet()).sortǃ();
+    List<S> keys = newRubyArray(rubyHash.keySet()).sortǃ();
     for (S key : keys) {
-      sortedList.addAll(map.get(key).sortǃ());
+      sortedList.addAll(rubyHash.get(key).sortǃ());
     }
     return sortedList;
   }
