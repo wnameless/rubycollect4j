@@ -515,8 +515,8 @@ public final class RubyLazyEnumerator<E> implements
     return init;
   }
 
-  @Override
   @SuppressWarnings("unchecked")
+  @Override
   public <S> S inject(S init, String methodName) {
     S result = init;
     Iterator<E> elements = iter.iterator();
@@ -526,8 +526,8 @@ public final class RubyLazyEnumerator<E> implements
     return result;
   }
 
-  @Override
   @SuppressWarnings("unchecked")
+  @Override
   public E inject(String methodName) {
     E result = null;
     Iterator<E> elements = iter.iterator();
@@ -783,8 +783,8 @@ public final class RubyLazyEnumerator<E> implements
     return this;
   }
 
-  @Override
   @SuppressWarnings("unchecked")
+  @Override
   public RubyArray<RubyArray<E>> partition(BooleanBlock<E> block) {
     RubyArray<E> trueList = newRubyArray();
     RubyArray<E> falseList = newRubyArray();
@@ -861,8 +861,8 @@ public final class RubyLazyEnumerator<E> implements
         Pattern.compile(regex)));
   }
 
-  @Override
   @SuppressWarnings({ "unchecked", "rawtypes" })
+  @Override
   public RubyArray<E> sort() {
     RubyArray<E> rubyArray = newRubyArray(iter);
     if (rubyArray.size() <= 1)
