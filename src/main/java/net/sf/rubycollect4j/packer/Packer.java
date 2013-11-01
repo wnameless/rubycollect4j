@@ -65,8 +65,7 @@ public final class Packer {
    * @throws IllegalArgumentException
    *           if too few arguments
    */
-  public static String pack(String aTemplateString,
-      @SuppressWarnings("rawtypes") List objs) {
+  public static String pack(String aTemplateString, List<?> objs) {
     if (!Directive.verify(aTemplateString))
       throw new IllegalArgumentException("Invalid template string");
 

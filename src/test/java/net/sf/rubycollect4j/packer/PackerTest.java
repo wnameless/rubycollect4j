@@ -41,7 +41,7 @@ public class PackerTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testPackWithShortArguments2() {
-    Packer.pack("c6", Arrays.asList(1, 2));
+    Packer.pack("X6", Arrays.asList(1, 2));
   }
 
   @Test

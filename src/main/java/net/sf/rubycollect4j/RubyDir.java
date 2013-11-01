@@ -20,6 +20,7 @@
  */
 package net.sf.rubycollect4j;
 
+import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 
@@ -155,7 +156,7 @@ public final class RubyDir extends RubyEnumerable<String> {
    */
   public static RubyArray<String> glob(String pattern) {
     if (pattern.isEmpty())
-      return ra();
+      return newRubyArray();
 
     pattern = convertWindowsPathToLinuxPath(pattern);
     boolean recursive = pattern.contains("/**/") || pattern.startsWith("**/");
@@ -185,7 +186,7 @@ public final class RubyDir extends RubyEnumerable<String> {
 
     RubyArray<File> files = ra(traverseFolder(new File(rootPath), recursive));
 
-    RubyArray<String> paths = ra();
+    RubyArray<String> paths = newRubyArray();
     for (File f : files) {
       String path = convertWindowsPathToLinuxPath(f.getPath());
       String fPath = f.isDirectory() ? f.getPath() + "/" : f.getPath();
