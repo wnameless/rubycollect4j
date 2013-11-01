@@ -29,11 +29,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Map;
 import java.util.Set;
 
 import javax.xml.bind.TypeConstraintException;
@@ -1669,18 +1667,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    */
   public <S> RubyArray<E> sortByǃ(Comparator<? super S> comp,
       TransformBlock<E, S> block) {
-    Map<S, RubyArray<E>> map = new LinkedHashMap<S, RubyArray<E>>();
-    for (E item : list) {
-      S key = block.yield(item);
-      if (!map.containsKey(key))
-        map.put(key, new RubyArray<E>());
-
-      map.get(key).add(item);
-    }
-    List<S> keys = newRubyArray(map.keySet()).sortǃ(comp);
+    RubyHash<S, RubyArray<E>> rubyHash = groupBy(block);
     list.clear();
-    for (S key : keys) {
-      list.addAll(map.get(key).sortǃ());
+    for (S key : rubyHash.keys().sortǃ(comp)) {
+      list.addAll(rubyHash.get(key).sortǃ());
     }
     return this;
   }
@@ -1702,18 +1692,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    */
   public <S> RubyArray<E> sortByǃ(Comparator<? super E> comp1,
       Comparator<? super S> comp2, TransformBlock<E, S> block) {
-    Map<S, RubyArray<E>> map = new LinkedHashMap<S, RubyArray<E>>();
-    for (E item : list) {
-      S key = block.yield(item);
-      if (!map.containsKey(key))
-        map.put(key, new RubyArray<E>());
-
-      map.get(key).add(item);
-    }
-    List<S> keys = newRubyArray(map.keySet()).sortǃ(comp2);
+    RubyHash<S, RubyArray<E>> rubyHash = groupBy(block);
     list.clear();
-    for (S key : keys) {
-      list.addAll(map.get(key).sortǃ(comp1));
+    for (S key : rubyHash.keys().sortǃ(comp2)) {
+      list.addAll(rubyHash.get(key).sortǃ(comp1));
     }
     return this;
   }
@@ -1729,18 +1711,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * @return this RubyArray
    */
   public <S> RubyArray<E> sortByǃ(TransformBlock<E, S> block) {
-    Map<S, RubyArray<E>> map = new LinkedHashMap<S, RubyArray<E>>();
-    for (E item : list) {
-      S key = block.yield(item);
-      if (!map.containsKey(key))
-        map.put(key, new RubyArray<E>());
-
-      map.get(key).add(item);
-    }
-    List<S> keys = newRubyArray(map.keySet()).sortǃ();
+    RubyHash<S, RubyArray<E>> rubyHash = groupBy(block);
     list.clear();
-    for (S key : keys) {
-      list.addAll(map.get(key).sortǃ());
+    for (S key : rubyHash.keys().sortǃ()) {
+      list.addAll(rubyHash.get(key).sortǃ());
     }
     return this;
   }

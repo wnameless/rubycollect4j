@@ -187,6 +187,17 @@ public class RubyFileTest {
   }
 
   @Test
+  public void testSize1() {
+    RubyFile.size(BASE_DIR + "ruby_file_exist_test.txt");
+    assertEquals(0L, RubyFile.size(BASE_DIR + "ruby_file_exist_test.txt"));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testSizeException() {
+    RubyFile.size(BASE_DIR + "no such file!");
+  }
+
+  @Test
   public void testSizeʔ() {
     assertNull(RubyFile.sizeʔ(BASE_DIR + "nonexist"));
     assertNull(RubyFile.sizeʔ(BASE_DIR + "ruby_file_exist_test.txt"));
@@ -235,7 +246,7 @@ public class RubyFileTest {
   }
 
   @Test
-  public void testSize() {
+  public void testSize2() {
     rf = RubyFile.open(BASE_DIR + "ruby_file_exist_test.txt");
     assertEquals(0L, rf.size());
     rf.close();

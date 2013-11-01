@@ -429,9 +429,9 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Returns a RubyEnumerator of keys of this RubyHash.
+   * Returns a RubyArray of keys of this RubyHash.
    * 
-   * @return a RubyEnumerator
+   * @return a RubyArray
    */
   public RubyArray<K> keys() {
     return newRubyArray(map.keySet());
@@ -1356,6 +1356,11 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
     });
   }
 
+  /**
+   * Returns a RubyArray of values of this RubyHash.
+   * 
+   * @return a RubyArray
+   */
   @Override
   public RubyArray<V> values() {
     return newRubyArray(map.values());

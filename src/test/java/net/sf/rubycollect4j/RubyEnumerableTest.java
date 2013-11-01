@@ -690,14 +690,17 @@ public class RubyEnumerableTest {
 
   @Test
   public void testInjectWithBlock() {
-    assertEquals(Integer.valueOf(10), re.inject(new ReduceBlock<Integer>() {
+    ReduceBlock<Integer> block = new ReduceBlock<Integer>() {
 
       @Override
       public Integer yield(Integer memo, Integer item) {
         return memo + item;
       }
 
-    }));
+    };
+    assertEquals(Integer.valueOf(10), re.inject(block));
+    re = ra();
+    assertNull(re.inject(block));
   }
 
   @Test
@@ -714,10 +717,13 @@ public class RubyEnumerableTest {
   }
 
   @Test
-  public void testInject() {
+  public void testInjectWithMethodName() {
     RubyEnumerable<Boolean> bools =
         newRubyEnumerator(Arrays.asList(true, true, true));
     assertEquals(Boolean.TRUE, bools.inject("equals"));
+    List<Boolean> list = new ArrayList<Boolean>();
+    bools = newRubyEnumerator(list);
+    assertNull(bools.inject("equals"));
   }
 
   @Test(expected = IllegalArgumentException.class)

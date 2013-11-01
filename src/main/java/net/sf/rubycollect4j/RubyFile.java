@@ -26,7 +26,6 @@ import static net.sf.rubycollect4j.RubyIO.Mode.R;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.logging.Level;
@@ -87,7 +86,7 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Finds the absolute path of the file.
+   * Returns the absolute path of the file.
    * 
    * @param path
    *          of a file
@@ -98,7 +97,7 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Finds the name of the file.
+   * Returns the name of the file.
    * 
    * @param path
    *          of a file
@@ -109,7 +108,7 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Finds the name of a file.
+   * Returns the name of a file.
    * 
    * @param path
    *          of a file
@@ -133,7 +132,7 @@ public final class RubyFile extends RubyIO {
    *          permission
    * @param files
    *          to be changed mode
-   * @return number of files chenged
+   * @return number of files changed
    */
   public static int chmod(int modeInt, String... files) {
     for (String f : files) {
@@ -180,7 +179,7 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Finds the parent folder of the file.
+   * Returns the parent folder of the file.
    * 
    * @param path
    *          of a file
@@ -224,7 +223,7 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Finds the absolute path of the file.
+   * Returns the absolute path of the file.
    * 
    * @param path
    *          of a file
@@ -235,7 +234,7 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Finds the extension name of the file.
+   * Returns the extension name of the file.
    * 
    * @param path
    *          of a file
@@ -297,6 +296,22 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
+   * Returns the size of a file.
+   * 
+   * @param path
+   *          of a file
+   * @return the size of a file in bytes
+   */
+  public static long size(String path) {
+    File file = new File(path);
+    if (!file.exists())
+      throw new IllegalArgumentException(
+          "Errno::ENOENT: No such file or directory - " + path);
+
+    return file.length();
+  }
+
+  /**
    * Returns null if filedoesn’t exist or has 0 in length, the size of the file
    * otherwise.
    * 
@@ -309,26 +324,7 @@ public final class RubyFile extends RubyIO {
     if (!file.exists())
       return null;
 
-    RandomAccessFile raf = null;
-    Long size = 0L;
-    try {
-      raf = new RandomAccessFile(file, "r");
-      size = raf.length();
-      raf.close();
-    } catch (IOException ex) {
-      Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
-      throw new RuntimeException(ex);
-    } finally {
-      if (raf != null) {
-        try {
-          raf.close();
-        } catch (IOException ex) {
-          Logger.getLogger(RubyFile.class.getName())
-              .log(Level.SEVERE, null, ex);
-          throw new RuntimeException(ex);
-        }
-      }
-    }
+    Long size = file.length();
     return size == 0L ? null : size;
   }
 
@@ -358,7 +354,7 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Finds the last modified Data of the file.
+   * Returns the last modified Data of the file.
    * 
    * @return the last modified Data of the file
    */
@@ -367,7 +363,7 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Finds the path of the fiel.
+   * Returns the path of the file.
    * 
    * @return the path of the file.
    */
@@ -376,33 +372,16 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Finds the size of the file in bytes.
+   * Returns the size of the file in bytes.
    * 
    * @return the size of the file in bytes
    */
   public long size() {
-    long size = 0L;
-    try {
-      size = raFile.length();
-    } catch (IOException ex) {
-      Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
-      throw new RuntimeException(ex);
-    } finally {
-      if (raFile != null) {
-        try {
-          raFile.close();
-        } catch (IOException ex) {
-          Logger.getLogger(RubyFile.class.getName())
-              .log(Level.SEVERE, null, ex);
-          throw new RuntimeException(ex);
-        }
-      }
-    }
-    return size;
+    return file.length();
   }
 
   /**
-   * Finds the path of the file.
+   * Returns the path of the file.
    * 
    * @return the path of the file.
    */
