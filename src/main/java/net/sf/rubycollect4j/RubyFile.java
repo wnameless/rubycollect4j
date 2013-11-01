@@ -234,6 +234,19 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
+   * Returns the expanded path by given paths.
+   * 
+   * @param file
+   *          path of a file
+   * @param dir
+   *          path of a directory
+   * @return the expanded path of the file
+   */
+  public static String expandPath(String file, String dir) {
+    return new File(RubyFile.join(dir, file)).getAbsolutePath();
+  }
+
+  /**
    * Returns the extension name of the file.
    * 
    * @param path

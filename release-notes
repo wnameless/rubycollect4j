@@ -170,3 +170,5 @@ Version 1.6.0
 + Most of the TransformBlocks in RubyCollect4J can now be replaced with method name and arguments (invoke method using Reflection)
 
 + Refactor code by adding RubyContract::Enumerable & RubyContract::Enumerator interfaces
+
+* Added RubyFile::size & RubyFile::expandPath(file, dir)

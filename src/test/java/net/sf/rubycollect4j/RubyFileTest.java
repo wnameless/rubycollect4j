@@ -139,10 +139,17 @@ public class RubyFileTest {
           (qx("cmd", "/C", "echo %cd%").trim() + "/" + BASE_DIR + "ruby_file_exist_test.txt")
               .replaceAll("/", "\\\\"), RubyFile.expandPath(BASE_DIR
               + "ruby_file_exist_test.txt"));
+      assertEquals(
+          (qx("cmd", "/C", "echo %cd%").trim() + "/" + BASE_DIR + "ruby_file_exist_test.txt")
+              .replaceAll("/", "\\\\"), RubyFile.expandPath(
+              "ruby_file_exist_test.txt", BASE_DIR));
     } else {
       assertEquals(qx("pwd").trim() + "/" + BASE_DIR
           + "ruby_file_exist_test.txt",
           RubyFile.expandPath(BASE_DIR + "ruby_file_exist_test.txt"));
+      assertEquals(qx("pwd").trim() + "/" + BASE_DIR
+          + "ruby_file_exist_test.txt",
+          RubyFile.expandPath("ruby_file_exist_test.txt", BASE_DIR));
     }
   }
 
