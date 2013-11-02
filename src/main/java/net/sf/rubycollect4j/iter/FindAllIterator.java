@@ -21,7 +21,6 @@
 package net.sf.rubycollect4j.iter;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 import net.sf.rubycollect4j.block.BooleanBlock;
 import net.sf.rubycollect4j.util.PeekingIterator;
@@ -37,7 +36,6 @@ public final class FindAllIterator<E> implements Iterator<E> {
 
   private final PeekingIterator<E> pIter;
   private final BooleanBlock<E> block;
-  private boolean isRemovable = false;
 
   /**
    * Creates a FindAllIterator.
@@ -71,19 +69,12 @@ public final class FindAllIterator<E> implements Iterator<E> {
 
   @Override
   public E next() {
-    if (!hasNext())
-      throw new NoSuchElementException();
-
-    isRemovable = true;
+    advanceCursor();
     return pIter.next();
   }
 
   @Override
   public void remove() {
-    if (!isRemovable)
-      throw new IllegalStateException();
-
-    isRemovable = false;
     pIter.remove();
   }
 

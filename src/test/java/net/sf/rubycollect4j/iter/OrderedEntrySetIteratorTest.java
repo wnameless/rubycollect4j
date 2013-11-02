@@ -28,7 +28,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import net.sf.rubycollect4j.util.ComparableEntry;
 
@@ -84,14 +83,6 @@ public class OrderedEntrySetIteratorTest {
   @Test
   public void testComparableEntry() {
     assertTrue(setIter.next() instanceof ComparableEntry);
-  }
-
-  @Test(expected = NoSuchElementException.class)
-  public void testNextException() {
-    while (setIter.hasNext()) {
-      setIter.next();
-    }
-    setIter.next();
   }
 
   @Test(expected = UnsupportedOperationException.class)

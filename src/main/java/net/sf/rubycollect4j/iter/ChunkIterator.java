@@ -20,7 +20,6 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static net.sf.rubycollect4j.RubyCollections.hp;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 
 import java.util.Iterator;
@@ -29,6 +28,7 @@ import java.util.NoSuchElementException;
 
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.block.TransformBlock;
+import net.sf.rubycollect4j.util.ComparableEntry;
 import net.sf.rubycollect4j.util.PeekingIterator;
 
 /**
@@ -73,7 +73,7 @@ public final class ChunkIterator<E, K> implements
     while (pIter.hasNext() && key.equals(block.yield(pIter.peek()))) {
       bucket.add(pIter.next());
     }
-    return hp(key, bucket);
+    return new ComparableEntry<K, RubyArray<E>>(key, bucket);
   }
 
   @Override

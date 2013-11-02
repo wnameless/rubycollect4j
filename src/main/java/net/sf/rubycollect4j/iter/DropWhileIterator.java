@@ -36,7 +36,7 @@ import net.sf.rubycollect4j.util.PeekingIterator;
 public final class DropWhileIterator<E> implements Iterator<E> {
 
   private final PeekingIterator<E> pIter;
-  private boolean isRemovable = false;
+  private boolean hasFirstCall = false;
 
   /**
    * Creates a DropWhileIterator.
@@ -65,13 +65,13 @@ public final class DropWhileIterator<E> implements Iterator<E> {
 
   @Override
   public E next() {
-    isRemovable = true;
+    hasFirstCall = true;
     return pIter.next();
   }
 
   @Override
   public void remove() {
-    if (!isRemovable)
+    if (!hasFirstCall)
       throw new IllegalStateException();
 
     pIter.remove();

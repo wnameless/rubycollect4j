@@ -75,28 +75,24 @@ public final class CycleIterator<E> implements Iterator<E> {
 
   private E nextElement() {
     if (!it.hasNext()) {
-      if (n == null) {
-        it = iter.iterator();
-      } else {
-        it = iter.iterator();
+      it = iter.iterator();
+      if (n != null)
         n--;
-      }
     }
-
-    E next = it.next();
-    return next;
+    return it.next();
   }
 
   @Override
   public boolean hasNext() {
-    if (n == null && iter.iterator().hasNext())
-      return true;
-    else if (!iter.iterator().hasNext())
-      return false;
-    else if (n <= 0)
-      return false;
-    else
-      return n == 1 && !it.hasNext() ? false : true;
+    boolean hasAny = iter.iterator().hasNext();
+    if (n == null) {
+      return hasAny;
+    } else {
+      if (!hasAny || n <= 0)
+        return false;
+      else
+        return it.hasNext() || n > 1;
+    }
   }
 
   @Override
@@ -109,7 +105,7 @@ public final class CycleIterator<E> implements Iterator<E> {
 
   @Override
   public void remove() {
-    throw new UnsupportedOperationException();
+    it.remove();
   }
 
 }

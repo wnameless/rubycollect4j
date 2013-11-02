@@ -90,13 +90,13 @@ public final class RepeatedPermutationIterator<E> implements
     for (int i = counter.length - 1; i >= 0; i--) {
       if (counter[i] < end) {
         counter[i]++;
-        return;
+        break;
       } else if (i != 0 && counter[i - 1] != end) {
         counter[i - 1]++;
         for (int j = i; j < counter.length; j++) {
           counter[j] = 0;
         }
-        return;
+        break;
       }
     }
   }

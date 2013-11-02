@@ -26,7 +26,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import net.sf.rubycollect4j.block.BooleanBlock;
 
@@ -84,24 +83,11 @@ public class FindAllIteratorTest {
     assertFalse(iter.hasNext());
   }
 
-  @Test(expected = NoSuchElementException.class)
-  public void testNextException() {
-    while (iter.hasNext()) {
-      iter.next();
-    }
-    iter.next();
-  }
-
   @Test
   public void testRemove() {
     iter.next();
     iter.remove();
     assertEquals(ra(2, 3), list);
-  }
-
-  @Test(expected = IllegalStateException.class)
-  public void testRemoveException() {
-    iter.remove();
   }
 
 }

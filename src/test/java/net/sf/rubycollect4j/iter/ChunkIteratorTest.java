@@ -30,6 +30,7 @@ import java.util.NoSuchElementException;
 
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.block.TransformBlock;
+import net.sf.rubycollect4j.util.ComparableEntry;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -84,6 +85,11 @@ public class ChunkIteratorTest {
     assertEquals(hp("1.0", ra((Number) 1.0, (Number) 1.0f)), iter.next());
     assertEquals(hp("2", ra((Number) 2, (Number) 2L)), iter.next());
     assertFalse(iter.hasNext());
+  }
+
+  @Test
+  public void testComparableEntry() {
+    assertTrue(iter.next() instanceof ComparableEntry);
   }
 
   @Test(expected = NoSuchElementException.class)

@@ -98,9 +98,13 @@ public class CycleIteratorTest {
     iter.next();
   }
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test
   public void testRemove() {
-    iter.remove();
+    while (iter.hasNext()) {
+      iter.next();
+      iter.remove();
+    }
+    assertFalse(iter.hasNext());
   }
 
 }

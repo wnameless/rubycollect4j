@@ -102,7 +102,7 @@ public final class PermutationIterator<E> implements Iterator<RubyArray<E>> {
       int next = getHigherIndex(i);
       if (next != -1) {
         counter[i] = next;
-        return;
+        break;
       } else if (i != 0) {
         int pre = getHigherIndex(i - 1);
         if (pre != -1) {
@@ -110,7 +110,7 @@ public final class PermutationIterator<E> implements Iterator<RubyArray<E>> {
           for (int j = i; j < counter.length; j++) {
             counter[j] = getLowerIndex(j);
           }
-          return;
+          break;
         }
       }
     }

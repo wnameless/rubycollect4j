@@ -99,14 +99,14 @@ public class CombinationIterator<E> implements Iterator<RubyArray<E>> {
     for (int i = counter.length - 1; i >= 0; i--) {
       if (counter[i] < list.size() - (counter.length - i)) {
         counter[i]++;
-        return;
+        break;
       } else if (i != 0
           && counter[i - 1] != list.size() - (counter.length - i + 1)) {
         counter[i - 1]++;
         for (int j = i; j < counter.length; j++) {
           counter[j] = counter[j - 1] + 1;
         }
-        return;
+        break;
       }
     }
   }

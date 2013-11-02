@@ -73,7 +73,7 @@ public final class ProductIterator<E> implements Iterator<RubyArray<E>> {
         for (int j = i + 1; j < counter.length; j++) {
           counter[j] = 0;
         }
-        return;
+        break;
       } else {
         counter[i] = -1;
       }
