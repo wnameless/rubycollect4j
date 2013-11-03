@@ -171,4 +171,11 @@ Version 1.6.0
 
 + Refactor code by adding RubyContract::Enumerable & RubyContract::Enumerator interfaces
 
+
+Version 1.6.1
+
 * Added RubyFile::size & RubyFile::expandPath(file, dir)
+
+* Fixed the remove logic of StepIterator
+
+* Fixed the potential bug of RubyArray#pack
