@@ -42,7 +42,7 @@ public class ZipIteratorTest {
   public void setUp() throws Exception {
     list = ra(1, 2, 3);
     others = ra(ra(4, 5).iterator(), ra(6).iterator());
-    iter = new ZipIterator<Integer>(ra(1, 2, 3).iterator(), others);
+    iter = new ZipIterator<Integer>(list.iterator(), others);
   }
 
   @Test
@@ -79,7 +79,6 @@ public class ZipIteratorTest {
 
   @Test
   public void testDefensiveCopy() {
-    list.clear();
     others.clear();
     assertEquals(ra(1, 4, 6), iter.next());
     assertEquals(ra(2, 5, null), iter.next());
