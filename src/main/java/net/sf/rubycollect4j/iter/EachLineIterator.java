@@ -37,6 +37,9 @@ import java.util.logging.Logger;
  */
 public final class EachLineIterator implements Iterator<String> {
 
+  private static final Logger logger = Logger.getLogger(EachLineIterator.class
+      .getName());
+
   private final BufferedReader reader;
   private String line;
 
@@ -67,8 +70,7 @@ public final class EachLineIterator implements Iterator<String> {
       if (line == null)
         reader.close();
     } catch (IOException ex) {
-      Logger.getLogger(EachLineIterator.class.getName()).log(Level.SEVERE,
-          null, ex);
+      logger.log(Level.SEVERE, null, ex);
       throw new RuntimeException(ex);
     }
   }

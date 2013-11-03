@@ -146,6 +146,8 @@ public class RubyIO {
 
   }
 
+  private static final Logger logger = Logger.getLogger(RubyIO.class.getName());
+
   protected final File file;
   protected final RandomAccessFile raFile;
   protected final Mode mode;
@@ -164,7 +166,7 @@ public class RubyIO {
     try {
       io = new RubyIO(new File(path), Mode.fromString(mode));
     } catch (IOException ex) {
-      Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
+      logger.log(Level.SEVERE, null, ex);
       throw new RuntimeException(ex);
     }
     return io;
@@ -261,10 +263,9 @@ public class RubyIO {
    */
   public void close() {
     try {
-      if (raFile != null)
-        raFile.close();
+      raFile.close();
     } catch (IOException ex) {
-      Logger.getLogger(RubyIO.class.getName()).log(Level.SEVERE, null, ex);
+      logger.log(Level.SEVERE, null, ex);
       throw new RuntimeException(ex);
     }
   }
@@ -299,8 +300,7 @@ public class RubyIO {
       raFile.write(words.getBytes());
       raFile.writeBytes(System.getProperty("line.separator"));
     } catch (IOException ex) {
-      close();
-      Logger.getLogger(RubyIO.class.getName()).log(Level.SEVERE, null, ex);
+      logger.log(Level.SEVERE, null, ex);
       throw new RuntimeException(ex);
     }
   }
@@ -326,8 +326,7 @@ public class RubyIO {
       }
       reader.close();
     } catch (IOException ex) {
-      close();
-      Logger.getLogger(RubyIO.class.getName()).log(Level.SEVERE, null, ex);
+      logger.log(Level.SEVERE, null, ex);
       throw new RuntimeException(ex);
     }
     return sb.toString();
@@ -343,8 +342,7 @@ public class RubyIO {
     try {
       raFile.seek(pos);
     } catch (IOException ex) {
-      close();
-      Logger.getLogger(RubyIO.class.getName()).log(Level.SEVERE, null, ex);
+      logger.log(Level.SEVERE, null, ex);
       throw new RuntimeException(ex);
     }
   }
@@ -365,8 +363,7 @@ public class RubyIO {
     try {
       raFile.write(words.getBytes());
     } catch (IOException ex) {
-      close();
-      Logger.getLogger(RubyIO.class.getName()).log(Level.SEVERE, null, ex);
+      logger.log(Level.SEVERE, null, ex);
       throw new RuntimeException(ex);
     }
     return words.getBytes().length;

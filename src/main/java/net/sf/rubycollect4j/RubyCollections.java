@@ -50,6 +50,9 @@ import net.sf.rubycollect4j.util.ComparableEntry;
  */
 public final class RubyCollections {
 
+  private static final Logger logger = Logger.getLogger(RubyCollections.class
+      .getName());
+
   private RubyCollections() {}
 
   /**
@@ -356,8 +359,7 @@ public final class RubyCollections {
         sb.append(s).append(System.getProperty("line.separator"));
       }
     } catch (IOException ex) {
-      Logger.getLogger(RubyCollections.class.getName()).log(Level.SEVERE, null,
-          ex);
+      logger.log(Level.SEVERE, null, ex);
       throw new RuntimeException(ex);
     }
 

@@ -1575,7 +1575,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * 
    * @return this RubyArray
    */
-  @SuppressWarnings({ "unchecked", "rawtypes" })
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   public RubyArray<E> sortǃ() {
     if (list.size() <= 1)
       return this;
@@ -1604,8 +1604,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
         }
       }
       throw new IllegalArgumentException("ArgumentError: comparison of "
-          + (sample == null ? "null" : sample.getClass().getName()) + " with "
-          + (error == null ? "null" : error.getClass().getName()) + " failed");
+          + (sample == null ? null : sample.getClass().getName()) + " with "
+          + (error == null ? null : error.getClass().getName()) + " failed");
     }
   }
 
@@ -1639,8 +1639,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
         }
       }
       throw new IllegalArgumentException("ArgumentError: comparison of "
-          + (sample == null ? "null" : sample.getClass().getName()) + " with "
-          + (error == null ? "null" : error.getClass().getName()) + " failed");
+          + (sample == null ? null : sample.getClass().getName()) + " with "
+          + (error == null ? null : error.getClass().getName()) + " failed");
     }
   }
 
@@ -2127,13 +2127,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   public int compareTo(RubyArray<E> arg0) {
     if (arg0 == null)
       throw new IllegalArgumentException("ArgumentError: comparison of "
-          + list.getClass().getName() + " with " + "null" + " failed");
+          + list.getClass().getName() + " with " + arg0 + " failed");
     if (list.isEmpty())
       return arg0.isEmpty() ? 0 : -1;
 
     for (int i = 0; i < list.size() && i < arg0.size(); i++) {
       try {
-        @SuppressWarnings({ "unchecked", "rawtypes" })
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         int diff = ((Comparable) list.get(i)).compareTo(arg0.get(i));
         if (diff != 0)
           return diff;

@@ -42,6 +42,9 @@ import net.sf.rubycollect4j.RubyArray;
  */
 public final class ByteUtil {
 
+  private static final Logger logger = Logger.getLogger(ByteUtil.class
+      .getName());
+
   private ByteUtil() {};
 
   /**
@@ -282,9 +285,9 @@ public final class ByteUtil {
       }
       return (byte[]) mothod.invoke(o);
     } catch (Exception ex) {
-      Logger.getLogger(ByteUtil.class.getName()).log(Level.SEVERE, null, ex);
+      logger.log(Level.SEVERE, null, ex);
       throw new TypeConstraintException("TypeError: no implicit conversion of "
-          + (o == null ? o : o.getClass().getName()) + " into byte[]");
+          + (o == null ? null : o.getClass().getName()) + " into byte[]");
     }
   }
 

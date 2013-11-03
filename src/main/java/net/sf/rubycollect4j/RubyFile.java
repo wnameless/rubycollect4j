@@ -38,6 +38,9 @@ import java.util.logging.Logger;
  */
 public final class RubyFile extends RubyIO {
 
+  private static final Logger logger = Logger.getLogger(RubyFile.class
+      .getName());
+
   /**
    * Creates a RubyFile by given path and mode.
    * 
@@ -52,7 +55,7 @@ public final class RubyFile extends RubyIO {
     try {
       rf = new RubyFile(new File(path), Mode.fromString(mode));
     } catch (IOException ex) {
-      Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
+      logger.log(Level.SEVERE, null, ex);
       throw new RuntimeException(ex);
     }
     return rf;
@@ -145,7 +148,7 @@ public final class RubyFile extends RubyIO {
         chmodMethod.setAccessible(true);
         chmodMethod.invoke(null, file.getPath(), modeInt);
       } catch (Exception ex) {
-        Logger.getLogger(RubyFile.class.getName()).log(Level.SEVERE, null, ex);
+        logger.log(Level.SEVERE, null, ex);
         throw new RuntimeException(ex);
       }
     }

@@ -31,6 +31,9 @@ import java.util.logging.Logger;
  */
 public final class RubyObject {
 
+  private static final Logger logger = Logger.getLogger(RubyObject.class
+      .getName());
+
   private RubyObject() {}
 
   /**
@@ -64,11 +67,11 @@ public final class RubyObject {
       }
       throw new NoSuchMethodException();
     } catch (NoSuchMethodException ex) {
-      Logger.getLogger(RubyObject.class.getName()).log(Level.SEVERE, null, ex);
+      logger.log(Level.SEVERE, null, ex);
       throw new IllegalArgumentException("NoMethodError: undefined method `"
           + methodName + "' for " + o + ":" + o.getClass().getName());
     } catch (Exception ex) {
-      Logger.getLogger(RubyObject.class.getName()).log(Level.SEVERE, null, ex);
+      logger.log(Level.SEVERE, null, ex);
       throw new RuntimeException(ex);
     }
   }

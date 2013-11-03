@@ -861,7 +861,7 @@ public final class RubyLazyEnumerator<E> implements
         Pattern.compile(regex)));
   }
 
-  @SuppressWarnings({ "unchecked", "rawtypes" })
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
   public RubyArray<E> sort() {
     RubyArray<E> rubyArray = newRubyArray(iter);
@@ -894,8 +894,8 @@ public final class RubyLazyEnumerator<E> implements
         }
       }
       throw new IllegalArgumentException("ArgumentError: comparison of "
-          + (sample == null ? "null" : sample.getClass().getName()) + " with "
-          + (error == null ? "null" : error.getClass().getName()) + " failed");
+          + (sample == null ? null : sample.getClass().getName()) + " with "
+          + (error == null ? null : error.getClass().getName()) + " failed");
     }
   }
 

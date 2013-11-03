@@ -98,9 +98,9 @@ public final class ComparableEntry<K, V> implements Entry<K, V>,
     if (!(entry.getKey() instanceof Comparable)
         || !(o.getKey() instanceof Comparable))
       throw new IllegalArgumentException("ArgumentError: comparison of "
-          + (entry.getKey() == null ? "null" : entry.getKey().getClass()
+          + (entry.getKey() == null ? null : entry.getKey().getClass()
               .getName()) + " with "
-          + (o.getKey() == null ? "null" : o.getKey().getClass().getName())
+          + (o.getKey() == null ? null : o.getKey().getClass().getName())
           + " failed");
 
     int diff;
