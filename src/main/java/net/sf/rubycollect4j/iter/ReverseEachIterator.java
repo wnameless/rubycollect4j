@@ -62,14 +62,16 @@ public final class ReverseEachIterator<E> implements Iterator<E> {
   @Override
   public boolean hasNext() {
     if (reversedIter == null)
-      initReversedIter();
-    return reversedIter.hasNext();
+      return iter.hasNext();
+    else
+      return reversedIter.hasNext();
   }
 
   @Override
   public E next() {
     if (reversedIter == null)
       initReversedIter();
+
     return reversedIter.next();
   }
 
