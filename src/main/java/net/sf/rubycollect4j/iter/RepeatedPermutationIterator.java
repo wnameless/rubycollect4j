@@ -22,6 +22,7 @@ package net.sf.rubycollect4j.iter;
 
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -60,8 +61,8 @@ public final class RepeatedPermutationIterator<E> implements
     if (list == null)
       throw new NullPointerException();
 
-    this.list = list;
-    end = list.size() - 1;
+    this.list = new ArrayList<E>(list);
+    end = this.list.size() - 1;
     if (n <= 0) {
       counter = new int[0];
       endStatus = new int[0];

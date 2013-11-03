@@ -59,6 +59,12 @@ public class ReverseEachIteratorTest {
   }
 
   @Test
+  public void testHasNextLaziness() {
+    iter = new ReverseEachIterator<Integer>(ra(1, 2, 3, 4, 5).lazy().cycle());
+    assertTrue(iter.hasNext());
+  }
+
+  @Test
   public void testNext() {
     assertEquals(Integer.valueOf(5), iter.next());
     assertEquals(Integer.valueOf(4), iter.next());

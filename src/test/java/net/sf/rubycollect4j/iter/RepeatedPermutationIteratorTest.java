@@ -25,6 +25,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.junit.Before;
@@ -33,10 +34,12 @@ import org.junit.Test;
 public class RepeatedPermutationIteratorTest {
 
   private RepeatedPermutationIterator<Integer> iter;
+  private List<Integer> list;
 
   @Before
   public void setUp() throws Exception {
-    iter = new RepeatedPermutationIterator<Integer>(ra(1, 2, 3), 2);
+    list = ra(1, 2, 3);
+    iter = new RepeatedPermutationIterator<Integer>(list, 2);
   }
 
   @Test
@@ -97,6 +100,21 @@ public class RepeatedPermutationIteratorTest {
 
   @Test
   public void testNext() {
+    assertEquals(ra(1, 1), iter.next());
+    assertEquals(ra(1, 2), iter.next());
+    assertEquals(ra(1, 3), iter.next());
+    assertEquals(ra(2, 1), iter.next());
+    assertEquals(ra(2, 2), iter.next());
+    assertEquals(ra(2, 3), iter.next());
+    assertEquals(ra(3, 1), iter.next());
+    assertEquals(ra(3, 2), iter.next());
+    assertEquals(ra(3, 3), iter.next());
+    assertFalse(iter.hasNext());
+  }
+
+  @Test
+  public void testDefensiveCopy() {
+    list.clear();
     assertEquals(ra(1, 1), iter.next());
     assertEquals(ra(1, 2), iter.next());
     assertEquals(ra(1, 3), iter.next());

@@ -77,6 +77,16 @@ public class ZipIteratorTest {
     assertFalse(iter.hasNext());
   }
 
+  @Test
+  public void testDefensiveCopy() {
+    list.clear();
+    others.clear();
+    assertEquals(ra(1, 4, 6), iter.next());
+    assertEquals(ra(2, 5, null), iter.next());
+    assertEquals(ra(3, null, null), iter.next());
+    assertFalse(iter.hasNext());
+  }
+
   @Test(expected = UnsupportedOperationException.class)
   public void testRemove() {
     iter.remove();

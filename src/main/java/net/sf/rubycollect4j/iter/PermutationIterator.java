@@ -59,8 +59,8 @@ public final class PermutationIterator<E> implements Iterator<RubyArray<E>> {
     if (list == null)
       throw new NullPointerException();
 
-    this.list = list;
-    if (n <= 0 || n > list.size()) {
+    this.list = new ArrayList<E>(list);
+    if (n <= 0 || n > this.list.size()) {
       counter = new int[0];
       endStatus = new int[0];
       if (n != 0)

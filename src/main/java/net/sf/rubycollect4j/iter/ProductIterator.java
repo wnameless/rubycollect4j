@@ -22,6 +22,7 @@ package net.sf.rubycollect4j.iter;
 
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -38,7 +39,7 @@ import net.sf.rubycollect4j.RubyArray;
  */
 public final class ProductIterator<E> implements Iterator<RubyArray<E>> {
 
-  private final List<? extends List<E>> lists;
+  private final List<List<E>> lists;
   private final int[] counter;
 
   /**
@@ -53,8 +54,11 @@ public final class ProductIterator<E> implements Iterator<RubyArray<E>> {
     if (lists == null)
       throw new NullPointerException();
 
-    this.lists = lists;
-    counter = new int[lists.size()];
+    this.lists = new ArrayList<List<E>>();
+    for (List<E> list : lists) {
+      this.lists.add(new ArrayList<E>(list));
+    }
+    counter = new int[this.lists.size()];
   }
 
   private RubyArray<E> nextElement() {

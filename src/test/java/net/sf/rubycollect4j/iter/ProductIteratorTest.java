@@ -37,12 +37,13 @@ import org.junit.Test;
 public class ProductIteratorTest {
 
   private ProductIterator<Integer> iter;
+  RubyArray<List<Integer>> lists;
 
   @Before
   public void setUp() throws Exception {
-    RubyArray<List<Integer>> lists = ra();
-    iter =
-        new ProductIterator<Integer>(lists.push(ra(1, 2, 3)).push(ra(4, 5, 6)));
+    lists = ra();
+    lists.push(ra(1, 2, 3)).push(ra(4, 5, 6));
+    iter = new ProductIterator<Integer>(lists);
   }
 
   @Test
@@ -85,6 +86,21 @@ public class ProductIteratorTest {
     iter =
         new ProductIterator<Integer>(lists.push(ra(1, 2, 3)).push(
             new ArrayList<Integer>()));
+    assertFalse(iter.hasNext());
+  }
+
+  @Test
+  public void testDefensiveCopy() {
+    lists.clear();
+    assertEquals(ra(1, 4), iter.next());
+    assertEquals(ra(1, 5), iter.next());
+    assertEquals(ra(1, 6), iter.next());
+    assertEquals(ra(2, 4), iter.next());
+    assertEquals(ra(2, 5), iter.next());
+    assertEquals(ra(2, 6), iter.next());
+    assertEquals(ra(3, 4), iter.next());
+    assertEquals(ra(3, 5), iter.next());
+    assertEquals(ra(3, 6), iter.next());
     assertFalse(iter.hasNext());
   }
 

@@ -26,6 +26,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.junit.Before;
@@ -34,10 +35,12 @@ import org.junit.Test;
 public class PermutationIteratorTest {
 
   private PermutationIterator<Integer> iter;
+  private List<Integer> list;
 
   @Before
   public void setUp() throws Exception {
-    iter = new PermutationIterator<Integer>(ra(1, 2, 3), 2);
+    list = ra(1, 2, 3);
+    iter = new PermutationIterator<Integer>(list, 2);
   }
 
   @Test
@@ -74,6 +77,18 @@ public class PermutationIteratorTest {
     iter = new PermutationIterator<Integer>(new ArrayList<Integer>(), 2);
     assertFalse(iter.hasNext());
     iter = new PermutationIterator<Integer>(ra(1, 2, 3), 4);
+    assertFalse(iter.hasNext());
+  }
+
+  @Test
+  public void testDefensiveCopy() {
+    list.clear();
+    assertEquals(ra(1, 2), iter.next());
+    assertEquals(ra(1, 3), iter.next());
+    assertEquals(ra(2, 1), iter.next());
+    assertEquals(ra(2, 3), iter.next());
+    assertEquals(ra(3, 1), iter.next());
+    assertEquals(ra(3, 2), iter.next());
     assertFalse(iter.hasNext());
   }
 

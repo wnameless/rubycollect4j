@@ -22,6 +22,7 @@ package net.sf.rubycollect4j.iter;
 
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -57,8 +58,8 @@ public class CombinationIterator<E> implements Iterator<RubyArray<E>> {
     if (list == null)
       throw new NullPointerException();
 
-    this.list = list;
-    if (n <= 0 || n > list.size()) {
+    this.list = new ArrayList<E>(list);
+    if (n <= 0 || n > this.list.size()) {
       counter = new int[0];
       endStatus = new int[0];
       if (n != 0)
