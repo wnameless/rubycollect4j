@@ -43,6 +43,7 @@ public class StringSuccessorTest {
     assertEquals("aa", successor.succ("z"));
     assertEquals("AA", successor.succ("Z"));
     assertEquals("AAA-000", successor.succ("ZZ-999"));
+    assertEquals("*1000*", successor.succ("*999*"));
     assertEquals("98.77", successor.succ("98.76"));
     assertEquals("Hello worle!", successor.succ("Hello world!"));
     assertEquals("$$$%", successor.succ("$$$$"));

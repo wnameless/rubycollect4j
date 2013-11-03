@@ -68,11 +68,11 @@ public enum StringSuccessor implements Successive<String> {
       for (List<Character> chars : parts) {
         Character c = chars.get(0);
         if (isAlphanumeric(c)) {
-          if (48 <= (int) c && (int) c <= 57)
+          if (isDigit(c))
             chars.add(0, '1');
-          if (65 <= (int) c && (int) c <= 90)
+          if (isUpperCase(c))
             chars.add(0, 'A');
-          if (97 <= (int) c && (int) c <= 122)
+          if (isLowerCase(c))
             chars.add(0, 'a');
           break;
         }
@@ -148,10 +148,19 @@ public enum StringSuccessor implements Successive<String> {
   }
 
   private boolean isAlphanumeric(char c) {
-    boolean isNumber = 48 <= (int) c && (int) c <= 57;
-    boolean isUpcase = 65 <= (int) c && (int) c <= 90;
-    boolean isDowncase = 97 <= (int) c && (int) c <= 122;
-    return isNumber || isUpcase || isDowncase;
+    return isDigit(c) || isUpperCase(c) || isLowerCase(c);
+  }
+
+  private boolean isDigit(char c) {
+    return 48 <= (int) c && (int) c <= 57;
+  }
+
+  private boolean isUpperCase(char c) {
+    return 65 <= (int) c && (int) c <= 90;
+  }
+
+  private boolean isLowerCase(char c) {
+    return 97 <= (int) c && (int) c <= 122;
   }
 
   @Override
