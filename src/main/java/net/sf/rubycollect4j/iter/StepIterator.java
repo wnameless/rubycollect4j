@@ -21,7 +21,6 @@
 package net.sf.rubycollect4j.iter;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 /**
  * 
@@ -34,7 +33,6 @@ public final class StepIterator<E> implements Iterator<E> {
 
   private final Iterator<E> iter;
   private final int step;
-  private E peek;
   private boolean hasMore = false;
   private boolean isRemovable = false;
 
@@ -61,27 +59,21 @@ public final class StepIterator<E> implements Iterator<E> {
 
     this.iter = iter;
     this.step = step;
-    if (iter.hasNext()) {
-      peek = iter.next();
+    if (iter.hasNext())
       hasMore = true;
-    }
   }
 
   private void advanceCursor() {
     if (!hasMore) {
+      isRemovable = false;
       int step = this.step;
-      while (step > 0 && iter.hasNext()) {
-        peek = iter.next();
+      while (step > 1 && iter.hasNext()) {
+        iter.next();
         step--;
       }
-      if (step == 0)
+      if (step == 1 && iter.hasNext())
         hasMore = true;
     }
-  }
-
-  private E nextElement() {
-    hasMore = false;
-    return peek;
   }
 
   @Override
@@ -92,11 +84,10 @@ public final class StepIterator<E> implements Iterator<E> {
 
   @Override
   public E next() {
-    if (!hasNext())
-      throw new NoSuchElementException();
-
+    advanceCursor();
     isRemovable = true;
-    return nextElement();
+    hasMore = false;
+    return iter.next();
   }
 
   @Override

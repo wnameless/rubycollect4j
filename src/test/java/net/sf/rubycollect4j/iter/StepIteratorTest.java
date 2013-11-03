@@ -27,7 +27,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -83,14 +82,9 @@ public class StepIteratorTest {
     iter = new StepIterator<Integer>(ra(1, 2, 3, 4, 5).iterator(), 6);
     assertEquals(Integer.valueOf(1), iter.next());
     assertFalse(iter.hasNext());
-  }
-
-  @Test(expected = NoSuchElementException.class)
-  public void testNextException() {
-    while (iter.hasNext()) {
-      iter.next();
-    }
-    iter.next();
+    iter = new StepIterator<Integer>(ra(1).iterator(), 1);
+    assertEquals(Integer.valueOf(1), iter.next());
+    assertFalse(iter.hasNext());
   }
 
   @Test
@@ -104,6 +98,8 @@ public class StepIteratorTest {
 
   @Test(expected = IllegalStateException.class)
   public void testRemoveExceotion() {
+    iter.next();
+    iter.hasNext();
     iter.remove();
   }
 
