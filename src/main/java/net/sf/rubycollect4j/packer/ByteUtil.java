@@ -272,20 +272,20 @@ public final class ByteUtil {
     if (o instanceof Character)
       return toByteArray((Character) o);
 
-    Class<?> c = o.getClass();
-    for (Method m : c.getDeclaredMethods()) {
-      if (m.getReturnType() == byte[].class
-          && m.getParameterTypes().length == 0) {
-        try {
-          return (byte[]) m.invoke(o);
-        } catch (Exception e) {
-          Logger.getLogger(ByteUtil.class.getName()).log(Level.INFO, null,
-              e.getMessage());
-        }
+    try {
+      Class<?> c = o.getClass();
+      Method mothod = null;
+      for (Method m : c.getMethods()) {
+        if (m.getReturnType() == byte[].class
+            && m.getParameterTypes().length == 0)
+          mothod = m;
       }
+      return (byte[]) mothod.invoke(o);
+    } catch (Exception ex) {
+      Logger.getLogger(ByteUtil.class.getName()).log(Level.SEVERE, null, ex);
+      throw new TypeConstraintException("TypeError: no implicit conversion of "
+          + (o == null ? o : o.getClass().getName()) + " into byte[]");
     }
-    throw new TypeConstraintException("TypeError: no implicit conversion of "
-        + c.getName() + " into byte[]");
   }
 
   /**
@@ -340,9 +340,9 @@ public final class ByteUtil {
   }
 
   private static String byteToASCII(byte b, boolean hexPrefix) {
-    if (b >= 32 && b <= 126)
+    if (b >= 32 && b <= 126) {
       return new String(new byte[] { b });
-    else if (b == 7)
+    } else if (b == 7)
       return "\\a";
     else if (b == 8)
       return "\\b";
@@ -359,8 +359,7 @@ public final class ByteUtil {
     else if (b == 27)
       return "\\e";
     else
-      return hexPrefix ? "\\x" + String.format("%02X", b) : String.format(
-          "%02X", b);
+      return (hexPrefix ? "\\x" : "") + String.format("%02X", b);
   }
 
   /**

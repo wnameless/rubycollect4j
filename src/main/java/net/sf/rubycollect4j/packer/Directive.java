@@ -28,7 +28,6 @@ import static net.sf.rubycollect4j.RubyCollections.qr;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 
 import java.nio.ByteOrder;
-import java.util.Collections;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -153,8 +152,8 @@ public enum Directive {
    */
   Z(true);
 
-  public static final Map<String, Directive> lookup = Collections
-      .unmodifiableMap(Hash(ra(Directive.values()).map(
+  public static final Map<String, Directive> lookup = Hash(
+      ra(Directive.values()).map(
           new TransformBlock<Directive, Entry<String, Directive>>() {
 
             @Override
@@ -162,7 +161,7 @@ public enum Directive {
               return hp(item.toString(), item);
             }
 
-          })));
+          })).freeze();
 
   private final boolean widthAdjustable;
 
@@ -188,7 +187,7 @@ public enum Directive {
    */
   public String pack(byte[] bytes) {
     switch (this) {
-    case c:
+    default: // c
       return ByteUtil.toASCIIs(bytes, 1);
     case s:
       return ByteUtil.toASCIIs(bytes, 2);
@@ -254,8 +253,6 @@ public enum Directive {
       return new String(bytes);
     case Z:
       return new String(bytes);
-    default:
-      throw new UnsupportedOperationException();
     }
   }
 

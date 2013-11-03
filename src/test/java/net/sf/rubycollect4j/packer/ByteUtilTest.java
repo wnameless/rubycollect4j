@@ -133,8 +133,13 @@ public class ByteUtilTest {
   }
 
   @Test(expected = TypeConstraintException.class)
-  public void testToByteArrayWithObjectAndException() {
+  public void testToByteArrayWithObjectAndException1() {
     ByteUtil.toByteArray(new ArrayList<Object>());
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testToByteArrayWithObjectAndException2() {
+    ByteUtil.toByteArray((Object) null);
   }
 
   @Test
@@ -153,6 +158,8 @@ public class ByteUtilTest {
         ByteUtil.toASCIIs(new byte[] { (byte) 65 }, 2, ByteOrder.LITTLE_ENDIAN));
     assertEquals("\\x00A",
         ByteUtil.toASCIIs(new byte[] { (byte) 65 }, 2, ByteOrder.BIG_ENDIAN));
+    assertEquals("A\\x7F", ByteUtil.toASCIIs(
+        new byte[] { (byte) 65, (byte) 127 }, 2, ByteOrder.BIG_ENDIAN));
   }
 
   @Test
@@ -160,12 +167,16 @@ public class ByteUtilTest {
     assertEquals("A", ByteUtil.toUTF(ByteBuffer.allocate(4).putInt(65).array()));
     assertEquals("\\u0000",
         ByteUtil.toUTF(ByteBuffer.allocate(4).putInt(0).array()));
+    assertEquals("\\a",
+        ByteUtil.toUTF(ByteBuffer.allocate(4).putInt(7).array()));
     assertEquals("〹",
         ByteUtil.toUTF(ByteBuffer.allocate(4).putInt(12345).array()));
     assertEquals("\\uD903",
         ByteUtil.toUTF(ByteBuffer.allocate(4).putInt(55555).array()));
     assertEquals("𐀀",
         ByteUtil.toUTF(ByteBuffer.allocate(4).putInt(65536).array()));
+    assertEquals("\\u{10D8EE}",
+        ByteUtil.toUTF(ByteBuffer.allocate(4).putInt(1104110).array()));
   }
 
   @Test(expected = IllegalArgumentException.class)

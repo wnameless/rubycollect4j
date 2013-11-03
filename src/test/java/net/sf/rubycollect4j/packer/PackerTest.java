@@ -54,6 +54,7 @@ public class PackerTest {
     assertEquals("\\x00{", Packer.pack("s>", 123));
     assertEquals("{\\x00", Packer.pack("s<", 123));
     assertEquals("a", Packer.pack("A*", "a"));
+    assertEquals("ab", Packer.pack("A1A1", "abc", "bc"));
     assertEquals("a\\x00", Packer.pack("Z*", "a"));
     assertEquals("a\\x00\\x00", Packer.pack("Z3", "a"));
   }

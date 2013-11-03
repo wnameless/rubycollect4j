@@ -96,7 +96,7 @@ public final class Packer {
         if (d.isWidthAdjustable()) {
           String str = d.pack(ByteUtil.toByteArray(d.cast(objs.get(i))));
           if (str.length() >= count) {
-            sb.append(str.substring(0, count + 1));
+            sb.append(str.substring(0, count));
           } else {
             sb.append(str);
             count -= str.length();
