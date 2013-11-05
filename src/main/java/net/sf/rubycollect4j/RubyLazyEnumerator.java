@@ -640,24 +640,9 @@ public final class RubyLazyEnumerator<E> implements
     });
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public RubyArray<E> minmax() {
-    Iterator<E> elements = iter.iterator();
-    if (!elements.hasNext())
-      return newRubyArray(null, null);
-
-    Comparator<E> comp = new TryComparator<E>();
-    E max = elements.next();
-    E min = max;
-    while (elements.hasNext()) {
-      E item = elements.next();
-      if (comp.compare(max, item) < 0)
-        max = item;
-      if (comp.compare(min, item) > 0)
-        min = item;
-    }
-    return newRubyArray(min, max);
+    return minmax(null);
   }
 
   @SuppressWarnings("unchecked")
@@ -706,24 +691,9 @@ public final class RubyLazyEnumerator<E> implements
     return newRubyArray(min, max);
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public <S> RubyArray<E> minmaxBy(TransformBlock<E, S> block) {
-    Iterator<E> elements = iter.iterator();
-    if (!elements.hasNext())
-      return newRubyArray(null, null);
-
-    Comparator<S> comp = new TryComparator<S>();
-    E max = elements.next();
-    E min = max;
-    while (elements.hasNext()) {
-      E item = elements.next();
-      if (comp.compare(block.yield(max), block.yield(item)) < 0)
-        max = item;
-      if (comp.compare(block.yield(min), block.yield(item)) > 0)
-        min = item;
-    }
-    return newRubyArray(min, max);
+    return minmaxBy(null, block);
   }
 
   @Override
