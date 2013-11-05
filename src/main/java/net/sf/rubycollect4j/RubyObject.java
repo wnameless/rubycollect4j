@@ -66,13 +66,13 @@ public final class RubyObject {
         }
       }
       throw new NoSuchMethodException();
-    } catch (NoSuchMethodException ex) {
-      logger.log(Level.SEVERE, null, ex);
+    } catch (NoSuchMethodException e) {
+      logger.log(Level.SEVERE, null, e);
       throw new IllegalArgumentException("NoMethodError: undefined method `"
           + methodName + "' for " + o + ":" + o.getClass().getName());
-    } catch (Exception ex) {
-      logger.log(Level.SEVERE, null, ex);
-      throw new RuntimeException(ex);
+    } catch (Exception e) {
+      logger.log(Level.SEVERE, null, e);
+      throw new RuntimeException(e);
     }
   }
 

@@ -465,14 +465,14 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @return a new RubyHash
    */
   public RubyHash<K, V> merge(Map<K, V> otherHash) {
-    RubyHash<K, V> newHash = newRubyHash();
+    RubyHash<K, V> rubyHash = newRubyHash();
     for (Entry<K, V> item : map.entrySet()) {
-      newHash.put(item);
+      rubyHash.put(item);
     }
     for (Entry<K, V> item : otherHash.entrySet()) {
-      newHash.put(item);
+      rubyHash.put(item);
     }
-    return newHash;
+    return rubyHash;
   }
 
   /**
@@ -486,18 +486,18 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @return a new RubyHash
    */
   public RubyHash<K, V> merge(Map<K, V> otherHash, EntryMergeBlock<K, V> block) {
-    RubyHash<K, V> newHash = newRubyHash(map);
+    RubyHash<K, V> rubyHash = newRubyHash(map);
     for (Entry<K, V> item : otherHash.entrySet()) {
-      if (newHash.containsKey(item.getKey()))
-        newHash
+      if (rubyHash.containsKey(item.getKey()))
+        rubyHash
             .put(
                 item.getKey(),
                 block.yield(item.getKey(), map.get(item.getKey()),
                     item.getValue()));
       else
-        newHash.put(item);
+        rubyHash.put(item);
     }
-    return newHash;
+    return rubyHash;
   }
 
   /**
@@ -1385,11 +1385,11 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @return a RubyArray
    */
   public RubyArray<V> valuesAt(Iterable<K> keys) {
-    RubyArray<V> values = newRubyArray();
+    RubyArray<V> rubyArray = newRubyArray();
     for (K key : keys) {
-      values.add(map.get(key));
+      rubyArray.add(map.get(key));
     }
-    return values;
+    return rubyArray;
   }
 
   /**

@@ -181,3 +181,5 @@ Version 1.6.1
 * Fixed the potential bug of RubyArray#pack
 
 * Defensive copies are made while constructing CombinationIterator, PermutationIterator, RepeatedCombinationIterator, RepeatedPermutationIterator, ProductIterator and ZipIterator
+
+* RubyRnumerable#sortBy & RubyArray#sortBy! are no longer to do the second sorting on the elements which get the same transformed value

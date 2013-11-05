@@ -435,11 +435,6 @@ public class RubyLazyEnumeratorTest {
     assertEquals(ints, list);
   }
 
-  @Test(expected = IllegalStateException.class)
-  public void testRemoveException() {
-    lre.remove();
-  }
-
   @Test
   public void testToString() {
     assertEquals("RubyLazyEnumerator{[1, 2, 3, 4]}", lre.toString());

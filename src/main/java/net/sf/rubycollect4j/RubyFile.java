@@ -54,9 +54,9 @@ public final class RubyFile extends RubyIO {
     RubyFile rf = null;
     try {
       rf = new RubyFile(new File(path), Mode.fromString(mode));
-    } catch (IOException ex) {
-      logger.log(Level.SEVERE, null, ex);
-      throw new RuntimeException(ex);
+    } catch (IOException e) {
+      logger.log(Level.SEVERE, null, e);
+      throw new RuntimeException(e);
     }
     return rf;
   }
@@ -147,9 +147,9 @@ public final class RubyFile extends RubyIO {
             fspClass.getDeclaredMethod("chmod", String.class, Integer.TYPE);
         chmodMethod.setAccessible(true);
         chmodMethod.invoke(null, file.getPath(), modeInt);
-      } catch (Exception ex) {
-        logger.log(Level.SEVERE, null, ex);
-        throw new RuntimeException(ex);
+      } catch (Exception e) {
+        logger.log(Level.SEVERE, null, e);
+        throw new RuntimeException(e);
       }
     }
     return files.length;

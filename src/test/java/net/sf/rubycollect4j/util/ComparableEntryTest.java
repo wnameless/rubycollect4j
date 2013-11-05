@@ -34,12 +34,10 @@ import org.junit.Test;
 public class ComparableEntryTest {
 
   private ComparableEntry<Integer, Integer> entry;
-  private ComparableEntry<Integer, Integer> incomparableEntry;
 
   @Before
   public void setUp() throws Exception {
     entry = new ComparableEntry<Integer, Integer>(0, 1);
-    incomparableEntry = new ComparableEntry<Integer, Integer>(null, 1);
   }
 
   @Test
@@ -105,21 +103,6 @@ public class ComparableEntryTest {
   @Test(expected = IllegalArgumentException.class)
   public void testCompareToException1() {
     entry.compareTo(null);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testCompareToException2() {
-    entry.compareTo(new ComparableEntry<Integer, Integer>(null, 0));
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testCompareToException3() {
-    incomparableEntry.compareTo(new ComparableEntry<Integer, Integer>(0, 0));
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testCompareToException4() {
-    incomparableEntry.compareTo(new ComparableEntry<Integer, Integer>(null, 0));
   }
 
 }

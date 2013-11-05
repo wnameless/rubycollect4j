@@ -90,6 +90,7 @@ import net.sf.rubycollect4j.util.ComparableEntryTest;
 import net.sf.rubycollect4j.util.LinkedIdentityMapTest;
 import net.sf.rubycollect4j.util.ListSetTest;
 import net.sf.rubycollect4j.util.PeekingIteratorTest;
+import net.sf.rubycollect4j.util.TryComparatorTest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -100,10 +101,7 @@ import org.junit.runners.Suite.SuiteClasses;
     RubyDateTest.class, RubyDirTest.class, RubyEnumerableTest.class,
     RubyEnumeratorTest.class, RubyFileTest.class, RubyHashTest.class,
     RubyIOTest.class, RubyKernelTest.class, RubyLazyEnumeratorTest.class,
-    RubyObjectTest.class, RubyRangeTest.class, DateSuccessorTest.class,
-    DoubleSuccessorTest.class, IntegerSuccessorTest.class,
-    LongSuccessorTest.class, StringSuccessorTest.class,
-    LinkedIdentityMapTest.class, ListSetTest.class, ChunkIterableTest.class,
+    RubyObjectTest.class, RubyRangeTest.class, ChunkIterableTest.class,
     ChunkIteratorTest.class, CombinationIterableTest.class,
     CombinationIteratorTest.class, ComparableEntryIterableTest.class,
     ComparableEntryIteratorTest.class, CycleIterableTest.class,
@@ -132,6 +130,9 @@ import org.junit.runners.Suite.SuiteClasses;
     TakeWhileIterableTest.class, TakeWhileIteratorTest.class,
     TransformIterableTest.class, TransformIteratorTest.class,
     ZipIterableTest.class, ZipIteratorTest.class, ByteUtilTest.class,
-    DirectiveTest.class, PackerTest.class, PeekingIteratorTest.class,
-    ComparableEntryTest.class })
+    DirectiveTest.class, PackerTest.class, DateSuccessorTest.class,
+    DoubleSuccessorTest.class, IntegerSuccessorTest.class,
+    LongSuccessorTest.class, StringSuccessorTest.class,
+    ComparableEntryTest.class, LinkedIdentityMapTest.class, ListSetTest.class,
+    PeekingIteratorTest.class, TryComparatorTest.class })
 public class RubyCollect4JTests {}

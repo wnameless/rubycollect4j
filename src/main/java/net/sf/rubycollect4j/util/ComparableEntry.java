@@ -21,6 +21,7 @@
 package net.sf.rubycollect4j.util;
 
 import java.util.AbstractMap.SimpleEntry;
+import java.util.Comparator;
 import java.util.Map.Entry;
 
 /**
@@ -89,29 +90,22 @@ public final class ComparableEntry<K, V> implements Entry<K, V>,
     return entry.toString();
   }
 
-  @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
   public int compareTo(Entry<K, V> o) {
     if (o == null)
       throw new IllegalArgumentException("ArgumentError: comparison of "
           + entry.getClass().getName() + " with null failed");
-    if (!(entry.getKey() instanceof Comparable)
-        || !(o.getKey() instanceof Comparable))
-      throw new IllegalArgumentException("ArgumentError: comparison of "
-          + (entry.getKey() == null ? null : entry.getKey().getClass()
-              .getName()) + " with "
-          + (o.getKey() == null ? null : o.getKey().getClass().getName())
-          + " failed");
+
+    Comparator<K> keyComp = new TryComparator<K>();
+    Comparator<V> valueComp = new TryComparator<V>();
 
     int diff;
-    diff = ((Comparable) entry.getKey()).compareTo(o.getKey());
-    if (diff != 0)
+    if ((diff = keyComp.compare(entry.getKey(), o.getKey())) != 0)
       return diff;
 
     if (entry.getValue() instanceof Comparable
         && o.getValue() instanceof Comparable) {
-      diff = ((Comparable) entry.getValue()).compareTo(o.getValue());
-      if (diff != 0)
+      if ((diff = valueComp.compare(entry.getValue(), o.getValue())) != 0)
         return diff;
     }
 

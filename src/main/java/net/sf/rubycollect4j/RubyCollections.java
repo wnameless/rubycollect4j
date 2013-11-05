@@ -358,9 +358,9 @@ public final class RubyCollections {
       while ((s = stdError.readLine()) != null) {
         sb.append(s).append(System.getProperty("line.separator"));
       }
-    } catch (IOException ex) {
-      logger.log(Level.SEVERE, null, ex);
-      throw new RuntimeException(ex);
+    } catch (IOException e) {
+      logger.log(Level.SEVERE, null, e);
+      throw new RuntimeException(e);
     }
 
     return sb.toString();

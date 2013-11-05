@@ -284,8 +284,8 @@ public final class ByteUtil {
           mothod = m;
       }
       return (byte[]) mothod.invoke(o);
-    } catch (Exception ex) {
-      logger.log(Level.SEVERE, null, ex);
+    } catch (Exception e) {
+      logger.log(Level.SEVERE, null, e);
       throw new TypeConstraintException("TypeError: no implicit conversion of "
           + (o == null ? null : o.getClass().getName()) + " into byte[]");
     }

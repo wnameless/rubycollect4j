@@ -58,6 +58,7 @@ public final class EachLineIterator implements Iterator<String> {
     try {
       reader = new BufferedReader(new FileReader(file));
     } catch (FileNotFoundException e) {
+      logger.log(Level.SEVERE, null, e);
       throw new RuntimeException("Errno::ENOENT: No such file or directory - "
           + file.getName());
     }
@@ -69,9 +70,9 @@ public final class EachLineIterator implements Iterator<String> {
       line = reader.readLine();
       if (line == null)
         reader.close();
-    } catch (IOException ex) {
-      logger.log(Level.SEVERE, null, ex);
-      throw new RuntimeException(ex);
+    } catch (IOException e) {
+      logger.log(Level.SEVERE, null, e);
+      throw new RuntimeException(e);
     }
   }
 

@@ -379,7 +379,7 @@ public class RubyArrayTest {
     try {
       ra.fetch(4);
       fail();
-    } catch (Exception e) {}
+    } catch (IndexOutOfBoundsException e) {}
     ra.fetch(-5);
   }
 
@@ -1245,16 +1245,6 @@ public class RubyArrayTest {
     assertEquals(ra(null, null, null), ra(null, null, null).sortǃ());
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testSortǃException1() {
-    ra(null, 2, 3).sortǃ();
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testSortǃException2() {
-    ra(1, null, 3).sortǃ();
-  }
-
   @Test
   public void testSortǃWithComparator() {
     ra = ra(4, 1, 2, 3, 3);
@@ -1262,16 +1252,6 @@ public class RubyArrayTest {
     assertEquals(ra(4, 3, 3, 2, 1), ra);
     assertEquals(ra(1), ra(1).sortǃ(comp));
     assertEquals(ra(null, null, null), ra(null, null, null).sortǃ(null));
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testSortǃWithComparatorException1() {
-    ra(1, 2, null).sortǃ(comp);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testSortǃWithComparatorException2() {
-    ra(null, 2, 3).sortǃ(comp);
   }
 
   @Test
@@ -1283,7 +1263,7 @@ public class RubyArrayTest {
   @Test
   public void testSortByǃWithComparatorAndBlock() {
     RubyArray<String> ra = ra("aaaa", "bbb", "ff", "cc", "d");
-    assertEquals(ra("aaaa", "bbb", "cc", "ff", "d"),
+    assertEquals(ra("aaaa", "bbb", "ff", "cc", "d"),
         ra.sortByǃ(comp, new TransformBlock<String, Integer>() {
 
           @Override
@@ -1292,7 +1272,7 @@ public class RubyArrayTest {
           }
 
         }));
-    assertEquals(ra("aaaa", "bbb", "cc", "ff", "d"), ra);
+    assertEquals(ra("aaaa", "bbb", "ff", "cc", "d"), ra);
   }
 
   @Test
@@ -1320,7 +1300,7 @@ public class RubyArrayTest {
   @Test
   public void testSortByǃWithBlock() {
     RubyArray<String> ra = ra("aaaa", "bbb", "ff", "cc", "d");
-    assertEquals(ra("d", "cc", "ff", "bbb", "aaaa"),
+    assertEquals(ra("d", "ff", "cc", "bbb", "aaaa"),
         ra.sortByǃ(new TransformBlock<String, Integer>() {
 
           @Override
@@ -1329,14 +1309,14 @@ public class RubyArrayTest {
           }
 
         }));
-    assertEquals(ra("d", "cc", "ff", "bbb", "aaaa"), ra);
+    assertEquals(ra("d", "ff", "cc", "bbb", "aaaa"), ra);
   }
 
   @Test
   public void testSortByǃWithMethodName() {
     RubyArray<String> ra = ra("aaaa", "bbb", "ff", "cc", "d");
-    assertEquals(ra("d", "cc", "ff", "bbb", "aaaa"), ra.sortByǃ("length"));
-    assertEquals(ra("d", "cc", "ff", "bbb", "aaaa"), ra);
+    assertEquals(ra("d", "ff", "cc", "bbb", "aaaa"), ra.sortByǃ("length"));
+    assertEquals(ra("d", "ff", "cc", "bbb", "aaaa"), ra);
   }
 
   @Test
@@ -1682,12 +1662,6 @@ public class RubyArrayTest {
   @Test(expected = IllegalArgumentException.class)
   public void testCompareToException1() {
     ra(ra(4, 5), ra(1), null).sort();
-  }
-
-  @SuppressWarnings("unchecked")
-  @Test(expected = IllegalArgumentException.class)
-  public void testCompareToException2() {
-    ra(ra(4, 5), ra(1), ra(null, 2, 3)).sort();
   }
 
 }

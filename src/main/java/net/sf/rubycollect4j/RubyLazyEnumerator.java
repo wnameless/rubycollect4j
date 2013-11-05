@@ -59,6 +59,7 @@ import net.sf.rubycollect4j.iter.TakeWhileIterable;
 import net.sf.rubycollect4j.iter.TransformIterable;
 import net.sf.rubycollect4j.iter.ZipIterable;
 import net.sf.rubycollect4j.util.PeekingIterator;
+import net.sf.rubycollect4j.util.TryComparator;
 
 /**
  * 
@@ -397,9 +398,9 @@ public final class RubyLazyEnumerator<E> implements
 
   @Override
   public E first() {
-    Iterator<E> iterator = iter.iterator();
-    if (iterator.hasNext())
-      return iterator.next();
+    Iterator<E> elements = iter.iterator();
+    if (elements.hasNext())
+      return elements.next();
     else
       return null;
   }
@@ -410,10 +411,10 @@ public final class RubyLazyEnumerator<E> implements
       throw new IllegalArgumentException(
           "ArgumentError: attempt to take negative size");
 
-    Iterator<E> it = iter.iterator();
+    Iterator<E> elements = iter.iterator();
     RubyArray<E> rubyArray = newRubyArray();
-    for (int i = 0; i < n && it.hasNext(); i++) {
-      rubyArray.add(it.next());
+    for (int i = 0; i < n && elements.hasNext(); i++) {
+      rubyArray.add(elements.next());
     }
     return rubyArray;
   }
@@ -639,20 +640,21 @@ public final class RubyLazyEnumerator<E> implements
     });
   }
 
-  @SuppressWarnings({ "rawtypes", "unchecked" })
+  @SuppressWarnings("unchecked")
   @Override
   public RubyArray<E> minmax() {
     Iterator<E> elements = iter.iterator();
     if (!elements.hasNext())
       return newRubyArray(null, null);
 
+    Comparator<E> comp = new TryComparator<E>();
     E max = elements.next();
     E min = max;
     while (elements.hasNext()) {
       E item = elements.next();
-      if (((Comparable) max).compareTo(item) < 0)
+      if (comp.compare(max, item) < 0)
         max = item;
-      if (((Comparable) min).compareTo(item) > 0)
+      if (comp.compare(min, item) > 0)
         min = item;
     }
     return newRubyArray(min, max);
@@ -702,20 +704,21 @@ public final class RubyLazyEnumerator<E> implements
     return newRubyArray(min, max);
   }
 
-  @SuppressWarnings({ "rawtypes", "unchecked" })
+  @SuppressWarnings("unchecked")
   @Override
   public <S> RubyArray<E> minmaxBy(TransformBlock<E, S> block) {
     Iterator<E> elements = iter.iterator();
     if (!elements.hasNext())
       return newRubyArray(null, null);
 
+    Comparator<S> comp = new TryComparator<S>();
     E max = elements.next();
     E min = max;
     while (elements.hasNext()) {
       E item = elements.next();
-      if (((Comparable) block.yield(max)).compareTo(block.yield(item)) < 0)
+      if (comp.compare(block.yield(max), block.yield(item)) < 0)
         max = item;
-      if (((Comparable) block.yield(min)).compareTo(block.yield(item)) > 0)
+      if (comp.compare(block.yield(min), block.yield(item)) > 0)
         min = item;
     }
     return newRubyArray(min, max);
@@ -861,42 +864,14 @@ public final class RubyLazyEnumerator<E> implements
         Pattern.compile(regex)));
   }
 
-  @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
   public RubyArray<E> sort() {
     RubyArray<E> rubyArray = newRubyArray(iter);
     if (rubyArray.size() <= 1)
       return rubyArray;
 
-    try {
-      Collections.sort(rubyArray, new Comparator() {
-
-        @Override
-        public int compare(Object arg0, Object arg1) {
-          return ((Comparable) arg0).compareTo(arg1);
-        }
-
-      });
-      return rubyArray;
-    } catch (Exception e) {
-      if (rubyArray.uniq().count() == 1)
-        return rubyArray;
-
-      Iterator<E> iter = rubyArray.iterator();
-      E sample = iter.next();
-      E error = null;
-      while (iter.hasNext()) {
-        error = iter.next();
-        try {
-          ((Comparable) sample).compareTo(error);
-        } catch (Exception ex) {
-          break;
-        }
-      }
-      throw new IllegalArgumentException("ArgumentError: comparison of "
-          + (sample == null ? null : sample.getClass().getName()) + " with "
-          + (error == null ? null : error.getClass().getName()) + " failed");
-    }
+    Collections.sort(rubyArray, new TryComparator<E>());
+    return rubyArray;
   }
 
   // @Override
@@ -918,32 +893,32 @@ public final class RubyLazyEnumerator<E> implements
   public <S> RubyArray<E> sortBy(Comparator<? super S> comp,
       TransformBlock<E, S> block) {
     RubyHash<S, RubyArray<E>> rubyHash = groupBy(block);
-    RubyArray<E> sortedList = newRubyArray();
+    RubyArray<E> rubyArray = newRubyArray();
     for (S key : rubyHash.keys().sortǃ(comp)) {
-      sortedList.addAll(rubyHash.get(key).sortǃ());
+      rubyArray.addAll(rubyHash.get(key));
     }
-    return sortedList;
+    return rubyArray;
   }
 
   @Override
   public <S> RubyArray<E> sortBy(Comparator<? super E> comp1,
       Comparator<? super S> comp2, TransformBlock<E, S> block) {
     RubyHash<S, RubyArray<E>> rubyHash = groupBy(block);
-    RubyArray<E> sortedList = newRubyArray();
+    RubyArray<E> rubyArray = newRubyArray();
     for (S key : rubyHash.keys().sortǃ(comp2)) {
-      sortedList.addAll(rubyHash.get(key).sortǃ(comp1));
+      rubyArray.addAll(rubyHash.get(key).sortǃ(comp1));
     }
-    return sortedList;
+    return rubyArray;
   }
 
   @Override
   public <S> RubyArray<E> sortBy(TransformBlock<E, S> block) {
     RubyHash<S, RubyArray<E>> rubyHash = groupBy(block);
-    RubyArray<E> sortedList = newRubyArray();
+    RubyArray<E> rubyArray = newRubyArray();
     for (S key : rubyHash.keys().sortǃ()) {
-      sortedList.addAll(rubyHash.get(key).sortǃ());
+      rubyArray.addAll(rubyHash.get(key));
     }
-    return sortedList;
+    return rubyArray;
   }
 
   @Override
@@ -997,8 +972,8 @@ public final class RubyLazyEnumerator<E> implements
   @Override
   public void
       zip(List<? extends Iterable<E>> others, Block<RubyArray<E>> block) {
-    RubyLazyEnumerator<RubyArray<E>> zippedRubyArray = zip(others);
-    for (RubyArray<E> item : zippedRubyArray) {
+    RubyLazyEnumerator<RubyArray<E>> rubyArrays = zip(others);
+    for (RubyArray<E> item : rubyArrays) {
       block.yield(item);
     }
   }

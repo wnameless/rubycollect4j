@@ -1230,16 +1230,6 @@ public class RubyEnumerableTest {
   // assertEquals(ra(1), newRubyEnumerator(Arrays.asList(1)).sort(null));
   // }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testSortException1() {
-    newRubyEnumerator(Arrays.asList(1, 2, null)).sort();
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testSortException2() {
-    newRubyEnumerator(Arrays.asList(null, 2, 3)).sort();
-  }
-
   @Test
   public void testSortBy() {
     assertEquals(RubyEnumerator.class, re.sortBy().getClass());
@@ -1250,7 +1240,7 @@ public class RubyEnumerableTest {
   public void testSortByWithComparatorAndBlock() {
     RubyEnumerable<String> re =
         newRubyEnumerator(Arrays.asList("aaaa", "bbb", "cc", "e", "d"));
-    assertEquals(ra("aaaa", "bbb", "cc", "d", "e"),
+    assertEquals(ra("aaaa", "bbb", "cc", "e", "d"),
         re.sortBy(new Comparator<Integer>() {
 
           @Override
@@ -1301,7 +1291,7 @@ public class RubyEnumerableTest {
   public void testSortByWithBlock() {
     RubyEnumerable<String> re =
         newRubyEnumerator(Arrays.asList("aaaa", "bbb", "cc", "e", "d"));
-    assertEquals(ra("d", "e", "cc", "bbb", "aaaa"),
+    assertEquals(ra("e", "d", "cc", "bbb", "aaaa"),
         re.sortBy(new TransformBlock<String, Integer>() {
 
           @Override
@@ -1316,7 +1306,7 @@ public class RubyEnumerableTest {
   public void testSortByWithMethodName() {
     RubyEnumerable<String> re =
         newRubyEnumerator(Arrays.asList("aaaa", "bbb", "cc", "e", "d"));
-    assertEquals(ra("d", "e", "cc", "bbb", "aaaa"), re.sortBy("length"));
+    assertEquals(ra("e", "d", "cc", "bbb", "aaaa"), re.sortBy("length"));
   }
 
   @Test

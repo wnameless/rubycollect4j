@@ -165,9 +165,9 @@ public class RubyIO {
     RubyIO io = null;
     try {
       io = new RubyIO(new File(path), Mode.fromString(mode));
-    } catch (IOException ex) {
-      logger.log(Level.SEVERE, null, ex);
-      throw new RuntimeException(ex);
+    } catch (IOException e) {
+      logger.log(Level.SEVERE, null, e);
+      throw new RuntimeException(e);
     }
     return io;
   }
@@ -264,9 +264,9 @@ public class RubyIO {
   public void close() {
     try {
       raFile.close();
-    } catch (IOException ex) {
-      logger.log(Level.SEVERE, null, ex);
-      throw new RuntimeException(ex);
+    } catch (IOException e) {
+      logger.log(Level.SEVERE, null, e);
+      throw new RuntimeException(e);
     }
   }
 
@@ -299,9 +299,9 @@ public class RubyIO {
     try {
       raFile.write(words.getBytes());
       raFile.writeBytes(System.getProperty("line.separator"));
-    } catch (IOException ex) {
-      logger.log(Level.SEVERE, null, ex);
-      throw new RuntimeException(ex);
+    } catch (IOException e) {
+      logger.log(Level.SEVERE, null, e);
+      throw new RuntimeException(e);
     }
   }
 
@@ -325,9 +325,9 @@ public class RubyIO {
         sb.append(String.valueOf(buf, 0, numOfChars));
       }
       reader.close();
-    } catch (IOException ex) {
-      logger.log(Level.SEVERE, null, ex);
-      throw new RuntimeException(ex);
+    } catch (IOException e) {
+      logger.log(Level.SEVERE, null, e);
+      throw new RuntimeException(e);
     }
     return sb.toString();
   }
@@ -341,9 +341,9 @@ public class RubyIO {
   public void seek(long pos) {
     try {
       raFile.seek(pos);
-    } catch (IOException ex) {
-      logger.log(Level.SEVERE, null, ex);
-      throw new RuntimeException(ex);
+    } catch (IOException e) {
+      logger.log(Level.SEVERE, null, e);
+      throw new RuntimeException(e);
     }
   }
 
@@ -362,9 +362,9 @@ public class RubyIO {
 
     try {
       raFile.write(words.getBytes());
-    } catch (IOException ex) {
-      logger.log(Level.SEVERE, null, ex);
-      throw new RuntimeException(ex);
+    } catch (IOException e) {
+      logger.log(Level.SEVERE, null, e);
+      throw new RuntimeException(e);
     }
     return words.getBytes().length;
   }
