@@ -67,7 +67,7 @@ public class RubyLazyEnumeratorTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException() {
-    lre = newRubyLazyEnumerator(null);
+    newRubyLazyEnumerator(null);
   }
 
   @SuppressWarnings("unchecked")

@@ -55,12 +55,12 @@ public class RubyEnumeratorTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException1() {
-    re = new RubyEnumerator<Integer>((Iterable<Integer>) null);
+    new RubyEnumerator<Integer>((Iterable<Integer>) null);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    re = new RubyEnumerator<Integer>((Iterator<Integer>) null);
+    new RubyEnumerator<Integer>((Iterator<Integer>) null);
   }
 
   @Test

@@ -90,22 +90,17 @@ public class RubyEnumerableTest {
 
   @Test
   public void testAllʔWithBlock() {
-    assertEquals(false, re.allʔ(new BooleanBlock<Integer>() {
+    BooleanBlock<Integer> block = new BooleanBlock<Integer>() {
 
       @Override
       public boolean yield(Integer item) {
         return item % 2 == 0;
       }
 
-    }));
-    assertEquals(true, re.allʔ(new BooleanBlock<Integer>() {
-
-      @Override
-      public boolean yield(Integer item) {
-        return item < 5;
-      }
-
-    }));
+    };
+    assertEquals(false, re.allʔ(block));
+    re = ra(2, 4, 6, 8);
+    assertEquals(true, re.allʔ(block));
   }
 
   @Test
@@ -123,22 +118,17 @@ public class RubyEnumerableTest {
 
   @Test
   public void testAnyʔWithBlock() {
-    assertEquals(true, re.anyʔ(new BooleanBlock<Integer>() {
+    BooleanBlock<Integer> block = new BooleanBlock<Integer>() {
 
       @Override
       public boolean yield(Integer item) {
         return item % 2 == 0;
       }
 
-    }));
-    assertEquals(false, re.anyʔ(new BooleanBlock<Integer>() {
-
-      @Override
-      public boolean yield(Integer item) {
-        return item > 5;
-      }
-
-    }));
+    };
+    assertEquals(true, re.anyʔ(block));
+    re = ra(1, 3, 5, 7);
+    assertEquals(false, re.anyʔ(block));
   }
 
   @Test
@@ -293,22 +283,17 @@ public class RubyEnumerableTest {
 
   @Test
   public void testDetectWithBlock() {
-    assertEquals(Integer.valueOf(3), re.detect(new BooleanBlock<Integer>() {
+    BooleanBlock<Integer> block = new BooleanBlock<Integer>() {
 
       @Override
       public boolean yield(Integer item) {
         return item == 3;
       }
 
-    }));
-    assertNull(re.detect(new BooleanBlock<Integer>() {
-
-      @Override
-      public boolean yield(Integer item) {
-        return item == 5;
-      }
-
-    }));
+    };
+    assertEquals(Integer.valueOf(3), re.detect(block));
+    re = ra(1, 2, 4, 5);
+    assertNull(re.detect(block));
   }
 
   @Test
@@ -515,22 +500,17 @@ public class RubyEnumerableTest {
 
   @Test
   public void testFindWithBlock() {
-    assertEquals(Integer.valueOf(3), re.find(new BooleanBlock<Integer>() {
+    BooleanBlock<Integer> block = new BooleanBlock<Integer>() {
 
       @Override
       public boolean yield(Integer item) {
         return item == 3;
       }
 
-    }));
-    assertNull(re.find(new BooleanBlock<Integer>() {
-
-      @Override
-      public boolean yield(Integer item) {
-        return item == 5;
-      }
-
-    }));
+    };
+    assertEquals(Integer.valueOf(3), re.find(block));
+    re = ra(1, 2, 4, 5);
+    assertNull(re.find(block));
   }
 
   @Test
@@ -559,22 +539,17 @@ public class RubyEnumerableTest {
 
   @Test
   public void testFindIndexWithBlock() {
-    assertEquals(Integer.valueOf(3), re.findIndex(new BooleanBlock<Integer>() {
+    BooleanBlock<Integer> block = new BooleanBlock<Integer>() {
 
       @Override
       public boolean yield(Integer item) {
         return item >= 4;
       }
 
-    }));
-    assertNull(re.findIndex(new BooleanBlock<Integer>() {
-
-      @Override
-      public boolean yield(Integer item) {
-        return item > 4;
-      }
-
-    }));
+    };
+    assertEquals(Integer.valueOf(3), re.findIndex(block));
+    re = ra(0, 1, 2, 3);
+    assertNull(re.findIndex(block));
   }
 
   @Test
@@ -1357,22 +1332,17 @@ public class RubyEnumerableTest {
 
   @Test
   public void testTakeWhileWithBlock() {
-    assertEquals(ra(1, 2), re.takeWhile(new BooleanBlock<Integer>() {
+    BooleanBlock<Integer> block = new BooleanBlock<Integer>() {
 
       @Override
       public boolean yield(Integer item) {
         return item != 3;
       }
 
-    }));
-    assertEquals(ra(1, 2, 3, 4), re.takeWhile(new BooleanBlock<Integer>() {
-
-      @Override
-      public boolean yield(Integer item) {
-        return item < 5;
-      }
-
-    }));
+    };
+    assertEquals(ra(1, 2), re.takeWhile(block));
+    re = ra(1, 1, 1, 1);
+    assertEquals(ra(1, 1, 1, 1), re.takeWhile(block));
   }
 
   @Test

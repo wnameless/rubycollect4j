@@ -49,6 +49,7 @@ import org.junit.Test;
 public class RubyHashTest {
 
   private RubyHash<Integer, Integer> rh;
+  private RubyHash<Integer, Integer> frozenRh;
 
   @Before
   public void setUp() {
@@ -56,6 +57,7 @@ public class RubyHashTest {
     rh.put(1, 2);
     rh.put(3, 4);
     rh.put(5, 6);
+    frozenRh = rh(1, 2, 3, 4, 5, 6).freeze();
   }
 
   @Test
@@ -250,16 +252,13 @@ public class RubyHashTest {
 
   @Test(expected = UnsupportedOperationException.class)
   public void testFreeze() {
-    rh.freeze();
-    rh.shift();
+    frozenRh.shift();
   }
 
   @Test
   public void testFrozenʔ() {
     assertFalse(rh.frozenʔ());
-    rh.freeze();
-    rh.freeze();
-    assertTrue(rh.frozenʔ());
+    assertTrue(frozenRh.frozenʔ());
   }
 
   @Test
@@ -389,24 +388,18 @@ public class RubyHashTest {
 
   @Test
   public void testRejectǃWithBlock() {
-    assertEquals(rh(1, 2, 5, 6),
-        rh.rejectǃ(new EntryBooleanBlock<Integer, Integer>() {
+    EntryBooleanBlock<Integer, Integer> block =
+        new EntryBooleanBlock<Integer, Integer>() {
 
           @Override
           public boolean yield(Integer key, Integer value) {
             return key + value == 7;
           }
 
-        }));
+        };
+    assertEquals(rh(1, 2, 5, 6), rh.rejectǃ(block));
     assertEquals(rh(1, 2, 5, 6), rh);
-    assertNull(rh.rejectǃ(new EntryBooleanBlock<Integer, Integer>() {
-
-      @Override
-      public boolean yield(Integer key, Integer value) {
-        return key + value == 7;
-      }
-
-    }));
+    assertNull(rh.rejectǃ(block));
   }
 
   @Test
@@ -490,26 +483,34 @@ public class RubyHashTest {
   // Tests for entry blocks of RubyEnumerable methods
   @Test
   public void testAllʔ() {
-    assertTrue(rh.allʔ(new EntryBooleanBlock<Integer, Integer>() {
+    EntryBooleanBlock<Integer, Integer> block =
+        new EntryBooleanBlock<Integer, Integer>() {
 
-      @Override
-      public boolean yield(Integer key, Integer value) {
-        return key > 0 && value > 0;
-      }
+          @Override
+          public boolean yield(Integer key, Integer value) {
+            return key > 0;
+          }
 
-    }));
+        };
+    assertTrue(rh.allʔ(block));
+    rh = rh(0, 1, 2, 3);
+    assertFalse(rh.allʔ(block));
   }
 
   @Test
   public void testAnyʔ() {
-    assertTrue(rh.anyʔ(new EntryBooleanBlock<Integer, Integer>() {
+    EntryBooleanBlock<Integer, Integer> block =
+        new EntryBooleanBlock<Integer, Integer>() {
 
-      @Override
-      public boolean yield(Integer key, Integer value) {
-        return key > 0 && value > 0;
-      }
+          @Override
+          public boolean yield(Integer key, Integer value) {
+            return key > 0;
+          }
 
-    }));
+        };
+    assertTrue(rh.anyʔ(block));
+    rh = rh(0, -1);
+    assertFalse(rh.anyʔ(block));
   }
 
   @SuppressWarnings("unchecked")
@@ -667,15 +668,18 @@ public class RubyHashTest {
 
   @Test
   public void testFindIndex() {
-    assertEquals(Integer.valueOf(0),
-        rh.findIndex(new EntryBooleanBlock<Integer, Integer>() {
+    EntryBooleanBlock<Integer, Integer> block =
+        new EntryBooleanBlock<Integer, Integer>() {
 
           @Override
           public boolean yield(Integer key, Integer value) {
             return key < 4;
           }
 
-        }));
+        };
+    assertEquals(Integer.valueOf(0), rh.findIndex(block));
+    rh = rh(5, 6);
+    assertNull(rh.findIndex(block));
   }
 
   @Test
@@ -840,14 +844,18 @@ public class RubyHashTest {
 
   @Test
   public void testNoneʔ() {
-    assertTrue(rh.noneʔ(new EntryBooleanBlock<Integer, Integer>() {
+    EntryBooleanBlock<Integer, Integer> block =
+        new EntryBooleanBlock<Integer, Integer>() {
 
-      @Override
-      public boolean yield(Integer key, Integer value) {
-        return value > 10;
-      }
+          @Override
+          public boolean yield(Integer key, Integer value) {
+            return value >= 10;
+          }
 
-    }));
+        };
+    assertTrue(rh.noneʔ(block));
+    rh = rh(9, 10);
+    assertFalse(rh.noneʔ(block));
   }
 
   @Test

@@ -75,14 +75,12 @@ public class RubyIOTest {
 
   @Test(expected = IllegalStateException.class)
   public void testReadOnlyModeException1() {
-    RubyIO io = RubyIO.open(BASE_DIR + "ruby_io_read_only_mode.txt");
-    io.puts("test");
+    RubyIO.open(BASE_DIR + "ruby_io_read_only_mode.txt").puts("test");
   }
 
   @Test(expected = IllegalStateException.class)
   public void testReadOnlyModeException2() {
-    RubyIO io = RubyIO.open(BASE_DIR + "ruby_io_read_only_mode.txt");
-    io.write("test");
+    RubyIO.open(BASE_DIR + "ruby_io_read_only_mode.txt").write("test");
   }
 
   @Test
@@ -131,8 +129,7 @@ public class RubyIOTest {
 
   @Test(expected = IllegalStateException.class)
   public void testWriteOnlyModeException() {
-    io = RubyIO.open(BASE_DIR + "ruby_io_write_only_mode.txt", "w");
-    io.read();
+    RubyIO.open(BASE_DIR + "ruby_io_write_only_mode.txt", "w").read();
   }
 
   @Test
@@ -165,8 +162,7 @@ public class RubyIOTest {
 
   @Test(expected = IllegalStateException.class)
   public void testAppendOnlyModeException() {
-    io = RubyIO.open(BASE_DIR + "ruby_io_append_only_mode.txt", "a");
-    io.read();
+    RubyIO.open(BASE_DIR + "ruby_io_append_only_mode.txt", "a").read();
   }
 
   @Test
@@ -221,8 +217,7 @@ public class RubyIOTest {
 
   @Test(expected = IllegalStateException.class)
   public void testEachLineException() {
-    io = RubyIO.open(BASE_DIR + "ruby_io_write_only_mode.txt", "w");
-    io.eachLine();
+    RubyIO.open(BASE_DIR + "ruby_io_write_only_mode.txt", "w").eachLine();
   }
 
   @Test

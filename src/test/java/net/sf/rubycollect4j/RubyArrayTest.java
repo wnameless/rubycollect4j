@@ -48,12 +48,14 @@ import org.junit.Test;
 public class RubyArrayTest {
 
   private RubyArray<Integer> ra;
+  private RubyArray<Integer> frozenRa;
   private TransformBlock<Integer, Integer> block;
   private Comparator<Integer> comp;
 
   @Before
   public void setUp() throws Exception {
     ra = ra(1, 2, 3, 4);
+    frozenRa = ra(1, 2, 3, 4).freeze();
     block = new TransformBlock<Integer, Integer>() {
 
       @Override
@@ -578,16 +580,13 @@ public class RubyArrayTest {
 
   @Test(expected = UnsupportedOperationException.class)
   public void testFreeze() {
-    ra.freeze();
-    ra.shift();
+    frozenRa.shift();
   }
 
   @Test
   public void testFrozenʔ() {
     assertFalse(ra.frozenʔ());
-    ra.freeze();
-    ra.freeze();
-    assertTrue(ra.frozenʔ());
+    assertTrue(frozenRa.frozenʔ());
   }
 
   @Test
@@ -908,23 +907,17 @@ public class RubyArrayTest {
 
   @Test
   public void testRejectǃWithBlock() {
-    assertEquals(ra(1, 2), ra.rejectǃ(new BooleanBlock<Integer>() {
+    BooleanBlock<Integer> block = new BooleanBlock<Integer>() {
 
       @Override
       public boolean yield(Integer item) {
         return item > 2;
       }
 
-    }));
+    };
+    assertEquals(ra(1, 2), ra.rejectǃ(block));
     assertEquals(ra(1, 2), ra);
-    assertNull(ra.rejectǃ(new BooleanBlock<Integer>() {
-
-      @Override
-      public boolean yield(Integer item) {
-        return item > 2;
-      }
-
-    }));
+    assertNull(ra.rejectǃ(block));
   }
 
   @SuppressWarnings("unchecked")
@@ -1013,22 +1006,17 @@ public class RubyArrayTest {
 
   @Test
   public void testRindexWithBlock() {
-    assertEquals(Integer.valueOf(3), ra.rindex(new BooleanBlock<Integer>() {
+    BooleanBlock<Integer> block = new BooleanBlock<Integer>() {
 
       @Override
       public boolean yield(Integer item) {
         return item > 1;
       }
 
-    }));
-    assertNull(ra.rindex(new BooleanBlock<Integer>() {
-
-      @Override
-      public boolean yield(Integer item) {
-        return item < 1;
-      }
-
-    }));
+    };
+    assertEquals(Integer.valueOf(3), ra.rindex(block));
+    ra = ra(0, -1, -2, -3);
+    assertNull(ra.rindex(block));
   }
 
   @Test
@@ -1109,23 +1097,17 @@ public class RubyArrayTest {
 
   @Test
   public void testSelectǃWithBlock() {
-    assertEquals(ra(1, 3), ra.selectǃ(new BooleanBlock<Integer>() {
+    BooleanBlock<Integer> block = new BooleanBlock<Integer>() {
 
       @Override
       public boolean yield(Integer item) {
         return item % 2 == 1;
       }
 
-    }));
+    };
+    assertEquals(ra(1, 3), ra.selectǃ(block));
     assertEquals(ra(1, 3), ra);
-    assertNull(ra.selectǃ(new BooleanBlock<Integer>() {
-
-      @Override
-      public boolean yield(Integer item) {
-        return item % 2 == 1;
-      }
-
-    }));
+    assertNull(ra.selectǃ(block));
   }
 
   @Test
@@ -1654,7 +1636,7 @@ public class RubyArrayTest {
 
   @SuppressWarnings("unchecked")
   @Test(expected = IllegalArgumentException.class)
-  public void testCompareToException1() {
+  public void testCompareToException() {
     ra(ra(4, 5), ra(1), null).sort();
   }
 
