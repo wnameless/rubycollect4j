@@ -24,7 +24,6 @@ import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 
 import java.util.Iterator;
 import java.util.Map.Entry;
-import java.util.NoSuchElementException;
 
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.block.TransformBlock;
@@ -83,9 +82,6 @@ public final class ChunkIterator<E, K> implements
 
   @Override
   public Entry<K, RubyArray<E>> next() {
-    if (!hasNext())
-      throw new NoSuchElementException();
-
     return nextElement();
   }
 

@@ -25,9 +25,6 @@ import static net.sf.rubycollect4j.RubyCollections.ra;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
-import java.util.NoSuchElementException;
-
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.block.TransformBlock;
 import net.sf.rubycollect4j.util.ComparableEntry;
@@ -90,14 +87,6 @@ public class ChunkIteratorTest {
   @Test
   public void testComparableEntry() {
     assertTrue(iter.next() instanceof ComparableEntry);
-  }
-
-  @Test(expected = NoSuchElementException.class)
-  public void testNextException() {
-    while (iter.hasNext()) {
-      iter.next();
-    }
-    iter.next();
   }
 
   @Test(expected = UnsupportedOperationException.class)
