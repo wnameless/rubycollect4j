@@ -877,7 +877,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Drops the first n elements until a element gets false returned by the
+   * Drops the first n elements until an element gets false returned by the
    * block.
    * 
    * @param block

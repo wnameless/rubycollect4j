@@ -667,13 +667,14 @@ public final class RubyLazyEnumerator<E> implements
     if (!elements.hasNext())
       return newRubyArray(null, null);
 
+    Comparator<E> tryComp = new TryComparator<E>(comp);
     E max = elements.next();
     E min = max;
     while (elements.hasNext()) {
       E item = elements.next();
-      if (comp.compare(max, item) < 0)
+      if (tryComp.compare(max, item) < 0)
         max = item;
-      if (comp.compare(min, item) > 0)
+      if (tryComp.compare(min, item) > 0)
         min = item;
     }
     return newRubyArray(min, max);
@@ -692,13 +693,14 @@ public final class RubyLazyEnumerator<E> implements
     if (!elements.hasNext())
       return newRubyArray(null, null);
 
+    Comparator<S> tryComp = new TryComparator<S>(comp);
     E max = elements.next();
     E min = max;
     while (elements.hasNext()) {
       E item = elements.next();
-      if (comp.compare(block.yield(max), block.yield(item)) < 0)
+      if (tryComp.compare(block.yield(max), block.yield(item)) < 0)
         max = item;
-      if (comp.compare(block.yield(min), block.yield(item)) > 0)
+      if (tryComp.compare(block.yield(min), block.yield(item)) > 0)
         min = item;
     }
     return newRubyArray(min, max);

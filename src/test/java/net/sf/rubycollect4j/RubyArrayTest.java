@@ -121,23 +121,17 @@ public class RubyArrayTest {
 
   @Test
   public void testBsearchWithComparator() {
-    assertNull(ra.bsearch(3, new Comparator<Integer>() {
+    Comparator<Integer> comp = new Comparator<Integer>() {
 
       @Override
       public int compare(Integer arg0, Integer arg1) {
         return arg1 - arg0;
       }
 
-    }));
+    };
+    assertNull(ra.bsearch(3, comp));
     ra = ra(4, 3, 2, 1);
-    assertEquals(Integer.valueOf(3), ra.bsearch(3, new Comparator<Integer>() {
-
-      @Override
-      public int compare(Integer arg0, Integer arg1) {
-        return arg1 - arg0;
-      }
-
-    }));
+    assertEquals(Integer.valueOf(3), ra.bsearch(3, comp));
   }
 
   @Test

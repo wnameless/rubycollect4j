@@ -254,7 +254,7 @@ public final class RubyContract {
     public I dropWhile();
 
     /**
-     * Drops the first n elements until a element gets false returned by the
+     * Drops the first n elements until an element gets false returned by the
      * block. Lazy loading by a RubyLazyEnumerator.
      * 
      * @param block
@@ -423,8 +423,8 @@ public final class RubyContract {
     public I findIndex();
 
     /**
-     * Finds the index of a element which is true returned by the block. Returns
-     * null if nothing found.
+     * Finds the index of an element which is true returned by the block.
+     * Returns null if nothing found.
      * 
      * @param block
      *          to check elements
@@ -1133,7 +1133,7 @@ public final class RubyContract {
     public I takeWhile();
 
     /**
-     * Takes elements until a element gets false returned by the block.
+     * Takes elements until an element gets false returned by the block.
      * 
      * @param block
      *          to filter elements

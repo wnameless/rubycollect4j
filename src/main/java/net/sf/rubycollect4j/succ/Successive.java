@@ -36,7 +36,7 @@ public interface Successive<E> extends Comparator<E> {
    * Returns the successor of given element.
    * 
    * @param curr
-   *          a element
+   *          an element
    * @return the successor of given element
    */
   E succ(E curr);

@@ -931,16 +931,19 @@ public class RubyEnumerableTest {
   @Test
   public void testMinmaxWithComparator() {
     re = ra(2, 1, 4, 3);
-    assertEquals(ra(4, 1), re.minmax(new Comparator<Integer>() {
+    Comparator<Integer> comp = new Comparator<Integer>() {
 
       @Override
       public int compare(Integer o1, Integer o2) {
         return o2 - o1;
       }
 
-    }));
+    };
+    assertEquals(ra(4, 1), re.minmax(comp));
     re = newRubyEnumerator(new ArrayList<Integer>());
-    assertEquals(ra(null, null), re.minmax(null));
+    assertEquals(ra(null, null), re.minmax(comp));
+    re = ra(null, null, null);
+    assertEquals(ra(null, null), re.minmax(comp));
   }
 
   @Test
@@ -959,6 +962,7 @@ public class RubyEnumerableTest {
       public int compare(Integer o1, Integer o2) {
         return o2 - o1;
       }
+
     }, new TransformBlock<String, Integer>() {
 
       @Override
@@ -970,6 +974,16 @@ public class RubyEnumerableTest {
     re = newRubyEnumerator(new ArrayList<String>());
     Comparator<Integer> comp = null;
     assertEquals(ra(null, null), re.minmaxBy(comp, null));
+    re = ra(null, null, null);
+    assertEquals(ra(null, null),
+        re.minmaxBy(comp, new TransformBlock<String, Integer>() {
+
+          @Override
+          public Integer yield(String item) {
+            return null;
+          }
+
+        }));
   }
 
   @Test
