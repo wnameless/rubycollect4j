@@ -25,8 +25,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.NoSuchElementException;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -72,14 +70,6 @@ public class ReverseEachIteratorTest {
     assertEquals(Integer.valueOf(2), iter.next());
     assertEquals(Integer.valueOf(1), iter.next());
     assertFalse(iter.hasNext());
-  }
-
-  @Test(expected = NoSuchElementException.class)
-  public void testNextException() {
-    while (iter.hasNext()) {
-      iter.next();
-    }
-    iter.next();
   }
 
   @Test(expected = UnsupportedOperationException.class)

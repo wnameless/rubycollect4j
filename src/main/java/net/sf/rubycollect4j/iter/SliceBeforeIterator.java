@@ -23,7 +23,6 @@ package net.sf.rubycollect4j.iter;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
 
 import net.sf.rubycollect4j.RubyArray;
@@ -105,9 +104,6 @@ public final class SliceBeforeIterator<E> implements Iterator<RubyArray<E>> {
 
   @Override
   public RubyArray<E> next() {
-    if (!hasNext())
-      throw new NoSuchElementException();
-
     return nextElement();
   }
 

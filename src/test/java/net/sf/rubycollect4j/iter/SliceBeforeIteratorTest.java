@@ -27,7 +27,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
 
 import net.sf.rubycollect4j.block.BooleanBlock;
@@ -103,14 +102,6 @@ public class SliceBeforeIteratorTest {
     assertEquals(ra(1, 2), iter.next());
     assertEquals(ra(3, 4, 5), iter.next());
     assertFalse(iter.hasNext());
-  }
-
-  @Test(expected = NoSuchElementException.class)
-  public void testNextException() {
-    while (iter.hasNext()) {
-      iter.next();
-    }
-    iter.next();
   }
 
   @Test(expected = UnsupportedOperationException.class)
