@@ -182,7 +182,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
 
   /**
    * Uses binary search and a block to find an element. The block needs to
-   * compare elements by its own definition and returns a Integer to show the
+   * compare elements by its own definition and returns an Integer to show the
    * result of comparison (which is much like the result of a Comparator).
    * BinarySearch will be performed based on the comparison result. Assumes this
    * RubyArray is already sorted.

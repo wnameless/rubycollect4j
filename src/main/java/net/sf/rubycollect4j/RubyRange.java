@@ -132,7 +132,7 @@ public final class RubyRange<E> extends RubyEnumerable<E> {
   /**
    * Equivalent to hashCode().
    * 
-   * @return a int
+   * @return the hash code
    */
   public int hash() {
     return hashCode();

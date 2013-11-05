@@ -806,7 +806,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * 
    * @param block
    *          to define elements to be counted
-   * @return a int
+   * @return a total number
    */
   public int count(final EntryBooleanBlock<K, V> block) {
     return count(new BooleanBlock<Entry<K, V>>() {

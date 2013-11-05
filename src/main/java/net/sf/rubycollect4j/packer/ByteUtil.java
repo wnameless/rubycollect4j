@@ -94,10 +94,10 @@ public final class ByteUtil {
   }
 
   /**
-   * Converts a int into a byte array.
+   * Converts an int into a byte array.
    * 
    * @param i
-   *          a int
+   *          an int
    * @return a byte array
    */
   public static byte[] toByteArray(int i) {
@@ -106,10 +106,10 @@ public final class ByteUtil {
   }
 
   /**
-   * Converts a Integer into a byte array.
+   * Converts an Integer into a byte array.
    * 
    * @param i
-   *          a Integer
+   *          an Integer
    * @return a byte array
    */
   public static byte[] toByteArray(Integer i) {
