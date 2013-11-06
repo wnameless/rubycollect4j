@@ -183,5 +183,3 @@ Version 1.6.1
 * Defensive copies are made while constructing CombinationIterator, PermutationIterator, RepeatedCombinationIterator, RepeatedPermutationIterator, ProductIterator and ZipIterator
 
 * RubyRnumerable#sortBy & RubyArray#sortBy! are no longer to do the second sorting on the elements which get the same transformed value
-
-+ Added back RubyEnumerable#sort(comparator) by adding a boolean varargs to avoid the conflict with Java 8 List interface

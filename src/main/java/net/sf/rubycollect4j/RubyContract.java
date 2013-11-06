@@ -1037,18 +1037,15 @@ public final class RubyContract {
      */
     public RubyArray<E> sort();
 
-    /**
-     * Sorts elements of this RubyEnumerable by given Comparator and puts them
-     * into a RubyArray.
-     * 
-     * @param comp
-     *          a Comparator
-     * @param args
-     *          useless arguments, only used to avoid signature conflict with
-     *          Java 8 List interface
-     * @return a RubyArray
-     */
-    public RubyArray<E> sort(Comparator<? super E> comp, boolean... args);
+    // /**
+    // * Sorts elements of this RubyEnumerable by given Comparator and puts them
+    // * into a RubyArray.
+    // *
+    // * @param comp
+    // * a Comparator
+    // * @return a RubyArray
+    // */
+    // public RubyArray<E> sort(Comparator<? super E> comp);
 
     /**
      * Returns an Enumerator of this Enumerable.

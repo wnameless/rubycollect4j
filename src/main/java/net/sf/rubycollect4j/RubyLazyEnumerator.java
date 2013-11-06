@@ -846,15 +846,15 @@ public final class RubyLazyEnumerator<E> implements
     return rubyArray;
   }
 
-  @Override
-  public RubyArray<E> sort(Comparator<? super E> comp, boolean... args) {
-    RubyArray<E> rubyArray = newRubyArray(iter);
-    if (rubyArray.size() <= 1)
-      return rubyArray;
-
-    Collections.sort(rubyArray, new TryComparator<E>(comp));
-    return rubyArray;
-  }
+  // @Override
+  // public RubyArray<E> sort(Comparator<? super E> comp) {
+  // RubyArray<E> rubyArray = newRubyArray(iter);
+  // if (rubyArray.size() <= 1)
+  // return rubyArray;
+  //
+  // Collections.sort(rubyArray, new TryComparator<E>(comp));
+  // return rubyArray;
+  // }
 
   @Override
   public RubyLazyEnumerator<E> sortBy() {
