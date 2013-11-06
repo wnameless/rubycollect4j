@@ -27,8 +27,8 @@ package net.sf.rubycollect4j.block;
  * @param <E>
  *          the type of the elements
  */
-public interface WithObjectBlock<E, S> {
+public interface WithObjectBlock<E, O> {
 
-  public void yield(E item, S o);
+  public void yield(E item, O obj);
 
 }

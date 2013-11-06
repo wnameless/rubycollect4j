@@ -330,16 +330,16 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public <S> RubyLazyEnumerator<Entry<E, S>> eachWithObject(S o) {
-    return newRubyLazyEnumerator(new EachWithObjectIterable<E, S>(iter, o));
+  public <O> RubyLazyEnumerator<Entry<E, O>> eachWithObject(O obj) {
+    return newRubyLazyEnumerator(new EachWithObjectIterable<E, O>(iter, obj));
   }
 
   @Override
-  public <S> S eachWithObject(S o, WithObjectBlock<E, S> block) {
+  public <O> O eachWithObject(O obj, WithObjectBlock<E, O> block) {
     for (E item : iter) {
-      block.yield(item, o);
+      block.yield(item, obj);
     }
-    return o;
+    return obj;
   }
 
   @Override
@@ -509,7 +509,7 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public <S> S inject(S init, WithInitBlock<E, S> block) {
+  public <I> I inject(I init, WithInitBlock<E, I> block) {
     for (E item : iter) {
       init = block.yield(init, item);
     }
@@ -518,11 +518,11 @@ public final class RubyLazyEnumerator<E> implements
 
   @SuppressWarnings("unchecked")
   @Override
-  public <S> S inject(S init, String methodName) {
-    S result = init;
+  public <I> I inject(I init, String methodName) {
+    I result = init;
     Iterator<E> elements = iter.iterator();
     while (elements.hasNext()) {
-      result = (S) RubyObject.send(result, methodName, elements.next());
+      result = (I) RubyObject.send(result, methodName, elements.next());
     }
     return result;
   }

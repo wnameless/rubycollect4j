@@ -28,8 +28,8 @@ package net.sf.rubycollect4j.block;
  * @param <E>
  *          the type of the elements
  */
-public interface WithInitBlock<E, S> {
+public interface WithInitBlock<E, I> {
 
-  public S yield(S memo, E item);
+  public I yield(I init, E item);
 
 }

@@ -49,12 +49,12 @@ public final class RubyContract {
    * 
    * @param <E>
    *          the type of the elements
-   * @param <I>
+   * @param <N>
    *          the type of what kind of Enumerator should be used
    * @param <Z>
    *          the type to define if some methods are lazy or eager loading
    */
-  interface Enumerable<E, I extends Enumerator<?, ?, ?>, Z extends Enumerable<?, ?, ?>>
+  interface Enumerable<E, N extends Enumerator<?, ?, ?>, Z extends Enumerable<?, ?, ?>>
       extends Iterable<E> {
 
     /**
@@ -100,7 +100,7 @@ public final class RubyContract {
      *          to chunk elements
      * @return an Enumerator
      */
-    public <S> I chunk(TransformBlock<E, S> block);
+    public <S> N chunk(TransformBlock<E, S> block);
 
     /**
      * Chunks elements to entries. Keys of entries are the result invoked by the
@@ -115,14 +115,14 @@ public final class RubyContract {
      *          arguments of a Method
      * @return an Enumerator
      */
-    public <S> I chunk(final String methodName, final Object... args);
+    public <S> N chunk(final String methodName, final Object... args);
 
     /**
      * Returns an Enumerator of this Enumerable.
      * 
      * @return an Enumerator
      */
-    public I collect();
+    public N collect();
 
     /**
      * Transforms each element by the block.
@@ -153,7 +153,7 @@ public final class RubyContract {
      * 
      * @return an Enumerator
      */
-    public I collectConcat();
+    public N collectConcat();
 
     /**
      * Turns each element into a RubyArray and then flattens it.
@@ -188,7 +188,7 @@ public final class RubyContract {
      * 
      * @return an Enumerator
      */
-    public I cycle();
+    public N cycle();
 
     /**
      * Generates a sequence from first element to last element, repeat n times.
@@ -197,7 +197,7 @@ public final class RubyContract {
      *          times to repeat
      * @return an Enumerator
      */
-    public I cycle(int n);
+    public N cycle(int n);
 
     /**
      * Generates a sequence from start element to end element, repeat n times.
@@ -224,7 +224,7 @@ public final class RubyContract {
      * 
      * @return an Enumerator
      */
-    public I detect();
+    public N detect();
 
     /**
      * Finds the first element which gets true returned by the block. Returns
@@ -251,7 +251,7 @@ public final class RubyContract {
      * 
      * @return an Enumerator
      */
-    public I dropWhile();
+    public N dropWhile();
 
     /**
      * Drops the first n elements until an element gets false returned by the
@@ -268,7 +268,7 @@ public final class RubyContract {
      * 
      * @return an Enumerator
      */
-    public I each();
+    public N each();
 
     /**
      * Yields each element to the block.
@@ -277,7 +277,7 @@ public final class RubyContract {
      *          to yield each element
      * @return an Enumerable
      */
-    public Enumerable<E, I, Z> each(Block<E> block);
+    public Enumerable<E, N, Z> each(Block<E> block);
 
     /**
      * Iterates each element and puts the element with n - 1 consecutive
@@ -287,7 +287,7 @@ public final class RubyContract {
      *          number of consecutive elements
      * @return an Enumerator
      */
-    public I eachCons(int n);
+    public N eachCons(int n);
 
     /**
      * Iterates each element and yields the element with n - 1 consecutive
@@ -305,7 +305,7 @@ public final class RubyContract {
      * 
      * @return an Enumerator
      */
-    public I eachEntry();
+    public N eachEntry();
 
     /**
      * Yields each element to the block.
@@ -314,7 +314,7 @@ public final class RubyContract {
      *          to yield each element
      * @return an Enumerable
      */
-    public Enumerable<E, I, Z> eachEntry(Block<E> block);
+    public Enumerable<E, N, Z> eachEntry(Block<E> block);
 
     /**
      * Slices elements into RubyArrays with length n.
@@ -323,7 +323,7 @@ public final class RubyContract {
      *          size of each slice
      * @return an Enumerator
      */
-    public I eachSlice(int n);
+    public N eachSlice(int n);
 
     /**
      * Slices elements into RubyArrays with length n and yield them to the
@@ -341,7 +341,7 @@ public final class RubyContract {
      * 
      * @return an Enumerator
      */
-    public I eachWithIndex();
+    public N eachWithIndex();
 
     /**
      * YIterates elements with their indices and yields them to the block.
@@ -350,31 +350,31 @@ public final class RubyContract {
      *          to yield each element
      * @return an Enumerable
      */
-    public Enumerable<E, I, Z> eachWithIndex(WithIndexBlock<E> block);
+    public Enumerable<E, N, Z> eachWithIndex(WithIndexBlock<E> block);
 
     /**
-     * Iterates elements with the object S.
+     * Iterates elements with an object O.
      * 
-     * @param <S>
+     * @param <O>
      *          the type of transformed elements
-     * @param o
-     *          an Object
+     * @param obj
+     *          an object O
      * @return an Enumerator
      */
-    public <S> I eachWithObject(S o);
+    public <O> N eachWithObject(O obj);
 
     /**
-     * Iterates elements with the Object S and yield them to the block.
+     * Iterates elements with an object O and yield them to the block.
      * 
-     * @param <S>
+     * @param <O>
      *          the type of transformed elements
-     * @param o
-     *          any Object
+     * @param obj
+     *          an object O
      * @param block
      *          to yield each Entry
-     * @return the Object S
+     * @return the object O
      */
-    public <S> S eachWithObject(S o, WithObjectBlock<E, S> block);
+    public <O> O eachWithObject(O obj, WithObjectBlock<E, O> block);
 
     /**
      * Puts each element into a RubyArray.
@@ -388,7 +388,7 @@ public final class RubyContract {
      * 
      * @return an Enumerator
      */
-    public I find();
+    public N find();
 
     /**
      * Equivalent to detect().
@@ -404,7 +404,7 @@ public final class RubyContract {
      * 
      * @return an Enumerator
      */
-    public I findAll();
+    public N findAll();
 
     /**
      * Finds all elements which are true returned by the block.
@@ -420,7 +420,7 @@ public final class RubyContract {
      * 
      * @return an Enumerator
      */
-    public I findIndex();
+    public N findIndex();
 
     /**
      * Finds the index of an element which is true returned by the block.
@@ -465,7 +465,7 @@ public final class RubyContract {
      * 
      * @return an Enumerator
      */
-    public I flatMap();
+    public N flatMap();
 
     /**
      * Equivalent to collectConcat().
@@ -523,7 +523,7 @@ public final class RubyContract {
      * 
      * @return an Enumerator
      */
-    public I groupBy();
+    public N groupBy();
 
     /**
      * Puts elements with the same result S returned by the block into a
@@ -575,33 +575,33 @@ public final class RubyContract {
      * Reduces each element with block, then assigns the result back to initial
      * value and so on.
      * 
-     * @param <S>
+     * @param <I>
      *          the type of transformed elements
      * @param init
      *          initial value
      * @param block
      *          to reduce each element
-     * @return an element S
+     * @return an object I
      */
-    public <S> S inject(S init, WithInitBlock<E, S> block);
+    public <I> I inject(I init, WithInitBlock<E, I> block);
 
     /**
      * Reduces each element with initial value by a method of S, then assigns
      * the result back to initial value and so on.
      * 
-     * @param <S>
+     * @param <I>
      *          the type of transformed elements
      * @param init
      *          initial value
      * @param methodName
      *          method used to reduce elements
-     * @return an element S
+     * @return an object I
      * @throws IllegalArgumentException
      *           if method not found
      * @throws RuntimeException
      *           if invocation failed
      */
-    public <S> S inject(S init, String methodName);
+    public <I> I inject(I init, String methodName);
 
     /**
      * Assigns the first element as the initial value. Reduces each element with
@@ -630,7 +630,7 @@ public final class RubyContract {
      * 
      * @return an Enumerator
      */
-    public I map();
+    public N map();
 
     /**
      * Equivalent to collect().
@@ -679,7 +679,7 @@ public final class RubyContract {
      * 
      * @return an Enumerator
      */
-    public I maxBy();
+    public N maxBy();
 
     /**
      * Finds the element which is the max element induced by the Comparator
@@ -754,7 +754,7 @@ public final class RubyContract {
      * 
      * @return an Enumerator
      */
-    public I minBy();
+    public N minBy();
 
     /**
      * Finds the element which is the min element induced by the Comparator
@@ -820,7 +820,7 @@ public final class RubyContract {
      * 
      * @return an Enumerator
      */
-    public I minmaxBy();
+    public N minmaxBy();
 
     /**
      * Finds elements which are the min and max elements induced by the
@@ -905,7 +905,7 @@ public final class RubyContract {
      * 
      * @return an Enumerator
      */
-    public I partition();
+    public N partition();
 
     /**
      * Divides elements into 2 groups by the given block.
@@ -928,28 +928,32 @@ public final class RubyContract {
     /**
      * Equivalent to inject().
      * 
-     * @param <S>
+     * @param <I>
      *          the type of transformed elements
      * @param init
      *          initial value
      * @param block
      *          to reduce each element
-     * @return an element S
+     * @return an object I
      */
-    public <S> S reduce(S init, WithInitBlock<E, S> block);
+    public <I> I reduce(I init, WithInitBlock<E, I> block);
 
     /**
      * Equivalent to inject().
      * 
-     * @param <S>
+     * @param <I>
      *          the type of transformed elements
      * @param init
      *          initial value
      * @param methodName
      *          method used to reduce elements
-     * @return an element S
+     * @return an object I
+     * @throws IllegalArgumentException
+     *           if method not found
+     * @throws RuntimeException
+     *           if invocation failed
      */
-    public <S> S reduce(S init, String methodName);
+    public <I> I reduce(I init, String methodName);
 
     /**
      * Equivalent to inject().
@@ -957,6 +961,10 @@ public final class RubyContract {
      * @param methodName
      *          method used to reduce elements
      * @return an element
+     * @throws IllegalArgumentException
+     *           if method not found
+     * @throws RuntimeException
+     *           if invocation failed
      */
     public E reduce(String methodName);
 
@@ -965,7 +973,7 @@ public final class RubyContract {
      * 
      * @return an Enumerator
      */
-    public I reject();
+    public N reject();
 
     /**
      * Filters all elements which are true returned by the block.
@@ -981,7 +989,7 @@ public final class RubyContract {
      * 
      * @return an Enumerator
      */
-    public I reverseEach();
+    public N reverseEach();
 
     /**
      * Iterates each element reversely by given block.
@@ -990,14 +998,14 @@ public final class RubyContract {
      *          to yield each element
      * @return an Enumerable
      */
-    public Enumerable<E, I, Z> reverseEach(Block<E> block);
+    public Enumerable<E, N, Z> reverseEach(Block<E> block);
 
     /**
      * Returns an Enumerator of this Enumerable.
      * 
      * @return an Enumerator
      */
-    public I select();
+    public N select();
 
     /**
      * Equivalent to findAll().
@@ -1016,7 +1024,7 @@ public final class RubyContract {
      *          to check where to do slice
      * @return an Enumerator
      */
-    public I sliceBefore(BooleanBlock<E> block);
+    public N sliceBefore(BooleanBlock<E> block);
 
     /**
      * Groups elements into RubyArrays and the first element of each RubyArray
@@ -1026,7 +1034,7 @@ public final class RubyContract {
      *          to check where to do slice
      * @return an Enumerator
      */
-    public I sliceBefore(String regex);
+    public N sliceBefore(String regex);
 
     /**
      * Sorts elements of this RubyEnumerable and puts them into a RubyArray.
@@ -1052,7 +1060,7 @@ public final class RubyContract {
      * 
      * @return an Enumerator
      */
-    public I sortBy();
+    public N sortBy();
 
     /**
      * Sorts elements of this RubyEnumerable by the ordering of elements
@@ -1127,7 +1135,7 @@ public final class RubyContract {
      * 
      * @return an Enumerator
      */
-    public I takeWhile();
+    public N takeWhile();
 
     /**
      * Takes elements until an element gets false returned by the block.
@@ -1184,12 +1192,12 @@ public final class RubyContract {
    * 
    * @param <E>
    *          the type of the elements
-   * @param <I>
+   * @param <N>
    *          the type of what kind of Enumerator should be used
    * @param <Z>
    *          the type to define if some methods are lazy or eager loading
    */
-  interface Enumerator<E, I extends Enumerator<?, ?, ?>, Z extends Enumerable<?, ?, ?>>
-      extends Enumerable<E, I, Z>, Iterable<E>, Iterator<E> {}
+  interface Enumerator<E, N extends Enumerator<?, ?, ?>, Z extends Enumerable<?, ?, ?>>
+      extends Enumerable<E, N, Z>, Iterable<E>, Iterator<E> {}
 
 }

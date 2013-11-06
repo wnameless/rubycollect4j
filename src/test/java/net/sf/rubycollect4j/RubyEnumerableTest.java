@@ -480,8 +480,8 @@ public class RubyEnumerableTest {
         re.eachWithObject(obj, new WithObjectBlock<Integer, Long[]>() {
 
           @Override
-          public void yield(Integer item, Long[] o) {
-            o[0] += item;
+          public void yield(Integer item, Long[] obj) {
+            obj[0] += item;
           }
 
         })[0]);

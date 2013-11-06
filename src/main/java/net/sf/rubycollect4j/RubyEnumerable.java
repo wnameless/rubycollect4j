@@ -255,13 +255,14 @@ public abstract class RubyEnumerable<E> implements
   }
 
   @Override
-  public <S> RubyEnumerator<Entry<E, S>> eachWithObject(S o) {
-    return newRubyEnumerator(new EachWithObjectIterable<E, S>(getIterable(), o));
+  public <O> RubyEnumerator<Entry<E, O>> eachWithObject(O obj) {
+    return newRubyEnumerator(new EachWithObjectIterable<E, O>(getIterable(),
+        obj));
   }
 
   @Override
-  public <S> S eachWithObject(S o, WithObjectBlock<E, S> block) {
-    return newRubyLazyEnumerator(getIterable()).eachWithObject(o, block);
+  public <O> O eachWithObject(O obj, WithObjectBlock<E, O> block) {
+    return newRubyLazyEnumerator(getIterable()).eachWithObject(obj, block);
   }
 
   @Override
@@ -374,12 +375,12 @@ public abstract class RubyEnumerable<E> implements
   }
 
   @Override
-  public <S> S inject(S init, WithInitBlock<E, S> block) {
+  public <I> I inject(I init, WithInitBlock<E, I> block) {
     return newRubyLazyEnumerator(getIterable()).inject(init, block);
   }
 
   @Override
-  public <S> S inject(S init, String methodName) {
+  public <I> I inject(I init, String methodName) {
     return newRubyLazyEnumerator(getIterable()).inject(init, methodName);
   }
 
@@ -540,12 +541,12 @@ public abstract class RubyEnumerable<E> implements
   }
 
   @Override
-  public <S> S reduce(S init, WithInitBlock<E, S> block) {
+  public <I> I reduce(I init, WithInitBlock<E, I> block) {
     return newRubyLazyEnumerator(getIterable()).reduce(init, block);
   }
 
   @Override
-  public <S> S reduce(S init, String methodName) {
+  public <I> I reduce(I init, String methodName) {
     return newRubyLazyEnumerator(getIterable()).reduce(init, methodName);
   }
 
