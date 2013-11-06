@@ -38,7 +38,7 @@ public class RubyRangeTest {
   @Test
   public void testConstructor() {
     RubyRange<String> range =
-        new RubyRange<String>(StringSuccessor.INSTANCE, "a", "z");
+        new RubyRange<String>(StringSuccessor.getInstance(), "a", "z");
     assertTrue(range instanceof RubyRange);
   }
 
@@ -49,12 +49,12 @@ public class RubyRangeTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testConstructorWithNullStartPoint() {
-    new RubyRange<String>(StringSuccessor.INSTANCE, null, "z");
+    new RubyRange<String>(StringSuccessor.getInstance(), null, "z");
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testConstructorWithNullEndPoint() {
-    new RubyRange<String>(StringSuccessor.INSTANCE, "a", null);
+    new RubyRange<String>(StringSuccessor.getInstance(), "a", null);
   }
 
   @Test

@@ -26,9 +26,20 @@ package net.sf.rubycollect4j.succ;
  * object.
  * 
  */
-public enum IntegerSuccessor implements Successive<Integer> {
+public final class IntegerSuccessor implements Successive<Integer> {
 
-  INSTANCE;
+  private static final IntegerSuccessor INSTANCE = new IntegerSuccessor();
+
+  private IntegerSuccessor() {}
+
+  /**
+   * Returns an IntegerSuccessor.
+   * 
+   * @return an IntegerSuccessor
+   */
+  public static IntegerSuccessor getInstance() {
+    return IntegerSuccessor.INSTANCE;
+  }
 
   @Override
   public Integer succ(Integer curr) {

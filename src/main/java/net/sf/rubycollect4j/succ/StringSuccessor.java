@@ -32,9 +32,20 @@ import java.util.List;
  * on those numeric values.
  * 
  */
-public enum StringSuccessor implements Successive<String> {
+public final class StringSuccessor implements Successive<String> {
 
-  INSTANCE;
+  private static final StringSuccessor INSTANCE = new StringSuccessor();
+
+  private StringSuccessor() {}
+
+  /**
+   * Returns a StringSuccessor.
+   * 
+   * @return a StringSuccessor
+   */
+  public static StringSuccessor getInstance() {
+    return StringSuccessor.INSTANCE;
+  }
 
   @Override
   public String succ(String curr) {

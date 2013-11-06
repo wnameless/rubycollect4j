@@ -33,7 +33,7 @@ public class RangeIterableTest {
 
   @Before
   public void setUp() throws Exception {
-    iter = new RangeIterable<Integer>(IntegerSuccessor.INSTANCE, 1, 3);
+    iter = new RangeIterable<Integer>(IntegerSuccessor.getInstance(), 1, 3);
   }
 
   @Test
@@ -48,12 +48,12 @@ public class RangeIterableTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    new RangeIterable<Integer>(IntegerSuccessor.INSTANCE, null, 3);
+    new RangeIterable<Integer>(IntegerSuccessor.getInstance(), null, 3);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException3() {
-    new RangeIterable<Integer>(IntegerSuccessor.INSTANCE, 1, null);
+    new RangeIterable<Integer>(IntegerSuccessor.getInstance(), 1, null);
   }
 
   @Test

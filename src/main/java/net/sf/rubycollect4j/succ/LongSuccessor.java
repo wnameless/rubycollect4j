@@ -26,9 +26,20 @@ package net.sf.rubycollect4j.succ;
  * object.
  * 
  */
-public enum LongSuccessor implements Successive<Long> {
+public final class LongSuccessor implements Successive<Long> {
 
-  INSTANCE;
+  private static final LongSuccessor INSTANCE = new LongSuccessor();
+
+  private LongSuccessor() {}
+
+  /**
+   * Returns a LongSuccessor.
+   * 
+   * @return a LongSuccessor
+   */
+  public static LongSuccessor getInstance() {
+    return LongSuccessor.INSTANCE;
+  }
 
   @Override
   public Long succ(Long curr) {

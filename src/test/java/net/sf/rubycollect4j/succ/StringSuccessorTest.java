@@ -27,11 +27,11 @@ import org.junit.Test;
 
 public class StringSuccessorTest {
 
-  private StringSuccessor successor = StringSuccessor.INSTANCE;
+  private StringSuccessor successor = StringSuccessor.getInstance();
 
   @Test
   public void testSingleton() {
-    assertSame(StringSuccessor.INSTANCE, successor);
+    assertSame(StringSuccessor.getInstance(), successor);
   }
 
   @Test

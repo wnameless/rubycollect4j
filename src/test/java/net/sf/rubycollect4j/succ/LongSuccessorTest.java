@@ -27,11 +27,11 @@ import org.junit.Test;
 
 public class LongSuccessorTest {
 
-  private LongSuccessor successor = LongSuccessor.INSTANCE;
+  private LongSuccessor successor = LongSuccessor.getInstance();
 
   @Test
   public void testSingleton() {
-    assertSame(LongSuccessor.INSTANCE, successor);
+    assertSame(LongSuccessor.getInstance(), successor);
   }
 
   @Test
