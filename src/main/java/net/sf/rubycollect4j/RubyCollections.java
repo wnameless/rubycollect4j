@@ -1871,14 +1871,14 @@ public final class RubyCollections {
   }
 
   /**
-   * Turns a List of Entry into a RubyHash.
+   * Turns a List of Entries into a RubyHash.
    * 
    * @param <K>
    *          the type of the key elements
    * @param <V>
    *          the type of the value elements
    * @param list
-   *          a List of Entry
+   *          a List of Entries
    * @return a RubyHash
    */
   public static <K, V> RubyHash<K, V> Hash(List<? extends Entry<K, V>> list) {
@@ -1890,7 +1890,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Turns a List of List into a RubyHash.
+   * Turns a RubyArray of Lists into a RubyHash.
    * 
    * @param <E>
    *          the type of the elements

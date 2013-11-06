@@ -28,6 +28,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
+import java.util.Map;
 
 import net.sf.rubycollect4j.util.ComparableEntry;
 
@@ -38,13 +39,14 @@ public class OrderedEntrySetIteratorTest {
 
   private OrderedEntrySetIterator<String, Integer> setIter;
   private List<String> list;
+  private Map<String, Integer> map;
 
   @Before
   public void setUp() throws Exception {
     list = ra("a", "b", "c");
+    map = rh("c", 3, "b", 2, "a", 1);
     setIter =
-        new OrderedEntrySetIterator<String, Integer>(list.iterator(), rh("c",
-            3, "b", 2, "a", 1));
+        new OrderedEntrySetIterator<String, Integer>(list.iterator(), map);
   }
 
   @Test
@@ -54,8 +56,7 @@ public class OrderedEntrySetIteratorTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException1() {
-    new OrderedEntrySetIterator<String, Integer>(null, rh("c", 3, "b", 2, "a",
-        1));
+    new OrderedEntrySetIterator<String, Integer>(null, map);
   }
 
   @Test(expected = NullPointerException.class)

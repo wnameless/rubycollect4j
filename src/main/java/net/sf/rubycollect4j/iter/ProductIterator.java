@@ -23,7 +23,6 @@ package net.sf.rubycollect4j.iter;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -46,7 +45,7 @@ public final class ProductIterator<E> implements Iterator<RubyArray<E>> {
    * Creates a ProductIterator.
    * 
    * @param lists
-   *          a List of List
+   *          a List of Lists
    * @throws NullPointerException
    *           if lists is null
    */
@@ -62,15 +61,15 @@ public final class ProductIterator<E> implements Iterator<RubyArray<E>> {
   }
 
   private RubyArray<E> nextElement() {
-    RubyArray<E> combination = newRubyArray();
+    RubyArray<E> product = newRubyArray();
     for (int i = 0; i < counter.length; i++) {
-      combination.add(lists.get(i).get(counter[i]));
+      product.add(lists.get(i).get(counter[i]));
     }
-    increaseCounters();
-    return combination;
+    increaseCounter();
+    return product;
   }
 
-  private void increaseCounters() {
+  private void increaseCounter() {
     for (int i = counter.length - 1; i >= 0; i--) {
       if (counter[i] < lists.get(i).size() - 1) {
         counter[i]++;
@@ -86,10 +85,10 @@ public final class ProductIterator<E> implements Iterator<RubyArray<E>> {
 
   private boolean isLooping() {
     for (int i = 0; i < counter.length; i++) {
-      if (lists.get(i).isEmpty())
+      if (lists.get(i).isEmpty() || counter[i] == -1)
         return false;
     }
-    return Arrays.binarySearch(counter, -1) == -1;
+    return true;
   }
 
   @Override

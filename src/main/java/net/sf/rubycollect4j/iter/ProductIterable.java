@@ -44,7 +44,7 @@ public final class ProductIterable<E> implements Iterable<RubyArray<E>> {
    * @param self
    *          a List
    * @param others
-   *          a List of List
+   *          a List of Lists
    * @throws NullPointerException
    *           if self or others is null
    */

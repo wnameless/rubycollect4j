@@ -26,7 +26,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.sf.rubycollect4j.util.ComparableEntry;
@@ -38,13 +38,15 @@ public class EachWithObjectIteratorTest {
 
   private EachWithObjectIterator<Integer, List<Integer>> iter;
   private List<Integer> list;
+  private List<Integer> emptyList;
 
   @Before
   public void setUp() throws Exception {
+    emptyList = Collections.emptyList();
     list = ra(1, 2, 3);
     iter =
         new EachWithObjectIterator<Integer, List<Integer>>(list.iterator(),
-            new ArrayList<Integer>());
+            emptyList);
   }
 
   @Test
@@ -54,8 +56,7 @@ public class EachWithObjectIteratorTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException1() {
-    new EachWithObjectIterator<Integer, List<Integer>>(null,
-        new ArrayList<Integer>());
+    new EachWithObjectIterator<Integer, List<Integer>>(null, emptyList);
   }
 
   @Test(expected = NullPointerException.class)
@@ -74,9 +75,9 @@ public class EachWithObjectIteratorTest {
 
   @Test
   public void testNext() {
-    assertEquals(hp(1, new ArrayList<Integer>()), iter.next());
-    assertEquals(hp(2, new ArrayList<Integer>()), iter.next());
-    assertEquals(hp(3, new ArrayList<Integer>()), iter.next());
+    assertEquals(hp(1, emptyList), iter.next());
+    assertEquals(hp(2, emptyList), iter.next());
+    assertEquals(hp(3, emptyList), iter.next());
     assertFalse(iter.hasNext());
   }
 

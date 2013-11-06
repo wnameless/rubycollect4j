@@ -78,7 +78,7 @@ public final class RepeatedCombinationIterator<E> implements
   private RubyArray<E> nextElement() {
     RubyArray<E> c = newRubyArray();
     for (int i = 0; i < counter.length; i++) {
-      c.push(list.get(counter[i]));
+      c.add(list.get(counter[i]));
     }
     if (Arrays.equals(counter, endStatus))
       hasMore = false;
@@ -92,7 +92,7 @@ public final class RepeatedCombinationIterator<E> implements
       if (counter[i] < end) {
         counter[i]++;
         break;
-      } else if (i != 0 && counter[i - 1] != end) {
+      } else if (counter[i - 1] != end) {
         counter[i - 1]++;
         for (int j = i; j < counter.length; j++) {
           counter[j] = counter[i - 1];

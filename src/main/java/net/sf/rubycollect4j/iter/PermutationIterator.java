@@ -88,7 +88,7 @@ public final class PermutationIterator<E> implements Iterator<RubyArray<E>> {
   private RubyArray<E> nextElement() {
     RubyArray<E> c = newRubyArray();
     for (int i = 0; i < counter.length; i++) {
-      c.push(list.get(counter[i]));
+      c.add(list.get(counter[i]));
     }
     if (Arrays.equals(counter, endStatus))
       hasMore = false;
@@ -103,7 +103,7 @@ public final class PermutationIterator<E> implements Iterator<RubyArray<E>> {
       if (next != -1) {
         counter[i] = next;
         break;
-      } else if (i != 0) {
+      } else {
         int pre = getHigherIndex(i - 1);
         if (pre != -1) {
           counter[i - 1] = pre;

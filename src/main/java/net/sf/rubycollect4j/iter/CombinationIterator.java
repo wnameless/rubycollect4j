@@ -87,7 +87,7 @@ public class CombinationIterator<E> implements Iterator<RubyArray<E>> {
   private RubyArray<E> nextElement() {
     RubyArray<E> c = newRubyArray();
     for (int i = 0; i < counter.length; i++) {
-      c.push(list.get(counter[i]));
+      c.add(list.get(counter[i]));
     }
     if (Arrays.equals(counter, endStatus))
       hasMore = false;
@@ -101,8 +101,7 @@ public class CombinationIterator<E> implements Iterator<RubyArray<E>> {
       if (counter[i] < list.size() - (counter.length - i)) {
         counter[i]++;
         break;
-      } else if (i != 0
-          && counter[i - 1] != list.size() - (counter.length - i + 1)) {
+      } else if (counter[i - 1] != list.size() - (counter.length - i + 1)) {
         counter[i - 1]++;
         for (int j = i; j < counter.length; j++) {
           counter[j] = counter[j - 1] + 1;

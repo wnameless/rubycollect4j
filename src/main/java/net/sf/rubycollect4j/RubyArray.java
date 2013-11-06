@@ -1065,10 +1065,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Generates the production of self with List of Lists.
+   * Generates the production of self with a List of Lists.
    * 
    * @param others
-   *          List of Lists
+   *          a List of Lists
    * @return a new RubyArray of RubyArrays
    */
   public RubyArray<RubyArray<E>> product(List<? extends List<E>> others) {
