@@ -684,8 +684,8 @@ public class RubyEnumerableTest {
         re.inject(Long.valueOf(10), new WithInitBlock<Integer, Long>() {
 
           @Override
-          public Long yield(Long memo, Integer item) {
-            return memo + item;
+          public Long yield(Long init, Integer item) {
+            return init + item;
           }
 
         }));
@@ -1099,8 +1099,8 @@ public class RubyEnumerableTest {
         re.reduce(Long.valueOf(10), new WithInitBlock<Integer, Long>() {
 
           @Override
-          public Long yield(Long memo, Integer item) {
-            return memo + item;
+          public Long yield(Long init, Integer item) {
+            return init + item;
           }
 
         }));
