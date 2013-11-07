@@ -138,6 +138,7 @@ public final class RubyCollections {
    *          varargs
    * @return a new RubyArray
    */
+  @SafeVarargs
   public static <E> RubyArray<E> newRubyArray(E... elements) {
     List<E> list = new ArrayList<E>();
     for (E item : elements) {
@@ -389,6 +390,7 @@ public final class RubyCollections {
    *          elements
    * @return a RubyArray
    */
+  @SafeVarargs
   public static <E> RubyArray<E> ra(E... args) {
     return newRubyArray(args);
   }
