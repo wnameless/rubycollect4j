@@ -353,7 +353,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   /**
    * Equivalent to hashCode().
    * 
-   * @return an int
+   * @return the hash code
    */
   public int hash() {
     return hashCode();
@@ -451,7 +451,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   /**
    * Equivalent to size().
    * 
-   * @return an int
+   * @return the size of this RubyHash
    */
   public int length() {
     return map.size();

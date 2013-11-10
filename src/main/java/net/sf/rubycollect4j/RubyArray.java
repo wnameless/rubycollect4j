@@ -310,18 +310,18 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Returns the number of target element in this RubyArray.
+   * Returns a total number of the target element in this RubyArray.
    * 
    * @param target
    *          to be counted
-   * @return an int
+   * @return the total number
    */
   public int count(E target) {
     return Collections.frequency(list, target);
   }
 
   /**
-   * Deletes all elements which equals to target. Return null if nothing is
+   * Deletes all elements which equal to the target. Return null if nothing is
    * deleted.
    * 
    * @param target
@@ -694,7 +694,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   /**
    * Equivalent to hashCode().
    * 
-   * @return an int
+   * @return the hash code
    */
   public int hash() {
     return hashCode();
@@ -881,7 +881,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   /**
    * Equivalent to size().
    * 
-   * @return an int
+   * @return the size of this RubyArray
    */
   public int length() {
     return list.size();

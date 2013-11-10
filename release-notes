@@ -183,3 +183,8 @@ Version 1.6.1
 * Defensive copies are made while constructing CombinationIterator, PermutationIterator, RepeatedCombinationIterator, RepeatedPermutationIterator, ProductIterator and ZipIterator
 
 * RubyRnumerable#sortBy & RubyArray#sortBy! are no longer to do the second sorting on the elements which get the same transformed value
+
+
+Version 1.6.2
+
++ Added @SafeVarargs annotations

@@ -169,7 +169,7 @@ public final class RubyContract {
     /**
      * Counts the elements.
      * 
-     * @return a total number
+     * @return the total number
      */
     public int count();
 
@@ -178,7 +178,7 @@ public final class RubyContract {
      * 
      * @param block
      *          to define elements to be counted
-     * @return a total number
+     * @return the total number
      */
     public int count(BooleanBlock<E> block);
 
