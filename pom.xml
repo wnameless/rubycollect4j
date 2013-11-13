@@ -16,6 +16,7 @@
 	<name>rubycollect4j</name>
 	<description>Ruby Collections for Java</description>
 	<url>http://rubycollect4j.sf.net</url>
+
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
@@ -24,11 +25,13 @@
 			<comments>A business-friendly OSS license</comments>
 		</license>
 	</licenses>
+
 	<scm>
 		<connection>scm:git:git@github.com:wnameless/rubycollect4j.git</connection>
 		<developerConnection>scm:git:git@github.com:wnameless/rubycollect4j.git</developerConnection>
 		<url>git@github.com:wnameless/rubycollect4j.git</url>
 	</scm>
+
 	<developers>
 		<developer>
 			<id>wnameless</id>
@@ -36,6 +39,7 @@
 			<email>wnameless@gmail.com</email>
 		</developer>
 	</developers>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -62,6 +66,34 @@
 				</executions>
 			</plugin>
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-enforcer-plugin</artifactId>
+										<versionRange>[1.0.0,)</versionRange>
+										<goals>
+											<goal>enforce</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 
 	<properties>
