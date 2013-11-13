@@ -423,8 +423,8 @@ public final class RubyContract {
     public N findIndex();
 
     /**
-     * Finds the index of an element which is true returned by the block.
-     * Returns null if nothing found.
+     * Finds the first index of an element which gets true returned by the
+     * block. Returns null if nothing found.
      * 
      * @param block
      *          to check elements

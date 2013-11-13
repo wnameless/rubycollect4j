@@ -189,8 +189,8 @@ public final class RubyCollections {
       boolean defensiveCopy) {
     if (defensiveCopy)
       return new RubyHash<K, V>(new LinkedHashMap<K, V>(map));
-
-    return new RubyHash<K, V>(map);
+    else
+      return new RubyHash<K, V>(map);
   }
 
   /**

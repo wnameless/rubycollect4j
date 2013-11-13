@@ -701,19 +701,18 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Finds the index of the element which is true returned by the block.
+   * Finds the first index of an element which gets true returned by the block.
    * 
    * @param block
-   *          to filter the target
+   *          to filter elements
    * @return an element or null
    */
   public Integer index(BooleanBlock<E> block) {
-    Integer index = null;
     for (int i = 0; i < list.size(); i++) {
       if (block.yield(list.get(i)))
         return i;
     }
-    return index;
+    return null;
   }
 
   /**
@@ -729,7 +728,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Starts to insert elements to this RubyArray from the index.
+   * Starts to insert elements to this RubyArray from given index.
    * 
    * @param index
    *          where to begin
@@ -1271,7 +1270,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Finds the last index of the element which is true returned by the block.
+   * Finds the last index of the element which gets true returned by the block.
    * 
    * @param block
    *          to filter the element
