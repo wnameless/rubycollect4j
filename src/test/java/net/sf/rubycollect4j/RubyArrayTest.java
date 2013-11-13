@@ -1634,10 +1634,9 @@ public class RubyArrayTest {
             .sort());
   }
 
-  @SuppressWarnings("unchecked")
   @Test(expected = IllegalArgumentException.class)
   public void testCompareToException() {
-    ra(ra(4, 5), ra(1), null).sort();
+    ra(4, 5).compareTo(null);
   }
 
 }

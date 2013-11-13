@@ -1277,12 +1277,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * @return an element or null
    */
   public Integer rindex(BooleanBlock<E> block) {
-    Integer index = null;
     for (int i = list.size() - 1; i >= 0; i--) {
       if (block.yield(list.get(i)))
         return i;
     }
-    return index;
+    return null;
   }
 
   /**
