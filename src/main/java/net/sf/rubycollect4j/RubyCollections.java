@@ -24,6 +24,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -63,8 +64,7 @@ public final class RubyCollections {
    * @return a new RubyArray
    */
   public static <E> RubyArray<E> newRubyArray() {
-    List<E> list = new ArrayList<E>();
-    return new RubyArray<E>(list);
+    return new RubyArray<E>();
   }
 
   /**
@@ -90,11 +90,11 @@ public final class RubyCollections {
    * @return a new RubyArray
    */
   public static <E> RubyArray<E> newRubyArray(Iterator<E> iter) {
-    List<E> list = new ArrayList<E>();
+    RubyArray<E> rubyArray = new RubyArray<E>();
     while (iter.hasNext()) {
-      list.add(iter.next());
+      rubyArray.add(iter.next());
     }
-    return new RubyArray<E>(list);
+    return rubyArray;
   }
 
   /**
@@ -140,11 +140,7 @@ public final class RubyCollections {
    */
   @SafeVarargs
   public static <E> RubyArray<E> newRubyArray(E... elements) {
-    List<E> list = new ArrayList<E>();
-    for (E item : elements) {
-      list.add(item);
-    }
-    return new RubyArray<E>(list);
+    return new RubyArray<E>(new ArrayList<E>(Arrays.asList(elements)));
   }
 
   /**
@@ -157,8 +153,7 @@ public final class RubyCollections {
    * @return a new RubyHash
    */
   public static <K, V> RubyHash<K, V> newRubyHash() {
-    LinkedHashMap<K, V> linkedHashMap = new LinkedHashMap<K, V>();
-    return new RubyHash<K, V>(linkedHashMap);
+    return new RubyHash<K, V>();
   }
 
   /**
@@ -173,8 +168,7 @@ public final class RubyCollections {
    * @return a new RubyHash
    */
   public static <K, V> RubyHash<K, V> newRubyHash(Map<K, V> map) {
-    LinkedHashMap<K, V> linkedHashMap = new LinkedHashMap<K, V>(map);
-    return new RubyHash<K, V>(linkedHashMap);
+    return new RubyHash<K, V>(new LinkedHashMap<K, V>(map));
   }
 
   /**
@@ -193,10 +187,9 @@ public final class RubyCollections {
    */
   public static <K, V> RubyHash<K, V> newRubyHash(LinkedHashMap<K, V> map,
       boolean defensiveCopy) {
-    if (defensiveCopy) {
-      LinkedHashMap<K, V> linkedHashMap = new LinkedHashMap<K, V>(map);
-      return new RubyHash<K, V>(linkedHashMap);
-    }
+    if (defensiveCopy)
+      return new RubyHash<K, V>(new LinkedHashMap<K, V>(map));
+
     return new RubyHash<K, V>(map);
   }
 
@@ -294,10 +287,12 @@ public final class RubyCollections {
    */
   public static RubyRange<Double> newRubyRange(double startPoint,
       double endPoint) {
-    String doubleStr = String.valueOf(startPoint);
-    int precision = doubleStr.length() - doubleStr.lastIndexOf('.') - 1;
-    return new RubyRange<Double>(new DoubleSuccessor(precision), startPoint,
-        endPoint);
+    String startStr = String.valueOf(startPoint);
+    String endStr = String.valueOf(endPoint);
+    int startPrecision = startStr.length() - startStr.lastIndexOf('.') - 1;
+    int endPrecision = endStr.length() - endStr.lastIndexOf('.') - 1;
+    return new RubyRange<Double>(new DoubleSuccessor(Math.max(startPrecision,
+        endPrecision)), startPoint, endPoint);
   }
 
   /**

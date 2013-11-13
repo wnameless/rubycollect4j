@@ -277,27 +277,29 @@ public class RubyCollectionsTest {
   }
 
   @Test
-  public void testRange1() {
+  public void testStringRange() {
     assertTrue(range("A", "Z") instanceof RubyRange);
   }
 
   @Test
-  public void testRange2() {
+  public void testIntegerRange() {
     assertTrue(range(1, 100) instanceof RubyRange);
   }
 
   @Test
-  public void testRange3() {
+  public void testLongRange() {
     assertTrue(range(1L, 100L) instanceof RubyRange);
   }
 
   @Test
-  public void testRange4() {
+  public void testDoubleRange() {
     assertTrue(range(1.0, 100.0) instanceof RubyRange);
+    assertEquals(ra(1.48, 1.49, 1.50), range(1.48, 1.5).toA());
+    assertEquals(ra(1.50, 1.51, 1.52), range(1.5, 1.52).toA());
   }
 
   @Test
-  public void testRange5() {
+  public void testDateRange() {
     assertTrue(range(RubyDate.yesterday(), RubyDate.tomorrow()) instanceof RubyRange);
   }
 
