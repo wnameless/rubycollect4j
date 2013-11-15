@@ -578,15 +578,25 @@ public class RubyArrayTest {
     assertEquals(ra(null, null, 1, 2, 3, 4, 5, 6), layer3WithNull.flatten());
   }
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test
   public void testFreeze() {
-    frozenRa.shift();
+    ra.freeze();
+    assertSame(ra, ra.freeze());
+    assertTrue(ra.frozenʔ());
+    frozenRa.freeze();
+    assertSame(frozenRa, frozenRa.freeze());
+    assertTrue(frozenRa.frozenʔ());
   }
 
   @Test
   public void testFrozenʔ() {
     assertFalse(ra.frozenʔ());
     assertTrue(frozenRa.frozenʔ());
+  }
+
+  @Test(expected = UnsupportedOperationException.class)
+  public void testFrozenException() {
+    frozenRa.shift();
   }
 
   @Test
