@@ -372,7 +372,7 @@ public final class ByteUtil {
    *          used to be converted
    * @return an UTF String
    * @throws IllegalArgumentException
-   *           if codePoint less than 0 or codePoint greater than 0X10FFFF
+   *           if codePoint is less than 0 or greater than 0X10FFFF
    */
   public static String toUTF(byte[] bytes) {
     int codePoint = ByteBuffer.wrap(bytes).getInt();

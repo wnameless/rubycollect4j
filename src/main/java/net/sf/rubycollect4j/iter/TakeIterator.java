@@ -45,7 +45,7 @@ public final class TakeIterator<E> implements Iterator<E> {
    * @throws NullPointerException
    *           if iter is null
    * @throws IllegalArgumentException
-   *           if n less than 0
+   *           if n is less than 0
    */
   public TakeIterator(Iterator<E> iter, int n) {
     if (iter == null)

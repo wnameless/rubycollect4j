@@ -48,7 +48,7 @@ public final class EachSliceIterable<E> implements Iterable<RubyArray<E>> {
    * @throws NullPointerException
    *           if iter is null
    * @throws IllegalArgumentException
-   *           if size less than or equal to 0
+   *           if size is less than or equal to 0
    */
   public EachSliceIterable(Iterable<E> iter, int size) {
     if (iter == null)

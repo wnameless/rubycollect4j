@@ -736,7 +736,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    *          elements to be inserted
    * @return this RubyArray
    * @throws IndexOutOfBoundsException
-   *           if index less than -size
+   *           if index is less than -size
    */
   public RubyArray<E> insert(int index, E... args) {
     if (index < -list.size())
@@ -745,20 +745,14 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
 
     if (index < 0) {
       int relIndex = list.size() + index + 1;
-      for (int i = args.length - 1; i >= 0; i--) {
-        list.add(relIndex, args[i]);
-      }
+      list.addAll(relIndex, Arrays.asList(args));
     } else if (index <= list.size()) {
-      for (int i = args.length - 1; i >= 0; i--) {
-        list.add(index, args[i]);
-      }
+      list.addAll(index, Arrays.asList(args));
     } else {
       while (index > list.size()) {
         list.add(null);
       }
-      for (int i = args.length - 1; i >= 0; i--) {
-        list.add(index - args.length + 2, args[i]);
-      }
+      list.addAll(index, Arrays.asList(args));
     }
     return this;
   }
@@ -917,7 +911,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    *          multiply n times
    * @return a new RubyArray
    * @throws IllegalArgumentException
-   *           if n less than 0
+   *           if n is less than 0
    */
   public RubyArray<E> multiply(int n) {
     if (n < 0)
@@ -1038,7 +1032,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    *          number of elements
    * @return a new RubyArray
    * @throws IllegalArgumentException
-   *           if n less than 0
+   *           if n is less than 0
    */
   public RubyArray<E> pop(int n) {
     if (n < 0)
@@ -1112,9 +1106,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * @return this RubyArray
    */
   public RubyArray<E> push(E... items) {
-    for (E item : items) {
-      list.add(item);
-    }
+    list.addAll(Arrays.asList(items));
     return this;
   }
 
@@ -1384,7 +1376,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    *          number of elements
    * @return a new RubyArray
    * @throws IllegalArgumentException
-   *           if n less than 0
+   *           if n is less than 0
    */
   public RubyArray<E> sample(int n) {
     if (n < 0)
@@ -1443,7 +1435,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    *          number of elements
    * @return a new RubyArray
    * @throws IllegalArgumentException
-   *           if n less than 0
+   *           if n is less than 0
    */
   public RubyArray<E> shift(int n) {
     if (n < 0)

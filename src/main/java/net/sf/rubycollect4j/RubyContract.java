@@ -456,7 +456,7 @@ public final class RubyContract {
      *          number of elements
      * @return a RubyArray
      * @throws IllegalArgumentException
-     *           if n less than 0
+     *           if n is less than 0
      */
     public RubyArray<E> first(int n);
 

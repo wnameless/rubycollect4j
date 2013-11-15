@@ -51,7 +51,7 @@ public final class EachConsIterator<E> implements Iterator<RubyArray<E>> {
    * @throws NullPointerException
    *           if iter is null
    * @throws IllegalArgumentException
-   *           if size less than or equal to 0
+   *           if size is less than or equal to 0
    */
   public EachConsIterator(Iterator<E> iter, int size) {
     if (iter == null)
