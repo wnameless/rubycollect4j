@@ -511,10 +511,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * @return this RubyArray
    */
   public RubyArray<E> fill(E item) {
-    for (int i = 0; i < list.size(); i++) {
-      list.set(i, item);
-    }
-    return this;
+    return fill(item, 0);
   }
 
   /**
@@ -526,17 +523,15 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    *          where to begin
    * @return this RubyArray
    */
-  public RubyArray<E> fill(E item, int start) {
-    if (start <= -list.size())
-      return fill(item);
+  public RubyArray<E> fill(final E item, int start) {
+    return fill(start, new TransformBlock<Integer, E>() {
 
-    if (start < 0)
-      start += list.size();
+      @Override
+      public E yield(Integer i) {
+        return item;
+      }
 
-    for (int i = start; i < list.size(); i++) {
-      list.set(i, item);
-    }
-    return this;
+    });
   }
 
   /**
@@ -550,24 +545,15 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    *          of the interval to be filled
    * @return this RubyArray
    */
-  public RubyArray<E> fill(E item, int start, int length) {
-    if (start < 0) {
-      start += list.size();
-      if (start < 0)
-        start = 0;
-    }
-    if (start > list.size()) {
-      for (int i = list.size(); i < start; i++) {
-        list.add(null);
+  public RubyArray<E> fill(final E item, int start, int length) {
+    return fill(start, length, new TransformBlock<Integer, E>() {
+
+      @Override
+      public E yield(Integer i) {
+        return item;
       }
-    }
-    for (int i = start; i < list.size() && i < start + length; i++) {
-      list.set(i, item);
-    }
-    for (int i = list.size(); i < start + length; i++) {
-      list.add(item);
-    }
-    return this;
+
+    });
   }
 
   /**
@@ -578,10 +564,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * @return this RubyArray
    */
   public RubyArray<E> fill(TransformBlock<Integer, E> block) {
-    for (int i = 0; i < list.size(); i++) {
-      list.set(i, block.yield(i));
-    }
-    return this;
+    return fill(0, block);
   }
 
   /**
@@ -601,10 +584,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
     if (start < 0)
       start += list.size();
 
-    for (int i = start; i < list.size(); i++) {
-      list.set(i, block.yield(i));
-    }
-    return this;
+    return fill(start, list.size() - start, block);
   }
 
   /**
