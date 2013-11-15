@@ -770,12 +770,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * @return a String
    */
   public String join() {
-    StringBuilder sb = new StringBuilder();
-    for (E item : list) {
-      if (item != null)
-        sb.append(item.toString());
-    }
-    return sb.toString();
+    return join("");
   }
 
   /**
