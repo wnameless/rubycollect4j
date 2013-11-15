@@ -709,6 +709,11 @@ public class RubyArrayTest {
     assertEquals(ra(), ra.last(2));
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void testLastWithNException() {
+    ra.last(-1);
+  }
+
   @Test
   public void testLength() {
     assertEquals(4, ra.length());
