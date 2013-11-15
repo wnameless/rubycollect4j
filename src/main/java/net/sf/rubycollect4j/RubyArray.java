@@ -1218,8 +1218,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    */
   public RubyArray<E> reverse() {
     RubyArray<E> rubyArray = newRubyArray();
-    for (int i = 0; i < list.size(); i++) {
-      rubyArray.unshift(list.get(i));
+    for (E item : list) {
+      rubyArray.unshift(item);
     }
     return rubyArray;
   }
