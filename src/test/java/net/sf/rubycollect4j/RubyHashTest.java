@@ -250,15 +250,25 @@ public class RubyHashTest {
     assertEquals(ra(hp(1, 2), hp(3, 4), hp(5, 6)), rh.flatten());
   }
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test
   public void testFreeze() {
-    frozenRh.shift();
+    rh.freeze();
+    assertSame(rh, rh.freeze());
+    assertTrue(rh.frozenʔ());
+    frozenRh.freeze();
+    assertSame(frozenRh, frozenRh.freeze());
+    assertTrue(frozenRh.frozenʔ());
   }
 
   @Test
   public void testFrozenʔ() {
     assertFalse(rh.frozenʔ());
     assertTrue(frozenRh.frozenʔ());
+  }
+
+  @Test(expected = UnsupportedOperationException.class)
+  public void testFrozenException() {
+    frozenRh.shift();
   }
 
   @Test
