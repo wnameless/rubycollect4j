@@ -25,13 +25,12 @@ import static java.util.Collections.unmodifiableList;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.IdentityHashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 
 import net.sf.rubycollect4j.iter.OrderedEntrySetIterable;
+import sun.awt.util.IdentityLinkedList;
 
 /**
  * 
@@ -46,7 +45,7 @@ import net.sf.rubycollect4j.iter.OrderedEntrySetIterable;
 public final class LinkedIdentityMap<K, V> implements Map<K, V> {
 
   private final IdentityHashMap<K, V> map = new IdentityHashMap<K, V>();
-  private final LinkedList<K> list = new LinkedList<K>();
+  private final List<K> list = new IdentityLinkedList<K>();
 
   public LinkedIdentityMap() {}
 
@@ -108,16 +107,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
 
   @Override
   public V remove(Object key) {
-    if (map.containsKey(key)) {
-      ListIterator<K> li = list.listIterator();
-      while (li.hasNext()) {
-        K k = li.next();
-        if (k == key) {
-          li.remove();
-          break;
-        }
-      }
-    }
+    list.remove(key);
     return map.remove(key);
   }
 
