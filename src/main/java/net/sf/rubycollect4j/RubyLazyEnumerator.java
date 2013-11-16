@@ -645,24 +645,16 @@ public final class RubyLazyEnumerator<E> implements
     return minmax(null);
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public RubyArray<E> minmax(Comparator<? super E> comp) {
-    Iterator<E> elements = iter.iterator();
-    if (!elements.hasNext())
-      return newRubyArray(null, null);
+    return minmaxBy(comp, new TransformBlock<E, E>() {
 
-    Comparator<E> tryComp = new TryComparator<E>(comp);
-    E max = elements.next();
-    E min = max;
-    while (elements.hasNext()) {
-      E item = elements.next();
-      if (tryComp.compare(max, item) < 0)
-        max = item;
-      if (tryComp.compare(min, item) > 0)
-        min = item;
-    }
-    return newRubyArray(min, max);
+      @Override
+      public E yield(E item) {
+        return item;
+      }
+
+    });
   }
 
   @Override
