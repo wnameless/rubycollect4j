@@ -516,29 +516,28 @@ public final class RubyLazyEnumerator<E> implements
     return init;
   }
 
-  @SuppressWarnings("unchecked")
   @Override
-  public <I> I inject(I init, String methodName) {
-    I result = init;
-    Iterator<E> elements = iter.iterator();
-    while (elements.hasNext()) {
-      result = (I) RubyObject.send(result, methodName, elements.next());
-    }
-    return result;
+  public <I> I inject(I init, final String methodName) {
+    return inject(init, new WithInitBlock<E, I>() {
+
+      @Override
+      public I yield(I init, E item) {
+        return RubyObject.send(init, methodName, item);
+      }
+
+    });
   }
 
-  @SuppressWarnings("unchecked")
   @Override
-  public E inject(String methodName) {
-    E result = null;
-    Iterator<E> elements = iter.iterator();
-    if (elements.hasNext())
-      result = elements.next();
+  public E inject(final String methodName) {
+    return inject(new ReduceBlock<E>() {
 
-    while (elements.hasNext()) {
-      result = (E) RubyObject.send(result, methodName, elements.next());
-    }
-    return result;
+      @Override
+      public E yield(E memo, E item) {
+        return RubyObject.send(memo, methodName, item);
+      }
+
+    });
   }
 
   @Override

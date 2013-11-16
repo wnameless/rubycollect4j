@@ -289,11 +289,13 @@ public final class RubyFile extends RubyIO {
 
     RubyArray<String> ra = newRubyArray(files);
     for (int i = 1; i < ra.size(); i++) {
-      while (ra.get(i - 1).endsWith(pathSeprator)) {
-        ra.set(i - 1, ra.get(i - 1).substring(0, ra.get(i - 1).length() - 1));
+      int predecessor = i - 1;
+      while (ra.get(predecessor).endsWith(pathSeprator)) {
+        ra.set(predecessor,
+            ra.get(predecessor).substring(0, ra.get(predecessor).length() - 1));
       }
       while (ra.get(i).startsWith(pathSeprator)) {
-        ra.set(i, ra.get(i).substring(1, ra.get(i).length()));
+        ra.set(i, ra.get(i).substring(1));
       }
       ra.set(i, pathSeprator + ra.get(i));
     }
