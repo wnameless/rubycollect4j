@@ -36,13 +36,13 @@ import org.junit.Test;
 
 import sun.awt.util.IdentityLinkedList;
 
-public class LinkedIdentityMapValuesTest {
+public class LinkedIdentityMap_ValuesTest {
 
   private IdentityLinkedList<String> list = new IdentityLinkedList<String>();
   private IdentityHashMap<String, Integer> map =
       new IdentityHashMap<String, Integer>();
-  private LinkedIdentityMapValues<String, Integer> values =
-      new LinkedIdentityMapValues<String, Integer>(list, map);
+  private LinkedIdentityMap.Values<String, Integer> values =
+      new LinkedIdentityMap.Values<String, Integer>(list, map);
 
   @Before
   public void setUp() throws Exception {
@@ -62,7 +62,7 @@ public class LinkedIdentityMapValuesTest {
 
   @Test
   public void testConstructor() {
-    assertTrue(values instanceof LinkedIdentityMapValues);
+    assertTrue(values instanceof LinkedIdentityMap.Values);
   }
 
   @Test
@@ -104,6 +104,10 @@ public class LinkedIdentityMapValuesTest {
   @Test
   public void testToArray() {
     assertArrayEquals(new Integer[] { 1, 2, 3 }, values.toArray());
+  }
+
+  @Test
+  public void testToArrayWithGeneric() {
     assertArrayEquals(new Integer[] { 1, 2, 3 }, values.toArray(new Integer[3]));
   }
 
@@ -114,8 +118,8 @@ public class LinkedIdentityMapValuesTest {
 
   @Test
   public void testRemove() {
-    assertTrue(values.remove(1));
     assertFalse(values.remove(0));
+    assertTrue(values.remove(1));
     assertEquals(2, list.size());
     assertEquals(ra(2, 3), ra(values));
   }
