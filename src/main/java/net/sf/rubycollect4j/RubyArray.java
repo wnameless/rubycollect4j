@@ -119,13 +119,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
         @SuppressWarnings("unchecked")
         List<S> lst = (List<S>) item;
         if (lst.size() > 0) {
-          if (target == null) {
-            if (lst.get(0) == null)
-              return newRubyArray(lst, true);
-          } else {
-            if (target.equals(lst.get(0)))
-              return newRubyArray(lst, true);
-          }
+          if (target == null ? lst.get(0) == null : target.equals(lst.get(0)))
+            return newRubyArray(lst, true);
         }
       }
     }
@@ -1108,13 +1103,9 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
         @SuppressWarnings("unchecked")
         List<S> lst = (List<S>) item;
         if (lst.size() > 0) {
-          if (target == null) {
-            if (lst.get(lst.size() - 1) == null)
-              return newRubyArray(lst, true);
-          } else {
-            if (target.equals(lst.get(lst.size() - 1)))
-              return newRubyArray(lst, true);
-          }
+          if (target == null ? lst.get(lst.size() - 1) == null : target
+              .equals(lst.get(lst.size() - 1)))
+            return newRubyArray(lst, true);
         }
       }
     }
@@ -1694,7 +1685,6 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * @throws IndexOutOfBoundsException
    *           if all lists are not the same size
    */
-  @SuppressWarnings("rawtypes")
   public <S> RubyArray<RubyArray<S>> transpose() {
     if (list.isEmpty())
       return newRubyArray();
@@ -1707,10 +1697,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
                 + item.getClass().toString() + " into List");
 
       if (size == null)
-        size = ((List) item).size();
-      else if (size != ((List) item).size())
+        size = ((List<?>) item).size();
+      else if (size != ((List<?>) item).size())
         throw new IndexOutOfBoundsException(
-            "IndexError: element size differs (" + ((List) item).size()
+            "IndexError: element size differs (" + ((List<?>) item).size()
                 + " should be " + size + ")");
     }
     RubyArray<RubyArray<S>> rubyArray = newRubyArray();

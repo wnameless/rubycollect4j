@@ -190,3 +190,5 @@ Version 1.6.2
 + Added @SafeVarargs annotations
 
 * RubyArray#last(int n) throws IllegalArgumentException if n is < 0
+
+* Reimplemented LinkedIdentityMap

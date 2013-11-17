@@ -100,7 +100,7 @@ public class LinkedIdentityMap_KeySetTest {
     assertSame(key1, iter.next());
     assertSame(key2, iter.next());
     iter.remove();
-    assertEquals(key2, iter.next());
+    assertSame(key3, iter.next());
     assertFalse(iter.hasNext());
     assertEquals(2, list.size());
     assertSame(key1, keySet.toArray()[0]);

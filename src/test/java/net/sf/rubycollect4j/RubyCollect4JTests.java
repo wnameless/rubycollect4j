@@ -50,8 +50,6 @@ import net.sf.rubycollect4j.iter.FlattenIterableTest;
 import net.sf.rubycollect4j.iter.FlattenIteratorTest;
 import net.sf.rubycollect4j.iter.GrepIterableTest;
 import net.sf.rubycollect4j.iter.GrepIteratorTest;
-import net.sf.rubycollect4j.iter.OrderedEntrySetIterableTest;
-import net.sf.rubycollect4j.iter.OrderedEntrySetIteratorTest;
 import net.sf.rubycollect4j.iter.PermutationIterableTest;
 import net.sf.rubycollect4j.iter.PermutationIteratorTest;
 import net.sf.rubycollect4j.iter.ProductIterableTest;
@@ -88,6 +86,8 @@ import net.sf.rubycollect4j.succ.LongSuccessorTest;
 import net.sf.rubycollect4j.succ.StringSuccessorTest;
 import net.sf.rubycollect4j.util.ComparableEntryTest;
 import net.sf.rubycollect4j.util.LinkedIdentityMapTest;
+import net.sf.rubycollect4j.util.LinkedIdentityMap_EntrySetTest;
+import net.sf.rubycollect4j.util.LinkedIdentityMap_IdentityEntryTest;
 import net.sf.rubycollect4j.util.LinkedIdentityMap_KeySetTest;
 import net.sf.rubycollect4j.util.LinkedIdentityMap_ValuesTest;
 import net.sf.rubycollect4j.util.PeekingIteratorTest;
@@ -117,7 +117,6 @@ import org.junit.runners.Suite.SuiteClasses;
     FindAllIterableTest.class, FindAllIteratorTest.class,
     FlattenIterableTest.class, FlattenIteratorTest.class,
     GrepIterableTest.class, GrepIteratorTest.class,
-    OrderedEntrySetIterableTest.class, OrderedEntrySetIteratorTest.class,
     PermutationIterableTest.class, PermutationIteratorTest.class,
     ProductIterableTest.class, ProductIteratorTest.class,
     RangeIterableTest.class, RangeIteratorTest.class, RejectIterableTest.class,
@@ -134,7 +133,9 @@ import org.junit.runners.Suite.SuiteClasses;
     DirectiveTest.class, PackerTest.class, DateSuccessorTest.class,
     DoubleSuccessorTest.class, IntegerSuccessorTest.class,
     LongSuccessorTest.class, StringSuccessorTest.class,
-    ComparableEntryTest.class, LinkedIdentityMap_KeySetTest.class,
-    LinkedIdentityMap_ValuesTest.class, LinkedIdentityMapTest.class,
-    PeekingIteratorTest.class, TryComparatorTest.class })
+    ComparableEntryTest.class, LinkedIdentityMap_EntrySetTest.class,
+    LinkedIdentityMap_IdentityEntryTest.class,
+    LinkedIdentityMap_KeySetTest.class, LinkedIdentityMap_ValuesTest.class,
+    LinkedIdentityMapTest.class, PeekingIteratorTest.class,
+    TryComparatorTest.class })
 public class RubyCollect4JTests {}

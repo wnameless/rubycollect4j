@@ -122,6 +122,14 @@ public class LinkedIdentityMap_ValuesTest {
     assertTrue(values.remove(1));
     assertEquals(2, list.size());
     assertEquals(ra(2, 3), ra(values));
+    list.add(new String("a"));
+    map.put(list.get(list.size() - 1), 3);
+    assertTrue(values.remove(3));
+    assertEquals(ra(2, 3), ra(values));
+    assertFalse(values.remove(null));
+    list.add(new String("a"));
+    map.put(list.get(list.size() - 1), null);
+    assertTrue(values.remove(null));
   }
 
   @Test
