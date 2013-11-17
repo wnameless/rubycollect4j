@@ -88,6 +88,7 @@ import net.sf.rubycollect4j.succ.LongSuccessorTest;
 import net.sf.rubycollect4j.succ.StringSuccessorTest;
 import net.sf.rubycollect4j.util.ComparableEntryTest;
 import net.sf.rubycollect4j.util.LinkedIdentityMapTest;
+import net.sf.rubycollect4j.util.LinkedIdentityMapValuesTest;
 import net.sf.rubycollect4j.util.ListSetTest;
 import net.sf.rubycollect4j.util.PeekingIteratorTest;
 import net.sf.rubycollect4j.util.TryComparatorTest;
@@ -133,6 +134,7 @@ import org.junit.runners.Suite.SuiteClasses;
     DirectiveTest.class, PackerTest.class, DateSuccessorTest.class,
     DoubleSuccessorTest.class, IntegerSuccessorTest.class,
     LongSuccessorTest.class, StringSuccessorTest.class,
-    ComparableEntryTest.class, LinkedIdentityMapTest.class, ListSetTest.class,
-    PeekingIteratorTest.class, TryComparatorTest.class })
+    ComparableEntryTest.class, LinkedIdentityMapValuesTest.class,
+    LinkedIdentityMapTest.class, ListSetTest.class, PeekingIteratorTest.class,
+    TryComparatorTest.class })
 public class RubyCollect4JTests {}

@@ -43,13 +43,13 @@ public class LinkedIdentityMapTest {
       new LinkedIdentityMap<String, Integer>();
 
   @Before
-  public void setUp() {
+  public void setUp() throws Exception {
     map.put("a", 1);
     map.put(new String("a"), 1);
   }
 
   @After
-  public void tearDown() {
+  public void tearDown() throws Exception {
     map.clear();
   }
 
@@ -82,8 +82,10 @@ public class LinkedIdentityMapTest {
 
   @Test
   public void testContainsValue() {
-    assertTrue(map.containsValue(1));
+    map.put(new String("a"), null);
+    assertTrue(map.containsValue(new Integer(1)));
     assertFalse(map.containsValue(2));
+    assertTrue(map.containsValue(null));
   }
 
   @SuppressWarnings("unchecked")

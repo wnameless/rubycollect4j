@@ -22,10 +22,8 @@ package net.sf.rubycollect4j.util;
 
 import static java.util.Collections.unmodifiableList;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.IdentityHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -36,6 +34,8 @@ import sun.awt.util.IdentityLinkedList;
  * 
  * LinkedIdentityMap is implemented by IdentityHashMap and takes advantage of
  * LinkedList to keep the key elements ordered by their insertion sequence.
+ * Unlike IdentityHashMap, LinkedIdentityMap only compares its keys by
+ * identities NOT the values.
  * 
  * @param <K>
  *          the type of the key elements
@@ -45,7 +45,7 @@ import sun.awt.util.IdentityLinkedList;
 public final class LinkedIdentityMap<K, V> implements Map<K, V> {
 
   private final IdentityHashMap<K, V> map = new IdentityHashMap<K, V>();
-  private final List<K> list = new IdentityLinkedList<K>();
+  private final IdentityLinkedList<K> list = new IdentityLinkedList<K>();
 
   public LinkedIdentityMap() {}
 
@@ -66,7 +66,13 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
 
   @Override
   public boolean containsValue(Object value) {
-    return map.containsValue(value);
+    for (V val : map.values()) {
+      if (val == null && value == null)
+        return true;
+      else if (val != null && val.equals(value))
+        return true;
+    }
+    return false;
   }
 
   @Override
@@ -118,11 +124,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
 
   @Override
   public Collection<V> values() {
-    List<V> values = new ArrayList<V>();
-    for (K key : list) {
-      values.add(map.get(key));
-    }
-    return values;
+    return new LinkedIdentityMapValues<K, V>(list, map);
   }
 
   @Override
