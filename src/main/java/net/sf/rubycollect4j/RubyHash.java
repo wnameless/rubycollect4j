@@ -418,13 +418,9 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    */
   public K key(V value) {
     for (Entry<K, V> item : map.entrySet()) {
-      if (value == null) {
-        if (item.getValue() == null)
-          return item.getKey();
-      } else {
-        if (value.equals(item.getValue()))
-          return item.getKey();
-      }
+      if (value == null ? item.getValue() == null : value.equals(item
+          .getValue()))
+        return item.getKey();
     }
     return null;
   }
@@ -572,13 +568,9 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    */
   public Entry<K, V> rassoc(V value) {
     for (Entry<K, V> item : map.entrySet()) {
-      if (value == null) {
-        if (item.getValue() == null)
-          return new ComparableEntry<K, V>(item);
-      } else {
-        if (value.equals(item.getValue()))
-          return new ComparableEntry<K, V>(item);
-      }
+      if (value == null ? item.getValue() == null : value.equals(item
+          .getValue()))
+        return new ComparableEntry<K, V>(item);
     }
     return null;
   }
