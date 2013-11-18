@@ -69,9 +69,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
   @Override
   public boolean containsValue(Object value) {
     for (V val : map.values()) {
-      if (val == null && value == null)
-        return true;
-      else if (val != null && val.equals(value))
+      if (val == null ? value == null : val.equals(value))
         return true;
     }
     return false;
@@ -107,9 +105,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
   @Override
   public void putAll(Map<? extends K, ? extends V> m) {
     for (Entry<? extends K, ? extends V> e : m.entrySet()) {
-      if (!map.containsKey(e.getKey()))
-        list.add(e.getKey());
-      map.put(e.getKey(), e.getValue());
+      put(e.getKey(), e.getValue());
     }
   }
 
@@ -164,30 +160,44 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
    * @param <V2>
    *          the type of the value elements
    */
-  static final class IdentityEntry<K0, V0> implements Entry<K0, V0> {
+  static final class IdentityEntry<S, U> implements Entry<S, U> {
 
-    private final Entry<K0, V0> entry;
+    private final Entry<S, U> entry;
 
-    public IdentityEntry(K0 key, V0 value) {
-      this.entry = new SimpleEntry<K0, V0>(key, value);
+    /**
+     * Creates a LinkedIdentityMap::IdentityEntry.
+     * 
+     * @param key
+     *          of the entry
+     * @param value
+     *          of the entry
+     */
+    public IdentityEntry(S key, U value) {
+      this.entry = new SimpleEntry<S, U>(key, value);
     }
 
-    public IdentityEntry(Entry<K0, V0> entry) {
-      this.entry = entry;
+    /**
+     * Creates a LinkedIdentityMap::IdentityEntry.
+     * 
+     * @param entry
+     *          any Entry
+     */
+    public IdentityEntry(Entry<S, U> entry) {
+      this.entry = new SimpleEntry<S, U>(entry.getKey(), entry.getValue());
     }
 
     @Override
-    public K0 getKey() {
+    public S getKey() {
       return entry.getKey();
     }
 
     @Override
-    public V0 getValue() {
+    public U getValue() {
       return entry.getValue();
     }
 
     @Override
-    public V0 setValue(V0 value) {
+    public U setValue(U value) {
       return entry.setValue(value);
     }
 
@@ -228,12 +238,20 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
    * @param <V2>
    *          the type of the value elements
    */
-  static final class EntrySet<K1, V1> implements Set<Entry<K1, V1>> {
+  static final class EntrySet<S, U> implements Set<Entry<S, U>> {
 
-    private final IdentityLinkedList<K1> list;
-    private final IdentityHashMap<K1, V1> map;
+    private final IdentityLinkedList<S> list;
+    private final IdentityHashMap<S, U> map;
 
-    public EntrySet(IdentityLinkedList<K1> list, IdentityHashMap<K1, V1> map) {
+    /**
+     * Creates a LinkedIdentityMap::EntrySet.
+     * 
+     * @param list
+     *          an IdentityLinkedList
+     * @param map
+     *          an IdentityHashMap
+     */
+    public EntrySet(IdentityLinkedList<S> list, IdentityHashMap<S, U> map) {
       this.list = list;
       this.map = map;
     }
@@ -253,7 +271,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
       if (o instanceof Entry) {
         Entry<?, ?> entry = (Entry<?, ?>) o;
         if (map.containsKey(entry.getKey())) {
-          V1 val = map.get(entry.getKey());
+          U val = map.get(entry.getKey());
           if (val == null ? entry.getValue() == null : val.equals(entry
               .getValue()))
             return true;
@@ -263,30 +281,30 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
     }
 
     @Override
-    public Iterator<Entry<K1, V1>> iterator() {
+    public Iterator<Entry<S, U>> iterator() {
       return new EntriesIterator(list.iterator(), map);
     }
 
     @Override
     public Object[] toArray() {
-      List<Entry<K1, V1>> entries = new ArrayList<Entry<K1, V1>>();
-      for (K1 key : list) {
-        entries.add(new SimpleEntry<K1, V1>(key, map.get(key)));
+      List<Entry<S, U>> entries = new ArrayList<Entry<S, U>>();
+      for (S key : list) {
+        entries.add(new SimpleEntry<S, U>(key, map.get(key)));
       }
       return entries.toArray();
     }
 
     @Override
     public <T> T[] toArray(T[] a) {
-      List<Entry<K1, V1>> entries = new ArrayList<Entry<K1, V1>>();
-      for (K1 key : list) {
-        entries.add(new SimpleEntry<K1, V1>(key, map.get(key)));
+      List<Entry<S, U>> entries = new ArrayList<Entry<S, U>>();
+      for (S key : list) {
+        entries.add(new SimpleEntry<S, U>(key, map.get(key)));
       }
       return entries.toArray(a);
     }
 
     @Override
-    public boolean add(Entry<K1, V1> e) {
+    public boolean add(Entry<S, U> e) {
       throw new UnsupportedOperationException();
     }
 
@@ -295,7 +313,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
       if (o instanceof Entry) {
         Entry<?, ?> entry = (Entry<?, ?>) o;
         if (map.containsKey(entry.getKey())) {
-          V1 val = map.get(entry.getKey());
+          U val = map.get(entry.getKey());
           if ((val == null ? entry.getValue() == null : val.equals(entry
               .getValue()))) {
             list.remove(entry.getKey());
@@ -317,30 +335,31 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
     }
 
     @Override
-    public boolean addAll(Collection<? extends Entry<K1, V1>> c) {
+    public boolean addAll(Collection<? extends Entry<S, U>> c) {
       throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
-      Map<IdentityEntry<Object, Object>, Object> hashMap =
-          new HashMap<IdentityEntry<Object, Object>, Object>();
+      Map<IdentityEntry<?, ?>, Object> hashMap =
+          new HashMap<IdentityEntry<?, ?>, Object>();
       for (Object o : c) {
         if (o instanceof Entry) {
-          @SuppressWarnings("unchecked")
-          Entry<Object, Object> entry = (Entry<Object, Object>) o;
-          hashMap.put(new IdentityEntry<Object, Object>(entry), null);
+          Entry<?, ?> entry = (Entry<?, ?>) o;
+          hashMap.put(
+              new IdentityEntry<Object, Object>(entry.getKey(), entry
+                  .getValue()), null);
         }
       }
 
       boolean isChanged = false;
-      Iterator<K1> iter = map.keySet().iterator();
+      Iterator<Entry<S, U>> iter = map.entrySet().iterator();
       while (iter.hasNext()) {
-        K1 key = iter.next();
-        if (!hashMap.containsKey(new IdentityEntry<K1, V1>(key, map.get(key)))) {
-          isChanged = true;
-          list.remove(key);
+        Entry<S, U> entry = iter.next();
+        if (!hashMap.containsKey(new IdentityEntry<S, U>(entry))) {
+          list.remove(entry.getKey());
           iter.remove();
+          isChanged = true;
         }
       }
       return isChanged;
@@ -375,7 +394,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
     public String toString() {
       StringBuilder sb = new StringBuilder("[");
       for (int i = 0; i < list.size(); i++) {
-        K1 key = list.get(i);
+        S key = list.get(i);
         if (i == 0)
           sb.append(key).append("=").append(map.get(key));
         else
@@ -385,13 +404,13 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
       return sb.toString();
     }
 
-    private final class EntriesIterator implements Iterator<Entry<K1, V1>> {
+    private final class EntriesIterator implements Iterator<Entry<S, U>> {
 
-      private final Iterator<K1> iter;
-      private final IdentityHashMap<K1, V1> map;
-      private K1 key;
+      private final Iterator<S> iter;
+      private final IdentityHashMap<S, U> map;
+      private S key;
 
-      public EntriesIterator(Iterator<K1> iter, IdentityHashMap<K1, V1> map) {
+      public EntriesIterator(Iterator<S> iter, IdentityHashMap<S, U> map) {
         this.iter = iter;
         this.map = map;
       }
@@ -402,9 +421,9 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
       }
 
       @Override
-      public Entry<K1, V1> next() {
+      public Entry<S, U> next() {
         key = iter.next();
-        return new IdentityEntry<K1, V1>(key, map.get(key));
+        return new IdentityEntry<S, U>(key, map.get(key));
       }
 
       @Override
@@ -422,15 +441,15 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
    * LinkedIdentityMap::KeySet is designed to build a Set view of the
    * LinkedIdentityMap#keySet.
    * 
-   * @param <K2>
+   * @param <S>
    *          the type of the key elements
-   * @param <V2>
+   * @param <U>
    *          the type of the value elements
    */
-  static final class KeySet<K2, V2> implements Set<K2> {
+  static final class KeySet<S, U> implements Set<S> {
 
-    private final IdentityLinkedList<K2> list;
-    private final IdentityHashMap<K2, V2> map;
+    private final IdentityLinkedList<S> list;
+    private final IdentityHashMap<S, U> map;
 
     /**
      * Creates a LinkedIdentityMap::KeySet.
@@ -440,7 +459,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
      * @param map
      *          an IdentityHashMap
      */
-    public KeySet(IdentityLinkedList<K2> list, IdentityHashMap<K2, V2> map) {
+    public KeySet(IdentityLinkedList<S> list, IdentityHashMap<S, U> map) {
       this.list = list;
       this.map = map;
     }
@@ -461,7 +480,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
     }
 
     @Override
-    public Iterator<K2> iterator() {
+    public Iterator<S> iterator() {
       return new KeysIterator(list.iterator(), map);
     }
 
@@ -476,7 +495,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
     }
 
     @Override
-    public boolean add(K2 e) {
+    public boolean add(S e) {
       throw new UnsupportedOperationException();
     }
 
@@ -492,7 +511,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
     }
 
     @Override
-    public boolean addAll(Collection<? extends K2> c) {
+    public boolean addAll(Collection<? extends S> c) {
       throw new UnsupportedOperationException();
     }
 
@@ -505,13 +524,13 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
       }
 
       boolean isChanged = false;
-      Iterator<K2> iter = list.iterator();
+      Iterator<S> iter = list.iterator();
       while (iter.hasNext()) {
-        K2 key = iter.next();
+        S key = iter.next();
         if (!idMap.containsKey(key)) {
-          isChanged = true;
-          iter.remove();
           map.remove(key);
+          iter.remove();
+          isChanged = true;
         }
       }
       return isChanged;
@@ -525,13 +544,13 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
       }
 
       boolean isChanged = false;
-      Iterator<K2> iter = list.iterator();
+      Iterator<S> iter = list.iterator();
       while (iter.hasNext()) {
-        K2 key = iter.next();
+        S key = iter.next();
         if (idMap.containsKey(key)) {
-          isChanged = true;
-          iter.remove();
           map.remove(key);
+          iter.remove();
+          isChanged = true;
         }
       }
       return isChanged;
@@ -558,13 +577,13 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
       return list.toString();
     }
 
-    private final class KeysIterator implements Iterator<K2> {
+    private final class KeysIterator implements Iterator<S> {
 
-      private final Iterator<K2> iter;
-      private final IdentityHashMap<K2, V2> map;
-      private K2 key;
+      private final Iterator<S> iter;
+      private final IdentityHashMap<S, U> map;
+      private S key;
 
-      public KeysIterator(Iterator<K2> iter, IdentityHashMap<K2, V2> map) {
+      public KeysIterator(Iterator<S> iter, IdentityHashMap<S, U> map) {
         this.iter = iter;
         this.map = map;
       }
@@ -575,7 +594,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
       }
 
       @Override
-      public K2 next() {
+      public S next() {
         key = iter.next();
         return key;
       }
@@ -595,15 +614,15 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
    * LinkedIdentityMap::Values is designed to build a Collection view of the
    * LinkedIdentityMap#values.
    * 
-   * @param <K3>
+   * @param <S>
    *          the type of the key elements
-   * @param <V3>
+   * @param <U>
    *          the type of the value elements
    */
-  static final class Values<K3, V3> implements Collection<V3> {
+  static final class Values<S, U> implements Collection<U> {
 
-    private final IdentityLinkedList<K3> list;
-    private final IdentityHashMap<K3, V3> map;
+    private final IdentityLinkedList<S> list;
+    private final IdentityHashMap<S, U> map;
 
     /**
      * Creates a LinkedIdentityMap::Values.
@@ -613,7 +632,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
      * @param map
      *          an IdentityHashMap
      */
-    public Values(IdentityLinkedList<K3> list, IdentityHashMap<K3, V3> map) {
+    public Values(IdentityLinkedList<S> list, IdentityHashMap<S, U> map) {
       this.list = list;
       this.map = map;
     }
@@ -630,7 +649,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean contains(Object o) {
-      for (V3 val : map.values()) {
+      for (U val : map.values()) {
         if (val == null ? o == null : val.equals(o))
           return true;
       }
@@ -638,7 +657,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
     }
 
     @Override
-    public Iterator<V3> iterator() {
+    public Iterator<U> iterator() {
       return new ValuesIterator(list.iterator(), map);
     }
 
@@ -653,23 +672,23 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
 
     @Override
     public <T> T[] toArray(T[] a) {
-      List<V3> values = new ArrayList<V3>();
-      for (K3 key : list) {
+      List<U> values = new ArrayList<U>();
+      for (S key : list) {
         values.add(map.get(key));
       }
       return values.toArray(a);
     }
 
     @Override
-    public boolean add(V3 e) {
+    public boolean add(U e) {
       throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean remove(Object o) {
-      Iterator<Entry<K3, V3>> iter = map.entrySet().iterator();
+      Iterator<Entry<S, U>> iter = map.entrySet().iterator();
       while (iter.hasNext()) {
-        Entry<K3, V3> entry = iter.next();
+        Entry<S, U> entry = iter.next();
         if (o == null ? entry.getValue() == null : o.equals(entry.getValue())) {
           list.remove(entry.getKey());
           iter.remove();
@@ -682,27 +701,27 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
     @Override
     public boolean containsAll(Collection<?> c) {
       Collection<Object> coll = new ArrayList<Object>(c);
-      for (V3 val : map.values()) {
+      for (U val : map.values()) {
         coll.remove(val);
       }
       return coll.isEmpty();
     }
 
     @Override
-    public boolean addAll(Collection<? extends V3> c) {
+    public boolean addAll(Collection<? extends U> c) {
       throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean removeAll(Collection<?> c) {
       boolean isChanged = false;
-      Iterator<Entry<K3, V3>> iter = map.entrySet().iterator();
+      Iterator<Entry<S, U>> iter = map.entrySet().iterator();
       while (iter.hasNext()) {
-        Entry<K3, V3> entry = iter.next();
+        Entry<S, U> entry = iter.next();
         if (c.contains(entry.getValue())) {
-          isChanged = true;
           list.remove(entry.getKey());
           iter.remove();
+          isChanged = true;
         }
       }
       return isChanged;
@@ -710,30 +729,30 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean retainAll(Collection<?> c) {
-      boolean changed = false;
-      Iterator<Entry<K3, V3>> iter = map.entrySet().iterator();
+      boolean isChanged = false;
+      Iterator<Entry<S, U>> iter = map.entrySet().iterator();
       while (iter.hasNext()) {
-        Entry<K3, V3> entry = iter.next();
+        Entry<S, U> entry = iter.next();
         if (!c.contains(entry.getValue())) {
-          changed = true;
           list.remove(entry.getKey());
           iter.remove();
+          isChanged = true;
         }
       }
-      return changed;
+      return isChanged;
     }
 
     @Override
     public void clear() {
       list.clear();
-      map.values().clear();
+      map.clear();
     }
 
     @Override
     public String toString() {
       StringBuilder sb = new StringBuilder("[");
       for (int i = 0; i < list.size(); i++) {
-        K3 key = list.get(i);
+        S key = list.get(i);
         if (i == 0)
           sb.append(map.get(key));
         else
@@ -743,13 +762,13 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
       return sb.toString();
     }
 
-    private final class ValuesIterator implements Iterator<V3> {
+    private final class ValuesIterator implements Iterator<U> {
 
-      private final Iterator<K3> iter;
-      private final IdentityHashMap<K3, V3> map;
-      private K3 key;
+      private final Iterator<S> iter;
+      private final IdentityHashMap<S, U> map;
+      private S key;
 
-      public ValuesIterator(Iterator<K3> iter, IdentityHashMap<K3, V3> map) {
+      public ValuesIterator(Iterator<S> iter, IdentityHashMap<S, U> map) {
         this.iter = iter;
         this.map = map;
       }
@@ -760,7 +779,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
       }
 
       @Override
-      public V3 next() {
+      public U next() {
         key = iter.next();
         return map.get(key);
       }
