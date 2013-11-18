@@ -173,7 +173,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
      *          of the entry
      */
     public IdentityEntry(S key, U value) {
-      this.entry = new SimpleEntry<S, U>(key, value);
+      entry = new SimpleEntry<S, U>(key, value);
     }
 
     /**
@@ -517,8 +517,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean retainAll(Collection<?> c) {
-      IdentityHashMap<Object, Object> idMap =
-          new IdentityHashMap<Object, Object>();
+      Map<Object, Object> idMap = new IdentityHashMap<Object, Object>();
       for (Object o : c) {
         idMap.put(o, null);
       }
