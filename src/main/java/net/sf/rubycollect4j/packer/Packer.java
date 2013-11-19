@@ -53,12 +53,12 @@ public final class Packer {
   }
 
   /**
-   * Packs a List of Object into a binary String.
+   * Packs a List of Objects into a binary String.
    * 
    * @param aTemplateString
    *          a String made by Directive
    * @param objs
-   *          a List of Object
+   *          a List of Objects
    * @return a binary String
    * @throws IllegalArgumentException
    *           if template string is invalid

@@ -1178,7 +1178,7 @@ public final class RubyContract {
      * RubyArrays and yields them to the block.
      * 
      * @param others
-     *          List of Iterable
+     *          a List of Iterables
      * @param block
      *          to yield zipped elements
      */

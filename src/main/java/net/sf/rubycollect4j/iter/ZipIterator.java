@@ -46,7 +46,7 @@ public final class ZipIterator<E> implements Iterator<RubyArray<E>> {
    * @param iter
    *          an Iterator
    * @param others
-   *          a List of Iterator
+   *          a List of Iterators
    */
   public ZipIterator(Iterator<E> iter, List<? extends Iterator<E>> others) {
     if (iter == null || others == null)

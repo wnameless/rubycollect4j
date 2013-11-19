@@ -44,7 +44,7 @@ public final class ZipIterable<E> implements Iterable<RubyArray<E>> {
    * @param iter
    *          an Iterable
    * @param others
-   *          a List of Iterable
+   *          a List of Iterables
    */
   public ZipIterable(Iterable<E> iter, List<? extends Iterable<E>> others) {
     if (iter == null || others == null)

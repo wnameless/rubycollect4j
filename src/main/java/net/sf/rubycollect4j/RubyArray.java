@@ -1047,11 +1047,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Generates the productions of self with List of Lists and yield them to the
-   * block.
+   * Generates the productions of self with a List of Lists and yield them to
+   * the block.
    * 
    * @param others
-   *          List of Lists
+   *          a List of Lists
    * @param block
    *          to yield each production
    * @return this RubyArray
