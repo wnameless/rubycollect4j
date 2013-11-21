@@ -1030,6 +1030,9 @@ public class RubyEnumerableTest {
     List<Integer> ints = new ArrayList<Integer>();
     re = newRubyEnumerator(ints);
     assertFalse(re.oneʔ());
+    List<Object> objs =
+        new ArrayList<Object>(Arrays.<Object> asList(null, false, 1));
+    assertTrue(newRubyEnumerator(objs).oneʔ());
   }
 
   @Test

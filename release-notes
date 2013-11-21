@@ -192,3 +192,5 @@ Version 1.6.2
 * RubyArray#last(int n) throws IllegalArgumentException if n is < 0
 
 * Reimplemented LinkedIdentityMap
+
+* Fixed the bug of RubyEnumerable#oneʔ which is not supposed to count Boolean.False

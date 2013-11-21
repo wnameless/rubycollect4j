@@ -883,10 +883,11 @@ public final class RubyContract {
     public boolean noneʔ(BooleanBlock<E> block);
 
     /**
-     * Checks if this RubyEnumerable contains only one element beside null
-     * objects.
+     * Checks if this RubyEnumerable contains only one element beside null and
+     * Boolean.False objects.
      * 
-     * @return true if only one element and nulls are found, false otherwise
+     * @return true if only one element beside null and Boolean.False objects is
+     *         found, false otherwise
      */
     public boolean oneʔ();
 

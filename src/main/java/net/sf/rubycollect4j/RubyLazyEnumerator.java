@@ -722,7 +722,7 @@ public final class RubyLazyEnumerator<E> implements
   public boolean oneʔ() {
     int count = 0;
     for (E item : iter) {
-      if (item != null) {
+      if (item != null && !Boolean.FALSE.equals(item)) {
         count++;
         if (count > 1)
           return false;
