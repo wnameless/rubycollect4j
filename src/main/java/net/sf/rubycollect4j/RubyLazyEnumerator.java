@@ -388,7 +388,7 @@ public final class RubyLazyEnumerator<E> implements
   public Integer findIndex(E target) {
     int index = 0;
     for (E item : iter) {
-      if (item.equals(target))
+      if (target == null ? item == null : target.equals(item))
         return index;
 
       index++;

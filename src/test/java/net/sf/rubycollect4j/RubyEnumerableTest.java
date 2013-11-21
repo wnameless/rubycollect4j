@@ -556,6 +556,8 @@ public class RubyEnumerableTest {
   public void testFindIndexWithTarget() {
     assertEquals(Integer.valueOf(2), re.findIndex(3));
     assertNull(re.findIndex(0));
+    re = newRubyEnumerator(Arrays.asList(1, null, 3));
+    assertEquals(Integer.valueOf(1), re.findIndex((Integer) null));
   }
 
   @Test

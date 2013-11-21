@@ -194,3 +194,5 @@ Version 1.6.2
 * Reimplemented LinkedIdentityMap
 
 * Fixed the bug of RubyEnumerable#oneʔ which is not supposed to count Boolean.False
+
+* Fixed the bug of RubyEnumerable#findIndex while finding the index of a null object 
