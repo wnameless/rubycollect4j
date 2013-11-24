@@ -58,9 +58,9 @@ public final class RubyContract {
       extends Iterable<E> {
 
     /**
-     * Checks if null or false included.
+     * Checks if null excluded.
      * 
-     * @return true if null or false is found, false otherwise
+     * @return true if null is not found, false otherwise
      */
     public boolean allʔ();
 
@@ -74,9 +74,9 @@ public final class RubyContract {
     public boolean allʔ(BooleanBlock<E> block);
 
     /**
-     * Checks if any non-null or not-false object included.
+     * Checks if any non-null object included.
      * 
-     * @return true if non-null or not-false object is found, false otherwise
+     * @return true if non-null object is found, false otherwise
      */
     public boolean anyʔ();
 
@@ -883,11 +883,9 @@ public final class RubyContract {
     public boolean noneʔ(BooleanBlock<E> block);
 
     /**
-     * Checks if this RubyEnumerable contains only one element beside null and
-     * Boolean.False objects.
+     * Checks if this RubyEnumerable contains only one element beside null.
      * 
-     * @return true if only one element beside null and Boolean.False objects is
-     *         found, false otherwise
+     * @return true if only one element beside null is found, false otherwise
      */
     public boolean oneʔ();
 

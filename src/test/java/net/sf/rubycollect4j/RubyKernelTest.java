@@ -89,7 +89,7 @@ public class RubyKernelTest {
 
   @Test
   public void testPutsBoolean() {
-    assertEquals(true, p(true));
+    assertTrue(p(true));
     assertEquals("true" + lineSeparator, outContent.toString());
   }
 
