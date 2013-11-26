@@ -26,11 +26,11 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
-
-import sun.awt.util.IdentityLinkedList;
 
 /**
  * 
@@ -47,7 +47,7 @@ import sun.awt.util.IdentityLinkedList;
 public final class LinkedIdentityMap<K, V> implements Map<K, V> {
 
   private final IdentityHashMap<K, V> map = new IdentityHashMap<K, V>();
-  private final IdentityLinkedList<K> list = new IdentityLinkedList<K>();
+  private final List<K> list = new LinkedList<K>();
 
   public LinkedIdentityMap() {}
 
@@ -111,7 +111,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
 
   @Override
   public V remove(Object key) {
-    list.remove(key);
+    removeByIdentity(list, key);
     return map.remove(key);
   }
 
@@ -240,18 +240,18 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
    */
   static final class EntrySet<S, U> implements Set<Entry<S, U>> {
 
-    private final IdentityLinkedList<S> list;
+    private final List<S> list;
     private final IdentityHashMap<S, U> map;
 
     /**
      * Creates a LinkedIdentityMap::EntrySet.
      * 
      * @param list
-     *          an IdentityLinkedList
+     *          a List
      * @param map
      *          an IdentityHashMap
      */
-    public EntrySet(IdentityLinkedList<S> list, IdentityHashMap<S, U> map) {
+    public EntrySet(List<S> list, IdentityHashMap<S, U> map) {
       this.list = list;
       this.map = map;
     }
@@ -316,7 +316,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
           U val = map.get(entry.getKey());
           if ((val == null ? entry.getValue() == null : val.equals(entry
               .getValue()))) {
-            list.remove(entry.getKey());
+            removeByIdentity(list, entry.getKey());
             map.remove(entry.getKey());
             return true;
           }
@@ -357,7 +357,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
       while (iter.hasNext()) {
         Entry<S, U> entry = iter.next();
         if (!hashMap.containsKey(new IdentityEntry<S, U>(entry))) {
-          list.remove(entry.getKey());
+          removeByIdentity(list, entry.getKey());
           iter.remove();
           isChanged = true;
         }
@@ -448,18 +448,18 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
    */
   static final class KeySet<S, U> implements Set<S> {
 
-    private final IdentityLinkedList<S> list;
+    private final List<S> list;
     private final IdentityHashMap<S, U> map;
 
     /**
      * Creates a LinkedIdentityMap::KeySet.
      * 
      * @param list
-     *          an IdentityLinkedList
+     *          a List
      * @param map
      *          an IdentityHashMap
      */
-    public KeySet(IdentityLinkedList<S> list, IdentityHashMap<S, U> map) {
+    public KeySet(List<S> list, IdentityHashMap<S, U> map) {
       this.list = list;
       this.map = map;
     }
@@ -502,7 +502,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
     @Override
     public boolean remove(Object o) {
       map.remove(o);
-      return list.remove(o);
+      return removeByIdentity(list, o);
     }
 
     @Override
@@ -620,18 +620,18 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
    */
   static final class Values<S, U> implements Collection<U> {
 
-    private final IdentityLinkedList<S> list;
+    private final List<S> list;
     private final IdentityHashMap<S, U> map;
 
     /**
      * Creates a LinkedIdentityMap::Values.
      * 
      * @param list
-     *          an IdentityLinkedList
+     *          a List
      * @param map
      *          an IdentityHashMap
      */
-    public Values(IdentityLinkedList<S> list, IdentityHashMap<S, U> map) {
+    public Values(List<S> list, IdentityHashMap<S, U> map) {
       this.list = list;
       this.map = map;
     }
@@ -689,7 +689,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
       while (iter.hasNext()) {
         Entry<S, U> entry = iter.next();
         if (o == null ? entry.getValue() == null : o.equals(entry.getValue())) {
-          list.remove(entry.getKey());
+          removeByIdentity(list, entry.getKey());
           iter.remove();
           return true;
         }
@@ -718,7 +718,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
       while (iter.hasNext()) {
         Entry<S, U> entry = iter.next();
         if (c.contains(entry.getValue())) {
-          list.remove(entry.getKey());
+          removeByIdentity(list, entry.getKey());
           iter.remove();
           isChanged = true;
         }
@@ -733,7 +733,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
       while (iter.hasNext()) {
         Entry<S, U> entry = iter.next();
         if (!c.contains(entry.getValue())) {
-          list.remove(entry.getKey());
+          removeByIdentity(list, entry.getKey());
           iter.remove();
           isChanged = true;
         }
@@ -791,6 +791,18 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
 
     }
 
+  }
+
+  private static boolean removeByIdentity(List<?> list, Object o) {
+    ListIterator<?> li = list.listIterator();
+    while (li.hasNext()) {
+      Object element = li.next();
+      if (element == o) {
+        li.remove();
+        return true;
+      }
+    }
+    return false;
   }
 
 }
