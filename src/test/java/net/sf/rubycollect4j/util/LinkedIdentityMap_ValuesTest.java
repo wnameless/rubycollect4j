@@ -29,16 +29,16 @@ import static org.junit.Assert.assertTrue;
 import java.util.Arrays;
 import java.util.IdentityHashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import sun.awt.util.IdentityLinkedList;
-
 public class LinkedIdentityMap_ValuesTest {
 
-  private IdentityLinkedList<String> list = new IdentityLinkedList<String>();
+  private List<String> list = new LinkedList<String>();
   private IdentityHashMap<String, Integer> map =
       new IdentityHashMap<String, Integer>();
   private LinkedIdentityMap.Values<String, Integer> values =

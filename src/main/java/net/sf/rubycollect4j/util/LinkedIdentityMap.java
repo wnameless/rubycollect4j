@@ -476,7 +476,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean contains(Object o) {
-      return list.contains(o);
+      return map.keySet().contains(o);
     }
 
     @Override
@@ -507,7 +507,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean containsAll(Collection<?> c) {
-      return list.containsAll(c);
+      return map.keySet().containsAll(c);
     }
 
     @Override
