@@ -86,20 +86,13 @@ public class PeekingIteratorTest {
   }
 
   @Test(expected = NoSuchElementException.class)
-  public void testPeekException1() {
+  public void testPeekException() {
     emptyIterater.peek();
   }
 
   @Test(expected = IllegalStateException.class)
-  public void testPeekException2() {
+  public void testRemoveException() {
     pIterater.peek();
-    pIterater.remove();
-  }
-
-  @Test(expected = IllegalStateException.class)
-  public void testPeekException3() {
-    pIterater.next();
-    pIterater.remove();
     pIterater.remove();
   }
 

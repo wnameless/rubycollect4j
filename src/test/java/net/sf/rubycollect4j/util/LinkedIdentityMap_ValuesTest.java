@@ -113,7 +113,7 @@ public class LinkedIdentityMap_ValuesTest {
 
   @Test(expected = UnsupportedOperationException.class)
   public void testAdd() {
-    values.add(1);
+    values.add(null);
   }
 
   @Test
@@ -140,7 +140,7 @@ public class LinkedIdentityMap_ValuesTest {
 
   @Test(expected = UnsupportedOperationException.class)
   public void testAddAll() {
-    values.addAll(Arrays.asList(4, 5, 6));
+    values.addAll(null);
   }
 
   @Test

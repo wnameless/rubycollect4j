@@ -124,7 +124,7 @@ public class LinkedIdentityMap_KeySetTest {
 
   @Test(expected = UnsupportedOperationException.class)
   public void testAdd() {
-    keySet.add("a");
+    keySet.add(null);
   }
 
   @Test
@@ -143,7 +143,7 @@ public class LinkedIdentityMap_KeySetTest {
 
   @Test(expected = UnsupportedOperationException.class)
   public void testAddAll() {
-    keySet.addAll(Arrays.asList("a"));
+    keySet.addAll(null);
   }
 
   @Test
