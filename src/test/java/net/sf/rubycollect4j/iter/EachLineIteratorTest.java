@@ -53,7 +53,8 @@ public class EachLineIteratorTest {
 
   @Test(expected = RuntimeException.class)
   public void testConstructorException2() {
-    new EachLineIterator(new File("No such file"));
+    iter = new EachLineIterator(new File("No such file"));
+    iter.hasNext();
   }
 
   @Test

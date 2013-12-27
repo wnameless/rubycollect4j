@@ -196,3 +196,7 @@ Version 1.6.2
 * RubyEnumerable#allʔ, anyʔ, oneʔ do not check Boolean.False anymore
 
 * Fixed the bug of RubyEnumerable#findIndex while finding the index of a null object 
+
+Version 1.6.3
+
+* Avoided file lock by initiating EachLineIterator lazily

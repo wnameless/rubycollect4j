@@ -40,7 +40,8 @@ public final class EachLineIterator implements Iterator<String> {
   private static final Logger logger = Logger.getLogger(EachLineIterator.class
       .getName());
 
-  private final BufferedReader reader;
+  private final File file;
+  private BufferedReader reader;
   private String line;
 
   /**
@@ -55,6 +56,10 @@ public final class EachLineIterator implements Iterator<String> {
     if (file == null)
       throw new NullPointerException();
 
+    this.file = file;
+  }
+
+  private void init() {
     try {
       reader = new BufferedReader(new FileReader(file));
     } catch (FileNotFoundException e) {
@@ -78,11 +83,16 @@ public final class EachLineIterator implements Iterator<String> {
 
   @Override
   public boolean hasNext() {
+    if (reader == null)
+      init();
+
     return line != null;
   }
 
   @Override
   public String next() {
+    if (reader == null)
+      init();
     if (!hasNext())
       throw new NoSuchElementException();
 
