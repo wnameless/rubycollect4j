@@ -49,7 +49,13 @@ public class RubyIO {
 
   /**
    * 
-   * This Mode enum contains all open modes of RubyIO.
+   * This Mode enum contains all open modes of RubyIO.<br>
+   * r : Read.<br>
+   * r+ : Read and Write.<br>
+   * w : Write.<br>
+   * w+ : Write and Read.<br>
+   * a : Append.<br>
+   * a+ : Append and Read.
    * 
    */
   public enum Mode {
@@ -159,6 +165,7 @@ public class RubyIO {
    *          of a File
    * @param mode
    *          r, rw, w, w+, a, a+
+   * @see Mode
    * @return a RubyIO
    */
   public static RubyIO open(String path, String mode) {
@@ -190,6 +197,7 @@ public class RubyIO {
    *          a File
    * @param mode
    *          a Mode
+   * @see Mode
    * @throws NullPointerException
    *           if file is null
    * @throws IOException
