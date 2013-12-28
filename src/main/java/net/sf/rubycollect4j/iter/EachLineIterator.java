@@ -70,7 +70,8 @@ public final class EachLineIterator implements Iterator<String> {
     nextLine();
   }
 
-  private void nextLine() {
+  private String nextLine() {
+    String next = line;
     try {
       line = reader.readLine();
       if (line == null)
@@ -79,6 +80,7 @@ public final class EachLineIterator implements Iterator<String> {
       logger.log(Level.SEVERE, null, e);
       throw new RuntimeException(e);
     }
+    return next;
   }
 
   @Override
@@ -91,14 +93,10 @@ public final class EachLineIterator implements Iterator<String> {
 
   @Override
   public String next() {
-    if (reader == null)
-      init();
     if (!hasNext())
       throw new NoSuchElementException();
 
-    String next = line;
-    nextLine();
-    return next;
+    return nextLine();
   }
 
   @Override

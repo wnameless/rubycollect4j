@@ -34,11 +34,13 @@ public class EachLineIteratorTest {
 
   private static final String BASE_DIR = "src/test/resources/";
   private EachLineIterator iter;
+  private EachLineIterator noFileIter;
 
   @Before
   public void setUp() throws Exception {
     iter =
         new EachLineIterator(new File(BASE_DIR + "ruby_io_read_only_mode.txt"));
+    noFileIter = new EachLineIterator(new File("No such file"));
   }
 
   @Test
@@ -53,8 +55,7 @@ public class EachLineIteratorTest {
 
   @Test(expected = RuntimeException.class)
   public void testConstructorException2() {
-    iter = new EachLineIterator(new File("No such file"));
-    iter.hasNext();
+    noFileIter.next();
   }
 
   @Test
