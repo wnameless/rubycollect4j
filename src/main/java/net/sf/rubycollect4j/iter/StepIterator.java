@@ -46,7 +46,7 @@ public final class StepIterator<E> implements Iterator<E> {
    * @throws NullPointerException
    *           if iter is null
    * @throws IllegalArgumentException
-   *           if step less or equal 0
+   *           if step is less than or equal to 0
    */
   public StepIterator(Iterator<E> iter, int step) {
     if (iter == null)

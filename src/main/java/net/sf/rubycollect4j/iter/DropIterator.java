@@ -44,7 +44,7 @@ public final class DropIterator<E> implements Iterator<E> {
    * @throws NullPointerException
    *           if iter is null
    * @throws IllegalArgumentException
-   *           if step less or equal 0
+   *           if step is less than or equal to 0
    */
   public DropIterator(Iterator<E> iter, int drop) {
     if (iter == null)
@@ -53,11 +53,11 @@ public final class DropIterator<E> implements Iterator<E> {
       throw new IllegalArgumentException(
           "ArgumentError: attempt to drop negative size");
 
-    this.iter = iter;
-    while (this.iter.hasNext() && drop > 0) {
-      this.iter.next();
+    while (iter.hasNext() && drop > 0) {
+      iter.next();
       drop--;
     }
+    this.iter = iter;
   }
 
   @Override
