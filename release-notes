@@ -200,3 +200,9 @@ Version 1.6.2
 Version 1.6.3
 
 * Avoided file lock by initiating EachLineIterator lazily
+
+Version 1.7.0
+
++ Added RubyString
+
++ Added CharacterSuccessor

@@ -125,7 +125,7 @@ public final class Packer {
     return sb.toString();
   }
 
-  private static Directive parseDirective(String template) {
+  static Directive parseDirective(String template) {
     if (template.length() >= 2) {
       if (Directive.lookup.get(template.substring(0, 2)) != null)
         return Directive.lookup.get(template.substring(0, 2));
@@ -133,7 +133,7 @@ public final class Packer {
     return Directive.lookup.get(template.substring(0, 1));
   }
 
-  private static List<String> parseTemplate(String template) {
+  static List<String> parseTemplate(String template) {
     return ra(template.split("(?!^)")).sliceBefore(
         ra(Directive.values()).map(new TransformBlock<Directive, String>() {
 

@@ -27,7 +27,9 @@ import static net.sf.rubycollect4j.RubyCollections.hp;
 import static net.sf.rubycollect4j.RubyCollections.qr;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 
+import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -178,6 +180,14 @@ public enum Directive {
     return widthAdjustable;
   }
 
+  public String pack(List<Byte> bytes) {
+    byte[] byteAry = new byte[bytes.size()];
+    for (int i = 0; i < bytes.size(); i++) {
+      byteAry[i] = bytes.get(i);
+    }
+    return pack(byteAry);
+  }
+
   /**
    * Packs array of byte into a binary String.
    * 
@@ -253,6 +263,70 @@ public enum Directive {
       return new String(bytes);
     case Z:
       return new String(bytes);
+    }
+  }
+
+  public String unpack(String ch) {
+    switch (this) {
+    default: // U
+      return String.valueOf(ch.codePointAt(0));
+    }
+  }
+
+  public String unpack(List<Byte> bytes) {
+    byte[] byteAry = new byte[bytes.size()];
+    for (int i = 0; i < bytes.size(); i++) {
+      byteAry[i] = bytes.get(i);
+    }
+    return unpack(byteAry);
+  }
+
+  public String unpack(byte[] bytes) {
+    switch (this) {
+    default: // c
+      return String.valueOf((int) bytes[0]);
+    case s:
+      return String.valueOf(ByteBuffer.wrap(bytes).getShort());
+    case sb:
+      return String
+          .valueOf(ByteBuffer.wrap(bytes).order(BIG_ENDIAN).getShort());
+    case sl:
+      return String.valueOf(ByteBuffer.wrap(bytes).order(LITTLE_ENDIAN)
+          .getShort());
+    case l:
+      return String.valueOf(ByteBuffer.wrap(bytes).getInt());
+    case lb:
+      return String.valueOf(ByteBuffer.wrap(bytes).order(BIG_ENDIAN).getInt());
+    case ll:
+      return String.valueOf(ByteBuffer.wrap(bytes).order(LITTLE_ENDIAN)
+          .getInt());
+    case q:
+      return String.valueOf(ByteBuffer.wrap(bytes).getLong());
+    case qb:
+      return String.valueOf(ByteBuffer.wrap(bytes).order(BIG_ENDIAN).getLong());
+    case ql:
+      return String.valueOf(ByteBuffer.wrap(bytes).order(LITTLE_ENDIAN)
+          .getLong());
+    case D:
+      return String.valueOf(ByteBuffer.wrap(bytes).getDouble());
+    case d:
+      return String.valueOf(ByteBuffer.wrap(bytes).getDouble());
+    case E:
+      return String.valueOf(ByteBuffer.wrap(bytes).order(LITTLE_ENDIAN)
+          .getDouble());
+    case G:
+      return String
+          .valueOf(ByteBuffer.wrap(bytes).order(BIG_ENDIAN).getFloat());
+    case F:
+      return String.valueOf(ByteBuffer.wrap(bytes).getFloat());
+    case f:
+      return String.valueOf(ByteBuffer.wrap(bytes).getFloat());
+    case e:
+      return String.valueOf(ByteBuffer.wrap(bytes).order(LITTLE_ENDIAN)
+          .getFloat());
+    case g:
+      return String
+          .valueOf(ByteBuffer.wrap(bytes).order(BIG_ENDIAN).getFloat());
     }
   }
 

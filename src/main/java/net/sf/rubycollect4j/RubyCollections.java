@@ -36,6 +36,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
+import net.sf.rubycollect4j.succ.CharacterSuccessor;
 import net.sf.rubycollect4j.succ.DateSuccessor;
 import net.sf.rubycollect4j.succ.DoubleSuccessor;
 import net.sf.rubycollect4j.succ.IntegerSuccessor;
@@ -249,6 +250,21 @@ public final class RubyCollections {
   }
 
   /**
+   * Creates a RubyRange by given chars.
+   * 
+   * @param startPoint
+   *          where the range begins
+   * @param endPoint
+   *          where the range ends
+   * @return a RubyRange
+   */
+  public static RubyRange<Character>
+      newRubyRange(char startPoint, char endPoint) {
+    return new RubyRange<Character>(CharacterSuccessor.getInstance(),
+        startPoint, endPoint);
+  }
+
+  /**
    * Creates a RubyRange by given ints.
    * 
    * @param startPoint
@@ -307,6 +323,42 @@ public final class RubyCollections {
   public static RubyRange<Date> newRubyRange(Date startPoint, Date endPoint) {
     return new RubyRange<Date>(DateSuccessor.getInstance(), startPoint,
         endPoint);
+  }
+
+  /**
+   * Creates a RubyString.
+   * 
+   * @return a RubyString
+   */
+  public static RubyString newRubyString() {
+    return new RubyString();
+  }
+
+  /**
+   * Creates a RubyString by given String.
+   * 
+   * @return a RubyString
+   */
+  public static RubyString newRubyString(String str) {
+    return new RubyString(str);
+  }
+
+  /**
+   * Creates a RubyString.
+   * 
+   * @return a RubyString
+   */
+  public static RubyString rs() {
+    return new RubyString();
+  }
+
+  /**
+   * Creates a RubyString by given String.
+   * 
+   * @return a RubyString
+   */
+  public static RubyString rs(String str) {
+    return new RubyString(str);
   }
 
   /**
@@ -1920,6 +1972,19 @@ public final class RubyCollections {
    * @return a RubyRange
    */
   public static RubyRange<String> range(String start, String end) {
+    return newRubyRange(start, end);
+  }
+
+  /**
+   * Creates a RubyRange by given chars.
+   * 
+   * @param start
+   *          of the range
+   * @param end
+   *          of the range
+   * @return a RubyRange
+   */
+  public static RubyRange<Character> range(char start, char end) {
     return newRubyRange(start, end);
   }
 
