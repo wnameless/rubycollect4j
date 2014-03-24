@@ -45,7 +45,6 @@ import javax.xml.bind.TypeConstraintException;
 
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.block.BooleanBlock;
-import net.sf.rubycollect4j.block.ReduceBlock;
 import net.sf.rubycollect4j.block.TransformBlock;
 import net.sf.rubycollect4j.packer.Unpacker;
 import net.sf.rubycollect4j.succ.StringSuccessor;
@@ -268,25 +267,51 @@ public final class RubyString extends RubyEnumerable<String> implements
     return this;
   }
 
-  public int count(String sets) {
-    checkNotNull(sets);
+  public int count(final String charSet, final String... charSets) {
+    checkNotNull(charSet);
 
-    final RubyArray<String> chars = chars();
-    return rs(sets).chars().uniq().map(new TransformBlock<String, Integer>() {
-
-      @Override
-      public Integer yield(String item) {
-        return chars.count(item);
-      }
-
-    }).reduce(new ReduceBlock<Integer>() {
+    return chars().count(new BooleanBlock<String>() {
 
       @Override
-      public Integer yield(Integer memo, Integer item) {
-        return memo + item;
+      public boolean yield(String item) {
+        if (!isCharSetMatched(item, charSet))
+          return false;
+
+        for (String cs : charSets) {
+          if (!isCharSetMatched(item, cs))
+            return false;
+        }
+
+        return true;
       }
 
     });
+  }
+
+  private boolean isCharSetMatched(String ch, String charSet) {
+    if (charSet.startsWith("^") && !ch.matches("[" + charSet + "]"))
+      return false;
+
+    if (!charSet.startsWith("^")
+        && !rs(charSet2Str(charSet)).chars().includeʔ(ch))
+      return false;
+
+    return true;
+  }
+
+  private String charSet2Str(String charSet) {
+    Matcher matcher = qr("\\\\?[^\\\\]-\\\\?[^\\\\]").matcher(charSet);
+    while (matcher.find()) {
+      String charRg = matcher.group();
+      RubyRange<Character> rr =
+          range(charRg.replace("\\", "").charAt(0), charRg.replace("\\", "")
+              .charAt(2));
+      if (rr.noneʔ())
+        throw new IllegalArgumentException("ArgumentError: invalid range \""
+            + charSet + "\" in string transliteration");
+      charSet = charSet.replace(charRg, rr.toA().join());
+    }
+    return charSet;
   }
 
   public String crypt(String salt) {
@@ -494,10 +519,121 @@ public final class RubyString extends RubyEnumerable<String> implements
       return null;
   }
 
-  public RubyString replace(String otherStr) {
-    checkNotNull(otherStr);
+  public RubyString insert(int index, String otherStr) {
+    str = chars().insert(index, otherStr).join();
+    return this;
+  }
 
-    str = otherStr;
+  public String inspect() {
+    String printable = str.replaceAll("\b", "\\\\b");
+    printable = printable.replaceAll("\f", "\\\\f");
+    printable = printable.replaceAll("\n", "\\\\n");
+    printable = printable.replaceAll("\r", "\\\\r");
+    printable = printable.replaceAll("\t", "\\\\t");
+    return "\"" + printable + "\"";
+  }
+
+  public RubyArray<String> lines() {
+    return eachLine().toA();
+  }
+
+  public RubyArray<String> lines(String separator) {
+    return eachLine(separator).toA();
+  }
+
+  public String ljust(int width) {
+    return ljust(width, " ");
+  }
+
+  public String ljust(int width, String padstr) {
+    RubyLazyEnumerator<String> padStr = rs(padstr).chars().lazy().cycle();
+
+    int extra = width - str.length();
+    if (extra > 0) {
+      StringBuilder sb = new StringBuilder();
+      while (extra > 0) {
+        sb.append(padStr.next());
+        extra--;
+      }
+      return str + sb.toString();
+    }
+
+    return str;
+  }
+
+  public String lstrip() {
+    return str.replaceFirst("^\\s+", "");
+  }
+
+  public RubyString lstripǃ() {
+    str = lstrip();
+    return this;
+  }
+
+  public Matcher match(String pattern) {
+    return qr(pattern).matcher(str);
+  }
+
+  public Matcher match(String pattern, int pos) {
+    return qr(pattern).matcher(str.substring(pos));
+  }
+
+  public RubyString next() {
+    return rs(StringSuccessor.getInstance().succ(str));
+  }
+
+  public RubyString nextǃ() {
+    str = StringSuccessor.getInstance().succ(str);
+    return this;
+  }
+
+  public int oct() {
+    return toI(8);
+  }
+
+  public int ord() {
+    if (str == null)
+      throw new IllegalArgumentException("ArgumentError: empty string");
+
+    return str.charAt(0);
+  }
+
+  public RubyArray<String> partition(String sep) {
+    if (sep == null)
+      throw new TypeConstraintException("TypeError: type mismatch: null given");
+
+    int sepIndex = str.indexOf(sep);
+    if (sepIndex == -1)
+      return newRubyArray("", "", str);
+
+    return newRubyArray(str.substring(0, sepIndex), sep,
+        str.substring(sepIndex + sep.length()));
+  }
+
+  public RubyArray<String> partition(Pattern regex) {
+    if (regex == null)
+      throw new TypeConstraintException("TypeError: type mismatch: null given");
+
+    Matcher matcher = regex.matcher(str);
+    if (matcher.find()) {
+      String sep = matcher.group();
+      while (matcher.find()) {
+        sep = matcher.group();
+      }
+      int sepIndex = str.indexOf(sep);
+      return newRubyArray(str.substring(0, sepIndex), sep,
+          str.substring(sepIndex + sep.length()));
+    } else
+      return newRubyArray("", "", str);
+  }
+
+  public RubyString prepend(String otherStr) {
+    str = checkNotNull(otherStr) + str;
+    return this;
+  }
+
+  public RubyString replace(String otherStr) {
+    str = checkNotNull(otherStr);
     return this;
   }
 
@@ -1079,21 +1215,6 @@ public final class RubyString extends RubyEnumerable<String> implements
 
     str = trimmedStr;
     return this;
-  }
-
-  private String charSet2Str(String charSet) {
-    Matcher matcher = qr("\\\\?[^\\\\]-\\\\?[^\\\\]").matcher(charSet);
-    while (matcher.find()) {
-      String charRg = matcher.group();
-      RubyRange<Character> rr =
-          range(charRg.replace("\\", "").charAt(0), charRg.replace("\\", "")
-              .charAt(2));
-      if (rr.noneʔ())
-        throw new IllegalArgumentException("ArgumentError: invalid range \""
-            + charSet + "\" in string transliteration");
-      charSet = charSet.replace(charRg, rr.toA().join());
-    }
-    return charSet;
   }
 
   public RubyArray<String> unpack(String format) {

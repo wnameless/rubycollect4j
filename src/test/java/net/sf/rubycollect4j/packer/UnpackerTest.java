@@ -25,7 +25,9 @@ import static net.sf.rubycollect4j.RubyCollections.rs;
 public class UnpackerTest {
 
   public static void main(String[] args) {
-    System.out.println(rs("\0\32\0\32").unpack("c4c"));
+    System.out.println(rs("a").ord());
+
+    // System.out.println(rs("\0\32\0\32").unpack("c4c"));
     // System.out.println(rs("aaa").unpack("h2H2c"));
     // System.out.println("ABC \0".matches(".*\\p{C}"));
     // System.out.println(rs("abc \0\0abc \0").unpack("Z*Z*Z*"));
@@ -37,5 +39,4 @@ public class UnpackerTest {
     // System.out.println(rs("X['\\b']").tr("X\\", ""));
     // System.out.println(rs("X['\\b']").tr("X-\\]", ""));
   }
-
 }
