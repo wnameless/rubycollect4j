@@ -21,13 +21,24 @@
 package net.sf.rubycollect4j.packer;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.junit.Test;
 
 public class PackerTest {
+
+  @Test
+  public void testPrivateConstructor() throws Exception {
+    Constructor<Packer> c = Packer.class.getDeclaredConstructor();
+    assertTrue(Modifier.isPrivate(c.getModifiers()));
+    c.setAccessible(true);
+    c.newInstance();
+  }
 
   @Test(expected = IllegalArgumentException.class)
   public void testPackWithInvalidDirective() {

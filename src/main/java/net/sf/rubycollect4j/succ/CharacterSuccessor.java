@@ -20,6 +20,12 @@
  */
 package net.sf.rubycollect4j.succ;
 
+/**
+ * 
+ * CharacterSuccessor generates a successor of any given Character. It's a
+ * singleton object.
+ * 
+ */
 public final class CharacterSuccessor implements Successive<Character> {
 
   private static final CharacterSuccessor INSTANCE = new CharacterSuccessor();
@@ -43,6 +49,11 @@ public final class CharacterSuccessor implements Successive<Character> {
   @Override
   public Character succ(Character curr) {
     return (char) (curr + 1);
+  }
+
+  @Override
+  public String toString() {
+    return "CharacterSuccessor";
   }
 
 }

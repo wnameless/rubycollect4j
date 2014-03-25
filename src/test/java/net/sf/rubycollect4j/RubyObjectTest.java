@@ -21,7 +21,11 @@
 package net.sf.rubycollect4j;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -33,6 +37,14 @@ public class RubyObjectTest {
   @Before
   public void setUp() throws Exception {
     tester = new SendTester();
+  }
+
+  @Test
+  public void testPrivateConstructor() throws Exception {
+    Constructor<RubyObject> c = RubyObject.class.getDeclaredConstructor();
+    assertTrue(Modifier.isPrivate(c.getModifiers()));
+    c.setAccessible(true);
+    c.newInstance();
   }
 
   @Test

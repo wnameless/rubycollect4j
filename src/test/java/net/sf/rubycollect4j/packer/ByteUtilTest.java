@@ -22,7 +22,10 @@ package net.sf.rubycollect4j.packer;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
@@ -32,6 +35,14 @@ import javax.xml.bind.TypeConstraintException;
 import org.junit.Test;
 
 public class ByteUtilTest {
+
+  @Test
+  public void testPrivateConstructor() throws Exception {
+    Constructor<ByteUtil> c = ByteUtil.class.getDeclaredConstructor();
+    assertTrue(Modifier.isPrivate(c.getModifiers()));
+    c.setAccessible(true);
+    c.newInstance();
+  }
 
   @Test
   public void testToByteArrayWithByte() {

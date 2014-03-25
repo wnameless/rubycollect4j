@@ -29,6 +29,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
 import java.util.regex.Pattern;
 
 import org.junit.After;
@@ -51,6 +53,14 @@ public class RubyKernelTest {
   public void cleanUpStreams() {
     System.setOut(null);
     System.setErr(null);
+  }
+
+  @Test
+  public void testPrivateConstructor() throws Exception {
+    Constructor<RubyKernel> c = RubyKernel.class.getDeclaredConstructor();
+    assertTrue(Modifier.isPrivate(c.getModifiers()));
+    c.setAccessible(true);
+    c.newInstance();
   }
 
   @Test

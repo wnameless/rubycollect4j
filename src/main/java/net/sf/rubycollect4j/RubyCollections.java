@@ -2272,6 +2272,17 @@ public final class RubyCollections {
   }
 
   /**
+   * Checks if a RubyHash is null or empty.
+   * 
+   * @param rubyHash
+   *          any RubyHash
+   * @return true if given RubyHash is null or empty, false otherwise
+   */
+  public static boolean isBlank(RubyHash<?, ?> rubyHash) {
+    return rubyHash == null || rubyHash.isEmpty();
+  }
+
+  /**
    * Checks if a Boolean is null or false.
    * 
    * @param bool

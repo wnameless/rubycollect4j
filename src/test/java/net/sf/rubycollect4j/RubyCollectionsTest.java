@@ -23,20 +23,26 @@ package net.sf.rubycollect4j;
 import static net.sf.rubycollect4j.RubyCollections.Hash;
 import static net.sf.rubycollect4j.RubyCollections.date;
 import static net.sf.rubycollect4j.RubyCollections.hp;
+import static net.sf.rubycollect4j.RubyCollections.isBlank;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
 import static net.sf.rubycollect4j.RubyCollections.newRubyLazyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.newRubyRange;
+import static net.sf.rubycollect4j.RubyCollections.newRubyString;
 import static net.sf.rubycollect4j.RubyCollections.qr;
 import static net.sf.rubycollect4j.RubyCollections.qw;
 import static net.sf.rubycollect4j.RubyCollections.qx;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.range;
 import static net.sf.rubycollect4j.RubyCollections.rh;
+import static net.sf.rubycollect4j.RubyCollections.rs;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
@@ -55,6 +61,15 @@ import net.sf.rubycollect4j.util.ComparableEntry;
 import org.junit.Test;
 
 public class RubyCollectionsTest {
+
+  @Test
+  public void testPrivateConstructor() throws Exception {
+    Constructor<RubyCollections> c =
+        RubyCollections.class.getDeclaredConstructor();
+    assertTrue(Modifier.isPrivate(c.getModifiers()));
+    c.setAccessible(true);
+    c.newInstance();
+  }
 
   @Test
   public void testNewRubyArray() {
@@ -115,10 +130,23 @@ public class RubyCollectionsTest {
   @Test
   public void testNewRubyRange() {
     assertTrue(newRubyRange("a", "z") instanceof RubyRange);
+    assertTrue(newRubyRange('a', 'z') instanceof RubyRange);
     assertTrue(newRubyRange(1, 9) instanceof RubyRange);
     assertTrue(newRubyRange(1L, 9L) instanceof RubyRange);
     assertTrue(newRubyRange(1.0, 9.0) instanceof RubyRange);
     assertTrue(newRubyRange(RubyDate.today(), RubyDate.today().add(9).days()) instanceof RubyRange);
+  }
+
+  @Test
+  public void testNewRubyString() {
+    assertTrue(newRubyString() instanceof RubyString);
+    assertTrue(newRubyString("str") instanceof RubyString);
+  }
+
+  @Test
+  public void testRs() {
+    assertTrue(rs() instanceof RubyString);
+    assertTrue(rs("str") instanceof RubyString);
   }
 
   @Test
@@ -282,6 +310,11 @@ public class RubyCollectionsTest {
   }
 
   @Test
+  public void testCharacterRange() {
+    assertTrue(range('A', 'Z') instanceof RubyRange);
+  }
+
+  @Test
   public void testIntegerRange() {
     assertTrue(range(1, 100) instanceof RubyRange);
   }
@@ -410,6 +443,37 @@ public class RubyCollectionsTest {
     c.set(Calendar.SECOND, 33);
     c.set(Calendar.MILLISECOND, 999);
     assertEquals(c.getTime(), date(2013, 7, 7, 11, 22, 33, 999));
+  }
+
+  @Test
+  public void testIsBlank() {
+    assertTrue(isBlank(""));
+    assertTrue(isBlank("   "));
+    assertTrue(isBlank((String) null));
+    assertFalse(isBlank("?"));
+    assertTrue(isBlank(ra()));
+    assertTrue(isBlank((Iterable<?>) null));
+    assertFalse(isBlank(ra(1, 2, 3)));
+    assertTrue(isBlank(new HashMap<Integer, String>()));
+    assertTrue(isBlank((Map<?, ?>) null));
+    assertFalse(isBlank(new HashMap<Integer, String>() {
+
+      private static final long serialVersionUID = 1L;
+
+      {
+        put(1, "a");
+        put(2, "b");
+      }
+
+    }));
+    assertTrue(isBlank(false));
+    assertTrue(isBlank((Boolean) null));
+    assertFalse(isBlank(true));
+    assertTrue(isBlank((Integer) null));
+    assertFalse(isBlank(1));
+    assertTrue(isBlank(rh()));
+    assertTrue(isBlank((RubyHash<?, ?>) null));
+    assertFalse(isBlank(rh(1, "a", 2, "b")));
   }
 
 }

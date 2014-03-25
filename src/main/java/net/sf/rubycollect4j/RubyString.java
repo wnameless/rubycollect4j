@@ -162,7 +162,7 @@ public final class RubyString extends RubyEnumerable<String> implements
 
     RubyArray<String> centeredStr = newRubyArray();
     int start = (width - str.length()) / 2;
-    RubyLazyEnumerator<String> padStr = rs(padstr).chars().lazy().cycle();
+    RubyLazyEnumerator<String> padStr = rs(padstr).lazy().cycle();
     for (int i = 0; i < width; i++) {
       if (i < start) {
         centeredStr.add(padStr.next());
@@ -277,7 +277,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   public int count(final String charSet, final String... charSets) {
     checkNotNull(charSet);
 
-    return chars().count(new BooleanBlock<String>() {
+    return count(new BooleanBlock<String>() {
 
       @Override
       public boolean yield(String item) {
@@ -299,8 +299,7 @@ public final class RubyString extends RubyEnumerable<String> implements
     if (charSet.startsWith("^") && !ch.matches("[" + charSet + "]"))
       return false;
 
-    if (!charSet.startsWith("^")
-        && !rs(charSet2Str(charSet)).chars().includeʔ(ch))
+    if (!charSet.startsWith("^") && !rs(charSet2Str(charSet)).includeʔ(ch))
       return false;
 
     return true;
@@ -581,7 +580,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   }
 
   public RubyString ljust(int width, String padstr) {
-    RubyLazyEnumerator<String> padStr = rs(padstr).chars().lazy().cycle();
+    RubyLazyEnumerator<String> padStr = rs(padstr).lazy().cycle();
 
     int extra = width - str.length();
     if (extra > 0) {
@@ -722,7 +721,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   }
 
   public RubyString rjust(int width, String padstr) {
-    RubyLazyEnumerator<String> padStr = rs(padstr).chars().lazy().cycle();
+    RubyLazyEnumerator<String> padStr = rs(padstr).lazy().cycle();
 
     int extra = width - str.length();
     if (extra > 0) {
@@ -831,7 +830,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   }
 
   public RubyString scrub(final TransformBlock<RubyArray<Byte>, String> block) {
-    return rs(chars().map(new TransformBlock<String, String>() {
+    return rs(map(new TransformBlock<String, String>() {
 
       @Override
       public String yield(String item) {
@@ -920,7 +919,7 @@ public final class RubyString extends RubyEnumerable<String> implements
     if (slicedStr == null)
       return null;
 
-    str = chars().join();
+    str = chars.join();
     return index;
   }
 
@@ -930,7 +929,7 @@ public final class RubyString extends RubyEnumerable<String> implements
     if (slicedStr == null)
       return null;
 
-    str = chars().join();
+    str = chars.join();
     return rs(slicedStr.join());
   }
 
@@ -1106,7 +1105,7 @@ public final class RubyString extends RubyEnumerable<String> implements
 
   public RubyString swapcase() {
     final Pattern upperCase = qr("[A-Z]");
-    return rs(chars().map(new TransformBlock<String, String>() {
+    return rs(map(new TransformBlock<String, String>() {
 
       @Override
       public String yield(String item) {
@@ -1230,15 +1229,14 @@ public final class RubyString extends RubyEnumerable<String> implements
                       .replace("]", "\\]") + "]", rh).toS();
     }
 
-    RubyArray<Boolean> matchIndice =
-        chars().map(new TransformBlock<String, Boolean>() {
+    RubyArray<Boolean> matchIndice = map(new TransformBlock<String, Boolean>() {
 
-          @Override
-          public Boolean yield(String item) {
-            return item.matches("[" + fromString + "]");
-          }
+      @Override
+      public Boolean yield(String item) {
+        return item.matches("[" + fromString + "]");
+      }
 
-        });
+    });
 
     final Boolean[] prev = { matchIndice.get(0) };
     RubyArray<Integer> matchCounts =
