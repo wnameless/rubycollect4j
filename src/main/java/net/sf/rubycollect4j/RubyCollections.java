@@ -2238,4 +2238,59 @@ public final class RubyCollections {
     return new RubyDate(c.getTime());
   }
 
+  /**
+   * Checks if a String is null or blank(only white-spaces).
+   * 
+   * @param str
+   *          any String
+   * @return true if given String is null or blank, false otherwise
+   */
+  public static boolean isBlank(String str) {
+    return str == null || str.trim().isEmpty();
+  }
+
+  /**
+   * Checks if an Iterable is null or empty.
+   * 
+   * @param iter
+   *          any Iterable
+   * @return true if given Iterable is null or empty, false otherwise
+   */
+  public static boolean isBlank(Iterable<?> iter) {
+    return iter == null || !iter.iterator().hasNext();
+  }
+
+  /**
+   * Checks if a Map is null or empty.
+   * 
+   * @param map
+   *          any Map
+   * @return true if given Map is null or empty, false otherwise
+   */
+  public static boolean isBlank(Map<?, ?> map) {
+    return map == null || map.isEmpty();
+  }
+
+  /**
+   * Checks if a Boolean is null or false.
+   * 
+   * @param bool
+   *          any Boolean
+   * @return true if given Boolean is null or False, false otherwise
+   */
+  public static boolean isBlank(Boolean bool) {
+    return bool == null || bool.equals(Boolean.FALSE);
+  }
+
+  /**
+   * Checks if an Object is null.
+   * 
+   * @param o
+   *          any Object
+   * @return true if given Object is null, false otherwise
+   */
+  public static boolean isBlank(Object o) {
+    return o == null;
+  }
+
 }
