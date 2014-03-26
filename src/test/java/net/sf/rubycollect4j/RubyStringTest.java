@@ -29,6 +29,8 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.nio.charset.Charset;
+
 import javax.xml.bind.TypeConstraintException;
 
 import net.sf.rubycollect4j.block.Block;
@@ -307,6 +309,148 @@ public class RubyStringTest {
 
     }));
     assertEquals(ra(97, 98, 99), ints);
+  }
+
+  @Test
+  public void testEachLine() {
+    assertEquals(ra("a", "\r", "bc"), rs("a\n\r\nbc\n").eachLine().toA());
+  }
+
+  @Test
+  public void testEachLineWithBlock() {
+    rs = rs("a\n\r\nbc\n");
+    final RubyArray<String> lines = newRubyArray();
+    assertSame(rs, rs.eachLine(new Block<String>() {
+
+      @Override
+      public void yield(String item) {
+        lines.add(item);
+      }
+
+    }));
+    assertEquals(ra("a", "\r", "bc"), lines);
+  }
+
+  @Test
+  public void testEachLineWithSeparator() {
+    assertEquals(ra("a\n", "\nbc\n"), rs("a\n\r\nbc\n").eachLine("\r").toA());
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testEachLineWithSeparatorException() {
+    rs.eachLine((String) null);
+  }
+
+  @Test
+  public void testEachLineWithSeparatorAndBlock() {
+    rs = rs("a\n\r\nbc\n");
+    final RubyArray<String> lines = newRubyArray();
+    assertSame(rs, rs.eachLine("\r", new Block<String>() {
+
+      @Override
+      public void yield(String item) {
+        lines.add(item);
+      }
+
+    }));
+    assertEquals(ra("a\n", "\nbc\n"), lines);
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testEachLineWithSeparatorAndBlockException() {
+    rs.eachLine((String) null, new Block<String>() {
+
+      @Override
+      public void yield(String item) {}
+
+    });
+  }
+
+  @Test
+  public void testEmptyʔ() {
+    assertFalse(rs.emptyʔ());
+    rs = rs("");
+    assertTrue(rs.emptyʔ());
+  }
+
+  @Test
+  public void testEncode() {
+    assertEquals(rs("æ"), rs("我").encode("ISO-8859-1"));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testEncodeException() {
+    rs.encode(null);
+  }
+
+  @Test
+  public void testEncodeWithDestinationAndSourceEncoding() {
+    assertEquals(rs("æ"), rs("我").encode("ISO-8859-1", "UTF-8"));
+  }
+
+  @Test
+  public void testEncodeǃ() {
+    assertEquals(rs("æ"), rs("我").encodeǃ("ISO-8859-1"));
+    assertSame(rs, rs.encodeǃ("ISO-8859-1"));
+  }
+
+  @Test
+  public void testEncodeǃWithDestinationAndSourceEncoding() {
+    assertEquals(rs("æ"), rs("我").encodeǃ("ISO-8859-1", "UTF-8"));
+    assertSame(rs, rs.encodeǃ("ISO-8859-1", "UTF-8"));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testEncodeExceptionWithNullDestinationEncoding() {
+    rs.encode(null, "UTF-8");
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testEncodeExceptionWithNullSourceEncoding() {
+    rs.encode("ISO-8859-1", null);
+  }
+
+  @Test
+  public void testEncoding() {
+    assertEquals(Charset.forName("UTF-8"), rs.encoding());
+  }
+
+  @Test
+  public void testEndWithʔ() {
+    assertTrue(rs.endWithʔ("c"));
+    assertTrue(rs.endWithʔ("b", "a", "c"));
+    assertFalse(rs.endWithʔ("a"));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testEndWithʔException1() {
+    rs.endWithʔ(null);
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testEndWithʔException2() {
+    rs.endWithʔ("c", (String[]) null);
+  }
+
+  @Test
+  public void testEqlʔ() {
+    assertTrue(rs("a").eqlʔ(rs("a")));
+    assertFalse(rs("a").eqlʔ("a"));
+  }
+
+  @Test
+  public void testForceEncoding() {
+    assertEquals(rs("æ"), rs("我").forceEncoding("ISO-8859-1"));
+    assertSame(rs, rs.forceEncoding("ISO-8859-1"));
+  }
+
+  @Test
+  public void testGetbyte() {
+    assertEquals((Byte) "我".getBytes()[0], rs("我").getbyte(0));
+    assertEquals((Byte) "我".getBytes()[1], rs("我").getbyte(1));
+    assertEquals((Byte) "我".getBytes()[2], rs("我").getbyte(2));
+    assertNull(rs("我").getbyte(3));
+    assertEquals((Byte) "我".getBytes()[2], rs("我").getbyte(-1));
   }
 
   @Test

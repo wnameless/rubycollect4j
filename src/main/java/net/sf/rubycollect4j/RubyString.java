@@ -560,6 +560,11 @@ public final class RubyString extends RubyEnumerable<String> implements
     return rs(str.toLowerCase());
   }
 
+  /**
+   * Downcases the contents of str, returning null if no changes were made.
+   * 
+   * @return this RubyString or null
+   */
   public RubyString downcaseǃ() {
     RubyString downcasedStr = downcase();
     if (downcasedStr.equals(this))
@@ -678,52 +683,137 @@ public final class RubyString extends RubyEnumerable<String> implements
     return this;
   }
 
+  /**
+   * Returns a RubyEnumerator of each line in str.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<String> eachLine() {
     return ra(str.split(System.getProperty("line.separator"))).each();
   }
 
+  /**
+   * Passes each line in str to the given block.
+   * 
+   * @param block
+   *          to yield line
+   * @return this RubyString
+   */
   public RubyString eachLine(Block<String> block) {
     eachLine().each(block);
     return this;
   }
 
+  /**
+   * Returns a RubyEnumerator of each line by given separator in str.
+   * 
+   * @return a RubyEnumerator
+   */
+  public RubyEnumerator<String> eachLine(String separator) {
+    checkNotNull(separator);
+
+    return ra(str.split(separator)).each();
+  }
+
+  /**
+   * Passes each line by given separator in str to the given block.
+   * 
+   * @param block
+   *          to yield line
+   * @return this RubyString
+   */
   public RubyString eachLine(String separator, Block<String> block) {
+    checkNotNull(separator);
+
     ra(str.split(separator)).each(block);
     return this;
   }
 
-  public RubyEnumerator<String> eachLine(String separator) {
-    return ra(str.split(separator)).each();
-  }
-
+  /**
+   * Returns true if str has a length of zero.
+   * 
+   * @return true if str has a length of zero, false otherwise
+   */
   public boolean emptyʔ() {
     return str.isEmpty();
   }
 
+  /**
+   * Returns a copy of str transcoded to encoding encoding.
+   * 
+   * @param encoding
+   *          name of encoding
+   * @return a new RubyString
+   */
   public RubyString encode(String encoding) {
+    checkNotNull(encoding);
+
     return rs(new String(str.getBytes(), Charset.forName(encoding)));
   }
 
+  /**
+   * Returns a copy of str transcoded from srcEncoding to dstEncoding.
+   * 
+   * @param dstEncoding
+   *          name of destination encoding
+   * @param srcEncoding
+   *          name of source encoding
+   * @return a new RubyString
+   */
   public RubyString encode(String dstEncoding, String srcEncoding) {
+    checkNotNull(srcEncoding);
+    checkNotNull(dstEncoding);
+
     return rs(new String(str.getBytes(Charset.forName(srcEncoding)),
         Charset.forName(dstEncoding)));
   }
 
+  /**
+   * Returns the str transcoded to encoding encoding.
+   * 
+   * @param encoding
+   *          name of encoding
+   * @return this RubyString
+   */
   public RubyString encodeǃ(String encoding) {
     str = encode(encoding).toS();
     return this;
   }
 
+  /**
+   * Returns the str transcoded from srcEncoding to dstEncoding.
+   * 
+   * @param dstEncoding
+   *          name of destination encoding
+   * @param srcEncoding
+   *          name of source encoding
+   * @return this RubyString
+   */
   public RubyString encodeǃ(String dstEncoding, String srcEncoding) {
     str = encode(dstEncoding, srcEncoding).toS();
     return this;
   }
 
+  /**
+   * Returns UTF-8 Charset.
+   * 
+   * @return a Charset
+   */
   public Charset encoding() {
     return Charset.forName("UTF-8");
   }
 
+  /**
+   * Returns true if str ends with one of the suffixes given.
+   * 
+   * @param suffix
+   * @param otherSuffix
+   * @return true if str ends with one of the suffixes given, false otherwise
+   */
   public boolean endWithʔ(String suffix, String... otherSuffix) {
+    checkNotNull(suffix);
+    checkNotNull(otherSuffix);
+
     if (str.endsWith(suffix))
       return true;
 
@@ -735,15 +825,36 @@ public final class RubyString extends RubyEnumerable<String> implements
     return false;
   }
 
+  /**
+   * Two RubyString are equal if they have the same length and content.
+   * 
+   * @param o
+   *          any Object
+   * @return true if two objects are equal, false otherwise
+   */
   public boolean eqlʔ(Object o) {
     return equals(o);
   }
 
+  /**
+   * Changes the encoding to encoding and returns self.
+   * 
+   * @param encoding
+   *          name of encoding
+   * @return this RubyString
+   */
   public RubyString forceEncoding(String encoding) {
     str = encode(encoding).toS();
     return this;
   }
 
+  /**
+   * Returns the indexth byte, or null if index was out of range.
+   * 
+   * @param index
+   *          of a byte
+   * @return a Byte or null
+   */
   public Byte getbyte(int index) {
     return bytes().at(index);
   }
