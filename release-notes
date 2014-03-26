@@ -206,3 +206,5 @@ Version 1.7.0
 + Added RubyString
 
 + Added CharacterSuccessor
+
+* Fixed the bug of RubyArray#pack

@@ -60,12 +60,24 @@ public final class RubyString extends RubyEnumerable<String> implements
 
   private String str;
 
+  /**
+   * Returns a RubyString with an empty String as default value.
+   */
   public RubyString() {
     str = "";
   }
 
-  public RubyString(String str) {
-    this.str = checkNotNull(str);
+  /**
+   * Returns a RubyString with calling {@link Object#toString()} on given Object
+   * as default value.
+   * 
+   * @param o
+   *          any Object
+   * @throws TypeConstraintException
+   *           if o is null
+   */
+  public RubyString(Object o) {
+    str = checkNotNull(o);
   }
 
   @Override
@@ -82,22 +94,37 @@ public final class RubyString extends RubyEnumerable<String> implements
         });
   }
 
-  private String checkNotNull(String str) {
-    if (str == null)
+  private String checkNotNull(Object o) {
+    if (o == null)
       throw new TypeConstraintException(
           "TypeError: no implicit conversion of null into String");
 
-    return str;
+    return o.toString();
   }
 
+  /**
+   * Checks if RubyString only contains ascii.
+   * 
+   * @return true if this RubyString only contains ascii, false otherwise
+   */
   public boolean asciiOnlyʔ() {
     return str.matches("^[\\u0000-\\u007F]*$");
   }
 
+  /**
+   * Returns a copied string whose encoding is ASCII-8BIT.
+   * 
+   * @return a new RubyString
+   */
   public RubyString b() {
     return rs(new String(str.getBytes(), Charset.forName("ISO-8859-1")));
   }
 
+  /**
+   * Returns an RubyArray of Byte in RubyString.
+   * 
+   * @return a RubyArray of Byte
+   */
   public RubyArray<Byte> bytes() {
     RubyArray<Byte> bytes = newRubyArray();
     for (Byte b : str.getBytes()) {
@@ -106,13 +133,28 @@ public final class RubyString extends RubyEnumerable<String> implements
     return bytes;
   }
 
+  /**
+   * Returns the length of RubyString in bytes.
+   * 
+   * @return the length of bytes
+   */
   public int bytesize() {
     return str.getBytes().length;
   }
 
-  public RubyString byteslice(int fixnum) {
-    Byte ch = bytes().at(fixnum);
-    return ch == null ? null : rs(new String(new byte[] { ch }));
+  /**
+   * Returns a substring of one byte at given index.
+   * 
+   * @param index
+   *          of target byte
+   * @return s RubyString of sliced byte
+   */
+  public RubyString byteslice(int index) {
+    Byte ch = bytes().at(index);
+    if (ch == null)
+      return null;
+
+    return rs(new String(new byte[] { ch }, Charset.forName("ISO-8859-1")));
   }
 
   public RubyString byteslice(int index, int length) {
@@ -559,11 +601,32 @@ public final class RubyString extends RubyEnumerable<String> implements
   }
 
   public RubyString inspect() {
-    String printable = str.replaceAll("\b", "\\\\b");
-    printable = printable.replaceAll("\f", "\\\\f");
-    printable = printable.replaceAll("\n", "\\\\n");
-    printable = printable.replaceAll("\r", "\\\\r");
-    printable = printable.replaceAll("\t", "\\\\t");
+    String printable = chars().map(new TransformBlock<String, String>() {
+
+      @Override
+      public String yield(String item) {
+        if (item.matches("\b"))
+          return "\\b";
+        else if (item.matches("\f"))
+          return "\\f";
+        else if (item.matches("\n"))
+          return "\\n";
+        else if (item.matches("\r"))
+          return "\\r";
+        else if (item.matches("\t"))
+          return "\\t";
+        else if (item.matches("\\p{C}")) {
+          Integer codepoint = item.codePointAt(0);
+          if (codepoint < 256) {
+            return "\\" + Integer.parseInt(codepoint.toString(), 8);
+          } else {
+            return "\\u" + Integer.toHexString(codepoint);
+          }
+        }
+        return item;
+      }
+
+    }).join();
     return rs("\"" + printable + "\"");
   }
 

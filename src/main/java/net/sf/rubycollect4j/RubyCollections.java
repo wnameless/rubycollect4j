@@ -335,12 +335,12 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyString by given String.
+   * Creates a RubyString by given Object.
    * 
    * @return a RubyString
    */
-  public static RubyString newRubyString(String str) {
-    return new RubyString(str);
+  public static RubyString newRubyString(Object o) {
+    return new RubyString(o);
   }
 
   /**
@@ -353,12 +353,12 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyString by given String.
+   * Creates a RubyString by given Object.
    * 
    * @return a RubyString
    */
-  public static RubyString rs(String str) {
-    return new RubyString(str);
+  public static RubyString rs(Object o) {
+    return new RubyString(o);
   }
 
   /**

@@ -763,8 +763,7 @@ public class RubyArrayTest {
   @Test
   public void testPack() {
     assertEquals("a  b  c  ", ra("a", "b", "c").pack("A3A3A3"));
-    assertEquals("a\\x00\\x00b\\x00\\x00c\\x00\\x00",
-        ra("a", "b", "c").pack("a3a3a3"));
+    assertEquals("a\0\0b\0\0c\0\0", ra("a", "b", "c").pack("a3a3a3"));
     assertEquals("ABC", ra(65, 66, 67).pack("ccc"));
   }
 

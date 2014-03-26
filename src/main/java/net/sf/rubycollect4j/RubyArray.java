@@ -432,7 +432,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   /**
    * Checks if this is an empty RubyArray.
    * 
-   * @return true if this RubyArray is empty, false otherwise.
+   * @return true if this RubyArray is empty, false otherwise
    */
   public boolean emptyʔ() {
     return list.isEmpty();

@@ -22,14 +22,13 @@ package net.sf.rubycollect4j.packer;
 
 import static java.nio.ByteOrder.LITTLE_ENDIAN;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
-import static net.sf.rubycollect4j.RubyCollections.qr;
 
 import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.nio.charset.Charset;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
 
 import javax.xml.bind.TypeConstraintException;
 
@@ -307,22 +306,22 @@ public final class ByteUtil {
     if (bo == LITTLE_ENDIAN) {
       for (int i = 0; i < n; i++) {
         if (i >= bytes.length) {
-          ra.push("\\x00");
+          ra.push("\0");
           continue;
         }
         byte b = bytes[i];
-        ra.push(byteToASCII(b, true));
+        ra.push(byteToASCII(b));
       }
       return ra.join();
     } else {
       for (int i = bytes.length - 1; n > 0; i--) {
         if (i < 0) {
-          ra.unshift("\\x00");
+          ra.unshift("\0");
           n--;
           continue;
         }
         byte b = bytes[i];
-        ra.unshift(byteToASCII(b, true));
+        ra.unshift(byteToASCII(b));
         n--;
       }
       return ra.join();
@@ -342,27 +341,8 @@ public final class ByteUtil {
     return toASCIIs(bytes, n, ByteOrder.nativeOrder());
   }
 
-  private static String byteToASCII(byte b, boolean hexPrefix) {
-    if (b >= 32 && b <= 126) {
-      return new String(new byte[] { b });
-    } else if (b == 7)
-      return "\\a";
-    else if (b == 8)
-      return "\\b";
-    else if (b == 9)
-      return "\\t";
-    else if (b == 10)
-      return "\\n";
-    else if (b == 11)
-      return "\\v";
-    else if (b == 12)
-      return "\\f";
-    else if (b == 13)
-      return "\\r";
-    else if (b == 27)
-      return "\\e";
-    else
-      return (hexPrefix ? "\\x" : "") + String.format("%02X", b);
+  private static String byteToASCII(byte b) {
+    return new String(new byte[] { b }, Charset.forName("ISO-8859-1"));
   }
 
   /**
@@ -380,35 +360,7 @@ public final class ByteUtil {
       throw new IllegalArgumentException(
           "RangeError: pack(U): value out of range");
 
-    if (codePoint <= 126) {
-      String ascii = byteToASCII((byte) codePoint, false);
-      if (ascii.length() == 2 && !ascii.startsWith("\\"))
-        return "\\u00" + ascii;
-      else
-        return ascii;
-    } else if (codePoint <= 65535) {
-      String utf16 = String.valueOf((char) codePoint);
-      Pattern p = qr("(\\p{C})+");
-      if (p.matcher(utf16).matches()) {
-        ByteBuffer bb = ByteBuffer.allocate(2).putChar((char) codePoint);
-        return "\\u" + String.format("%02X", bb.get(0))
-            + String.format("%02X", bb.get(1));
-      } else {
-        return utf16;
-      }
-    } else {
-      char[] chars = Character.toChars(codePoint);
-      String utf16 = String.valueOf(chars);
-      Pattern p = qr("(\\p{C})+");
-      if (p.matcher(utf16).matches()) {
-        ByteBuffer bb = ByteBuffer.allocate(4).putInt(codePoint);
-        return "\\u{" + String.format("%X", bb.get(1))
-            + String.format("%02X", bb.get(2))
-            + String.format("%02X", bb.get(3)) + "}";
-      } else {
-        return utf16;
-      }
-    }
+    return String.valueOf((char) codePoint);
   }
 
 }

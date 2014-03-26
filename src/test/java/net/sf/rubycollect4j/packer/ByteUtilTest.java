@@ -156,38 +156,32 @@ public class ByteUtilTest {
   @Test
   public void testToASCIIs() {
     assertEquals("A", ByteUtil.toASCIIs(new byte[] { (byte) 65 }, 1));
-    assertEquals("\\a", ByteUtil.toASCIIs(new byte[] { (byte) 7 }, 1));
-    assertEquals("\\b", ByteUtil.toASCIIs(new byte[] { (byte) 8 }, 1));
-    assertEquals("\\t", ByteUtil.toASCIIs(new byte[] { (byte) 9 }, 1));
-    assertEquals("\\n", ByteUtil.toASCIIs(new byte[] { (byte) 10 }, 1));
-    assertEquals("\\v", ByteUtil.toASCIIs(new byte[] { (byte) 11 }, 1));
-    assertEquals("\\f", ByteUtil.toASCIIs(new byte[] { (byte) 12 }, 1));
-    assertEquals("\\r", ByteUtil.toASCIIs(new byte[] { (byte) 13 }, 1));
-    assertEquals("\\e", ByteUtil.toASCIIs(new byte[] { (byte) 27 }, 1));
-    assertEquals("\\x10", ByteUtil.toASCIIs(new byte[] { (byte) 16 }, 1));
-    assertEquals("A\\x00",
+    assertEquals("\7", ByteUtil.toASCIIs(new byte[] { (byte) 7 }, 1));
+    assertEquals("\10", ByteUtil.toASCIIs(new byte[] { (byte) 8 }, 1));
+    assertEquals("\11", ByteUtil.toASCIIs(new byte[] { (byte) 9 }, 1));
+    assertEquals("\12", ByteUtil.toASCIIs(new byte[] { (byte) 10 }, 1));
+    assertEquals("\13", ByteUtil.toASCIIs(new byte[] { (byte) 11 }, 1));
+    assertEquals("\14", ByteUtil.toASCIIs(new byte[] { (byte) 12 }, 1));
+    assertEquals("\15", ByteUtil.toASCIIs(new byte[] { (byte) 13 }, 1));
+    assertEquals("\33", ByteUtil.toASCIIs(new byte[] { (byte) 27 }, 1));
+    assertEquals("\20", ByteUtil.toASCIIs(new byte[] { (byte) 16 }, 1));
+    assertEquals("A\0",
         ByteUtil.toASCIIs(new byte[] { (byte) 65 }, 2, ByteOrder.LITTLE_ENDIAN));
-    assertEquals("\\x00A",
+    assertEquals("\0A",
         ByteUtil.toASCIIs(new byte[] { (byte) 65 }, 2, ByteOrder.BIG_ENDIAN));
-    assertEquals("A\\x7F", ByteUtil.toASCIIs(
+    assertEquals("A\177", ByteUtil.toASCIIs(
         new byte[] { (byte) 65, (byte) 127 }, 2, ByteOrder.BIG_ENDIAN));
   }
 
   @Test
   public void testToUTF() {
     assertEquals("A", ByteUtil.toUTF(ByteBuffer.allocate(4).putInt(65).array()));
-    assertEquals("\\u0000",
-        ByteUtil.toUTF(ByteBuffer.allocate(4).putInt(0).array()));
-    assertEquals("\\a",
-        ByteUtil.toUTF(ByteBuffer.allocate(4).putInt(7).array()));
+    assertEquals("\0", ByteUtil.toUTF(ByteBuffer.allocate(4).putInt(0).array()));
+    assertEquals("\7", ByteUtil.toUTF(ByteBuffer.allocate(4).putInt(7).array()));
     assertEquals("〹",
         ByteUtil.toUTF(ByteBuffer.allocate(4).putInt(12345).array()));
-    assertEquals("\\uD903",
+    assertEquals("\uD903",
         ByteUtil.toUTF(ByteBuffer.allocate(4).putInt(55555).array()));
-    assertEquals("𐀀",
-        ByteUtil.toUTF(ByteBuffer.allocate(4).putInt(65536).array()));
-    assertEquals("\\u{10D8EE}",
-        ByteUtil.toUTF(ByteBuffer.allocate(4).putInt(1104110).array()));
   }
 
   @Test(expected = IllegalArgumentException.class)

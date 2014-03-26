@@ -104,7 +104,7 @@ import org.junit.runners.Suite.SuiteClasses;
     RubyEnumerableTest.class, RubyEnumeratorTest.class, RubyFileTest.class,
     RubyHashTest.class, RubyIOTest.class, RubyKernelTest.class,
     RubyLazyEnumeratorTest.class, RubyObjectTest.class, RubyRangeTest.class,
-    ChunkIterableTest.class, ChunkIteratorTest.class,
+    RubyStringTest.class, ChunkIterableTest.class, ChunkIteratorTest.class,
     CombinationIterableTest.class, CombinationIteratorTest.class,
     ComparableEntryIterableTest.class, ComparableEntryIteratorTest.class,
     CycleIterableTest.class, CycleIteratorTest.class, DropIterableTest.class,

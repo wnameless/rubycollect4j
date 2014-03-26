@@ -83,7 +83,7 @@ public final class Packer {
         i++;
       } else if (d == Directive.Z && template.charAt(0) == '*') {
         sb.append(d.pack(ByteUtil.toByteArray(d.cast(objs.get(i)))));
-        sb.append("\\x00");
+        sb.append("\0");
       } else if (template.charAt(0) == '*') {
         while (i < objs.size()) {
           sb.append(d.pack(ByteUtil.toByteArray(d.cast(objs.get(i)))));
@@ -104,7 +104,7 @@ public final class Packer {
               if (d == Directive.A)
                 sb.append(" ");
               else
-                sb.append("\\x00");
+                sb.append("\0");
               count--;
             }
           }

@@ -65,28 +65,26 @@ public class DirectiveTest {
     assertEquals("BA", Directive.sb.pack(int4407873()));
     assertEquals("AB", Directive.sl.pack(int4407873()));
 
-    assertEquals(IS_BIG_ENDIAN ? "\\x00ABC" : "ABC\\x00", Directive.l.pack(ABC));
-    assertEquals("\\x00CBA", Directive.lb.pack(int4407873()));
-    assertEquals("ABC\\x00", Directive.ll.pack(int4407873()));
+    assertEquals(IS_BIG_ENDIAN ? "\0ABC" : "ABC\0", Directive.l.pack(ABC));
+    assertEquals("\0CBA", Directive.lb.pack(int4407873()));
+    assertEquals("ABC\0", Directive.ll.pack(int4407873()));
 
-    assertEquals(IS_BIG_ENDIAN ? "\\x00\\x00\\x00\\x00\\x00ABC"
-        : "ABC\\x00\\x00\\x00\\x00\\x00", Directive.q.pack(ABC));
-    assertEquals("\\x00\\x00\\x00\\x00\\x00CBA",
-        Directive.qb.pack(int4407873()));
-    assertEquals("ABC\\x00\\x00\\x00\\x00\\x00",
-        Directive.ql.pack(int4407873()));
+    assertEquals(IS_BIG_ENDIAN ? "\0\0\0\0\0ABC" : "ABC\0\0\0\0\0",
+        Directive.q.pack(ABC));
+    assertEquals("\0\0\0\0\0CBA", Directive.qb.pack(int4407873()));
+    assertEquals("ABC\0\0\0\0\0", Directive.ql.pack(int4407873()));
 
-    assertEquals(IS_BIG_ENDIAN ? "\\x00\\x00\\x00\\x00\\x00ABC"
-        : "ABC\\x00\\x00\\x00\\x00\\x00", Directive.D.pack(ABC));
-    assertEquals(IS_BIG_ENDIAN ? "\\x00\\x00\\x00\\x00\\x00ABC"
-        : "ABC\\x00\\x00\\x00\\x00\\x00", Directive.d.pack(ABC));
-    assertEquals("ABC\\x00\\x00\\x00\\x00\\x00", Directive.E.pack(int4407873()));
-    assertEquals("\\x00\\x00\\x00\\x00\\x00CBA", Directive.G.pack(int4407873()));
+    assertEquals(IS_BIG_ENDIAN ? "\0\0\0\0\0ABC" : "ABC\0\0\0\0\0",
+        Directive.D.pack(ABC));
+    assertEquals(IS_BIG_ENDIAN ? "\0\0\0\0\0ABC" : "ABC\0\0\0\0\0",
+        Directive.d.pack(ABC));
+    assertEquals("ABC\0\0\0\0\0", Directive.E.pack(int4407873()));
+    assertEquals("\0\0\0\0\0CBA", Directive.G.pack(int4407873()));
 
-    assertEquals(IS_BIG_ENDIAN ? "\\x00ABC" : "ABC\\x00", Directive.F.pack(ABC));
-    assertEquals(IS_BIG_ENDIAN ? "\\x00ABC" : "ABC\\x00", Directive.f.pack(ABC));
-    assertEquals("ABC\\x00", Directive.e.pack(int4407873()));
-    assertEquals("\\x00CBA", Directive.g.pack(int4407873()));
+    assertEquals(IS_BIG_ENDIAN ? "\0ABC" : "ABC\0", Directive.F.pack(ABC));
+    assertEquals(IS_BIG_ENDIAN ? "\0ABC" : "ABC\0", Directive.f.pack(ABC));
+    assertEquals("ABC\0", Directive.e.pack(int4407873()));
+    assertEquals("\0CBA", Directive.g.pack(int4407873()));
 
     assertEquals("〹", Directive.U.pack(ByteUtil.toByteArray(12345)));
     assertEquals("ABC", Directive.A.pack(ABC));
