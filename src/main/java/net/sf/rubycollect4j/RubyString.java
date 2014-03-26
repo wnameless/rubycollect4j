@@ -157,8 +157,18 @@ public final class RubyString extends RubyEnumerable<String> implements
     return rs(new String(new byte[] { ch }, Charset.forName("ISO-8859-1")));
   }
 
-  public RubyString byteslice(int index, int length) {
-    RubyArray<Byte> bytes = bytes().slice(index, length);
+  /**
+   * Returns a substring starting at the offset given by the first, and a length
+   * given by the second.
+   * 
+   * @param offset
+   *          begin index
+   * @param length
+   *          of the bytes
+   * @return a new RubyString
+   */
+  public RubyString byteslice(int offset, int length) {
+    RubyArray<Byte> bytes = bytes().slice(offset, length);
     if (bytes == null)
       return null;
 
@@ -169,6 +179,12 @@ public final class RubyString extends RubyEnumerable<String> implements
     return rs(new String(byteAry));
   }
 
+  /**
+   * Returns a copy of RubyString with the first character converted to
+   * uppercase and the remainder to lowercase.
+   * 
+   * @return a new RubyString
+   */
   public RubyString capitalize() {
     if (str.isEmpty())
       return this;
@@ -177,6 +193,12 @@ public final class RubyString extends RubyEnumerable<String> implements
         + str.substring(1).toLowerCase());
   }
 
+  /**
+   * Modifies RubyString by converting the first character to uppercase and the
+   * remainder to lowercase.
+   * 
+   * @return this RubyString if capitalized, null otherwise
+   */
   public RubyString capitalizeǃ() {
     RubyString capitals = capitalize();
     if (capitals.equals(this))
@@ -186,14 +208,33 @@ public final class RubyString extends RubyEnumerable<String> implements
     return this;
   }
 
-  public int casecmp(String str) {
-    return this.str.compareToIgnoreCase(str);
+  /**
+   * Case-insensitive version of String#compareTo.
+   * 
+   * @param charSeq
+   *          any CharSequence
+   * @return a negative integer, zero, or a positive integer as the specified
+   *         CharSequence is greater than, equal to, or less than this String,
+   *         ignoring case considerations.
+   */
+  public int casecmp(CharSequence charSeq) {
+    return this.str.compareToIgnoreCase(str.toString());
   }
 
   public RubyString center(int width) {
     return center(width, " ");
   }
 
+  /**
+   * Returns a new RubyString of length width with str centered and padded with
+   * padstr; otherwise, returns str.
+   * 
+   * @param width
+   *          of result
+   * @param padstr
+   *          used to pad in front and after the str
+   * @return a new RubyString
+   */
   public RubyString center(int width, String padstr) {
     checkNotNull(padstr);
     if (padstr.isEmpty())
@@ -223,22 +264,39 @@ public final class RubyString extends RubyEnumerable<String> implements
     return rs(centeredStr.join());
   }
 
+  /**
+   * Returns a RubyArray of characters in str.
+   * 
+   * @return a RubyArray
+   */
   public RubyArray<String> chars() {
     return newRubyArray(str.split("(?!^)"));
   }
 
+  /**
+   * Returns a new RubyString with the line separator removed from the end of
+   * str.
+   * 
+   * @return a new RubyString
+   */
   public RubyString chomp() {
-    String result = str.replaceAll("\\r\\n$", "");
+    String result = str.replaceFirst("\r\n$", "");
     if (result.length() < str.length())
       return rs(result);
 
-    result = str.replaceAll("\\n$", "");
+    result = result.replaceFirst("\r$", "");
     if (result.length() < str.length())
       return rs(result);
 
-    return rs(result.replaceAll("\\r$", ""));
+    return rs(result.replaceFirst("\n$", ""));
   }
 
+  /**
+   * Modifies str in place as described for RubyString#chomp, returning str, or
+   * null if no modifications were made.
+   * 
+   * @return this RubyString or null
+   */
   public RubyString chompǃ() {
     RubyString chomppedStr = chomp();
     if (chomppedStr.equals(this))
@@ -248,11 +306,28 @@ public final class RubyString extends RubyEnumerable<String> implements
     return this;
   }
 
+  /**
+   * Returns a new RubyString with the given line separator removed from the end
+   * of str.
+   * 
+   * @param separator
+   *          a line separator
+   * @return a new RubyString
+   */
   public RubyString chomp(String separator) {
     separator = separator == null ? "" : separator;
-    return rs(str.replaceAll(separator + "$", ""));
+    if (str.endsWith(separator))
+      return rs(str.substring(0, str.lastIndexOf(separator)));
+
+    return rs(str);
   }
 
+  /**
+   * Modifies str in place as described for RubyString#chomp, returning str, or
+   * null if no modifications were made.
+   * 
+   * @return this RubyString or null
+   */
   public RubyString chompǃ(String separator) {
     RubyString chomppedStr = chomp(separator);
     if (chomppedStr.equals(this))
@@ -262,17 +337,28 @@ public final class RubyString extends RubyEnumerable<String> implements
     return this;
   }
 
+  /**
+   * Returns a new RubyString with the last character removed. If the string
+   * ends with \r\n, both characters are removed.
+   * 
+   * @return a new RubyString
+   */
   public RubyString chop() {
     if (str.isEmpty())
       return rs(str);
 
-    String result = str.replaceAll("\\r\\n$", "");
-    if (result.length() < str.length())
-      return rs(result);
-
-    return rs(result.substring(0, result.length() - 1));
+    if (str.endsWith("\r\n"))
+      return rs(str.substring(0, str.length() - 2));
+    else
+      return rs(str.substring(0, str.length() - 1));
   }
 
+  /**
+   * Processes str as for RubyString#chop, returning str, or null if str is the
+   * empty string.
+   * 
+   * @return a new RubyString or null
+   */
   public RubyString chopǃ() {
     RubyString choppedStr = chop();
     if (choppedStr.equals(this))
@@ -282,6 +368,11 @@ public final class RubyString extends RubyEnumerable<String> implements
     return this;
   }
 
+  /**
+   * Returns a one-character string at the beginning of the string.
+   * 
+   * @return a new RubyString
+   */
   public RubyString chr() {
     if (str.isEmpty())
       return this;
@@ -289,35 +380,69 @@ public final class RubyString extends RubyEnumerable<String> implements
     return rs(str.substring(0, 1));
   }
 
+  /**
+   * Makes string empty.
+   * 
+   * @return this RubyString
+   */
   public RubyString clear() {
     str = "";
     return this;
   }
 
+  /**
+   * Returns a RubyArray of the Integer ordinals of the characters in str.
+   * 
+   * @return a RubyArray
+   */
   public RubyArray<Integer> codepoints() {
-    return range(0, str.length() - 1).map(
-        new TransformBlock<Integer, Integer>() {
-
-          @Override
-          public Integer yield(Integer item) {
-            return str.codePointAt(item);
-          }
-
-        });
+    RubyArray<Integer> codepoints = newRubyArray();
+    for (int i = 0; i < str.length(); i++) {
+      codepoints.add(str.codePointAt(i));
+    }
+    return codepoints;
   }
 
+  /**
+   * Appends the given codepoint as a character to str.
+   * 
+   * @param codepoint
+   *          of a character
+   * @return this RubyString
+   */
   public RubyString concat(int codepoint) {
     str += (char) codepoint;
     return this;
   }
 
+  /**
+   * Appends the given object to str.
+   * 
+   * @param o
+   *          any Object
+   * @return this RubyString
+   */
   public RubyString concat(Object o) {
     str += o;
     return this;
   }
 
+  /**
+   * Each charSet parameter defines a set of characters to count. The
+   * intersection of these sets defines the characters to count in str. Any
+   * charSet that starts with a caret ^ is negated. The sequence c1-c2 means all
+   * characters between c1 and c2. The backslash character can be used to escape
+   * ^ or -.
+   * 
+   * @param charSet
+   *          a set of characters
+   * @param charSets
+   *          sets of characters
+   * @return the total count
+   */
   public int count(final String charSet, final String... charSets) {
     checkNotNull(charSet);
+    checkNotNull(charSets);
 
     return count(new BooleanBlock<String>() {
 
@@ -362,7 +487,17 @@ public final class RubyString extends RubyEnumerable<String> implements
     return charSet;
   }
 
+  /**
+   * Applies a one-way cryptographic hash to str by invoking the
+   * MessageDigest(MD5) with the given salt string.
+   * 
+   * @param salt
+   *          a secret string
+   * @return a new RubyString
+   */
   public RubyString crypt(String salt) {
+    checkNotNull(salt);
+
     String md5 = null;
     MessageDigest digest;
     try {
@@ -373,14 +508,41 @@ public final class RubyString extends RubyEnumerable<String> implements
     return rs(md5);
   }
 
-  public RubyString delete(String otherStr) {
-    checkNotNull(otherStr);
+  /**
+   * Returns a copy of str with all characters in the intersection of its
+   * arguments deleted. Uses the same rules for building the set of characters
+   * as RubyString#count.
+   * 
+   * @param charSet
+   *          a set of characters
+   * @return a new RubyString
+   */
+  public RubyString delete(final String charSet) {
+    checkNotNull(charSet);
 
-    return rs(chars().minus(rs(otherStr).chars()).join());
+    return rs(chars().deleteIf((new BooleanBlock<String>() {
+
+      @Override
+      public boolean yield(String item) {
+        if (!isCharSetMatched(item, charSet))
+          return false;
+
+        return true;
+      }
+
+    })).join());
   }
 
-  public RubyString deleteǃ(String otherStr) {
-    RubyString deletedStr = delete(otherStr);
+  /**
+   * Performs a delete operation in place, returning str, or null if str was not
+   * modified.
+   * 
+   * @param charSet
+   *          a set of characters
+   * @return a new RubyString or null
+   */
+  public RubyString deleteǃ(String charSet) {
+    RubyString deletedStr = delete(charSet);
     if (deletedStr.equals(this))
       return null;
 
@@ -388,6 +550,12 @@ public final class RubyString extends RubyEnumerable<String> implements
     return this;
   }
 
+  /**
+   * Returns a copy of str with all uppercase letters replaced with their
+   * lowercase.
+   * 
+   * @return a new RubyString
+   */
   public RubyString downcase() {
     return rs(str.toLowerCase());
   }
@@ -401,48 +569,122 @@ public final class RubyString extends RubyEnumerable<String> implements
     return this;
   }
 
+  /**
+   * Produces a version of str with all non-printing or non-ASCII 8bit
+   * characters replaced by \\nnn or \\unnnn notation and all special characters
+   * escaped.
+   * 
+   * @return a new RubyString
+   */
   public RubyString dump() {
-    return rs("\""
-        + str.replaceAll("\b", "\\\\b").replaceAll("\t", "\\\\t")
-            .replaceAll("\n", "\\\\n").replaceAll("\f", "\\\\f")
-            .replaceAll("\r", "\\\\r").replaceAll("\n", "\\\\n")
-            .replaceAll("\\p{C}", "") + "\"");
+    String printable = chars().map(new TransformBlock<String, String>() {
+
+      @Override
+      public String yield(String item) {
+        Integer codepoint = item.codePointAt(0);
+
+        if (item.matches("\b"))
+          return "\\b";
+        else if (item.matches("\f"))
+          return "\\f";
+        else if (item.matches("\n"))
+          return "\\n";
+        else if (item.matches("\r"))
+          return "\\r";
+        else if (item.matches("\t"))
+          return "\\t";
+        else if (codepoint < 256 && !item.matches("\\p{C}")) {
+          return item;
+        } else {
+          if (codepoint < 256)
+            return "\\" + Integer.toOctalString(codepoint);
+          else
+            return "\\u" + Integer.toHexString(codepoint);
+        }
+      }
+
+    }).join();
+    return rs("\"" + printable + "\"");
   }
 
+  /**
+   * Returns a RubyEnumerator of each byte in str.
+   * 
+   * @return a RubyEnumerator
+   */
+  public RubyEnumerator<Byte> eachByte() {
+    return bytes().each();
+  }
+
+  /**
+   * Passes each byte in str to the given block.
+   * 
+   * @param block
+   *          to yield byte
+   * @return this RubyString
+   */
   public RubyString eachByte(Block<Byte> block) {
     bytes().each(block);
     return this;
   }
 
-  public RubyEnumerator<Byte> eachByte() {
-    return bytes().each();
+  /**
+   * Returns a RubyEnumerator of each character in str.
+   * 
+   * @return a RubyEnumerator
+   */
+  public RubyEnumerator<String> eachChar() {
+    return each();
   }
 
+  /**
+   * Passes each character in str to the given block.
+   * 
+   * @param block
+   *          to yield character
+   * @return this RubyString
+   */
   public RubyString eachChar(Block<String> block) {
     each(block);
     return this;
   }
 
-  public RubyEnumerator<String> eachChar() {
-    return each();
-  }
-
-  public RubyString eachCodepoint(Block<Integer> block) {
-    codepoints().each(block);
-    return this;
-  }
-
+  /**
+   * Returns a RubyEnumerator of each codepoint in str.
+   * 
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<Integer> eachCodepoint() {
-    return codepoints().each();
+    return newRubyEnumerator((Iterable<Integer>) each().lazy().map(
+        new TransformBlock<String, Integer>() {
+
+          @Override
+          public Integer yield(String item) {
+            return item.codePointAt(0);
+          }
+
+        }));
   }
 
-  public RubyString eachLine(Block<String> block) {
-    ra(str.split("$")).each(block);
+  /**
+   * Passes each codepoint in str to the given block.
+   * 
+   * @param block
+   *          to yield character
+   * @return this RubyString
+   */
+  public RubyString eachCodepoint(Block<Integer> block) {
+    eachCodepoint().each(block);
     return this;
   }
 
   public RubyEnumerator<String> eachLine() {
-    return ra(str.split("$")).each();
+    return ra(str.split(System.getProperty("line.separator"))).each();
+  }
+
+  public RubyString eachLine(Block<String> block) {
+    eachLine().each(block);
+    return this;
   }
 
   public RubyString eachLine(String separator, Block<String> block) {
@@ -617,11 +859,10 @@ public final class RubyString extends RubyEnumerable<String> implements
           return "\\t";
         else if (item.matches("\\p{C}")) {
           Integer codepoint = item.codePointAt(0);
-          if (codepoint < 256) {
-            return "\\" + Integer.parseInt(codepoint.toString(), 8);
-          } else {
+          if (codepoint < 256)
+            return "\\" + Integer.toOctalString(codepoint);
+          else
             return "\\u" + Integer.toHexString(codepoint);
-          }
         }
         return item;
       }
