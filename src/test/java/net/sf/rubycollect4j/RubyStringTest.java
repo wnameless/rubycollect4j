@@ -21,19 +21,25 @@
 package net.sf.rubycollect4j;
 
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
+import static net.sf.rubycollect4j.RubyCollections.qr;
 import static net.sf.rubycollect4j.RubyCollections.ra;
+import static net.sf.rubycollect4j.RubyCollections.rh;
 import static net.sf.rubycollect4j.RubyCollections.rs;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.nio.charset.Charset;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.xml.bind.TypeConstraintException;
 
 import net.sf.rubycollect4j.block.Block;
+import net.sf.rubycollect4j.block.TransformBlock;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -420,16 +426,12 @@ public class RubyStringTest {
     assertTrue(rs.endWithʔ("c"));
     assertTrue(rs.endWithʔ("b", "a", "c"));
     assertFalse(rs.endWithʔ("a"));
+    assertTrue(rs.endWithʔ("c", (String[]) null));
   }
 
   @Test(expected = TypeConstraintException.class)
-  public void testEndWithʔException1() {
+  public void testEndWithʔException() {
     rs.endWithʔ(null);
-  }
-
-  @Test(expected = TypeConstraintException.class)
-  public void testEndWithʔException2() {
-    rs.endWithʔ("c", (String[]) null);
   }
 
   @Test
@@ -451,6 +453,174 @@ public class RubyStringTest {
     assertEquals((Byte) "我".getBytes()[2], rs("我").getbyte(2));
     assertNull(rs("我").getbyte(3));
     assertEquals((Byte) "我".getBytes()[2], rs("我").getbyte(-1));
+  }
+
+  @Test
+  public void testGsub() {
+    assertEquals(rs("ab77c77"), rs("ab4c56").gsub("\\d+", "77"));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testGsubException1() {
+    rs("ab4c56").gsub(null, "77");
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testGsubException2() {
+    rs("ab4c56").gsub("\\d+", (String) null);
+  }
+
+  @Test
+  public void testGsubWithMap() {
+    assertEquals(rs("0ab88c99"),
+        rs("0ab4c56").gsub("\\d+", rh("4", "88", "56", "99")));
+    assertEquals(rs, rs.gsub("\\d+", (Map<String, ?>) null));
+    assertNotSame(rs, rs.gsub("\\d+", (Map<String, ?>) null));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testGsubWithMapException() {
+    rs("0ab4c56").gsub(null, rh("4", "88", "56", "99"));
+  }
+
+  @Test
+  public void testGsubWithBlock() {
+    assertEquals(rs("ab40c560"),
+        rs("ab4c56").gsub("\\d+", new TransformBlock<String, String>() {
+
+          @Override
+          public String yield(String item) {
+            return item + "0";
+          }
+
+        }));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testGsubWithBlockException() {
+    rs("ab4c56").gsub(null, new TransformBlock<String, String>() {
+
+      @Override
+      public String yield(String item) {
+        return item + "0";
+      }
+
+    });
+  }
+
+  @Test
+  public void testGsubWithoutReplacement() {
+    assertEquals(ra("4", "56"), rs("ab4c56").gsub("\\d+").toA());
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testGsubWithoutReplacementException() {
+    rs("ab4c56").gsub(null);
+  }
+
+  @Test
+  public void testGsubǃ() {
+    rs = rs("ab4c56");
+    assertSame(rs, rs.gsubǃ("\\d+", "77"));
+    assertEquals(rs("ab77c77"), rs);
+    assertNull(rs.gsubǃ("\\d+", "77"));
+  }
+
+  @Test
+  public void testGsubǃWithBlock() {
+    rs = rs("ab4c56");
+    assertSame(rs, rs.gsubǃ("\\d+", new TransformBlock<String, String>() {
+
+      @Override
+      public String yield(String item) {
+        return "?";
+      }
+
+    }));
+    assertEquals(rs("ab?c?"), rs);
+    assertNull(rs.gsubǃ("\\d+", new TransformBlock<String, String>() {
+
+      @Override
+      public String yield(String item) {
+        return item + "?";
+      }
+
+    }));
+  }
+
+  @Test
+  public void testGsubǃWithoutReplacement() {
+    assertEquals(ra("4", "56"), rs("ab4c56").gsubǃ("\\d+").toA());
+  }
+
+  @Test
+  public void testHash() {
+    assertEquals(rs.hashCode(), rs.hash());
+  }
+
+  @Test
+  public void testHex() {
+    assertEquals(10, rs("0x0a").hex());
+    assertEquals(-4660, rs("-1234").hex());
+    assertEquals(0, rs("0").hex());
+    assertEquals(0, rs("haha").hex());
+  }
+
+  @Test
+  public void testIncludeʔ() {
+    assertTrue(rs("abc").includeʔ("ab"));
+    assertFalse(rs("abc").includeʔ("ac"));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testIncludeʔtException() {
+    rs.includeʔ(null);
+  }
+
+  @Test
+  public void testIndex() {
+    assertEquals((Integer) 1, rs.index("bc"));
+    assertNull(rs.index("def"));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testIndexException() {
+    rs.index((String) null);
+  }
+
+  @Test
+  public void testIndexWithOffset() {
+    assertEquals((Integer) 1, rs.index("bc", 1));
+    assertNull(rs.index("ab", 100));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testIndexWithOffsetException() {
+    rs.index((String) null, 100);
+  }
+
+  @Test
+  public void testIndexWithPattern() {
+    assertEquals((Integer) 2, rs.index(qr("[c-z]+")));
+    assertNull(rs.index(qr("[d-z]+")));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testIndexWithPatternException() {
+    rs.index((Pattern) null);
+  }
+
+  @Test
+  public void testIndexWithPatternAndOffset() {
+    assertEquals((Integer) 2, rs.index(qr("[c-z]+"), 1));
+    assertNull(rs.index(qr("[c-z]+"), rs.length()));
+    assertNull(rs.index(qr("[c-z]+"), -100));
+    assertNull(rs.index(qr("[c-z]+"), 100));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testIndexWithPatternAndOffsetException() {
+    rs.index((Pattern) null, 1);
   }
 
   @Test

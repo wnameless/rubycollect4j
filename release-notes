@@ -205,6 +205,8 @@ Version 1.7.0
 
 + Added RubyString
 
-+ Added CharacterSuccessor
++ Added CharacterSuccessor and extended RubyRange by it
+
++ Added RubyCollections#isBlank & RubyCollections#isNotBlank
 
 * Fixed the bug of RubyArray#pack

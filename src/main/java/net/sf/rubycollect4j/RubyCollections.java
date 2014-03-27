@@ -2250,6 +2250,18 @@ public final class RubyCollections {
   }
 
   /**
+   * Checks if a String is not null or blank(only white-spaces).
+   * 
+   * 
+   * @param str
+   *          any String
+   * @return true if given String is not null or blank, false otherwise
+   */
+  public static boolean isNotBlank(String str) {
+    return !isBlank(str);
+  }
+
+  /**
    * Checks if an Iterable is null or empty.
    * 
    * @param iter
@@ -2258,6 +2270,17 @@ public final class RubyCollections {
    */
   public static boolean isBlank(Iterable<?> iter) {
     return iter == null || !iter.iterator().hasNext();
+  }
+
+  /**
+   * Checks if an Iterable is not null or empty.
+   * 
+   * @param iter
+   *          any Iterable
+   * @return true if given Iterable is not null or empty, false otherwise
+   */
+  public static boolean isNotBlank(Iterable<?> iter) {
+    return !isBlank(iter);
   }
 
   /**
@@ -2272,6 +2295,17 @@ public final class RubyCollections {
   }
 
   /**
+   * Checks if a Map is not null or empty.
+   * 
+   * @param map
+   *          any Map
+   * @return true if given Map is not null or empty, false otherwise
+   */
+  public static boolean isNotBlank(Map<?, ?> map) {
+    return !isBlank(map);
+  }
+
+  /**
    * Checks if a RubyHash is null or empty.
    * 
    * @param rubyHash
@@ -2280,6 +2314,17 @@ public final class RubyCollections {
    */
   public static boolean isBlank(RubyHash<?, ?> rubyHash) {
     return rubyHash == null || rubyHash.isEmpty();
+  }
+
+  /**
+   * Checks if a RubyHash is not null or empty.
+   * 
+   * @param rubyHash
+   *          any RubyHash
+   * @return true if given RubyHash is not null or empty, false otherwise
+   */
+  public static boolean isNotBlank(RubyHash<?, ?> rubyHash) {
+    return !isBlank(rubyHash);
   }
 
   /**
@@ -2294,6 +2339,17 @@ public final class RubyCollections {
   }
 
   /**
+   * Checks if a Boolean is not null or false.
+   * 
+   * @param bool
+   *          any Boolean
+   * @return true if given Boolean is not null or False, false otherwise
+   */
+  public static boolean isNotBlank(Boolean bool) {
+    return !isBlank(bool);
+  }
+
+  /**
    * Checks if an Object is null.
    * 
    * @param o
@@ -2302,6 +2358,17 @@ public final class RubyCollections {
    */
   public static boolean isBlank(Object o) {
     return o == null;
+  }
+
+  /**
+   * Checks if an Object is not null.
+   * 
+   * @param o
+   *          any Object
+   * @return true if given Object is not null, false otherwise
+   */
+  public static boolean isNotBlank(Object o) {
+    return o != null;
   }
 
 }

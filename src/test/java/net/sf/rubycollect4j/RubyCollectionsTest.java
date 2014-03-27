@@ -24,6 +24,7 @@ import static net.sf.rubycollect4j.RubyCollections.Hash;
 import static net.sf.rubycollect4j.RubyCollections.date;
 import static net.sf.rubycollect4j.RubyCollections.hp;
 import static net.sf.rubycollect4j.RubyCollections.isBlank;
+import static net.sf.rubycollect4j.RubyCollections.isNotBlank;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
@@ -474,6 +475,37 @@ public class RubyCollectionsTest {
     assertTrue(isBlank(rh()));
     assertTrue(isBlank((RubyHash<?, ?>) null));
     assertFalse(isBlank(rh(1, "a", 2, "b")));
+  }
+
+  @Test
+  public void testIsNotBlank() {
+    assertFalse(isNotBlank(""));
+    assertFalse(isNotBlank("   "));
+    assertFalse(isNotBlank((String) null));
+    assertTrue(isNotBlank("?"));
+    assertFalse(isNotBlank(ra()));
+    assertFalse(isNotBlank((Iterable<?>) null));
+    assertTrue(isNotBlank(ra(1, 2, 3)));
+    assertFalse(isNotBlank(new HashMap<Integer, String>()));
+    assertFalse(isNotBlank((Map<?, ?>) null));
+    assertTrue(isNotBlank(new HashMap<Integer, String>() {
+
+      private static final long serialVersionUID = 1L;
+
+      {
+        put(1, "a");
+        put(2, "b");
+      }
+
+    }));
+    assertFalse(isNotBlank(false));
+    assertFalse(isNotBlank((Boolean) null));
+    assertTrue(isNotBlank(true));
+    assertFalse(isNotBlank((Integer) null));
+    assertTrue(isNotBlank(1));
+    assertFalse(isNotBlank(rh()));
+    assertFalse(isNotBlank((RubyHash<?, ?>) null));
+    assertTrue(isNotBlank(rh(1, "a", 2, "b")));
   }
 
 }
