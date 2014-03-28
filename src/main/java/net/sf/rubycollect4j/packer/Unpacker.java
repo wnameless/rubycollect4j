@@ -27,8 +27,24 @@ import java.util.List;
 
 import net.sf.rubycollect4j.RubyArray;
 
+/**
+ * 
+ * Unpacker is designed to implement the RubyString#unpack.
+ * 
+ */
 public final class Unpacker {
 
+  private Unpacker() {}
+
+  /**
+   * Unpacks a String into a RubyArray of String.
+   * 
+   * @param format
+   *          a String made by Directive
+   * @param str
+   *          target for unpacking
+   * @return a RubyArray
+   */
   public static RubyArray<String> unpack(String format, String str) {
     if (!Directive.verify(format))
       throw new IllegalArgumentException("Invalid template string");
@@ -83,7 +99,7 @@ public final class Unpacker {
           continue;
 
         while (count > 0 && chars.anyʔ()) {
-          strs.add(d.unpack(chars.shift()));
+          strs.add(d.unpack(chars.shift().getBytes()));
           bytes = rs(chars.join()).bytes();
           count--;
         }

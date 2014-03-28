@@ -32,7 +32,10 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.math.BigInteger;
 import java.nio.charset.Charset;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -107,6 +110,7 @@ public class RubyStringTest {
     assertEquals(rs('\210'), rs("我").byteslice(1));
     assertEquals(rs('\221'), rs("我").byteslice(2));
     assertEquals(rs("el"), rs("hello").byteslice(1, 2));
+    assertNull(rs("hello").byteslice(5));
     assertNull(rs("hello").byteslice(5, -1));
   }
 
@@ -125,7 +129,8 @@ public class RubyStringTest {
 
   @Test
   public void testCasecmp() {
-    assertEquals("abc".compareToIgnoreCase("ABC"), rs.casecmp("ABC"));
+    assertEquals(rs.toS().compareToIgnoreCase("ABC"), rs.casecmp("ABC"));
+    assertEquals(rs.toS().compareToIgnoreCase("def"), rs.casecmp("def"));
   }
 
   @Test
@@ -228,6 +233,49 @@ public class RubyStringTest {
   }
 
   @Test
+  public void testCount() {
+    rs = rs("hello world");
+    assertEquals(5, rs.count("lo"));
+    assertEquals(2, rs.count("lo", "o"));
+    assertEquals(4, rs.count("hello", "^l"));
+    assertEquals(4, rs.count("ej-m"));
+    assertEquals(4, rs("hello^world").count("\\^aeiou"));
+    assertEquals(4, rs("hello-world").count("a\\-eo"));
+    rs = rs("hello world\\r\\n");
+    assertEquals(2, rs.count("\\"));
+    assertEquals(0, rs.count("\\A"));
+    assertEquals(3, rs.count("X-\\w"));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testCountException1() {
+    rs.count((String) null);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testCountException2() {
+    rs.count("x-a");
+  }
+
+  @Test
+  public void testCrypt() {
+    String encrypt = rs.toS() + "secret";
+    String md5 = null;
+    MessageDigest digest;
+    try {
+      digest = MessageDigest.getInstance("MD5");
+      digest.update(encrypt.getBytes(), 0, encrypt.length());
+      md5 = new BigInteger(1, digest.digest()).toString(16);
+    } catch (NoSuchAlgorithmException e) {}
+    assertEquals(md5, rs.crypt("secret").toS());
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testCryptException() {
+    rs.crypt(null);
+  }
+
+  @Test
   public void testDelete() {
     assertEquals(rs("b"), rs("abc").delete("ac"));
     assertEquals(rs("a"), rs("abc").delete("^a"));
@@ -237,7 +285,7 @@ public class RubyStringTest {
 
   @Test(expected = TypeConstraintException.class)
   public void testDeleteException() {
-    rs("abc").delete(null);
+    rs.delete(null);
   }
 
   @Test
@@ -1632,6 +1680,8 @@ public class RubyStringTest {
   @Test
   public void testComparable() {
     assertEquals(rs.toS().compareTo("def"), rs.compareTo("def"));
+    assertEquals(ra(rs("a"), rs("b"), rs("c")), ra(rs("c"), rs("b"), rs("a"))
+        .sort());
   }
 
 }

@@ -20,23 +20,70 @@
  */
 package net.sf.rubycollect4j.packer;
 
-import static net.sf.rubycollect4j.RubyCollections.rs;
+import static net.sf.rubycollect4j.RubyCollections.ra;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
+
+import org.junit.Test;
 
 public class UnpackerTest {
 
-  public static void main(String[] args) {
-    System.out.println(rs("a").ord());
-
-    // System.out.println(rs("\0\32\0\32").unpack("c4c"));
-    // System.out.println(rs("aaa").unpack("h2H2c"));
-    // System.out.println("ABC \0".matches(".*\\p{C}"));
-    // System.out.println(rs("abc \0\0abc \0").unpack("Z*Z*Z*"));
-    // System.out.println(rs("hello").trS("l", "r"));
-    // System.out.println(rs("hello^world").tr("\\^aeiou", "*"));
-    // System.out.println(rs("hello\r\nworld").tr("\r", "*"));
-    // System.out.println(rs("hello\r\nworld").tr("\\r", "*"));
-    // System.out.println(rs("hello\r\nworld").tr("\\\r", "*"));
-    // System.out.println(rs("X['\\b']").tr("X\\", ""));
-    // System.out.println(rs("X['\\b']").tr("X-\\]", ""));
+  @Test
+  public void testPrivateConstructor() throws Exception {
+    Constructor<Unpacker> c = Unpacker.class.getDeclaredConstructor();
+    assertTrue(Modifier.isPrivate(c.getModifiers()));
+    c.setAccessible(true);
+    c.newInstance();
   }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testUnpackWithInvalidDirective() {
+    Unpacker.unpack("Y1", "");
+  }
+
+  @Test
+  public void testUnpackWith_a() {
+    assertEquals(ra("abc", " \0\0"), Unpacker.unpack("a3a3", "abc \0\0"));
+  }
+
+  @Test
+  public void testUnpackWith_AZ() {
+    assertEquals(ra("abc", "abc "), Unpacker.unpack("A6Z6", "abc \0\0abc \0\0"));
+  }
+
+  @Test
+  public void testUnpackWith_c() {
+    assertEquals(ra("0", "26", "0", "26", null),
+        Unpacker.unpack("c4c", "\0\32\0\32"));
+  }
+
+  @Test
+  public void testUnpackWith_Z() {
+    assertEquals(ra("abc ", "abc "), Unpacker.unpack("Z*Z*", "abc \0abc \0"));
+  }
+
+  @Test
+  public void testUnpackWith_U() {
+    assertEquals(ra("97", "98", "99", "25105"), Unpacker.unpack("U*", "abc我"));
+  }
+
+  @Test
+  public void testUnpackWith_s() {
+    assertEquals(ra("-15426", "-15425"), Unpacker.unpack("ss", "\376\377"));
+  }
+
+  @Test
+  public void testUnpackWith_l() {
+    assertEquals(ra("-1010908225"), Unpacker.unpack("l", "\376\377"));
+  }
+
+  @Test
+  public void testUnpackWith_q() {
+    assertEquals(ra("-4341817762348350529"),
+        Unpacker.unpack("q", "\376\377\376\377"));
+  }
+
 }

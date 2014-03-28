@@ -216,7 +216,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   }
 
   /**
-   * Case-insensitive version of String#compareTo.
+   * Case-insensitive version of RubyString#compareTo.
    * 
    * @param charSeq
    *          any CharSequence
@@ -225,7 +225,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    *         ignoring case considerations.
    */
   public int casecmp(CharSequence charSeq) {
-    return this.str.compareToIgnoreCase(str.toString());
+    return str.compareToIgnoreCase(charSeq.toString());
   }
 
   public RubyString center(int width) {
@@ -432,19 +432,18 @@ public final class RubyString extends RubyEnumerable<String> implements
    * @return the total count
    */
   public int count(final String charSet, final String... charSets) {
-    stringify(charSet);
-    stringify(charSets);
-
     return count(new BooleanBlock<String>() {
 
       @Override
       public boolean yield(String item) {
-        if (!isCharSetMatched(item, charSet))
+        if (!isCharSetMatched(item, stringify(charSet)))
           return false;
 
-        for (String cs : charSets) {
-          if (!isCharSetMatched(item, cs))
-            return false;
+        if (charSets != null) {
+          for (String cs : charSets) {
+            if (!isCharSetMatched(item, stringify(cs)))
+              return false;
+          }
         }
 
         return true;
@@ -464,12 +463,11 @@ public final class RubyString extends RubyEnumerable<String> implements
   }
 
   private String charSet2Str(String charSet) {
-    Matcher matcher = qr("\\\\?[^\\\\]-\\\\?[^\\\\]").matcher(charSet);
+    charSet = charSet.replaceAll("^\\\\([^-^])", "$1");
+    Matcher matcher = qr("[^\\\\]-.").matcher(charSet);
     while (matcher.find()) {
       String charRg = matcher.group();
-      RubyRange<Character> rr =
-          range(charRg.replace("\\", "").charAt(0), charRg.replace("\\", "")
-              .charAt(2));
+      RubyRange<Character> rr = range(charRg.charAt(0), charRg.charAt(2));
       if (rr.noneʔ())
         throw new IllegalArgumentException("ArgumentError: invalid range \""
             + charSet + "\" in string transliteration");
@@ -487,13 +485,13 @@ public final class RubyString extends RubyEnumerable<String> implements
    * @return a new RubyString
    */
   public RubyString crypt(String salt) {
-    stringify(salt);
+    String encrypt = str + stringify(salt);
 
     String md5 = null;
     MessageDigest digest;
     try {
       digest = MessageDigest.getInstance("MD5");
-      digest.update(salt.getBytes(), 0, salt.length());
+      digest.update(encrypt.getBytes(), 0, encrypt.length());
       md5 = new BigInteger(1, digest.digest()).toString(16);
     } catch (NoSuchAlgorithmException e) {}
     return rs(md5);
@@ -788,14 +786,12 @@ public final class RubyString extends RubyEnumerable<String> implements
    * @return true if str ends with one of the suffixes given, false otherwise
    */
   public boolean endWithʔ(String suffix, String... otherSuffix) {
-    stringify(suffix);
-
-    if (str.endsWith(suffix))
+    if (str.endsWith(stringify(suffix)))
       return true;
 
     if (otherSuffix != null) {
       for (String s : otherSuffix) {
-        if (str.endsWith(s))
+        if (str.endsWith(stringify(s)))
           return true;
       }
     }

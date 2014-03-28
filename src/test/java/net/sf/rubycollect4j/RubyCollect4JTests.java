@@ -79,6 +79,7 @@ import net.sf.rubycollect4j.iter.ZipIteratorTest;
 import net.sf.rubycollect4j.packer.ByteUtilTest;
 import net.sf.rubycollect4j.packer.DirectiveTest;
 import net.sf.rubycollect4j.packer.PackerTest;
+import net.sf.rubycollect4j.packer.UnpackerTest;
 import net.sf.rubycollect4j.succ.CharacterSuccessorTest;
 import net.sf.rubycollect4j.succ.DateSuccessorTest;
 import net.sf.rubycollect4j.succ.DoubleSuccessorTest;
@@ -131,11 +132,11 @@ import org.junit.runners.Suite.SuiteClasses;
     TakeWhileIterableTest.class, TakeWhileIteratorTest.class,
     TransformIterableTest.class, TransformIteratorTest.class,
     ZipIterableTest.class, ZipIteratorTest.class, ByteUtilTest.class,
-    DirectiveTest.class, PackerTest.class, CharacterSuccessorTest.class,
-    DateSuccessorTest.class, DoubleSuccessorTest.class,
-    IntegerSuccessorTest.class, LongSuccessorTest.class,
-    StringSuccessorTest.class, ComparableEntryTest.class,
-    LinkedIdentityMap_EntrySetTest.class,
+    DirectiveTest.class, PackerTest.class, UnpackerTest.class,
+    CharacterSuccessorTest.class, DateSuccessorTest.class,
+    DoubleSuccessorTest.class, IntegerSuccessorTest.class,
+    LongSuccessorTest.class, StringSuccessorTest.class,
+    ComparableEntryTest.class, LinkedIdentityMap_EntrySetTest.class,
     LinkedIdentityMap_IdentityEntryTest.class,
     LinkedIdentityMap_KeySetTest.class, LinkedIdentityMap_ValuesTest.class,
     LinkedIdentityMapTest.class, PeekingIteratorTest.class,

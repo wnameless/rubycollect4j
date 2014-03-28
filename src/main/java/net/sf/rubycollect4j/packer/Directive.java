@@ -266,13 +266,13 @@ public enum Directive {
     }
   }
 
-  public String unpack(String ch) {
-    switch (this) {
-    default: // U
-      return String.valueOf(ch.codePointAt(0));
-    }
-  }
-
+  /**
+   * Adaptor for #unpack(byte[] bytes).
+   * 
+   * @param bytes
+   *          a list of byte
+   * @return a String
+   */
   public String unpack(List<Byte> bytes) {
     byte[] byteAry = new byte[bytes.size()];
     for (int i = 0; i < bytes.size(); i++) {
@@ -281,10 +281,19 @@ public enum Directive {
     return unpack(byteAry);
   }
 
+  /**
+   * Unpacks array of byte into a String.
+   * 
+   * @param bytes
+   *          array of byte
+   * @return a String
+   */
   public String unpack(byte[] bytes) {
     switch (this) {
     default: // c
       return String.valueOf((int) bytes[0]);
+    case U:
+      return String.valueOf(new String(bytes).codePointAt(0));
     case s:
       return String.valueOf(ByteBuffer.wrap(bytes).getShort());
     case sb:

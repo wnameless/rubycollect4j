@@ -35,10 +35,14 @@ public class DirectiveTest {
       ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN;
 
   private byte[] ABC;
+  private byte[] ABCDEFGH;
 
   @Before
   public void setUp() throws Exception {
     ABC = new byte[] { (byte) 65, (byte) 66, (byte) 67 };
+    ABCDEFGH =
+        new byte[] { (byte) 65, (byte) 66, (byte) 67, (byte) 68, (byte) 69,
+            (byte) 70, (byte) 71, (byte) 72 };
   }
 
   private byte[] int4407873() {
@@ -90,6 +94,30 @@ public class DirectiveTest {
     assertEquals("ABC", Directive.A.pack(ABC));
     assertEquals("ABC", Directive.a.pack(ABC));
     assertEquals("ABC", Directive.Z.pack(ABC));
+  }
+
+  @Test
+  public void testUnpack() {
+    assertEquals("65", Directive.a.unpack(ABCDEFGH));
+    assertEquals("-26", Directive.a.unpack("我".getBytes()));
+    assertEquals("25105", Directive.U.unpack("我".getBytes()));
+    assertEquals("16706", Directive.s.unpack(ABCDEFGH));
+    assertEquals("16706", Directive.sb.unpack(ABCDEFGH));
+    assertEquals("16961", Directive.sl.unpack(ABCDEFGH));
+    assertEquals("1094861636", Directive.l.unpack(ABCDEFGH));
+    assertEquals("1094861636", Directive.lb.unpack(ABCDEFGH));
+    assertEquals("1145258561", Directive.ll.unpack(ABCDEFGH));
+    assertEquals("4702394921427289928", Directive.q.unpack(ABCDEFGH));
+    assertEquals("4702394921427289928", Directive.qb.unpack(ABCDEFGH));
+    assertEquals("5208208757389214273", Directive.ql.unpack(ABCDEFGH));
+    assertEquals("2393736.541207228", Directive.D.unpack(ABCDEFGH));
+    assertEquals("2393736.541207228", Directive.d.unpack(ABCDEFGH));
+    assertEquals("1.5839800103804824E40", Directive.E.unpack(ABCDEFGH));
+    assertEquals("12.141422", Directive.G.unpack(ABCDEFGH));
+    assertEquals("12.141422", Directive.F.unpack(ABCDEFGH));
+    assertEquals("12.141422", Directive.f.unpack(ABCDEFGH));
+    assertEquals("781.0352", Directive.e.unpack(ABCDEFGH));
+    assertEquals("12.141422", Directive.g.unpack(ABCDEFGH));
   }
 
   @Test
