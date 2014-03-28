@@ -640,11 +640,13 @@ public class RubyArrayTest {
     ra = ra(1, 2, 3, 4);
     assertEquals(ra(1, 2, 3, 4, null, null, null, 5, 6), ra.insert(7, 5, 6));
     assertEquals(ra(1, 2, 3, 4, null, null, null, 5, 6), ra);
+    ra = ra(1, 2, 3, 4);
+    assertEquals(ra(-1, 0, 1, 2, 3, 4), ra.insert(-5, -1, 0));
   }
 
   @Test(expected = IndexOutOfBoundsException.class)
   public void testInsertException() {
-    ra.insert(-5, 0);
+    ra.insert(-6, 0);
   }
 
   @Test

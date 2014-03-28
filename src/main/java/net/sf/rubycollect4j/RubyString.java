@@ -20,8 +20,11 @@
  */
 package net.sf.rubycollect4j;
 
+import static java.lang.Character.MAX_RADIX;
+import static java.lang.Character.MIN_RADIX;
 import static net.sf.rubycollect4j.RubyCollections.Hash;
 import static net.sf.rubycollect4j.RubyCollections.isBlank;
+import static net.sf.rubycollect4j.RubyCollections.isNotBlank;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.qr;
@@ -1040,11 +1043,33 @@ public final class RubyString extends RubyEnumerable<String> implements
       return null;
   }
 
+  /**
+   * Inserts otherStr before the character at the given index, modifying str.
+   * Negative indices count from the end of the string, and insert after the
+   * given character. The intent is insert aString so that it starts at the
+   * given index.
+   * 
+   * @param index
+   *          position to begin insertion
+   * @param otherStr
+   *          any String
+   * @return this RubyString
+   */
   public RubyString insert(int index, String otherStr) {
-    str = chars().insert(index, otherStr).join();
+    if (index < -str.length() - 1 || index > str.length())
+      throw new IndexOutOfBoundsException("IndexError: index " + index
+          + " out of string");
+
+    str = chars().insert(index, stringify(otherStr)).join();
     return this;
   }
 
+  /**
+   * Returns a printable version of str, surrounded by quote marks, with special
+   * characters escaped.
+   * 
+   * @return a new RubyString
+   */
   public RubyString inspect() {
     String printable = chars().map(new TransformBlock<String, String>() {
 
@@ -1074,20 +1099,51 @@ public final class RubyString extends RubyEnumerable<String> implements
     return rs("\"" + printable + "\"");
   }
 
+  /**
+   * Returns a RubyArray of lines in str split using the supplied record
+   * separator (System.getProperty("line.separator") by default).
+   * 
+   * @return a RubyArray
+   */
   public RubyArray<String> lines() {
     return eachLine().toA();
   }
 
+  /**
+   * Returns a RubyArray of lines in str split using given record separator.
+   * 
+   * @return a RubyArray
+   */
   public RubyArray<String> lines(String separator) {
     return eachLine(separator).toA();
   }
 
+  /**
+   * If integer is greater than the length of str, returns a new RubyString of
+   * length integer with str left justified and padded with whitesapce;
+   * otherwise, returns str.
+   * 
+   * @param width
+   *          of new RubyString
+   * @return a new RubyString
+   */
   public RubyString ljust(int width) {
     return ljust(width, " ");
   }
 
+  /**
+   * If integer is greater than the length of str, returns a new RubyString of
+   * length integer with str left justified and padded with padstr; otherwise,
+   * returns str.
+   * 
+   * @param width
+   *          of new RubyString
+   * @param padstr
+   *          used to pad on the right of new RubyString
+   * @return a new RubyString
+   */
   public RubyString ljust(int width, String padstr) {
-    RubyLazyEnumerator<String> padStr = rs(padstr).lazy().cycle();
+    RubyLazyEnumerator<String> padStr = rs(stringify(padstr)).lazy().cycle();
 
     int extra = width - str.length();
     if (extra > 0) {
@@ -1102,35 +1158,94 @@ public final class RubyString extends RubyEnumerable<String> implements
     return rs(str);
   }
 
+  /**
+   * Returns a copy of str with leading whitespace removed.
+   * 
+   * @return a new RubyString
+   */
   public RubyString lstrip() {
     return rs(str.replaceFirst("^\\s+", ""));
   }
 
+  /**
+   * Removes leading whitespace from str, returning null if no change was made.
+   * 
+   * @return
+   */
   public RubyString lstripǃ() {
     return inPlace(lstrip());
   }
 
-  public Matcher match(String pattern) {
-    return qr(pattern).matcher(str);
+  /**
+   * Converts regex to a Pattern, then invokes its match method on str. Returns
+   * null if no match found.
+   * 
+   * @param regex
+   *          regular expression
+   * @return a Matcher or null
+   */
+  public Matcher match(String regex) {
+    Matcher matcher = qr(stringify(regex)).matcher(str);
+    return matcher.find() ? matcher.reset() : null;
   }
 
-  public Matcher match(String pattern, int pos) {
-    return qr(pattern).matcher(str.substring(pos));
+  /**
+   * Converts regex to a Pattern, then invokes its match method on str. The
+   * second parameter specifies the position in the string to begin the search.
+   * Returns null if no match found.
+   * 
+   * @param regex
+   *          regular expression
+   * @param pos
+   *          position begin to search
+   * @return a Matcher or null
+   */
+  public Matcher match(String regex, int pos) {
+    if (pos < 0)
+      pos = pos + str.length();
+    if (pos >= str.length() || pos < 0)
+      return null;
+
+    Matcher matcher = qr(stringify(regex)).matcher(str);
+    matcher.region(pos, str.length());
+    return matcher.find() ? matcher.reset().region(pos, str.length()) : null;
   }
 
+  /**
+   * Returns the successor to str.
+   * 
+   * @return a new RubyString
+   */
   public RubyString next() {
     return rs(StringSuccessor.getInstance().succ(str));
   }
 
+  /**
+   * Equivalent to RubyString#next, but modifies the receiver in place.
+   * 
+   * @return a new RubyString
+   */
   public RubyString nextǃ() {
     str = StringSuccessor.getInstance().succ(str);
     return this;
   }
 
+  /**
+   * Treats leading characters of str as a string of octal digits (with an
+   * optional sign) and returns the corresponding number. Returns 0 if the
+   * conversion fails.
+   * 
+   * @return an int
+   */
   public int oct() {
     return toI(8);
   }
 
+  /**
+   * Return the Integer ordinal of a one-character string.
+   * 
+   * @return an int
+   */
   public int ord() {
     if (str.isEmpty())
       throw new IllegalArgumentException("ArgumentError: empty string");
@@ -1138,68 +1253,166 @@ public final class RubyString extends RubyEnumerable<String> implements
     return str.codePointAt(0);
   }
 
+  /**
+   * Searches sep in the string and returns the part before it, the match, and
+   * the part after it. If it is not found, returns two empty strings and str.
+   * 
+   * @param sep
+   * @return a RubyArray
+   */
   public RubyArray<String> partition(String sep) {
     if (sep == null)
       throw new TypeConstraintException("TypeError: type mismatch: null given");
 
     int sepIndex = str.indexOf(sep);
     if (sepIndex == -1)
-      return newRubyArray("", "", str);
+      return newRubyArray(str, "", "");
 
     return newRubyArray(str.substring(0, sepIndex), sep,
         str.substring(sepIndex + sep.length()));
   }
 
-  public RubyArray<String> partition(Pattern regex) {
-    if (regex == null)
+  /**
+   * Searches pattern in the string and returns the part before it, the match,
+   * and the part after it. If it is not found, returns two empty strings and
+   * str.
+   * 
+   * @param pattern
+   *          a Pattern
+   * @return a RubyArray
+   */
+  public RubyArray<String> partition(Pattern pattern) {
+    if (pattern == null)
       throw new TypeConstraintException("TypeError: type mismatch: null given");
 
-    Matcher matcher = regex.matcher(str);
+    Matcher matcher = pattern.matcher(str);
     if (matcher.find()) {
       String sep = matcher.group();
-      while (matcher.find()) {
-        sep = matcher.group();
-      }
       int sepIndex = str.indexOf(sep);
       return newRubyArray(str.substring(0, sepIndex), sep,
           str.substring(sepIndex + sep.length()));
-    } else
-      return newRubyArray("", "", str);
+    } else {
+      return newRubyArray(str, "", "");
+    }
   }
 
+  /**
+   * Prepends the given string to str.
+   * 
+   * @param otherStr
+   *          any String
+   * @return a new RubyString
+   */
   public RubyString prepend(String otherStr) {
     str = stringify(otherStr) + str;
     return this;
   }
 
+  /**
+   * Replaces the contents and taintedness of str with the corresponding values
+   * in otherStr.
+   * 
+   * @param otherStr
+   * @return
+   */
   public RubyString replace(String otherStr) {
     str = stringify(otherStr);
     return this;
   }
 
+  /**
+   * Returns a new string with the characters from str in reverse order.
+   * 
+   * @return a new RubyString
+   */
   public RubyString reverse() {
     return rs(new StringBuilder(str).reverse().toString());
   }
 
+  /**
+   * Reverses str in place.
+   * 
+   * @return this RubyString
+   */
   public RubyString reverseǃ() {
-    return inPlace(reverse());
+    str = reverse().toS();
+    return this;
   }
 
+  /**
+   * Returns the index of the last occurrence of the given substring in str.
+   * Returns null if not found.
+   * 
+   * @param substring
+   *          any String
+   * @return an Ineger or null
+   */
   public Integer rindex(String substring) {
-    return rindex(substring, 0);
+    return rindex(stringify(substring), str.length() - 1);
   }
 
-  public Integer rindex(String substring, int offset) {
-    int index = str.lastIndexOf(substring, str.length() - 1);
-    return index == -1 ? null : index;
+  /**
+   * Returns the index of the last occurrence of the given Pattern in str.
+   * Returns null if not found. The second parameter specifies the position in
+   * the string to end the search—characters beyond this point will not be
+   * considered.
+   * 
+   * @param substring
+   *          any String
+   * @param stopAt
+   *          position to stop search
+   * @return an Ineger or null
+   */
+  public Integer rindex(String substring, int stopAt) {
+    stringify(substring);
+
+    if (stopAt < 0)
+      stopAt += str.length();
+    if (stopAt < 0)
+      return null;
+
+    String revStr = new StringBuilder(str).reverse().toString();
+    int index = revStr.indexOf(substring, str.length() - stopAt - 1);
+    return index == -1 ? null : str.length() - index - 1;
   }
 
-  public Integer rindex(Pattern regex) {
-    return rindex(regex, str.length() - 1);
+  /**
+   * Returns the index of the last occurrence of the given Pattern in str.
+   * Returns null if not found.
+   * 
+   * @param pattern
+   *          a Pattern
+   * @return an Integer or null
+   */
+  public Integer rindex(Pattern pattern) {
+    if (pattern == null)
+      throw new TypeConstraintException("TypeError: type mismatch: null given");
+
+    return rindex(pattern, str.length() - 1);
   }
 
-  public Integer rindex(Pattern regex, int stopAt) {
-    Matcher matcher = regex.matcher(str);
+  /**
+   * Returns the index of the last occurrence of the given Pattern in str.
+   * Returns null if not found. The second parameter specifies the position in
+   * the string to end the search—characters beyond this point will not be
+   * considered.
+   * 
+   * @param pattern
+   *          a Pattern
+   * @param stopAt
+   *          position to stop search
+   * @return an Integer or null
+   */
+  public Integer rindex(Pattern pattern, int stopAt) {
+    if (pattern == null)
+      throw new TypeConstraintException("TypeError: type mismatch: null given");
+
+    if (stopAt < 0)
+      stopAt += str.length();
+    if (stopAt < 0)
+      return null;
+
+    Matcher matcher = pattern.matcher(str);
     int index = -1;
     while (matcher.find()) {
       int found = matcher.start();
@@ -1213,10 +1426,30 @@ public final class RubyString extends RubyEnumerable<String> implements
       return null;
   }
 
+  /**
+   * If width is greater than the length of str, returns a new String of length
+   * integer with str right justified and padded with whitespace; otherwise,
+   * returns str.
+   * 
+   * @param width
+   *          of new RubyString
+   * @return a new RubyString
+   */
   public RubyString rjust(int width) {
     return rjust(width, " ");
   }
 
+  /**
+   * If width is greater than the length of str, returns a new String of length
+   * integer with str right justified and padded with padstr; otherwise, returns
+   * str.
+   * 
+   * @param width
+   *          of new RubyString
+   * @param padstr
+   *          used to pad on the left of new RubyString
+   * @return a new RubyString
+   */
   public RubyString rjust(int width, String padstr) {
     RubyLazyEnumerator<String> padStr = rs(padstr).lazy().cycle();
 
@@ -1233,6 +1466,15 @@ public final class RubyString extends RubyEnumerable<String> implements
     return this;
   }
 
+  /**
+   * Searches sep in the string from the end of the string, and returns the part
+   * before it, the match, and the part after it. If it is not found, returns
+   * two empty strings and str.
+   * 
+   * @param sep
+   *          separator
+   * @return a RubyArray
+   */
   public RubyArray<String> rpartition(String sep) {
     if (sep == null)
       throw new TypeConstraintException("TypeError: type mismatch: null given");
@@ -1245,75 +1487,148 @@ public final class RubyString extends RubyEnumerable<String> implements
         str.substring(sepIndex + sep.length()));
   }
 
-  public RubyArray<String> rpartition(Pattern regex) {
-    if (regex == null)
+  /**
+   * Searches Pattern in the string from the end of the string, and returns the
+   * part before it, the match, and the part after it. If it is not found,
+   * returns two empty strings and str.
+   * 
+   * @param pattern
+   *          a Pattern
+   * @return a RubyArray
+   */
+  public RubyArray<String> rpartition(Pattern pattern) {
+    if (pattern == null)
       throw new TypeConstraintException("TypeError: type mismatch: null given");
 
-    Matcher matcher = regex.matcher(str);
+    Matcher matcher = pattern.matcher(str);
     if (matcher.find()) {
       String sep = matcher.group();
+      matcher.region(matcher.start() + 1, str.length());
       while (matcher.find()) {
         sep = matcher.group();
+        matcher.region(matcher.start() + 1, str.length());
       }
       int sepIndex = str.lastIndexOf(sep);
       return newRubyArray(str.substring(0, sepIndex), sep,
           str.substring(sepIndex + sep.length()));
-    } else
+    } else {
       return newRubyArray("", "", str);
+    }
   }
 
+  /**
+   * Returns a copy of str with trailing whitespace removed. See also
+   * RubyString#lstrip and RubyString#strip.
+   * 
+   * @return a new RubyString
+   */
   public RubyString rstrip() {
     return rs(str.replaceFirst("\\s+$", ""));
   }
 
+  /**
+   * Removes trailing whitespace from str, returning nil if no change was made.
+   * See also RubyString#lstrip! and RubyString#strip!.
+   * 
+   * @return this RubyString
+   */
   public RubyString rstripǃ() {
     return inPlace(rstrip());
   }
 
+  /**
+   * Both forms iterate through str, matching the regexp. For each match, a
+   * result is generated and added to the result RubyArray.
+   * 
+   * @param regex
+   *          regular expression
+   * @return a RubyArray
+   */
   public RubyArray<String> scan(String regex) {
-    if (regex == null)
-      throw new TypeConstraintException(
-          "TypeError: wrong argument type null (expected Regexp)");
-
+    Matcher matcher = qr(stringify(regex)).matcher(str);
     RubyArray<String> matches = newRubyArray();
-    Matcher matcher = qr(regex).matcher(str);
     while (matcher.find()) {
       matches.add(matcher.group());
     }
     return matches;
   }
 
+  /**
+   * Both forms iterate through str, matching the regexp. For each match, a
+   * result is generated and passed to the block.
+   * 
+   * @param regex
+   *          regular expression
+   * @param block
+   *          to do the replacement
+   * @return this RubyString
+   */
   public RubyString scan(String regex, Block<String> block) {
     scan(regex).each(block);
     return this;
   }
 
+  /**
+   * Both forms iterate through str, matching the regexp. For each match, a
+   * result is generated and added to the result array. If the pattern contains
+   * no groups, each individual result consists of the matched string. If the
+   * pattern contains groups, each individual result is itself an array
+   * containing one entry per group.
+   * 
+   * @param regex
+   *          regular expression
+   * @return a RubyArray
+   */
   public RubyArray<RubyArray<String>> scanGroups(String regex) {
-    if (regex == null)
-      throw new TypeConstraintException(
-          "TypeError: wrong argument type null (expected Regexp)");
-
+    Matcher matcher = qr(stringify(regex)).matcher(str);
     RubyArray<RubyArray<String>> groups = newRubyArray();
-    Matcher matcher = qr(regex).matcher(str);
     while (matcher.find()) {
       RubyArray<String> group = newRubyArray();
-      for (int i = 1; i <= matcher.groupCount(); i++) {
-        group.add(matcher.group(i));
+      if (matcher.groupCount() == 0) {
+        group.add(matcher.group());
+      } else {
+        for (int i = 1; i <= matcher.groupCount(); i++) {
+          group.add(matcher.group(i));
+        }
       }
       groups.add(group);
     }
     return groups;
   }
 
+  /**
+   * Both forms iterate through str, matching the regexp. For each match, a
+   * result is generated and passed to the block. If the pattern contains no
+   * groups, each individual result consists of the matched string. If the
+   * pattern contains groups, each individual result is itself an array
+   * containing one entry per group.
+   * 
+   * @param regex
+   *          regular expression
+   * @param block
+   *          to yield matched groups
+   * @return this RubyString
+   */
   public RubyString scanGroups(String regex, Block<RubyArray<String>> block) {
-    scanGroups(regex).each(block);
+    scanGroups(stringify(regex)).each(block);
     return this;
   }
 
+  /**
+   * If the string is invalid byte sequence then replace invalid bytes with �.
+   * 
+   * @return a new RubyString
+   */
   public RubyString scrub() {
     return rs(str.replaceAll("\\p{C}", "\uFFFD"));
   }
 
+  /**
+   * If the string is invalid byte sequence then replace invalid bytes with
+   * given replacement character.
+   * 
+   * @return a new RubyString
+   */
   public RubyString scrub(String repl) {
     if (repl == null)
       return scrub();
@@ -1321,6 +1636,12 @@ public final class RubyString extends RubyEnumerable<String> implements
     return rs(str.replaceAll("\\p{C}", repl));
   }
 
+  /**
+   * If the string is invalid byte sequence then replace invalid bytes with
+   * returned value of the block.
+   * 
+   * @return a new RubyString
+   */
   public RubyString scrub(final TransformBlock<RubyArray<Byte>, String> block) {
     return rs(map(new TransformBlock<String, String>() {
 
@@ -1335,48 +1656,121 @@ public final class RubyString extends RubyEnumerable<String> implements
     }).join());
   }
 
+  /**
+   * If the string is invalid byte sequence then replace invalid bytes with �.
+   * 
+   * @return this RubyString
+   */
   public RubyString scrubǃ() {
     return inPlace(scrub());
   }
 
+  /**
+   * If the string is invalid byte sequence then replace invalid bytes with
+   * given replacement character.
+   * 
+   * @return this RubyString
+   */
   public RubyString scrubǃ(String repl) {
     return inPlace(scrub(repl));
   }
 
+  /**
+   * If the string is invalid byte sequence then replace invalid bytes with
+   * returned value of the block.
+   * 
+   * @return this RubyString
+   */
   public RubyString scrubǃ(final TransformBlock<RubyArray<Byte>, String> block) {
     return inPlace(scrub(block));
   }
 
+  /**
+   * Modifies the indexth byte.
+   * 
+   * @param index
+   *          position to modify
+   * @param b
+   *          a byte
+   * @return a byte
+   */
   public byte setbyte(int index, byte b) {
     byte[] bytes = str.getBytes();
+    if (index < 0)
+      index += bytes.length;
+    if (index < 0 || index >= bytes.length)
+      throw new IndexOutOfBoundsException("IndexError: index " + index
+          + " out of string");
+
     bytes[index] = b;
     str = new String(bytes);
     return b;
   }
 
+  /**
+   * Returns the character length of str.
+   * 
+   * @return an int
+   */
   public int size() {
     return str.length();
   }
 
+  /**
+   * Returns a substring of one character at that index.
+   * 
+   * @param index
+   *          of the character
+   * @return a new RubyString or null
+   */
   public RubyString slice(int index) {
-    return rs(chars().slice(index));
+    String slicedStr = chars().slice(index);
+    return slicedStr == null ? null : rs(slicedStr);
   }
 
+  /**
+   * Returns a substring containing length characters starting at the index.
+   * 
+   * @param index
+   *          position to begin slice
+   * @param length
+   *          of new RubyString
+   * @return a new RubyString or null
+   */
   public RubyString slice(int index, int length) {
     RubyArray<String> slicedStr = chars().slice(index, length);
     return slicedStr == null ? null : rs(slicedStr.join());
   }
 
-  public RubyString slice(Pattern regex) {
-    Matcher matcher = regex.matcher(str);
+  /**
+   * Returns the matching portion of the string.
+   * 
+   * @param pattern
+   *          a Pattern
+   * @return a new RubyString or null
+   */
+  public RubyString slice(Pattern pattern) {
+    if (pattern == null)
+      throw new TypeConstraintException("TypeError: type mismatch: null given");
+
+    Matcher matcher = pattern.matcher(str);
     if (matcher.find())
       return rs(matcher.group());
     else
       return null;
   }
 
-  public RubyString slice(Pattern regex, int group) {
-    Matcher matcher = regex.matcher(str);
+  /**
+   * Returns the target group of matching portion of the string.
+   * 
+   * @param pattern
+   *          a Pattern
+   * @param group
+   *          number pf matched group
+   * @return a new RubyString or null
+   */
+  public RubyString slice(Pattern pattern, int group) {
+    Matcher matcher = pattern.matcher(str);
     if (matcher.find())
       if (group < 1 || group > matcher.groupCount())
         return null;
@@ -1386,20 +1780,43 @@ public final class RubyString extends RubyEnumerable<String> implements
       return null;
   }
 
+  /**
+   * Returns if matchStr occurs in the string.
+   * 
+   * @param matchStr
+   *          matched string
+   * @return a new RubyString or null
+   */
   public RubyString slice(String matchStr) {
     return str.contains(matchStr) ? rs(matchStr) : null;
   }
 
-  public Integer sliceǃ(int index) {
+  /**
+   * Deletes the specified portion from str, and returns the portion deleted.
+   * 
+   * @param index
+   *          of the character
+   * @return a new RubyString or null
+   */
+  public RubyString sliceǃ(int index) {
     RubyArray<String> chars = chars();
     String slicedStr = chars.sliceǃ(index);
     if (slicedStr == null)
       return null;
 
     str = chars.join();
-    return index;
+    return rs(slicedStr);
   }
 
+  /**
+   * Deletes the specified portion from str, and returns the portion deleted.
+   * 
+   * @param index
+   *          position to begin slice
+   * @param length
+   *          of new RubyString
+   * @return a new RubyString or null
+   */
   public RubyString sliceǃ(int index, int length) {
     RubyArray<String> chars = chars();
     RubyArray<String> slicedStr = chars.sliceǃ(index, length);
@@ -1410,8 +1827,15 @@ public final class RubyString extends RubyEnumerable<String> implements
     return rs(slicedStr.join());
   }
 
-  public RubyString sliceǃ(Pattern regex) {
-    RubyString slicedStr = slice(regex);
+  /**
+   * Deletes the specified portion from str, and returns the portion deleted.
+   * 
+   * @param pattern
+   *          a Pattern
+   * @return a new RubyString or null
+   */
+  public RubyString sliceǃ(Pattern pattern) {
+    RubyString slicedStr = slice(pattern);
     if (slicedStr == null)
       return null;
 
@@ -1419,8 +1843,17 @@ public final class RubyString extends RubyEnumerable<String> implements
     return slicedStr;
   }
 
-  public RubyString sliceǃ(Pattern regex, int group) {
-    RubyString slicedStr = slice(regex, group);
+  /**
+   * Deletes the specified portion from str, and returns the portion deleted.
+   * 
+   * @param pattern
+   *          a Pattern
+   * @param group
+   *          number pf matched group
+   * @return a new RubyString or null
+   */
+  public RubyString sliceǃ(Pattern pattern, int group) {
+    RubyString slicedStr = slice(pattern, group);
     if (slicedStr == null)
       return null;
 
@@ -1428,6 +1861,13 @@ public final class RubyString extends RubyEnumerable<String> implements
     return slicedStr;
   }
 
+  /**
+   * Deletes the specified portion from str, and returns the portion deleted.
+   * 
+   * @param matchStr
+   *          matched string
+   * @return a new RubyString or null
+   */
   public RubyString sliceǃ(String matchStr) {
     RubyString slicedStr = slice(matchStr);
     if (slicedStr == null)
@@ -1437,27 +1877,65 @@ public final class RubyString extends RubyEnumerable<String> implements
     return slicedStr;
   }
 
+  /**
+   * Divides str into substrings based on a whitespaces, returning a RubyArray
+   * of these substrings.
+   * 
+   * @return a RubyArray
+   */
   public RubyArray<String> split() {
-    return ra(str.trim().replaceAll("  ", " ").split(" "));
+    return ra(str.trim().split(" +"));
   }
 
-  public RubyArray<String> split(final String pattern) {
-    if (pattern == null || pattern.equals(" "))
+  /**
+   * Divides str into substrings based on a delimiter, returning a RubyArray of
+   * these substrings.
+   * 
+   * @param delimiter
+   *          used to split str
+   * @return a RubyArray
+   */
+  public RubyArray<String> split(final String delimiter) {
+    if (delimiter == null || delimiter.equals(" "))
       return split();
 
-    return newRubyArray(str.split(Pattern.quote(pattern)));
+    return newRubyArray(str.split(Pattern.quote(delimiter)));
   }
 
-  public RubyArray<String> split(String pattern, int limit) {
-    if (pattern == null)
-      return split();
+  /**
+   * Divides str into substrings based on a delimiter, returning a RubyArray of
+   * these substrings, at most that limit number of fields will be returned.
+   * 
+   * @param delimiter
+   *          used to split str
+   * @param limit
+   *          max number of fields
+   * @return a RubyArray
+   */
+  public RubyArray<String> split(String delimiter, int limit) {
+    if (delimiter == null || delimiter.equals(" ")) {
+      if (limit <= 0)
+        return newRubyArray(str.trim().split(" +"));
+      else if (limit == 1)
+        return newRubyArray(str);
+      else
+        return newRubyArray(rs(str).lstrip().toS().split(" +", limit));
+    }
 
-    if (limit < 0)
-      return newRubyArray(str.split(Pattern.quote(pattern)));
+    if (limit <= 0)
+      return newRubyArray(str.split(Pattern.quote(delimiter)));
     else
-      return newRubyArray(str.split(Pattern.quote(pattern), limit));
+      return newRubyArray(str.split(Pattern.quote(delimiter), limit));
   }
 
+  /**
+   * Divides str into substrings based on a Pattern, returning a RubyArray of
+   * these substrings.
+   * 
+   * @param pattern
+   *          a Pattern
+   * @return a RubyArray
+   */
   public RubyArray<String> split(Pattern pattern) {
     if (pattern == null)
       return split();
@@ -1465,67 +1943,162 @@ public final class RubyString extends RubyEnumerable<String> implements
     return newRubyArray(str.split(pattern.pattern()));
   }
 
+  /**
+   * Divides str into substrings based on a Pattern, returning a RubyArray of
+   * these substrings, at most that limit number of fields will be returned.
+   * 
+   * @param pattern
+   *          a Pattern
+   * @param limit
+   *          max number of fields
+   * @return a RubyArray
+   */
   public RubyArray<String> split(Pattern pattern, int limit) {
     if (pattern == null)
-      return split();
+      return split((String) null, limit);
 
-    if (limit < 0)
+    if (limit <= 0)
       return newRubyArray(str.split(pattern.pattern()));
     else
       return newRubyArray(str.split(pattern.pattern(), limit));
   }
 
+  /**
+   * Builds a set of characters using the procedure described for
+   * RubyString#count.
+   * 
+   * @return a new RubyString
+   */
   public RubyString squeeze() {
-    return squeeze(".");
+    return rs(str.replaceAll("(.)\\1+", "$1"));
   }
 
-  public RubyString squeeze(String regex) {
-    stringify(regex);
+  /**
+   * Builds a set of characters from the charSet using the procedure described
+   * for RubyString#count.
+   * 
+   * @param charSet
+   *          a set of characters
+   * @return a new RubyString
+   */
+  public RubyString squeeze(String charSet) {
+    stringify(charSet);
 
-    return rs(str.replaceAll("(" + regex + ")\\1+", "$1"));
+    return rs(str.replaceAll("([" + charSet2Str(charSet) + "])\\1+", "$1"));
   }
 
-  public RubyString squeezeǃ(String regex) {
-    return inPlace(squeeze(regex));
+  /**
+   * Squeezes str in place, returning either str, or nil if no changes were
+   * made.
+   * 
+   * @return this RubyString or null
+   */
+  public RubyString squeezeǃ() {
+    return inPlace(squeeze());
   }
 
+  /**
+   * Squeezes str in place, returning either str, or nil if no changes were
+   * made.
+   * 
+   * @param charSet
+   *          a set of characters
+   * @return this RubyString or null
+   */
+  public RubyString squeezeǃ(String charSet) {
+    return inPlace(squeeze(charSet));
+  }
+
+  /**
+   * Returns true if str starts with one of the prefixes given.
+   * 
+   * @param prefix
+   *          first prefix
+   * @param otherPrefix
+   *          otner prefixes
+   * @return true if str starts with one of the prefixes given, flase otherwise
+   */
   public boolean startWithʔ(String prefix, String... otherPrefix) {
-    if (str.startsWith(prefix))
+    if (str.startsWith(stringify(prefix)))
       return true;
 
-    for (String p : otherPrefix) {
-      if (str.startsWith(p))
-        return true;
+    if (otherPrefix != null) {
+      for (String p : otherPrefix) {
+        if (str.startsWith(p))
+          return true;
+      }
     }
 
     return false;
   }
 
+  /**
+   * Returns a copy of str with leading and trailing whitespace removed.
+   * 
+   * @return a new RubyString
+   */
   public RubyString strip() {
     return rs(str.trim());
   }
 
+  /**
+   * Removes leading and trailing whitespace from str. Returns nil if str was
+   * not altered.
+   * 
+   * @return this RubyString
+   */
   public RubyString stripǃ() {
     return inPlace(strip());
   }
 
-  public RubyString sub(String pattern, String replacement) {
-    return rs(str.replaceFirst(pattern, replacement));
+  /**
+   * Returns a copy of str with the first occurrence of pattern replaced by the
+   * second argument.
+   * 
+   * @param regex
+   *          regular expression
+   * @param replacement
+   *          used to replace matched string
+   * @return a new RubyString
+   */
+  public RubyString sub(String regex, String replacement) {
+    return rs(str.replaceFirst(stringify(regex), stringify(replacement)));
   }
 
-  public RubyString sub(String pattern, Map<String, ?> map) {
+  /**
+   * Returns a copy of str with the first occurrence of pattern replaced by the
+   * second argument. The second argument is a Map, and the matched text is one
+   * of its keys, the corresponding value is the replacement string.
+   * 
+   * @param regex
+   *          regular expression
+   * @param map
+   *          any Map
+   * @return a new RubyString
+   */
+  public RubyString sub(String regex, Map<String, ?> map) {
     String result = str;
-    Matcher matcher = qr(pattern).matcher(str);
+    Matcher matcher = qr(stringify(regex)).matcher(str);
     if (matcher.find()) {
       String target = matcher.group();
-      if (map.containsKey(target))
+      if (isNotBlank(map) && map.containsKey(target))
         result = result.replace(target, map.get(target).toString());
     }
     return rs(result);
   }
 
-  public RubyString sub(String pattern, TransformBlock<String, String> block) {
-    Matcher matcher = qr(pattern).matcher(str);
+  /**
+   * Returns a copy of str with the first occurrence of pattern replaced by the
+   * value returned by the block will be substituted for the match on each call.
+   * 
+   * @param regex
+   *          regular expression
+   * @param block
+   *          to do the replacement
+   * @return a new RubyString
+   */
+  public RubyString sub(String regex, TransformBlock<String, String> block) {
+    Matcher matcher = qr(stringify(regex)).matcher(str);
     if (matcher.find()) {
       String match = matcher.group();
       return rs(str.replace(match, block.yield(match)));
@@ -1533,43 +2106,94 @@ public final class RubyString extends RubyEnumerable<String> implements
     return this;
   }
 
-  public RubyString subǃ(String pattern, String replacement) {
-    if (qr(pattern).matcher(str).find())
-      return rs(str.replaceFirst(pattern, replacement));
-    else
-      return null;
+  /**
+   * Performs the same substitution as #sub in-place. Returns str if a
+   * substitution was performed or nil if no substitution was performed.
+   * 
+   * @param regex
+   *          regular expression
+   * @param replacement
+   *          used to replace matched string
+   * @return this RubyString or null
+   */
+  public RubyString subǃ(String regex, String replacement) {
+    return inPlace(sub(regex, replacement));
   }
 
-  public RubyString subǃ(String pattern, TransformBlock<String, String> block) {
-    Matcher matcher = qr(pattern).matcher(str);
-    if (matcher.find()) {
-      String match = matcher.group();
-      return rs(str.replace(match, block.yield(match)));
-    }
-    return null;
+  /**
+   * Performs the same substitution as #sub in-place. Returns str if a
+   * substitution was performed or nil if no substitution was performed.
+   * 
+   * @param regex
+   *          regular expression
+   * @param block
+   *          to do the replacement
+   * @return this RubyString or null
+   */
+  public RubyString subǃ(String regex, TransformBlock<String, String> block) {
+    return inPlace(sub(regex, block));
   }
 
+  /**
+   * Returns the successor to str. The successor is calculated by incrementing
+   * characters starting from the rightmost alphanumeric (or the rightmost
+   * character if there are no alphanumerics) in the string. Incrementing a
+   * digit always results in another digit, and incrementing a letter results in
+   * another letter of the same case. Incrementing nonalphanumerics uses the
+   * underlying character set’s collating sequence.
+   * 
+   * @return a new RubyString
+   */
   public RubyString succ() {
     return rs(StringSuccessor.getInstance().succ(str));
   }
 
+  /**
+   * Equivalent to RubyString#succ, but modifies the receiver in place.
+   * 
+   * @return this RubyString
+   */
   public RubyString succǃ() {
     str = succ().toS();
     return this;
   }
 
+  /**
+   * Returns a basic n-bit checksum of the characters in str, where n is 16. The
+   * result is simply the sum of the binary value of each character in str
+   * modulo 2**n - 1. This is not a particularly good checksum.
+   * 
+   * @return an int
+   */
   public int sum() {
     return sum(16);
   }
 
+  /**
+   * Returns a basic n-bit checksum of the characters in str, where n is the
+   * optional Fixnum parameter. The result is simply the sum of the binary value
+   * of each character in str modulo 2**n - 1. This is not a particularly good
+   * checksum.
+   * 
+   * @param n
+   *          any int
+   * @return an int
+   */
   public int sum(int n) {
     int sum = 0;
     for (byte b : str.getBytes()) {
-      sum += (int) b;
+      sum += (int) b & 0xFF;
     }
     return sum % (int) Math.pow(2, n - 1);
   }
 
+  /**
+   * Returns a copy of str with uppercase alphabetic characters converted to
+   * lowercase and lowercase characters converted to uppercase. Note: case
+   * conversion is effective only in ASCII region.
+   * 
+   * @return a new RubyString
+   */
   public RubyString swapcase() {
     final Pattern upperCase = qr("[A-Z]");
     return rs(map(new TransformBlock<String, String>() {
@@ -1583,53 +2207,90 @@ public final class RubyString extends RubyEnumerable<String> implements
     }).join());
   }
 
+  /**
+   * Equivalent to String#swapcase, but modifies the receiver in place,
+   * returning str, or null if no changes were made. Note: case conversion is
+   * effective only in ASCII region.
+   * 
+   * @return
+   */
   public RubyString swapcaseǃ() {
     return inPlace(swapcase());
   }
 
+  /**
+   * Returns the result of interpreting leading characters in str as a floating
+   * point number. Extraneous characters past the end of a valid number are
+   * ignored. If there is not a valid number at the start of str, 0.0 is
+   * returned. This method never raises an exception.
+   * 
+   * @return a double
+   */
   public double toF() {
     Matcher intMatcher =
-        qr("^\\s*[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?").matcher(str);
+        qr("^\\s*[-+]?\\s*[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?").matcher(str);
     if (intMatcher.find())
-      return Double.valueOf(intMatcher.group().trim());
+      return Double.valueOf(intMatcher.group().trim().replaceAll("\\s+", ""));
     else
       return 0.0;
   }
 
   public int toI() {
-    Matcher intMatcher = qr("^\\s*[-+]?\\d+").matcher(str);
+    Matcher intMatcher = qr("^\\s*[-+]?\\s*\\d+").matcher(str);
     if (intMatcher.find())
-      return Integer.valueOf(intMatcher.group().trim());
+      return Integer.valueOf(intMatcher.group().trim().replaceAll("\\s+", ""));
     else
       return 0;
   }
 
-  public int toI(int base) {
-    if (base < 2 || base > 32)
-      throw new IllegalArgumentException("ArgumentError: invalid radix " + base);
+  public int toI(int radix) {
+    if (radix < MIN_RADIX || radix > MAX_RADIX)
+      throw new IllegalArgumentException("ArgumentError: invalid radix "
+          + radix);
 
-    int i = 0;
-    Matcher intMatcher = qr("^\\s*[-+]?\\d+").matcher(str);
+    String digits = "0123456789abcdefghijklmnopqrstuvwxyz";
+    Matcher intMatcher =
+        qr("(?i)^\\s*[-+]?\\s*[" + digits.substring(0, radix) + "]+").matcher(
+            str);
     if (intMatcher.find()) {
-      int multiplier = 1;
-      RubyArray<String> digits = rs(intMatcher.group().trim()).chars();
-      while (digits.anyʔ()) {
-        i += Integer.valueOf(digits.pop()) * multiplier;
-        multiplier = multiplier * base;
+      try {
+        return Integer.parseInt(intMatcher.group().trim(), radix);
+      } catch (NumberFormatException e) {
+        return 0;
       }
     }
-
-    return i;
+    return 0;
   }
 
+  /**
+   * Returns the receiver.
+   * 
+   * @return a String
+   */
   public String toS() {
     return str;
   }
 
+  /**
+   * Returns the receiver.
+   * 
+   * @return a String
+   */
   public String toStr() {
     return str;
   }
 
+  /**
+   * Returns a copy of str with the characters in from_str replaced by the
+   * corresponding characters in toStr. If to_str is shorter than fromStr, it is
+   * padded with its last character in order to maintain the correspondence.
+   * 
+   * @param fromStr
+   *          a list of characters
+   * @param toStr
+   *          a list of characters
+   * @return a new RubyString
+   */
   public RubyString tr(String fromStr, String toStr) {
     fromStr = charSet2Str(stringify(fromStr));
     toStr = charSet2Str(stringify(toStr));
@@ -1648,6 +2309,14 @@ public final class RubyString extends RubyEnumerable<String> implements
 
       @SuppressWarnings("unchecked")
       RubyHash<String, String> rh = Hash(fromStrAry.zip(toStrAry));
+      if (fromStr.contains("\\^")) {
+        fromStr = fromStr.replaceAll("\\\\^", "");
+        fromStr += "^";
+      }
+      if (fromStr.contains("\\-")) {
+        fromStr = fromStr.replaceAll("\\\\-", "");
+        fromStr += "-";
+      }
       return gsub(
           "["
               + fromStr.replace("\\", "\\\\").replace("[", "\\[")
@@ -1655,15 +2324,30 @@ public final class RubyString extends RubyEnumerable<String> implements
     }
   }
 
+  /**
+   * Translates str in place, using the same rules as String#tr. Returns str, or
+   * nil if no changes were made.
+   * 
+   * @param fromStr
+   *          a list of characters
+   * @param toStr
+   *          a list of characters
+   * @return this RubyString or null
+   */
   public RubyString trǃ(String fromStr, String toStr) {
-    RubyString trimmedStr = tr(fromStr, toStr);
-    if (trimmedStr.equals(this))
-      return null;
-
-    str = trimmedStr.toS();
-    return this;
+    return inPlace(tr(fromStr, toStr));
   }
 
+  /**
+   * Processes a copy of str as described under RubyString#tr, then removes
+   * duplicate characters in regions that were affected by the translation.
+   * 
+   * @param fromStr
+   *          a list of characters
+   * @param toStr
+   *          a list of characters
+   * @return a new RubyString
+   */
   public RubyString trS(String fromStr, String toStr) {
     final String fromString = charSet2Str(stringify(fromStr));
     toStr = charSet2Str(stringify(toStr));
@@ -1684,6 +2368,14 @@ public final class RubyString extends RubyEnumerable<String> implements
 
       @SuppressWarnings("unchecked")
       RubyHash<String, String> rh = Hash(fromStrAry.zip(toStrAry));
+      if (fromStr.contains("\\^")) {
+        fromStr = fromStr.replaceAll("\\\\^", "");
+        fromStr += "^";
+      }
+      if (fromStr.contains("\\-")) {
+        fromStr = fromStr.replaceAll("\\\\-", "");
+        fromStr += "-";
+      }
       trStr =
           gsub(
               "["
@@ -1730,27 +2422,85 @@ public final class RubyString extends RubyEnumerable<String> implements
     return rs(trSqueezed);
   }
 
+  /**
+   * Performs RubyString#trS processing on str in place, returning str, or null
+   * if no changes were made.
+   * 
+   * @param fromStr
+   *          a list of characters
+   * @param toStr
+   *          a list of characters
+   * @return this RubyString or null
+   */
   public RubyString trSǃ(String fromStr, String toStr) {
     return inPlace(trS(fromStr, toStr));
   }
 
+  /**
+   * Decodes str (which may contain binary data) according to the format string,
+   * returning an array of each value extracted. The format string consists of a
+   * sequence of single-character directives, summarized in the table at the end
+   * of this entry. Each directive may be followed by a number, indicating the
+   * number of times to repeat with this directive. An asterisk (“*”) will use
+   * up all remaining elements. See also RubyArray#pack.
+   * 
+   * @param format
+   *          format string
+   * @return a RubyArray
+   */
   public RubyArray<String> unpack(String format) {
-    return Unpacker.unpack(format, str);
+    return Unpacker.unpack(stringify(format), str);
   }
 
+  /**
+   * Returns a copy of str with all lowercase letters replaced with their
+   * uppercase counterparts. The operation is locale insensitive—only characters
+   * “a” to “z” are affected.
+   * 
+   * @return a new RubyString
+   */
   public RubyString upcase() {
     return rs(str.toUpperCase());
   }
 
+  /**
+   * Upcases the contents of str, returning nil if no changes were made.
+   * 
+   * @return a new RubyString
+   */
   public RubyString upcaseǃ() {
     return inPlace(upcase());
   }
 
+  /**
+   * Iterates through successive values, starting at str and ending at otherStr
+   * inclusive, passing each value in turn to the block. The RubyString#succ
+   * method is used to generate each value.
+   * 
+   * @param otherStr
+   *          any String
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<String> upto(String otherStr) {
-    return upto(otherStr, false);
+    return upto(stringify(otherStr), false);
   }
 
+  /**
+   * Iterates through successive values, starting at str and ending at otherStr
+   * inclusive, passing each value in turn to the block. The RubyString#succ
+   * method is used to generate each value. The second argument exclusive is
+   * omitted or is false, the last value will be included; otherwise it will be
+   * excluded.
+   * 
+   * @param otherStr
+   *          any String
+   * @param exclusive
+   *          true if the last value is ommitted, false otherwise
+   * @return a RubyEnumerator
+   */
   public RubyEnumerator<String> upto(final String otherStr, boolean exclusive) {
+    stringify(otherStr);
+
     if (exclusive) {
       return newRubyEnumerator((Iterable<String>) range(str, otherStr).lazy()
           .takeWhile(new BooleanBlock<String>() {
@@ -1766,9 +2516,50 @@ public final class RubyString extends RubyEnumerable<String> implements
     }
   }
 
-  public boolean validEncodingʔ(Charset encoding) {
+  /**
+   * Iterates through successive values, starting at str and ending at otherStr
+   * inclusive, passing each value in turn to the block.
+   * 
+   * @param otherStr
+   *          any String
+   * @param block
+   *          to yield successive value
+   * @return this RubyString
+   */
+  public RubyString upto(String otherStr, Block<String> block) {
+    upto(stringify(otherStr), false).each(block);
+    return this;
+  }
+
+  /**
+   * Iterates through successive values, starting at str and ending at otherStr,
+   * passing each value in turn to the block. The second argument exclusive is
+   * omitted or is false, the last value will be included.
+   * 
+   * @param otherStr
+   *          any String
+   * @param exclusive
+   *          true if the last value is ommitted, false otherwise
+   * @param block
+   *          to yield successive value
+   * @return this RubyString
+   */
+  public RubyString
+      upto(String otherStr, boolean exclusive, Block<String> block) {
+    upto(stringify(otherStr), exclusive).each(block);
+    return this;
+  }
+
+  /**
+   * Returns true for a string which encoded correctly.
+   * 
+   * @param encoding
+   *          name of encoding
+   * @return true if a string encoded correctly, flase otherwise
+   */
+  public boolean validEncodingʔ(String encoding) {
     CharsetDecoder decoder = Charset.forName("UTF-8").newDecoder();
-    CharsetEncoder encoder = encoding.newEncoder();
+    CharsetEncoder encoder = Charset.forName(stringify(encoding)).newEncoder();
     ByteBuffer tmp;
     try {
       tmp = encoder.encode(CharBuffer.wrap(str));

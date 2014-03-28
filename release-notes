@@ -210,3 +210,5 @@ Version 1.7.0
 + Added RubyCollections#isBlank & RubyCollections#isNotBlank
 
 * Fixed the bug of RubyArray#pack
+
+* Fixed the bug of RubyArray#insert

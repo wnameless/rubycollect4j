@@ -33,13 +33,16 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.nio.charset.Charset;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.xml.bind.TypeConstraintException;
 
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.block.TransformBlock;
+import net.sf.rubycollect4j.succ.StringSuccessor;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -200,6 +203,12 @@ public class RubyStringTest {
   public void testChr() {
     assertEquals(rs("a"), rs.chr());
     assertEquals(rs(), rs("").chr());
+  }
+
+  @Test
+  public void testClear() {
+    assertEquals(rs(), rs.clear());
+    assertSame(rs, rs.clear());
   }
 
   @Test
@@ -624,20 +633,1005 @@ public class RubyStringTest {
   }
 
   @Test
+  public void testInsert() {
+    assertEquals(rs("X1234"), rs("1234").insert(0, "X"));
+    assertEquals(rs("X1234"), rs("1234").insert(-5, "X"));
+    assertEquals(rs("123X4"), rs("1234").insert(3, "X"));
+    assertEquals(rs("1234X"), rs("1234").insert(4, "X"));
+    assertEquals(rs("12X34"), rs("1234").insert(-3, "X"));
+    assertEquals(rs("1234X"), rs("1234").insert(0 - 1, "X"));
+  }
+
+  @Test(expected = IndexOutOfBoundsException.class)
+  public void testInsertIndexException1() {
+    rs("1234").insert(-6, "X");
+  }
+
+  @Test(expected = IndexOutOfBoundsException.class)
+  public void testInsertIndexException2() {
+    rs("1234").insert(5, "X");
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testInsertException() {
+    rs.insert(0, null);
+  }
+
+  @Test
   public void testInspect() {
     assertEquals("\"我\\b\\f\\n\\r\\t\\0abc]\\n\\177\\uea60\"",
         rs("我\b\f\n\r\t\0abc]\n\177\uea60").inspect().toS());
   }
 
   @Test
-  public void testClear() {
-    assertEquals(rs(), rs.clear());
-    assertSame(rs, rs.clear());
+  public void testLines() {
+    assertEquals(ra("a", "b", "", "c"), rs("a\nb\n\nc").lines());
   }
 
   @Test
-  public void testLines() {
-    assertEquals(ra("a", "b", "", "c"), rs("a\nb\n\nc").lines());
+  public void testLinesWithSeparator() {
+    assertEquals(ra("a\n", "\nc"), rs("a\nb\n\nc").lines("b\n"));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testLinesWithSeparatorException() {
+    rs("a\nb\n\nc").lines(null);
+  }
+
+  @Test
+  public void testLjust() {
+    assertEquals(rs("hello"), rs("hello").ljust(4));
+    assertEquals(rs("hello               "), rs("hello").ljust(20));
+  }
+
+  @Test
+  public void testLjustWithPadstr() {
+    assertEquals(rs("hello123412341234123"), rs("hello").ljust(20, "1234"));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testLjustWithPadstrException() {
+    rs("hello").ljust(20, null);
+  }
+
+  @Test
+  public void testLstrip() {
+    assertEquals(rs("hello  "), rs("  hello  ").lstrip());
+  }
+
+  @Test
+  public void testLstripǃ() {
+    rs = rs("  hello  ");
+    assertSame(rs, rs.lstripǃ());
+    assertEquals(rs("hello  "), rs);
+    assertNull(rs.lstripǃ());
+  }
+
+  @Test
+  public void testMatch() {
+    Matcher matcher = rs.match("[a-z]");
+    assertTrue(matcher instanceof Matcher);
+    RubyArray<String> chars = rs.chars();
+    while (matcher.find()) {
+      assertEquals(chars.shift(), matcher.group());
+    }
+    assertNull(rs.match("\\d"));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testMatchException() {
+    rs.match(null);
+  }
+
+  @Test
+  public void testMatchWithPosition() {
+    Matcher matcher = rs.match("[a-z]", 1);
+    assertTrue(matcher instanceof Matcher);
+    RubyArray<String> chars = rs.chars();
+    chars.shift(1);
+    while (matcher.find()) {
+      assertEquals(chars.shift(), matcher.group());
+    }
+    assertNull(rs.match("\\d", 1));
+    assertNull(rs.match("[a-z]", -rs.length() - 1));
+    assertNull(rs.match("[a-z]", rs.length()));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testMatchWithPositionException() {
+    rs.match(null, 1);
+  }
+
+  @Test
+  public void testNext() {
+    assertEquals(StringSuccessor.getInstance().succ(rs.toS()), rs.next().toS());
+  }
+
+  @Test
+  public void testNextǃ() {
+    RubyString succ = rs.next();
+    assertSame(rs, rs.nextǃ());
+    assertEquals(succ, rs);
+  }
+
+  @Test
+  public void testOct() {
+    assertEquals(83, rs("123").oct());
+    assertEquals(-255, rs("-377").oct());
+    assertEquals(0, rs("bad").oct());
+    assertEquals(255, rs("0377bad").oct());
+  }
+
+  @Test
+  public void testOrd() {
+    assertEquals(97, rs("abc").ord());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testOrdException() {
+    rs("").ord();
+  }
+
+  @Test
+  public void testPartition() {
+    assertEquals(ra("he", "l", "lo"), rs("hello").partition("l"));
+    assertEquals(ra("hello", "", ""), rs("hello").partition("x"));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testPartitionException() {
+    rs.partition((String) null);
+  }
+
+  @Test
+  public void testPartitionWithPattern() {
+    assertEquals(ra("h", "el", "lo"), rs("hello").partition(qr(".l")));
+    assertEquals(ra("hello", "", ""), rs("hello").partition(qr(".x")));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testPartitionWithPatternException() {
+    rs.partition((Pattern) null);
+  }
+
+  @Test
+  public void testPrepend() {
+    assertSame(rs, rs.prepend("def"));
+    assertEquals(rs("defabc"), rs);
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testPrependException() {
+    rs.prepend(null);
+  }
+
+  @Test
+  public void testReplace() {
+    assertSame(rs, rs.replace("def"));
+    assertEquals(rs("def"), rs);
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testReplaceException() {
+    rs.replace(null);
+  }
+
+  @Test
+  public void testReverse() {
+    assertEquals(rs("cba"), rs.reverse());
+  }
+
+  @Test
+  public void testReverseǃ() {
+    assertSame(rs, rs.reverseǃ());
+    assertEquals(rs("cba"), rs);
+    assertEquals(rs("abc"), rs.reverseǃ());
+  }
+
+  @Test
+  public void testLindex() {
+    assertEquals((Integer) 1, rs("hello").rindex("e"));
+    assertEquals((Integer) 4, rs("hello").rindex("o"));
+    assertEquals(null, rs("hello").rindex("a"));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testLindexException() {
+    rs.rindex((String) null);
+  }
+
+  @Test
+  public void testLindexWithEnd() {
+    assertEquals((Integer) 3, rs("hello").rindex("l", -2));
+    assertEquals((Integer) 4, rs("hello").rindex("o", -1));
+    assertEquals((Integer) 2, rs("hello").rindex("l", -3));
+    assertEquals((Integer) 3, rs("hello").rindex("l", 100));
+    assertNull(rs("hello").rindex("l", -100));
+    assertEquals((Integer) 0, rs("hello").rindex("h", -5));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testLindexWithEndException() {
+    rs.rindex((String) null, -1);
+  }
+
+  @Test
+  public void testLindexWithPattern() {
+    assertEquals((Integer) 1, rs("hello").rindex(qr("e")));
+    assertEquals((Integer) 4, rs("hello").rindex(qr("o")));
+    assertEquals(null, rs("hello").rindex(qr("a")));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testLindexWithPatternException() {
+    rs.rindex((Pattern) null);
+  }
+
+  @Test
+  public void testLindexWithPatternAndStopAt() {
+    assertEquals((Integer) 3, rs("hello").rindex(qr("l"), -2));
+    assertEquals((Integer) 4, rs("hello").rindex(qr("o"), -1));
+    assertEquals((Integer) 2, rs("hello").rindex(qr("l"), -3));
+    assertEquals((Integer) 3, rs("hello").rindex(qr("l"), 100));
+    assertNull(rs("hello").rindex(qr("l"), -100));
+    assertEquals((Integer) 0, rs("hello").rindex(qr("h"), -5));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testLindexWithPatternAndStopAtException() {
+    rs.rindex((Pattern) null, -1);
+  }
+
+  @Test
+  public void testRjust() {
+    assertEquals(rs("hello"), rs("hello").rjust(4));
+    assertEquals(rs("               hello"), rs("hello").rjust(20));
+  }
+
+  @Test
+  public void testRjustWithPadstr() {
+    assertEquals(rs("hello"), rs("hello").rjust(-1, "1234"));
+    assertEquals(rs("123412341234123hello"), rs("hello").rjust(20, "1234"));
+  }
+
+  @Test
+  public void testRpartition() {
+    assertEquals(ra("hel", "l", "o"), rs("hello").rpartition("l"));
+    assertEquals(ra("", "", "hello"), rs("hello").rpartition("x"));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testRpartitionException() {
+    rs.rpartition((String) null);
+  }
+
+  @Test
+  public void testRpartitionWithPattern() {
+    assertEquals(ra("he", "ll", "o"), rs("hello").rpartition(qr(".l")));
+    assertEquals(ra("", "", "hello"), rs("hello").rpartition(qr(".x")));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testRpartitionWithPatternException() {
+    rs.rpartition((Pattern) null);
+  }
+
+  @Test
+  public void testRstrip() {
+    assertEquals(rs("  hello"), rs("  hello  ").rstrip());
+    assertEquals(rs("hello"), rs("hello").rstrip());
+  }
+
+  @Test
+  public void testRstripǃ() {
+    rs = rs("  hello  ");
+    assertSame(rs, rs.rstripǃ());
+    assertEquals(rs("  hello"), rs);
+    assertNull(rs.rstripǃ());
+  }
+
+  @Test
+  public void testScan() {
+    assertEquals(ra("cruel", "world"), rs("cruel world").scan("\\w+"));
+    assertEquals(ra("cru", "el ", "wor"), rs("cruel world").scan("..."));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testScanException() {
+    rs.scan(null);
+  }
+
+  @Test
+  public void testScanWithBlock() {
+    final RubyArray<String> strs = newRubyArray();
+    rs = rs("cruel world");
+    assertSame(rs, rs.scan("\\w+", new Block<String>() {
+
+      @Override
+      public void yield(String item) {
+        strs.add(item);
+      }
+
+    }));
+    assertEquals(ra("cruel", "world"), strs);
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testScanWithBlockException() {
+    rs.scan(null, null);
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testScanGroups() {
+    assertEquals(ra(ra("cru"), ra("el "), ra("wor")), rs("cruel world")
+        .scanGroups("(...)"));
+    assertEquals(ra(ra("cr", "ue"), ra("l ", "wo")), rs("cruel world")
+        .scanGroups("(..)(..)"));
+    assertEquals(ra(ra("cru"), ra("el "), ra("wor")), rs("cruel world")
+        .scanGroups("..."));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testScanGroupsException() {
+    rs.scanGroups(null);
+  }
+
+  @Test
+  public void testScanGroupsWithBlock() {
+    final RubyArray<String> strs = newRubyArray();
+    rs = rs("cruel world");
+    assertSame(rs, rs.scanGroups("(...)", new Block<RubyArray<String>>() {
+
+      @Override
+      public void yield(RubyArray<String> item) {
+        strs.concat(item);
+      }
+
+    }));
+    assertEquals(ra("cru", "el ", "wor"), strs);
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testScanGroupsWithBlockException() {
+    rs.scanGroups(null, null);
+  }
+
+  @Test
+  public void testScrub() {
+    assertEquals(rs("abcあ�"), rs("abc\u3042\0").scrub());
+    assertEquals(rs("abcあ\uFFFD"), rs("abc\u3042\0").scrub());
+  }
+
+  @Test
+  public void testScrubWithReplacement() {
+    assertEquals(rs("abcあ!"), rs("abc\u3042\0").scrub("!"));
+    assertEquals(rs("abc\u3042\0").scrub(),
+        rs("abc\u3042\0").scrub((String) null));
+  }
+
+  @Test
+  public void testScrubWithBlock() {
+    assertEquals(rs("abcあ?"),
+        rs("abc\u3042\0").scrub(new TransformBlock<RubyArray<Byte>, String>() {
+
+          @Override
+          public String yield(RubyArray<Byte> item) {
+            assertEquals(1, item.size());
+            assertEquals(new Byte((byte) 0), item.get(0));
+            return "?";
+          }
+
+        }));
+  }
+
+  @Test
+  public void testScrubǃ() {
+    rs = rs("abc\u3042\0");
+    assertSame(rs, rs.scrubǃ());
+    assertEquals(rs("abcあ�"), rs);
+    assertNull(rs.scrubǃ());
+  }
+
+  @Test
+  public void testScrubǃWithReplacement() {
+    rs = rs("abc\u3042\0");
+    assertSame(rs, rs.scrubǃ("!"));
+    assertEquals(rs("abcあ!"), rs);
+    assertNull(rs.scrubǃ("!"));
+  }
+
+  @Test
+  public void testScrubǃWithBlock() {
+    TransformBlock<RubyArray<Byte>, String> block =
+        new TransformBlock<RubyArray<Byte>, String>() {
+
+          @Override
+          public String yield(RubyArray<Byte> item) {
+            assertEquals(1, item.size());
+            assertEquals(new Byte((byte) 0), item.get(0));
+            return "?";
+          }
+
+        };
+    rs = rs("abc\u3042\0");
+    assertSame(rs, rs.scrubǃ(block));
+    assertEquals(rs("abcあ?"), rs);
+    assertNull(rs.scrubǃ("?"));
+  }
+
+  @Test
+  public void testSetbyte() {
+    assertEquals((byte) 97, rs.setbyte(2, (byte) 97));
+    assertEquals(rs("aba"), rs);
+    assertEquals((byte) 97, rs.setbyte(-2, (byte) 97));
+    assertEquals(rs("aaa"), rs);
+  }
+
+  @Test(expected = IndexOutOfBoundsException.class)
+  public void testSetbyteException1() {
+    rs.setbyte(3, (byte) 97);
+  }
+
+  @Test(expected = IndexOutOfBoundsException.class)
+  public void testSetbyteException2() {
+    rs.setbyte(-4, (byte) 97);
+  }
+
+  @Test
+  public void testSize() {
+    assertEquals(rs.length(), rs.size());
+  }
+
+  @Test
+  public void testSlice() {
+    assertNull(rs.slice(3));
+    assertNull(rs.slice(-4));
+    assertEquals(rs("a"), rs.slice(0));
+    assertEquals(rs("c"), rs.slice(-1));
+  }
+
+  @Test
+  public void testSliceWithLength() {
+    assertNull(rs.slice(3, 2));
+    assertNull(rs.slice(-4, 2));
+    assertEquals(rs("ab"), rs.slice(0, 2));
+    assertEquals(rs("c"), rs.slice(-1, 2));
+  }
+
+  @Test
+  public void testSliceWithPattern() {
+    assertNull(rs.slice(qr("d")));
+    assertEquals(rs("ab"), rs.slice(qr("[a-b]+")));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testSliceWithPatternException() {
+    rs.slice((Pattern) null);
+  }
+
+  @Test
+  public void testSliceWithPatternAndGroupNumber() {
+    assertNull(rs.slice(qr("d"), 1));
+    assertNull(rs.slice(qr("a"), 1));
+    assertNull(rs.slice(qr("a"), 0));
+    assertEquals(rs("ab"), rs.slice(qr("([a-b]+)"), 1));
+  }
+
+  @Test
+  public void testSliceWithMatchStr() {
+    assertNull(rs.slice("d"));
+    assertEquals(rs("bc"), rs.slice("bc"));
+  }
+
+  @Test
+  public void testSliceǃ() {
+    assertNull(rs.sliceǃ(3));
+    assertNull(rs.sliceǃ(-4));
+    assertEquals(rs("a"), rs.sliceǃ(0));
+    assertEquals(rs("bc"), rs);
+  }
+
+  @Test
+  public void testSliceǃWithLength() {
+    assertNull(rs.sliceǃ(3, 2));
+    assertNull(rs.sliceǃ(-4, 2));
+    assertEquals(rs("ab"), rs.sliceǃ(0, 2));
+    assertEquals(rs("c"), rs);
+  }
+
+  @Test
+  public void testSliceǃWithPattern() {
+    assertNull(rs.sliceǃ(qr("d")));
+    assertEquals(rs("ab"), rs.sliceǃ(qr("[a-b]+")));
+    assertEquals(rs("c"), rs);
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testSliceǃWithPatternException() {
+    rs.sliceǃ((Pattern) null);
+  }
+
+  @Test
+  public void testSliceǃWithPatternAndGroupNumber() {
+    assertNull(rs.sliceǃ(qr("d"), 1));
+    assertNull(rs.sliceǃ(qr("a"), 1));
+    assertNull(rs.sliceǃ(qr("a"), 0));
+    assertEquals(rs("ab"), rs.sliceǃ(qr("([a-b]+)"), 1));
+    assertEquals(rs("c"), rs);
+  }
+
+  @Test
+  public void testSliceǃWithMatchStr() {
+    assertNull(rs.sliceǃ("d"));
+    assertEquals(rs("bc"), rs.sliceǃ("bc"));
+    assertEquals(rs("a"), rs);
+  }
+
+  @Test
+  public void testSplit() {
+    assertEquals(ra("a", "bc", "def"), rs("  a   bc   def ").split());
+  }
+
+  @Test
+  public void testSplitWithDelimiter() {
+    assertEquals(ra("a", "bc", "def"), rs("  a   bc   def ").split(" "));
+    assertEquals(ra("a", "bc", "def"),
+        rs("  a   bc   def ").split((String) null));
+    assertEquals(ra("", "a", " bc", " def "), rs("  a   bc   def ").split("  "));
+  }
+
+  @Test
+  public void testSplitWithDelimiterAndLimit() {
+    assertEquals(ra("a", "bc", "def"), rs("  a   bc   def ").split(" ", 0));
+    assertEquals(ra("a", "bc", "def"),
+        rs("  a   bc   def ").split((String) null, 0));
+    assertEquals(ra("a", "bc", "def"), rs("  a   bc   def ").split(" ", -1));
+    assertEquals(ra("  a   bc   def "), rs("  a   bc   def ").split(" ", 1));
+    assertEquals(ra("a", "bc   def "), rs("  a   bc   def ").split(" ", 2));
+    assertEquals(ra("", "a   bc   def "), rs("  a   bc   def ").split("  ", 2));
+    assertEquals(ra("", "a", " bc", " def "),
+        rs("  a   bc   def ").split("  ", 0));
+  }
+
+  @Test
+  public void testSplitWithPatternAndDelimiter() {
+    assertEquals(ra("", "a", "bc", "def"), rs("  a   bc   def ")
+        .split(qr(" +")));
+    assertEquals(ra("a", "bc", "def"),
+        rs("  a   bc   def ").split((Pattern) null));
+    assertEquals(ra("", "a", "bc", "def"), rs("  a   bc   def ")
+        .split(qr(" +")));
+  }
+
+  @Test
+  public void testSplitWithPatternAndDelimiterAndLimit() {
+    assertEquals(ra("", "a", "bc", "def"),
+        rs("  a   bc   def ").split(qr(" +"), 0));
+    assertEquals(ra("a", "bc", "def"),
+        rs("  a   bc   def ").split((Pattern) null, 0));
+    assertEquals(ra("", "a", "bc", "def"),
+        rs("  a   bc   def ").split(qr(" +"), -1));
+    assertEquals(ra("  a   bc   def "), rs("  a   bc   def ")
+        .split(qr(" +"), 1));
+    assertEquals(ra("", "a   bc   def "),
+        rs("  a   bc   def ").split(qr(" +"), 2));
+    assertEquals(ra("", "a   bc   def "),
+        rs("  a   bc   def ").split(qr(" {2,2}"), 2));
+    assertEquals(ra("", "a", " bc", " def "),
+        rs("  a   bc   def ").split(qr(" {2,2}"), 0));
+  }
+
+  @Test
+  public void testSqueeze() {
+    assertEquals(rs("yelow mon"), rs("yellow moon").squeeze());
+  }
+
+  @Test
+  public void testSqueezeWithCharSet() {
+    assertEquals(rs(" now is the"), rs("  now   is  the").squeeze(" "));
+    assertEquals(rs("puters shot balls"),
+        rs("putters shoot balls").squeeze("m-z"));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testSqueezeWithCharSetException() {
+    rs("  now   is  the").squeeze(null);
+  }
+
+  @Test
+  public void testSqueezeǃ() {
+    rs = rs("yellow moon");
+    assertSame(rs, rs.squeezeǃ());
+    assertEquals(rs("yelow mon"), rs);
+    assertNull(rs.squeezeǃ());
+  }
+
+  @Test
+  public void testSqueezeǃWithCharSetException() {
+    rs = rs("  now   is  the");
+    assertSame(rs, rs.squeezeǃ(" "));
+    assertEquals(rs(" now is the"), rs);
+    assertNull(rs.squeezeǃ(" "));
+  }
+
+  @Test
+  public void testStartWithʔ() {
+    assertTrue(rs("hello").startWithʔ("hell"));
+    assertTrue(rs("hello").startWithʔ("heaven", "hell"));
+    assertFalse(rs("hello").startWithʔ("heaven", "paradise"));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testStartWithʔException() {
+    rs("hello").startWithʔ(null);
+  }
+
+  @Test
+  public void testStrip() {
+    assertEquals(rs("goodbye"), rs("\tgoodbye\r\n").strip());
+  }
+
+  @Test
+  public void testStripǃ() {
+    rs = rs("\tgoodbye\r\n");
+    assertSame(rs, rs.stripǃ());
+    assertEquals(rs("goodbye"), rs);
+    assertNull(rs.stripǃ());
+  }
+
+  @Test
+  public void testSub() {
+    assertEquals(rs("h*llo"), rs("hello").sub("[aeiou]", "*"));
+    assertEquals(rs("h<e>llo"), rs("hello").sub("([aeiou])", "<$1>"));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testSubException1() {
+    rs("hello").sub(null, "*");
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testSubException2() {
+    rs("hello").sub("[aeiou]", (String) null);
+  }
+
+  @Test
+  public void testSubWithMap() {
+    assertEquals(rs("h0llo"), rs("hello").sub("[aeiou]", rh("e", 0)));
+    assertEquals(rs("hello"), rs("hello").sub("[aeiou]", rh("a", 1)));
+    assertEquals(rs("hello"), rs("hello").sub("x", rh("a", 1)));
+    assertEquals(rs("hello"),
+        rs("hello").sub("e", new HashMap<String, Object>()));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testSubWithMapException() {
+    rs.sub(null, rh("a", 1));
+  }
+
+  @Test
+  public void testSubWithBlock() {
+    TransformBlock<String, String> block =
+        new TransformBlock<String, String>() {
+
+          @Override
+          public String yield(String item) {
+            return "0";
+
+          }
+        };
+    assertEquals(rs("h0llo"), rs("hello").sub("[aeiou]", block));
+    assertEquals(rs("hello"), rs("hello").sub("x", block));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testSubWithBlockException() {
+    rs.sub(null, (TransformBlock<String, String>) null);
+  }
+
+  @Test
+  public void testSubǃ() {
+    rs = rs("hello");
+    assertSame(rs, rs.subǃ("e", "*"));
+    assertEquals(rs("h*llo"), rs);
+    assertNull(rs.subǃ("e", "*"));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testSubǃException1() {
+    rs("hello").subǃ(null, "*");
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testSubǃException2() {
+    rs("hello").subǃ("[aeiou]", (String) null);
+  }
+
+  @Test
+  public void testSubǃWithBlock() {
+    TransformBlock<String, String> block =
+        new TransformBlock<String, String>() {
+
+          @Override
+          public String yield(String item) {
+            return "0";
+
+          }
+        };
+    rs = rs("hello");
+    assertSame(rs, rs.subǃ("e", block));
+    assertEquals(rs("h0llo"), rs);
+    assertNull(rs.subǃ("e", block));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testSubǃWithBlockException() {
+    rs.subǃ(null, (TransformBlock<String, String>) null);
+  }
+
+  @Test
+  public void testSucc() {
+    assertEquals(rs("abce"), rs("abcd").succ());
+    assertEquals(rs("THX1139"), rs("THX1138").succ());
+    assertEquals(rs("<<koalb>>"), rs("<<koala>>").succ());
+    assertEquals(rs("2000aaa"), rs("1999zzz").succ());
+    assertEquals(rs("AAAA0000"), rs("ZZZ9999").succ());
+    assertEquals(rs("**+"), rs("***").succ());
+  }
+
+  @Test
+  public void testSuccǃ() {
+    assertSame(rs, rs.succǃ());
+    assertEquals(rs("abd"), rs);
+  }
+
+  @Test
+  public void testSum() {
+    assertEquals(805, rs("abc我").sum());
+  }
+
+  @Test
+  public void testSwapcase() {
+    assertEquals(rs("hELLO"), rs("Hello").swapcase());
+    assertEquals(rs("CyBeR_pUnK11"), rs("cYbEr_PuNk11").swapcase());
+  }
+
+  @Test
+  public void testSwapcaseǃ() {
+    rs = rs("Hello");
+    assertSame(rs, rs.swapcaseǃ());
+    assertEquals(rs("hELLO"), rs);
+    assertEquals(rs("Hello"), rs.swapcaseǃ());
+    assertNull(rs("!").swapcaseǃ());
+  }
+
+  @Test
+  public void testToF() {
+    assertEquals((Double) 0d, (Double) rs("dhd").toF());
+    assertEquals((Double) (-0.0253), (Double) rs("  -  .253e-1 ").toF());
+    assertEquals((Double) (0.0253), (Double) rs("  +  .253E-1 ").toF());
+  }
+
+  @Test
+  public void testToI() {
+    assertEquals((Integer) 0, (Integer) rs("fbdh").toI());
+    assertEquals((Integer) (-123), (Integer) rs("  -  123 ").toI());
+    assertEquals((Integer) 456, (Integer) rs("  +  456 ").toI());
+  }
+
+  @Test
+  public void testToIWithRadix() {
+    assertEquals((Integer) 12345, (Integer) rs("12345").toI());
+    assertEquals((Integer) 99, (Integer) rs("99 red balloons").toI());
+    assertEquals((Integer) 0, (Integer) rs("0a").toI());
+    assertEquals((Integer) 10, (Integer) rs("0a").toI(16));
+    assertEquals((Integer) 0, (Integer) rs("hello").toI());
+    assertEquals((Integer) 101, (Integer) rs("1100101").toI(2));
+    assertEquals((Integer) 294977, (Integer) rs("1100101").toI(8));
+    assertEquals((Integer) rs("1100101").toI(8), (Integer) rs("11001019")
+        .toI(8));
+    assertEquals((Integer) rs("11001").toI(8), (Integer) rs("110019").toI(8));
+    assertEquals((Integer) 1100101, (Integer) rs("1100101").toI(10));
+    assertEquals((Integer) 17826049, (Integer) rs("1100101").toI(16));
+    assertEquals((Integer) rs("1100101F").toI(16), (Integer) rs("1100101fg")
+        .toI(16));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testToIWithRadixException1() {
+    rs.toI(1);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testToIWithRadixException2() {
+    rs.toI(37);
+  }
+
+  @Test
+  public void testToIWithRadixException3() {
+    assertEquals((Integer) 0,
+        (Integer) rs("fffffffffffffffffffffffffffffffffffff").toI(16));
+  }
+
+  @Test
+  public void testToS() {
+    assertEquals("abc", rs.toS());
+  }
+
+  @Test
+  public void testToStr() {
+    assertEquals("abc", rs.toStr());
+  }
+
+  @Test
+  public void testTr() {
+    assertEquals(rs("hippo"), rs("hello").tr("el", "ip"));
+    assertEquals(rs("h*ll*"), rs("hello").tr("aeiou", "*"));
+    assertEquals(rs("hAll*"), rs("hello").tr("aeiou", "AA*"));
+    assertEquals(rs("ifmmp"), rs("hello").tr("a-y", "b-z"));
+    assertEquals(rs("*e**o"), rs("hello").tr("^aeiou", "*"));
+    assertEquals(rs("h*ll**w*rld"), rs("hello^world").tr("\\^aeiou", "*"));
+    assertEquals(rs("h*ll**w*rld"), rs("hello-world").tr("a\\-eo", "*"));
+    assertEquals(rs("hello\nworld"), rs("hello\r\nworld").tr("\r", ""));
+    assertEquals(rs("hello\r\nwold").inspect(),
+        rs("hello\r\nworld").tr("\\r", "").inspect());
+    assertEquals(rs("hello\nworld"), rs("hello\r\nworld").tr("\\\r", ""));
+    assertEquals(rs("['b']"), rs("X['\\b']").tr("X\\", ""));
+    assertEquals(rs("'b'"), rs("X['\\b']").tr("X-\\]", ""));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testTrException1() {
+    rs.tr(null, "");
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testTrException2() {
+    rs.tr("", null);
+  }
+
+  @Test
+  public void testTrǃ() {
+    rs = rs("hello");
+    assertSame(rs, rs.trǃ("el", "ip"));
+    assertEquals(rs("hippo"), rs);
+    assertNull(rs.trǃ("el", "ip"));
+  }
+
+  @Test
+  public void testTrS() {
+    assertEquals(rs("hero"), rs("hello").trS("l", "r"));
+    assertEquals(rs("h*o"), rs("hello").trS("el", "*"));
+    assertEquals(rs("hhxo"), rs("hello").trS("el", "hx"));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testTrSException1() {
+    rs.trS(null, "");
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testTrSException2() {
+    rs.trS("", null);
+  }
+
+  @Test
+  public void testTrSǃ() {
+    rs = rs("hello");
+    assertSame(rs, rs.trSǃ("l", "r"));
+    assertEquals(rs("hero"), rs);
+    assertNull(rs.trSǃ("l", "r"));
+  }
+
+  @Test
+  public void testUnpack() {
+    assertEquals(ra("abc", "abc "), rs("abc \0\0abc \0\0").unpack("A6Z6"));
+    assertEquals(ra("abc", " \000\000"), rs("abc \0\0").unpack("a3a3"));
+    assertEquals(ra("abc ", "abc "), rs("abc \0abc \0").unpack("Z*Z*"));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testUnpackException() {
+    rs.unpack(null);
+  }
+
+  @Test
+  public void testUpcase() {
+    assertEquals(rs("ABC"), rs.upcase());
+  }
+
+  @Test
+  public void testUpcaseǃ() {
+    assertSame(rs, rs.upcaseǃ());
+    assertEquals(rs("ABC"), rs);
+    assertNull(rs.upcaseǃ());
+  }
+
+  @Test
+  public void testUpto() {
+    assertEquals(ra("9", "10", "11"), rs("9").upto("11").toA());
+    assertEquals(ra(), rs("25").upto("5").toA());
+    assertEquals(ra("07", "08", "09", "10", "11"), rs("07").upto("11").toA());
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testUptoException() {
+    rs.upto(null);
+  }
+
+  @Test
+  public void testUptoWithExclusive() {
+    assertEquals(ra("9", "10", "11"), rs("9").upto("11", false).toA());
+    assertEquals(ra("9", "10"), rs("9").upto("11", true).toA());
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testUptoWithExclusiveException() {
+    rs.upto(null, false);
+  }
+
+  @Test
+  public void testUptoWithBlock() {
+    final RubyArray<String> strs = newRubyArray();
+    assertSame(rs, rs.upto("abe", new Block<String>() {
+
+      @Override
+      public void yield(String item) {
+        strs.add(item);
+      }
+
+    }));
+    assertEquals(ra("abc", "abd", "abe"), strs);
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testUptoWithBlockException() {
+    rs.upto(null, (Block<String>) null);
+  }
+
+  @Test
+  public void testUptoWithExclusiveAndBlock() {
+    final RubyArray<String> strs = newRubyArray();
+    assertSame(rs, rs.upto("abe", true, new Block<String>() {
+
+      @Override
+      public void yield(String item) {
+        strs.add(item);
+      }
+
+    }));
+    assertEquals(ra("abc", "abd"), strs);
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testUptoWithExclusiveAndBlockException() {
+    rs.upto(null, true, (Block<String>) null);
+  }
+
+  @Test
+  public void testValidEncodingʔ() {
+    String test1 = "Itâ€™s a string with â€˜unknownâ€˜).";
+    String test2 = "It’s a string with ‘unknown‘).";
+    assertTrue(rs(test1).validEncodingʔ("Windows-1252"));
+    assertFalse(rs(test2).validEncodingʔ("Windows-1252"));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testValidEncodingʔException() {
+    rs.validEncodingʔ(null);
+  }
+
+  @Test
+  public void testCharSequence() {
+    assertEquals(rs.toS().length(), rs.length());
+    assertEquals(rs.toS().charAt(0), rs.charAt(0));
+    assertEquals(rs.toS().subSequence(0, 1), rs.subSequence(0, 1));
+  }
+
+  @Test
+  public void testComparable() {
+    assertEquals(rs.toS().compareTo("def"), rs.compareTo("def"));
   }
 
 }

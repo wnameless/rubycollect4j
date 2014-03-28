@@ -715,7 +715,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    *           if index is less than -size
    */
   public RubyArray<E> insert(int index, E... args) {
-    if (index < -list.size())
+    if (index < -list.size() - 1)
       throw new IndexOutOfBoundsException("IndexError: index " + index
           + " too small for array; minimum: " + -list.size());
 
