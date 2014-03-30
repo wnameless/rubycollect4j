@@ -1527,6 +1527,7 @@ public class RubyStringTest {
     assertEquals(rs("hello\nworld"), rs("hello\r\nworld").tr("\\\r", ""));
     assertEquals(rs("['b']"), rs("X['\\b']").tr("X\\", ""));
     assertEquals(rs("'b'"), rs("X['\\b']").tr("X-\\]", ""));
+    assertEquals(rs("ell"), rs("hello").tr("^el", ""));
   }
 
   @Test(expected = TypeConstraintException.class)
@@ -1552,6 +1553,8 @@ public class RubyStringTest {
     assertEquals(rs("hero"), rs("hello").trS("l", "r"));
     assertEquals(rs("h*o"), rs("hello").trS("el", "*"));
     assertEquals(rs("hhxo"), rs("hello").trS("el", "hx"));
+    assertEquals(rs("xellx"), rs("hello").trS("^el", "hx"));
+    assertEquals(rs("ell"), rs("hello").trS("^el", ""));
   }
 
   @Test(expected = TypeConstraintException.class)

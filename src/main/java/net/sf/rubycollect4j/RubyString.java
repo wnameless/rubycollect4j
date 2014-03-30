@@ -276,7 +276,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * @return a RubyArray
    */
   public RubyArray<String> chars() {
-    return newRubyArray(str.split("(?!^)"));
+    return toA();
   }
 
   /**
@@ -2346,38 +2346,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    */
   public RubyString trS(String fromStr, String toStr) {
     final String fromString = charSet2Str(stringify(fromStr));
-    toStr = charSet2Str(stringify(toStr));
-    String trStr = "";
-    if (fromString.startsWith("^")) {
-      trStr =
-          str.replaceAll("[" + fromString + "]",
-              toStr.isEmpty() ? "" : rs(toStr).chars().last());
-    } else {
-      RubyArray<String> fromStrAry =
-          rs(fromString.replace("\\^", "^").replace("\\-", "-")).chars();
-      RubyArray<String> toStrAry = rs(toStr).chars();
-      if (toStrAry.isEmpty())
-        toStrAry.fill("", 0, fromStrAry.length());
-      else if (toStrAry.length() < fromStrAry.length())
-        toStrAry.fill(toStrAry.last(), toStrAry.size(), fromStrAry.length()
-            - toStrAry.length());
-
-      @SuppressWarnings("unchecked")
-      RubyHash<String, String> rh = Hash(fromStrAry.zip(toStrAry));
-      if (fromStr.contains("\\^")) {
-        fromStr = fromStr.replaceAll("\\\\^", "");
-        fromStr += "^";
-      }
-      if (fromStr.contains("\\-")) {
-        fromStr = fromStr.replaceAll("\\\\-", "");
-        fromStr += "-";
-      }
-      trStr =
-          gsub(
-              "["
-                  + fromString.replace("\\", "\\\\").replace("[", "\\[")
-                      .replace("]", "\\]") + "]", rh).toS();
-    }
+    String trStr = tr(fromString, toStr).toS();
 
     RubyArray<Boolean> matchIndice = map(new TransformBlock<String, Boolean>() {
 
@@ -2403,6 +2372,9 @@ public final class RubyString extends RubyEnumerable<String> implements
           }
 
         }).map("count");
+
+    if (toStr.isEmpty())
+      return rs(trStr);
 
     String trSqueezed = "";
     int i = 0;
