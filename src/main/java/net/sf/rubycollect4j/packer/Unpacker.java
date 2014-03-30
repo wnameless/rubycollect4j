@@ -45,11 +45,11 @@ public final class Unpacker {
    *          target for unpacking
    * @return a RubyArray
    */
-  public static RubyArray<String> unpack(String format, String str) {
+  public static RubyArray<Object> unpack(String format, String str) {
     if (!Directive.verify(format))
       throw new IllegalArgumentException("Invalid template string");
 
-    RubyArray<String> strs = newRubyArray();
+    RubyArray<Object> objs = newRubyArray();
     RubyArray<String> chars = rs(str).chars();
     RubyArray<Byte> bytes = rs(str).bytes();
 
@@ -65,14 +65,14 @@ public final class Unpacker {
 
       default: // a
         unpack = d.pack(bytes.shift(count));
-        strs.add(unpack);
+        objs.add(unpack);
 
         chars = rs(byteList2Str(bytes)).chars();
         break;
 
       case A:
         unpack = d.pack(bytes.shift(count));
-        strs.add(unpack.replaceFirst("[\\s\0]+$", ""));
+        objs.add(unpack.replaceFirst("[\\s\0]+$", ""));
 
         chars = rs(byteList2Str(bytes)).chars();
         break;
@@ -87,9 +87,9 @@ public final class Unpacker {
 
         int end = unpack.indexOf('\0');
         if (end != -1)
-          strs.add(unpack.substring(0, unpack.indexOf('\0')));
+          objs.add(unpack.substring(0, unpack.indexOf('\0')));
         else
-          strs.add(unpack);
+          objs.add(unpack);
 
         chars = rs(byteList2Str(bytes)).chars();
         break;
@@ -99,7 +99,7 @@ public final class Unpacker {
           continue;
 
         while (count > 0 && chars.anyʔ()) {
-          strs.add(d.unpack(chars.shift().getBytes()));
+          objs.add(d.unpack(chars.shift().getBytes()));
           bytes = rs(chars.join()).bytes();
           count--;
         }
@@ -107,12 +107,12 @@ public final class Unpacker {
 
       case c:
         if (bytes.isEmpty()) {
-          strs.add(null);
+          objs.add(null);
           break;
         }
 
         while (count > 0 && bytes.anyʔ()) {
-          strs.add(d.unpack(bytes.shift(1)));
+          objs.add(d.unpack(bytes.shift(1)));
           count--;
         }
 
@@ -123,13 +123,15 @@ public final class Unpacker {
       case sb:
       case sl:
         if (bytes.isEmpty()) {
-          strs.add(null);
+          objs.add(null);
           break;
         }
 
         while (count > 0 && bytes.anyʔ()) {
-          strs.add(d.unpack(bytes.shift(2)));
+          objs.add(d.unpack(bytes.shift(2)));
           count--;
+          if (bytes.size() < 2)
+            bytes.clear();
         }
 
         chars = rs(byteList2Str(bytes)).chars();
@@ -138,19 +140,20 @@ public final class Unpacker {
       case l:
       case lb:
       case ll:
-      case G:
       case F:
       case f:
       case e:
       case g:
         if (bytes.isEmpty()) {
-          strs.add(null);
+          objs.add(null);
           break;
         }
 
         while (count > 0 && bytes.anyʔ()) {
-          strs.add(d.unpack(bytes.shift(4)));
+          objs.add(d.unpack(bytes.shift(4)));
           count--;
+          if (bytes.size() < 4)
+            bytes.clear();
         }
 
         chars = rs(byteList2Str(bytes)).chars();
@@ -162,24 +165,26 @@ public final class Unpacker {
       case D:
       case d:
       case E:
+      case G:
         if (bytes.isEmpty()) {
-          strs.add(null);
+          objs.add(null);
           break;
         }
 
         while (count > 0 && bytes.anyʔ()) {
-          strs.add(d.unpack(bytes.shift(8)));
+          objs.add(d.unpack(bytes.shift(8)));
           count--;
+          if (bytes.size() < 8)
+            bytes.clear();
         }
 
         chars = rs(byteList2Str(bytes)).chars();
         break;
 
       }
-
     }
 
-    return strs;
+    return objs;
   }
 
   private static String byteList2Str(List<Byte> bytes) {

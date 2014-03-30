@@ -197,9 +197,11 @@ Version 1.6.2
 
 * Fixed the bug of RubyEnumerable#findIndex while finding the index of a null object 
 
+
 Version 1.6.3
 
 * Avoided file lock by initiating EachLineIterator lazily
+
 
 Version 1.7.0
 
@@ -209,6 +211,6 @@ Version 1.7.0
 
 + Added RubyCollections#isBlank & RubyCollections#isNotBlank
 
-* Fixed the bug of RubyArray#pack
+* Correct the behavior of RubyArray#pack & RubyString#unpack
 
-* Fixed the bug of RubyArray#insert
+* Fixed the bug of RubyArray#insert while using negative index

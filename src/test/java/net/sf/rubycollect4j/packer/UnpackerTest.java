@@ -56,7 +56,7 @@ public class UnpackerTest {
 
   @Test
   public void testUnpackWith_c() {
-    assertEquals(ra("0", "26", "0", "26", null),
+    assertEquals(ra((byte) 0, (byte) 26, (byte) 0, (byte) 26, null),
         Unpacker.unpack("c4c", "\0\32\0\32"));
   }
 
@@ -67,22 +67,23 @@ public class UnpackerTest {
 
   @Test
   public void testUnpackWith_U() {
-    assertEquals(ra("97", "98", "99", "25105"), Unpacker.unpack("U*", "abc我"));
+    assertEquals(ra(97, 98, 99, 25105), Unpacker.unpack("U*", "abc我"));
   }
 
   @Test
   public void testUnpackWith_s() {
-    assertEquals(ra("-15426", "-15425"), Unpacker.unpack("ss", "\376\377"));
+    assertEquals(ra((short) -16701, (short) -16445),
+        Unpacker.unpack("ss", "\376\377"));
   }
 
   @Test
   public void testUnpackWith_l() {
-    assertEquals(ra("-1010908225"), Unpacker.unpack("l", "\376\377"));
+    assertEquals(ra(-1077690685), Unpacker.unpack("l", "\376\377"));
   }
 
   @Test
   public void testUnpackWith_q() {
-    assertEquals(ra("-4341817762348350529"),
+    assertEquals(ra(-4628646244061561149L),
         Unpacker.unpack("q", "\376\377\376\377"));
   }
 

@@ -22,6 +22,7 @@ package net.sf.rubycollect4j.packer;
 
 import static java.nio.ByteOrder.BIG_ENDIAN;
 import static java.nio.ByteOrder.LITTLE_ENDIAN;
+import static java.nio.ByteOrder.nativeOrder;
 import static net.sf.rubycollect4j.RubyCollections.Hash;
 import static net.sf.rubycollect4j.RubyCollections.hp;
 import static net.sf.rubycollect4j.RubyCollections.qr;
@@ -200,7 +201,7 @@ public enum Directive {
     default: // c
       return ByteUtil.toASCIIs(bytes, 1);
     case s:
-      return ByteUtil.toASCIIs(bytes, 2);
+      return ByteUtil.toASCIIs(bytes, 2, nativeOrder());
     case sb:
       if (ByteOrder.nativeOrder() != BIG_ENDIAN)
         reverseBytes(bytes);
@@ -210,7 +211,7 @@ public enum Directive {
         reverseBytes(bytes);
       return ByteUtil.toASCIIs(bytes, 2, LITTLE_ENDIAN);
     case l:
-      return ByteUtil.toASCIIs(bytes, 4);
+      return ByteUtil.toASCIIs(bytes, 4, nativeOrder());
     case lb:
       if (ByteOrder.nativeOrder() != BIG_ENDIAN)
         reverseBytes(bytes);
@@ -220,7 +221,7 @@ public enum Directive {
         reverseBytes(bytes);
       return ByteUtil.toASCIIs(bytes, 4, LITTLE_ENDIAN);
     case q:
-      return ByteUtil.toASCIIs(bytes, 8);
+      return ByteUtil.toASCIIs(bytes, 8, nativeOrder());
     case qb:
       if (ByteOrder.nativeOrder() != BIG_ENDIAN)
         reverseBytes(bytes);
@@ -230,9 +231,9 @@ public enum Directive {
         reverseBytes(bytes);
       return ByteUtil.toASCIIs(bytes, 8, LITTLE_ENDIAN);
     case D:
-      return ByteUtil.toASCIIs(bytes, 8);
+      return ByteUtil.toASCIIs(bytes, 8, nativeOrder());
     case d:
-      return ByteUtil.toASCIIs(bytes, 8);
+      return ByteUtil.toASCIIs(bytes, 8, nativeOrder());
     case E:
       if (ByteOrder.nativeOrder() != LITTLE_ENDIAN)
         reverseBytes(bytes);
@@ -242,9 +243,9 @@ public enum Directive {
         reverseBytes(bytes);
       return ByteUtil.toASCIIs(bytes, 8, BIG_ENDIAN);
     case F:
-      return ByteUtil.toASCIIs(bytes, 4);
+      return ByteUtil.toASCIIs(bytes, 4, nativeOrder());
     case f:
-      return ByteUtil.toASCIIs(bytes, 4);
+      return ByteUtil.toASCIIs(bytes, 4, nativeOrder());
     case e:
       if (ByteOrder.nativeOrder() != LITTLE_ENDIAN)
         reverseBytes(bytes);
@@ -273,7 +274,7 @@ public enum Directive {
    *          a list of byte
    * @return a String
    */
-  public String unpack(List<Byte> bytes) {
+  public Object unpack(List<Byte> bytes) {
     byte[] byteAry = new byte[bytes.size()];
     for (int i = 0; i < bytes.size(); i++) {
       byteAry[i] = bytes.get(i);
@@ -288,54 +289,46 @@ public enum Directive {
    *          array of byte
    * @return a String
    */
-  public String unpack(byte[] bytes) {
+  public Object unpack(byte[] bytes) {
     switch (this) {
     default: // c
-      return String.valueOf((int) bytes[0]);
+      return bytes[0];
     case U:
-      return String.valueOf(new String(bytes).codePointAt(0));
+      return new String(bytes).codePointAt(0);
     case s:
-      return String.valueOf(ByteBuffer.wrap(bytes).getShort());
+      return ByteBuffer.wrap(bytes).order(nativeOrder()).getShort();
     case sb:
-      return String
-          .valueOf(ByteBuffer.wrap(bytes).order(BIG_ENDIAN).getShort());
+      return ByteBuffer.wrap(bytes).order(BIG_ENDIAN).getShort();
     case sl:
-      return String.valueOf(ByteBuffer.wrap(bytes).order(LITTLE_ENDIAN)
-          .getShort());
+      return ByteBuffer.wrap(bytes).order(LITTLE_ENDIAN).getShort();
     case l:
-      return String.valueOf(ByteBuffer.wrap(bytes).getInt());
+      return ByteBuffer.wrap(bytes).order(nativeOrder()).getInt();
     case lb:
-      return String.valueOf(ByteBuffer.wrap(bytes).order(BIG_ENDIAN).getInt());
+      return ByteBuffer.wrap(bytes).order(BIG_ENDIAN).getInt();
     case ll:
-      return String.valueOf(ByteBuffer.wrap(bytes).order(LITTLE_ENDIAN)
-          .getInt());
+      return ByteBuffer.wrap(bytes).order(LITTLE_ENDIAN).getInt();
     case q:
-      return String.valueOf(ByteBuffer.wrap(bytes).getLong());
+      return ByteBuffer.wrap(bytes).order(nativeOrder()).getLong();
     case qb:
-      return String.valueOf(ByteBuffer.wrap(bytes).order(BIG_ENDIAN).getLong());
+      return ByteBuffer.wrap(bytes).order(BIG_ENDIAN).getLong();
     case ql:
-      return String.valueOf(ByteBuffer.wrap(bytes).order(LITTLE_ENDIAN)
-          .getLong());
+      return ByteBuffer.wrap(bytes).order(LITTLE_ENDIAN).getLong();
     case D:
-      return String.valueOf(ByteBuffer.wrap(bytes).getDouble());
+      return ByteBuffer.wrap(bytes).order(nativeOrder()).getDouble();
     case d:
-      return String.valueOf(ByteBuffer.wrap(bytes).getDouble());
+      return ByteBuffer.wrap(bytes).order(nativeOrder()).getDouble();
     case E:
-      return String.valueOf(ByteBuffer.wrap(bytes).order(LITTLE_ENDIAN)
-          .getDouble());
+      return ByteBuffer.wrap(bytes).order(LITTLE_ENDIAN).getDouble();
     case G:
-      return String
-          .valueOf(ByteBuffer.wrap(bytes).order(BIG_ENDIAN).getFloat());
+      return ByteBuffer.wrap(bytes).order(BIG_ENDIAN).getDouble();
     case F:
-      return String.valueOf(ByteBuffer.wrap(bytes).getFloat());
+      return ByteBuffer.wrap(bytes).order(nativeOrder()).getFloat();
     case f:
-      return String.valueOf(ByteBuffer.wrap(bytes).getFloat());
+      return ByteBuffer.wrap(bytes).order(nativeOrder()).getFloat();
     case e:
-      return String.valueOf(ByteBuffer.wrap(bytes).order(LITTLE_ENDIAN)
-          .getFloat());
+      return ByteBuffer.wrap(bytes).order(LITTLE_ENDIAN).getFloat();
     case g:
-      return String
-          .valueOf(ByteBuffer.wrap(bytes).order(BIG_ENDIAN).getFloat());
+      return ByteBuffer.wrap(bytes).order(BIG_ENDIAN).getFloat();
     }
   }
 

@@ -2444,7 +2444,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    *          format string
    * @return a RubyArray
    */
-  public RubyArray<String> unpack(String format) {
+  public RubyArray<Object> unpack(String format) {
     return Unpacker.unpack(stringify(format), str);
   }
 
