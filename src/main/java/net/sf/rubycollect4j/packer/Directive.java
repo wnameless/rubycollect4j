@@ -163,7 +163,17 @@ public enum Directive {
   /**
    * String, bit string (LSB first)
    */
-  b(false);
+  b(false),
+
+  /**
+   * String, hex string (high nibble first)
+   */
+  H(false),
+
+  /**
+   * String, hex string (low nibble first)
+   */
+  h(false);
 
   public static final Map<String, Directive> lookup = Hash(
       ra(Directive.values()).map(
@@ -284,6 +294,16 @@ public enum Directive {
                 ByteUtil.toBinaryString(new byte[] { bytes[i] }, false), 2);
       }
       return new String(msb);
+    case H:
+      return new String(bytes);
+    case h:
+      byte[] lnf = new byte[bytes.length];
+      for (int i = 0; i < lnf.length; i++) {
+        lnf[i] =
+            (byte) Integer.parseInt(
+                ByteUtil.toHexString(new byte[] { bytes[i] }, false), 16);
+      }
+      return new String(lnf);
     }
   }
 
@@ -353,6 +373,10 @@ public enum Directive {
       return ByteUtil.toBinaryString(bytes, true);
     case b:
       return ByteUtil.toBinaryString(bytes, false);
+    case H:
+      return ByteUtil.toHexString(bytes, true);
+    case h:
+      return ByteUtil.toHexString(bytes, false);
     }
   }
 
@@ -384,6 +408,8 @@ public enum Directive {
         return (byte) ((Character) o).charValue();
       break;
     case s:
+    case sb:
+    case sl:
       if (o instanceof Number)
         return ((Number) o).shortValue();
       if (o instanceof Boolean)
@@ -391,11 +417,10 @@ public enum Directive {
       if (o instanceof Character)
         return (short) ((Character) o).charValue();
       break;
-    case sb:
-      return s.cast(o);
-    case sl:
-      return s.cast(o);
     case l:
+    case lb:
+    case ll:
+    case U:
       if (o instanceof Number)
         return ((Number) o).intValue();
       if (o instanceof Boolean)
@@ -403,11 +428,9 @@ public enum Directive {
       if (o instanceof Character)
         return (int) ((Character) o).charValue();
       break;
-    case lb:
-      return l.cast(o);
-    case ll:
-      return l.cast(o);
     case q:
+    case qb:
+    case ql:
       if (o instanceof Number)
         return ((Number) o).longValue();
       if (o instanceof Boolean)
@@ -415,13 +438,10 @@ public enum Directive {
       if (o instanceof Character)
         return (long) ((Character) o).charValue();
       break;
-    case qb:
-      return q.cast(o);
-    case ql:
-      return q.cast(o);
-    case U:
-      return l.cast(o);
     case D:
+    case d:
+    case E:
+    case G:
       if (o instanceof Number)
         return ((Number) o).doubleValue();
       if (o instanceof Boolean)
@@ -429,13 +449,10 @@ public enum Directive {
       if (o instanceof Character)
         return (double) ((Character) o).charValue();
       break;
-    case d:
-      return D.cast(o);
-    case E:
-      return D.cast(o);
-    case G:
-      return D.cast(o);
     case F:
+    case f:
+    case e:
+    case g:
       if (o instanceof Number)
         return ((Number) o).floatValue();
       if (o instanceof Boolean)
@@ -443,12 +460,6 @@ public enum Directive {
       if (o instanceof Character)
         return (float) ((Character) o).charValue();
       break;
-    case f:
-      return F.cast(o);
-    case e:
-      return F.cast(o);
-    case g:
-      return F.cast(o);
     }
     return o;
   }

@@ -116,4 +116,20 @@ public class UnpackerTest {
     assertEquals(ra("10000110"), Unpacker.unpack("b100", "a"));
   }
 
+  @Test
+  public void testUnpackWith_H() {
+    assertEquals(ra("616263"), Unpacker.unpack("H*", "abc"));
+    assertEquals(ra("6"), Unpacker.unpack("H1", "abc"));
+    assertEquals(ra("6162"), Unpacker.unpack("H4", "abc"));
+    assertEquals(ra("616263"), Unpacker.unpack("H100", "abc"));
+  }
+
+  @Test
+  public void testUnpackWith_h() {
+    assertEquals(ra("162636"), Unpacker.unpack("h*", "abc"));
+    assertEquals(ra("1"), Unpacker.unpack("h1", "abc"));
+    assertEquals(ra("1626"), Unpacker.unpack("h4", "abc"));
+    assertEquals(ra("162636"), Unpacker.unpack("h100", "abc"));
+  }
+
 }

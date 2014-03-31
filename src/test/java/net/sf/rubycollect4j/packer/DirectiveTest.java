@@ -97,6 +97,9 @@ public class DirectiveTest {
 
     assertEquals("我", Directive.B.pack("我".getBytes()));
     assertEquals("g�", Directive.b.pack("我".getBytes()));
+
+    assertEquals("我", Directive.H.pack("我".getBytes()));
+    assertEquals("n�", Directive.h.pack("我".getBytes()));
   }
 
   @Test
@@ -123,6 +126,8 @@ public class DirectiveTest {
     assertEquals(12.141422f, Directive.g.unpack(ABCDEFGH));
     assertEquals("111001101000100010010001", Directive.B.unpack("我".getBytes()));
     assertEquals("011001110001000110001001", Directive.b.unpack("我".getBytes()));
+    assertEquals("e68891", Directive.H.unpack("我".getBytes()));
+    assertEquals("6e8819", Directive.h.unpack("我".getBytes()));
   }
 
   @Test

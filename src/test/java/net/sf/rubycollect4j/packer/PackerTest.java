@@ -74,6 +74,10 @@ public class PackerTest {
     assertEquals("\200", Packer.pack("B*", "!!!"));
     assertEquals("b", Packer.pack("B*", "0110001"));
     assertEquals("F", Packer.pack("b*", "0110001"));
+    assertEquals("abc我", Packer.pack("H*", "616263e68891"));
+    assertEquals("abc我", Packer.pack("h*", "1626366e8819"));
+    assertEquals("\200", Packer.pack("H*", "!!!"));
+    assertEquals("`", Packer.pack("H*", "6"));
+    assertEquals("\1", Packer.pack("h*", "1"));
   }
-
 }

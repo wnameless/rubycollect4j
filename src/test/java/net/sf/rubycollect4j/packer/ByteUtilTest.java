@@ -204,4 +204,12 @@ public class ByteUtilTest {
         ByteUtil.toBinaryString("我".getBytes(), false));
   }
 
+  @Test
+  public void testToHexString() {
+    assertEquals("61", ByteUtil.toHexString("a".getBytes(), true));
+    assertEquals("16", ByteUtil.toHexString("a".getBytes(), false));
+    assertEquals("e68891", ByteUtil.toHexString("我".getBytes(), true));
+    assertEquals("6e8819", ByteUtil.toHexString("我".getBytes(), false));
+  }
+
 }

@@ -99,6 +99,21 @@ public final class Packer {
         }
         break;
 
+      case H:
+      case h:
+        RubyString hexStr =
+            rs(items.shift().toString()).slice(qr("^[0-9A-Fa-f]+"));
+        if (hexStr == null) {
+          sb.append('\200');
+        } else {
+          int suffixZero = hexStr.size() % 2;
+          if (suffixZero != 0)
+            hexStr.concat("0");
+          sb.append(d.pack(new BigInteger(hexStr.toS(), 16).toByteArray())
+              .replaceAll("^\0+", ""));
+        }
+        break;
+
       default:
         if (template.length() == 0) {
           if (items.noneʔ())

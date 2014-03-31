@@ -1575,11 +1575,14 @@ public class RubyStringTest {
     assertNull(rs.trSǃ("l", "r"));
   }
 
+  @SuppressWarnings("unchecked")
   @Test
   public void testUnpack() {
     assertEquals(ra("abc", "abc "), rs("abc \0\0abc \0\0").unpack("A6Z6"));
     assertEquals(ra("abc", " \000\000"), rs("abc \0\0").unpack("a3a3"));
     assertEquals(ra("abc ", "abc "), rs("abc \0abc \0").unpack("Z*Z*"));
+    assertEquals(ra("10000110", "01100001"), rs("aa").unpack("b8B8"));
+    assertEquals(ra("16", "61", (byte) 97), rs("aaa").unpack("h2H2c"));
   }
 
   @Test(expected = TypeConstraintException.class)

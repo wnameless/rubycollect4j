@@ -138,4 +138,16 @@ public class RubyStringUnpackWithRubyArrayPackTest {
     assertEquals(rs("abc我"), rs(rs("abc我").unpack("b*").pack("b*")));
   }
 
+  @Test
+  public void testDirective_H() {
+    assertEquals(ra("616263e68891"), rs("abc我").unpack("H*"));
+    assertEquals("abc我", rs("abc我").unpack("H*").pack("H*"));
+  }
+
+  @Test
+  public void testDirective_h() {
+    assertEquals(ra("1626366e8819"), rs("abc我").unpack("h*"));
+    assertEquals("abc我", rs("abc我").unpack("h*").pack("h*"));
+  }
+
 }

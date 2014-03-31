@@ -386,4 +386,26 @@ public final class ByteUtil {
     return sb.toString();
   }
 
+  /**
+   * Converts byte array to a hex String.
+   * 
+   * @param bytes
+   *          array of byte
+   * @param isMSB
+   *          true if HNF(high nibble first), false if LNF(low nibble first)
+   * @return a hex String
+   */
+  public static String toHexString(byte[] bytes, boolean isHNF) {
+    StringBuilder sb = new StringBuilder();
+    for (byte b : bytes) {
+      String hex =
+          String.format("%2s", Integer.toHexString(b & 0xFF)).replace(' ', '0');
+      if (isHNF)
+        sb.append(hex);
+      else
+        sb.append(new StringBuilder(hex).reverse());
+    }
+    return sb.toString();
+  }
+
 }

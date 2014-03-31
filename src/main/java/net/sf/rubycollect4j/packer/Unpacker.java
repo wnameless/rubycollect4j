@@ -130,6 +130,16 @@ public final class Unpacker {
         objs.add(rs(strLSB).take(count).join());
         break;
 
+      case H:
+        String strHNF = ByteUtil.toHexString(str.getBytes(), true);
+        objs.add(rs(strHNF).take(count).join());
+        break;
+
+      case h:
+        String strLNF = ByteUtil.toHexString(str.getBytes(), false);
+        objs.add(rs(strLNF).take(count).join());
+        break;
+
       case s:
       case sb:
       case sl:
