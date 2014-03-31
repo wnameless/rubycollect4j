@@ -30,6 +30,7 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -73,6 +74,14 @@ public class RubyArrayTest {
 
     };
 
+  }
+
+  @Test
+  public void testInterfaces() {
+    assertTrue(ra instanceof RubyEnumerable);
+    assertTrue(ra instanceof List);
+    assertTrue(ra instanceof Comparable);
+    assertTrue(ra instanceof Serializable);
   }
 
   @Test

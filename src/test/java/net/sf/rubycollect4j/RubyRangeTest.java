@@ -27,6 +27,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
+
+import java.io.Serializable;
+
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.succ.DoubleSuccessor;
 import net.sf.rubycollect4j.succ.StringSuccessor;
@@ -34,6 +37,12 @@ import net.sf.rubycollect4j.succ.StringSuccessor;
 import org.junit.Test;
 
 public class RubyRangeTest {
+
+  @Test
+  public void testInterfaces() {
+    assertTrue(range("A", "Z") instanceof RubyEnumerable);
+    assertTrue(range("A", "Z") instanceof Serializable);
+  }
 
   @Test
   public void testConstructor() {

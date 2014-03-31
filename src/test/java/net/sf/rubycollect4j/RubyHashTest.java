@@ -30,6 +30,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
@@ -58,6 +59,13 @@ public class RubyHashTest {
     rh.put(3, 4);
     rh.put(5, 6);
     frozenRh = rh(1, 2, 3, 4, 5, 6).freeze();
+  }
+
+  @Test
+  public void testInterfaces() {
+    assertTrue(rh instanceof RubyEnumerable);
+    assertTrue(rh instanceof Map);
+    assertTrue(rh instanceof Serializable);
   }
 
   @Test

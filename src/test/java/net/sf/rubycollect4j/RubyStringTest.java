@@ -32,6 +32,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
@@ -60,10 +61,11 @@ public class RubyStringTest {
   }
 
   @Test
-  public void testInterface() {
+  public void testInterfaces() {
     assertTrue(rs instanceof RubyEnumerable);
     assertTrue(rs instanceof CharSequence);
     assertTrue(rs instanceof Comparable);
+    assertTrue(rs instanceof Serializable);
   }
 
   @Test

@@ -21,7 +21,7 @@ Installation with Maven:
 Java 8 with rubycollect4j:
 ```java
 // Sorts the characters by its frequency based on the word 'Mississippi' case-insensitively.
-RubyArray<String> word = ra("Mississippi".split("(?!^)"));
+RubyString word = rs("Mississippi");
 
 String result = word.map((c) -> {
   return c.toLowerCase();
@@ -94,6 +94,26 @@ p( Hash(rh("a", 1, "b", 2).toA()) );   // Output: {a=1, b=2}
 p( rh(4, 3, 2, 1).sort() );            // Output: [2=1, 4=3]
 // RubyHash is also a Map.
 p( rh(1, 2, 3, 4) instanceof Map );    // Output: true
+```
+
+```java
+// By default, rh() makes a copy of input Map.
+// You can only wrap a LinkedHashMap up by following codes, because the keys of RubyHash need to be ordered.
+LinkedHashMap<Integer, String> map = new LinkedHashMap<Integer, String>();
+map.put(1, "a");
+RubyHash<Integer, String> rh = newRubyHash(map, false);
+```
+
+Demo rs() & newRubyString():
+```java
+// RubyString can be created from any Object.
+p( newRubyString(1000L).count("0") )                   // Output: 3
+// RubyString is also an RubyEnumerable(Iterable) of each character(String).
+p( rs("abc").map("codePointAt", 0) );                  // Output: [97, 98, 99]
+// RubyString implements fluent interface.
+// After multiple actions, you can turn it to a Java String by calling toS().
+p( rs("ABC").chop().capitalize().concat("001").toS() ) // Output: Ab001
+
 ```
 
 ```java
