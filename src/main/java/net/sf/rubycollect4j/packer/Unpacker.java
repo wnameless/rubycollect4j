@@ -119,6 +119,14 @@ public final class Unpacker {
         chars = rs(byteList2Str(bytes)).chars();
         break;
 
+      case B:
+        objs.add(ByteUtil.toBinaryString(str.getBytes(), true));
+        break;
+
+      case b:
+        objs.add(ByteUtil.toBinaryString(str.getBytes(), false));
+        break;
+
       case s:
       case sb:
       case sl:

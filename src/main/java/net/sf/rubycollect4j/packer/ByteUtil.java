@@ -363,4 +363,27 @@ public final class ByteUtil {
     return String.valueOf((char) codePoint);
   }
 
+  /**
+   * Converts byte array to a binary String.
+   * 
+   * @param bytes
+   *          array of byte
+   * @param isMSB
+   *          true if MSB, false if LSB
+   * @return a binary String
+   */
+  public static String toBinaryString(byte[] bytes, boolean isMSB) {
+    StringBuilder sb = new StringBuilder();
+    for (byte b : bytes) {
+      String binary =
+          String.format("%8s", Integer.toBinaryString(b & 0xFF)).replace(' ',
+              '0');
+      if (isMSB)
+        sb.append(binary);
+      else
+        sb.append(new StringBuilder(binary).reverse());
+    }
+    return sb.toString();
+  }
+
 }

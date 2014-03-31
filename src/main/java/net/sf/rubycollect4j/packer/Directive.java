@@ -153,7 +153,17 @@ public enum Directive {
   /**
    * String, null padded with a count and null is added with *.
    */
-  Z(true);
+  Z(true),
+
+  /**
+   * String, bit string (MSB first)
+   */
+  B(false),
+
+  /**
+   * String, bit string (LSB first)
+   */
+  b(false);
 
   public static final Map<String, Directive> lookup = Hash(
       ra(Directive.values()).map(
@@ -264,6 +274,16 @@ public enum Directive {
       return new String(bytes);
     case Z:
       return new String(bytes);
+    case B:
+      return new String(bytes);
+    case b:
+      byte[] msb = new byte[bytes.length];
+      for (int i = 0; i < msb.length; i++) {
+        msb[i] =
+            (byte) Integer.parseInt(
+                ByteUtil.toBinaryString(new byte[] { bytes[i] }, false), 2);
+      }
+      return new String(msb);
     }
   }
 
@@ -329,6 +349,10 @@ public enum Directive {
       return ByteBuffer.wrap(bytes).order(LITTLE_ENDIAN).getFloat();
     case g:
       return ByteBuffer.wrap(bytes).order(BIG_ENDIAN).getFloat();
+    case B:
+      return ByteUtil.toBinaryString(bytes, true);
+    case b:
+      return ByteUtil.toBinaryString(bytes, false);
     }
   }
 

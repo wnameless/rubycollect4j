@@ -194,4 +194,14 @@ public class ByteUtilTest {
     ByteUtil.toUTF(ByteBuffer.allocate(4).putInt(0X10FFFF + 1).array());
   }
 
+  @Test
+  public void testToBinaryString() {
+    assertEquals("01100001", ByteUtil.toBinaryString("a".getBytes(), true));
+    assertEquals("10000110", ByteUtil.toBinaryString("a".getBytes(), false));
+    assertEquals("111001101000100010010001",
+        ByteUtil.toBinaryString("我".getBytes(), true));
+    assertEquals("011001110001000110001001",
+        ByteUtil.toBinaryString("我".getBytes(), false));
+  }
+
 }

@@ -20,14 +20,17 @@
  */
 package net.sf.rubycollect4j.packer;
 
+import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.qr;
 import static net.sf.rubycollect4j.RubyCollections.ra;
+import static net.sf.rubycollect4j.RubyCollections.rs;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
 
 import net.sf.rubycollect4j.RubyArray;
+import net.sf.rubycollect4j.RubyString;
 import net.sf.rubycollect4j.block.TransformBlock;
 
 /**
@@ -71,57 +74,76 @@ public final class Packer {
 
     StringBuilder sb = new StringBuilder();
     List<String> templateList = parseTemplate(aTemplateString);
-    int i = 0;
+    RubyArray<?> items = newRubyArray(objs, true);
     for (String template : templateList) {
       Directive d = parseDirective(template);
       template = template.replace(d.toString(), "");
-      if (template.length() == 0) {
-        if (i > objs.size() - 1)
-          throw new IllegalArgumentException("ArgumentError: too few arguments");
+      int count =
+          template.isEmpty() ? 1 : template.equals("*") ? Integer.MAX_VALUE
+              : rs(template).toI();
 
-        sb.append(d.pack(ByteUtil.toByteArray(d.cast(objs.get(i)))));
-        i++;
-      } else if (d == Directive.Z && template.charAt(0) == '*') {
-        sb.append(d.pack(ByteUtil.toByteArray(d.cast(objs.get(i)))));
-        sb.append("\0");
-      } else if (template.charAt(0) == '*') {
-        while (i < objs.size()) {
-          sb.append(d.pack(ByteUtil.toByteArray(d.cast(objs.get(i)))));
-          i++;
-        }
-      } else {
-        Matcher matcher = qr("\\d+").matcher(template);
-        matcher.find();
-        int count = Integer.valueOf(matcher.group());
-        if (d.isWidthAdjustable()) {
-          String str = d.pack(ByteUtil.toByteArray(d.cast(objs.get(i))));
-          if (str.length() > count) {
-            sb.append(str.substring(0, count));
-          } else {
-            sb.append(str);
-            count -= str.length();
-            while (count > 0) {
-              if (d == Directive.A)
-                sb.append(" ");
-              else
-                sb.append("\0");
-              count--;
-            }
-          }
-          i++;
+      switch (d) {
+
+      case B:
+      case b:
+        RubyString binaryStr = rs(items.shift().toString()).slice(qr("^[01]+"));
+        if (binaryStr == null) {
+          sb.append('\200');
         } else {
-          if (count > objs.size())
+          int suffixZero = binaryStr.size() % 8;
+          suffixZero = suffixZero == 0 ? 0 : 8 - suffixZero;
+          if (suffixZero != 0)
+            binaryStr.concat(ra("0").multiply(suffixZero).join());
+          sb.append(d.pack(new BigInteger(binaryStr.toS(), 2).toByteArray())
+              .replaceAll("^\0+", ""));
+        }
+        break;
+
+      default:
+        if (template.length() == 0) {
+          if (items.noneʔ())
             throw new IllegalArgumentException(
                 "ArgumentError: too few arguments");
 
-          while (count > 0) {
-            sb.append(d.pack(ByteUtil.toByteArray(d.cast(objs.get(i)))));
-            count--;
-            i++;
+          sb.append(d.pack(ByteUtil.toByteArray(d.cast(items.shift()))));
+        } else if (d == Directive.Z && template.charAt(0) == '*') {
+          sb.append(d.pack(ByteUtil.toByteArray(d.cast(items.shift()))));
+          sb.append("\0");
+        } else if (template.charAt(0) == '*') {
+          while (items.anyʔ()) {
+            sb.append(d.pack(ByteUtil.toByteArray(d.cast(items.shift()))));
+          }
+        } else {
+          if (d.isWidthAdjustable()) {
+            String str = d.pack(ByteUtil.toByteArray(d.cast(items.shift())));
+            if (str.length() > count) {
+              sb.append(str.substring(0, count));
+            } else {
+              sb.append(str);
+              count -= str.length();
+              while (count > 0) {
+                if (d == Directive.A)
+                  sb.append(" ");
+                else
+                  sb.append("\0");
+                count--;
+              }
+            }
+          } else {
+            if (count > objs.size())
+              throw new IllegalArgumentException(
+                  "ArgumentError: too few arguments");
+
+            while (count > 0) {
+              sb.append(d.pack(ByteUtil.toByteArray(d.cast(items.shift()))));
+              count--;
+            }
           }
         }
+
       }
     }
+
     return sb.toString();
   }
 
