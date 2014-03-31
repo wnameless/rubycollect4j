@@ -67,6 +67,13 @@ public class PackerTest {
     assertEquals("ab", Packer.pack("A1A1", "abc", "bc"));
     assertEquals("a\0", Packer.pack("Z*", "a"));
     assertEquals("a\0\0", Packer.pack("Z3", "a"));
+    assertEquals("abc我",
+        Packer.pack("B*", "011000010110001001100011111001101000100010010001"));
+    assertEquals("abc我",
+        Packer.pack("b*", "100001100100011011000110011001110001000110001001"));
+    assertEquals("\200", Packer.pack("B*", "!!!"));
+    assertEquals("b", Packer.pack("B*", "0110001"));
+    assertEquals("F", Packer.pack("b*", "0110001"));
   }
 
 }

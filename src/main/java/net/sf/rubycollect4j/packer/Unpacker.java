@@ -80,7 +80,9 @@ public final class Unpacker {
       case Z:
         if (count == Integer.MAX_VALUE) {
           int index = bytes.indexOf((byte) '\0');
-          unpack = index == -1 ? d.pack(bytes) : d.pack(bytes.shift(index + 1));
+          unpack =
+              index == -1 ? d.pack(bytes.shift(bytes.size())) : d.pack(bytes
+                  .shift(index + 1));
         } else {
           unpack = d.pack(bytes.shift(count));
         }
@@ -95,9 +97,6 @@ public final class Unpacker {
         break;
 
       case U:
-        if (chars.isEmpty())
-          continue;
-
         while (count > 0 && chars.anyʔ()) {
           objs.add(d.unpack(chars.shift().getBytes()));
           bytes = rs(chars.join()).bytes();
@@ -106,13 +105,15 @@ public final class Unpacker {
         continue;
 
       case c:
-        if (bytes.isEmpty()) {
-          objs.add(null);
-          break;
-        }
+        while (count > 0) {
+          if (count == Integer.MAX_VALUE)
+            count = bytes.size();
 
-        while (count > 0 && bytes.anyʔ()) {
-          objs.add(d.unpack(bytes.shift(1)));
+          if (bytes.anyʔ())
+            objs.add(d.unpack(bytes.shift(1)));
+          else
+            objs.add(null);
+
           count--;
         }
 
@@ -120,26 +121,28 @@ public final class Unpacker {
         break;
 
       case B:
-        objs.add(ByteUtil.toBinaryString(str.getBytes(), true));
+        String strMSB = ByteUtil.toBinaryString(str.getBytes(), true);
+        objs.add(rs(strMSB).take(count).join());
         break;
 
       case b:
-        objs.add(ByteUtil.toBinaryString(str.getBytes(), false));
+        String strLSB = ByteUtil.toBinaryString(str.getBytes(), false);
+        objs.add(rs(strLSB).take(count).join());
         break;
 
       case s:
       case sb:
       case sl:
-        if (bytes.isEmpty()) {
-          objs.add(null);
-          break;
-        }
+        while (count > 0) {
+          if (count == Integer.MAX_VALUE)
+            count = bytes.size() / 2;
 
-        while (count > 0 && bytes.anyʔ()) {
-          objs.add(d.unpack(bytes.shift(2)));
+          if (bytes.size() >= 2)
+            objs.add(d.unpack(bytes.shift(2)));
+          else
+            objs.add(null);
+
           count--;
-          if (bytes.size() < 2)
-            bytes.clear();
         }
 
         chars = rs(byteList2Str(bytes)).chars();
@@ -152,16 +155,16 @@ public final class Unpacker {
       case f:
       case e:
       case g:
-        if (bytes.isEmpty()) {
-          objs.add(null);
-          break;
-        }
+        while (count > 0) {
+          if (count == Integer.MAX_VALUE)
+            count = bytes.size() / 4;
 
-        while (count > 0 && bytes.anyʔ()) {
-          objs.add(d.unpack(bytes.shift(4)));
+          if (bytes.size() >= 4)
+            objs.add(d.unpack(bytes.shift(4)));
+          else
+            objs.add(null);
+
           count--;
-          if (bytes.size() < 4)
-            bytes.clear();
         }
 
         chars = rs(byteList2Str(bytes)).chars();
@@ -174,16 +177,16 @@ public final class Unpacker {
       case d:
       case E:
       case G:
-        if (bytes.isEmpty()) {
-          objs.add(null);
-          break;
-        }
+        while (count > 0) {
+          if (count == Integer.MAX_VALUE)
+            count = bytes.size() / 8;
 
-        while (count > 0 && bytes.anyʔ()) {
-          objs.add(d.unpack(bytes.shift(8)));
+          if (bytes.size() >= 8)
+            objs.add(d.unpack(bytes.shift(8)));
+          else
+            objs.add(null);
+
           count--;
-          if (bytes.size() < 8)
-            bytes.clear();
         }
 
         chars = rs(byteList2Str(bytes)).chars();
