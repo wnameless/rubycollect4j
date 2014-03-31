@@ -24,6 +24,7 @@ import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -56,7 +57,9 @@ import net.sf.rubycollect4j.util.LinkedIdentityMap;
  *          the type of the value elements
  */
 public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
-    Map<K, V> {
+    Map<K, V>, Serializable {
+
+  private static final long serialVersionUID = 1L;
 
   private Map<K, V> map;
   private V defaultValue;

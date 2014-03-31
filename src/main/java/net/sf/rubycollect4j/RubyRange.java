@@ -22,6 +22,9 @@ package net.sf.rubycollect4j;
 
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
+
+import java.io.Serializable;
+
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.iter.RangeIterable;
 import net.sf.rubycollect4j.iter.StepIterable;
@@ -37,7 +40,10 @@ import net.sf.rubycollect4j.succ.Successive;
  * @param <E>
  *          the type of elements
  */
-public final class RubyRange<E> extends RubyEnumerable<E> {
+public final class RubyRange<E> extends RubyEnumerable<E> implements
+    Serializable {
+
+  private static final long serialVersionUID = 1L;
 
   private final RangeIterable<E> iter;
   private final Successive<E> successive;

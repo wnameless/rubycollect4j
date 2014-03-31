@@ -23,6 +23,7 @@ package net.sf.rubycollect4j;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -58,7 +59,9 @@ import net.sf.rubycollect4j.util.TryComparator;
  *          the type of the elements
  */
 public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
-    Comparable<RubyArray<E>> {
+    Comparable<RubyArray<E>>, Serializable {
+
+  private static final long serialVersionUID = 1L;
 
   private List<E> list;
   private boolean isFrozen = false;

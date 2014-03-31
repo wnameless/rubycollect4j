@@ -32,6 +32,7 @@ import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.range;
 import static net.sf.rubycollect4j.RubyCollections.rs;
 
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
@@ -60,7 +61,9 @@ import net.sf.rubycollect4j.succ.StringSuccessor;
  * 
  */
 public final class RubyString extends RubyEnumerable<String> implements
-    CharSequence, Comparable<CharSequence> {
+    CharSequence, Comparable<CharSequence>, Serializable {
+
+  private static final long serialVersionUID = 1L;
 
   private String str;
 
