@@ -47,14 +47,14 @@ It also implements parts of Ruby Dir, File and Date methods.</p>
 <div class="highlight highlight-xml"><pre><span class="nt">&lt;dependency&gt;</span>
   <span class="nt">&lt;groupId&gt;</span>net.sf.rubycollect4j<span class="nt">&lt;/groupId&gt;</span>
   <span class="nt">&lt;artifactId&gt;</span>rubycollect4j<span class="nt">&lt;/artifactId&gt;</span>
-  <span class="nt">&lt;version&gt;</span>1.6.3<span class="nt">&lt;/version&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.7.0<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 
 <p>Java 8 with rubycollect4j:</p>
 
 <div class="highlight highlight-java"><pre><span class="c1">// Sorts the characters by its frequency based on the word 'Mississippi' case-insensitively.</span>
-<span class="n">RubyArray</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">word</span> <span class="o">=</span> <span class="n">ra</span><span class="o">(</span><span class="s">"Mississippi"</span><span class="o">.</span><span class="na">split</span><span class="o">(</span><span class="s">"(?!^)"</span><span class="o">));</span>
+<span class="n">RubyString</span> <span class="n">word</span> <span class="o">=</span> <span class="n">rs</span><span class="o">(</span><span class="s">"Mississippi"</span><span class="o">);</span>
 
 <span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="n">word</span><span class="o">.</span><span class="na">map</span><span class="o">((</span><span class="n">c</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
   <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="na">toLowerCase</span><span class="o">();</span>
@@ -126,6 +126,25 @@ It also implements parts of Ruby Dir, File and Date methods.</p>
 <span class="n">p</span><span class="o">(</span> <span class="n">rh</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">1</span><span class="o">).</span><span class="na">sort</span><span class="o">()</span> <span class="o">);</span>            <span class="c1">// Output: [2=1, 4=3]</span>
 <span class="c1">// RubyHash is also a Map.</span>
 <span class="n">p</span><span class="o">(</span> <span class="n">rh</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">)</span> <span class="k">instanceof</span> <span class="n">Map</span> <span class="o">);</span>    <span class="c1">// Output: true</span>
+</pre></div>
+
+<div class="highlight highlight-java"><pre><span class="c1">// By default, rh() makes a copy of input Map.</span>
+<span class="c1">// You can only wrap a LinkedHashMap up by following codes, because the keys of RubyHash need to be ordered.</span>
+<span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;();</span>
+<span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s">"a"</span><span class="o">);</span>
+<span class="n">RubyHash</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">rh</span> <span class="o">=</span> <span class="n">newRubyHash</span><span class="o">(</span><span class="n">map</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+</pre></div>
+
+<p>Demo rs() &amp; newRubyString():</p>
+
+<div class="highlight highlight-java"><pre><span class="c1">// RubyString can be created from any Object.</span>
+<span class="n">p</span><span class="o">(</span> <span class="n">newRubyString</span><span class="o">(</span><span class="mi">1000L</span><span class="o">).</span><span class="na">count</span><span class="o">(</span><span class="s">"0"</span><span class="o">)</span> <span class="o">)</span>                   <span class="c1">// Output: 3</span>
+<span class="c1">// RubyString is also an RubyEnumerable(Iterable) of each character(String).</span>
+<span class="n">p</span><span class="o">(</span> <span class="n">rs</span><span class="o">(</span><span class="s">"abc"</span><span class="o">).</span><span class="na">map</span><span class="o">(</span><span class="s">"codePointAt"</span><span class="o">,</span> <span class="mi">0</span><span class="o">)</span> <span class="o">);</span>                  <span class="c1">// Output: [97, 98, 99]</span>
+<span class="c1">// RubyString implements fluent interface.</span>
+<span class="c1">// After multiple actions, you can turn it to a Java String by calling toS().</span>
+<span class="n">p</span><span class="o">(</span> <span class="n">rs</span><span class="o">(</span><span class="s">"ABC"</span><span class="o">).</span><span class="na">chop</span><span class="o">().</span><span class="na">capitalize</span><span class="o">().</span><span class="na">concat</span><span class="o">(</span><span class="s">"001"</span><span class="o">).</span><span class="na">toS</span><span class="o">()</span> <span class="o">)</span> <span class="c1">// Output: Ab001</span>
+
 </pre></div>
 
 <div class="highlight highlight-java"><pre><span class="c1">// By default, rh() makes a copy of input Map.</span>
