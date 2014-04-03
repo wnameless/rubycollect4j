@@ -211,8 +211,8 @@ Version 1.7.0
 
 + Added RubyCollections#isBlank & RubyCollections#isNotBlank
 
-* Correct the behavior of RubyArray#pack & RubyString#unpack
+* Corrected the behavior of RubyArray#pack & RubyString#unpack
 
 * Fixed the bug of RubyArray#insert while using negative index
 
-+ Added Serializable to RubyArray RubyHash RubyRange RubyString
++ Added Serializable to RubyArray, RubyHash, RubyRange & RubyString

@@ -20,19 +20,18 @@
  */
 package net.sf.rubycollect4j.packer;
 
+import static java.nio.ByteOrder.BIG_ENDIAN;
+import static java.nio.ByteOrder.nativeOrder;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
-import java.nio.ByteOrder;
 
 import org.junit.Before;
 import org.junit.Test;
 
 public class DirectiveTest {
 
-  private static final boolean IS_BIG_ENDIAN =
-      ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN;
+  private static final boolean IS_BIG_ENDIAN = nativeOrder() == BIG_ENDIAN;
 
   private byte[] ABC;
   private byte[] ABCDEFGH;

@@ -1194,7 +1194,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Replaces all elements of self with other List
+   * Replaces all elements of self with other List.
    * 
    * @param other
    *          a List
