@@ -391,7 +391,7 @@ public final class ByteUtil {
    * 
    * @param bytes
    *          array of byte
-   * @param isMSB
+   * @param isHNF
    *          true if HNF(high nibble first), false if LNF(low nibble first)
    * @return a hex String
    */

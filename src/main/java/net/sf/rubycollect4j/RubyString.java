@@ -1169,7 +1169,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   /**
    * Removes leading whitespace from str, returning null if no change was made.
    * 
-   * @return
+   * @return this RubyString or null
    */
   public RubyString lstripǃ() {
     return inPlace(lstrip());
@@ -1312,7 +1312,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * in otherStr.
    * 
    * @param otherStr
-   * @return
+   * @return this RubyString
    */
   public RubyString replace(String otherStr) {
     str = stringify(otherStr);
@@ -2211,7 +2211,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * returning str, or null if no changes were made. Note: case conversion is
    * effective only in ASCII region.
    * 
-   * @return
+   * @return this RubyString or null
    */
   public RubyString swapcaseǃ() {
     return inPlace(swapcase());
