@@ -35,7 +35,7 @@
 
 <p>Ruby Collections for Java.</p>
 
-<p>The rubycollect4j implements all methods refer to Ruby Array, Hash, Enumerable, Enumerator and Range.
+<p>The rubycollect4j implements all methods refer to Ruby Array, Hash, Enumerable, Enumerator, Range and String.
 It also implements parts of Ruby Dir, File and Date methods.</p>
 
 <p>For further information, please visit <a href="http://ruby-doc.org">http://ruby-doc.org</a> website.</p>
@@ -54,7 +54,7 @@ It also implements parts of Ruby Dir, File and Date methods.</p>
 <p>Java 8 with rubycollect4j:</p>
 
 <div class="highlight highlight-java"><pre><span class="c1">// Sorts the characters by its frequency based on the word 'Mississippi' case-insensitively.</span>
-<span class="n">RubyString</span> <span class="n">word</span> <span class="o">=</span> <span class="n">rs</span><span class="o">(</span><span class="s">"Mississippi"</span><span class="o">);</span>
+<span class="n">RubyString</span> <span class="n">word</span> <span class="o">=</span> <span class="n">rs</span><span class="o">(</span><span class="s">"Mississippi"</span><span class="o">);</span> <span class="c1">// Equivalent to newRubyString("Mississippi")</span>
 
 <span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="n">word</span><span class="o">.</span><span class="na">map</span><span class="o">((</span><span class="n">c</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
   <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="na">toLowerCase</span><span class="o">();</span>
@@ -69,11 +69,11 @@ It also implements parts of Ruby Dir, File and Date methods.</p>
 <p>Java 6 with rubycollect4j:</p>
 
 <div class="highlight highlight-java"><pre><span class="c1">// Finds 2 words which get the least and the most unique letters in upper case.</span>
-<span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">words</span> <span class="o">=</span>
+<span class="n">RubyArray</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">words</span> <span class="o">=</span>
   <span class="n">RubyFile</span><span class="o">.</span><span class="na">foreach</span><span class="o">(</span><span class="s">"/usr/share/dict/web2"</span><span class="o">)</span> <span class="c1">// Dictionary of Mac OS</span>
     <span class="o">.</span><span class="na">minmaxBy</span><span class="o">(</span><span class="k">new</span> <span class="n">TransformBlock</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;()</span> <span class="o">{</span>
       <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">yield</span><span class="o">(</span><span class="n">String</span> <span class="n">item</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="nf">newRubyArray</span><span class="o">(</span><span class="n">item</span><span class="o">.</span><span class="na">split</span><span class="o">(</span><span class="s">"(?!^)"</span><span class="o">)).</span><span class="na">uniq</span><span class="o">().</span><span class="na">count</span><span class="o">();</span>
+        <span class="k">return</span> <span class="nf">newRubyString</span><span class="o">(</span><span class="n">item</span><span class="o">).</span><span class="na">toA</span><span class="o">().</span><span class="na">uniq</span><span class="o">().</span><span class="na">count</span><span class="o">();</span>
       <span class="o">}</span>
     <span class="o">}).</span><span class="na">map</span><span class="err">ǃ</span><span class="o">(</span><span class="s">"toUpperCase"</span><span class="o">);</span>
 
