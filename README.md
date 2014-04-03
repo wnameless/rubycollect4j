@@ -2,7 +2,7 @@ rubycollect4j
 =============
 Ruby Collections for Java.
 
-The rubycollect4j implements all methods refer to Ruby Array, Hash, Enumerable, Enumerator and Range.
+The rubycollect4j implements all methods refer to Ruby Array, Hash, Enumerable, Enumerator, Range and String.
 It also implements parts of Ruby Dir, File and Date methods.
 
 For further information, please visit http://ruby-doc.org website.
@@ -21,7 +21,7 @@ Installation with Maven:
 Java 8 with rubycollect4j:
 ```java
 // Sorts the characters by its frequency based on the word 'Mississippi' case-insensitively.
-RubyString word = rs("Mississippi");
+RubyString word = rs("Mississippi"); // Equivalent to newRubyString("Mississippi")
 
 String result = word.map((c) -> {
   return c.toLowerCase();
@@ -36,11 +36,11 @@ p(result);
 Java 6 with rubycollect4j:
 ```java
 // Finds 2 words which get the least and the most unique letters in upper case.
-List<String> words =
+RubyArray<String> words =
   RubyFile.foreach("/usr/share/dict/web2") // Dictionary of Mac OS
     .minmaxBy(new TransformBlock<String, Integer>() {
       public Integer yield(String item) {
-        return newRubyArray(item.split("(?!^)")).uniq().count();
+        return newRubyString(item).toA().uniq().count();
       }
     }).mapǃ("toUpperCase");
 
