@@ -14,7 +14,7 @@ Installation with Maven:
 <dependency>
   <groupId>net.sf.rubycollect4j</groupId>
   <artifactId>rubycollect4j</artifactId>
-  <version>1.7.0</version>
+  <version>1.7.1</version>
 </dependency>
 ```
 
