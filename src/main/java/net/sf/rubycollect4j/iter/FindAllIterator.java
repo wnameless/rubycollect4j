@@ -47,7 +47,8 @@ public final class FindAllIterator<E> implements Iterator<E> {
    * @throws NullPointerException
    *           if iter or block is null
    */
-  public FindAllIterator(Iterator<E> iter, BooleanBlock<? super E> block) {
+  public FindAllIterator(Iterator<? extends E> iter,
+      BooleanBlock<? super E> block) {
     if (iter == null || block == null)
       throw new NullPointerException();
 

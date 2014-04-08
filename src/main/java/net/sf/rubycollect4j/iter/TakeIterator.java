@@ -32,7 +32,7 @@ import java.util.NoSuchElementException;
  */
 public final class TakeIterator<E> implements Iterator<E> {
 
-  private final Iterator<E> iter;
+  private final Iterator<? extends E> iter;
   private int n;
 
   /**
@@ -47,7 +47,7 @@ public final class TakeIterator<E> implements Iterator<E> {
    * @throws IllegalArgumentException
    *           if n is less than 0
    */
-  public TakeIterator(Iterator<E> iter, int n) {
+  public TakeIterator(Iterator<? extends E> iter, int n) {
     if (iter == null)
       throw new NullPointerException();
     if (n < 0)

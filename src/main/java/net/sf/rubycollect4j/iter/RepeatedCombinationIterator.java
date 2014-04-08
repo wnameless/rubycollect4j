@@ -41,7 +41,7 @@ import net.sf.rubycollect4j.RubyArray;
 public final class RepeatedCombinationIterator<E> implements
     Iterator<RubyArray<E>> {
 
-  private final List<E> list;
+  private final List<? extends E> list;
   private final int[] counter;
   private final int[] endStatus;
   private final int end;
@@ -57,7 +57,7 @@ public final class RepeatedCombinationIterator<E> implements
    * @throws NullPointerException
    *           if list is null
    */
-  public RepeatedCombinationIterator(List<E> list, int n) {
+  public RepeatedCombinationIterator(List<? extends E> list, int n) {
     if (list == null)
       throw new NullPointerException();
 

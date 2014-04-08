@@ -31,7 +31,7 @@ import java.util.Iterator;
  */
 public final class TakeIterable<E> implements Iterable<E> {
 
-  private final Iterable<E> iter;
+  private final Iterable<? extends E> iter;
   private final int n;
 
   /**
@@ -46,7 +46,7 @@ public final class TakeIterable<E> implements Iterable<E> {
    * @throws IllegalArgumentException
    *           if n is less than 0
    */
-  public TakeIterable(Iterable<E> iter, int n) {
+  public TakeIterable(Iterable<? extends E> iter, int n) {
     if (iter == null)
       throw new NullPointerException();
     if (n < 0)

@@ -31,7 +31,7 @@ import java.util.Iterator;
  */
 public final class GrepIterable<E> implements Iterable<E> {
 
-  private final Iterable<E> iter;
+  private final Iterable<? extends E> iter;
   private final String regex;
 
   /**
@@ -44,7 +44,7 @@ public final class GrepIterable<E> implements Iterable<E> {
    * @throws NullPointerException
    *           if iter or regex is null
    */
-  public GrepIterable(Iterable<E> iter, String regex) {
+  public GrepIterable(Iterable<? extends E> iter, String regex) {
     if (iter == null || regex == null)
       throw new NullPointerException();
 

@@ -34,7 +34,7 @@ import java.util.Map.Entry;
  *          the type of the value elements
  */
 public final class ComparableEntry<K, V> implements Entry<K, V>,
-    Comparable<Entry<K, V>> {
+    Comparable<Entry<? extends K, ? extends V>> {
 
   private final Entry<K, V> entry;
 
@@ -56,8 +56,8 @@ public final class ComparableEntry<K, V> implements Entry<K, V>,
    * @param entry
    *          any Entry
    */
-  public ComparableEntry(Entry<K, V> entry) {
-    this.entry = entry;
+  public ComparableEntry(Entry<? extends K, ? extends V> entry) {
+    this.entry = new SimpleEntry<K, V>(entry.getKey(), entry.getValue());
   }
 
   @Override
@@ -91,7 +91,7 @@ public final class ComparableEntry<K, V> implements Entry<K, V>,
   }
 
   @Override
-  public int compareTo(Entry<K, V> o) {
+  public int compareTo(Entry<? extends K, ? extends V> o) {
     if (o == null)
       throw new IllegalArgumentException("ArgumentError: comparison of "
           + entry.getClass().getName() + " with null failed");

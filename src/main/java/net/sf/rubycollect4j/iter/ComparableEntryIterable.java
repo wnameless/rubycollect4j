@@ -36,7 +36,7 @@ import java.util.Map.Entry;
 public final class ComparableEntryIterable<K, V> implements
     Iterable<Entry<K, V>> {
 
-  private final Iterable<Entry<K, V>> iter;
+  private final Iterable<? extends Entry<? extends K, ? extends V>> iter;
 
   /**
    * Creates a ComparableEntryIterable.
@@ -44,7 +44,8 @@ public final class ComparableEntryIterable<K, V> implements
    * @param iter
    *          an Iterable of Entry
    */
-  public ComparableEntryIterable(Iterable<Entry<K, V>> iter) {
+  public ComparableEntryIterable(
+      Iterable<? extends Entry<? extends K, ? extends V>> iter) {
     this.iter = iter;
   }
 

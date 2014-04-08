@@ -31,7 +31,7 @@ import java.util.Iterator;
  */
 public final class StepIterator<E> implements Iterator<E> {
 
-  private final Iterator<E> iter;
+  private final Iterator<? extends E> iter;
   private final int step;
   private boolean hasMore = false;
   private boolean isRemovable = false;
@@ -48,7 +48,7 @@ public final class StepIterator<E> implements Iterator<E> {
    * @throws IllegalArgumentException
    *           if step is less than or equal to 0
    */
-  public StepIterator(Iterator<E> iter, int step) {
+  public StepIterator(Iterator<? extends E> iter, int step) {
     if (iter == null)
       throw new NullPointerException();
     if (step == 0)

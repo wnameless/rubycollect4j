@@ -32,7 +32,7 @@ import java.util.Iterator;
  */
 public final class CycleIterable<E> implements Iterable<E> {
 
-  private final Iterable<E> iter;
+  private final Iterable<? extends E> iter;
   private final Integer n;
 
   /**
@@ -43,7 +43,7 @@ public final class CycleIterable<E> implements Iterable<E> {
    * @throws NullPointerException
    *           if iter is null
    */
-  public CycleIterable(Iterable<E> iter) {
+  public CycleIterable(Iterable<? extends E> iter) {
     if (iter == null)
       throw new NullPointerException();
 

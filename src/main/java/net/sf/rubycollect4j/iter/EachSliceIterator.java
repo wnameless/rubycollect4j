@@ -38,7 +38,7 @@ import net.sf.rubycollect4j.RubyArray;
  */
 public final class EachSliceIterator<E> implements Iterator<RubyArray<E>> {
 
-  private final Iterator<E> iter;
+  private final Iterator<? extends E> iter;
   private final int size;
 
   /**
@@ -53,7 +53,7 @@ public final class EachSliceIterator<E> implements Iterator<RubyArray<E>> {
    * @throws IllegalArgumentException
    *           if size is less than or equal to 0
    */
-  public EachSliceIterator(Iterator<E> iter, int size) {
+  public EachSliceIterator(Iterator<? extends E> iter, int size) {
     if (iter == null)
       throw new NullPointerException();
     if (size <= 0)

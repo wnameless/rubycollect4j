@@ -33,7 +33,7 @@ import java.util.Map.Entry;
 public final class EachWithIndexIterable<E> implements
     Iterable<Entry<E, Integer>> {
 
-  private final Iterable<E> iter;
+  private final Iterable<? extends E> iter;
 
   /**
    * Creates an EachWithIndexIterable.
@@ -43,7 +43,7 @@ public final class EachWithIndexIterable<E> implements
    * @throws NullPointerException
    *           if iter is null
    */
-  public EachWithIndexIterable(Iterable<E> iter) {
+  public EachWithIndexIterable(Iterable<? extends E> iter) {
     if (iter == null)
       throw new NullPointerException();
 

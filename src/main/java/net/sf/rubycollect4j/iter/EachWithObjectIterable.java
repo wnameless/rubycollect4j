@@ -35,7 +35,7 @@ import java.util.Map.Entry;
 public final class EachWithObjectIterable<E, O> implements
     Iterable<Entry<E, O>> {
 
-  private final Iterable<E> iter;
+  private final Iterable<? extends E> iter;
   private final O obj;
 
   /**
@@ -48,7 +48,7 @@ public final class EachWithObjectIterable<E, O> implements
    * @throws NullPointerException
    *           if iter or obj is null
    */
-  public EachWithObjectIterable(Iterable<E> iter, O obj) {
+  public EachWithObjectIterable(Iterable<? extends E> iter, O obj) {
     if (iter == null || obj == null)
       throw new NullPointerException();
 

@@ -35,7 +35,7 @@ import net.sf.rubycollect4j.util.ComparableEntry;
 public final class EachWithIndexIterator<E> implements
     Iterator<Entry<E, Integer>> {
 
-  private final Iterator<E> iter;
+  private final Iterator<? extends E> iter;
   private int index = 0;
 
   /**
@@ -46,7 +46,7 @@ public final class EachWithIndexIterator<E> implements
    * @throws NullPointerException
    *           if iter is null
    */
-  public EachWithIndexIterator(Iterator<E> iter) {
+  public EachWithIndexIterator(Iterator<? extends E> iter) {
     if (iter == null)
       throw new NullPointerException();
 

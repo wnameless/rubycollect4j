@@ -37,7 +37,7 @@ import net.sf.rubycollect4j.block.BooleanBlock;
  */
 public final class SliceBeforeIterable<E> implements Iterable<RubyArray<E>> {
 
-  private final Iterable<E> iter;
+  private final Iterable<? extends E> iter;
   private final BooleanBlock<? super E> block;
   private final Pattern pattern;
 
@@ -51,7 +51,8 @@ public final class SliceBeforeIterable<E> implements Iterable<RubyArray<E>> {
    * @throws NullPointerException
    *           if iter or block is null
    */
-  public SliceBeforeIterable(Iterable<E> iter, BooleanBlock<? super E> block) {
+  public SliceBeforeIterable(Iterable<? extends E> iter,
+      BooleanBlock<? super E> block) {
     if (iter == null || block == null)
       throw new NullPointerException();
 

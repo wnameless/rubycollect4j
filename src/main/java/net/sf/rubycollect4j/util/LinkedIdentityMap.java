@@ -51,7 +51,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
 
   public LinkedIdentityMap() {}
 
-  public LinkedIdentityMap(Map<K, V> map) {
+  public LinkedIdentityMap(Map<? extends K, ? extends V> map) {
     putAll(map);
   }
 

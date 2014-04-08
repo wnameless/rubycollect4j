@@ -58,7 +58,7 @@ public final class ChunkIterator<E, K> implements
    * @throws NullPointerException
    *           if iterator or block is null
    */
-  public ChunkIterator(Iterator<E> iter,
+  public ChunkIterator(Iterator<? extends E> iter,
       TransformBlock<? super E, ? extends K> block) {
     if (iter == null || block == null)
       throw new NullPointerException();

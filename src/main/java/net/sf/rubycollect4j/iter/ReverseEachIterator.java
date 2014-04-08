@@ -33,7 +33,7 @@ import java.util.List;
  */
 public final class ReverseEachIterator<E> implements Iterator<E> {
 
-  private final Iterator<E> iter;
+  private final Iterator<? extends E> iter;
   private Iterator<E> reversedIter;
 
   /**
@@ -44,7 +44,7 @@ public final class ReverseEachIterator<E> implements Iterator<E> {
    * @throws NullPointerException
    *           if iter is null
    */
-  public ReverseEachIterator(Iterator<E> iter) {
+  public ReverseEachIterator(Iterator<? extends E> iter) {
     if (iter == null)
       throw new NullPointerException();
 

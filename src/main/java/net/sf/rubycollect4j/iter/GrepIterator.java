@@ -47,7 +47,7 @@ public final class GrepIterator<E> implements Iterator<E> {
    * @throws NullPointerException
    *           if iter or regex is null
    */
-  public GrepIterator(Iterator<E> iter, String regex) {
+  public GrepIterator(Iterator<? extends E> iter, String regex) {
     if (iter == null || regex == null)
       throw new NullPointerException();
 

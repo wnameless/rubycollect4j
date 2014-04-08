@@ -38,7 +38,7 @@ import net.sf.rubycollect4j.util.ComparableEntry;
 public final class ComparableEntryIterator<K, V> implements
     Iterator<Entry<K, V>> {
 
-  private final Iterator<Entry<K, V>> iter;
+  private final Iterator<? extends Entry<? extends K, ? extends V>> iter;
 
   /**
    * Creates a ComparableEntryIterator.
@@ -46,7 +46,8 @@ public final class ComparableEntryIterator<K, V> implements
    * @param iter
    *          an Iterator of Entry
    */
-  public ComparableEntryIterator(Iterator<Entry<K, V>> iter) {
+  public ComparableEntryIterator(
+      Iterator<? extends Entry<? extends K, ? extends V>> iter) {
     this.iter = iter;
   }
 

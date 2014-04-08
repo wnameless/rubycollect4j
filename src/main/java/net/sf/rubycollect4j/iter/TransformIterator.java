@@ -35,7 +35,7 @@ import net.sf.rubycollect4j.block.TransformBlock;
  */
 public final class TransformIterator<E, S> implements Iterator<S> {
 
-  private final Iterator<E> iter;
+  private final Iterator<? extends E> iter;
   private final TransformBlock<? super E, ? extends S> block;
 
   /**
@@ -48,7 +48,7 @@ public final class TransformIterator<E, S> implements Iterator<S> {
    * @throws NullPointerException
    *           if iter or block is null
    */
-  public TransformIterator(Iterator<E> iter,
+  public TransformIterator(Iterator<? extends E> iter,
       TransformBlock<? super E, ? extends S> block) {
     if (iter == null || block == null)
       throw new NullPointerException();

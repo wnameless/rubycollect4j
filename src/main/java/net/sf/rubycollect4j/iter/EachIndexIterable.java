@@ -29,7 +29,7 @@ import java.util.Iterator;
  */
 public final class EachIndexIterable<E> implements Iterable<Integer> {
 
-  private final Iterable<E> iter;
+  private final Iterable<? extends E> iter;
 
   /**
    * Creates an EachIndexIterable.
@@ -39,7 +39,7 @@ public final class EachIndexIterable<E> implements Iterable<Integer> {
    * @throws NullPointerException
    *           if iter is null
    */
-  public EachIndexIterable(Iterable<E> iter) {
+  public EachIndexIterable(Iterable<? extends E> iter) {
     if (iter == null)
       throw new NullPointerException();
 

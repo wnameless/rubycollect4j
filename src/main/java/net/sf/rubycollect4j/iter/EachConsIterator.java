@@ -37,7 +37,7 @@ import net.sf.rubycollect4j.RubyArray;
  */
 public final class EachConsIterator<E> implements Iterator<RubyArray<E>> {
 
-  private final Iterator<E> iter;
+  private final Iterator<? extends E> iter;
   private final int size;
   private final RubyArray<E> bucket = newRubyArray();
 
@@ -53,7 +53,7 @@ public final class EachConsIterator<E> implements Iterator<RubyArray<E>> {
    * @throws IllegalArgumentException
    *           if size is less than or equal to 0
    */
-  public EachConsIterator(Iterator<E> iter, int size) {
+  public EachConsIterator(Iterator<? extends E> iter, int size) {
     if (iter == null)
       throw new NullPointerException();
     if (size <= 0)

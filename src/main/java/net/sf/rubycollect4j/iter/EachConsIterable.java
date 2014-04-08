@@ -34,7 +34,7 @@ import net.sf.rubycollect4j.RubyArray;
  */
 public final class EachConsIterable<E> implements Iterable<RubyArray<E>> {
 
-  private final Iterable<E> iter;
+  private final Iterable<? extends E> iter;
   private final int size;
 
   /**
@@ -49,7 +49,7 @@ public final class EachConsIterable<E> implements Iterable<RubyArray<E>> {
    * @throws IllegalArgumentException
    *           if size is less than or equal to 0
    */
-  public EachConsIterable(Iterable<E> iter, int size) {
+  public EachConsIterable(Iterable<? extends E> iter, int size) {
     if (iter == null)
       throw new NullPointerException();
     if (size <= 0)

@@ -33,9 +33,9 @@ import java.util.NoSuchElementException;
  */
 public final class CycleIterator<E> implements Iterator<E> {
 
-  private final Iterable<E> iter;
+  private final Iterable<? extends E> iter;
   private Integer n;
-  private Iterator<E> it;
+  private Iterator<? extends E> it;
 
   /**
    * Creates a CycleIterator.
@@ -45,7 +45,7 @@ public final class CycleIterator<E> implements Iterator<E> {
    * @throws NullPointerException
    *           if iter is null
    */
-  public CycleIterator(Iterable<E> iter) {
+  public CycleIterator(Iterable<? extends E> iter) {
     if (iter == null)
       throw new NullPointerException();
 
@@ -64,7 +64,7 @@ public final class CycleIterator<E> implements Iterator<E> {
    * @throws NullPointerException
    *           if iter is null
    */
-  public CycleIterator(Iterable<E> iter, int n) {
+  public CycleIterator(Iterable<? extends E> iter, int n) {
     if (iter == null)
       throw new NullPointerException();
 

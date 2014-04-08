@@ -47,7 +47,8 @@ public final class RejectIterator<E> implements Iterator<E> {
    * @throws NullPointerException
    *           if iter or block is null
    */
-  public RejectIterator(Iterator<E> iter, BooleanBlock<? super E> block) {
+  public RejectIterator(Iterator<? extends E> iter,
+      BooleanBlock<? super E> block) {
     if (iter == null || block == null)
       throw new NullPointerException();
 

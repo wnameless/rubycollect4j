@@ -41,7 +41,7 @@ import net.sf.rubycollect4j.block.TransformBlock;
 public final class ChunkIterable<E, K> implements
     Iterable<Entry<K, RubyArray<E>>> {
 
-  private final Iterable<E> iter;
+  private final Iterable<? extends E> iter;
   private final TransformBlock<? super E, ? extends K> block;
 
   /**
@@ -54,7 +54,7 @@ public final class ChunkIterable<E, K> implements
    * @throws NullPointerException
    *           if iterable or block is null
    */
-  public ChunkIterable(Iterable<E> iter,
+  public ChunkIterable(Iterable<? extends E> iter,
       TransformBlock<? super E, ? extends K> block) {
     if (iter == null || block == null)
       throw new NullPointerException();

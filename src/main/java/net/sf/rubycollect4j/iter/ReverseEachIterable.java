@@ -31,7 +31,7 @@ import java.util.Iterator;
  */
 public final class ReverseEachIterable<E> implements Iterable<E> {
 
-  private final Iterable<E> iter;
+  private final Iterable<? extends E> iter;
 
   /**
    * Creates a ReverseEachIterable.
@@ -41,7 +41,7 @@ public final class ReverseEachIterable<E> implements Iterable<E> {
    * @throws NullPointerException
    *           if iter or block is null
    */
-  public ReverseEachIterable(Iterable<E> iter) {
+  public ReverseEachIterable(Iterable<? extends E> iter) {
     if (iter == null)
       throw new NullPointerException();
 

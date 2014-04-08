@@ -33,7 +33,7 @@ import net.sf.rubycollect4j.block.BooleanBlock;
  */
 public final class FindAllIterable<E> implements Iterable<E> {
 
-  private final Iterable<E> iter;
+  private final Iterable<? extends E> iter;
   private final BooleanBlock<? super E> block;
 
   /**
@@ -46,7 +46,8 @@ public final class FindAllIterable<E> implements Iterable<E> {
    * @throws NullPointerException
    *           if iter or block is null
    */
-  public FindAllIterable(Iterable<E> iter, BooleanBlock<? super E> block) {
+  public FindAllIterable(Iterable<? extends E> iter,
+      BooleanBlock<? super E> block) {
     if (iter == null || block == null)
       throw new NullPointerException();
 

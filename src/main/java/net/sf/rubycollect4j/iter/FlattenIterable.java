@@ -36,7 +36,7 @@ import net.sf.rubycollect4j.block.TransformBlock;
  */
 public final class FlattenIterable<E, S> implements Iterable<S> {
 
-  private final Iterable<E> iter;
+  private final Iterable<? extends E> iter;
   private final TransformBlock<? super E, ? extends List<? extends S>> block;
 
   /**
@@ -49,7 +49,7 @@ public final class FlattenIterable<E, S> implements Iterable<S> {
    * @throws NullPointerException
    *           if iter or block is null
    */
-  public FlattenIterable(Iterable<E> iter,
+  public FlattenIterable(Iterable<? extends E> iter,
       TransformBlock<? super E, ? extends List<? extends S>> block) {
     if (iter == null || block == null)
       throw new NullPointerException();

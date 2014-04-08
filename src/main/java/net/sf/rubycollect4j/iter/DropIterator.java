@@ -31,7 +31,7 @@ import java.util.Iterator;
  */
 public final class DropIterator<E> implements Iterator<E> {
 
-  private final Iterator<E> iter;
+  private final Iterator<? extends E> iter;
   private boolean hasFirstCall = false;
 
   /**
@@ -46,7 +46,7 @@ public final class DropIterator<E> implements Iterator<E> {
    * @throws IllegalArgumentException
    *           if step is less than or equal to 0
    */
-  public DropIterator(Iterator<E> iter, int drop) {
+  public DropIterator(Iterator<? extends E> iter, int drop) {
     if (iter == null)
       throw new NullPointerException();
     if (drop < 0)

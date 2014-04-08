@@ -49,7 +49,8 @@ public final class TakeWhileIterator<E> implements Iterator<E> {
    * @throws NullPointerException
    *           if iter or block is null
    */
-  public TakeWhileIterator(Iterator<E> iter, BooleanBlock<? super E> block) {
+  public TakeWhileIterator(Iterator<? extends E> iter,
+      BooleanBlock<? super E> block) {
     if (iter == null || block == null)
       throw new NullPointerException();
 

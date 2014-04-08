@@ -33,7 +33,7 @@ import java.util.NoSuchElementException;
  */
 public final class PeekingIterator<E> implements Iterator<E> {
 
-  private final Iterator<E> iterator;
+  private final Iterator<? extends E> iterator;
   private E peek;
   private boolean hasPeek = false;
 
@@ -43,7 +43,7 @@ public final class PeekingIterator<E> implements Iterator<E> {
    * @param iterator
    *          an Iterator
    */
-  public PeekingIterator(Iterator<E> iterator) {
+  public PeekingIterator(Iterator<? extends E> iterator) {
     this.iterator = iterator;
   }
 

@@ -36,7 +36,7 @@ import net.sf.rubycollect4j.RubyArray;
 public final class RepeatedPermutationIterable<E> implements
     Iterable<RubyArray<E>> {
 
-  private final List<E> list;
+  private final List<? extends E> list;
   private final int n;
 
   /**
@@ -49,7 +49,7 @@ public final class RepeatedPermutationIterable<E> implements
    * @throws NullPointerException
    *           if list is null
    */
-  public RepeatedPermutationIterable(List<E> list, int n) {
+  public RepeatedPermutationIterable(List<? extends E> list, int n) {
     if (list == null)
       throw new NullPointerException();
 

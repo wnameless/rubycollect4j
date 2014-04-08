@@ -31,7 +31,7 @@ import java.util.Iterator;
  */
 public final class StepIterable<E> implements Iterable<E> {
 
-  private final Iterable<E> iter;
+  private final Iterable<? extends E> iter;
   private final int step;
 
   /**
@@ -46,7 +46,7 @@ public final class StepIterable<E> implements Iterable<E> {
    * @throws IllegalArgumentException
    *           if step is less than or equal to 0
    */
-  public StepIterable(Iterable<E> iter, int step) {
+  public StepIterable(Iterable<? extends E> iter, int step) {
     if (iter == null)
       throw new NullPointerException();
     if (step == 0)

@@ -40,7 +40,7 @@ import net.sf.rubycollect4j.RubyArray;
  */
 public final class PermutationIterator<E> implements Iterator<RubyArray<E>> {
 
-  private final List<E> list;
+  private final List<? extends E> list;
   private final int[] counter;
   private final int[] endStatus;
   private boolean hasMore = true;
@@ -55,7 +55,7 @@ public final class PermutationIterator<E> implements Iterator<RubyArray<E>> {
    * @throws NullPointerException
    *           if list is null
    */
-  public PermutationIterator(List<E> list, int n) {
+  public PermutationIterator(List<? extends E> list, int n) {
     if (list == null)
       throw new NullPointerException();
 

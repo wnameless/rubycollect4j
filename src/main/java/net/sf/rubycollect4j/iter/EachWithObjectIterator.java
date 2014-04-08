@@ -36,7 +36,7 @@ import net.sf.rubycollect4j.util.ComparableEntry;
 public final class EachWithObjectIterator<E, O> implements
     Iterator<Entry<E, O>> {
 
-  private final Iterator<E> iter;
+  private final Iterator<? extends E> iter;
   private final O obj;
 
   /**
@@ -49,7 +49,7 @@ public final class EachWithObjectIterator<E, O> implements
    * @throws NullPointerException
    *           if iter or obj is null
    */
-  public EachWithObjectIterator(Iterator<E> iter, O obj) {
+  public EachWithObjectIterator(Iterator<? extends E> iter, O obj) {
     if (iter == null || obj == null)
       throw new NullPointerException();
 
