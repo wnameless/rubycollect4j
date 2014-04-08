@@ -41,7 +41,7 @@ import net.sf.rubycollect4j.util.PeekingIterator;
 public final class SliceBeforeIterator<E> implements Iterator<RubyArray<E>> {
 
   private final PeekingIterator<E> pIter;
-  private final BooleanBlock<E> block;
+  private final BooleanBlock<? super E> block;
   private final Pattern pattern;
 
   /**
@@ -54,7 +54,7 @@ public final class SliceBeforeIterator<E> implements Iterator<RubyArray<E>> {
    * @throws NullPointerException
    *           if iter or block is null
    */
-  public SliceBeforeIterator(Iterator<E> iter, BooleanBlock<E> block) {
+  public SliceBeforeIterator(Iterator<E> iter, BooleanBlock<? super E> block) {
     if (iter == null || block == null)
       throw new NullPointerException();
 

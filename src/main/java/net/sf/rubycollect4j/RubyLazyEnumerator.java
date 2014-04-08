@@ -102,7 +102,7 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public boolean allʔ(BooleanBlock<E> block) {
+  public boolean allʔ(BooleanBlock<? super E> block) {
     for (E item : iter) {
       if (block.yield(item) == false)
         return false;
@@ -120,7 +120,7 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public boolean anyʔ(BooleanBlock<E> block) {
+  public boolean anyʔ(BooleanBlock<? super E> block) {
     for (E item : iter) {
       if (block.yield(item))
         return true;
@@ -130,7 +130,7 @@ public final class RubyLazyEnumerator<E> implements
 
   @Override
   public <S> RubyLazyEnumerator<Entry<S, RubyArray<E>>> chunk(
-      TransformBlock<E, S> block) {
+      TransformBlock<? super E, ? extends S> block) {
     return newRubyLazyEnumerator(new ChunkIterable<E, S>(iter, block));
   }
 
@@ -154,7 +154,8 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public <S> RubyLazyEnumerator<S> collect(TransformBlock<E, S> block) {
+  public <S> RubyLazyEnumerator<S> collect(
+      TransformBlock<? super E, ? extends S> block) {
     return newRubyLazyEnumerator(new TransformIterable<E, S>(iter, block));
   }
 
@@ -178,7 +179,7 @@ public final class RubyLazyEnumerator<E> implements
 
   @Override
   public <S> RubyLazyEnumerator<S> collectConcat(
-      TransformBlock<E, ? extends List<S>> block) {
+      TransformBlock<? super E, ? extends List<? extends S>> block) {
     return newRubyLazyEnumerator(new FlattenIterable<E, S>(iter, block));
   }
 
@@ -193,7 +194,7 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public int count(BooleanBlock<E> block) {
+  public int count(BooleanBlock<? super E> block) {
     int count = 0;
     for (E item : iter) {
       if (block.yield(item))
@@ -213,7 +214,7 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public void cycle(int n, Block<E> block) {
+  public void cycle(int n, Block<? super E> block) {
     for (int i = 0; i < n; i++) {
       for (E item : iter) {
         block.yield(item);
@@ -222,7 +223,7 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public void cycle(Block<E> block) {
+  public void cycle(Block<? super E> block) {
     while (true) {
       for (E item : iter) {
         block.yield(item);
@@ -236,7 +237,7 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public E detect(BooleanBlock<E> block) {
+  public E detect(BooleanBlock<? super E> block) {
     for (E item : iter) {
       if (block.yield(item))
         return item;
@@ -260,7 +261,7 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public RubyLazyEnumerator<E> dropWhile(BooleanBlock<E> block) {
+  public RubyLazyEnumerator<E> dropWhile(BooleanBlock<? super E> block) {
     return newRubyLazyEnumerator(new DropWhileIterable<E>(iter, block));
   }
 
@@ -270,7 +271,7 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public RubyLazyEnumerator<E> each(Block<E> block) {
+  public RubyLazyEnumerator<E> each(Block<? super E> block) {
     for (E item : iter) {
       block.yield(item);
     }
@@ -283,7 +284,7 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public void eachCons(int n, Block<RubyArray<E>> block) {
+  public void eachCons(int n, Block<? super RubyArray<E>> block) {
     for (RubyArray<E> cons : eachCons(n)) {
       block.yield(cons);
     }
@@ -295,7 +296,7 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public RubyLazyEnumerator<E> eachEntry(Block<E> block) {
+  public RubyLazyEnumerator<E> eachEntry(Block<? super E> block) {
     for (E item : iter) {
       block.yield(item);
     }
@@ -308,7 +309,7 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public void eachSlice(int n, Block<RubyArray<E>> block) {
+  public void eachSlice(int n, Block<? super RubyArray<E>> block) {
     for (RubyArray<E> ra : new EachSliceIterable<E>(iter, n)) {
       block.yield(ra);
     }
@@ -320,7 +321,7 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public RubyLazyEnumerator<E> eachWithIndex(WithIndexBlock<E> block) {
+  public RubyLazyEnumerator<E> eachWithIndex(WithIndexBlock<? super E> block) {
     int i = 0;
     for (E item : iter) {
       block.yield(item, i);
@@ -335,7 +336,8 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public <O> O eachWithObject(O obj, WithObjectBlock<E, O> block) {
+  public <O> O
+      eachWithObject(O obj, WithObjectBlock<? super E, ? super O> block) {
     for (E item : iter) {
       block.yield(item, obj);
     }
@@ -358,12 +360,12 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public E find(BooleanBlock<E> block) {
+  public E find(BooleanBlock<? super E> block) {
     return detect(block);
   }
 
   @Override
-  public RubyLazyEnumerator<E> findAll(BooleanBlock<E> block) {
+  public RubyLazyEnumerator<E> findAll(BooleanBlock<? super E> block) {
     return newRubyLazyEnumerator(new FindAllIterable<E>(iter, block));
   }
 
@@ -373,7 +375,7 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public Integer findIndex(BooleanBlock<E> block) {
+  public Integer findIndex(BooleanBlock<? super E> block) {
     int index = 0;
     for (E item : iter) {
       if (block.yield(item))
@@ -426,7 +428,7 @@ public final class RubyLazyEnumerator<E> implements
 
   @Override
   public <S> RubyLazyEnumerator<S> flatMap(
-      TransformBlock<E, ? extends List<S>> block) {
+      TransformBlock<? super E, ? extends List<? extends S>> block) {
     return collectConcat(block);
   }
 
@@ -436,8 +438,8 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public <S> RubyLazyEnumerator<S>
-      grep(String regex, TransformBlock<E, S> block) {
+  public <S> RubyLazyEnumerator<S> grep(String regex,
+      TransformBlock<? super E, ? extends S> block) {
     return newRubyLazyEnumerator(new TransformIterable<E, S>(
         new GrepIterable<E>(iter, regex), block));
   }
@@ -461,7 +463,8 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public <S> RubyHash<S, RubyArray<E>> groupBy(TransformBlock<E, S> block) {
+  public <S> RubyHash<S, RubyArray<E>> groupBy(
+      TransformBlock<? super E, ? extends S> block) {
     RubyHash<S, RubyArray<E>> rubyHash = newRubyHash();
     for (E item : iter) {
       S key = block.yield(item);
@@ -509,7 +512,7 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public <I> I inject(I init, WithInitBlock<E, I> block) {
+  public <I> I inject(I init, WithInitBlock<? super E, I> block) {
     for (E item : iter) {
       init = block.yield(init, item);
     }
@@ -551,7 +554,8 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public <S> RubyLazyEnumerator<S> map(TransformBlock<E, S> block) {
+  public <S> RubyLazyEnumerator<S> map(
+      TransformBlock<? super E, ? extends S> block) {
     return collect(block);
   }
 
@@ -576,12 +580,13 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public <S> E maxBy(Comparator<? super S> comp, TransformBlock<E, S> block) {
+  public <S> E maxBy(Comparator<? super S> comp,
+      TransformBlock<? super E, ? extends S> block) {
     return minmaxBy(comp, block).last();
   }
 
   @Override
-  public <S> E maxBy(TransformBlock<E, S> block) {
+  public <S> E maxBy(TransformBlock<? super E, ? extends S> block) {
     return minmaxBy(block).last();
   }
 
@@ -618,12 +623,13 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public <S> E minBy(Comparator<? super S> comp, TransformBlock<E, S> block) {
+  public <S> E minBy(Comparator<? super S> comp,
+      TransformBlock<? super E, ? extends S> block) {
     return minmaxBy(comp, block).first();
   }
 
   @Override
-  public <S> E minBy(TransformBlock<E, S> block) {
+  public <S> E minBy(TransformBlock<? super E, ? extends S> block) {
     return minmaxBy(block).first();
   }
 
@@ -664,7 +670,7 @@ public final class RubyLazyEnumerator<E> implements
   @SuppressWarnings("unchecked")
   @Override
   public <S> RubyArray<E> minmaxBy(Comparator<? super S> comp,
-      TransformBlock<E, S> block) {
+      TransformBlock<? super E, ? extends S> block) {
     Iterator<E> elements = iter.iterator();
     if (!elements.hasNext())
       return newRubyArray(null, null);
@@ -683,7 +689,8 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public <S> RubyArray<E> minmaxBy(TransformBlock<E, S> block) {
+  public <S> RubyArray<E>
+      minmaxBy(TransformBlock<? super E, ? extends S> block) {
     return minmaxBy(null, block);
   }
 
@@ -710,7 +717,7 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public boolean noneʔ(BooleanBlock<E> block) {
+  public boolean noneʔ(BooleanBlock<? super E> block) {
     for (E item : iter) {
       if (block.yield(item))
         return false;
@@ -732,7 +739,7 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public boolean oneʔ(BooleanBlock<E> block) {
+  public boolean oneʔ(BooleanBlock<? super E> block) {
     int count = 0;
     for (E item : iter) {
       if (block.yield(item)) {
@@ -751,7 +758,7 @@ public final class RubyLazyEnumerator<E> implements
 
   @SuppressWarnings("unchecked")
   @Override
-  public RubyArray<RubyArray<E>> partition(BooleanBlock<E> block) {
+  public RubyArray<RubyArray<E>> partition(BooleanBlock<? super E> block) {
     RubyArray<E> trueList = newRubyArray();
     RubyArray<E> falseList = newRubyArray();
     for (E item : iter) {
@@ -769,7 +776,7 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public <S> S reduce(S init, WithInitBlock<E, S> block) {
+  public <S> S reduce(S init, WithInitBlock<? super E, S> block) {
     return inject(init, block);
   }
 
@@ -789,7 +796,7 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public RubyLazyEnumerator<E> reject(BooleanBlock<E> block) {
+  public RubyLazyEnumerator<E> reject(BooleanBlock<? super E> block) {
     return newRubyLazyEnumerator(new RejectIterable<E>(iter, block));
   }
 
@@ -799,7 +806,7 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public RubyLazyEnumerator<E> reverseEach(Block<E> block) {
+  public RubyLazyEnumerator<E> reverseEach(Block<? super E> block) {
     for (E item : reverseEach()) {
       block.yield(item);
     }
@@ -812,12 +819,13 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public RubyLazyEnumerator<E> select(BooleanBlock<E> block) {
+  public RubyLazyEnumerator<E> select(BooleanBlock<? super E> block) {
     return findAll(block);
   }
 
   @Override
-  public RubyLazyEnumerator<RubyArray<E>> sliceBefore(BooleanBlock<E> block) {
+  public RubyLazyEnumerator<RubyArray<E>> sliceBefore(
+      BooleanBlock<? super E> block) {
     return newRubyLazyEnumerator(new SliceBeforeIterable<E>(iter, block));
   }
 
@@ -854,7 +862,7 @@ public final class RubyLazyEnumerator<E> implements
 
   @Override
   public <S> RubyArray<E> sortBy(Comparator<? super S> comp,
-      TransformBlock<E, S> block) {
+      TransformBlock<? super E, ? extends S> block) {
     RubyHash<S, RubyArray<E>> rubyHash = groupBy(block);
     RubyArray<E> rubyArray = newRubyArray();
     for (S key : rubyHash.keys().sortǃ(comp)) {
@@ -864,8 +872,9 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public <S> RubyArray<E> sortBy(Comparator<? super E> comp1,
-      Comparator<? super S> comp2, TransformBlock<E, S> block) {
+  public <S> RubyArray<E>
+      sortBy(Comparator<? super E> comp1, Comparator<? super S> comp2,
+          TransformBlock<? super E, ? extends S> block) {
     RubyHash<S, RubyArray<E>> rubyHash = groupBy(block);
     RubyArray<E> rubyArray = newRubyArray();
     for (S key : rubyHash.keys().sortǃ(comp2)) {
@@ -875,7 +884,7 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public <S> RubyArray<E> sortBy(TransformBlock<E, S> block) {
+  public <S> RubyArray<E> sortBy(TransformBlock<? super E, ? extends S> block) {
     RubyHash<S, RubyArray<E>> rubyHash = groupBy(block);
     RubyArray<E> rubyArray = newRubyArray();
     for (S key : rubyHash.keys().sortǃ()) {
@@ -912,7 +921,7 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public RubyLazyEnumerator<E> takeWhile(BooleanBlock<E> block) {
+  public RubyLazyEnumerator<E> takeWhile(BooleanBlock<? super E> block) {
     return newRubyLazyEnumerator(new TakeWhileIterable<E>(iter, block));
   }
 
@@ -922,19 +931,19 @@ public final class RubyLazyEnumerator<E> implements
   }
 
   @Override
-  public RubyLazyEnumerator<RubyArray<E>> zip(Iterable<E>... others) {
+  public RubyLazyEnumerator<RubyArray<E>> zip(Iterable<? extends E>... others) {
     return zip(Arrays.asList(others));
   }
 
   @Override
-  public RubyLazyEnumerator<RubyArray<E>>
-      zip(List<? extends Iterable<E>> others) {
+  public RubyLazyEnumerator<RubyArray<E>> zip(
+      List<? extends Iterable<? extends E>> others) {
     return newRubyLazyEnumerator(new ZipIterable<E>(iter, others));
   }
 
   @Override
-  public void
-      zip(List<? extends Iterable<E>> others, Block<RubyArray<E>> block) {
+  public void zip(List<? extends Iterable<? extends E>> others,
+      Block<RubyArray<E>> block) {
     RubyLazyEnumerator<RubyArray<E>> rubyArrays = zip(others);
     for (RubyArray<E> item : rubyArrays) {
       block.yield(item);

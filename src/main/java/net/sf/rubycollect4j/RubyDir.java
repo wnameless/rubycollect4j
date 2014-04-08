@@ -291,7 +291,8 @@ public final class RubyDir extends RubyEnumerable<String> {
    *          to yield entries
    * @return this RubyDir
    */
-  public RubyDir each(Block<String> block) {
+  @Override
+  public RubyDir each(Block<? super String> block) {
     eachEntry(block);
     return this;
   }

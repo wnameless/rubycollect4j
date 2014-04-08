@@ -38,7 +38,7 @@ import net.sf.rubycollect4j.RubyArray;
  */
 public final class ProductIterator<E> implements Iterator<RubyArray<E>> {
 
-  private final List<List<E>> lists;
+  private final List<List<? extends E>> lists;
   private final int[] counter;
 
   /**
@@ -49,12 +49,12 @@ public final class ProductIterator<E> implements Iterator<RubyArray<E>> {
    * @throws NullPointerException
    *           if lists is null
    */
-  public ProductIterator(List<? extends List<E>> lists) {
+  public ProductIterator(List<? extends List<? extends E>> lists) {
     if (lists == null)
       throw new NullPointerException();
 
-    this.lists = new ArrayList<List<E>>();
-    for (List<E> list : lists) {
+    this.lists = new ArrayList<List<? extends E>>();
+    for (List<? extends E> list : lists) {
       this.lists.add(new ArrayList<E>(list));
     }
     counter = new int[this.lists.size()];

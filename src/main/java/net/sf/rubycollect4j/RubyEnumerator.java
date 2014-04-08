@@ -93,7 +93,7 @@ public class RubyEnumerator<E> extends RubyEnumerable<E> implements
    * @return this RubyEnumerator
    */
   @Override
-  public RubyEnumerator<E> each(Block<E> block) {
+  public RubyEnumerator<E> each(Block<? super E> block) {
     for (E item : iter) {
       block.yield(item);
     }

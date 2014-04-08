@@ -48,7 +48,7 @@ public final class DropWhileIterator<E> implements Iterator<E> {
    * @throws NullPointerException
    *           if iter or block is null
    */
-  public DropWhileIterator(Iterator<E> iter, BooleanBlock<E> block) {
+  public DropWhileIterator(Iterator<E> iter, BooleanBlock<? super E> block) {
     if (iter == null || block == null)
       throw new NullPointerException();
 

@@ -35,7 +35,7 @@ import net.sf.rubycollect4j.block.BooleanBlock;
 public final class DropWhileIterable<E> implements Iterable<E> {
 
   private final Iterable<E> iter;
-  private final BooleanBlock<E> block;
+  private final BooleanBlock<? super E> block;
 
   /**
    * Creates a DropWhileIterable.
@@ -47,7 +47,7 @@ public final class DropWhileIterable<E> implements Iterable<E> {
    * @throws NullPointerException
    *           if iter or block is null
    */
-  public DropWhileIterable(Iterable<E> iter, BooleanBlock<E> block) {
+  public DropWhileIterable(Iterable<E> iter, BooleanBlock<? super E> block) {
     if (iter == null || block == null)
       throw new NullPointerException();
 

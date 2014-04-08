@@ -42,7 +42,7 @@ public final class ChunkIterable<E, K> implements
     Iterable<Entry<K, RubyArray<E>>> {
 
   private final Iterable<E> iter;
-  private final TransformBlock<E, K> block;
+  private final TransformBlock<? super E, ? extends K> block;
 
   /**
    * Creates a ChunkIterable.
@@ -54,7 +54,8 @@ public final class ChunkIterable<E, K> implements
    * @throws NullPointerException
    *           if iterable or block is null
    */
-  public ChunkIterable(Iterable<E> iter, TransformBlock<E, K> block) {
+  public ChunkIterable(Iterable<E> iter,
+      TransformBlock<? super E, ? extends K> block) {
     if (iter == null || block == null)
       throw new NullPointerException();
 

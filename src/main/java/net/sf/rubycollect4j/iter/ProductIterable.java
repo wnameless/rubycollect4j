@@ -36,7 +36,8 @@ import net.sf.rubycollect4j.RubyArray;
  */
 public final class ProductIterable<E> implements Iterable<RubyArray<E>> {
 
-  private final List<List<E>> lists = new ArrayList<List<E>>();
+  private final List<List<? extends E>> lists =
+      new ArrayList<List<? extends E>>();
 
   /**
    * Creates a ProductIterable.
@@ -48,7 +49,8 @@ public final class ProductIterable<E> implements Iterable<RubyArray<E>> {
    * @throws NullPointerException
    *           if self or others is null
    */
-  public ProductIterable(List<E> self, List<? extends List<E>> others) {
+  public ProductIterable(List<? extends E> self,
+      List<? extends List<? extends E>> others) {
     if (self == null || others == null)
       throw new NullPointerException();
 
@@ -66,7 +68,7 @@ public final class ProductIterable<E> implements Iterable<RubyArray<E>> {
    * @throws NullPointerException
    *           if self is null
    */
-  public ProductIterable(List<E> self, List<E>... others) {
+  public ProductIterable(List<? extends E> self, List<? extends E>... others) {
     if (self == null)
       throw new NullPointerException();
 

@@ -46,7 +46,7 @@ public final class ChunkIterator<E, K> implements
     Iterator<Entry<K, RubyArray<E>>> {
 
   private final PeekingIterator<E> pIter;
-  private final TransformBlock<E, K> block;
+  private final TransformBlock<? super E, ? extends K> block;
 
   /**
    * Creates a ChunkIterator.
@@ -58,7 +58,8 @@ public final class ChunkIterator<E, K> implements
    * @throws NullPointerException
    *           if iterator or block is null
    */
-  public ChunkIterator(Iterator<E> iter, TransformBlock<E, K> block) {
+  public ChunkIterator(Iterator<E> iter,
+      TransformBlock<? super E, ? extends K> block) {
     if (iter == null || block == null)
       throw new NullPointerException();
 

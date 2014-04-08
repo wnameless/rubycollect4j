@@ -37,7 +37,7 @@ import net.sf.rubycollect4j.util.PeekingIterator;
 public final class TakeWhileIterator<E> implements Iterator<E> {
 
   private final PeekingIterator<E> pIter;
-  private final BooleanBlock<E> block;
+  private final BooleanBlock<? super E> block;
 
   /**
    * Creates a TakeWhileIterator.
@@ -49,7 +49,7 @@ public final class TakeWhileIterator<E> implements Iterator<E> {
    * @throws NullPointerException
    *           if iter or block is null
    */
-  public TakeWhileIterator(Iterator<E> iter, BooleanBlock<E> block) {
+  public TakeWhileIterator(Iterator<E> iter, BooleanBlock<? super E> block) {
     if (iter == null || block == null)
       throw new NullPointerException();
 

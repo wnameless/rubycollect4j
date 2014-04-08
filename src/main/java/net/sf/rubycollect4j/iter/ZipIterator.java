@@ -37,8 +37,8 @@ import net.sf.rubycollect4j.RubyArray;
  */
 public final class ZipIterator<E> implements Iterator<RubyArray<E>> {
 
-  private final Iterator<E> iter;
-  private final List<? extends Iterator<E>> others;
+  private final Iterator<? extends E> iter;
+  private final List<? extends Iterator<? extends E>> others;
 
   /**
    * Creates a ZipIterator.
@@ -48,12 +48,13 @@ public final class ZipIterator<E> implements Iterator<RubyArray<E>> {
    * @param others
    *          a List of Iterators
    */
-  public ZipIterator(Iterator<E> iter, List<? extends Iterator<E>> others) {
+  public ZipIterator(Iterator<? extends E> iter,
+      List<? extends Iterator<? extends E>> others) {
     if (iter == null || others == null)
       throw new NullPointerException();
 
     this.iter = iter;
-    this.others = new ArrayList<Iterator<E>>(others);
+    this.others = new ArrayList<Iterator<? extends E>>(others);
   }
 
   @Override
@@ -65,7 +66,7 @@ public final class ZipIterator<E> implements Iterator<RubyArray<E>> {
   public RubyArray<E> next() {
     RubyArray<E> element = newRubyArray();
     element.add(iter.next());
-    for (Iterator<E> i : others) {
+    for (Iterator<? extends E> i : others) {
       if (i.hasNext())
         element.add(i.next());
       else

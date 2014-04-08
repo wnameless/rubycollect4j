@@ -110,7 +110,7 @@ public final class RubyRange<E> extends RubyEnumerable<E> implements
    * @return this RubyRange
    */
   @Override
-  public RubyRange<E> each(Block<E> block) {
+  public RubyRange<E> each(Block<? super E> block) {
     eachEntry(block);
     return this;
   }
