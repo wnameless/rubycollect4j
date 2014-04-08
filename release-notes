@@ -216,3 +216,7 @@ Version 1.7.0
 * Fixed the bug of RubyArray#insert while using negative index
 
 + Added Serializable to RubyArray, RubyHash, RubyRange & RubyString
+
+Version 1.7.1
+
+* Used bounded wildcards to increased API flexibility
