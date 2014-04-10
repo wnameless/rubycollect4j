@@ -96,7 +96,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
 
   @Override
   protected Iterable<E> getIterable() {
-    return list;
+    return Collections.unmodifiableList(list);
   }
 
   /**
@@ -129,6 +129,9 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    *          an Iterable
    */
   public RubyArray(Iterable<? extends E> iter) {
+    if (iter == null)
+      throw new NullPointerException();
+
     list = new ArrayList<E>();
     for (E item : iter) {
       list.add(item);

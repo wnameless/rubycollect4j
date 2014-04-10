@@ -109,6 +109,15 @@ public class RubyArrayTest {
     RubyArray.copyOf(null);
   }
 
+  @Test(expected = UnsupportedOperationException.class)
+  public void testGetIterable() {
+    Iterable<Integer> iter = ra.getIterable();
+    if (iter instanceof List) {
+      List<Integer> list = (List<Integer>) iter;
+      list.remove(0);
+    }
+  }
+
   @Test
   public void testConstructor() {
     assertTrue(ra instanceof RubyArray);
@@ -120,8 +129,13 @@ public class RubyArrayTest {
   }
 
   @Test(expected = NullPointerException.class)
-  public void testConstructorException() {
-    new RubyArray<Integer>(null);
+  public void testConstructorException1() {
+    new RubyArray<Integer>((List<Integer>) null);
+  }
+
+  @Test(expected = NullPointerException.class)
+  public void testConstructorException2() {
+    new RubyArray<Integer>((Iterable<Integer>) null);
   }
 
   @SuppressWarnings("unchecked")

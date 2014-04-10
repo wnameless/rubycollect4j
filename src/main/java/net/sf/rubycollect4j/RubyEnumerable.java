@@ -49,8 +49,8 @@ import net.sf.rubycollect4j.iter.SliceBeforeIterable;
 import net.sf.rubycollect4j.iter.TransformIterable;
 
 /**
- * An extension class for any Iterable object. It includes all methods refer to
- * the Enumerable module of Ruby.
+ * An extension for any Iterable class. It includes all methods refer to the
+ * Enumerable module of Ruby.
  * 
  * @param <E>
  *          the type of the elements
