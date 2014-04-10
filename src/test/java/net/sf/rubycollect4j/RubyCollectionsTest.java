@@ -72,6 +72,7 @@ public class RubyCollectionsTest {
     c.newInstance();
   }
 
+  @SuppressWarnings("deprecation")
   @Test
   public void testNewRubyArray() {
     RubyArray<Integer> ra;
@@ -97,6 +98,7 @@ public class RubyCollectionsTest {
     assertEquals(ra(4, 2, 3), ra);
   }
 
+  @SuppressWarnings("deprecation")
   @Test
   public void testNewRubyHash() {
     RubyHash<Integer, Integer> rh;

@@ -14,7 +14,7 @@ Installation with Maven:
 <dependency>
   <groupId>net.sf.rubycollect4j</groupId>
   <artifactId>rubycollect4j</artifactId>
-  <version>1.7.1</version>
+  <version>1.7.2</version>
 </dependency>
 ```
 
@@ -77,7 +77,7 @@ p( ra(1, 2, 3) instanceof List );   // Output: true
 // You can make a defensive copy by following codes.
 List<Integer> list = new ArrayList<Integer>();
 list.add(1);
-RubyArray<Integer> ra = newRubyArray(list, true);
+RubyArray<Integer> ra = RubyArray.copyOf(list);
 ```
 
 Demo rh(), hp(), Hash() & newRubyHash():
@@ -101,7 +101,7 @@ p( rh(1, 2, 3, 4) instanceof Map );    // Output: true
 // You can only wrap a LinkedHashMap up by following codes, because the keys of RubyHash need to be ordered.
 LinkedHashMap<Integer, String> map = new LinkedHashMap<Integer, String>();
 map.put(1, "a");
-RubyHash<Integer, String> rh = newRubyHash(map, false);
+RubyHash<Integer, String> rh = RubyHash.of(map);
 ```
 
 Demo rs() & newRubyString():

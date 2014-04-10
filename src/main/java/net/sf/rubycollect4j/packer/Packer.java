@@ -20,7 +20,6 @@
  */
 package net.sf.rubycollect4j.packer;
 
-import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.qr;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.rs;
@@ -74,7 +73,7 @@ public final class Packer {
 
     StringBuilder sb = new StringBuilder();
     List<String> templateList = parseTemplate(aTemplateString);
-    RubyArray<?> items = newRubyArray(objs, true);
+    RubyArray<?> items = RubyArray.copyOf(objs);
     for (String template : templateList) {
       Directive d = parseDirective(template);
       template = template.replace(d.toString(), "");

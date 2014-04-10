@@ -2237,7 +2237,8 @@ public final class RubyString extends RubyEnumerable<String> implements
   public int toI() {
     Matcher intMatcher = qr("^\\s*[-+]?\\s*\\d+").matcher(str);
     if (intMatcher.find())
-      return Integer.valueOf(intMatcher.group().trim().replaceAll("\\s+", ""));
+      return Integer.valueOf(intMatcher.group().trim()
+          .replaceAll("[\\s\\+]+", ""));
     else
       return 0;
   }
@@ -2253,7 +2254,8 @@ public final class RubyString extends RubyEnumerable<String> implements
             str);
     if (intMatcher.find()) {
       try {
-        return Integer.parseInt(intMatcher.group().trim(), radix);
+        return Integer.parseInt(
+            intMatcher.group().trim().replaceAll("[\\s\\+]+", ""), radix);
       } catch (NumberFormatException e) {
         return 0;
       }

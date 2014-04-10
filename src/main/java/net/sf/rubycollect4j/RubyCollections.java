@@ -121,7 +121,9 @@ public final class RubyCollections {
    * @param defensiveCopy
    *          true If defensive copy required and false otherwise
    * @return a new RubyArray
+   * @deprecated As of release 1.7.2, replaced by {@link RubyArray#copyOf}
    */
+  @Deprecated
   public static <E> RubyArray<E> newRubyArray(List<E> list,
       boolean defensiveCopy) {
     if (defensiveCopy)
@@ -185,7 +187,9 @@ public final class RubyCollections {
    * @param defensiveCopy
    *          it makes a defensive copy if specified
    * @return a new RubyHash
+   * @deprecated As of release 1.7.2, replaced by {@link RubyHash#copyOf}
    */
+  @Deprecated
   public static <K, V> RubyHash<K, V> newRubyHash(LinkedHashMap<K, V> map,
       boolean defensiveCopy) {
     if (defensiveCopy)

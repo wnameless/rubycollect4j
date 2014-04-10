@@ -77,7 +77,7 @@ public final class EachConsIterator<E> implements Iterator<RubyArray<E>> {
   }
 
   private RubyArray<E> nextElement() {
-    RubyArray<E> element = newRubyArray(bucket, true);
+    RubyArray<E> element = RubyArray.copyOf(bucket);
     updateBucket();
     return element;
   }

@@ -66,6 +66,34 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   private V defaultValue;
   private boolean isFrozen = false;
 
+  /**
+   * Returns a RubyHash which wraps the given Map.
+   * 
+   * @param map
+   *          any Map
+   * @return a RubyHash
+   */
+  public static <K, V> RubyHash<K, V> of(LinkedHashMap<K, V> map) {
+    if (map == null)
+      throw new NullPointerException();
+
+    return new RubyHash<K, V>(map);
+  }
+
+  /**
+   * Returns a RubyHash which copies the elements of given Map.
+   * 
+   * @param map
+   *          any Map
+   * @return a RubyHash
+   */
+  public static <K, V> RubyHash<K, V> copyOf(Map<K, V> map) {
+    if (map == null)
+      throw new NullPointerException();
+
+    return new RubyHash<K, V>(new LinkedHashMap<K, V>(map));
+  }
+
   @Override
   protected Iterable<Entry<K, V>> getIterable() {
     return new ComparableEntryIterable<K, V>(map.entrySet());

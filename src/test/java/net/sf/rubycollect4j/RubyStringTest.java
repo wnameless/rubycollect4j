@@ -1477,7 +1477,7 @@ public class RubyStringTest {
     assertEquals((Integer) 0, (Integer) rs("0a").toI());
     assertEquals((Integer) 10, (Integer) rs("0a").toI(16));
     assertEquals((Integer) 0, (Integer) rs("hello").toI());
-    assertEquals((Integer) 101, (Integer) rs("1100101").toI(2));
+    assertEquals((Integer) 101, (Integer) rs(" + 1100101").toI(2));
     assertEquals((Integer) 294977, (Integer) rs("1100101").toI(8));
     assertEquals((Integer) rs("1100101").toI(8), (Integer) rs("11001019")
         .toI(8));

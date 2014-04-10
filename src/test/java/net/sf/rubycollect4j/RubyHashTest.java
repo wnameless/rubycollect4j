@@ -26,6 +26,7 @@ import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.rh;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
@@ -66,6 +67,38 @@ public class RubyHashTest {
     assertTrue(rh instanceof RubyEnumerable);
     assertTrue(rh instanceof Map);
     assertTrue(rh instanceof Serializable);
+  }
+
+  @Test
+  public void testStaticFactoryMethodOf() {
+    LinkedHashMap<Integer, String> map = new LinkedHashMap<Integer, String>();
+    map.put(1, "a");
+    map.put(2, "b");
+    map.put(3, "c");
+    RubyHash<Integer, String> intStr = RubyHash.of(map);
+    map.remove(1);
+    assertEquals(map, intStr);
+  }
+
+  @Test(expected = NullPointerException.class)
+  public void testStaticFactoryMethodOfException() {
+    RubyHash.of(null);
+  }
+
+  @Test
+  public void testStaticFactoryMethodCopyOf() {
+    LinkedHashMap<Integer, String> map = new LinkedHashMap<Integer, String>();
+    map.put(1, "a");
+    map.put(2, "b");
+    map.put(3, "c");
+    RubyHash<Integer, String> intStr = RubyHash.copyOf(map);
+    map.remove(1);
+    assertNotEquals(map, intStr);
+  }
+
+  @Test(expected = NullPointerException.class)
+  public void testStaticFactoryMethodCopyOfException() {
+    RubyHash.copyOf(null);
   }
 
   @Test

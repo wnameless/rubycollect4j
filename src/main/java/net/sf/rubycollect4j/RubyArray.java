@@ -66,6 +66,34 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   private List<E> list;
   private boolean isFrozen = false;
 
+  /**
+   * Returns a RubyArray which wraps the given List.
+   * 
+   * @param list
+   *          any List
+   * @return a RubyArray
+   */
+  public static <E> RubyArray<E> of(List<E> list) {
+    if (list == null)
+      throw new NullPointerException();
+
+    return new RubyArray<E>(list);
+  }
+
+  /**
+   * Returns a RubyArray which copies the elements of given List.
+   * 
+   * @param list
+   *          any List
+   * @return a RubyArray
+   */
+  public static <E> RubyArray<E> copyOf(List<E> list) {
+    if (list == null)
+      throw new NullPointerException();
+
+    return new RubyArray<E>(new ArrayList<E>(list));
+  }
+
   @Override
   protected Iterable<E> getIterable() {
     return list;
@@ -123,7 +151,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
         List<S> lst = (List<S>) item;
         if (lst.size() > 0) {
           if (target == null ? lst.get(0) == null : target.equals(lst.get(0)))
-            return newRubyArray(lst, true);
+            return RubyArray.copyOf(lst);
         }
       }
     }
@@ -991,7 +1019,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * @return a new RubyArray
    */
   public RubyArray<E> plus(List<? extends E> other) {
-    RubyArray<E> rubyArray = newRubyArray(list, true);
+    RubyArray<E> rubyArray = RubyArray.copyOf(list);
     rubyArray.addAll(other);
     return rubyArray;
   }
@@ -1111,7 +1139,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
         if (lst.size() > 0) {
           if (target == null ? lst.get(lst.size() - 1) == null : target
               .equals(lst.get(lst.size() - 1)))
-            return newRubyArray(lst, true);
+            return RubyArray.copyOf(lst);
         }
       }
     }
@@ -1276,7 +1304,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * @return a new RubyArray
    */
   public RubyArray<E> rotate() {
-    RubyArray<E> rubyArray = newRubyArray(list, true);
+    RubyArray<E> rubyArray = RubyArray.copyOf(list);
     if (rubyArray.size() > 1)
       rubyArray.push(rubyArray.shift());
     return rubyArray;
@@ -1302,7 +1330,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * @return a new RubyArray
    */
   public RubyArray<E> rotate(int n) {
-    RubyArray<E> rubyArray = newRubyArray(list, true);
+    RubyArray<E> rubyArray = RubyArray.copyOf(list);
     if (rubyArray.size() > 1) {
       while (n != 0) {
         if (n > 0) {
@@ -1436,7 +1464,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * @return a new RubyArray
    */
   public RubyArray<E> shuffle() {
-    RubyArray<E> rubyArray = newRubyArray(list, true);
+    RubyArray<E> rubyArray = RubyArray.copyOf(list);
     Collections.shuffle(rubyArray);
     return rubyArray;
   }
@@ -1668,7 +1696,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * @return a new RubyArray
    */
   public RubyArray<E> minus(List<? extends E> other) {
-    RubyArray<E> rubyArray = newRubyArray(list, true);
+    RubyArray<E> rubyArray = RubyArray.copyOf(list);
     rubyArray.removeAll(other);
     return rubyArray;
   }
@@ -1733,7 +1761,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * @return a new RubyArray
    */
   public RubyArray<E> union(List<? extends E> other) {
-    RubyArray<E> rubyArray = newRubyArray(list, true);
+    RubyArray<E> rubyArray = RubyArray.copyOf(list);
     rubyArray.addAll(other);
     rubyArray.uniqǃ();
     return rubyArray;

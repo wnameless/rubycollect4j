@@ -20,11 +20,11 @@
  */
 package net.sf.rubycollect4j;
 
-import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
@@ -73,7 +73,6 @@ public class RubyArrayTest {
       }
 
     };
-
   }
 
   @Test
@@ -82,6 +81,32 @@ public class RubyArrayTest {
     assertTrue(ra instanceof List);
     assertTrue(ra instanceof Comparable);
     assertTrue(ra instanceof Serializable);
+  }
+
+  @Test
+  public void testStaticFactoryMethodOf() {
+    List<Integer> list = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
+    RubyArray<Integer> ints = RubyArray.of(list);
+    list.remove(0);
+    assertEquals(list, ints);
+  }
+
+  @Test(expected = NullPointerException.class)
+  public void testStaticFactoryMethodOfException() {
+    RubyArray.of(null);
+  }
+
+  @Test
+  public void testStaticFactoryMethodCopyOf() {
+    List<Integer> list = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
+    RubyArray<Integer> ints = RubyArray.copyOf(list);
+    list.remove(0);
+    assertNotEquals(list, ints);
+  }
+
+  @Test(expected = NullPointerException.class)
+  public void testStaticFactoryMethodCopyOfException() {
+    RubyArray.copyOf(null);
   }
 
   @Test
@@ -1439,7 +1464,7 @@ public class RubyArrayTest {
   @Test
   public void testSize() {
     List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
-    ra = newRubyArray(ints, true);
+    ra = RubyArray.copyOf(ints);
     assertEquals(ints.size(), ra.size());
     ints.clear();
     ra.clear();
@@ -1449,7 +1474,7 @@ public class RubyArrayTest {
   @Test
   public void testIsEmpty() {
     List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
-    ra = newRubyArray(ints, true);
+    ra = RubyArray.copyOf(ints);
     assertEquals(ints.isEmpty(), ra.isEmpty());
     ints.clear();
     ra.clear();
@@ -1459,35 +1484,35 @@ public class RubyArrayTest {
   @Test
   public void testContains() {
     List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
-    ra = newRubyArray(ints, true);
+    ra = RubyArray.copyOf(ints);
     assertEquals(ints.contains(1), ra.contains(1));
   }
 
   @Test
   public void testIterator() {
     List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
-    ra = newRubyArray(ints, true);
+    ra = RubyArray.copyOf(ints);
     assertEquals(ra(ints.iterator()), ra(ra.iterator()));
   }
 
   @Test
   public void testToArray() {
     List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
-    ra = newRubyArray(ints, true);
+    ra = RubyArray.copyOf(ints);
     assertArrayEquals(ints.toArray(), ra.toArray());
   }
 
   @Test
   public void testToArrayWithArgument() {
     List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
-    ra = newRubyArray(ints, true);
+    ra = RubyArray.copyOf(ints);
     assertArrayEquals(ints.toArray(new Integer[4]), ra.toArray(new Integer[4]));
   }
 
   @Test
   public void testAdd() {
     List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
-    ra = newRubyArray(ints, true);
+    ra = RubyArray.copyOf(ints);
     ints.add(5);
     ra.add(5);
     assertEquals(ints, ra);
@@ -1496,7 +1521,7 @@ public class RubyArrayTest {
   @Test
   public void testRemove() {
     List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
-    ra = newRubyArray(ints, true);
+    ra = RubyArray.copyOf(ints);
     ints.remove(Integer.valueOf(4));
     ra.remove(Integer.valueOf(4));
     assertEquals(ints, ra);
@@ -1505,7 +1530,7 @@ public class RubyArrayTest {
   @Test
   public void testContainsAll() {
     List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
-    ra = newRubyArray(ints, true);
+    ra = RubyArray.copyOf(ints);
     List<Integer> one = Collections.singletonList(1);
     assertEquals(ints.containsAll(one), ra.containsAll(one));
   }
@@ -1513,7 +1538,7 @@ public class RubyArrayTest {
   @Test
   public void testAddAll() {
     List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
-    ra = newRubyArray(ints, true);
+    ra = RubyArray.copyOf(ints);
     List<Integer> one = Collections.singletonList(1);
     ints.addAll(one);
     ra.addAll(one);
@@ -1523,7 +1548,7 @@ public class RubyArrayTest {
   @Test
   public void testAddAllWithIndex() {
     List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
-    ra = newRubyArray(ints, true);
+    ra = RubyArray.copyOf(ints);
     List<Integer> one = Collections.singletonList(1);
     ints.addAll(0, one);
     ra.addAll(0, one);
@@ -1533,7 +1558,7 @@ public class RubyArrayTest {
   @Test
   public void testRemoveAll() {
     List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
-    ra = newRubyArray(ints, true);
+    ra = RubyArray.copyOf(ints);
     List<Integer> one = Collections.singletonList(1);
     ints.removeAll(one);
     ra.removeAll(one);
@@ -1543,7 +1568,7 @@ public class RubyArrayTest {
   @Test
   public void testRetainAll() {
     List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
-    ra = newRubyArray(ints, true);
+    ra = RubyArray.copyOf(ints);
     List<Integer> one = Collections.singletonList(1);
     ints.retainAll(one);
     ra.retainAll(one);
@@ -1553,7 +1578,7 @@ public class RubyArrayTest {
   @Test
   public void testClear() {
     List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
-    ra = newRubyArray(ints, true);
+    ra = RubyArray.copyOf(ints);
     ints.clear();
     ra.clear();
     assertEquals(ints, ra);
@@ -1562,14 +1587,14 @@ public class RubyArrayTest {
   @Test
   public void testGet() {
     List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
-    ra = newRubyArray(ints, true);
+    ra = RubyArray.copyOf(ints);
     assertEquals(ints.get(1), ra.get(1));
   }
 
   @Test
   public void testSet() {
     List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
-    ra = newRubyArray(ints, true);
+    ra = RubyArray.copyOf(ints);
     ints.set(0, 0);
     ra.set(0, 0);
     assertEquals(ints, ra);
@@ -1578,7 +1603,7 @@ public class RubyArrayTest {
   @Test
   public void testAddWithIndex() {
     List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
-    ra = newRubyArray(ints, true);
+    ra = RubyArray.copyOf(ints);
     ints.add(0, 0);
     ra.add(0, 0);
     assertEquals(ints, ra);
@@ -1587,7 +1612,7 @@ public class RubyArrayTest {
   @Test
   public void testRemoveWithIndex() {
     List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
-    ra = newRubyArray(ints, true);
+    ra = RubyArray.copyOf(ints);
     ints.remove(0);
     ra.remove(0);
     assertEquals(ints, ra);
@@ -1596,42 +1621,42 @@ public class RubyArrayTest {
   @Test
   public void testIndexOf() {
     List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
-    ra = newRubyArray(ints, true);
+    ra = RubyArray.copyOf(ints);
     assertEquals(ints.indexOf(1), ra.indexOf(1));
   }
 
   @Test
   public void testLastIndexOf() {
     List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
-    ra = newRubyArray(ints, true);
+    ra = RubyArray.copyOf(ints);
     assertEquals(ints.lastIndexOf(1), ra.lastIndexOf(1));
   }
 
   @Test
   public void testListIterator() {
     List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
-    ra = newRubyArray(ints, true);
+    ra = RubyArray.copyOf(ints);
     assertEquals(ra(ints.listIterator()), ra(ra.listIterator()));
   }
 
   @Test
   public void testListIteratorWithIndex() {
     List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
-    ra = newRubyArray(ints, true);
+    ra = RubyArray.copyOf(ints);
     assertEquals(ra(ints.listIterator(1)), ra(ra.listIterator(1)));
   }
 
   @Test
   public void testSubList() {
     List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
-    ra = newRubyArray(ints, true);
+    ra = RubyArray.copyOf(ints);
     assertEquals(ints.subList(0, 2), ra.subList(0, 2));
   }
 
   @Test
   public void testEquals() {
     List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
-    ra = newRubyArray(ints, true);
+    ra = RubyArray.copyOf(ints);
     assertEquals(ints.equals(Arrays.asList(1, 2, 3, 4)),
         ra.equals(Arrays.asList(1, 2, 3, 4)));
   }
@@ -1639,14 +1664,14 @@ public class RubyArrayTest {
   @Test
   public void testHashCode() {
     List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
-    ra = newRubyArray(ints, true);
+    ra = RubyArray.copyOf(ints);
     assertEquals(ints.hashCode(), ra.hashCode());
   }
 
   @Test
   public void testToString() {
     List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
-    ra = newRubyArray(ints, true);
+    ra = RubyArray.copyOf(ints);
     assertEquals(ints.toString(), ra.toString());
   }
 
