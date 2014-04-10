@@ -109,15 +109,6 @@ public class RubyArrayTest {
     RubyArray.copyOf(null);
   }
 
-  @Test(expected = UnsupportedOperationException.class)
-  public void testGetIterable() {
-    Iterable<Integer> iter = ra.getIterable();
-    if (iter instanceof List) {
-      List<Integer> list = (List<Integer>) iter;
-      list.remove(0);
-    }
-  }
-
   @Test
   public void testConstructor() {
     assertTrue(ra instanceof RubyArray);
