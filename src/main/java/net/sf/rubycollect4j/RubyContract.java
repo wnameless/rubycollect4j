@@ -1192,7 +1192,7 @@ public final class RubyContract {
      *          to yield zipped elements
      */
     public void zip(List<? extends Iterable<? extends E>> others,
-        Block<RubyArray<E>> block);
+        Block<? super RubyArray<E>> block);
   }
 
   /**

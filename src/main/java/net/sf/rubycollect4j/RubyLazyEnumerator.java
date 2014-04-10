@@ -943,7 +943,7 @@ public final class RubyLazyEnumerator<E> implements
 
   @Override
   public void zip(List<? extends Iterable<? extends E>> others,
-      Block<RubyArray<E>> block) {
+      Block<? super RubyArray<E>> block) {
     RubyLazyEnumerator<RubyArray<E>> rubyArrays = zip(others);
     for (RubyArray<E> item : rubyArrays) {
       block.yield(item);

@@ -683,7 +683,7 @@ public abstract class RubyEnumerable<E> implements
 
   @Override
   public void zip(List<? extends Iterable<? extends E>> others,
-      Block<RubyArray<E>> block) {
+      Block<? super RubyArray<E>> block) {
     newRubyLazyEnumerator(getIterable()).zip(others, block);
   }
 
