@@ -50,7 +50,7 @@ public final class Unpacker {
       throw new IllegalArgumentException("Invalid template string");
 
     RubyArray<Object> objs = newRubyArray();
-    RubyArray<String> chars = rs(str).chars();
+    RubyArray<String> chars = rs(str).toA();
     RubyArray<Byte> bytes = rs(str).bytes();
 
     for (String template : Packer.parseTemplate(format)) {
@@ -67,14 +67,14 @@ public final class Unpacker {
         unpack = d.pack(bytes.shift(count));
         objs.add(unpack);
 
-        chars = rs(byteList2Str(bytes)).chars();
+        chars = rs(byteList2Str(bytes)).toA();
         break;
 
       case A:
         unpack = d.pack(bytes.shift(count));
         objs.add(unpack.replaceFirst("[\\s\0]+$", ""));
 
-        chars = rs(byteList2Str(bytes)).chars();
+        chars = rs(byteList2Str(bytes)).toA();
         break;
 
       case Z:
@@ -93,7 +93,7 @@ public final class Unpacker {
         else
           objs.add(unpack);
 
-        chars = rs(byteList2Str(bytes)).chars();
+        chars = rs(byteList2Str(bytes)).toA();
         break;
 
       case U:
@@ -117,7 +117,7 @@ public final class Unpacker {
           count--;
         }
 
-        chars = rs(byteList2Str(bytes)).chars();
+        chars = rs(byteList2Str(bytes)).toA();
         break;
 
       case B:
@@ -155,7 +155,7 @@ public final class Unpacker {
           count--;
         }
 
-        chars = rs(byteList2Str(bytes)).chars();
+        chars = rs(byteList2Str(bytes)).toA();
         break;
 
       case l:
@@ -177,7 +177,7 @@ public final class Unpacker {
           count--;
         }
 
-        chars = rs(byteList2Str(bytes)).chars();
+        chars = rs(byteList2Str(bytes)).toA();
         break;
 
       case q:
@@ -199,7 +199,7 @@ public final class Unpacker {
           count--;
         }
 
-        chars = rs(byteList2Str(bytes)).chars();
+        chars = rs(byteList2Str(bytes)).toA();
         break;
 
       }

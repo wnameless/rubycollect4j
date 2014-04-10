@@ -152,10 +152,10 @@ public class RubyStringTest {
     assertEquals("12312312311231231231", rs().center(20, "123").toS());
   }
 
-  @Test
-  public void testChars() {
-    assertEquals(ra("a", "b", "c"), rs.chars());
-  }
+  // @Test
+  // public void testChars() {
+  // assertEquals(ra("a", "b", "c"), rs.toA());
+  // }
 
   @Test
   public void testChomp() {
@@ -761,7 +761,7 @@ public class RubyStringTest {
   public void testMatch() {
     Matcher matcher = rs.match("[a-z]");
     assertTrue(matcher instanceof Matcher);
-    RubyArray<String> chars = rs.chars();
+    RubyArray<String> chars = rs.toA();
     while (matcher.find()) {
       assertEquals(chars.shift(), matcher.group());
     }
@@ -777,7 +777,7 @@ public class RubyStringTest {
   public void testMatchWithPosition() {
     Matcher matcher = rs.match("[a-z]", 1);
     assertTrue(matcher instanceof Matcher);
-    RubyArray<String> chars = rs.chars();
+    RubyArray<String> chars = rs.toA();
     chars.shift(1);
     while (matcher.find()) {
       assertEquals(chars.shift(), matcher.group());

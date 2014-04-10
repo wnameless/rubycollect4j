@@ -226,3 +226,5 @@ Version 1.7.2
 + Added static factory methods #of, #copyOf to RubyArray and RubyHash
 
 * Deprecated RubyCollections#newRubyArray(List, boolean) and  RubyCollections#newRubyHash(LinkedHashMap, boolean)
+
+- Removed RubyString#chars to solve the API conflict with Java 8 CharSequence

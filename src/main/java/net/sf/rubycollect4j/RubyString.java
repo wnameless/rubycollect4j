@@ -264,7 +264,7 @@ public final class RubyString extends RubyEnumerable<String> implements
           centeredStr.add(padStr.next());
           continue;
         }
-        centeredStr = centeredStr.plus(chars());
+        centeredStr = centeredStr.plus(toA());
         i += str.length() - 1;
       } else {
         centeredStr.add(padStr.next());
@@ -273,14 +273,14 @@ public final class RubyString extends RubyEnumerable<String> implements
     return rs(centeredStr.join());
   }
 
-  /**
-   * Returns a RubyArray of characters in str.
-   * 
-   * @return a RubyArray
-   */
-  public RubyArray<String> chars() {
-    return toA();
-  }
+  // /**
+  // * Returns a RubyArray of characters in str.
+  // *
+  // * @return a RubyArray
+  // */
+  // public RubyArray<String> chars() {
+  // return toA();
+  // }
 
   /**
    * Returns a new RubyString with the line separator removed from the end of
@@ -512,7 +512,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   public RubyString delete(final String charSet) {
     stringify(charSet);
 
-    return rs(chars().deleteIf((new BooleanBlock<String>() {
+    return rs(toA().deleteIf((new BooleanBlock<String>() {
 
       @Override
       public boolean yield(String item) {
@@ -564,7 +564,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * @return a new RubyString
    */
   public RubyString dump() {
-    String printable = chars().map(new TransformBlock<String, String>() {
+    String printable = toA().map(new TransformBlock<String, String>() {
 
       @Override
       public String yield(String item) {
@@ -1059,7 +1059,7 @@ public final class RubyString extends RubyEnumerable<String> implements
       throw new IndexOutOfBoundsException("IndexError: index " + index
           + " out of string");
 
-    str = chars().insert(index, stringify(otherStr)).join();
+    str = toA().insert(index, stringify(otherStr)).join();
     return this;
   }
 
@@ -1070,7 +1070,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * @return a new RubyString
    */
   public RubyString inspect() {
-    String printable = chars().map(new TransformBlock<String, String>() {
+    String printable = toA().map(new TransformBlock<String, String>() {
 
       @Override
       public String yield(String item) {
@@ -1723,7 +1723,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * @return a new RubyString or null
    */
   public RubyString slice(int index) {
-    String slicedStr = chars().slice(index);
+    String slicedStr = toA().slice(index);
     return slicedStr == null ? null : rs(slicedStr);
   }
 
@@ -1737,7 +1737,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * @return a new RubyString or null
    */
   public RubyString slice(int index, int length) {
-    RubyArray<String> slicedStr = chars().slice(index, length);
+    RubyArray<String> slicedStr = toA().slice(index, length);
     return slicedStr == null ? null : rs(slicedStr.join());
   }
 
@@ -1798,7 +1798,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * @return a new RubyString or null
    */
   public RubyString sliceǃ(int index) {
-    RubyArray<String> chars = chars();
+    RubyArray<String> chars = toA();
     String slicedStr = chars.sliceǃ(index);
     if (slicedStr == null)
       return null;
@@ -1817,7 +1817,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * @return a new RubyString or null
    */
   public RubyString sliceǃ(int index, int length) {
-    RubyArray<String> chars = chars();
+    RubyArray<String> chars = toA();
     RubyArray<String> slicedStr = chars.sliceǃ(index, length);
     if (slicedStr == null)
       return null;
@@ -2297,11 +2297,11 @@ public final class RubyString extends RubyEnumerable<String> implements
     toStr = charSet2Str(stringify(toStr));
     if (fromStr.startsWith("^")) {
       return rs(str.replaceAll("[" + fromStr + "]",
-          toStr.isEmpty() ? "" : rs(toStr).chars().last()));
+          toStr.isEmpty() ? "" : rs(toStr).toA().last()));
     } else {
       RubyArray<String> fromStrAry =
-          rs(fromStr.replace("\\^", "^").replace("\\-", "-")).chars();
-      RubyArray<String> toStrAry = rs(toStr).chars();
+          rs(fromStr.replace("\\^", "^").replace("\\-", "-")).toA();
+      RubyArray<String> toStrAry = rs(toStr).toA();
       if (toStrAry.isEmpty())
         toStrAry.fill("", 0, fromStrAry.length());
       else if (toStrAry.length() < fromStrAry.length())
