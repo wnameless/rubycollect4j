@@ -105,6 +105,7 @@ public abstract class RubyEnumerable<E> implements
         }));
   }
 
+  @Override
   public RubyEnumerator<E> collect() {
     return newRubyEnumerator(getIterable());
   }

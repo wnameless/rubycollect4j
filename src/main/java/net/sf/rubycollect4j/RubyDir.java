@@ -280,6 +280,7 @@ public final class RubyDir extends RubyEnumerable<String> {
    * 
    * @return a RubyEnumerator
    */
+  @Override
   public RubyEnumerator<String> each() {
     return eachEntry();
   }

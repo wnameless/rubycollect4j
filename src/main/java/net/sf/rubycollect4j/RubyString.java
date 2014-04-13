@@ -981,6 +981,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @return true if str contains the given string, false otherwise
    */
+  @Override
   public boolean includeʔ(String otherStr) {
     return str.contains(stringify(otherStr));
   }
