@@ -81,17 +81,21 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Returns a RubyArray which copies the elements of given List.
+   * Returns a RubyArray which copies the elements of given Iterable.
    * 
    * @param list
-   *          any List
+   *          any Iterable
    * @return a RubyArray
    */
-  public static <E> RubyArray<E> copyOf(List<E> list) {
-    if (list == null)
+  public static <E> RubyArray<E> copyOf(Iterable<E> elements) {
+    if (elements == null)
       throw new NullPointerException();
 
-    return new RubyArray<E>(new ArrayList<E>(list));
+    List<E> list = new ArrayList<E>();
+    for (E e : elements) {
+      list.add(e);
+    }
+    return new RubyArray<E>(list);
   }
 
   @Override
