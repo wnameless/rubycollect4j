@@ -83,7 +83,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   /**
    * Returns a RubyArray which copies the elements of given Iterable.
    * 
-   * @param list
+   * @param elements
    *          any Iterable
    * @return a RubyArray
    */
