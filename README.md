@@ -14,7 +14,7 @@ Installation with Maven:
 <dependency>
   <groupId>net.sf.rubycollect4j</groupId>
   <artifactId>rubycollect4j</artifactId>
-  <version>1.7.2</version>
+  <version>1.7.3</version>
 </dependency>
 ```
 
@@ -23,11 +23,9 @@ Java 8 with rubycollect4j:
 // Sorts the characters by its frequency based on the word 'Mississippi' case-insensitively.
 RubyString word = rs("Mississippi"); // Equivalent to newRubyString("Mississippi")
 
-String result = word.map((c) -> {
-  return c.toLowerCase();
-}).sortBy((c) -> {
-  return word.count(c);
-}).uniq().join();
+String result = word.map(String::toLowerCase).sortBy((c) -> {
+      return word.count(c);
+    }).uniq().join();
 
 p(result);
 // Output: "mpis"
@@ -108,20 +106,12 @@ Demo rs() & newRubyString():
 ```java
 // RubyString can be created from any Object.
 p( newRubyString(1000L).count("0") )                   // Output: 3
-// RubyString is also an RubyEnumerable(Iterable) of each character(String).
+// RubyString is also a RubyEnumerable of each character(as String).
 p( rs("abc").map("codePointAt", 0) );                  // Output: [97, 98, 99]
 // RubyString implements fluent interface.
 // After multiple actions, you can turn it to a Java String by calling toS().
 p( rs("ABC").chop().capitalize().concat("001").toS() ) // Output: Ab001
 
-```
-
-```java
-// By default, rh() makes a copy of input Map.
-// You can only wrap a LinkedHashMap up by following codes, because the keys of RubyHash need to be ordered.
-LinkedHashMap<Integer, String> map = new LinkedHashMap<Integer, String>();
-map.put(1, "a");
-RubyHash<Integer, String> rh = newRubyHash(map, false);
 ```
 
 Demo abstract RubyEnumerable class:
