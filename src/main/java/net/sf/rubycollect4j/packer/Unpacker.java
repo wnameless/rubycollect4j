@@ -26,6 +26,7 @@ import static net.sf.rubycollect4j.RubyCollections.rs;
 import java.util.List;
 
 import net.sf.rubycollect4j.RubyArray;
+import net.sf.rubycollect4j.RubyString;
 
 /**
  * 
@@ -121,23 +122,64 @@ public final class Unpacker {
         break;
 
       case B:
-        String strMSB = ByteUtil.toBinaryString(str.getBytes(), true);
-        objs.add(rs(strMSB).take(count).join());
-        break;
-
       case b:
-        String strLSB = ByteUtil.toBinaryString(str.getBytes(), false);
-        objs.add(rs(strLSB).take(count).join());
+        if (chars.noneʔ()) {
+          objs.add("");
+          break;
+        }
+
+        RubyString strMorLSB =
+            rs(ByteUtil.toBinaryString(new byte[] { bytes.shift() },
+                d == Directive.B));
+
+        RubyArray<String> unpackedMorLSB = newRubyArray();
+        while (count > 0) {
+          if (strMorLSB.anyʔ()) {
+            unpackedMorLSB.add(strMorLSB.sliceǃ(0).toS());
+            count--;
+          } else if (bytes.anyʔ()) {
+            strMorLSB =
+                rs(ByteUtil.toBinaryString(new byte[] { bytes.shift() },
+                    d == Directive.B));
+            unpackedMorLSB.add(strMorLSB.sliceǃ(0).toS());
+            count--;
+          } else {
+            break;
+          }
+        }
+        objs.add(unpackedMorLSB.join());
+
+        chars = rs(byteList2Str(bytes)).toA();
         break;
 
       case H:
-        String strHNF = ByteUtil.toHexString(str.getBytes(), true);
-        objs.add(rs(strHNF).take(count).join());
-        break;
-
       case h:
-        String strLNF = ByteUtil.toHexString(str.getBytes(), false);
-        objs.add(rs(strLNF).take(count).join());
+        if (chars.noneʔ()) {
+          objs.add("");
+          break;
+        }
+
+        RubyString strHorLNF =
+            rs(ByteUtil.toHexString(chars.shift().getBytes(), d == Directive.H));
+
+        RubyArray<String> unpackedHorLNF = newRubyArray();
+        while (count > 0) {
+          if (strHorLNF.anyʔ()) {
+            unpackedHorLNF.add(strHorLNF.sliceǃ(0).toS());
+            count--;
+          } else if (chars.anyʔ()) {
+            strHorLNF =
+                rs(ByteUtil.toHexString(chars.shift().getBytes(),
+                    d == Directive.H));
+            unpackedHorLNF.add(strHorLNF.sliceǃ(0).toS());
+            count--;
+          } else {
+            break;
+          }
+        }
+        objs.add(unpackedHorLNF.join());
+
+        bytes = rs(chars.join()).bytes();
         break;
 
       case s:
