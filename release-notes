@@ -235,3 +235,5 @@ Version 1.7.2
 Version 1.7.3
 
 * Fixed RubyString#unpack Directive H,h,B,b bugs
+
+* Modified RubyKernel#p behavior toward primitive arrays

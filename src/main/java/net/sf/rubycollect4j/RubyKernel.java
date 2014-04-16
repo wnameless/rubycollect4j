@@ -23,6 +23,8 @@ package net.sf.rubycollect4j;
 import static java.lang.System.out;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 
+import java.util.Arrays;
+
 /**
  * 
  * RubyKernel mimics the useful Ruby p method by wrapping the Java
@@ -288,6 +290,90 @@ public final class RubyKernel {
       rubyArray.add(x);
     }
     return rubyArray;
+  }
+
+  /**
+   * Calls System.out.println() and returns arguments.
+   * 
+   * @param x
+   *          an array of byte
+   * @return an array of byte
+   */
+  public static byte[] p(byte[] x) {
+    out.println(Arrays.toString(x));
+    return x;
+  }
+
+  /**
+   * Calls System.out.println() and returns arguments.
+   * 
+   * @param x
+   *          an array of short
+   * @return an array of short
+   */
+  public static short[] p(short[] x) {
+    out.println(Arrays.toString(x));
+    return x;
+  }
+
+  /**
+   * Calls System.out.println() and returns arguments.
+   * 
+   * @param x
+   *          an array of int
+   * @return an array of int
+   */
+  public static int[] p(int[] x) {
+    out.println(Arrays.toString(x));
+    return x;
+  }
+
+  /**
+   * Calls System.out.println() and returns arguments.
+   * 
+   * @param x
+   *          an array of long
+   * @return an array of long
+   */
+  public static long[] p(long[] x) {
+    out.println(Arrays.toString(x));
+    return x;
+  }
+
+  /**
+   * Calls System.out.println() and returns arguments.
+   * 
+   * @param x
+   *          an array of float
+   * @return an array of float
+   */
+  public static float[] p(float[] x) {
+    out.println(Arrays.toString(x));
+    return x;
+  }
+
+  /**
+   * Calls System.out.println() and returns arguments.
+   * 
+   * @param x
+   *          an array of double
+   * @return an array of double
+   */
+  public static double[] p(double[] x) {
+    out.println(Arrays.toString(x));
+    return x;
+  }
+
+  /**
+   * Calls System.out.println() and returns arguments.
+   * 
+   * @param x
+   *          an array of boolean
+   * @return an array of boolean
+   */
+  public static boolean[] p(boolean[] x) {
+    out.println(Arrays.toString(x));
+    return x;
   }
 
 }
