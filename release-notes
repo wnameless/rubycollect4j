@@ -217,9 +217,11 @@ Version 1.7.0
 
 + Added Serializable to RubyArray, RubyHash, RubyRange & RubyString
 
+
 Version 1.7.1
 
 * Used bounded wildcards to increased API flexibility
+
 
 Version 1.7.2
 
@@ -228,3 +230,8 @@ Version 1.7.2
 * Deprecated RubyCollections#newRubyArray(List, boolean) and  RubyCollections#newRubyHash(LinkedHashMap, boolean)
 
 - Removed RubyString#chars to solve the API conflict with Java 8 CharSequence
+
+
+Version 1.7.3
+
+* Fixed RubyString#unpack Directive H,h,B,b bugs
