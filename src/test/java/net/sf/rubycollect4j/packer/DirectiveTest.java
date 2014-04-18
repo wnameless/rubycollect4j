@@ -94,11 +94,11 @@ public class DirectiveTest {
     assertEquals("ABC", Directive.a.pack(ABC));
     assertEquals("ABC", Directive.Z.pack(ABC));
 
-    assertEquals("我", Directive.B.pack("我".getBytes()));
-    assertEquals("g�", Directive.b.pack("我".getBytes()));
+    assertEquals("\346\210\221", Directive.B.pack("我".getBytes()));
+    assertEquals("\147\21\211", Directive.b.pack("我".getBytes()));
 
-    assertEquals("我", Directive.H.pack("我".getBytes()));
-    assertEquals("n�", Directive.h.pack("我".getBytes()));
+    assertEquals("\346\210\221", Directive.H.pack("我".getBytes()));
+    assertEquals("\156\210\31", Directive.h.pack("我".getBytes()));
   }
 
   @Test

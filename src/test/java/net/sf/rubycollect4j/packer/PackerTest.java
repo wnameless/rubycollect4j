@@ -91,7 +91,7 @@ public class PackerTest {
 
   @Test
   public void testPackWith_B() {
-    assertEquals("abc我",
+    assertEquals("abc\346\210\221",
         Packer.pack("B*", "011000010110001001100011111001101000100010010001"));
     assertEquals("\200", Packer.pack("B*", "!!!"));
     assertEquals("b", Packer.pack("B*", "0110001"));
@@ -99,21 +99,21 @@ public class PackerTest {
 
   @Test
   public void testPackWith_b() {
-    assertEquals("abc我",
+    assertEquals("abc\346\210\221",
         Packer.pack("b*", "100001100100011011000110011001110001000110001001"));
     assertEquals("F", Packer.pack("b*", "0110001"));
   }
 
   @Test
   public void testPackWith_H() {
-    assertEquals("abc我", Packer.pack("H*", "616263e68891"));
+    assertEquals("abc\346\210\221", Packer.pack("H*", "616263e68891"));
     assertEquals("\200", Packer.pack("H*", "!!!"));
     assertEquals("`", Packer.pack("H*", "6"));
   }
 
   @Test
   public void testPackWith_h() {
-    assertEquals("abc我", Packer.pack("h*", "1626366e8819"));
+    assertEquals("abc\346\210\221", Packer.pack("h*", "1626366e8819"));
     assertEquals("\1", Packer.pack("h*", "1"));
   }
 

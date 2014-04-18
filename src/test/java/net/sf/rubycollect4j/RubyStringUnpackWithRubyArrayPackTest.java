@@ -149,7 +149,7 @@ public class RubyStringUnpackWithRubyArrayPackTest {
   public void testDirective_B() {
     assertEquals(ra("011000010110001001100011111001101000100010010001"),
         rs("abc我").unpack("B*"));
-    assertEquals("abc我", rs("abc我").unpack("B*").pack("B*"));
+    assertEquals("abc\346\210\221", rs("abc我").unpack("B*").pack("B*"));
     assertEquals(ra("01", "011", "0110", "11100", "100010", "1001000", ""),
         rs("abc我").unpack("B2B3B4B5B6B7B*"));
   }
@@ -158,7 +158,7 @@ public class RubyStringUnpackWithRubyArrayPackTest {
   public void testDirective_b() {
     assertEquals(ra("100001100100011011000110011001110001000110001001"),
         rs("abc我").unpack("b*"));
-    assertEquals(rs("abc我"), rs(rs("abc我").unpack("b*").pack("b*")));
+    assertEquals("abc\346\210\221", rs("abc我").unpack("b*").pack("b*"));
     assertEquals(ra("10", "010", "1100", "01100", "000100", "1000100", ""),
         rs("abc我").unpack("b2b3b4b5b6b7b*"));
   }
@@ -166,14 +166,14 @@ public class RubyStringUnpackWithRubyArrayPackTest {
   @Test
   public void testDirective_H() {
     assertEquals(ra("616263e68891"), rs("abc我").unpack("H*"));
-    assertEquals("abc我", rs("abc我").unpack("H*").pack("H*"));
+    assertEquals("abc\346\210\221", rs("abc我").unpack("H*").pack("H*"));
     assertEquals(ra("46", "45", ""), rs("FE").unpack("H2H3H*"));
   }
 
   @Test
   public void testDirective_h() {
     assertEquals(ra("1626366e8819"), rs("abc我").unpack("h*"));
-    assertEquals("abc我", rs("abc我").unpack("h*").pack("h*"));
+    assertEquals("abc\346\210\221", rs("abc我").unpack("h*").pack("h*"));
     assertEquals(ra("64", "54", ""), rs("FE").unpack("h2h3h*"));
   }
 

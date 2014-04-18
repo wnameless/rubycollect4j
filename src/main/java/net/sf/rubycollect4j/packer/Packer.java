@@ -96,8 +96,9 @@ public final class Packer {
           suffixZero = suffixZero == 0 ? 0 : 8 - suffixZero;
           if (suffixZero != 0)
             binaryStr.concat(ra("0").multiply(suffixZero).join());
-          sb.append(d.pack(new BigInteger(binaryStr.toS(), 2).toByteArray())
-              .replaceAll("^\0+", ""));
+          sb.append(d.pack(ByteUtil.rjust(
+              new BigInteger(binaryStr.toS(), 2).toByteArray(),
+              binaryStr.length() / 8)));
         }
         break;
 
@@ -111,8 +112,9 @@ public final class Packer {
           int suffixZero = hexStr.size() % 2;
           if (suffixZero != 0)
             hexStr.concat("0");
-          sb.append(d.pack(new BigInteger(hexStr.toS(), 16).toByteArray())
-              .replaceAll("^\0+", ""));
+          sb.append(d.pack(ByteUtil.rjust(
+              new BigInteger(hexStr.toS(), 16).toByteArray(),
+              hexStr.length() / 2)));
         }
         break;
 

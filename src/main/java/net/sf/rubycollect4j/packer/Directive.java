@@ -30,6 +30,7 @@ import static net.sf.rubycollect4j.RubyCollections.ra;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -285,7 +286,7 @@ public enum Directive {
     case Z:
       return new String(bytes);
     case B:
-      return new String(bytes);
+      return new String(bytes, Charset.forName("ISO-8859-1"));
     case b:
       byte[] msb = new byte[bytes.length];
       for (int i = 0; i < msb.length; i++) {
@@ -293,9 +294,9 @@ public enum Directive {
             (byte) Integer.parseInt(
                 ByteUtil.toBinaryString(new byte[] { bytes[i] }, false), 2);
       }
-      return new String(msb);
+      return new String(msb, Charset.forName("ISO-8859-1"));
     case H:
-      return new String(bytes);
+      return new String(bytes, Charset.forName("ISO-8859-1"));
     case h:
       byte[] lnf = new byte[bytes.length];
       for (int i = 0; i < lnf.length; i++) {
@@ -303,7 +304,7 @@ public enum Directive {
             (byte) Integer.parseInt(
                 ByteUtil.toHexString(new byte[] { bytes[i] }, false), 16);
       }
-      return new String(lnf);
+      return new String(lnf, Charset.forName("ISO-8859-1"));
     }
   }
 

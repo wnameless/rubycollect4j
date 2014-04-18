@@ -21,8 +21,10 @@
 package net.sf.rubycollect4j.packer;
 
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
+import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.rs;
 
+import java.nio.ByteBuffer;
 import java.util.List;
 
 import net.sf.rubycollect4j.RubyArray;
@@ -106,15 +108,41 @@ public final class Unpacker {
         continue;
 
       case c:
+        if (chars.noneʔ()) {
+          objs.add(null);
+          break;
+        }
+
+        boolean isStar = count == Integer.MAX_VALUE;
+
+        RubyArray<Byte> strBytes;
+        if (chars.first().codePointAt(0) < 256) {
+          bytes.shift(chars.first().getBytes().length);
+          strBytes =
+              ra(ByteBuffer.allocate(2)
+                  .putShort((short) chars.shift().codePointAt(0)).array()[1]);
+        } else {
+          strBytes = bytes.shift(chars.shift().getBytes().length);
+        }
+
         while (count > 0) {
-          if (count == Integer.MAX_VALUE)
-            count = bytes.size();
-
-          if (bytes.anyʔ())
-            objs.add(d.unpack(bytes.shift(1)));
-          else
+          if (strBytes.anyʔ()) {
+            objs.add(strBytes.shift());
+          } else if (bytes.anyʔ()) {
+            if (chars.first().codePointAt(0) < 256) {
+              bytes.shift(chars.first().getBytes().length);
+              strBytes =
+                  ra(ByteBuffer.allocate(2)
+                      .putShort((short) chars.shift().codePointAt(0)).array()[1]);
+            } else {
+              strBytes = bytes.shift(chars.shift().getBytes().length);
+            }
+            objs.add(strBytes.shift());
+          } else if (!isStar) {
             objs.add(null);
-
+          } else {
+            break;
+          }
           count--;
         }
 
@@ -128,9 +156,22 @@ public final class Unpacker {
           break;
         }
 
-        RubyString strMorLSB =
-            rs(ByteUtil.toBinaryString(new byte[] { bytes.shift() },
-                d == Directive.B));
+        int charByteNum = chars.first().getBytes().length;
+        RubyString strMorLSB;
+        if (chars.first().codePointAt(0) < 256) {
+          charByteNum = 1;
+          bytes.shift(chars.first().getBytes().length);
+          strMorLSB =
+              rs(
+                  ByteUtil.toBinaryString(
+                      ByteBuffer.allocate(2)
+                          .putShort((short) chars.first().codePointAt(0))
+                          .array(), d == Directive.B)).slice(8, 8);
+        } else {
+          strMorLSB =
+              rs(ByteUtil.toBinaryString(new byte[] { bytes.shift() },
+                  d == Directive.B));
+        }
 
         RubyArray<String> unpackedMorLSB = newRubyArray();
         while (count > 0) {
@@ -138,9 +179,28 @@ public final class Unpacker {
             unpackedMorLSB.add(strMorLSB.sliceǃ(0).toS());
             count--;
           } else if (bytes.anyʔ()) {
-            strMorLSB =
-                rs(ByteUtil.toBinaryString(new byte[] { bytes.shift() },
-                    d == Directive.B));
+            charByteNum--;
+            if (charByteNum == 0) {
+              chars.shift();
+              if (chars.first().codePointAt(0) < 256)
+                charByteNum = 1;
+              else
+                charByteNum = chars.first().getBytes().length;
+            }
+
+            if (charByteNum == 1 && chars.first().codePointAt(0) < 256) {
+              bytes.shift(chars.first().getBytes().length);
+              strMorLSB =
+                  rs(
+                      ByteUtil.toBinaryString(
+                          ByteBuffer.allocate(2)
+                              .putShort((short) chars.first().codePointAt(0))
+                              .array(), d == Directive.B)).slice(8, 8);
+            } else {
+              strMorLSB =
+                  rs(ByteUtil.toBinaryString(new byte[] { bytes.shift() },
+                      d == Directive.B));
+            }
             unpackedMorLSB.add(strMorLSB.sliceǃ(0).toS());
             count--;
           } else {
@@ -159,8 +219,19 @@ public final class Unpacker {
           break;
         }
 
-        RubyString strHorLNF =
-            rs(ByteUtil.toHexString(chars.shift().getBytes(), d == Directive.H));
+        RubyString strHorLNF;
+        if (chars.first().codePointAt(0) < 256) {
+          strHorLNF =
+              rs(
+                  ByteUtil.toHexString(
+                      ByteBuffer.allocate(2)
+                          .putShort((short) chars.shift().codePointAt(0))
+                          .array(), d == Directive.H)).slice(2, 2);
+        } else {
+          strHorLNF =
+              rs(ByteUtil.toHexString(chars.shift().getBytes(),
+                  d == Directive.H));
+        }
 
         RubyArray<String> unpackedHorLNF = newRubyArray();
         while (count > 0) {
@@ -168,9 +239,18 @@ public final class Unpacker {
             unpackedHorLNF.add(strHorLNF.sliceǃ(0).toS());
             count--;
           } else if (chars.anyʔ()) {
-            strHorLNF =
-                rs(ByteUtil.toHexString(chars.shift().getBytes(),
-                    d == Directive.H));
+            if (chars.first().codePointAt(0) < 256) {
+              strHorLNF =
+                  rs(
+                      ByteUtil.toHexString(
+                          ByteBuffer.allocate(2)
+                              .putShort((short) chars.shift().codePointAt(0))
+                              .array(), d == Directive.H)).slice(2, 2);
+            } else {
+              strHorLNF =
+                  rs(ByteUtil.toHexString(chars.shift().getBytes(),
+                      d == Directive.H));
+            }
             unpackedHorLNF.add(strHorLNF.sliceǃ(0).toS());
             count--;
           } else {

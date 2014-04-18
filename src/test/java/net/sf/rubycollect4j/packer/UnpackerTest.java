@@ -106,14 +106,25 @@ public class UnpackerTest {
   public void testUnpackWith_B() {
     assertEquals(ra("01100001"), Unpacker.unpack("B*", "a"));
     assertEquals(ra("0110"), Unpacker.unpack("B4", "a"));
-    assertEquals(ra("01100001"), Unpacker.unpack("B100", "a"));
+    assertEquals(
+        ra("11111111011000010110001001100011111001101000100010010001", ""),
+        Unpacker.unpack("B100B", "\377abc我"));
+    assertEquals(
+        ra("11100110100010001001000111111111011000010110001001100011", ""),
+        Unpacker.unpack("B100B", "我\377abc"));
   }
 
   @Test
   public void testUnpackWith_b() {
     assertEquals(ra("10000110"), Unpacker.unpack("b*", "a"));
     assertEquals(ra("1000"), Unpacker.unpack("b4", "a"));
-    assertEquals(ra("10000110"), Unpacker.unpack("b100", "a"));
+    assertEquals(ra("10000110", ""), Unpacker.unpack("b100b", "a"));
+    assertEquals(
+        ra("11111111100001100100011011000110011001110001000110001001", ""),
+        Unpacker.unpack("b100b", "\377abc我"));
+    assertEquals(
+        ra("01100111000100011000100111111111100001100100011011000110", ""),
+        Unpacker.unpack("b100b", "我\377abc"));
   }
 
   @Test
@@ -121,7 +132,8 @@ public class UnpackerTest {
     assertEquals(ra("616263"), Unpacker.unpack("H*", "abc"));
     assertEquals(ra("6"), Unpacker.unpack("H1", "abc"));
     assertEquals(ra("6162"), Unpacker.unpack("H4", "abc"));
-    assertEquals(ra("616263"), Unpacker.unpack("H100", "abc"));
+    assertEquals(ra("ff616263e68891", ""), Unpacker.unpack("H100H", "\377abc我"));
+    assertEquals(ra("e68891ff616263", ""), Unpacker.unpack("H100H", "我\377abc"));
   }
 
   @Test
@@ -129,7 +141,8 @@ public class UnpackerTest {
     assertEquals(ra("162636"), Unpacker.unpack("h*", "abc"));
     assertEquals(ra("1"), Unpacker.unpack("h1", "abc"));
     assertEquals(ra("1626"), Unpacker.unpack("h4", "abc"));
-    assertEquals(ra("162636"), Unpacker.unpack("h100", "abc"));
+    assertEquals(ra("ff1626366e8819", ""), Unpacker.unpack("h100h", "\377abc我"));
+    assertEquals(ra("6e8819ff162636", ""), Unpacker.unpack("h100h", "我\377abc"));
   }
 
 }

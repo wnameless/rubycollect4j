@@ -27,6 +27,11 @@ import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -45,6 +50,43 @@ public final class ByteUtil {
       .getName());
 
   private ByteUtil() {};
+
+  public static List<Byte> toList(byte[] bytes) {
+    List<Byte> list = new ArrayList<Byte>();
+    for (byte b : bytes) {
+      list.add(b);
+    }
+    return list;
+  }
+
+  public static byte[] toArray(Collection<Byte> bytes) {
+    byte[] array = new byte[bytes.size()];
+    Iterator<Byte> iter = bytes.iterator();
+    for (int i = 0; i < bytes.size(); i++) {
+      array[i] = iter.next();
+    }
+    return array;
+  }
+
+  public static byte[] ljust(byte[] bytes, int width) {
+    if (bytes.length >= width) {
+      return Arrays.copyOf(bytes, width);
+    } else {
+      byte[] ljustied = new byte[width];
+      System.arraycopy(bytes, 0, ljustied, 0, bytes.length);
+      return ljustied;
+    }
+  }
+
+  public static byte[] rjust(byte[] bytes, int width) {
+    if (bytes.length >= width) {
+      return Arrays.copyOfRange(bytes, bytes.length - width, bytes.length);
+    } else {
+      byte[] rjustied = new byte[width];
+      System.arraycopy(bytes, 0, rjustied, width - bytes.length, bytes.length);
+      return rjustied;
+    }
+  }
 
   /**
    * Converts a byte into a byte array.
