@@ -21,6 +21,7 @@
 package net.sf.rubycollect4j.packer;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
+import static net.sf.rubycollect4j.RubyCollections.rs;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -89,8 +90,7 @@ public class UnpackerTest {
 
   @Test
   public void testUnpackWith_s() {
-    assertEquals(ra((short) -16701, (short) -16445),
-        Unpacker.unpack("ss", "\376\377"));
+    assertEquals(ra((short) -2, null), Unpacker.unpack("ss", "\376\377"));
     assertEquals(ra((short) 25185, null), Unpacker.unpack("ss", "abc"));
     assertEquals(ra((short) 25185, (short) 25699),
         Unpacker.unpack("s*", "abcde"));
@@ -98,15 +98,14 @@ public class UnpackerTest {
 
   @Test
   public void testUnpackWith_l() {
-    assertEquals(ra(-1077690685), Unpacker.unpack("l", "\376\377"));
+    assertEquals(ra((Integer) null), Unpacker.unpack("l", "\376\377"));
     assertEquals(ra(1684234849, null), Unpacker.unpack("ll", "abcde"));
     assertEquals(ra(1684234849, 1751606885), Unpacker.unpack("l*", "abcdefghi"));
   }
 
   @Test
   public void testUnpackWith_q() {
-    assertEquals(ra(-4628646244061561149L),
-        Unpacker.unpack("q", "\376\377\376\377"));
+    assertEquals(ra((Long) null), Unpacker.unpack("q", "\376\377\376\377"));
     assertEquals(ra(7523094288207667809L, null),
         Unpacker.unpack("qq", "abcdefghi"));
     assertEquals(ra(7523094288207667809L, 8101815670912281193L),
@@ -154,6 +153,23 @@ public class UnpackerTest {
     assertEquals(ra("1626"), Unpacker.unpack("h4", "abc"));
     assertEquals(ra("ff1626366e8819", ""), Unpacker.unpack("h100h", "\377abc我"));
     assertEquals(ra("6e8819ff162636", ""), Unpacker.unpack("h100h", "我\377abc"));
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testDirective_c_b() {
+    assertEquals(ra((byte) -1, (byte) -26, "0001000110001001"), rs("\377我")
+        .unpack("c2b*"));
+    assertEquals(ra("01", (byte) -120, (byte) -111, (byte) -1), rs("我\377")
+        .unpack("b2c*"));
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testDirective_c_h() {
+    assertEquals(ra((byte) -1, (byte) -26, "8819"), rs("\377我").unpack("c2h*"));
+    assertEquals(ra("6e", (byte) -120, (byte) -111, (byte) -1), rs("我\377")
+        .unpack("h2c*"));
   }
 
 }
