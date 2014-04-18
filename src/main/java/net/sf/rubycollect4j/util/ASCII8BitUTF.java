@@ -144,7 +144,7 @@ public final class ASCII8BitUTF {
   /**
    * Returns next character.
    * 
-   * @return
+   * @return a character as String
    * @throws IllegalStateException
    *           if no more character is left
    */
