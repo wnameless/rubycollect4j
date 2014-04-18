@@ -51,8 +51,6 @@ public final class Unpacker {
 
     ASCII8BitUTF a8u = new ASCII8BitUTF(str);
     RubyArray<Object> objs = newRubyArray();
-    // RubyArray<String> chars = rs(str).toA();
-    // RubyArray<Byte> bytes = rs(str).bytes();
 
     for (String template : Packer.parseTemplate(format)) {
       Directive d = Packer.parseDirective(template);
@@ -182,9 +180,9 @@ public final class Unpacker {
       case sl:
         while (count > 0) {
           if (count == Integer.MAX_VALUE)
-            count = a8u.remainByteNum() / 2;
+            count = a8u.remainingByteNumber() / 2;
 
-          if (a8u.remainByteNum() >= 2)
+          if (a8u.remainingByteNumber() >= 2)
             objs.add(d.unpack(a8u.nextByte(2)));
           else
             objs.add(null);
@@ -202,9 +200,9 @@ public final class Unpacker {
       case g:
         while (count > 0) {
           if (count == Integer.MAX_VALUE)
-            count = a8u.remainByteNum() / 4;
+            count = a8u.remainingByteNumber() / 4;
 
-          if (a8u.remainByteNum() >= 4)
+          if (a8u.remainingByteNumber() >= 4)
             objs.add(d.unpack(a8u.nextByte(4)));
           else
             objs.add(null);
@@ -222,9 +220,9 @@ public final class Unpacker {
       case G:
         while (count > 0) {
           if (count == Integer.MAX_VALUE)
-            count = a8u.remainByteNum() / 8;
+            count = a8u.remainingByteNumber() / 8;
 
-          if (a8u.remainByteNum() >= 8)
+          if (a8u.remainingByteNumber() >= 8)
             objs.add(d.unpack(a8u.nextByte(8)));
           else
             objs.add(null);

@@ -28,51 +28,59 @@ import java.nio.ByteBuffer;
 import java.util.List;
 
 import net.sf.rubycollect4j.RubyArray;
+import net.sf.rubycollect4j.RubyString;
 
+/**
+ * 
+ * {@link ASCII8BitUTF} traverse a String byte by byte. It uses ACII8Bit to
+ * encode String characters which have codepoints between 0-255 into single byte
+ * and remains other String characters as UTF8 encoding.<br>
+ * <br>
+ * It is designed for {@link RubyString#unpack} to use.
+ *
+ */
 public final class ASCII8BitUTF {
 
   private final String str;
-  private final int totalByteNum;
-  private int remainByteNum;
-  private RubyArray<String> chars;
+  private final RubyArray<String> chars = newRubyArray();
+  private final RubyArray<Byte> currentBytes = newRubyArray();
+  private final int totalByteNumber;
+  private int remainingByteNumber;
   private String currentChar;
-  private RubyArray<Byte> currentBytes = newRubyArray();
 
+  /**
+   * Returns a {@link ASCII8BitUTF}.
+   * 
+   * @param str
+   *          any String
+   */
   public ASCII8BitUTF(String str) {
+    if (str == null)
+      throw new NullPointerException();
+
     this.str = str;
-    chars = rs(str).toA();
+    chars.replace(rs(str).toA());
+    totalByteNumber = remainingByteNumber = countByteNumber();
+    reset();
+  }
+
+  private int countByteNumber() {
     advanceChar();
     int total = 0;
     while (hasByte()) {
       nextByte();
       total++;
     }
-    totalByteNum = total;
-    remainByteNum = totalByteNum;
-    reset();
+    return total;
   }
 
-  public int totalByteNum() {
-    return totalByteNum;
-  }
-
-  public int remainByteNum() {
-    return remainByteNum;
-  }
-
-  public void reset() {
-    chars = rs(str).toA();
-    remainByteNum = totalByteNum;
-    advanceChar();
-  }
-
-  public void advanceChar() {
+  private void advanceChar() {
     currentChar = chars.shift();
     for (@SuppressWarnings("unused")
     Byte b : currentBytes) {
-      remainByteNum--;
+      remainingByteNumber--;
     }
-    currentBytes = ch2Bytes(currentChar);
+    currentBytes.replace(ch2Bytes(currentChar));
   }
 
   private RubyArray<Byte> ch2Bytes(String ch) {
@@ -87,21 +95,65 @@ public final class ASCII8BitUTF {
       return ra(ByteUtil.toList(ch.getBytes()));
   }
 
+  /**
+   * Returns the total number of bytes.
+   * 
+   * @return the total number of bytes
+   */
+  public int totalByteNumber() {
+    return totalByteNumber;
+  }
+
+  /**
+   * Returns the remaining number of bytes.
+   * 
+   * @return the remaining number of bytes
+   */
+  public int remainingByteNumber() {
+    return remainingByteNumber;
+  }
+
+  /**
+   * Resets this {@link ASCII8BitUTF}.
+   */
+  public void reset() {
+    chars.replace(rs(str).toA());
+    advanceChar();
+    remainingByteNumber = totalByteNumber;
+  }
+
+  /**
+   * Checks if there are remaining characters.
+   * 
+   * @return true if there are remaining characters, false otherwise
+   */
   public boolean hasChar() {
     return (currentChar != null && currentChar.getBytes().length == currentBytes
         .size()) || chars.anyʔ();
   }
 
+  /**
+   * Checks if there are remaining bytes.
+   * 
+   * @return true if there are remaining bytes, false otherwise
+   */
   public boolean hasByte() {
     return currentBytes.anyʔ() || hasChar();
   }
 
+  /**
+   * Returns next character.
+   * 
+   * @return
+   * @throws IllegalStateException
+   *           if no more character is left
+   */
   public String nextChar() {
     if (!hasChar())
-      throw new IllegalStateException();
+      throw new IllegalStateException("No more character");
 
     String ch;
-    if (currentChar.getBytes().length == currentBytes.size()) {
+    if (ch2Bytes(currentChar).size() == currentBytes.size()) {
       ch = currentChar;
       advanceChar();
     } else {
@@ -112,25 +164,58 @@ public final class ASCII8BitUTF {
     return ch;
   }
 
-  public List<Byte> nextByte(int n) {
+  /**
+   * Returns next byte.
+   * 
+   * @return a byte
+   * @throws IllegalStateException
+   *           if no more byte is left
+   */
+  public byte nextByte() {
+    if (currentBytes.anyʔ()) {
+      remainingByteNumber--;
+      return currentBytes.shift();
+    } else if (hasChar()) {
+      advanceChar();
+      remainingByteNumber--;
+      return currentBytes.shift();
+    }
+    throw new IllegalStateException("No more byte");
+  }
+
+  /**
+   * Returns next n as maximum bytes .
+   * 
+   * @param n
+   *          maximum number of bytes
+   * @return a byte array
+   */
+  public byte[] nextByte(int n) {
     List<Byte> bytes = newRubyArray();
     while (n > 0 && hasByte()) {
       bytes.add(nextByte());
       n--;
     }
-    return bytes;
+    return ByteUtil.toArray(bytes);
   }
 
-  public byte nextByte() {
-    if (currentBytes.anyʔ()) {
-      remainByteNum--;
-      return currentBytes.shift();
-    } else if (hasChar()) {
-      advanceChar();
-      remainByteNum--;
-      return currentBytes.shift();
+  @Override
+  public boolean equals(Object o) {
+    if (o instanceof ASCII8BitUTF) {
+      ASCII8BitUTF a8u = (ASCII8BitUTF) o;
+      return str.equals(a8u.str);
     }
-    throw new IllegalStateException();
+    return false;
+  }
+
+  @Override
+  public int hashCode() {
+    return str.hashCode();
+  }
+
+  @Override
+  public String toString() {
+    return getClass().getSimpleName() + "{" + str + "}";
   }
 
 }
