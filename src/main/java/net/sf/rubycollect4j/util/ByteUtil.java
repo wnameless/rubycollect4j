@@ -18,7 +18,7 @@
  * the License.
  *
  */
-package net.sf.rubycollect4j.packer;
+package net.sf.rubycollect4j.util;
 
 import static java.nio.ByteOrder.LITTLE_ENDIAN;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
@@ -51,6 +51,13 @@ public final class ByteUtil {
 
   private ByteUtil() {};
 
+  /**
+   * Converts a byte array to a List of Byte.
+   * 
+   * @param bytes
+   *          a byte array
+   * @return a List of Byte
+   */
   public static List<Byte> toList(byte[] bytes) {
     List<Byte> list = new ArrayList<Byte>();
     for (byte b : bytes) {
@@ -59,6 +66,13 @@ public final class ByteUtil {
     return list;
   }
 
+  /**
+   * Converts a Collection of Byte to a byte array.
+   * 
+   * @param bytes
+   *          a Collection of Byte
+   * @return a byte array
+   */
   public static byte[] toArray(Collection<Byte> bytes) {
     byte[] array = new byte[bytes.size()];
     Iterator<Byte> iter = bytes.iterator();
@@ -68,6 +82,15 @@ public final class ByteUtil {
     return array;
   }
 
+  /**
+   * Modifies the length of a byte array by padding zero bytes to the right.
+   * 
+   * @param bytes
+   *          a byte array
+   * @param width
+   *          of the new byte array
+   * @return a new byte array
+   */
   public static byte[] ljust(byte[] bytes, int width) {
     if (bytes.length >= width) {
       return Arrays.copyOf(bytes, width);
@@ -78,6 +101,15 @@ public final class ByteUtil {
     }
   }
 
+  /**
+   * Modifies the length of a byte array by padding zero bytes to the left.
+   * 
+   * @param bytes
+   *          a byte array
+   * @param width
+   *          of the new byte array
+   * @return a new byte array
+   */
   public static byte[] rjust(byte[] bytes, int width) {
     if (bytes.length >= width) {
       return Arrays.copyOfRange(bytes, bytes.length - width, bytes.length);

@@ -243,3 +243,6 @@ Version 1.7.3
 Version 1.7.4
 
 * Changed Directive H,h,B,b to use ASCII-8bit encoding
+
+* Moved ByteUtil to net.sf.rubycollect4j.util package
+

@@ -18,8 +18,9 @@
  * the License.
  *
  */
-package net.sf.rubycollect4j.packer;
+package net.sf.rubycollect4j.util;
 
+import static net.sf.rubycollect4j.RubyCollections.ra;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -29,6 +30,7 @@ import java.lang.reflect.Modifier;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.TypeConstraintException;
 
@@ -42,6 +44,40 @@ public class ByteUtilTest {
     assertTrue(Modifier.isPrivate(c.getModifiers()));
     c.setAccessible(true);
     c.newInstance();
+  }
+
+  @Test
+  public void testToList() {
+    List<Byte> bytes =
+        ByteUtil.toList(new byte[] { (byte) 0x00, (byte) 0x01, (byte) 0x02 });
+    assertEquals(ra((byte) 0x00, (byte) 0x01, (byte) 0x02), bytes);
+  }
+
+  @Test
+  public void testToArray() {
+    List<Byte> bytes = ra((byte) 0x00, (byte) 0x01, (byte) 0x02);
+    assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x01, (byte) 0x02 },
+        ByteUtil.toArray(bytes));
+  }
+
+  @Test
+  public void testLjust() {
+    byte[] bytes =
+        new byte[] { (byte) 0x00, (byte) 0x01, (byte) 0x02, (byte) 0x03 };
+    assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x01, (byte) 0x02 },
+        ByteUtil.ljust(bytes, 3));
+    assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x01, (byte) 0x02,
+        (byte) 0x03, (byte) 0x00 }, ByteUtil.ljust(bytes, 5));
+  }
+
+  @Test
+  public void testRjust() {
+    byte[] bytes =
+        new byte[] { (byte) 0x00, (byte) 0x01, (byte) 0x02, (byte) 0x03 };
+    assertArrayEquals(new byte[] { (byte) 0x01, (byte) 0x02, (byte) 0x03 },
+        ByteUtil.rjust(bytes, 3));
+    assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x00, (byte) 0x01,
+        (byte) 0x02, (byte) 0x03 }, ByteUtil.rjust(bytes, 5));
   }
 
   @Test

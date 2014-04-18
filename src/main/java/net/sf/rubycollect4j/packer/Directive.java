@@ -36,6 +36,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.sf.rubycollect4j.block.TransformBlock;
+import net.sf.rubycollect4j.util.ByteUtil;
 
 /**
  * 
@@ -202,6 +203,13 @@ public enum Directive {
     return widthAdjustable;
   }
 
+  /**
+   * Packs a List of Byte into a binary String.
+   * 
+   * @param bytes
+   *          a List of Byte
+   * @return a binary String represented in hex or ASCII format
+   */
   public String pack(List<Byte> bytes) {
     byte[] byteAry = new byte[bytes.size()];
     for (int i = 0; i < bytes.size(); i++) {
@@ -211,10 +219,10 @@ public enum Directive {
   }
 
   /**
-   * Packs array of byte into a binary String.
+   * Packs an array of byte into a binary String.
    * 
    * @param bytes
-   *          array of byte
+   *          an array of byte
    * @return a binary String represented in hex or ASCII format
    */
   public String pack(byte[] bytes) {
@@ -309,11 +317,11 @@ public enum Directive {
   }
 
   /**
-   * Adaptor for #unpack(byte[] bytes).
+   * Unpacks a List of Byte into an Object.
    * 
    * @param bytes
-   *          a list of byte
-   * @return a String
+   *          a List of Byte
+   * @return an Object
    */
   public Object unpack(List<Byte> bytes) {
     byte[] byteAry = new byte[bytes.size()];
@@ -324,11 +332,11 @@ public enum Directive {
   }
 
   /**
-   * Unpacks array of byte into a String.
+   * Unpacks an array of byte into an Object.
    * 
    * @param bytes
-   *          array of byte
-   * @return a String
+   *          an array of byte
+   * @return an Object
    */
   public Object unpack(byte[] bytes) {
     switch (this) {
@@ -397,10 +405,9 @@ public enum Directive {
    *          any Object
    * @return a cast Object
    */
-  @SuppressWarnings("incomplete-switch")
   public Object cast(Object o) {
     switch (this) {
-    case c:
+    default: // c
       if (o instanceof Number)
         return ((Number) o).byteValue();
       if (o instanceof Boolean)

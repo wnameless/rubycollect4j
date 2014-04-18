@@ -42,7 +42,7 @@ public class PackerTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testPackWithInvalidDirective() {
-    Packer.pack("c1", new ArrayList<Object>());
+    Packer.pack("X1", new ArrayList<Object>());
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -93,7 +93,7 @@ public class PackerTest {
   public void testPackWith_B() {
     assertEquals("abc\346\210\221",
         Packer.pack("B*", "011000010110001001100011111001101000100010010001"));
-    assertEquals("\200", Packer.pack("B*", "!!!"));
+    assertEquals("", Packer.pack("B*", "!!!"));
     assertEquals("b", Packer.pack("B*", "0110001"));
   }
 
@@ -107,7 +107,7 @@ public class PackerTest {
   @Test
   public void testPackWith_H() {
     assertEquals("abc\346\210\221", Packer.pack("H*", "616263e68891"));
-    assertEquals("\200", Packer.pack("H*", "!!!"));
+    assertEquals("", Packer.pack("H*", "!!!"));
     assertEquals("`", Packer.pack("H*", "6"));
   }
 

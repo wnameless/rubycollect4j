@@ -61,6 +61,12 @@ public class UnpackerTest {
     assertEquals(ra((byte) 97, null, null, null), Unpacker.unpack("c4", "a"));
     assertEquals(ra((byte) 97, (byte) 98, (byte) 99),
         Unpacker.unpack("c*", "abc"));
+    assertEquals(
+        ra((byte) -1, (byte) 97, (byte) 98, (byte) 99, (byte) -26, (byte) -120,
+            (byte) -111, null), Unpacker.unpack("c*c", "\377abc我"));
+    assertEquals(
+        ra((byte) -26, (byte) -120, (byte) -111, (byte) -1, (byte) 97,
+            (byte) 98, (byte) 99, null), Unpacker.unpack("c*c", "我\377abc"));
   }
 
   @Test

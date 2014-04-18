@@ -29,6 +29,7 @@ import java.util.List;
 
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.RubyString;
+import net.sf.rubycollect4j.util.ByteUtil;
 
 /**
  * 

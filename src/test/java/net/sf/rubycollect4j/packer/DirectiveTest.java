@@ -25,6 +25,7 @@ import static java.nio.ByteOrder.nativeOrder;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import net.sf.rubycollect4j.util.ByteUtil;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -58,6 +59,12 @@ public class DirectiveTest {
   public void testIsWidthAdjustable() {
     assertFalse(Directive.c.isWidthAdjustable());
     assertTrue(Directive.a.isWidthAdjustable());
+  }
+
+  @Test
+  public void testPackWithList() {
+    assertEquals(IS_BIG_ENDIAN ? "C" : "A",
+        Directive.c.pack(ByteUtil.toList(ABC)));
   }
 
   @Test
@@ -99,6 +106,11 @@ public class DirectiveTest {
 
     assertEquals("\346\210\221", Directive.H.pack("我".getBytes()));
     assertEquals("\156\210\31", Directive.h.pack("我".getBytes()));
+  }
+
+  @Test
+  public void testUnpackWithList() {
+    assertEquals((byte) 65, Directive.a.unpack(ByteUtil.toList(ABCDEFGH)));
   }
 
   @Test

@@ -177,4 +177,10 @@ public class RubyStringUnpackWithRubyArrayPackTest {
     assertEquals(ra("64", "54", ""), rs("FE").unpack("h2h3h*"));
   }
 
+  @Test
+  public void testDirective_H_c() {
+    assertEquals(ra((byte) 0x00, (byte) 0xff, (byte) 0xa0),
+        rs(ra("00FFa0").pack("H*")).unpack("c*"));
+  }
+
 }

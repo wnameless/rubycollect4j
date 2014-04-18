@@ -31,6 +31,7 @@ import java.util.List;
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.RubyString;
 import net.sf.rubycollect4j.block.TransformBlock;
+import net.sf.rubycollect4j.util.ByteUtil;
 
 /**
  * 
@@ -90,7 +91,7 @@ public final class Packer {
       case b:
         RubyString binaryStr = rs(items.shift().toString()).slice(qr("^[01]+"));
         if (binaryStr == null) {
-          sb.append('\200');
+          sb.append("");
         } else {
           int suffixZero = binaryStr.size() % 8;
           suffixZero = suffixZero == 0 ? 0 : 8 - suffixZero;
@@ -107,7 +108,7 @@ public final class Packer {
         RubyString hexStr =
             rs(items.shift().toString()).slice(qr("^[0-9A-Fa-f]+"));
         if (hexStr == null) {
-          sb.append('\200');
+          sb.append("");
         } else {
           int suffixZero = hexStr.size() % 2;
           if (suffixZero != 0)
