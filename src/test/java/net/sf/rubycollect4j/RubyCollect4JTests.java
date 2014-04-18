@@ -85,6 +85,7 @@ import net.sf.rubycollect4j.succ.DoubleSuccessorTest;
 import net.sf.rubycollect4j.succ.IntegerSuccessorTest;
 import net.sf.rubycollect4j.succ.LongSuccessorTest;
 import net.sf.rubycollect4j.succ.StringSuccessorTest;
+import net.sf.rubycollect4j.util.ASCII8BitUTFTest;
 import net.sf.rubycollect4j.util.ByteUtilTest;
 import net.sf.rubycollect4j.util.ComparableEntryTest;
 import net.sf.rubycollect4j.util.LinkedIdentityMapTest;
@@ -132,11 +133,11 @@ import org.junit.runners.Suite.SuiteClasses;
     StepIteratorTest.class, TakeIterableTest.class, TakeIteratorTest.class,
     TakeWhileIterableTest.class, TakeWhileIteratorTest.class,
     TransformIterableTest.class, TransformIteratorTest.class,
-    ZipIterableTest.class, ZipIteratorTest.class, ByteUtilTest.class,
-    DirectiveTest.class, PackerTest.class, UnpackerTest.class,
-    CharacterSuccessorTest.class, DateSuccessorTest.class,
-    DoubleSuccessorTest.class, IntegerSuccessorTest.class,
-    LongSuccessorTest.class, StringSuccessorTest.class,
+    ZipIterableTest.class, ZipIteratorTest.class, DirectiveTest.class,
+    PackerTest.class, UnpackerTest.class, CharacterSuccessorTest.class,
+    DateSuccessorTest.class, DoubleSuccessorTest.class,
+    IntegerSuccessorTest.class, LongSuccessorTest.class,
+    StringSuccessorTest.class, ASCII8BitUTFTest.class, ByteUtilTest.class,
     ComparableEntryTest.class, LinkedIdentityMap_EntrySetTest.class,
     LinkedIdentityMap_IdentityEntryTest.class,
     LinkedIdentityMap_KeySetTest.class, LinkedIdentityMap_ValuesTest.class,
