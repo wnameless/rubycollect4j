@@ -146,13 +146,15 @@ public final class Unpacker {
           }
           count--;
         }
+        if (strBytes.anyʔ())
+          bytes.addAll(strBytes);
 
         chars = rs(byteList2Str(bytes)).toA();
         break;
 
       case B:
       case b:
-        if (chars.noneʔ()) {
+        if (bytes.noneʔ()) {
           objs.add("");
           break;
         }
@@ -215,22 +217,25 @@ public final class Unpacker {
 
       case H:
       case h:
-        if (chars.noneʔ()) {
+        if (bytes.noneʔ()) {
           objs.add("");
           break;
         }
 
+        charByteNum = chars.first().getBytes().length;
         RubyString strHorLNF;
         if (chars.first().codePointAt(0) < 256) {
+          charByteNum = 1;
+          bytes.shift(chars.first().getBytes().length);
           strHorLNF =
               rs(
                   ByteUtil.toHexString(
                       ByteBuffer.allocate(2)
-                          .putShort((short) chars.shift().codePointAt(0))
+                          .putShort((short) chars.first().codePointAt(0))
                           .array(), d == Directive.H)).slice(2, 2);
         } else {
           strHorLNF =
-              rs(ByteUtil.toHexString(chars.shift().getBytes(),
+              rs(ByteUtil.toHexString(new byte[] { bytes.shift() },
                   d == Directive.H));
         }
 
@@ -239,17 +244,27 @@ public final class Unpacker {
           if (strHorLNF.anyʔ()) {
             unpackedHorLNF.add(strHorLNF.sliceǃ(0).toS());
             count--;
-          } else if (chars.anyʔ()) {
-            if (chars.first().codePointAt(0) < 256) {
+          } else if (bytes.anyʔ()) {
+            charByteNum--;
+            if (charByteNum == 0) {
+              chars.shift();
+              if (chars.first().codePointAt(0) < 256)
+                charByteNum = 1;
+              else
+                charByteNum = chars.first().getBytes().length;
+            }
+
+            if (charByteNum == 1 && chars.first().codePointAt(0) < 256) {
+              bytes.shift(chars.first().getBytes().length);
               strHorLNF =
                   rs(
                       ByteUtil.toHexString(
                           ByteBuffer.allocate(2)
-                              .putShort((short) chars.shift().codePointAt(0))
+                              .putShort((short) chars.first().codePointAt(0))
                               .array(), d == Directive.H)).slice(2, 2);
             } else {
               strHorLNF =
-                  rs(ByteUtil.toHexString(chars.shift().getBytes(),
+                  rs(ByteUtil.toHexString(new byte[] { bytes.shift() },
                       d == Directive.H));
             }
             unpackedHorLNF.add(strHorLNF.sliceǃ(0).toS());
@@ -260,7 +275,7 @@ public final class Unpacker {
         }
         objs.add(unpackedHorLNF.join());
 
-        bytes = rs(chars.join()).bytes();
+        chars = rs(byteList2Str(bytes)).toA();
         break;
 
       case s:
