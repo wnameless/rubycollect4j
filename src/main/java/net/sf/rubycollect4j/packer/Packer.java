@@ -73,6 +73,9 @@ public final class Packer {
 
     StringBuilder sb = new StringBuilder();
     List<String> templateList = parseTemplate(aTemplateString);
+    if (templateList.size() > objs.size())
+      throw new IllegalArgumentException("ArgumentError: too few arguments");
+
     RubyArray<?> items = RubyArray.copyOf(objs);
     for (String template : templateList) {
       Directive d = parseDirective(template);
@@ -114,11 +117,7 @@ public final class Packer {
         break;
 
       default:
-        if (template.length() == 0) {
-          if (items.noneʔ())
-            throw new IllegalArgumentException(
-                "ArgumentError: too few arguments");
-
+        if (template.isEmpty()) {
           sb.append(d.pack(ByteUtil.toByteArray(d.cast(items.shift()))));
         } else if (d == Directive.Z && template.charAt(0) == '*') {
           sb.append(d.pack(ByteUtil.toByteArray(d.cast(items.shift()))));
@@ -144,10 +143,6 @@ public final class Packer {
               }
             }
           } else {
-            if (count > objs.size())
-              throw new IllegalArgumentException(
-                  "ArgumentError: too few arguments");
-
             while (count > 0) {
               sb.append(d.pack(ByteUtil.toByteArray(d.cast(items.shift()))));
               count--;
