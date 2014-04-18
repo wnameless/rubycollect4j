@@ -45,6 +45,11 @@ public class UnpackerTest {
   }
 
   @Test
+  public void testUnpackWithEmptyString() {
+    assertEquals(ra(), Unpacker.unpack("c*", ""));
+  }
+
+  @Test
   public void testUnpackWith_a() {
     assertEquals(ra("abc", " \0\0"), Unpacker.unpack("a3a3", "abc \0\0"));
   }

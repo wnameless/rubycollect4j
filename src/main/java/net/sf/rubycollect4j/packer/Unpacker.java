@@ -109,12 +109,12 @@ public final class Unpacker {
         continue;
 
       case c:
+        boolean isInfinite = count == Integer.MAX_VALUE;
         if (chars.noneʔ()) {
-          objs.add(null);
+          if (!isInfinite)
+            objs.add(null);
           break;
         }
-
-        boolean isStar = count == Integer.MAX_VALUE;
 
         RubyArray<Byte> strBytes;
         if (chars.first().codePointAt(0) < 256) {
@@ -139,7 +139,7 @@ public final class Unpacker {
               strBytes = bytes.shift(chars.shift().getBytes().length);
             }
             objs.add(strBytes.shift());
-          } else if (!isStar) {
+          } else if (!isInfinite) {
             objs.add(null);
           } else {
             break;

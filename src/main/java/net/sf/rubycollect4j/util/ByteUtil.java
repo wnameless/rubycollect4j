@@ -67,17 +67,17 @@ public final class ByteUtil {
   }
 
   /**
-   * Converts a Collection of Byte to a byte array.
+   * Converts a Collection of Number to a byte array.
    * 
    * @param bytes
-   *          a Collection of Byte
+   *          a Collection of Number
    * @return a byte array
    */
-  public static byte[] toArray(Collection<Byte> bytes) {
+  public static byte[] toArray(Collection<? extends Number> bytes) {
     byte[] array = new byte[bytes.size()];
-    Iterator<Byte> iter = bytes.iterator();
+    Iterator<? extends Number> iter = bytes.iterator();
     for (int i = 0; i < bytes.size(); i++) {
-      array[i] = iter.next();
+      array[i] = iter.next().byteValue();
     }
     return array;
   }
