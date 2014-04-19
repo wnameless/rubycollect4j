@@ -22,8 +22,10 @@ package net.sf.rubycollect4j.util;
 
 import static java.nio.ByteOrder.LITTLE_ENDIAN;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
+import static net.sf.rubycollect4j.RubyCollections.ra;
 
 import java.lang.reflect.Method;
+import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.charset.Charset;
@@ -39,7 +41,7 @@ import net.sf.rubycollect4j.RubyArray;
 
 /**
  * 
- * ByteUtil provides functions to manipulate bytes or convert variety Objects
+ * ByteUtil provides functions to manipulate bytes or to convert variety Objects
  * into bytes.
  * 
  */
@@ -473,6 +475,45 @@ public final class ByteUtil {
         sb.append(new StringBuilder(hex).reverse());
     }
     return sb.toString();
+  }
+
+  /**
+   * Converts a binary string into byte array.
+   * 
+   * @param binaryStr
+   *          a binary string
+   * @return an array of byte
+   * @throws IllegalArgumentException
+   *           if binary string is invalid
+   */
+  public static byte[] fromBinaryString(String binaryStr) {
+    if (!binaryStr.matches("^[01]+$"))
+      throw new IllegalArgumentException("Invalid binary string");
+
+    int complementary = binaryStr.length() % 8;
+    if (complementary != 0)
+      binaryStr += ra("0").multiply(8 - complementary).join();
+    return rjust(new BigInteger(binaryStr, 2).toByteArray(),
+        binaryStr.length() / 8);
+  }
+
+  /**
+   * Converts a hexadecimal string into byte array.
+   * 
+   * @param hexStr
+   *          a hexadecimal string
+   * @return an array of byte
+   * @throws IllegalArgumentException
+   *           if hexadecimal string is invalid
+   */
+  public static byte[] fromHexString(String hexStr) {
+    if (!hexStr.matches("^[0-9A-Fa-f]+$"))
+      throw new IllegalArgumentException("Invalid hexadecimal string");
+
+    int complementary = hexStr.length() % 2;
+    if (complementary != 0)
+      hexStr += "0";
+    return rjust(new BigInteger(hexStr, 16).toByteArray(), hexStr.length() / 2);
   }
 
 }

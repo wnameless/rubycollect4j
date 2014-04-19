@@ -280,4 +280,30 @@ public class ByteUtilTest {
     assertEquals("6e8819", ByteUtil.toHexString("我".getBytes(), false));
   }
 
+  @Test
+  public void testFromBinaryString() {
+    assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0xFF },
+        ByteUtil.fromBinaryString("0000000011111111"));
+    assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0xFE },
+        ByteUtil.fromBinaryString("000000001111111"));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testFromBinaryStringException() {
+    ByteUtil.fromBinaryString("000000001X1111111");
+  }
+
+  @Test
+  public void testFromHexString() {
+    assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0xFF },
+        ByteUtil.fromHexString("00Ff"));
+    assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0xF0 },
+        ByteUtil.fromHexString("00F"));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testFromHexStringException() {
+    ByteUtil.fromHexString("00XF");
+  }
+
 }

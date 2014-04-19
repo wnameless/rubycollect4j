@@ -20,11 +20,12 @@
  */
 package net.sf.rubycollect4j.packer;
 
+import static java.nio.ByteOrder.nativeOrder;
 import static net.sf.rubycollect4j.RubyCollections.qr;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.rs;
+import static net.sf.rubycollect4j.util.ByteUtil.toByteArray;
 
-import java.math.BigInteger;
 import java.nio.ByteOrder;
 import java.util.Arrays;
 import java.util.List;
@@ -91,50 +92,38 @@ public final class Packer {
       case B:
       case b:
         RubyString binaryStr = rs(items.shift().toString()).slice(qr("^[01]+"));
-        if (binaryStr == null) {
+        if (binaryStr == null)
           sb.append("");
-        } else {
-          int suffixZero = binaryStr.size() % 8;
-          suffixZero = suffixZero == 0 ? 0 : 8 - suffixZero;
-          if (suffixZero != 0)
-            binaryStr.concat(ra("0").multiply(suffixZero).join());
-          sb.append(d.pack(ByteUtil.rjust(
-              new BigInteger(binaryStr.toS(), 2).toByteArray(),
-              binaryStr.length() / 8)));
-        }
+        else
+          sb.append(d.pack(ByteUtil.fromBinaryString(binaryStr.toS())));
+
         break;
 
       case H:
       case h:
         RubyString hexStr =
             rs(items.shift().toString()).slice(qr("^[0-9A-Fa-f]+"));
-        if (hexStr == null) {
+        if (hexStr == null)
           sb.append("");
-        } else {
-          int suffixZero = hexStr.size() % 2;
-          if (suffixZero != 0)
-            hexStr.concat("0");
-          sb.append(d.pack(ByteUtil.rjust(
-              new BigInteger(hexStr.toS(), 16).toByteArray(),
-              hexStr.length() / 2)));
-        }
+        else
+          sb.append(d.pack(ByteUtil.fromHexString(hexStr.toS())));
+
         break;
 
       default:
-        ByteOrder bo = ByteOrder.nativeOrder();
+        ByteOrder bo = nativeOrder();
         if (template.isEmpty()) {
-          sb.append(d.pack(ByteUtil.toByteArray(d.cast(items.shift()), bo)));
+          sb.append(d.pack(toByteArray(d.cast(items.shift()), bo)));
         } else if (d == Directive.Z && template.charAt(0) == '*') {
-          sb.append(d.pack(ByteUtil.toByteArray(d.cast(items.shift()), bo)));
+          sb.append(d.pack(toByteArray(d.cast(items.shift()), bo)));
           sb.append("\0");
         } else if (template.charAt(0) == '*') {
           while (items.anyʔ()) {
-            sb.append(d.pack(ByteUtil.toByteArray(d.cast(items.shift()), bo)));
+            sb.append(d.pack(toByteArray(d.cast(items.shift()), bo)));
           }
         } else {
           if (d.isWidthAdjustable()) {
-            String str =
-                d.pack(ByteUtil.toByteArray(d.cast(items.shift()), bo));
+            String str = d.pack(toByteArray(d.cast(items.shift()), bo));
             if (str.length() > count) {
               sb.append(str.substring(0, count));
             } else {
@@ -145,12 +134,13 @@ public final class Packer {
                   sb.append(" ");
                 else
                   sb.append("\0");
+
                 count--;
               }
             }
           } else {
             while (count > 0) {
-              sb.append(d.pack(ByteUtil.toByteArray(d.cast(items.shift()), bo)));
+              sb.append(d.pack(toByteArray(d.cast(items.shift()), bo)));
               count--;
             }
           }
