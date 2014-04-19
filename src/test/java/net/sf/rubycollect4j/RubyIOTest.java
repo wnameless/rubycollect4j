@@ -34,8 +34,8 @@ import org.junit.Test;
 
 public class RubyIOTest {
 
-  private static final String BASE_DIR = "src/test/resources/";
-  private RubyIO io;
+  static final String BASE_DIR = "src/test/resources/";
+  RubyIO io;
 
   @Test
   public void testConstructor() throws Exception {

@@ -33,9 +33,9 @@ import org.junit.Test;
 
 public class RejectIterableTest {
 
-  private RejectIterable<Integer> iter;
-  private List<Integer> list;
-  private BooleanBlock<Integer> block;
+  RejectIterable<Integer> iter;
+  List<Integer> list;
+  BooleanBlock<Integer> block;
 
   @Before
   public void setUp() throws Exception {

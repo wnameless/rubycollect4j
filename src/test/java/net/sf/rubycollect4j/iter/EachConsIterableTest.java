@@ -31,8 +31,8 @@ import org.junit.Test;
 
 public class EachConsIterableTest {
 
-  private EachConsIterable<Integer> iter;
-  private List<Integer> list;
+  EachConsIterable<Integer> iter;
+  List<Integer> list;
 
   @Before
   public void setUp() throws Exception {

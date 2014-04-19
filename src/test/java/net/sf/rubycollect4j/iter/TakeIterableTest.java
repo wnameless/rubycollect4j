@@ -31,8 +31,8 @@ import org.junit.Test;
 
 public class TakeIterableTest {
 
-  private TakeIterable<Integer> iter;
-  private List<Integer> list;
+  TakeIterable<Integer> iter;
+  List<Integer> list;
 
   @Before
   public void setUp() throws Exception {

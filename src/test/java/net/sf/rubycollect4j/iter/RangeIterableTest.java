@@ -29,7 +29,7 @@ import org.junit.Test;
 
 public class RangeIterableTest {
 
-  private RangeIterable<Integer> iter;
+  RangeIterable<Integer> iter;
 
   @Before
   public void setUp() throws Exception {

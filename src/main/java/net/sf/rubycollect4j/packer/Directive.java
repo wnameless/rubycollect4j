@@ -29,7 +29,6 @@ import static net.sf.rubycollect4j.RubyCollections.qr;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 
 import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
@@ -228,64 +227,64 @@ public enum Directive {
   public String pack(byte[] bytes) {
     switch (this) {
     default: // c
-      return ByteUtil.toASCIIs(bytes, 1);
+      return ByteUtil.toExtendedASCIIs(bytes, 1, nativeOrder());
     case s:
-      return ByteUtil.toASCIIs(bytes, 2, nativeOrder());
+      return ByteUtil.toExtendedASCIIs(bytes, 2, nativeOrder());
     case sb:
-      if (ByteOrder.nativeOrder() != BIG_ENDIAN)
-        reverseBytes(bytes);
-      return ByteUtil.toASCIIs(bytes, 2, BIG_ENDIAN);
+      if (nativeOrder() != BIG_ENDIAN)
+        ByteUtil.reverse(bytes);
+      return ByteUtil.toExtendedASCIIs(bytes, 2, BIG_ENDIAN);
     case sl:
-      if (ByteOrder.nativeOrder() != LITTLE_ENDIAN)
-        reverseBytes(bytes);
-      return ByteUtil.toASCIIs(bytes, 2, LITTLE_ENDIAN);
+      if (nativeOrder() != LITTLE_ENDIAN)
+        ByteUtil.reverse(bytes);
+      return ByteUtil.toExtendedASCIIs(bytes, 2, LITTLE_ENDIAN);
     case l:
-      return ByteUtil.toASCIIs(bytes, 4, nativeOrder());
+      return ByteUtil.toExtendedASCIIs(bytes, 4, nativeOrder());
     case lb:
-      if (ByteOrder.nativeOrder() != BIG_ENDIAN)
-        reverseBytes(bytes);
-      return ByteUtil.toASCIIs(bytes, 4, BIG_ENDIAN);
+      if (nativeOrder() != BIG_ENDIAN)
+        ByteUtil.reverse(bytes);
+      return ByteUtil.toExtendedASCIIs(bytes, 4, BIG_ENDIAN);
     case ll:
-      if (ByteOrder.nativeOrder() != LITTLE_ENDIAN)
-        reverseBytes(bytes);
-      return ByteUtil.toASCIIs(bytes, 4, LITTLE_ENDIAN);
+      if (nativeOrder() != LITTLE_ENDIAN)
+        ByteUtil.reverse(bytes);
+      return ByteUtil.toExtendedASCIIs(bytes, 4, LITTLE_ENDIAN);
     case q:
-      return ByteUtil.toASCIIs(bytes, 8, nativeOrder());
+      return ByteUtil.toExtendedASCIIs(bytes, 8, nativeOrder());
     case qb:
-      if (ByteOrder.nativeOrder() != BIG_ENDIAN)
-        reverseBytes(bytes);
-      return ByteUtil.toASCIIs(bytes, 8, BIG_ENDIAN);
+      if (nativeOrder() != BIG_ENDIAN)
+        ByteUtil.reverse(bytes);
+      return ByteUtil.toExtendedASCIIs(bytes, 8, BIG_ENDIAN);
     case ql:
-      if (ByteOrder.nativeOrder() != LITTLE_ENDIAN)
-        reverseBytes(bytes);
-      return ByteUtil.toASCIIs(bytes, 8, LITTLE_ENDIAN);
+      if (nativeOrder() != LITTLE_ENDIAN)
+        ByteUtil.reverse(bytes);
+      return ByteUtil.toExtendedASCIIs(bytes, 8, LITTLE_ENDIAN);
     case D:
-      return ByteUtil.toASCIIs(bytes, 8, nativeOrder());
+      return ByteUtil.toExtendedASCIIs(bytes, 8, nativeOrder());
     case d:
-      return ByteUtil.toASCIIs(bytes, 8, nativeOrder());
+      return ByteUtil.toExtendedASCIIs(bytes, 8, nativeOrder());
     case E:
-      if (ByteOrder.nativeOrder() != LITTLE_ENDIAN)
-        reverseBytes(bytes);
-      return ByteUtil.toASCIIs(bytes, 8, LITTLE_ENDIAN);
+      if (nativeOrder() != LITTLE_ENDIAN)
+        ByteUtil.reverse(bytes);
+      return ByteUtil.toExtendedASCIIs(bytes, 8, LITTLE_ENDIAN);
     case G:
-      if (ByteOrder.nativeOrder() != BIG_ENDIAN)
-        reverseBytes(bytes);
-      return ByteUtil.toASCIIs(bytes, 8, BIG_ENDIAN);
+      if (nativeOrder() != BIG_ENDIAN)
+        ByteUtil.reverse(bytes);
+      return ByteUtil.toExtendedASCIIs(bytes, 8, BIG_ENDIAN);
     case F:
-      return ByteUtil.toASCIIs(bytes, 4, nativeOrder());
+      return ByteUtil.toExtendedASCIIs(bytes, 4, nativeOrder());
     case f:
-      return ByteUtil.toASCIIs(bytes, 4, nativeOrder());
+      return ByteUtil.toExtendedASCIIs(bytes, 4, nativeOrder());
     case e:
-      if (ByteOrder.nativeOrder() != LITTLE_ENDIAN)
-        reverseBytes(bytes);
-      return ByteUtil.toASCIIs(bytes, 4, LITTLE_ENDIAN);
+      if (nativeOrder() != LITTLE_ENDIAN)
+        ByteUtil.reverse(bytes);
+      return ByteUtil.toExtendedASCIIs(bytes, 4, LITTLE_ENDIAN);
     case g:
-      if (ByteOrder.nativeOrder() != BIG_ENDIAN)
-        reverseBytes(bytes);
-      return ByteUtil.toASCIIs(bytes, 4, BIG_ENDIAN);
+      if (nativeOrder() != BIG_ENDIAN)
+        ByteUtil.reverse(bytes);
+      return ByteUtil.toExtendedASCIIs(bytes, 4, BIG_ENDIAN);
     case U:
-      if (ByteOrder.nativeOrder() != BIG_ENDIAN)
-        reverseBytes(bytes);
+      if (nativeOrder() != BIG_ENDIAN)
+        ByteUtil.reverse(bytes);
       return ByteUtil.toUTF(bytes);
     case A:
       return new String(bytes);
@@ -386,14 +385,6 @@ public enum Directive {
       return ByteUtil.toHexString(bytes, true);
     case h:
       return ByteUtil.toHexString(bytes, false);
-    }
-  }
-
-  private void reverseBytes(byte[] bytes) {
-    for (int i = 0; i < bytes.length / 2; i++) {
-      byte temp = bytes[i];
-      bytes[i] = bytes[bytes.length - 1 - i];
-      bytes[bytes.length - 1 - i] = temp;
     }
   }
 

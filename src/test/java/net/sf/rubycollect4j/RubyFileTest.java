@@ -33,8 +33,8 @@ import org.junit.Test;
 
 public class RubyFileTest {
 
-  private static final String BASE_DIR = "src/test/resources/";
-  private RubyFile rf;
+  static final String BASE_DIR = "src/test/resources/";
+  RubyFile rf;
 
   @Test(expected = RuntimeException.class)
   public void testOpenException() {

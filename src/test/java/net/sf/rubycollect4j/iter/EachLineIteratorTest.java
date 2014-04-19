@@ -32,9 +32,9 @@ import org.junit.Test;
 
 public class EachLineIteratorTest {
 
-  private static final String BASE_DIR = "src/test/resources/";
-  private EachLineIterator iter;
-  private EachLineIterator noFileIter;
+  static final String BASE_DIR = "src/test/resources/";
+  EachLineIterator iter;
+  EachLineIterator noFileIter;
 
   @Before
   public void setUp() throws Exception {

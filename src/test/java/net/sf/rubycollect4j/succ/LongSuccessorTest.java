@@ -27,7 +27,7 @@ import org.junit.Test;
 
 public class LongSuccessorTest {
 
-  private LongSuccessor successor = LongSuccessor.getInstance();
+  LongSuccessor successor = LongSuccessor.getInstance();
 
   @Test
   public void testSingleton() {

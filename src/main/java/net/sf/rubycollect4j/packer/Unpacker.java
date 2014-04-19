@@ -21,11 +21,34 @@
 package net.sf.rubycollect4j.packer;
 
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
+import static net.sf.rubycollect4j.RubyCollections.rh;
 import static net.sf.rubycollect4j.RubyCollections.rs;
+import static net.sf.rubycollect4j.packer.Directive.B;
+import static net.sf.rubycollect4j.packer.Directive.D;
+import static net.sf.rubycollect4j.packer.Directive.E;
+import static net.sf.rubycollect4j.packer.Directive.F;
+import static net.sf.rubycollect4j.packer.Directive.G;
+import static net.sf.rubycollect4j.packer.Directive.H;
+import static net.sf.rubycollect4j.packer.Directive.b;
+import static net.sf.rubycollect4j.packer.Directive.d;
+import static net.sf.rubycollect4j.packer.Directive.e;
+import static net.sf.rubycollect4j.packer.Directive.f;
+import static net.sf.rubycollect4j.packer.Directive.g;
+import static net.sf.rubycollect4j.packer.Directive.l;
+import static net.sf.rubycollect4j.packer.Directive.lb;
+import static net.sf.rubycollect4j.packer.Directive.ll;
+import static net.sf.rubycollect4j.packer.Directive.q;
+import static net.sf.rubycollect4j.packer.Directive.qb;
+import static net.sf.rubycollect4j.packer.Directive.ql;
+import static net.sf.rubycollect4j.packer.Directive.s;
+import static net.sf.rubycollect4j.packer.Directive.sb;
+import static net.sf.rubycollect4j.packer.Directive.sl;
+import static net.sf.rubycollect4j.util.ByteUtil.toBinaryString;
+import static net.sf.rubycollect4j.util.ByteUtil.toHexString;
 import net.sf.rubycollect4j.RubyArray;
+import net.sf.rubycollect4j.RubyHash;
 import net.sf.rubycollect4j.RubyString;
 import net.sf.rubycollect4j.util.ASCII8BitUTF;
-import net.sf.rubycollect4j.util.ByteUtil;
 
 /**
  * 
@@ -33,6 +56,10 @@ import net.sf.rubycollect4j.util.ByteUtil;
  * 
  */
 public final class Unpacker {
+
+  private static final RubyHash<Directive, Integer> NUMBER_LENGTH_IN_BYTE = rh(
+      s, 2, sb, 2, sl, 2, l, 4, lb, 4, ll, 4, F, 4, f, 4, e, 4, g, 4, q, 8, qb,
+      8, ql, 8, D, 8, d, 8, E, 8, G, 8).freeze();
 
   private Unpacker() {}
 
@@ -119,33 +146,6 @@ public final class Unpacker {
 
       case B:
       case b:
-        if (!a8u.hasByte()) {
-          objs.add("");
-          break;
-        }
-
-        RubyString strMorLSB =
-            rs(ByteUtil.toBinaryString(new byte[] { a8u.nextByte() },
-                d == Directive.B));
-
-        RubyArray<String> unpackedMorLSB = newRubyArray();
-        while (count > 0) {
-          if (strMorLSB.anyʔ()) {
-            unpackedMorLSB.add(strMorLSB.sliceǃ(0).toS());
-            count--;
-          } else if (a8u.hasByte()) {
-            strMorLSB =
-                rs(ByteUtil.toBinaryString(new byte[] { a8u.nextByte() },
-                    d == Directive.B));
-            unpackedMorLSB.add(strMorLSB.sliceǃ(0).toS());
-            count--;
-          } else {
-            break;
-          }
-        }
-        objs.add(unpackedMorLSB.join());
-        break;
-
       case H:
       case h:
         if (!a8u.hasByte()) {
@@ -153,44 +153,36 @@ public final class Unpacker {
           break;
         }
 
-        RubyString strHorLNF =
-            rs(ByteUtil.toHexString(new byte[] { a8u.nextByte() },
-                d == Directive.H));
+        RubyString unpackRS;
+        if (d == B || d == b)
+          unpackRS = rs(toBinaryString(new byte[] { a8u.nextByte() }, d == B));
+        else
+          unpackRS = rs(toHexString(new byte[] { a8u.nextByte() }, d == H));
 
-        RubyArray<String> unpackedHorLNF = newRubyArray();
+        RubyArray<String> unpackRA = newRubyArray();
         while (count > 0) {
-          if (strHorLNF.anyʔ()) {
-            unpackedHorLNF.add(strHorLNF.sliceǃ(0).toS());
+          if (unpackRS.anyʔ()) {
+            unpackRA.add(unpackRS.sliceǃ(0).toS());
             count--;
           } else if (a8u.hasByte()) {
-            strHorLNF =
-                rs(ByteUtil.toHexString(new byte[] { a8u.nextByte() },
-                    d == Directive.H));
-            unpackedHorLNF.add(strHorLNF.sliceǃ(0).toS());
+            if (d == B || d == b)
+              unpackRS =
+                  rs(toBinaryString(new byte[] { a8u.nextByte() }, d == B));
+            else
+              unpackRS = rs(toHexString(new byte[] { a8u.nextByte() }, d == H));
+
+            unpackRA.add(unpackRS.sliceǃ(0).toS());
             count--;
           } else {
             break;
           }
         }
-        objs.add(unpackedHorLNF.join());
+        objs.add(unpackRA.join());
         break;
 
       case s:
       case sb:
       case sl:
-        while (count > 0) {
-          if (count == Integer.MAX_VALUE)
-            count = a8u.remainingByteNumber() / 2;
-
-          if (a8u.remainingByteNumber() >= 2)
-            objs.add(d.unpack(a8u.nextByte(2)));
-          else
-            objs.add(null);
-
-          count--;
-        }
-        break;
-
       case l:
       case lb:
       case ll:
@@ -198,19 +190,6 @@ public final class Unpacker {
       case f:
       case e:
       case g:
-        while (count > 0) {
-          if (count == Integer.MAX_VALUE)
-            count = a8u.remainingByteNumber() / 4;
-
-          if (a8u.remainingByteNumber() >= 4)
-            objs.add(d.unpack(a8u.nextByte(4)));
-          else
-            objs.add(null);
-
-          count--;
-        }
-        break;
-
       case q:
       case qb:
       case ql:
@@ -218,12 +197,13 @@ public final class Unpacker {
       case d:
       case E:
       case G:
+        int lengthInByte = NUMBER_LENGTH_IN_BYTE.get(d);
         while (count > 0) {
           if (count == Integer.MAX_VALUE)
-            count = a8u.remainingByteNumber() / 8;
+            count = a8u.remainingByteNumber() / lengthInByte;
 
-          if (a8u.remainingByteNumber() >= 8)
-            objs.add(d.unpack(a8u.nextByte(8)));
+          if (a8u.remainingByteNumber() >= lengthInByte)
+            objs.add(d.unpack(a8u.nextByte(lengthInByte)));
           else
             objs.add(null);
 

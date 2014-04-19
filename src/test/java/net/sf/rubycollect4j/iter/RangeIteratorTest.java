@@ -33,7 +33,7 @@ import org.junit.Test;
 
 public class RangeIteratorTest {
 
-  private RangeIterator<Integer> iter;
+  RangeIterator<Integer> iter;
 
   @Before
   public void setUp() throws Exception {

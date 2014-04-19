@@ -33,9 +33,9 @@ import org.junit.Test;
 
 public class FindAllIterableTest {
 
-  private FindAllIterable<Integer> iter;
-  private List<Integer> list;
-  private BooleanBlock<Integer> block;
+  FindAllIterable<Integer> iter;
+  List<Integer> list;
+  BooleanBlock<Integer> block;
 
   @Before
   public void setUp() throws Exception {

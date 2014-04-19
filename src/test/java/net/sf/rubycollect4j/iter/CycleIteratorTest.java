@@ -34,7 +34,7 @@ import org.junit.Test;
 
 public class CycleIteratorTest {
 
-  private CycleIterator<Integer> iter;
+  CycleIterator<Integer> iter;
 
   @Before
   public void setUp() throws Exception {

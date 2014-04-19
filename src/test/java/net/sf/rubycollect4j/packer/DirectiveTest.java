@@ -32,10 +32,10 @@ import org.junit.Test;
 
 public class DirectiveTest {
 
-  private static final boolean IS_BIG_ENDIAN = nativeOrder() == BIG_ENDIAN;
+  static final boolean IS_BIG_ENDIAN = nativeOrder() == BIG_ENDIAN;
 
-  private byte[] ABC;
-  private byte[] ABCDEFGH;
+  byte[] ABC;
+  byte[] ABCDEFGH;
 
   @Before
   public void setUp() throws Exception {
@@ -46,7 +46,7 @@ public class DirectiveTest {
   }
 
   private byte[] int4407873() {
-    return ByteUtil.toByteArray(4407873);
+    return ByteUtil.toByteArray(4407873, nativeOrder());
   }
 
   @Test
@@ -96,7 +96,8 @@ public class DirectiveTest {
     assertEquals("ABC\0", Directive.e.pack(int4407873()));
     assertEquals("\0CBA", Directive.g.pack(int4407873()));
 
-    assertEquals("〹", Directive.U.pack(ByteUtil.toByteArray(12345)));
+    assertEquals("〹",
+        Directive.U.pack(ByteUtil.toByteArray(12345, nativeOrder())));
     assertEquals("ABC", Directive.A.pack(ABC));
     assertEquals("ABC", Directive.a.pack(ABC));
     assertEquals("ABC", Directive.Z.pack(ABC));

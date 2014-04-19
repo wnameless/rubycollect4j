@@ -31,10 +31,10 @@ import org.junit.Test;
 
 public class ProductIterableTest {
 
-  private ProductIterable<Integer> iter;
-  private List<Integer> list1;
-  private List<Integer> list2;
-  private List<? extends List<Integer>> lists;
+  ProductIterable<Integer> iter;
+  List<Integer> list1;
+  List<Integer> list2;
+  List<? extends List<Integer>> lists;
 
   @Before
   public void setUp() throws Exception {

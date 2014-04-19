@@ -33,8 +33,8 @@ import org.junit.Test;
 
 public class CombinationIteratorTest {
 
-  private CombinationIterator<Integer> iter;
-  private List<Integer> list;
+  CombinationIterator<Integer> iter;
+  List<Integer> list;
 
   @Before
   public void setUp() throws Exception {

@@ -27,7 +27,7 @@ import org.junit.Test;
 
 public class CharacterSuccessorTest {
 
-  private CharacterSuccessor successor = CharacterSuccessor.getInstance();
+  CharacterSuccessor successor = CharacterSuccessor.getInstance();
 
   @Test
   public void testSingleton() {

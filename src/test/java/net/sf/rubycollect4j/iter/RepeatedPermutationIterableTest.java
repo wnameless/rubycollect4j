@@ -29,7 +29,7 @@ import org.junit.Test;
 
 public class RepeatedPermutationIterableTest {
 
-  private RepeatedPermutationIterable<Integer> iter;
+  RepeatedPermutationIterable<Integer> iter;
 
   @Before
   public void setUp() throws Exception {

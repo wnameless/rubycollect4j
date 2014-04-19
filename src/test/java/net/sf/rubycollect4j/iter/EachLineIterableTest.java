@@ -30,8 +30,8 @@ import org.junit.Test;
 
 public class EachLineIterableTest {
 
-  private static final String BASE_DIR = "src/test/resources/";
-  private EachLineIterable iter;
+  static final String BASE_DIR = "src/test/resources/";
+  EachLineIterable iter;
 
   @Before
   public void setUp() throws Exception {

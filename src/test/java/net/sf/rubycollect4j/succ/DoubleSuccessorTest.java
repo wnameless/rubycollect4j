@@ -30,7 +30,7 @@ import org.junit.Test;
 
 public class DoubleSuccessorTest {
 
-  private DoubleSuccessor successor;
+  DoubleSuccessor successor;
 
   @Before
   public void setUp() throws Exception {

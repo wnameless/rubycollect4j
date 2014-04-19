@@ -52,8 +52,8 @@ import org.junit.Test;
 
 public class RubyEnumerableTest {
 
-  private RubyEnumerable<Integer> re;
-  private Iterable<Integer> iter;
+  RubyEnumerable<Integer> re;
+  Iterable<Integer> iter;
 
   @Before
   public void setUp() throws Exception {

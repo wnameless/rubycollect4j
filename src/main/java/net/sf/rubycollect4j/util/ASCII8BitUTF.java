@@ -88,11 +88,11 @@ public final class ASCII8BitUTF {
       return ra();
 
     if (ch.codePointAt(0) < 256)
-      return ra(
-          ByteUtil.toList(ByteBuffer.allocate(2)
-              .putShort((short) ch.codePointAt(0)).array())).last(1);
+      return ByteUtil.toList(
+          ByteBuffer.allocate(2).putShort((short) ch.codePointAt(0)).array())
+          .last(1);
     else
-      return ra(ByteUtil.toList(ch.getBytes()));
+      return ByteUtil.toList(ch.getBytes());
   }
 
   /**

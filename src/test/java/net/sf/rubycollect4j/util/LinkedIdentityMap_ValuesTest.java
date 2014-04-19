@@ -38,10 +38,9 @@ import org.junit.Test;
 
 public class LinkedIdentityMap_ValuesTest {
 
-  private List<String> list = new LinkedList<String>();
-  private IdentityHashMap<String, Integer> map =
-      new IdentityHashMap<String, Integer>();
-  private LinkedIdentityMap.Values<String, Integer> values =
+  List<String> list = new LinkedList<String>();
+  IdentityHashMap<String, Integer> map = new IdentityHashMap<String, Integer>();
+  LinkedIdentityMap.Values<String, Integer> values =
       new LinkedIdentityMap.Values<String, Integer>(list, map);
 
   @Before

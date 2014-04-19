@@ -39,9 +39,9 @@ import org.junit.Test;
 
 public class RubyKernelTest {
 
-  private final String lineSeparator = System.getProperty("line.separator");
-  private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-  private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+  final String lineSeparator = System.getProperty("line.separator");
+  final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+  final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
 
   @Before
   public void setUpStreams() {

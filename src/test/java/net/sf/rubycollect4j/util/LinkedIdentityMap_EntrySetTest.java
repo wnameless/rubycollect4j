@@ -40,15 +40,14 @@ import org.junit.Test;
 
 public class LinkedIdentityMap_EntrySetTest {
 
-  private List<String> list = new LinkedList<String>();
-  private IdentityHashMap<String, Integer> map =
-      new IdentityHashMap<String, Integer>();
-  private LinkedIdentityMap.EntrySet<String, Integer> entrySet =
+  List<String> list = new LinkedList<String>();
+  IdentityHashMap<String, Integer> map = new IdentityHashMap<String, Integer>();
+  LinkedIdentityMap.EntrySet<String, Integer> entrySet =
       new LinkedIdentityMap.EntrySet<String, Integer>(list, map);
 
-  private String key1 = "a";
-  private String key2 = new String("a");
-  private String key3 = new String("a");
+  String key1 = "a";
+  String key2 = new String("a");
+  String key3 = new String("a");
 
   @Before
   public void setUp() throws Exception {

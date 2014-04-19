@@ -48,10 +48,10 @@ import org.junit.Test;
 
 public class RubyArrayTest {
 
-  private RubyArray<Integer> ra;
-  private RubyArray<Integer> frozenRa;
-  private TransformBlock<Integer, Integer> block;
-  private Comparator<Integer> comp;
+  RubyArray<Integer> ra;
+  RubyArray<Integer> frozenRa;
+  TransformBlock<Integer, Integer> block;
+  Comparator<Integer> comp;
 
   @Before
   public void setUp() throws Exception {

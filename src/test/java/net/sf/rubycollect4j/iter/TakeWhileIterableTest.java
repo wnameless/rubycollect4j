@@ -13,9 +13,9 @@ import org.junit.Test;
 
 public class TakeWhileIterableTest {
 
-  private TakeWhileIterable<Integer> iter;
-  private List<Integer> list;
-  private BooleanBlock<Integer> block;
+  TakeWhileIterable<Integer> iter;
+  List<Integer> list;
+  BooleanBlock<Integer> block;
 
   @Before
   public void setUp() throws Exception {

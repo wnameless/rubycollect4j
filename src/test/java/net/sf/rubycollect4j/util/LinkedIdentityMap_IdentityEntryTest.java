@@ -33,9 +33,9 @@ import org.junit.Test;
 
 public class LinkedIdentityMap_IdentityEntryTest {
 
-  private IdentityEntry<String, Integer> entry;
-  private String key;
-  private Integer value;
+  IdentityEntry<String, Integer> entry;
+  String key;
+  Integer value;
 
   @Before
   public void setUp() throws Exception {

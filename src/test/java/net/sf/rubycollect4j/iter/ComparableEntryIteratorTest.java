@@ -32,8 +32,8 @@ import org.junit.Test;
 
 public class ComparableEntryIteratorTest {
 
-  private ComparableEntryIterator<Integer, Integer> iter;
-  private RubyHash<Integer, Integer> rubyHash;
+  ComparableEntryIterator<Integer, Integer> iter;
+  RubyHash<Integer, Integer> rubyHash;
 
   @Before
   public void setUp() throws Exception {

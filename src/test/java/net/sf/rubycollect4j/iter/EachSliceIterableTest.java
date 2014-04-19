@@ -31,8 +31,8 @@ import org.junit.Test;
 
 public class EachSliceIterableTest {
 
-  private EachSliceIterable<Integer> iter;
-  private List<Integer> list;
+  EachSliceIterable<Integer> iter;
+  List<Integer> list;
 
   @Before
   public void setUp() throws Exception {

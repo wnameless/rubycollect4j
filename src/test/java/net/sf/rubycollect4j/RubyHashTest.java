@@ -50,8 +50,8 @@ import org.junit.Test;
 
 public class RubyHashTest {
 
-  private RubyHash<Integer, Integer> rh;
-  private RubyHash<Integer, Integer> frozenRh;
+  RubyHash<Integer, Integer> rh;
+  RubyHash<Integer, Integer> frozenRh;
 
   @Before
   public void setUp() {

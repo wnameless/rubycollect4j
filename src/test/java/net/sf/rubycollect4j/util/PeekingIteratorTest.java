@@ -35,8 +35,8 @@ import org.junit.Test;
 
 public class PeekingIteratorTest {
 
-  private PeekingIterator<Integer> pIterater;
-  private PeekingIterator<Integer> emptyIterater;
+  PeekingIterator<Integer> pIterater;
+  PeekingIterator<Integer> emptyIterater;
 
   @Before
   public void setUp() {

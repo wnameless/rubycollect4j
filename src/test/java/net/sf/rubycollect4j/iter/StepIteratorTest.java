@@ -33,8 +33,8 @@ import org.junit.Test;
 
 public class StepIteratorTest {
 
-  private StepIterator<Integer> iter;
-  private List<Integer> list;
+  StepIterator<Integer> iter;
+  List<Integer> list;
 
   @Before
   public void setUp() throws Exception {

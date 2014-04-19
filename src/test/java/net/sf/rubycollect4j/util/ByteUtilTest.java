@@ -20,6 +20,9 @@
  */
 package net.sf.rubycollect4j.util;
 
+import static java.nio.ByteOrder.BIG_ENDIAN;
+import static java.nio.ByteOrder.LITTLE_ENDIAN;
+import static java.nio.ByteOrder.nativeOrder;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -34,9 +37,13 @@ import java.util.List;
 
 import javax.xml.bind.TypeConstraintException;
 
+import net.sf.rubycollect4j.RubyArray;
+
 import org.junit.Test;
 
 public class ByteUtilTest {
+
+  ByteOrder bo = LITTLE_ENDIAN;
 
   @Test
   public void testPrivateConstructor() throws Exception {
@@ -48,7 +55,7 @@ public class ByteUtilTest {
 
   @Test
   public void testToList() {
-    List<Byte> bytes =
+    RubyArray<Byte> bytes =
         ByteUtil.toList(new byte[] { (byte) 0x00, (byte) 0x01, (byte) 0x02 });
     assertEquals(ra((byte) 0x00, (byte) 0x01, (byte) 0x02), bytes);
   }
@@ -81,6 +88,14 @@ public class ByteUtilTest {
   }
 
   @Test
+  public void testReverse() {
+    byte[] bytes = new byte[] { (byte) 1, (byte) 2, (byte) 3, (byte) 4 };
+    ByteUtil.reverse(bytes);
+    assertArrayEquals(new byte[] { (byte) 4, (byte) 3, (byte) 2, (byte) 1 },
+        bytes);
+  }
+
+  @Test
   public void testToByteArrayWithByte() {
     assertArrayEquals(new byte[] { (byte) 0x00 },
         ByteUtil.toByteArray((byte) 0x00));
@@ -91,45 +106,45 @@ public class ByteUtilTest {
   @Test
   public void testToByteArrayWithShort() {
     assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x00 },
-        ByteUtil.toByteArray((short) 0));
+        ByteUtil.toByteArray((short) 0, bo));
     assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x00 },
-        ByteUtil.toByteArray(Short.valueOf((short) 0)));
+        ByteUtil.toByteArray(Short.valueOf((short) 0), bo));
   }
 
   @Test
   public void testToByteArrayWithInteger() {
     assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x0, (byte) 0x00,
-        (byte) 0x00 }, ByteUtil.toByteArray(0));
+        (byte) 0x00 }, ByteUtil.toByteArray(0, bo));
     assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x00, (byte) 0x00,
-        (byte) 0x00 }, ByteUtil.toByteArray(Integer.valueOf(0)));
+        (byte) 0x00 }, ByteUtil.toByteArray(Integer.valueOf(0), bo));
   }
 
   @Test
   public void testToByteArrayWithLong() {
     assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x0, (byte) 0x00,
         (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00 },
-        ByteUtil.toByteArray(0L));
+        ByteUtil.toByteArray(0L, bo));
     assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x00, (byte) 0x00,
         (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00 },
-        ByteUtil.toByteArray(Long.valueOf(0L)));
+        ByteUtil.toByteArray(Long.valueOf(0L), bo));
   }
 
   @Test
   public void testToByteArrayWithFloat() {
     assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x0, (byte) 0x00,
-        (byte) 0x00 }, ByteUtil.toByteArray((float) 0));
+        (byte) 0x00 }, ByteUtil.toByteArray(0f, bo));
     assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x00, (byte) 0x00,
-        (byte) 0x00 }, ByteUtil.toByteArray(Float.valueOf((float) 0)));
+        (byte) 0x00 }, ByteUtil.toByteArray(Float.valueOf(0f), bo));
   }
 
   @Test
   public void testToByteArrayWithDouble() {
     assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x0, (byte) 0x00,
         (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00 },
-        ByteUtil.toByteArray((double) 0));
+        ByteUtil.toByteArray(0d, bo));
     assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x00, (byte) 0x00,
         (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00 },
-        ByteUtil.toByteArray(Double.valueOf((double) 0)));
+        ByteUtil.toByteArray(Double.valueOf(0d), bo));
   }
 
   @Test
@@ -145,9 +160,9 @@ public class ByteUtilTest {
   @Test
   public void testToByteArrayWithCharacter() {
     assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x00 },
-        ByteUtil.toByteArray((char) 0));
+        ByteUtil.toByteArray((char) 0, bo));
     assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x00 },
-        ByteUtil.toByteArray(Character.valueOf((char) 0)));
+        ByteUtil.toByteArray(Character.valueOf((char) 0), bo));
   }
 
   @Test
@@ -158,55 +173,72 @@ public class ByteUtilTest {
   @Test
   public void testToByteArrayWithObject() {
     assertArrayEquals(new byte[] { (byte) 0x41 },
-        ByteUtil.toByteArray((Object) "A"));
+        ByteUtil.toByteArray((Object) "A", bo));
     assertArrayEquals(new byte[] { (byte) 0x00 },
-        ByteUtil.toByteArray((Object) Byte.valueOf((byte) 0)));
+        ByteUtil.toByteArray((Object) Byte.valueOf((byte) 0), bo));
     assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x00 },
-        ByteUtil.toByteArray((Object) Short.valueOf((short) 0)));
+        ByteUtil.toByteArray((Object) Short.valueOf((short) 0), bo));
     assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x00, (byte) 0x00,
-        (byte) 0x00 }, ByteUtil.toByteArray((Object) Integer.valueOf((int) 0)));
+        (byte) 0x00 }, ByteUtil.toByteArray((Object) Integer.valueOf(0), bo));
     assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x00, (byte) 0x00,
         (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00 },
-        ByteUtil.toByteArray((Object) Long.valueOf((long) 0)));
+        ByteUtil.toByteArray((Object) Long.valueOf(0L), bo));
     assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x00, (byte) 0x00,
-        (byte) 0x00 }, ByteUtil.toByteArray((Object) Float.valueOf((float) 0)));
+        (byte) 0x00 }, ByteUtil.toByteArray((Object) Float.valueOf(0f), bo));
     assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x00, (byte) 0x00,
         (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00 },
-        ByteUtil.toByteArray((Object) Double.valueOf((double) 0)));
+        ByteUtil.toByteArray((Object) Double.valueOf(0d), bo));
     assertArrayEquals(new byte[] { (byte) 0x00 },
-        ByteUtil.toByteArray((Object) Boolean.FALSE));
+        ByteUtil.toByteArray((Object) Boolean.FALSE, bo));
     assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x00 },
-        ByteUtil.toByteArray((Object) Character.valueOf((char) 0)));
+        ByteUtil.toByteArray((Object) Character.valueOf((char) 0), bo));
   }
 
   @Test(expected = TypeConstraintException.class)
   public void testToByteArrayWithObjectAndException1() {
-    ByteUtil.toByteArray(new ArrayList<Object>());
+    ByteUtil.toByteArray(new ArrayList<Object>(), bo);
   }
 
   @Test(expected = TypeConstraintException.class)
   public void testToByteArrayWithObjectAndException2() {
-    ByteUtil.toByteArray((Object) null);
+    ByteUtil.toByteArray((Object) null, bo);
   }
 
   @Test
-  public void testToASCIIs() {
-    assertEquals("A", ByteUtil.toASCIIs(new byte[] { (byte) 65 }, 1));
-    assertEquals("\7", ByteUtil.toASCIIs(new byte[] { (byte) 7 }, 1));
-    assertEquals("\10", ByteUtil.toASCIIs(new byte[] { (byte) 8 }, 1));
-    assertEquals("\11", ByteUtil.toASCIIs(new byte[] { (byte) 9 }, 1));
-    assertEquals("\12", ByteUtil.toASCIIs(new byte[] { (byte) 10 }, 1));
-    assertEquals("\13", ByteUtil.toASCIIs(new byte[] { (byte) 11 }, 1));
-    assertEquals("\14", ByteUtil.toASCIIs(new byte[] { (byte) 12 }, 1));
-    assertEquals("\15", ByteUtil.toASCIIs(new byte[] { (byte) 13 }, 1));
-    assertEquals("\33", ByteUtil.toASCIIs(new byte[] { (byte) 27 }, 1));
-    assertEquals("\20", ByteUtil.toASCIIs(new byte[] { (byte) 16 }, 1));
+  public void testToASCII8Bit() {
+    for (int i = 0; i < 256; i++) {
+      assertEquals(String.valueOf((char) i), ByteUtil.toASCII8Bit((byte) i));
+    }
+  }
+
+  @Test
+  public void testToExtendedASCIIs() {
+    assertEquals("A",
+        ByteUtil.toExtendedASCIIs(new byte[] { (byte) 65 }, 1, nativeOrder()));
+    assertEquals("\7",
+        ByteUtil.toExtendedASCIIs(new byte[] { (byte) 7 }, 1, nativeOrder()));
+    assertEquals("\10",
+        ByteUtil.toExtendedASCIIs(new byte[] { (byte) 8 }, 1, nativeOrder()));
+    assertEquals("\11",
+        ByteUtil.toExtendedASCIIs(new byte[] { (byte) 9 }, 1, nativeOrder()));
+    assertEquals("\12",
+        ByteUtil.toExtendedASCIIs(new byte[] { (byte) 10 }, 1, nativeOrder()));
+    assertEquals("\13",
+        ByteUtil.toExtendedASCIIs(new byte[] { (byte) 11 }, 1, nativeOrder()));
+    assertEquals("\14",
+        ByteUtil.toExtendedASCIIs(new byte[] { (byte) 12 }, 1, nativeOrder()));
+    assertEquals("\15",
+        ByteUtil.toExtendedASCIIs(new byte[] { (byte) 13 }, 1, nativeOrder()));
+    assertEquals("\33",
+        ByteUtil.toExtendedASCIIs(new byte[] { (byte) 27 }, 1, nativeOrder()));
+    assertEquals("\20",
+        ByteUtil.toExtendedASCIIs(new byte[] { (byte) 16 }, 1, nativeOrder()));
     assertEquals("A\0",
-        ByteUtil.toASCIIs(new byte[] { (byte) 65 }, 2, ByteOrder.LITTLE_ENDIAN));
+        ByteUtil.toExtendedASCIIs(new byte[] { (byte) 65 }, 2, LITTLE_ENDIAN));
     assertEquals("\0A",
-        ByteUtil.toASCIIs(new byte[] { (byte) 65 }, 2, ByteOrder.BIG_ENDIAN));
-    assertEquals("A\177", ByteUtil.toASCIIs(
-        new byte[] { (byte) 65, (byte) 127 }, 2, ByteOrder.BIG_ENDIAN));
+        ByteUtil.toExtendedASCIIs(new byte[] { (byte) 65 }, 2, BIG_ENDIAN));
+    assertEquals("A\177", ByteUtil.toExtendedASCIIs(new byte[] { (byte) 65,
+        (byte) 127 }, 2, BIG_ENDIAN));
   }
 
   @Test

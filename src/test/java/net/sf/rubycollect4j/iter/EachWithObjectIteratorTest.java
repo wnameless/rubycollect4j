@@ -36,9 +36,9 @@ import org.junit.Test;
 
 public class EachWithObjectIteratorTest {
 
-  private EachWithObjectIterator<Integer, List<Integer>> iter;
-  private List<Integer> list;
-  private List<Integer> emptyList;
+  EachWithObjectIterator<Integer, List<Integer>> iter;
+  List<Integer> list;
+  List<Integer> emptyList;
 
   @Before
   public void setUp() throws Exception {

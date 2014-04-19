@@ -36,8 +36,8 @@ import org.junit.Test;
 
 public class RubyDirTest {
 
-  private static final String BASE_DIR = "src/test/resources/";
-  private static final String GLOB_DIR = "src/test/resources/glob_test/";
+  static final String BASE_DIR = "src/test/resources/";
+  static final String GLOB_DIR = "src/test/resources/glob_test/";
 
   @Test
   public void testOpen() {

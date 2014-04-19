@@ -42,9 +42,9 @@ import org.junit.Test;
 
 public class RubyLazyEnumeratorTest {
 
-  private RubyLazyEnumerator<Integer> lre;
-  private List<Integer> list;
-  private TransformBlock<Integer, Boolean> block;
+  RubyLazyEnumerator<Integer> lre;
+  List<Integer> list;
+  TransformBlock<Integer, Boolean> block;
 
   @Before
   public void setUp() throws Exception {

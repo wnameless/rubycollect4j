@@ -31,8 +31,8 @@ import org.junit.Test;
 
 public class DropIterableTest {
 
-  private DropIterable<Integer> iter;
-  private List<Integer> list;
+  DropIterable<Integer> iter;
+  List<Integer> list;
 
   @Before
   public void setUp() throws Exception {

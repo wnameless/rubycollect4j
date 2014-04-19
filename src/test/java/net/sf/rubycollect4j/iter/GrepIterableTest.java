@@ -31,9 +31,9 @@ import org.junit.Test;
 
 public class GrepIterableTest {
 
-  private GrepIterable<Integer> iter;
-  private List<Integer> list;
-  private String regex;
+  GrepIterable<Integer> iter;
+  List<Integer> list;
+  String regex;
 
   @Before
   public void setUp() throws Exception {

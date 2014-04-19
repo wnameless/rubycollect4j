@@ -28,7 +28,7 @@ import org.junit.Test;
 
 public class DateSuccessorTest {
 
-  private DateSuccessor successor = DateSuccessor.getInstance();
+  DateSuccessor successor = DateSuccessor.getInstance();
 
   @Test
   public void testSingleton() {

@@ -27,7 +27,7 @@ import org.junit.Test;
 
 public class IntegerSuccessorTest {
 
-  private IntegerSuccessor successor = IntegerSuccessor.getInstance();
+  IntegerSuccessor successor = IntegerSuccessor.getInstance();
 
   @Test
   public void testSingleton() {

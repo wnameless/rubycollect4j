@@ -20,20 +20,20 @@
  */
 package net.sf.rubycollect4j;
 
+import static net.sf.rubycollect4j.RubyCollections.date;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Calendar;
 import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import static net.sf.rubycollect4j.RubyCollections.date;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 public class RubyDateTest {
 
-  private RubyDate rd;
-  private Calendar c;
+  RubyDate rd;
+  Calendar c;
 
   @Before
   public void setUp() throws Exception {

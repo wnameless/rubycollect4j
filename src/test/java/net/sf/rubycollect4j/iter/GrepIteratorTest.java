@@ -32,9 +32,9 @@ import org.junit.Test;
 
 public class GrepIteratorTest {
 
-  private GrepIterator<Integer> iter;
-  private List<Integer> list;
-  private String regex;
+  GrepIterator<Integer> iter;
+  List<Integer> list;
+  String regex;
 
   @Before
   public void setUp() throws Exception {

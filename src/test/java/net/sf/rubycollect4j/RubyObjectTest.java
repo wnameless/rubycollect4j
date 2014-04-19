@@ -32,7 +32,7 @@ import org.junit.Test;
 
 public class RubyObjectTest {
 
-  private SendTester tester;
+  SendTester tester;
 
   @Before
   public void setUp() throws Exception {

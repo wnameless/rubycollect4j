@@ -31,9 +31,9 @@ import org.junit.Test;
 
 public class ZipIterableTest {
 
-  private ZipIterable<Integer> iter;
-  private List<Integer> list;
-  private List<? extends Iterable<Integer>> others;
+  ZipIterable<Integer> iter;
+  List<Integer> list;
+  List<? extends Iterable<Integer>> others;
 
   @SuppressWarnings("unchecked")
   @Before

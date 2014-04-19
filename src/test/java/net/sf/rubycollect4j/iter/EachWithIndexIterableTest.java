@@ -29,7 +29,7 @@ import org.junit.Test;
 
 public class EachWithIndexIterableTest {
 
-  private EachWithIndexIterable<Integer> iter;
+  EachWithIndexIterable<Integer> iter;
 
   @Before
   public void setUp() throws Exception {

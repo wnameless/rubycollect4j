@@ -27,11 +27,9 @@ import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,7 +39,8 @@ import net.sf.rubycollect4j.RubyArray;
 
 /**
  * 
- * ByteUtil provides functions to convert variety Objects into bytes.
+ * ByteUtil provides functions to manipulate bytes or convert variety Objects
+ * into bytes.
  * 
  */
 public final class ByteUtil {
@@ -52,14 +51,14 @@ public final class ByteUtil {
   private ByteUtil() {};
 
   /**
-   * Converts a byte array to a List of Byte.
+   * Converts a byte array to a RubyArray of Byte.
    * 
    * @param bytes
    *          a byte array
-   * @return a List of Byte
+   * @return a RubyArray of Byte
    */
-  public static List<Byte> toList(byte[] bytes) {
-    List<Byte> list = new ArrayList<Byte>();
+  public static RubyArray<Byte> toList(byte[] bytes) {
+    RubyArray<Byte> list = newRubyArray();
     for (byte b : bytes) {
       list.add(b);
     }
@@ -121,6 +120,20 @@ public final class ByteUtil {
   }
 
   /**
+   * Reverses a byte array in place.
+   * 
+   * @param bytes
+   *          to be reversed
+   */
+  public static void reverse(byte[] bytes) {
+    for (int i = 0; i < bytes.length / 2; i++) {
+      byte temp = bytes[i];
+      bytes[i] = bytes[bytes.length - 1 - i];
+      bytes[bytes.length - 1 - i] = temp;
+    }
+  }
+
+  /**
    * Converts a byte into a byte array.
    * 
    * @param b
@@ -149,9 +162,8 @@ public final class ByteUtil {
    *          a short
    * @return a byte array
    */
-  public static byte[] toByteArray(short s) {
-    return ByteBuffer.allocate(2).order(ByteOrder.nativeOrder()).putShort(s)
-        .array();
+  public static byte[] toByteArray(short s, ByteOrder bo) {
+    return ByteBuffer.allocate(2).order(bo).putShort(s).array();
   }
 
   /**
@@ -161,9 +173,8 @@ public final class ByteUtil {
    *          a Short
    * @return a byte array
    */
-  public static byte[] toByteArray(Short s) {
-    return ByteBuffer.allocate(2).order(ByteOrder.nativeOrder()).putShort(s)
-        .array();
+  public static byte[] toByteArray(Short s, ByteOrder bo) {
+    return ByteBuffer.allocate(2).order(bo).putShort(s).array();
   }
 
   /**
@@ -173,9 +184,8 @@ public final class ByteUtil {
    *          an int
    * @return a byte array
    */
-  public static byte[] toByteArray(int i) {
-    return ByteBuffer.allocate(4).order(ByteOrder.nativeOrder()).putInt(i)
-        .array();
+  public static byte[] toByteArray(int i, ByteOrder bo) {
+    return ByteBuffer.allocate(4).order(bo).putInt(i).array();
   }
 
   /**
@@ -185,9 +195,8 @@ public final class ByteUtil {
    *          an Integer
    * @return a byte array
    */
-  public static byte[] toByteArray(Integer i) {
-    return ByteBuffer.allocate(4).order(ByteOrder.nativeOrder()).putInt(i)
-        .array();
+  public static byte[] toByteArray(Integer i, ByteOrder bo) {
+    return ByteBuffer.allocate(4).order(bo).putInt(i).array();
   }
 
   /**
@@ -197,9 +206,8 @@ public final class ByteUtil {
    *          a long
    * @return a byte array
    */
-  public static byte[] toByteArray(long l) {
-    return ByteBuffer.allocate(8).order(ByteOrder.nativeOrder()).putLong(l)
-        .array();
+  public static byte[] toByteArray(long l, ByteOrder bo) {
+    return ByteBuffer.allocate(8).order(bo).putLong(l).array();
   }
 
   /**
@@ -209,9 +217,8 @@ public final class ByteUtil {
    *          a Long
    * @return a byte array
    */
-  public static byte[] toByteArray(Long l) {
-    return ByteBuffer.allocate(8).order(ByteOrder.nativeOrder()).putLong(l)
-        .array();
+  public static byte[] toByteArray(Long l, ByteOrder bo) {
+    return ByteBuffer.allocate(8).order(bo).putLong(l).array();
   }
 
   /**
@@ -221,9 +228,8 @@ public final class ByteUtil {
    *          a float
    * @return a byte array
    */
-  public static byte[] toByteArray(float f) {
-    return ByteBuffer.allocate(4).order(ByteOrder.nativeOrder()).putFloat(f)
-        .array();
+  public static byte[] toByteArray(float f, ByteOrder bo) {
+    return ByteBuffer.allocate(4).order(bo).putFloat(f).array();
   }
 
   /**
@@ -233,9 +239,8 @@ public final class ByteUtil {
    *          a Float
    * @return a byte array
    */
-  public static byte[] toByteArray(Float f) {
-    return ByteBuffer.allocate(4).order(ByteOrder.nativeOrder()).putFloat(f)
-        .array();
+  public static byte[] toByteArray(Float f, ByteOrder bo) {
+    return ByteBuffer.allocate(4).order(bo).putFloat(f).array();
   }
 
   /**
@@ -245,9 +250,8 @@ public final class ByteUtil {
    *          a double
    * @return a byte array
    */
-  public static byte[] toByteArray(double d) {
-    return ByteBuffer.allocate(8).order(ByteOrder.nativeOrder()).putDouble(d)
-        .array();
+  public static byte[] toByteArray(double d, ByteOrder bo) {
+    return ByteBuffer.allocate(8).order(bo).putDouble(d).array();
   }
 
   /**
@@ -257,9 +261,8 @@ public final class ByteUtil {
    *          a Double
    * @return a byte array
    */
-  public static byte[] toByteArray(Double d) {
-    return ByteBuffer.allocate(8).order(ByteOrder.nativeOrder()).putDouble(d)
-        .array();
+  public static byte[] toByteArray(Double d, ByteOrder bo) {
+    return ByteBuffer.allocate(8).order(bo).putDouble(d).array();
   }
 
   /**
@@ -270,8 +273,7 @@ public final class ByteUtil {
    * @return a byte array
    */
   public static byte[] toByteArray(boolean b) {
-    return ByteBuffer.allocate(1).order(ByteOrder.nativeOrder())
-        .put(b ? (byte) 0x01 : (byte) 0x00).array();
+    return ByteBuffer.allocate(1).put(b ? (byte) 0x01 : (byte) 0x00).array();
   }
 
   /**
@@ -282,8 +284,7 @@ public final class ByteUtil {
    * @return a byte array
    */
   public static byte[] toByteArray(Boolean b) {
-    return ByteBuffer.allocate(1).order(ByteOrder.nativeOrder())
-        .put(b ? (byte) 0x01 : (byte) 0x00).array();
+    return ByteBuffer.allocate(1).put(b ? (byte) 0x01 : (byte) 0x00).array();
   }
 
   /**
@@ -293,9 +294,8 @@ public final class ByteUtil {
    *          a char
    * @return a byte array
    */
-  public static byte[] toByteArray(char c) {
-    return ByteBuffer.allocate(2).order(ByteOrder.nativeOrder()).putChar(c)
-        .array();
+  public static byte[] toByteArray(char c, ByteOrder bo) {
+    return ByteBuffer.allocate(2).order(bo).putChar(c).array();
   }
 
   /**
@@ -305,9 +305,8 @@ public final class ByteUtil {
    *          a Character
    * @return a byte array
    */
-  public static byte[] toByteArray(Character c) {
-    return ByteBuffer.allocate(2).order(ByteOrder.nativeOrder()).putChar(c)
-        .array();
+  public static byte[] toByteArray(Character c, ByteOrder bo) {
+    return ByteBuffer.allocate(2).order(bo).putChar(c).array();
   }
 
   /**
@@ -330,23 +329,23 @@ public final class ByteUtil {
    * @throws TypeConstraintException
    *           if the Object can't be converted into bytes
    */
-  public static byte[] toByteArray(Object o) {
+  public static byte[] toByteArray(Object o, ByteOrder bo) {
     if (o instanceof Byte)
       return toByteArray((Byte) o);
     if (o instanceof Short)
-      return toByteArray((Short) o);
+      return toByteArray((Short) o, bo);
     if (o instanceof Integer)
-      return toByteArray((Integer) o);
+      return toByteArray((Integer) o, bo);
     if (o instanceof Long)
-      return toByteArray((Long) o);
+      return toByteArray((Long) o, bo);
     if (o instanceof Float)
-      return toByteArray((Float) o);
+      return toByteArray((Float) o, bo);
     if (o instanceof Double)
-      return toByteArray((Double) o);
+      return toByteArray((Double) o, bo);
     if (o instanceof Boolean)
       return toByteArray((Boolean) o);
     if (o instanceof Character)
-      return toByteArray((Character) o);
+      return toByteArray((Character) o, bo);
 
     try {
       Class<?> c = o.getClass();
@@ -365,6 +364,17 @@ public final class ByteUtil {
   }
 
   /**
+   * Encodes a byte to ASCII-8Bit String character.
+   * 
+   * @param b
+   *          any byte
+   * @return a ISO-8859-1 String character
+   */
+  public static String toASCII8Bit(byte b) {
+    return new String(new byte[] { b }, Charset.forName("ISO-8859-1"));
+  }
+
+  /**
    * Converts bytes into an ASCII String.
    * 
    * @param bytes
@@ -375,7 +385,7 @@ public final class ByteUtil {
    *          the ByteOrder
    * @return an ASCII String
    */
-  public static String toASCIIs(byte[] bytes, int n, ByteOrder bo) {
+  public static String toExtendedASCIIs(byte[] bytes, int n, ByteOrder bo) {
     RubyArray<String> ra = newRubyArray();
     if (bo == LITTLE_ENDIAN) {
       for (int i = 0; i < n; i++) {
@@ -384,7 +394,7 @@ public final class ByteUtil {
           continue;
         }
         byte b = bytes[i];
-        ra.push(byteToASCII(b));
+        ra.push(toASCII8Bit(b));
       }
       return ra.join();
     } else {
@@ -395,28 +405,11 @@ public final class ByteUtil {
           continue;
         }
         byte b = bytes[i];
-        ra.unshift(byteToASCII(b));
+        ra.unshift(toASCII8Bit(b));
         n--;
       }
       return ra.join();
     }
-  }
-
-  /**
-   * Converts bytes into an ASCII String.
-   * 
-   * @param bytes
-   *          used to be converted
-   * @param n
-   *          length of ASCII String
-   * @return an ASCII String
-   */
-  public static String toASCIIs(byte[] bytes, int n) {
-    return toASCIIs(bytes, n, ByteOrder.nativeOrder());
-  }
-
-  private static String byteToASCII(byte b) {
-    return new String(new byte[] { b }, Charset.forName("ISO-8859-1"));
   }
 
   /**

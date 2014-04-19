@@ -34,8 +34,8 @@ import org.junit.Test;
 
 public class PermutationIteratorTest {
 
-  private PermutationIterator<Integer> iter;
-  private List<Integer> list;
+  PermutationIterator<Integer> iter;
+  List<Integer> list;
 
   @Before
   public void setUp() throws Exception {

@@ -30,7 +30,7 @@ import org.junit.Test;
 
 public class ReverseEachIteratorTest {
 
-  private ReverseEachIterator<Integer> iter;
+  ReverseEachIterator<Integer> iter;
 
   @Before
   public void setUp() throws Exception {

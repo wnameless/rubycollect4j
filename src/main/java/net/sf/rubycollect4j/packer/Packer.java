@@ -25,6 +25,7 @@ import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.rs;
 
 import java.math.BigInteger;
+import java.nio.ByteOrder;
 import java.util.Arrays;
 import java.util.List;
 
@@ -120,18 +121,20 @@ public final class Packer {
         break;
 
       default:
+        ByteOrder bo = ByteOrder.nativeOrder();
         if (template.isEmpty()) {
-          sb.append(d.pack(ByteUtil.toByteArray(d.cast(items.shift()))));
+          sb.append(d.pack(ByteUtil.toByteArray(d.cast(items.shift()), bo)));
         } else if (d == Directive.Z && template.charAt(0) == '*') {
-          sb.append(d.pack(ByteUtil.toByteArray(d.cast(items.shift()))));
+          sb.append(d.pack(ByteUtil.toByteArray(d.cast(items.shift()), bo)));
           sb.append("\0");
         } else if (template.charAt(0) == '*') {
           while (items.anyʔ()) {
-            sb.append(d.pack(ByteUtil.toByteArray(d.cast(items.shift()))));
+            sb.append(d.pack(ByteUtil.toByteArray(d.cast(items.shift()), bo)));
           }
         } else {
           if (d.isWidthAdjustable()) {
-            String str = d.pack(ByteUtil.toByteArray(d.cast(items.shift())));
+            String str =
+                d.pack(ByteUtil.toByteArray(d.cast(items.shift()), bo));
             if (str.length() > count) {
               sb.append(str.substring(0, count));
             } else {
@@ -147,7 +150,7 @@ public final class Packer {
             }
           } else {
             while (count > 0) {
-              sb.append(d.pack(ByteUtil.toByteArray(d.cast(items.shift()))));
+              sb.append(d.pack(ByteUtil.toByteArray(d.cast(items.shift()), bo)));
               count--;
             }
           }

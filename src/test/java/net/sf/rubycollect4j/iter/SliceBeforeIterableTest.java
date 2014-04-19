@@ -35,10 +35,10 @@ import org.junit.Test;
 
 public class SliceBeforeIterableTest {
 
-  private SliceBeforeIterable<Integer> iter;
-  private List<Integer> list;
-  private BooleanBlock<Integer> block;
-  private Pattern pattern;
+  SliceBeforeIterable<Integer> iter;
+  List<Integer> list;
+  BooleanBlock<Integer> block;
+  Pattern pattern;
 
   @Before
   public void setUp() throws Exception {

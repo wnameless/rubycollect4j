@@ -35,9 +35,9 @@ import org.junit.Test;
 
 public class DropWhileIteratorTest {
 
-  private DropWhileIterator<Integer> iter;
-  private List<Integer> list;
-  private BooleanBlock<Integer> block;
+  DropWhileIterator<Integer> iter;
+  List<Integer> list;
+  BooleanBlock<Integer> block;
 
   @Before
   public void setUp() throws Exception {

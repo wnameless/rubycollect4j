@@ -33,7 +33,7 @@ import org.junit.Test;
 
 public class ComparableEntryTest {
 
-  private ComparableEntry<Integer, Integer> entry;
+  ComparableEntry<Integer, Integer> entry;
 
   @Before
   public void setUp() throws Exception {

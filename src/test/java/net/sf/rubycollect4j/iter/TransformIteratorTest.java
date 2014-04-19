@@ -34,9 +34,9 @@ import org.junit.Test;
 
 public class TransformIteratorTest {
 
-  private TransformIterator<Integer, Double> iter;
-  private TransformBlock<Integer, Double> block;
-  private List<Integer> list;
+  TransformIterator<Integer, Double> iter;
+  TransformBlock<Integer, Double> block;
+  List<Integer> list;
 
   @Before
   public void setUp() throws Exception {

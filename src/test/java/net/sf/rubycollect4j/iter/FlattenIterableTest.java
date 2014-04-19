@@ -34,9 +34,9 @@ import org.junit.Test;
 
 public class FlattenIterableTest {
 
-  private FlattenIterable<Integer, Double> iter;
-  private List<Integer> list;
-  private TransformBlock<Integer, RubyArray<Double>> block;
+  FlattenIterable<Integer, Double> iter;
+  List<Integer> list;
+  TransformBlock<Integer, RubyArray<Double>> block;
 
   @Before
   public void setUp() throws Exception {

@@ -29,7 +29,7 @@ import org.junit.Test;
 
 public class CycleIterableTest {
 
-  private CycleIterable<Integer> iter;
+  CycleIterable<Integer> iter;
 
   @Before
   public void setUp() throws Exception {

@@ -33,11 +33,11 @@ import org.junit.Test;
 
 public class TryComparatorTest {
 
-  private TryComparator<Integer> intComp;
-  private TryComparator<Integer> revIntComp;
-  private TryComparator<Set<Integer>> setComp;
-  private Set<Integer> emptySet;
-  private Set<Integer> singleSet;
+  TryComparator<Integer> intComp;
+  TryComparator<Integer> revIntComp;
+  TryComparator<Set<Integer>> setComp;
+  Set<Integer> emptySet;
+  Set<Integer> singleSet;
 
   @Before
   public void setUp() throws Exception {

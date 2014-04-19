@@ -33,8 +33,8 @@ import org.junit.Test;
 
 public class EachSliceIteratorTest {
 
-  private EachSliceIterator<Integer> iter;
-  private List<Integer> list;
+  EachSliceIterator<Integer> iter;
+  List<Integer> list;
 
   @Before
   public void setUp() throws Exception {

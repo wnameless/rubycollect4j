@@ -33,8 +33,8 @@ import org.junit.Test;
 
 public class RepeatedPermutationIteratorTest {
 
-  private RepeatedPermutationIterator<Integer> iter;
-  private List<Integer> list;
+  RepeatedPermutationIterator<Integer> iter;
+  List<Integer> list;
 
   @Before
   public void setUp() throws Exception {

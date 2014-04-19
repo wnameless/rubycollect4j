@@ -36,7 +36,7 @@ import org.junit.Test;
 
 public class ProductIteratorTest {
 
-  private ProductIterator<Integer> iter;
+  ProductIterator<Integer> iter;
   RubyArray<List<Integer>> lists;
 
   @Before

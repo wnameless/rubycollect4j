@@ -37,8 +37,8 @@ import org.junit.Test;
 
 public class RubyEnumeratorTest {
 
-  private RubyEnumerator<Integer> re;
-  private List<Integer> list;
+  RubyEnumerator<Integer> re;
+  List<Integer> list;
 
   @Before
   public void setUp() throws Exception {

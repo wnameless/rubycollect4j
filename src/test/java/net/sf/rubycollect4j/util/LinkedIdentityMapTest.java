@@ -39,7 +39,7 @@ import org.junit.Test;
 
 public class LinkedIdentityMapTest {
 
-  private LinkedIdentityMap<String, Integer> map =
+  LinkedIdentityMap<String, Integer> map =
       new LinkedIdentityMap<String, Integer>();
 
   @Before

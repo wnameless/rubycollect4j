@@ -29,7 +29,7 @@ import org.junit.Test;
 
 public class ComparableEntryIterableTest {
 
-  private ComparableEntryIterable<Integer, Integer> iter;
+  ComparableEntryIterable<Integer, Integer> iter;
 
   @Before
   public void setUp() throws Exception {

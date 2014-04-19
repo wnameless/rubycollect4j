@@ -35,8 +35,8 @@ import org.junit.Test;
 
 public class EachWithIndexIteratorTest {
 
-  private EachWithIndexIterator<Integer> iter;
-  private List<Integer> list;
+  EachWithIndexIterator<Integer> iter;
+  List<Integer> list;
 
   @Before
   public void setUp() throws Exception {

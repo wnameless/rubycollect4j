@@ -34,9 +34,9 @@ import org.junit.Test;
 
 public class ChunkIteratorTest {
 
-  private ChunkIterator<Number, String> iter;
-  private RubyArray<Number> nums;
-  private TransformBlock<Number, String> block;
+  ChunkIterator<Number, String> iter;
+  RubyArray<Number> nums;
+  TransformBlock<Number, String> block;
 
   @Before
   public void setUp() throws Exception {

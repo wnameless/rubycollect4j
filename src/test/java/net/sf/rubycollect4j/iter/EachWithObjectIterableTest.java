@@ -32,8 +32,8 @@ import org.junit.Test;
 
 public class EachWithObjectIterableTest {
 
-  private EachWithObjectIterable<Integer, List<Integer>> iter;
-  private List<Integer> list;
+  EachWithObjectIterable<Integer, List<Integer>> iter;
+  List<Integer> list;
 
   @Before
   public void setUp() throws Exception {
