@@ -106,6 +106,14 @@ public final class RubyString extends RubyEnumerable<String> implements
       throw new TypeConstraintException(
           "TypeError: no implicit conversion of null into String");
 
+    if (o instanceof String)
+      return (String) o;
+
+    if (o instanceof CharSequence) {
+      CharSequence cs = (CharSequence) o;
+      return new StringBuilder(cs.length()).append(cs).toString();
+    }
+
     return o.toString();
   }
 
@@ -489,11 +497,9 @@ public final class RubyString extends RubyEnumerable<String> implements
    */
   public RubyString crypt(String salt) {
     String encrypt = str + stringify(salt);
-
     String md5 = null;
-    MessageDigest digest;
     try {
-      digest = MessageDigest.getInstance("MD5");
+      MessageDigest digest = MessageDigest.getInstance("MD5");
       digest.update(encrypt.getBytes(), 0, encrypt.length());
       md5 = new BigInteger(1, digest.digest()).toString(16);
     } catch (NoSuchAlgorithmException e) {}
@@ -511,7 +517,6 @@ public final class RubyString extends RubyEnumerable<String> implements
    */
   public RubyString delete(final String charSet) {
     stringify(charSet);
-
     return rs(toA().deleteIf((new BooleanBlock<String>() {
 
       @Override
@@ -580,14 +585,12 @@ public final class RubyString extends RubyEnumerable<String> implements
           return "\\r";
         else if (item.matches("\t"))
           return "\\t";
-        else if (codepoint < 256 && !item.matches("\\p{C}")) {
+        else if (codepoint < 256 && !item.matches("\\p{C}"))
           return item;
-        } else {
-          if (codepoint < 256)
-            return "\\" + Integer.toOctalString(codepoint);
-          else
-            return "\\u" + Integer.toHexString(codepoint);
-        }
+        else if (codepoint < 256)
+          return "\\" + Integer.toOctalString(codepoint);
+        else
+          return "\\u" + Integer.toHexString(codepoint);
       }
 
     }).join();
@@ -725,7 +728,6 @@ public final class RubyString extends RubyEnumerable<String> implements
    */
   public RubyString encode(String encoding) {
     stringify(encoding);
-
     return rs(new String(str.getBytes(), Charset.forName(encoding)));
   }
 
@@ -741,7 +743,6 @@ public final class RubyString extends RubyEnumerable<String> implements
   public RubyString encode(String dstEncoding, String srcEncoding) {
     stringify(srcEncoding);
     stringify(dstEncoding);
-
     return rs(new String(str.getBytes(Charset.forName(srcEncoding)),
         Charset.forName(dstEncoding)));
   }

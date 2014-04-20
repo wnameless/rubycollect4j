@@ -32,10 +32,12 @@ import org.junit.Test;
 public class ASCII8BitUTFTest {
 
   ASCII8BitUTF a8u;
+  ASCII8BitUTF emptyA8u;
 
   @Before
   public void setUp() throws Exception {
     a8u = new ASCII8BitUTF("我\377abc");
+    emptyA8u = new ASCII8BitUTF("");
   }
 
   @Test
@@ -98,8 +100,7 @@ public class ASCII8BitUTFTest {
 
   @Test(expected = IllegalStateException.class)
   public void testNextCharException() {
-    a8u.nextByte(100);
-    a8u.nextChar();
+    emptyA8u.nextChar();
   }
 
   @Test
@@ -115,12 +116,7 @@ public class ASCII8BitUTFTest {
 
   @Test(expected = IllegalStateException.class)
   public void testNextByteException() {
-    a8u.nextChar();
-    a8u.nextChar();
-    a8u.nextChar();
-    a8u.nextChar();
-    a8u.nextChar();
-    a8u.nextByte();
+    emptyA8u.nextByte();
   }
 
   @Test

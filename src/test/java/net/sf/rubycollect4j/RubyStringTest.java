@@ -54,10 +54,31 @@ import org.junit.Test;
 public class RubyStringTest {
 
   RubyString rs;
+  CharSequence cs;
 
   @Before
   public void setUp() throws Exception {
     rs = new RubyString("abc");
+    cs = new CharSequence() {
+
+      private String str = "testCharSequence";
+
+      @Override
+      public char charAt(int index) {
+        return str.charAt(index);
+      }
+
+      @Override
+      public int length() {
+        return str.length();
+      }
+
+      @Override
+      public CharSequence subSequence(int beginIndex, int endIndex) {
+        return str.subSequence(beginIndex, endIndex);
+      }
+
+    };
   }
 
   @Test
@@ -69,10 +90,11 @@ public class RubyStringTest {
   }
 
   @Test
-  public void testConstruct() {
+  public void testConstructor() {
     assertEquals("abc", rs.toS());
     assertEquals("", rs().toS());
     assertEquals("1", rs(1).toS());
+    assertEquals("testCharSequence", rs(cs).toS());
   }
 
   @Test(expected = TypeConstraintException.class)
