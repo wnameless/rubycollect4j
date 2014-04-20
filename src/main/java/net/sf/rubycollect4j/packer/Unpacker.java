@@ -57,6 +57,7 @@ import net.sf.rubycollect4j.util.ASCII8BitUTF;
  */
 public final class Unpacker {
 
+  private static final int ж = Integer.MAX_VALUE;
   private static final Byte NUL = Byte.valueOf((byte) '\0');
   private static final RubyHash<Directive, Integer> NUMBER_LENGTH_IN_BYTE = rh(
       s, 2, sb, 2, sl, 2, l, 4, lb, 4, ll, 4, F, 4, f, 4, e, 4, g, 4, q, 8, qb,
@@ -83,9 +84,8 @@ public final class Unpacker {
     for (String template : Packer.parseTemplate(format)) {
       Directive d = Packer.parseDirective(template);
       String countStr = template.replaceFirst("^" + d, "");
-      int count =
-          countStr.isEmpty() ? 1 : countStr.equals("*") ? Integer.MAX_VALUE
-              : rs(countStr).toI();
+      int count = countStr.isEmpty() ? 1 : //
+          countStr.equals("*") ? ж : rs(countStr).toI();
 
       String unpack;
       switch (d) {
@@ -101,7 +101,7 @@ public final class Unpacker {
         break;
 
       case Z:
-        if (count == Integer.MAX_VALUE) {
+        if (count == ж) {
           RubyArray<Byte> bytes = newRubyArray();
           while (a8u.hasByte() && !NUL.equals(bytes.last())) {
             bytes.add(a8u.nextByte());
@@ -128,7 +128,7 @@ public final class Unpacker {
 
       case c:
         if (!a8u.hasByte()) {
-          if (count != Integer.MAX_VALUE)
+          if (count != ж)
             objs.add(null);
 
           break;
@@ -137,12 +137,12 @@ public final class Unpacker {
         while (count > 0) {
           if (a8u.hasByte())
             objs.add(a8u.nextByte());
-          else if (count != Integer.MAX_VALUE)
+          else if (count != ж)
             objs.add(null);
           else
             break;
 
-          if (count != Integer.MAX_VALUE)
+          if (count != ж)
             count--;
         }
         break;
@@ -156,15 +156,10 @@ public final class Unpacker {
           break;
         }
 
-        RubyString unpackRS;
-        if (d == B || d == b)
-          unpackRS = rs(toBinaryString(new byte[] { a8u.nextByte() }, d == B));
-        else
-          unpackRS = rs(toHexString(new byte[] { a8u.nextByte() }, d == H));
-
+        RubyString unpackRS = null;
         RubyArray<String> unpackRA = newRubyArray();
         while (count > 0) {
-          if (unpackRS.anyʔ()) {
+          if (unpackRS != null && unpackRS.anyʔ()) {
             unpackRA.add(unpackRS.sliceǃ(0).toS());
             count--;
           } else if (a8u.hasByte()) {
@@ -202,7 +197,7 @@ public final class Unpacker {
       case G:
         int lengthInByte = NUMBER_LENGTH_IN_BYTE.get(d);
         while (count > 0) {
-          if (count == Integer.MAX_VALUE)
+          if (count == ж)
             count = a8u.remainingByteNumber() / lengthInByte;
 
           if (a8u.remainingByteNumber() >= lengthInByte)
