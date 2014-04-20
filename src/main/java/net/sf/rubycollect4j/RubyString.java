@@ -1087,7 +1087,7 @@ public final class RubyString extends RubyEnumerable<String> implements
         else if (item.matches("\t"))
           return "\\t";
         else if (item.matches("\\p{C}")) {
-          Integer codepoint = item.codePointAt(0);
+          int codepoint = item.codePointAt(0);
           if (codepoint < 256)
             return "\\" + Integer.toOctalString(codepoint);
           else
@@ -1420,11 +1420,7 @@ public final class RubyString extends RubyEnumerable<String> implements
       if (found <= stopAt)
         index = found;
     }
-
-    if (index != -1)
-      return index;
-    else
-      return null;
+    return index == -1 ? null : index;
   }
 
   /**
@@ -1512,9 +1508,9 @@ public final class RubyString extends RubyEnumerable<String> implements
       int sepIndex = str.lastIndexOf(sep);
       return newRubyArray(str.substring(0, sepIndex), sep,
           str.substring(sepIndex + sep.length()));
-    } else {
-      return newRubyArray("", "", str);
     }
+
+    return newRubyArray("", "", str);
   }
 
   /**
@@ -1984,7 +1980,6 @@ public final class RubyString extends RubyEnumerable<String> implements
    */
   public RubyString squeeze(String charSet) {
     stringify(charSet);
-
     return rs(str.replaceAll("([" + charSet2Str(charSet) + "])\\1+", "$1"));
   }
 
@@ -2297,34 +2292,32 @@ public final class RubyString extends RubyEnumerable<String> implements
   public RubyString tr(String fromStr, String toStr) {
     fromStr = charSet2Str(stringify(fromStr));
     toStr = charSet2Str(stringify(toStr));
-    if (fromStr.startsWith("^")) {
+    if (fromStr.startsWith("^"))
       return rs(str.replaceAll("[" + fromStr + "]",
           toStr.isEmpty() ? "" : rs(toStr).toA().last()));
-    } else {
-      RubyArray<String> fromStrAry =
-          rs(fromStr.replace("\\^", "^").replace("\\-", "-")).toA();
-      RubyArray<String> toStrAry = rs(toStr).toA();
-      if (toStrAry.isEmpty())
-        toStrAry.fill("", 0, fromStrAry.length());
-      else if (toStrAry.length() < fromStrAry.length())
-        toStrAry.fill(toStrAry.last(), toStrAry.size(), fromStrAry.length()
-            - toStrAry.length());
 
-      @SuppressWarnings("unchecked")
-      RubyHash<String, String> rh = Hash(fromStrAry.zip(toStrAry));
-      if (fromStr.contains("\\^")) {
-        fromStr = fromStr.replaceAll("\\\\^", "");
-        fromStr += "^";
-      }
-      if (fromStr.contains("\\-")) {
-        fromStr = fromStr.replaceAll("\\\\-", "");
-        fromStr += "-";
-      }
-      return gsub(
-          "["
-              + fromStr.replace("\\", "\\\\").replace("[", "\\[")
-                  .replace("]", "\\]") + "]", rh);
+    RubyArray<String> fromStrAry =
+        rs(fromStr.replace("\\^", "^").replace("\\-", "-")).toA();
+    RubyArray<String> toStrAry = rs(toStr).toA();
+    if (toStrAry.isEmpty())
+      toStrAry.fill("", 0, fromStrAry.length());
+    else if (toStrAry.length() < fromStrAry.length())
+      toStrAry.fill(toStrAry.last(), toStrAry.size(), fromStrAry.length()
+          - toStrAry.length());
+
+    @SuppressWarnings("unchecked")
+    RubyHash<String, String> rh = Hash(fromStrAry.zip(toStrAry));
+    if (fromStr.contains("\\^")) {
+      fromStr = fromStr.replaceAll("\\\\^", "");
+      fromStr += "^";
     }
+    if (fromStr.contains("\\-")) {
+      fromStr = fromStr.replaceAll("\\\\-", "");
+      fromStr += "-";
+    }
+    return gsub("["
+        + fromStr.replace("\\", "\\\\").replace("[", "\\[").replace("]", "\\]")
+        + "]", rh);
   }
 
   /**
@@ -2475,8 +2468,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    */
   public RubyEnumerator<String> upto(final String otherStr, boolean exclusive) {
     stringify(otherStr);
-
-    if (exclusive) {
+    if (exclusive)
       return newRubyEnumerator((Iterable<String>) range(str, otherStr).lazy()
           .takeWhile(new BooleanBlock<String>() {
 
@@ -2486,9 +2478,8 @@ public final class RubyString extends RubyEnumerable<String> implements
             }
 
           }));
-    } else {
-      return range(str, otherStr).each();
-    }
+
+    return range(str, otherStr).each();
   }
 
   /**

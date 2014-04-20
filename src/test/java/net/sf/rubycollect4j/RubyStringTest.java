@@ -261,6 +261,7 @@ public class RubyStringTest {
     rs = rs("hello world");
     assertEquals(5, rs.count("lo"));
     assertEquals(2, rs.count("lo", "o"));
+    assertEquals(5, rs.count("lo", (String[]) null));
     assertEquals(4, rs.count("hello", "^l"));
     assertEquals(4, rs.count("ej-m"));
     assertEquals(4, rs("hello^world").count("\\^aeiou"));
@@ -1332,6 +1333,7 @@ public class RubyStringTest {
     assertTrue(rs("hello").startWithʔ("hell"));
     assertTrue(rs("hello").startWithʔ("heaven", "hell"));
     assertFalse(rs("hello").startWithʔ("heaven", "paradise"));
+    assertTrue(rs("hello").startWithʔ("hell", (String[]) null));
   }
 
   @Test(expected = TypeConstraintException.class)
