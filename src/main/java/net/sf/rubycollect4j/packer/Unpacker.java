@@ -57,6 +57,7 @@ import net.sf.rubycollect4j.util.ASCII8BitUTF;
  */
 public final class Unpacker {
 
+  private static final Byte NUL = Byte.valueOf((byte) '\0');
   private static final RubyHash<Directive, Integer> NUMBER_LENGTH_IN_BYTE = rh(
       s, 2, sb, 2, sl, 2, l, 4, lb, 4, ll, 4, F, 4, f, 4, e, 4, g, 4, q, 8, qb,
       8, ql, 8, D, 8, d, 8, E, 8, G, 8).freeze();
@@ -102,7 +103,7 @@ public final class Unpacker {
       case Z:
         if (count == Integer.MAX_VALUE) {
           RubyArray<Byte> bytes = newRubyArray();
-          while (a8u.hasByte() && bytes.last() != Byte.valueOf((byte) '\0')) {
+          while (a8u.hasByte() && !NUL.equals(bytes.last())) {
             bytes.add(a8u.nextByte());
           }
           unpack = d.pack(bytes);
@@ -115,6 +116,7 @@ public final class Unpacker {
           objs.add(unpack.substring(0, unpack.indexOf('\0')));
         else
           objs.add(unpack);
+
         break;
 
       case U:
@@ -125,22 +127,23 @@ public final class Unpacker {
         continue;
 
       case c:
-        boolean isInfinite = count == Integer.MAX_VALUE;
         if (!a8u.hasByte()) {
-          if (!isInfinite)
+          if (count != Integer.MAX_VALUE)
             objs.add(null);
+
           break;
         }
 
         while (count > 0) {
-          if (a8u.hasByte()) {
+          if (a8u.hasByte())
             objs.add(a8u.nextByte());
-          } else if (!isInfinite) {
+          else if (count != Integer.MAX_VALUE)
             objs.add(null);
-          } else {
+          else
             break;
-          }
-          count--;
+
+          if (count != Integer.MAX_VALUE)
+            count--;
         }
         break;
 
