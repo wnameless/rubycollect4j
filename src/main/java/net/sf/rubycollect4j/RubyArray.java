@@ -31,6 +31,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
@@ -59,7 +60,7 @@ import net.sf.rubycollect4j.util.TryComparator;
  *          the type of the elements
  */
 public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
-    Comparable<RubyArray<E>>, Serializable {
+    Comparable<List<E>>, Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -333,13 +334,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Appends all elements of other List in this RubyArray.
+   * Appends all elements of other Collection in this RubyArray.
    * 
    * @param other
-   *          a List
+   *          a Collection
    * @return this RubyArray
    */
-  public RubyArray<E> concat(List<? extends E> other) {
+  public RubyArray<E> concat(Collection<? extends E> other) {
     list.addAll(other);
     return this;
   }
@@ -786,10 +787,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * Puts all common elements into a new RubyArray.
    * 
    * @param other
-   *          a List
+   *          a Collection
    * @return a new RubyArray
    */
-  public RubyArray<E> intersection(List<? extends E> other) {
+  public RubyArray<E> intersection(Collection<? extends E> other) {
     Set<E> thatSet = new HashSet<E>(other);
     Set<E> thisSet = new HashSet<E>();
     RubyArray<E> rubyArray = newRubyArray();
@@ -1019,13 +1020,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Appends other List to self into a new RubyArray.
+   * Appends other Collection to self and puts the result into a new RubyArray.
    * 
    * @param other
-   *          a List
+   *          a Collection
    * @return a new RubyArray
    */
-  public RubyArray<E> plus(List<? extends E> other) {
+  public RubyArray<E> plus(Collection<? extends E> other) {
     RubyArray<E> rubyArray = RubyArray.copyOf(list);
     rubyArray.addAll(other);
     return rubyArray;
@@ -1237,10 +1238,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * Replaces all elements of self with other List.
    * 
    * @param other
-   *          a List
+   *          a Collection
    * @return this RubyArray
    */
-  public RubyArray<E> replace(List<? extends E> other) {
+  public RubyArray<E> replace(Collection<? extends E> other) {
     list.clear();
     list.addAll(other);
     return this;
@@ -1508,9 +1509,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    */
   public RubyArray<E> slice(int index, int length) {
     RubyArray<E> rubyArray = newRubyArray();
-    if (index < -list.size()) {
-      return null;
-    } else if (index >= list.size()) {
+    if (index < -list.size() || index >= list.size()) {
       return null;
     } else {
       if (index < 0)
@@ -1552,9 +1551,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    */
   public RubyArray<E> sliceǃ(int index, int length) {
     RubyArray<E> rubyArray = newRubyArray();
-    if (index < -list.size()) {
-      return null;
-    } else if (index >= list.size()) {
+    if (index < -list.size() || index >= list.size()) {
       return null;
     } else {
       if (index < 0)
@@ -1695,14 +1692,14 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Eliminates all elements from other List and puts the result into a new
-   * RubyArray.
+   * Eliminates all elements from other Collection and puts the result into a
+   * new RubyArray.
    * 
    * @param other
-   *          a List
+   *          a Collection
    * @return a new RubyArray
    */
-  public RubyArray<E> minus(List<? extends E> other) {
+  public RubyArray<E> minus(Collection<? extends E> other) {
     RubyArray<E> rubyArray = RubyArray.copyOf(list);
     rubyArray.removeAll(other);
     return rubyArray;
@@ -1764,13 +1761,12 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * Puts all distinct elements into a new RubyArray.
    * 
    * @param other
-   *          a List
+   *          a Collection
    * @return a new RubyArray
    */
-  public RubyArray<E> union(List<? extends E> other) {
+  public RubyArray<E> union(Collection<? extends E> other) {
     RubyArray<E> rubyArray = RubyArray.copyOf(list);
-    rubyArray.addAll(other);
-    rubyArray.uniqǃ();
+    rubyArray.concat(other).uniqǃ();
     return rubyArray;
   }
 
@@ -1780,13 +1776,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * @return a new RubyArray
    */
   public RubyArray<E> uniq() {
-    RubyArray<E> rubyArray = newRubyArray();
-    Set<E> set = new HashSet<E>();
-    for (E item : list) {
-      if (set.add(item))
-        rubyArray.add(item);
-    }
-    return rubyArray;
+    Set<E> set = new LinkedHashSet<E>(list);
+    return newRubyArray(set);
   }
 
   /**
@@ -1881,9 +1872,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
     Set<S> set = new HashSet<S>();
     ListIterator<E> li = list.listIterator();
     while (li.hasNext()) {
-      if (!set.add(block.yield(li.next()))) {
+      if (!set.add(block.yield(li.next())))
         li.remove();
-      }
     }
     return list.size() == beforeSize ? null : this;
   }
@@ -2061,7 +2051,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   @Override
-  public int compareTo(RubyArray<E> arg0) {
+  public int compareTo(List<E> arg0) {
     if (arg0 == null)
       throw new IllegalArgumentException("ArgumentError: comparison of "
           + list.getClass().getName() + " with null failed");

@@ -208,7 +208,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    */
   public V setDefault(V defaultValue) {
     this.defaultValue = defaultValue;
-    return this.defaultValue;
+    return defaultValue;
   }
 
   /**

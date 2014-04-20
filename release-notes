@@ -246,3 +246,10 @@ Version 1.7.4
 * Changed RubyString#unpack to use ASCII-8bit encoding by adding ASCII8BitUTF
 
 * Moved ByteUtil to net.sf.rubycollect4j.util package
+
+
+Version 1.7.5
+
+* Increased the flexibility of RubyArray API by accepting Collection in certain methods
+
+* Changed Comparable<RubyArray> to Comparable<List> in RubyArray
