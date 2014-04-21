@@ -103,7 +103,7 @@ public final class Unpacker {
       case Z:
         if (count == ж) {
           RubyArray<Byte> bytes = newRubyArray();
-          while (a8u.hasByte() && !NUL.equals(bytes.last())) {
+          while (a8u.hasNextByte() && !NUL.equals(bytes.last())) {
             bytes.add(a8u.nextByte());
           }
           unpack = d.pack(bytes);
@@ -120,14 +120,14 @@ public final class Unpacker {
         break;
 
       case U:
-        while (count > 0 && a8u.hasChar()) {
+        while (count > 0 && a8u.hasNextChar()) {
           objs.add(d.unpack(a8u.nextChar().getBytes()));
           count--;
         }
         continue;
 
       case c:
-        if (!a8u.hasByte()) {
+        if (!a8u.hasNextByte()) {
           if (count != ж)
             objs.add(null);
 
@@ -135,7 +135,7 @@ public final class Unpacker {
         }
 
         while (count > 0) {
-          if (a8u.hasByte())
+          if (a8u.hasNextByte())
             objs.add(a8u.nextByte());
           else if (count != ж)
             objs.add(null);
@@ -151,7 +151,7 @@ public final class Unpacker {
       case b:
       case H:
       case h:
-        if (!a8u.hasByte()) {
+        if (!a8u.hasNextByte()) {
           objs.add("");
           break;
         }
@@ -162,7 +162,7 @@ public final class Unpacker {
           if (unpackRS != null && unpackRS.anyʔ()) {
             unpackRA.add(unpackRS.sliceǃ(0).toS());
             count--;
-          } else if (a8u.hasByte()) {
+          } else if (a8u.hasNextByte()) {
             if (d == B || d == b)
               unpackRS =
                   rs(toBinaryString(new byte[] { a8u.nextByte() }, d == B));

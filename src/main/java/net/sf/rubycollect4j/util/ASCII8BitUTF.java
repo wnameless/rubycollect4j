@@ -39,7 +39,7 @@ import net.sf.rubycollect4j.RubyString;
  * It is designed for {@link RubyString#unpack} to use.
  *
  */
-public final class ASCII8BitUTF {
+public final class ASCII8BitUTF implements CharSequence {
 
   private final String str;
   private final RubyArray<String> chars = newRubyArray();
@@ -61,13 +61,13 @@ public final class ASCII8BitUTF {
     this.str = str;
     chars.replace(rs(str).toA());
     totalByteNumber = remainingByteNumber = countByteNumber();
-    reset();
+    rewind();
   }
 
   private int countByteNumber() {
     advanceChar();
     int total = 0;
-    while (hasByte()) {
+    while (hasNextByte()) {
       nextByte();
       total++;
     }
@@ -114,9 +114,9 @@ public final class ASCII8BitUTF {
   }
 
   /**
-   * Resets this {@link ASCII8BitUTF}.
+   * Rewinds this {@link ASCII8BitUTF}.
    */
-  public void reset() {
+  public void rewind() {
     chars.replace(rs(str).toA());
     advanceChar();
     remainingByteNumber = totalByteNumber;
@@ -127,7 +127,7 @@ public final class ASCII8BitUTF {
    * 
    * @return true if there are remaining characters, false otherwise
    */
-  public boolean hasChar() {
+  public boolean hasNextChar() {
     return (currentChar != null && currentChar.getBytes().length == currentBytes
         .size()) || chars.anyʔ();
   }
@@ -137,8 +137,8 @@ public final class ASCII8BitUTF {
    * 
    * @return true if there are remaining bytes, false otherwise
    */
-  public boolean hasByte() {
-    return currentBytes.anyʔ() || hasChar();
+  public boolean hasNextByte() {
+    return currentBytes.anyʔ() || hasNextChar();
   }
 
   /**
@@ -149,7 +149,7 @@ public final class ASCII8BitUTF {
    *           if no more character is left
    */
   public String nextChar() {
-    if (!hasChar())
+    if (!hasNextChar())
       throw new IllegalStateException("No more character");
 
     String ch;
@@ -165,6 +165,22 @@ public final class ASCII8BitUTF {
   }
 
   /**
+   * Returns next n as maximum chars.
+   * 
+   * @param n
+   *          maximum number of chars
+   * @return a String
+   */
+  public String nextChar(int n) {
+    StringBuilder sb = new StringBuilder();
+    while (n > 0 && hasNextChar()) {
+      sb.append(nextChar());
+      n--;
+    }
+    return sb.toString();
+  }
+
+  /**
    * Returns next byte.
    * 
    * @return a byte
@@ -175,7 +191,7 @@ public final class ASCII8BitUTF {
     if (currentBytes.anyʔ()) {
       remainingByteNumber--;
       return currentBytes.shift();
-    } else if (hasChar()) {
+    } else if (hasNextChar()) {
       advanceChar();
       remainingByteNumber--;
       return currentBytes.shift();
@@ -184,7 +200,7 @@ public final class ASCII8BitUTF {
   }
 
   /**
-   * Returns next n as maximum bytes .
+   * Returns next n as maximum bytes.
    * 
    * @param n
    *          maximum number of bytes
@@ -192,7 +208,7 @@ public final class ASCII8BitUTF {
    */
   public byte[] nextByte(int n) {
     List<Byte> bytes = newRubyArray();
-    while (n > 0 && hasByte()) {
+    while (n > 0 && hasNextByte()) {
       bytes.add(nextByte());
       n--;
     }
@@ -215,7 +231,22 @@ public final class ASCII8BitUTF {
 
   @Override
   public String toString() {
-    return getClass().getSimpleName() + "{" + str + "}";
+    return str;
+  }
+
+  @Override
+  public char charAt(int index) {
+    return str.charAt(index);
+  }
+
+  @Override
+  public int length() {
+    return str.length();
+  }
+
+  @Override
+  public CharSequence subSequence(int start, int end) {
+    return str.subSequence(start, end);
   }
 
 }

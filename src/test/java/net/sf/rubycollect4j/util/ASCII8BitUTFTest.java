@@ -32,11 +32,13 @@ import org.junit.Test;
 public class ASCII8BitUTFTest {
 
   ASCII8BitUTF a8u;
+  String str;
   ASCII8BitUTF emptyA8u;
 
   @Before
   public void setUp() throws Exception {
-    a8u = new ASCII8BitUTF("我\377abc");
+    str = "我\377abc";
+    a8u = new ASCII8BitUTF(str);
     emptyA8u = new ASCII8BitUTF("");
   }
 
@@ -59,36 +61,36 @@ public class ASCII8BitUTFTest {
   public void testRemainingByteNumber() {
     a8u.nextByte();
     assertEquals(6, a8u.remainingByteNumber());
-    a8u.reset();
+    a8u.rewind();
     a8u.nextChar();
     assertEquals(4, a8u.remainingByteNumber());
   }
 
   @Test
-  public void testReset() {
+  public void testRewind() {
     a8u.nextByte(100);
     assertEquals(0, a8u.remainingByteNumber());
-    a8u.reset();
+    a8u.rewind();
     assertEquals(7, a8u.remainingByteNumber());
   }
 
   @Test
-  public void testHasChar() {
+  public void testHasNextChar() {
     a8u = new ASCII8BitUTF("\377我");
-    assertTrue(a8u.hasChar());
+    assertTrue(a8u.hasNextChar());
     a8u.nextChar();
-    assertTrue(a8u.hasChar());
+    assertTrue(a8u.hasNextChar());
     a8u.nextByte();
-    assertFalse(a8u.hasChar());
+    assertFalse(a8u.hasNextChar());
   }
 
   @Test
-  public void testHasByte() {
-    assertTrue(a8u.hasByte());
+  public void testHasNextByte() {
+    assertTrue(a8u.hasNextByte());
     a8u.nextByte(6);
-    assertTrue(a8u.hasByte());
+    assertTrue(a8u.hasNextByte());
     a8u.nextByte();
-    assertFalse(a8u.hasByte());
+    assertFalse(a8u.hasNextByte());
   }
 
   @Test
@@ -101,6 +103,13 @@ public class ASCII8BitUTFTest {
   @Test(expected = IllegalStateException.class)
   public void testNextCharException() {
     emptyA8u.nextChar();
+  }
+
+  @Test
+  public void testNexCharWithNumber() {
+    a8u = new ASCII8BitUTF("abc");
+    assertEquals("ab", a8u.nextChar(2));
+    assertEquals("c", a8u.nextChar(2));
   }
 
   @Test
@@ -129,19 +138,34 @@ public class ASCII8BitUTFTest {
   @Test
   public void testEquals() {
     assertTrue(a8u.equals(a8u));
-    assertTrue(a8u.equals(new ASCII8BitUTF("我\377abc")));
+    assertTrue(a8u.equals(new ASCII8BitUTF(str)));
     assertFalse(a8u.equals(null));
   }
 
   @Test
   public void testHashCode() {
-    assertEquals(a8u.hashCode(), new ASCII8BitUTF("我\377abc").hashCode());
+    assertEquals(a8u.hashCode(), new ASCII8BitUTF(str).hashCode());
     assertNotEquals(a8u.hashCode(), new ASCII8BitUTF("\377abc").hashCode());
   }
 
   @Test
   public void testToString() {
-    assertEquals("ASCII8BitUTF{我\377abc}", a8u.toString());
+    assertEquals(str, a8u.toString());
+  }
+
+  @Test
+  public void testCharAt() {
+    assertEquals(str.charAt(4), a8u.charAt(4));
+  }
+
+  @Test
+  public void testLength() {
+    assertEquals(str.length(), a8u.length());
+  }
+
+  @Test
+  public void testSubSequence() {
+    assertEquals(str.subSequence(2, 4), a8u.subSequence(2, 4));
   }
 
 }
