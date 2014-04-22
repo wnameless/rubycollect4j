@@ -432,11 +432,9 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Yields each element to the block.
+   * {@inheritDoc}
    * 
-   * @param block
-   *          to yield each element
-   * @return this RubyArray
+   * @return this {@link RubyArray}
    */
   @Override
   public RubyArray<E> each(Block<? super E> block) {
