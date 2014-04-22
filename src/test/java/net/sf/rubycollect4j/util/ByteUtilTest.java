@@ -305,6 +305,7 @@ public class ByteUtilTest {
         ByteUtil.fromBinaryString("0000000011111111"));
     assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0xFE },
         ByteUtil.fromBinaryString("000000001111111"));
+    assertArrayEquals(new byte[0], ByteUtil.fromBinaryString(""));
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -318,6 +319,7 @@ public class ByteUtilTest {
         ByteUtil.fromHexString("00Ff"));
     assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0xF0 },
         ByteUtil.fromHexString("00F"));
+    assertArrayEquals(new byte[0], ByteUtil.fromHexString(""));
   }
 
   @Test(expected = IllegalArgumentException.class)

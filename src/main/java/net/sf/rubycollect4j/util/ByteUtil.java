@@ -520,8 +520,10 @@ public final class ByteUtil {
    *           if binary string is invalid
    */
   public static byte[] fromBinaryString(String binaryStr) {
-    if (!binaryStr.matches("^[01]+$"))
+    if (!binaryStr.matches("^[01]*$"))
       throw new IllegalArgumentException("Invalid binary string");
+    if (binaryStr.isEmpty())
+      return new byte[0];
 
     int complementary = binaryStr.length() % 8;
     if (complementary != 0)
@@ -540,8 +542,10 @@ public final class ByteUtil {
    *           if hexadecimal string is invalid
    */
   public static byte[] fromHexString(String hexStr) {
-    if (!hexStr.matches("^[0-9A-Fa-f]+$"))
+    if (!hexStr.matches("^[0-9A-Fa-f]*$"))
       throw new IllegalArgumentException("Invalid hexadecimal string");
+    if (hexStr.isEmpty())
+      return new byte[0];
 
     int complementary = hexStr.length() % 2;
     if (complementary != 0)
