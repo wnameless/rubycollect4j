@@ -60,10 +60,10 @@ import net.sf.rubycollect4j.succ.StringSuccessor;
  * language. {@link RubyString} is also a Java CharSequence.
  * <P>
  * To avoid the conflict of Java 8 String#chars(), {@link RubyString} doesn't
- * implements the chars() method, but it directly extends the
- * {@link RubyEnumerable} instead which also implies it allows to be manipulated
- * as RubyEnumerable&lt;String&gt; and each String represents a character in
- * this {@link RubyString}.
+ * implement the chars() method, but instead it directly extends the
+ * {@link RubyEnumerable} which also implies it allows to be manipulated as
+ * RubyEnumerable&lt;String&gt; and each String represents a character in this
+ * {@link RubyString}.
  * 
  */
 public final class RubyString extends RubyEnumerable<String> implements
