@@ -47,14 +47,14 @@ It also implements parts of Ruby Dir, File and Date methods.</p>
 <div class="highlight highlight-xml"><pre><span class="nt">&lt;dependency&gt;</span>
   <span class="nt">&lt;groupId&gt;</span>net.sf.rubycollect4j<span class="nt">&lt;/groupId&gt;</span>
   <span class="nt">&lt;artifactId&gt;</span>rubycollect4j<span class="nt">&lt;/artifactId&gt;</span>
-  <span class="nt">&lt;version&gt;</span>1.7.4<span class="nt">&lt;/version&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.7.5<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 
 <p>Java 8 with rubycollect4j:</p>
 
 <div class="highlight highlight-java"><pre><span class="c1">// Sorts the characters by its frequency based on the word 'Mississippi' case-insensitively.</span>
-<span class="n">RubyString</span> <span class="n">word</span> <span class="o">=</span> <span class="n">rs</span><span class="o">(</span><span class="s">"Mississippi"</span><span class="o">);</span> <span class="c1">// Equivalent to newRubyString("Mississippi")</span>
+<span class="n">RubyString</span> <span class="n">word</span> <span class="o">=</span> <span class="n">rs</span><span class="o">(</span><span class="s">"Mississippi"</span><span class="o">);</span> <span class="c1">// Equivalent to new RubyString("Mississippi")</span>
 
 <span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="n">word</span><span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="nl">String:</span><span class="o">:</span><span class="n">toLowerCase</span><span class="o">).</span><span class="na">sortBy</span><span class="o">((</span><span class="n">c</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
       <span class="k">return</span> <span class="n">word</span><span class="o">.</span><span class="na">count</span><span class="o">(</span><span class="n">c</span><span class="o">);</span>
@@ -71,7 +71,7 @@ It also implements parts of Ruby Dir, File and Date methods.</p>
   <span class="n">RubyFile</span><span class="o">.</span><span class="na">foreach</span><span class="o">(</span><span class="s">"/usr/share/dict/web2"</span><span class="o">)</span> <span class="c1">// Dictionary of Mac OS</span>
     <span class="o">.</span><span class="na">minmaxBy</span><span class="o">(</span><span class="k">new</span> <span class="n">TransformBlock</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;()</span> <span class="o">{</span>
       <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">yield</span><span class="o">(</span><span class="n">String</span> <span class="n">item</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="nf">newRubyString</span><span class="o">(</span><span class="n">item</span><span class="o">).</span><span class="na">toA</span><span class="o">().</span><span class="na">uniq</span><span class="o">().</span><span class="na">count</span><span class="o">();</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">RubyString</span><span class="o">(</span><span class="n">item</span><span class="o">).</span><span class="na">toA</span><span class="o">().</span><span class="na">uniq</span><span class="o">().</span><span class="na">count</span><span class="o">();</span>
       <span class="o">}</span>
     <span class="o">}).</span><span class="na">map</span><span class="err">ǃ</span><span class="o">(</span><span class="s">"toUpperCase"</span><span class="o">);</span>
 
