@@ -102,10 +102,10 @@ map.put(1, "a");
 RubyHash<Integer, String> rh = RubyHash.of(map);
 ```
 
-Demo rs() & newRubyString():
+Demo rs() & new RubyString():
 ```java
 // RubyString can be created from any Object.
-p( newRubyString(1000L).count("0") )                   // Output: 3
+p( new RubyString(1000L).count("0") )                  // Output: 3
 // RubyString is also a RubyEnumerable of each character(as String).
 p( rs("abc").map("codePointAt", 0) );                  // Output: [97, 98, 99]
 // RubyString implements fluent interface.
