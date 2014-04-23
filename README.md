@@ -14,14 +14,14 @@ Installation with Maven:
 <dependency>
   <groupId>net.sf.rubycollect4j</groupId>
   <artifactId>rubycollect4j</artifactId>
-  <version>1.7.4</version>
+  <version>1.7.5</version>
 </dependency>
 ```
 
 Java 8 with rubycollect4j:
 ```java
 // Sorts the characters by its frequency based on the word 'Mississippi' case-insensitively.
-RubyString word = rs("Mississippi"); // Equivalent to newRubyString("Mississippi")
+RubyString word = rs("Mississippi"); // Equivalent to new RubyString("Mississippi")
 
 String result = word.map(String::toLowerCase).sortBy((c) -> {
       return word.count(c);
@@ -38,7 +38,7 @@ RubyArray<String> words =
   RubyFile.foreach("/usr/share/dict/web2") // Dictionary of Mac OS
     .minmaxBy(new TransformBlock<String, Integer>() {
       public Integer yield(String item) {
-        return newRubyString(item).toA().uniq().count();
+        return new RubyString(item).toA().uniq().count();
       }
     }).mapǃ("toUpperCase");
 

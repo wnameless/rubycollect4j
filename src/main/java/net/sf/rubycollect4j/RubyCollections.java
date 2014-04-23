@@ -122,7 +122,8 @@ public final class RubyCollections {
    * @param defensiveCopy
    *          true If defensive copy required and false otherwise
    * @return new {@link RubyArray}
-   * @deprecated As of release 1.7.2, replaced by {@link RubyArray#copyOf}
+   * @deprecated As of release 1.7.2, replaced by
+   *             {@link RubyArray#copyOf(Iterable)}
    */
   @Deprecated
   public static <E> RubyArray<E> newRubyArray(List<E> list,
@@ -188,7 +189,7 @@ public final class RubyCollections {
    * @param defensiveCopy
    *          it makes a defensive copy if specified
    * @return new {@link RubyHash}
-   * @deprecated As of release 1.7.2, replaced by {@link RubyHash#copyOf}
+   * @deprecated As of release 1.7.2, replaced by {@link RubyHash#copyOf(Map)}
    */
   @Deprecated
   public static <K, V> RubyHash<K, V> newRubyHash(LinkedHashMap<K, V> map,
@@ -334,7 +335,9 @@ public final class RubyCollections {
    * Creates a {@link RubyString}.
    * 
    * @return {@link RubyString}
+   * @deprecated As of release 1.7.5, replaced by {@link #rs()}
    */
+  @Deprecated
   public static RubyString newRubyString() {
     return new RubyString();
   }
@@ -343,7 +346,9 @@ public final class RubyCollections {
    * Creates a {@link RubyString} by given Object.
    * 
    * @return {@link RubyString}
+   * @deprecated As of release 1.7.5, replaced by {@link #rs(Object)}
    */
+  @Deprecated
   public static RubyString newRubyString(Object o) {
     return new RubyString(o);
   }

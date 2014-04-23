@@ -255,3 +255,5 @@ Version 1.7.5
 * Changed Comparable<RubyArray> to Comparable<List> in RubyArray
 
 * Improved the quality of entire JavaDoc
+
+* Deprecated RubyCollections#newRubyString

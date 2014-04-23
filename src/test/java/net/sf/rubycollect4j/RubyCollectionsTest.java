@@ -140,6 +140,7 @@ public class RubyCollectionsTest {
     assertTrue(newRubyRange(RubyDate.today(), RubyDate.today().add(9).days()) instanceof RubyRange);
   }
 
+  @SuppressWarnings("deprecation")
   @Test
   public void testNewRubyString() {
     assertTrue(newRubyString() instanceof RubyString);
