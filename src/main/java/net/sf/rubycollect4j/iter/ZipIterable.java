@@ -27,8 +27,8 @@ import java.util.List;
 import net.sf.rubycollect4j.RubyArray;
 
 /**
- * ZipIterable iterates each RubyArray of elements which get the same indices
- * among all other Lists.
+ * {@link ZipIterable} iterates each {@link RubyArray} of elements which get the
+ * same indices among all other Lists.
  * 
  * @param <E>
  *          the type of the elements
@@ -39,7 +39,7 @@ public final class ZipIterable<E> implements Iterable<RubyArray<E>> {
   private final Iterable<? extends Iterable<? extends E>> others;
 
   /**
-   * Creates a ZipIterable.
+   * Creates a {@link ZipIterable}.
    * 
    * @param iter
    *          an Iterable

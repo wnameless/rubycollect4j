@@ -27,8 +27,8 @@ import net.sf.rubycollect4j.util.ComparableEntry;
 
 /**
  * 
- * ComparableEntryIterator iterates an Iterator of Entry and wraps each Entry
- * into a ComparableEntry.
+ * {@link ComparableEntryIterator} iterates an Iterator of Entry and wraps each
+ * Entry into a {@link ComparableEntry}.
  * 
  * @param <K>
  *          the type of the key elements
@@ -41,7 +41,7 @@ public final class ComparableEntryIterator<K, V> implements
   private final Iterator<? extends Entry<? extends K, ? extends V>> iter;
 
   /**
-   * Creates a ComparableEntryIterator.
+   * Creates a {@link ComparableEntryIterator}.
    * 
    * @param iter
    *          an Iterator of Entry

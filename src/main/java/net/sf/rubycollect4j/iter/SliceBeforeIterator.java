@@ -31,9 +31,9 @@ import net.sf.rubycollect4j.util.PeekingIterator;
 
 /**
  * 
- * SliceBeforeIterator iterates all elements by slicing elements into different
- * parts. It performs each slicing when any element is true returned by the
- * block or matched by the pattern.
+ * {@link SliceBeforeIterator} iterates all elements by slicing elements into
+ * different parts. It performs each slicing when any element is true returned
+ * by the block or matched by the pattern.
  * 
  * @param <E>
  *          the type of the elements
@@ -45,7 +45,7 @@ public final class SliceBeforeIterator<E> implements Iterator<RubyArray<E>> {
   private final Pattern pattern;
 
   /**
-   * Creates a SliceBeforeIterator.
+   * Creates a {@link SliceBeforeIterator}.
    * 
    * @param iter
    *          an Iterable
@@ -65,7 +65,7 @@ public final class SliceBeforeIterator<E> implements Iterator<RubyArray<E>> {
   }
 
   /**
-   * Creates a SliceBeforeIterator.
+   * Creates a {@link SliceBeforeIterator}.
    * 
    * @param iter
    *          an Iterator

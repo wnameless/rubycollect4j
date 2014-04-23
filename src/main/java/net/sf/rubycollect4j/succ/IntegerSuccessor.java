@@ -22,8 +22,8 @@ package net.sf.rubycollect4j.succ;
 
 /**
  * 
- * IntegerSuccessor generates a successor of any given Integer. It's a singleton
- * object.
+ * {@link IntegerSuccessor} generates a successor of any given Integer. It's a
+ * singleton object.
  * 
  */
 public final class IntegerSuccessor implements Successive<Integer> {
@@ -33,9 +33,9 @@ public final class IntegerSuccessor implements Successive<Integer> {
   private IntegerSuccessor() {}
 
   /**
-   * Returns an IntegerSuccessor.
+   * Returns an {@link IntegerSuccessor}.
    * 
-   * @return an IntegerSuccessor
+   * @return an {@link IntegerSuccessor}
    */
   public static IntegerSuccessor getInstance() {
     return IntegerSuccessor.INSTANCE;

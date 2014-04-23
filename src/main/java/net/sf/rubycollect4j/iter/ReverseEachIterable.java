@@ -24,7 +24,7 @@ import java.util.Iterator;
 
 /**
  * 
- * ReverseEachIterable iterates each element reversely.
+ * {@link ReverseEachIterable} iterates each element reversely.
  * 
  * @param <E>
  *          the type of the elements
@@ -34,7 +34,7 @@ public final class ReverseEachIterable<E> implements Iterable<E> {
   private final Iterable<? extends E> iter;
 
   /**
-   * Creates a ReverseEachIterable.
+   * Creates a {@link ReverseEachIterable}.
    * 
    * @param iter
    *          an Iterable

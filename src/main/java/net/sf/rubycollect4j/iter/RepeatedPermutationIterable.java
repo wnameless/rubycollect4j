@@ -27,8 +27,8 @@ import net.sf.rubycollect4j.RubyArray;
 
 /**
  * 
- * RepeatedPermutationIterable generates all repeated permutations into a List
- * with length n.
+ * {@link RepeatedPermutationIterable} generates all repeated permutations into
+ * a List with length n.
  * 
  * @param <E>
  *          the type of the elements
@@ -40,7 +40,7 @@ public final class RepeatedPermutationIterable<E> implements
   private final int n;
 
   /**
-   * Creates a RepeatedPermutationIterable.
+   * Creates a {@link RepeatedPermutationIterable}.
    * 
    * @param list
    *          a List

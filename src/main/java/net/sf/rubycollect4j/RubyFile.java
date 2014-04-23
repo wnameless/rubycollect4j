@@ -33,7 +33,8 @@ import java.util.logging.Logger;
 
 /**
  * 
- * RubyFile implements parts of the methods refer to the File class of Ruby.
+ * {@link RubyFile} implements parts of the methods refer to the File class of
+ * Ruby.
  * 
  */
 public final class RubyFile extends RubyIO {
@@ -42,13 +43,13 @@ public final class RubyFile extends RubyIO {
       .getName());
 
   /**
-   * Creates a RubyFile by given path and mode.
+   * Creates a {@link RubyFile} by given path and mode.
    * 
    * @param path
    *          of a File
    * @param mode
    *          r, rw, w, w+, a, a+
-   * @return a RubyFile
+   * @return a {@link RubyFile}
    */
   public static RubyFile open(String path, String mode) {
     RubyFile rf = null;
@@ -62,27 +63,16 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Creates a RubyFile by given file. Sets the mode to read-only.
+   * Creates a {@link RubyFile} by given file. Sets the mode to read-only.
    * 
    * @param path
    *          of a file
-   * @return a RubyFile
+   * @return a {@link RubyFile}
    */
   public static RubyFile open(String path) {
     return open(path, R.toString());
   }
 
-  /**
-   * Private constructor to enhance static factory methods and prevent from
-   * inheritance.
-   * 
-   * @param file
-   *          a File
-   * @param mode
-   *          a Mode
-   * @throws FileNotFoundException
-   * @throws IOException
-   */
   private RubyFile(File file, Mode mode) throws FileNotFoundException,
       IOException {
     super(file, mode);
@@ -215,7 +205,7 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
-   * Equivalent to existʔ().
+   * Equivalent to {@link #existʔ(String)}.
    * 
    * @param path
    *          of a file

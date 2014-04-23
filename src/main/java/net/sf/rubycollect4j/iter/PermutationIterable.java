@@ -27,7 +27,8 @@ import net.sf.rubycollect4j.RubyArray;
 
 /**
  * 
- * PermutationIterable generates all permutations into a List with length n.
+ * {@link PermutationIterable} generates all permutations into a List with
+ * length n.
  * 
  * @param <E>
  *          the type of the elements
@@ -38,7 +39,7 @@ public final class PermutationIterable<E> implements Iterable<RubyArray<E>> {
   private final int n;
 
   /**
-   * Creates a PermutationIterable.
+   * Creates a {@link PermutationIterable}.
    * 
    * @param list
    *          a List

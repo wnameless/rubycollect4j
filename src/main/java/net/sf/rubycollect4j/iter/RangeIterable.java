@@ -26,7 +26,8 @@ import net.sf.rubycollect4j.succ.Successive;
 
 /**
  * 
- * RangeIterable iterates each element within a range derived by 2 objects.
+ * {@link RangeIterable} iterates each element within a range derived by 2
+ * objects.
  * 
  * @param <E>
  *          the type of the elements
@@ -38,7 +39,7 @@ public final class RangeIterable<E> implements Iterable<E> {
   private final E endPoint;
 
   /**
-   * Creates a RangeIterable.
+   * Creates a {@link RangeIterable}.
    * 
    * @param successive
    *          a Successive

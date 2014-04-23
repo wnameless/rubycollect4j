@@ -27,7 +27,7 @@ import net.sf.rubycollect4j.util.ComparableEntry;
 
 /**
  * 
- * EachWithIndexIterator iterates each element with its index.
+ * {@link EachWithIndexIterator} iterates each element with its index.
  * 
  * @param <E>
  *          the type of the elements
@@ -39,7 +39,7 @@ public final class EachWithIndexIterator<E> implements
   private int index = 0;
 
   /**
-   * Creates an EachWithIndexIterator.
+   * Creates an {@link EachWithIndexIterator}.
    * 
    * @param iter
    *          an Iterator

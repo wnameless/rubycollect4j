@@ -26,10 +26,11 @@ import java.util.logging.Logger;
 
 /**
  * 
- * TryComparator tries to compare any 2 objects by casting the first object to a
- * Comparable. It allows to compare any 2 objects which have the same equality
- * even if they are not comparable. If a Comparator is provided, the Comparator
- * is used to compare objects and no additional casting will be performed.
+ * {@link TryComparator} tries to compare any 2 objects by casting the first
+ * object to a Comparable. It allows to compare any 2 objects which have the
+ * same equality even if they are not comparable. If a Comparator is provided,
+ * the Comparator is used to compare objects and no additional casting will be
+ * performed.
  * 
  * @param <E>
  *          the type of the elements
@@ -42,14 +43,14 @@ public final class TryComparator<E> implements Comparator<E> {
   private final Comparator<? super E> comp;
 
   /**
-   * Creates a TryComparator.
+   * Creates a {@link TryComparator}.
    */
   public TryComparator() {
     comp = null;
   }
 
   /**
-   * Creates a TryComparator by given Comparator.
+   * Creates a {@link TryComparator} by given Comparator.
    * 
    * @param comp
    *          a Comparator

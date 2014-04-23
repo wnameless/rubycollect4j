@@ -32,7 +32,7 @@ import java.util.logging.Logger;
 
 /**
  * 
- * EachLineIterator iterates a File line by line.
+ * {@link EachLineIterator} iterates a File line by line.
  * 
  */
 public final class EachLineIterator implements Iterator<String> {
@@ -45,7 +45,7 @@ public final class EachLineIterator implements Iterator<String> {
   private String line;
 
   /**
-   * Creates an EachLineIterator.
+   * Creates an {@link EachLineIterator}.
    * 
    * @param file
    *          a File

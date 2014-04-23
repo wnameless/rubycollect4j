@@ -23,10 +23,12 @@ package net.sf.rubycollect4j.iter;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import net.sf.rubycollect4j.util.ComparableEntry;
+
 /**
  * 
- * ComparableEntryIterable iterates an Iterable of Entry and wraps each Entry
- * into a ComparableEntry.
+ * {@link ComparableEntryIterable} iterates an Iterable of Entry and wraps each
+ * Entry into a {@link ComparableEntry}.
  * 
  * @param <K>
  *          the type of the key elements
@@ -39,7 +41,7 @@ public final class ComparableEntryIterable<K, V> implements
   private final Iterable<? extends Entry<? extends K, ? extends V>> iter;
 
   /**
-   * Creates a ComparableEntryIterable.
+   * Creates a {@link ComparableEntryIterable}.
    * 
    * @param iter
    *          an Iterable of Entry

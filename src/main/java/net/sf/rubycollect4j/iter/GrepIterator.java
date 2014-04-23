@@ -27,7 +27,8 @@ import net.sf.rubycollect4j.util.PeekingIterator;
 
 /**
  * 
- * GrepIterator iterates elements which are matched by the regular expression.
+ * {@link GrepIterator} iterates elements which are matched by the regular
+ * expression.
  * 
  * @param <E>
  *          the type of the elements
@@ -38,7 +39,7 @@ public final class GrepIterator<E> implements Iterator<E> {
   private final Pattern pattern;
 
   /**
-   * Creates a GrepIterator.
+   * Creates a {@link GrepIterator}.
    * 
    * @param iter
    *          an Iterator

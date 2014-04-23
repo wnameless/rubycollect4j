@@ -52,7 +52,8 @@ import net.sf.rubycollect4j.util.ASCII8BitUTF;
 
 /**
  * 
- * Unpacker is designed to implement the RubyString#unpack.
+ * {@link Unpacker} is designed to implement the
+ * {@link RubyString#unpack(String)}.
  * 
  */
 public final class Unpacker {
@@ -66,13 +67,13 @@ public final class Unpacker {
   private Unpacker() {}
 
   /**
-   * Unpacks a String into a RubyArray of String.
+   * Unpacks a String into a {@link RubyArray} of String.
    * 
    * @param format
    *          a String made by Directive
    * @param str
    *          target for unpacking
-   * @return a RubyArray
+   * @return a {@link RubyArray}
    */
   public static RubyArray<Object> unpack(String format, String str) {
     if (!Directive.verify(format))

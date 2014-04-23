@@ -26,9 +26,10 @@ import net.sf.rubycollect4j.RubyArray;
 
 /**
  * 
- * EachSliceIterable iterates each element by a window of size n. It returns a
- * RubyArray which includes n consecutive elements within this window, then it
- * moves the position to the very next element behind the window and so on.
+ * {@link EachSliceIterable} iterates each element by a window of size n. It
+ * returns a {@link RubyArray} which includes n consecutive elements within this
+ * window, then it moves the position to the very next element behind the window
+ * and so on.
  * 
  * @param <E>
  *          the type of the elements
@@ -39,7 +40,7 @@ public final class EachSliceIterable<E> implements Iterable<RubyArray<E>> {
   private final int size;
 
   /**
-   * Creates an EachSliceIterable.
+   * Creates an {@link EachSliceIterable}.
    * 
    * @param iter
    *          an Iterable

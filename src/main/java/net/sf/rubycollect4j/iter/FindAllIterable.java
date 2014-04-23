@@ -26,7 +26,8 @@ import net.sf.rubycollect4j.block.BooleanBlock;
 
 /**
  * 
- * FindAllIterable iterates elements which are true returned by the block.
+ * {@link FindAllIterable} iterates elements which are true returned by the
+ * block.
  * 
  * @param <E>
  *          the type of the elements
@@ -37,7 +38,7 @@ public final class FindAllIterable<E> implements Iterable<E> {
   private final BooleanBlock<? super E> block;
 
   /**
-   * Creates a FindAllIterable.
+   * Creates a {@link FindAllIterable}.
    * 
    * @param iter
    *          an Iterable

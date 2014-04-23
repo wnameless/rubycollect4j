@@ -27,7 +27,7 @@ import net.sf.rubycollect4j.block.TransformBlock;
 
 /**
  * 
- * FlattenIterable iterates each element and flattens it.
+ * {@link FlattenIterable} iterates each element and flattens it.
  * 
  * @param <E>
  *          the type of the elements
@@ -40,7 +40,7 @@ public final class FlattenIterable<E, S> implements Iterable<S> {
   private final TransformBlock<? super E, ? extends List<? extends S>> block;
 
   /**
-   * Creates a FlattenIterable.
+   * Creates a {@link FlattenIterable}.
    * 
    * @param iter
    *          an Iterable

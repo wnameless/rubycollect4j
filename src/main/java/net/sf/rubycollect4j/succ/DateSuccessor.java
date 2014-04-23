@@ -25,8 +25,8 @@ import java.util.Date;
 
 /**
  * 
- * DateSuccessor generates a successor of any given Date. It's a singleton
- * object.
+ * {@link DateSuccessor} generates a successor of any given Date. It's a
+ * singleton object.
  * 
  */
 public final class DateSuccessor implements Successive<Date> {
@@ -36,9 +36,9 @@ public final class DateSuccessor implements Successive<Date> {
   private DateSuccessor() {}
 
   /**
-   * Returns a DateSuccessor.
+   * Returns a {@link DateSuccessor}.
    * 
-   * @return a DateSuccessor
+   * @return a {@link DateSuccessor}
    */
   public static DateSuccessor getInstance() {
     return DateSuccessor.INSTANCE;

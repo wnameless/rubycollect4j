@@ -28,10 +28,10 @@ import net.sf.rubycollect4j.block.TransformBlock;
 
 /**
  * 
- * ChunkIterable transforms elements first, and then puts the original elements
- * together if elements which are next to each others have the same transformed
- * value. Chucked elements are placed into an Entry which uses transformed value
- * as key and a RubyArray of elements as value.
+ * {@link ChunkIterable} transforms elements first, and then puts the original
+ * elements together if elements which are next to each others have the same
+ * transformed value. Chucked elements are placed into an Entry which uses
+ * transformed value as key and a {@link RubyArray} of elements as value.
  * 
  * @param <E>
  *          the type of the elements
@@ -45,7 +45,7 @@ public final class ChunkIterable<E, K> implements
   private final TransformBlock<? super E, ? extends K> block;
 
   /**
-   * Creates a ChunkIterable.
+   * Creates a {@link ChunkIterable}.
    * 
    * @param iter
    *          an Iterable

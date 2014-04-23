@@ -25,7 +25,7 @@ import java.util.Map.Entry;
 
 /**
  * 
- * EachWithObjectIterable iterates each element with an object.
+ * {@link EachWithObjectIterable} iterates each element with an object.
  * 
  * @param <E>
  *          the type of the elements
@@ -39,7 +39,7 @@ public final class EachWithObjectIterable<E, O> implements
   private final O obj;
 
   /**
-   * Creates an EachWithObjectIterable.
+   * Creates an {@link EachWithObjectIterable}.
    * 
    * @param iter
    *          an Iterable

@@ -46,8 +46,8 @@ import net.sf.rubycollect4j.util.ComparableEntry;
 
 /**
  * 
- * RubyCollections provides numerous useful static methods to make rubycollect4j
- * easy to use.
+ * {@link RubyCollections} provides numerous useful static methods to make
+ * rubycollect4j easy to use.
  * 
  */
 public final class RubyCollections {
@@ -58,37 +58,37 @@ public final class RubyCollections {
   private RubyCollections() {}
 
   /**
-   * Creates an empty RubyArray.
+   * Creates an empty {@link RubyArray}.
    * 
    * @param <E>
    *          the type of the elements
-   * @return a new RubyArray
+   * @return a new {@link RubyArray}
    */
   public static <E> RubyArray<E> newRubyArray() {
     return new RubyArray<E>();
   }
 
   /**
-   * Creates a RubyArray by given Iterable.
+   * Creates a {@link RubyArray} by given Iterable.
    * 
    * @param <E>
    *          the type of the elements
    * @param iter
    *          an Iterable
-   * @return a new RubyArray
+   * @return a new {@link RubyArray}
    */
   public static <E> RubyArray<E> newRubyArray(Iterable<E> iter) {
     return new RubyArray<E>(iter);
   }
 
   /**
-   * Creates a RubyArray by given Iterator.
+   * Creates a {@link RubyArray} by given Iterator.
    * 
    * @param <E>
    *          the type of the elements
    * @param iter
    *          an Iterator
-   * @return a new RubyArray
+   * @return a new {@link RubyArray}
    */
   public static <E> RubyArray<E> newRubyArray(Iterator<E> iter) {
     RubyArray<E> rubyArray = new RubyArray<E>();
@@ -99,20 +99,21 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyArray by given List.
+   * Creates a {@link RubyArray} by given List.
    * 
    * @param <E>
    *          the type of the elements
    * @param list
    *          a List
-   * @return a new RubyArray
+   * @return a new {@link RubyArray}
    */
   public static <E> RubyArray<E> newRubyArray(List<E> list) {
     return new RubyArray<E>(list);
   }
 
   /**
-   * Creates a RubyArray by given List. It makes a defensive copy if specified.
+   * Creates a {@link RubyArray} by given List. It makes a defensive copy if
+   * specified.
    * 
    * @param <E>
    *          the type of the elements
@@ -120,7 +121,7 @@ public final class RubyCollections {
    *          a List
    * @param defensiveCopy
    *          true If defensive copy required and false otherwise
-   * @return a new RubyArray
+   * @return a new {@link RubyArray}
    * @deprecated As of release 1.7.2, replaced by {@link RubyArray#copyOf}
    */
   @Deprecated
@@ -133,13 +134,13 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyArray by given elements.
+   * Creates a {@link RubyArray} by given elements.
    * 
    * @param <E>
    *          the type of the elements
    * @param elements
    *          varargs
-   * @return a new RubyArray
+   * @return a new {@link RubyArray}
    */
   @SafeVarargs
   public static <E> RubyArray<E> newRubyArray(E... elements) {
@@ -147,20 +148,20 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates an empty RubyHash.
+   * Creates an empty {@link RubyHash}.
    * 
    * @param <K>
    *          the type of the key elements
    * @param <V>
    *          the type of the value elements
-   * @return a new RubyHash
+   * @return a new {@link RubyHash}
    */
   public static <K, V> RubyHash<K, V> newRubyHash() {
     return new RubyHash<K, V>();
   }
 
   /**
-   * Creates a RubyHash by given Map.
+   * Creates a {@link RubyHash} by given Map.
    * 
    * @param <K>
    *          the type of the key elements
@@ -168,15 +169,15 @@ public final class RubyCollections {
    *          the type of the value elements
    * @param map
    *          a Map
-   * @return a new RubyHash
+   * @return a new {@link RubyHash}
    */
   public static <K, V> RubyHash<K, V> newRubyHash(Map<K, V> map) {
     return new RubyHash<K, V>(new LinkedHashMap<K, V>(map));
   }
 
   /**
-   * Creates an empty RubyHash by given LinkedHashMap. It makes a defensive copy
-   * if specified
+   * Creates an empty {@link RubyHash} by given LinkedHashMap. It makes a
+   * defensive copy if specified
    * 
    * @param <K>
    *          the type of the key elements
@@ -186,7 +187,7 @@ public final class RubyCollections {
    *          a Map
    * @param defensiveCopy
    *          it makes a defensive copy if specified
-   * @return a new RubyHash
+   * @return a new {@link RubyHash}
    * @deprecated As of release 1.7.2, replaced by {@link RubyHash#copyOf}
    */
   @Deprecated
@@ -199,13 +200,13 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyLazyEnumerator by given Iterable.
+   * Creates a {@link RubyLazyEnumerator} by given Iterable.
    * 
    * @param <E>
    *          the type of the elements
    * @param iter
    *          an Iterable
-   * @return a new RubyLazyEnumerator
+   * @return a new {@link RubyLazyEnumerator}
    */
   public static <E> RubyLazyEnumerator<E>
       newRubyLazyEnumerator(Iterable<E> iter) {
@@ -213,39 +214,39 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyEnumerator by given Iterable.
+   * Creates a {@link RubyEnumerator} by given Iterable.
    * 
    * @param <E>
    *          the type of the elements
    * @param iter
    *          an Iterable
-   * @return a new RubyEnumerator
+   * @return a new {@link RubyEnumerator}
    */
   public static <E> RubyEnumerator<E> newRubyEnumerator(Iterable<E> iter) {
     return new RubyEnumerator<E>(iter);
   }
 
   /**
-   * Creates a RubyEnumerator by given Iterator.
+   * Creates a {@link RubyEnumerator} by given Iterator.
    * 
    * @param <E>
    *          the type of the elements
    * @param iter
    *          an Iterator
-   * @return a new RubyEnumerator
+   * @return a new {@link RubyEnumerator}
    */
   public static <E> RubyEnumerator<E> newRubyEnumerator(Iterator<E> iter) {
     return new RubyEnumerator<E>(iter);
   }
 
   /**
-   * Creates a RubyRange by given Strings.
+   * Creates a {@link RubyRange} by given Strings.
    * 
    * @param startPoint
    *          where the range begins
    * @param endPoint
    *          where the range ends
-   * @return a RubyRange
+   * @return a {@link RubyRange}
    */
   public static RubyRange<String> newRubyRange(String startPoint,
       String endPoint) {
@@ -254,13 +255,13 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyRange by given chars.
+   * Creates a {@link RubyRange} by given chars.
    * 
    * @param startPoint
    *          where the range begins
    * @param endPoint
    *          where the range ends
-   * @return a RubyRange
+   * @return a {@link RubyRange}
    */
   public static RubyRange<Character>
       newRubyRange(char startPoint, char endPoint) {
@@ -269,13 +270,13 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyRange by given ints.
+   * Creates a {@link RubyRange} by given ints.
    * 
    * @param startPoint
    *          where the range begins
    * @param endPoint
    *          where the range ends
-   * @return a RubyRange
+   * @return a {@link RubyRange}
    */
   public static RubyRange<Integer> newRubyRange(int startPoint, int endPoint) {
     return new RubyRange<Integer>(IntegerSuccessor.getInstance(), startPoint,
@@ -283,13 +284,13 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyRange by given longs.
+   * Creates a {@link RubyRange} by given longs.
    * 
    * @param startPoint
    *          where the range begins
    * @param endPoint
    *          where the range ends
-   * @return a RubyRange
+   * @return a {@link RubyRange}
    */
   public static RubyRange<Long> newRubyRange(long startPoint, long endPoint) {
     return new RubyRange<Long>(LongSuccessor.getInstance(), startPoint,
@@ -297,13 +298,13 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyRange by given doubles.
+   * Creates a {@link RubyRange} by given doubles.
    * 
    * @param startPoint
    *          where the range begins
    * @param endPoint
    *          where the range ends
-   * @return a RubyRange
+   * @return a {@link RubyRange}
    */
   public static RubyRange<Double> newRubyRange(double startPoint,
       double endPoint) {
@@ -316,13 +317,13 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyRange by given Dates.
+   * Creates a {@link RubyRange} by given Dates.
    * 
    * @param startPoint
    *          where the range begins
    * @param endPoint
    *          where the range ends
-   * @return a RubyRange
+   * @return a {@link RubyRange}
    */
   public static RubyRange<Date> newRubyRange(Date startPoint, Date endPoint) {
     return new RubyRange<Date>(DateSuccessor.getInstance(), startPoint,
@@ -330,36 +331,36 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyString.
+   * Creates a {@link RubyString}.
    * 
-   * @return a RubyString
+   * @return a {@link RubyString}
    */
   public static RubyString newRubyString() {
     return new RubyString();
   }
 
   /**
-   * Creates a RubyString by given Object.
+   * Creates a {@link RubyString} by given Object.
    * 
-   * @return a RubyString
+   * @return a {@link RubyString}
    */
   public static RubyString newRubyString(Object o) {
     return new RubyString(o);
   }
 
   /**
-   * Creates a RubyString.
+   * Creates a {@link RubyString}.
    * 
-   * @return a RubyString
+   * @return a {@link RubyString}
    */
   public static RubyString rs() {
     return new RubyString();
   }
 
   /**
-   * Creates a RubyString by given Object.
+   * Creates a {@link RubyString} by given Object.
    * 
-   * @return a RubyString
+   * @return a {@link RubyString}
    */
   public static RubyString rs(Object o) {
     return new RubyString(o);
@@ -377,11 +378,11 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyArray of Strings.
+   * Creates a {@link RubyArray} of Strings.
    * 
    * @param str
    *          words separated by spaces
-   * @return a RubyArray
+   * @return a {@link RubyArray}
    */
   public static RubyArray<String> qw(String str) {
     return newRubyArray(str.trim().split("\\s+"));
@@ -422,24 +423,24 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates an empty RubyArray
+   * Creates an empty {@link RubyArray}.
    * 
    * @param <E>
    *          the type of the elements
-   * @return a RubyArray
+   * @return a {@link RubyArray}
    */
   public static <E> RubyArray<E> ra() {
     return newRubyArray();
   }
 
   /**
-   * Creates a RubyArray by given elements.
+   * Creates a {@link RubyArray} by given elements.
    * 
    * @param <E>
    *          the type of the elements
    * @param args
    *          elements
-   * @return a RubyArray
+   * @return a {@link RubyArray}
    */
   @SafeVarargs
   public static <E> RubyArray<E> ra(E... args) {
@@ -447,52 +448,52 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyArray by given Iterable.
+   * Creates a {@link RubyArray} by given Iterable.
    * 
    * @param <E>
    *          the type of the elements
    * @param iter
    *          an Iterable
-   * @return a RubyArray
+   * @return a {@link RubyArray}
    */
   public static <E> RubyArray<E> ra(Iterable<E> iter) {
     return newRubyArray(iter);
   }
 
   /**
-   * Creates a RubyArray by given Iterator.
+   * Creates a {@link RubyArray} by given Iterator.
    * 
    * @param <E>
    *          the type of the elements
    * @param iter
    *          an Iterator
-   * @return a RubyArray
+   * @return a {@link RubyArray}
    */
   public static <E> RubyArray<E> ra(Iterator<E> iter) {
     return newRubyArray(iter);
   }
 
   /**
-   * Creates a RubyArray by given List.
+   * Creates a {@link RubyArray} by given List.
    * 
    * @param <E>
    *          the type of the elements
    * @param list
    *          a List
-   * @return a RubyArray
+   * @return a {@link RubyArray}
    */
   public static <E> RubyArray<E> ra(List<E> list) {
     return newRubyArray(list);
   }
 
   /**
-   * Creates a RubyArray which contains the given RubyArray.
+   * Creates a {@link RubyArray} which contains the given {@link RubyArray}.
    * 
    * @param <E>
    *          the type of the elements
    * @param rubyArray
-   *          a RubyArray
-   * @return a RubyArray of RubyArray
+   *          a {@link RubyArray}
+   * @return a {@link RubyArray} of {@link RubyArray}
    */
   public static <E> RubyArray<RubyArray<E>> ra(RubyArray<E> rubyArray) {
     RubyArray<RubyArray<E>> ra = newRubyArray();
@@ -500,20 +501,20 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates an empty RubyHash.
+   * Creates an empty {@link RubyHash}.
    * 
    * @param <K>
    *          the type of the key elements
    * @param <V>
    *          the type of the value elements
-   * @return a RubyHaah
+   * @return a {@link RubyHash}
    */
   public static <K, V> RubyHash<K, V> rh() {
     return newRubyHash();
   }
 
   /**
-   * Creates a RubyHash by given Map.
+   * Creates a {@link RubyHash} by given Map.
    * 
    * @param <K>
    *          the type of the key elements
@@ -521,14 +522,14 @@ public final class RubyCollections {
    *          the type of the value elements
    * @param map
    *          any Map
-   * @return a RubyHash
+   * @return a {@link RubyHash}
    */
   public static <K, V> RubyHash<K, V> rh(Map<K, V> map) {
     return newRubyHash(map);
   }
 
   /**
-   * Creates a RubyHash by given key-value pair.
+   * Creates a {@link RubyHash} by given key-value pair.
    * 
    * @param <K>
    *          the type of the key elements
@@ -538,7 +539,7 @@ public final class RubyCollections {
    *          of entry
    * @param value
    *          of entry
-   * @return a RubyHash
+   * @return a {@link RubyHash}
    */
   public static <K, V> RubyHash<K, V> rh(K key, V value) {
     RubyHash<K, V> rh = newRubyHash();
@@ -547,7 +548,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyHash by given key-value pairs.
+   * Creates a {@link RubyHash} by given key-value pairs.
    * 
    * @param <K>
    *          the type of the key elements
@@ -561,7 +562,7 @@ public final class RubyCollections {
    *          of entry 2
    * @param value2
    *          of entry 2
-   * @return a RubyHash
+   * @return a {@link RubyHash}
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2) {
     RubyHash<K, V> rh = newRubyHash();
@@ -571,7 +572,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyHash by given key-value pairs.
+   * Creates a {@link RubyHash} by given key-value pairs.
    * 
    * @param <K>
    *          the type of the key elements
@@ -589,7 +590,7 @@ public final class RubyCollections {
    *          of entry 3
    * @param value3
    *          of entry 3
-   * @return a RubyHash
+   * @return a {@link RubyHash}
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
       K key3, V value3) {
@@ -601,7 +602,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyHash by given key-value pairs.
+   * Creates a {@link RubyHash} by given key-value pairs.
    * 
    * @param <K>
    *          the type of the key elements
@@ -623,7 +624,7 @@ public final class RubyCollections {
    *          of entry 4
    * @param value4
    *          of entry 4
-   * @return a RubyHash
+   * @return a {@link RubyHash}
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
       K key3, V value3, K key4, V value4) {
@@ -636,7 +637,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyHash by given key-value pairs.
+   * Creates a {@link RubyHash} by given key-value pairs.
    * 
    * @param <K>
    *          the type of the key elements
@@ -662,7 +663,7 @@ public final class RubyCollections {
    *          of entry 5
    * @param value5
    *          of entry 5
-   * @return a RubyHash
+   * @return a {@link RubyHash}
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
       K key3, V value3, K key4, V value4, K key5, V value5) {
@@ -676,7 +677,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyHash by given key-value pairs.
+   * Creates a {@link RubyHash} by given key-value pairs.
    * 
    * @param <K>
    *          the type of the key elements
@@ -706,7 +707,7 @@ public final class RubyCollections {
    *          of entry 6
    * @param value6
    *          of entry 6
-   * @return a RubyHash
+   * @return a {@link RubyHash}
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
       K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6) {
@@ -721,7 +722,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyHash by given key-value pairs.
+   * Creates a {@link RubyHash} by given key-value pairs.
    * 
    * @param <K>
    *          the type of the key elements
@@ -755,7 +756,7 @@ public final class RubyCollections {
    *          of entry 7
    * @param value7
    *          of entry 7
-   * @return a RubyHash
+   * @return a {@link RubyHash}
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
       K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
@@ -772,7 +773,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyHash by given key-value pairs.
+   * Creates a {@link RubyHash} by given key-value pairs.
    * 
    * @param <K>
    *          the type of the key elements
@@ -810,7 +811,7 @@ public final class RubyCollections {
    *          of entry 8
    * @param value8
    *          of entry 8
-   * @return a RubyHash
+   * @return a {@link RubyHash}
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
       K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
@@ -828,7 +829,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyHash by given key-value pairs.
+   * Creates a {@link RubyHash} by given key-value pairs.
    * 
    * @param <K>
    *          the type of the key elements
@@ -870,7 +871,7 @@ public final class RubyCollections {
    *          of entry 9
    * @param value9
    *          of entry 9
-   * @return a RubyHash
+   * @return a {@link RubyHash}
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
       K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
@@ -889,7 +890,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyHash by given key-value pairs.
+   * Creates a {@link RubyHash} by given key-value pairs.
    * 
    * @param <K>
    *          the type of the key elements
@@ -935,7 +936,7 @@ public final class RubyCollections {
    *          of entry 10
    * @param value10
    *          of entry 10
-   * @return a RubyHash
+   * @return a {@link RubyHash}
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
       K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
@@ -955,7 +956,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyHash by given key-value pairs.
+   * Creates a {@link RubyHash} by given key-value pairs.
    * 
    * @param <K>
    *          the type of the key elements
@@ -1005,7 +1006,7 @@ public final class RubyCollections {
    *          of entry 11
    * @param value11
    *          of entry 11
-   * @return a RubyHash
+   * @return a {@link RubyHash}
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
       K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
@@ -1027,7 +1028,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyHash by given key-value pairs.
+   * Creates a {@link RubyHash} by given key-value pairs.
    * 
    * @param <K>
    *          the type of the key elements
@@ -1081,7 +1082,7 @@ public final class RubyCollections {
    *          of entry 12
    * @param value12
    *          of entry 12
-   * @return a RubyHash
+   * @return a {@link RubyHash}
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
       K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
@@ -1104,7 +1105,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyHash by given key-value pairs.
+   * Creates a {@link RubyHash} by given key-value pairs.
    * 
    * @param <K>
    *          the type of the key elements
@@ -1162,7 +1163,7 @@ public final class RubyCollections {
    *          of entry 13
    * @param value13
    *          of entry 13
-   * @return a RubyHash
+   * @return a {@link RubyHash}
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
       K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
@@ -1186,7 +1187,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyHash by given key-value pairs.
+   * Creates a {@link RubyHash} by given key-value pairs.
    * 
    * @param <K>
    *          the type of the key elements
@@ -1248,7 +1249,7 @@ public final class RubyCollections {
    *          of entry 14
    * @param value14
    *          of entry 14
-   * @return a RubyHash
+   * @return a {@link RubyHash}
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
       K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
@@ -1274,7 +1275,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyHash by given key-value pairs.
+   * Creates a {@link RubyHash} by given key-value pairs.
    * 
    * @param <K>
    *          the type of the key elements
@@ -1340,7 +1341,7 @@ public final class RubyCollections {
    *          of entry 15
    * @param value15
    *          of entry 15
-   * @return a RubyHash
+   * @return a {@link RubyHash}
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
       K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
@@ -1367,7 +1368,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyHash by given key-value pairs.
+   * Creates a {@link RubyHash} by given key-value pairs.
    * 
    * @param <K>
    *          the type of the key elements
@@ -1437,7 +1438,7 @@ public final class RubyCollections {
    *          of entry 16
    * @param value16
    *          of entry 16
-   * @return a RubyHash
+   * @return a {@link RubyHash}
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
       K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
@@ -1465,7 +1466,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyHash by given key-value pairs.
+   * Creates a {@link RubyHash} by given key-value pairs.
    * 
    * @param <K>
    *          the type of the key elements
@@ -1539,7 +1540,7 @@ public final class RubyCollections {
    *          of entry 17
    * @param value17
    *          of entry 17
-   * @return a RubyHash
+   * @return a {@link RubyHash}
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
       K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
@@ -1568,7 +1569,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyHash by given key-value pairs.
+   * Creates a {@link RubyHash} by given key-value pairs.
    * 
    * @param <K>
    *          the type of the key elements
@@ -1646,7 +1647,7 @@ public final class RubyCollections {
    *          of entry 18
    * @param value18
    *          of entry 18
-   * @return a RubyHash
+   * @return a {@link RubyHash}
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
       K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
@@ -1677,7 +1678,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyHash by given key-value pairs.
+   * Creates a {@link RubyHash} by given key-value pairs.
    * 
    * @param <K>
    *          the type of the key elements
@@ -1759,7 +1760,7 @@ public final class RubyCollections {
    *          of entry 19
    * @param value19
    *          of entry 19
-   * @return a RubyHash
+   * @return a {@link RubyHash}
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
       K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
@@ -1791,7 +1792,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyHash by given key-value pairs.
+   * Creates a {@link RubyHash} by given key-value pairs.
    * 
    * @param <K>
    *          the type of the key elements
@@ -1877,7 +1878,7 @@ public final class RubyCollections {
    *          of entry 20
    * @param value20
    *          of entry 20
-   * @return a RubyHash
+   * @return a {@link RubyHash}
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
       K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
@@ -1910,7 +1911,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a hash pair by the ComparableEntry.
+   * Creates a hash pair by the {@link ComparableEntry}.
    * 
    * @param <K>
    *          the type of the key
@@ -1927,7 +1928,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Turns a List of Entries into a RubyHash.
+   * Turns a List of Entries into a {@link RubyHash}.
    * 
    * @param <K>
    *          the type of the key elements
@@ -1935,7 +1936,7 @@ public final class RubyCollections {
    *          the type of the value elements
    * @param list
    *          a List of Entries
-   * @return a RubyHash
+   * @return a {@link RubyHash}
    */
   public static <K, V> RubyHash<K, V> Hash(List<? extends Entry<K, V>> list) {
     RubyHash<K, V> rubyHash = newRubyHash();
@@ -1946,13 +1947,13 @@ public final class RubyCollections {
   }
 
   /**
-   * Turns a RubyArray of Lists into a RubyHash.
+   * Turns a {@link RubyArray} of Lists into a {@link RubyHash}.
    * 
    * @param <E>
    *          the type of the elements
    * @param lists
-   *          a RubyArray of List
-   * @return a RubyHash
+   *          a {@link RubyArray} of List
+   * @return a {@link RubyHash}
    */
   public static <E> RubyHash<E, E> Hash(RubyArray<? extends List<E>> lists) {
     RubyHash<E, E> rubyHash = newRubyHash();
@@ -1967,109 +1968,109 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyRange by given strings.
+   * Creates a {@link RubyRange} by given strings.
    * 
    * @param start
    *          of the range
    * @param end
    *          of the range
-   * @return a RubyRange
+   * @return a {@link RubyRange}
    */
   public static RubyRange<String> range(String start, String end) {
     return newRubyRange(start, end);
   }
 
   /**
-   * Creates a RubyRange by given chars.
+   * Creates a {@link RubyRange} by given chars.
    * 
    * @param start
    *          of the range
    * @param end
    *          of the range
-   * @return a RubyRange
+   * @return a {@link RubyRange}
    */
   public static RubyRange<Character> range(char start, char end) {
     return newRubyRange(start, end);
   }
 
   /**
-   * Creates a RubyRange by given integers.
+   * Creates a {@link RubyRange} by given integers.
    * 
    * @param start
    *          of the range
    * @param end
    *          of the range
-   * @return a RubyRange
+   * @return a {@link RubyRange}
    */
   public static RubyRange<Integer> range(int start, int end) {
     return newRubyRange(start, end);
   }
 
   /**
-   * Creates a RubyRange by given longs.
+   * Creates a {@link RubyRange} by given longs.
    * 
    * @param start
    *          of the range
    * @param end
    *          of the range
-   * @return a RubyRange
+   * @return a {@link RubyRange}
    */
   public static RubyRange<Long> range(long start, long end) {
     return newRubyRange(start, end);
   }
 
   /**
-   * Creates a RubyRange by given doubles.
+   * Creates a {@link RubyRange} by given doubles.
    * 
    * @param start
    *          of the range
    * @param end
    *          of the range
-   * @return a RubyRange
+   * @return a {@link RubyRange}
    */
   public static RubyRange<Double> range(double start, double end) {
     return newRubyRange(start, end);
   }
 
   /**
-   * Creates a RubyRange by given Dates.
+   * Creates a {@link RubyRange} by given Dates.
    * 
    * @param start
    *          of the range
    * @param end
    *          of the range
-   * @return a RubyRange
+   * @return a {@link RubyRange}
    */
   public static RubyRange<Date> range(Date start, Date end) {
     return newRubyRange(start, end);
   }
 
   /**
-   * Creates a RubyDate by current Date.
+   * Creates a {@link RubyDate} by current Date.
    * 
-   * @return a RubyDate
+   * @return a {@link RubyDate}
    */
   public static RubyDate date() {
     return new RubyDate(new Date());
   }
 
   /**
-   * Creates a RubyDate by given Date.
+   * Creates a {@link RubyDate} by given Date.
    * 
    * @param date
    *          a Date
-   * @return a RubyDate
+   * @return a {@link RubyDate}
    */
   public static RubyDate date(Date date) {
     return new RubyDate(date);
   }
 
   /**
-   * Creates a RubyDate by given year.
+   * Creates a {@link RubyDate} by given year.
    * 
    * @param year
    *          of a date
-   * @return a RubyDate
+   * @return a {@link RubyDate}
    */
   public static RubyDate date(int year) {
     Calendar c = Calendar.getInstance();
@@ -2084,13 +2085,13 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyDate by given year and month.
+   * Creates a {@link RubyDate} by given year and month.
    * 
    * @param year
    *          of a date
    * @param month
    *          of a date
-   * @return a RubyDate
+   * @return a {@link RubyDate}
    */
   public static RubyDate date(int year, int month) {
     Calendar c = Calendar.getInstance();
@@ -2105,7 +2106,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyDate by given year, month and day.
+   * Creates a {@link RubyDate} by given year, month and day.
    * 
    * @param year
    *          of a date
@@ -2113,7 +2114,7 @@ public final class RubyCollections {
    *          of a date
    * @param day
    *          of a date
-   * @return a RubyDate
+   * @return a {@link RubyDate}
    */
   public static RubyDate date(int year, int month, int day) {
     Calendar c = Calendar.getInstance();
@@ -2128,7 +2129,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyDate by given year, month, day and hour.
+   * Creates a {@link RubyDate} by given year, month, day and hour.
    * 
    * @param year
    *          of a date
@@ -2138,7 +2139,7 @@ public final class RubyCollections {
    *          of a date
    * @param hour
    *          of a date
-   * @return a RubyDate
+   * @return a {@link RubyDate}
    */
   public static RubyDate date(int year, int month, int day, int hour) {
     Calendar c = Calendar.getInstance();
@@ -2153,7 +2154,7 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyDate by given year, month, day, hour and minute.
+   * Creates a {@link RubyDate} by given year, month, day, hour and minute.
    * 
    * @param year
    *          of a date
@@ -2165,7 +2166,7 @@ public final class RubyCollections {
    *          of a date
    * @param min
    *          of a date
-   * @return a RubyDate
+   * @return a {@link RubyDate}
    */
   public static RubyDate date(int year, int month, int day, int hour, int min) {
     Calendar c = Calendar.getInstance();
@@ -2180,7 +2181,8 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyDate by given year, month, day, hour, minute and second.
+   * Creates a {@link RubyDate} by given year, month, day, hour, minute and
+   * second.
    * 
    * @param year
    *          of a date
@@ -2194,7 +2196,7 @@ public final class RubyCollections {
    *          of a date
    * @param sec
    *          of a date
-   * @return a RubyDate
+   * @return a {@link RubyDate}
    */
   public static RubyDate date(int year, int month, int day, int hour, int min,
       int sec) {
@@ -2210,8 +2212,8 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a RubyDate by given year, month, day, hour, minute, second and
-   * millisecond.
+   * Creates a {@link RubyDate} by given year, month, day, hour, minute, second
+   * and millisecond.
    * 
    * @param year
    *          of a date
@@ -2227,7 +2229,7 @@ public final class RubyCollections {
    *          of a date
    * @param millisec
    *          of a date
-   * @return a RubyDate
+   * @return a {@link RubyDate}
    */
   public static RubyDate date(int year, int month, int day, int hour, int min,
       int sec, int millisec) {
@@ -2310,22 +2312,23 @@ public final class RubyCollections {
   }
 
   /**
-   * Checks if a RubyHash is null or empty.
+   * Checks if a {@link RubyHash} is null or empty.
    * 
    * @param rubyHash
-   *          any RubyHash
-   * @return true if given RubyHash is null or empty, false otherwise
+   *          any {@link RubyHash}
+   * @return true if given {@link RubyHash} is null or empty, false otherwise
    */
   public static boolean isBlank(RubyHash<?, ?> rubyHash) {
     return rubyHash == null || rubyHash.isEmpty();
   }
 
   /**
-   * Checks if a RubyHash is not null or empty.
+   * Checks if a {@link RubyHash} is not null or empty.
    * 
    * @param rubyHash
-   *          any RubyHash
-   * @return true if given RubyHash is not null or empty, false otherwise
+   *          any {@link RubyHash}
+   * @return true if given {@link RubyHash} is not null or empty, false
+   *         otherwise
    */
   public static boolean isNotBlank(RubyHash<?, ?> rubyHash) {
     return !isBlank(rubyHash);

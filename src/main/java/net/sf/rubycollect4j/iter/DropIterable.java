@@ -24,7 +24,7 @@ import java.util.Iterator;
 
 /**
  * 
- * DropIterable drops first n elements before iterating elements.
+ * {@link DropIterable} drops first n elements before iterating elements.
  * 
  * @param <E>
  *          the type of the elements
@@ -35,7 +35,7 @@ public final class DropIterable<E> implements Iterable<E> {
   private final int drop;
 
   /**
-   * Creates a DropIterable.
+   * Creates a {@link DropIterable}.
    * 
    * @param iter
    *          an Iterable

@@ -32,10 +32,10 @@ import net.sf.rubycollect4j.succ.Successive;
 
 /**
  * 
- * RubyRange is inspired by the Range class of Ruby. It does not exactly follow
- * the implementation of Ruby, especially on the range of alphanumeric strings.
- * All objects can use the RubyRange to create a range of interval. As long as
- * it provides the corresponding Successive object.
+ * {@link RubyRange} is inspired by the Range class of Ruby. It does not exactly
+ * follow the implementation of Ruby, especially on the range of alphanumeric
+ * strings. All objects can use the RubyRange to create a range of interval. As
+ * long as it provides the corresponding Successive object.
  * 
  * @param <E>
  *          the type of elements
@@ -56,7 +56,7 @@ public final class RubyRange<E> extends RubyEnumerable<E> implements
   }
 
   /**
-   * Creates a RubyRange of given elements.
+   * Creates a {@link RubyRange} of given elements.
    * 
    * @param successive
    *          a Successive object to provide the successor of elements
@@ -82,16 +82,16 @@ public final class RubyRange<E> extends RubyEnumerable<E> implements
   }
 
   /**
-   * Returns the beginning of this RubyRange.
+   * Returns the beginning of this {@link RubyRange}.
    * 
-   * @return the beginning of this RubyRange
+   * @return the beginning of this {@link RubyRange}
    */
   public E begin() {
     return startPoint;
   }
 
   /**
-   * Check if an item is within this RubyRange.
+   * Check if an item is within this {@link RubyRange}.
    * 
    * @param item
    *          to be checked
@@ -103,11 +103,11 @@ public final class RubyRange<E> extends RubyEnumerable<E> implements
   }
 
   /**
-   * Yields each element of this RubyRange to the block.
+   * Yields each element of this {@link RubyRange} to the block.
    * 
    * @param block
    *          to yield each element
-   * @return this RubyRange
+   * @return this {@link RubyRange}
    */
   @Override
   public RubyRange<E> each(Block<? super E> block) {
@@ -116,16 +116,16 @@ public final class RubyRange<E> extends RubyEnumerable<E> implements
   }
 
   /**
-   * Returns the end of this RubyRange.
+   * Returns the end of this {@link RubyRange}.
    * 
-   * @return the end of this RubyRange
+   * @return the end of this {@link RubyRange}
    */
   public E end() {
     return endPoint;
   }
 
   /**
-   * Equivalent to equals().
+   * Equivalent to {@link #equals(Object)}.
    * 
    * @param o
    *          any Object
@@ -136,7 +136,7 @@ public final class RubyRange<E> extends RubyEnumerable<E> implements
   }
 
   /**
-   * Equivalent to hashCode().
+   * Equivalent to {@link #hashCode()}.
    * 
    * @return the hash code
    */
@@ -150,7 +150,7 @@ public final class RubyRange<E> extends RubyEnumerable<E> implements
   }
 
   /**
-   * Equivalent to toString().
+   * Equivalent to {@link #toString()}.
    * 
    * @return a String
    */
@@ -159,20 +159,20 @@ public final class RubyRange<E> extends RubyEnumerable<E> implements
   }
 
   /**
-   * Returns the end of this RubyRange.
+   * Returns the end of this {@link RubyRange}.
    * 
-   * @return the end of this RubyRange
+   * @return the end of this {@link RubyRange}
    */
   public E last() {
     return end();
   }
 
   /**
-   * Returns the last n elements of this RubyRange.
+   * Returns the last n elements of this {@link RubyRange}.
    * 
    * @param n
    *          number of elements
-   * @return a RubyArray
+   * @return a {@link RubyArray}
    */
   public RubyArray<E> last(int n) {
     RubyArray<E> lasts = newRubyArray();
@@ -193,24 +193,25 @@ public final class RubyRange<E> extends RubyEnumerable<E> implements
   }
 
   /**
-   * Creates a RubyEnumerator by all nth elements of the range.
+   * Creates a {@link RubyEnumerator} by all nth elements of the range.
    * 
    * @param n
    *          interval to step
-   * @return a RubyEnumerator
+   * @return a {@link RubyEnumerator}
    */
   public RubyEnumerator<E> step(int n) {
     return newRubyEnumerator(new StepIterable<E>(iter, n));
   }
 
   /**
-   * Iterates over this RubyRange and yields each nth element to the block.
+   * Iterates over this {@link RubyRange} and yields each nth element to the
+   * block.
    * 
    * @param n
    *          interval to step
    * @param block
    *          to yield each element
-   * @return this RubyRange
+   * @return this {@link RubyRange}
    */
   public RubyRange<E> step(int n, Block<E> block) {
     for (E item : step(n)) {
@@ -220,7 +221,7 @@ public final class RubyRange<E> extends RubyEnumerable<E> implements
   }
 
   /**
-   * Equivalent to toString().
+   * Equivalent to {@link #toString()}.
    * 
    * @return a String
    */

@@ -32,10 +32,10 @@ import net.sf.rubycollect4j.util.PeekingIterator;
 
 /**
  * 
- * ChunkIterator transforms elements first, and then puts the original elements
- * together if elements which are next to each others have the same transformed
- * value. Chucked elements are placed into an Entry which uses transformed value
- * as key and a RubyArray of elements as value.
+ * {@link ChunkIterator} transforms elements first, and then puts the original
+ * elements together if elements which are next to each others have the same
+ * transformed value. Chucked elements are placed into an Entry which uses
+ * transformed value as key and a RubyArray of elements as value.
  * 
  * @param <E>
  *          the type of the elements
@@ -49,7 +49,7 @@ public final class ChunkIterator<E, K> implements
   private final TransformBlock<? super E, ? extends K> block;
 
   /**
-   * Creates a ChunkIterator.
+   * Creates a {@link ChunkIterator}.
    * 
    * @param iter
    *          an Iterator

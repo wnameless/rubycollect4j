@@ -22,8 +22,9 @@ package net.sf.rubycollect4j.succ;
 
 /**
  * 
- * DoubleSuccessor generates a successor of any given Double. It requires a
- * precision to determine what is the number to increase on every successor.
+ * {@link DoubleSuccessor} generates a successor of any given Double. It
+ * requires a precision to determine what is the number to increase on every
+ * successor.
  * 
  */
 public final class DoubleSuccessor implements Successive<Double> {
@@ -31,7 +32,7 @@ public final class DoubleSuccessor implements Successive<Double> {
   private final int precision;
 
   /**
-   * The constructor of the DoubleSuccessor.
+   * Returns a {@link DoubleSuccessor}.
    * 
    * @param precision
    *          of each successor

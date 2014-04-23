@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 
 /**
  * 
- * RubyObject provides the general methods of Ruby objects.
+ * {@link RubyObject} provides the general methods of Ruby objects.
  * 
  */
 public final class RubyObject {

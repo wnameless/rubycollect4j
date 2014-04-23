@@ -27,8 +27,8 @@ import net.sf.rubycollect4j.util.PeekingIterator;
 
 /**
  * 
- * DropWhileIterator drops elements until the returned value of the block is
- * false before iterating elements.
+ * {@link DropWhileIterator} drops elements until the returned value of the
+ * block is false before iterating elements.
  * 
  * @param <E>
  *          the type of the elements
@@ -39,7 +39,7 @@ public final class DropWhileIterator<E> implements Iterator<E> {
   private boolean hasFirstCall = false;
 
   /**
-   * Creates a DropWhileIterator.
+   * Creates a {@link DropWhileIterator}.
    * 
    * @param iter
    *          an Iterator

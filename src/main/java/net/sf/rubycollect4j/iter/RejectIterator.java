@@ -27,7 +27,8 @@ import net.sf.rubycollect4j.util.PeekingIterator;
 
 /**
  * 
- * RejectIterator filters all elements which are true returned by the block.
+ * {@link RejectIterator} filters all elements which are true returned by the
+ * block.
  * 
  * @param <E>
  *          the type of the elements
@@ -38,7 +39,7 @@ public final class RejectIterator<E> implements Iterator<E> {
   private final BooleanBlock<? super E> block;
 
   /**
-   * Creates a RejectIterator.
+   * Creates a {@link RejectIterator}.
    * 
    * @param iter
    *          an Iterator

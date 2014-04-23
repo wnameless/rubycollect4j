@@ -37,7 +37,7 @@ import net.sf.rubycollect4j.util.ByteUtil;
 
 /**
  * 
- * Packer is designed to implement the RubyArray#pack.
+ * {@link Packer} is designed to implement the {@link RubyArray#pack(String)}.
  * 
  */
 public final class Packer {

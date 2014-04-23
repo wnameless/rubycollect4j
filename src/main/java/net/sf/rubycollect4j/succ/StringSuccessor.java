@@ -25,11 +25,11 @@ import java.util.List;
 
 /**
  * 
- * StringSuccessor generates a successor of any given String. It's a singleton
- * object. If given String included alphanumeric characters, it will generate
- * successors based on those alphanumeric characters instead of the whole
- * String. If given String is numeric only, its will generate successors based
- * on those numeric values.
+ * {@link StringSuccessor} generates a successor of any given String. It's a
+ * singleton object. If given String included alphanumeric characters, it will
+ * generate successors based on those alphanumeric characters instead of the
+ * whole String. If given String is numeric only, its will generate successors
+ * based on those numeric values.
  * 
  */
 public final class StringSuccessor implements Successive<String> {
@@ -39,9 +39,9 @@ public final class StringSuccessor implements Successive<String> {
   private StringSuccessor() {}
 
   /**
-   * Returns a StringSuccessor.
+   * Returns a {@link StringSuccessor}.
    * 
-   * @return a StringSuccessor
+   * @return a {@link StringSuccessor}
    */
   public static StringSuccessor getInstance() {
     return StringSuccessor.INSTANCE;

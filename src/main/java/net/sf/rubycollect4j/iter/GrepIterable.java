@@ -24,7 +24,8 @@ import java.util.Iterator;
 
 /**
  * 
- * GrepIterable iterates elements which are matched by the regular expression.
+ * {@link GrepIterable} iterates elements which are matched by the regular
+ * expression.
  * 
  * @param <E>
  *          the type of the elements
@@ -35,7 +36,7 @@ public final class GrepIterable<E> implements Iterable<E> {
   private final String regex;
 
   /**
-   * Creates a GrepIterable.
+   * Creates a {@link GrepIterable}.
    * 
    * @param iter
    *          an Iterable

@@ -24,8 +24,8 @@ import java.util.Iterator;
 
 /**
  * 
- * CycleIterable iterates an Iterable n times. If n is not given, it iterates
- * the Iterable forever.
+ * {@link CycleIterable} iterates an Iterable n times. If n is not given, it
+ * iterates the Iterable forever.
  * 
  * @param <E>
  *          the type of the elements
@@ -36,7 +36,7 @@ public final class CycleIterable<E> implements Iterable<E> {
   private final Integer n;
 
   /**
-   * Creates a CycleIterable.
+   * Creates a {@link CycleIterable}.
    * 
    * @param iter
    *          an Iterable
@@ -52,7 +52,7 @@ public final class CycleIterable<E> implements Iterable<E> {
   }
 
   /**
-   * Creates a CycleIterable.
+   * Creates a {@link CycleIterable}.
    * 
    * @param iter
    *          an Iterable

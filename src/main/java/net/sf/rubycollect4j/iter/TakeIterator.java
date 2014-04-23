@@ -25,7 +25,7 @@ import java.util.NoSuchElementException;
 
 /**
  * 
- * TakeIterator drops first n elements before iterating elements.
+ * {@link TakeIterator} drops first n elements before iterating elements.
  * 
  * @param <E>
  *          the type of the elements
@@ -36,7 +36,7 @@ public final class TakeIterator<E> implements Iterator<E> {
   private int n;
 
   /**
-   * Creates a TakeIterator.
+   * Creates a {@link TakeIterator}.
    * 
    * @param iter
    *          an Iterator

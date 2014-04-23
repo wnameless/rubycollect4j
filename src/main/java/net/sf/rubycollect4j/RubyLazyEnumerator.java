@@ -63,9 +63,9 @@ import net.sf.rubycollect4j.util.TryComparator;
 
 /**
  * 
- * RubyLazyEnumerator implements most of the methods refer to the
- * Enumerator::Lazy of Ruby language. RubyLazyEnumerator is both Iterable and
- * Iterator and it's also a peeking iterator.
+ * {@link RubyLazyEnumerator} implements most of the methods refer to the
+ * Enumerator::Lazy of Ruby language. {@link RubyLazyEnumerator} is both
+ * Iterable and Iterator and it's also a peeking iterator.
  * 
  * @param <E>
  *          the type of the elements
@@ -77,7 +77,7 @@ public final class RubyLazyEnumerator<E> implements
   private PeekingIterator<E> pIterator;
 
   /**
-   * Creates a RubyLazyEnumerator by given Iterable.
+   * Creates a {@link RubyLazyEnumerator} by given Iterable.
    * 
    * @param iterable
    *          an Iterable

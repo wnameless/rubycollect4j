@@ -22,8 +22,8 @@ package net.sf.rubycollect4j.succ;
 
 /**
  * 
- * LongSuccessor generates a successor of any given Long. It's a singleton
- * object.
+ * {@link LongSuccessor} generates a successor of any given Long. It's a
+ * singleton object.
  * 
  */
 public final class LongSuccessor implements Successive<Long> {
@@ -33,9 +33,9 @@ public final class LongSuccessor implements Successive<Long> {
   private LongSuccessor() {}
 
   /**
-   * Returns a LongSuccessor.
+   * Returns a {@link LongSuccessor}.
    * 
-   * @return a LongSuccessor
+   * @return a {@link LongSuccessor}
    */
   public static LongSuccessor getInstance() {
     return LongSuccessor.INSTANCE;

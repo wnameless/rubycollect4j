@@ -31,7 +31,7 @@ import net.sf.rubycollect4j.block.TransformBlock;
 
 /**
  * 
- * FlattenIterator iterates each element and flattens it.
+ * {@link FlattenIterator} iterates each element and flattens it.
  * 
  * @param <E>
  *          the type of the elements
@@ -45,7 +45,7 @@ public final class FlattenIterator<E, S> implements Iterator<S> {
   private final RubyArray<S> buffer = newRubyArray();
 
   /**
-   * Creates a FlattenIterator.
+   * Creates a {@link FlattenIterator}.
    * 
    * @param iter
    *          an Iterator

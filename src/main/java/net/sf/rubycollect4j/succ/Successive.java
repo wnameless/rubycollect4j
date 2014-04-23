@@ -24,8 +24,8 @@ import java.util.Comparator;
 
 /**
  * 
- * Successive interface defines a common approach to generate a successive item
- * of any given element.
+ * {@link Successive} interface defines a common approach to generate a
+ * successive item of any given element.
  * 
  * @param <E>
  *          the type of the elements

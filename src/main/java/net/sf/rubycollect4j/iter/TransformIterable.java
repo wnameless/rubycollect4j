@@ -25,8 +25,8 @@ import java.util.Iterator;
 import net.sf.rubycollect4j.block.TransformBlock;
 
 /**
- * TransformIterable converts any type of Iterable to another type by given
- * TransformBlock.
+ * {@link TransformIterable} converts any type of Iterable to another type by
+ * given {@link TransformBlock}.
  * 
  * @param <E>
  *          the type of the elements
@@ -39,7 +39,7 @@ public class TransformIterable<E, S> implements Iterable<S> {
   private final TransformBlock<? super E, ? extends S> block;
 
   /**
-   * Creates a TransformIterable.
+   * Creates a {@link TransformIterable}.
    * 
    * @param iter
    *          an Iterable

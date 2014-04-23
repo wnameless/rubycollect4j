@@ -34,10 +34,10 @@ import java.util.Set;
 
 /**
  * 
- * LinkedIdentityMap is implemented by IdentityHashMap and takes advantage of
- * LinkedList to keep the key elements ordered by their insertion sequence.
- * Unlike IdentityHashMap, LinkedIdentityMap only compares its keys by
- * identities NOT the values.
+ * {@link LinkedIdentityMap} is implemented by IdentityHashMap and takes
+ * advantage of LinkedList to keep the key elements ordered by their insertion
+ * sequence. Unlike IdentityHashMap, {@link LinkedIdentityMap} only compares its
+ * keys by identities NOT the values.
  * 
  * @param <K>
  *          the type of the key elements
@@ -49,8 +49,17 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
   private final IdentityHashMap<K, V> map = new IdentityHashMap<K, V>();
   private final List<K> list = new LinkedList<K>();
 
+  /**
+   * Creates a {@link LinkedIdentityMap}.
+   */
   public LinkedIdentityMap() {}
 
+  /**
+   * Creates a {@link LinkedIdentityMap} by given Map.
+   * 
+   * @param map
+   *          any Map
+   */
   public LinkedIdentityMap(Map<? extends K, ? extends V> map) {
     putAll(map);
   }
@@ -155,9 +164,9 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
    * keys have the same identities before applying the regular equality logic of
    * Entry.
    * 
-   * @param <K2>
+   * @param <S>
    *          the type of the key elements
-   * @param <V2>
+   * @param <U>
    *          the type of the value elements
    */
   static final class IdentityEntry<S, U> implements Entry<S, U> {
@@ -233,9 +242,9 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
    * LinkedIdentityMap::EntrySet is designed to build a Set view of the
    * LinkedIdentityMap#entrySet.
    * 
-   * @param <K2>
+   * @param <S>
    *          the type of the key elements
-   * @param <V2>
+   * @param <U>
    *          the type of the value elements
    */
   static final class EntrySet<S, U> implements Set<Entry<S, U>> {

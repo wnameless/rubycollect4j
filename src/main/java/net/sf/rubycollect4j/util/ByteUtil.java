@@ -42,8 +42,8 @@ import net.sf.rubycollect4j.RubyArray;
 
 /**
  * 
- * ByteUtil provides functions to manipulate bytes or to convert variety Objects
- * into bytes.
+ * {@link ByteUtil} provides functions to manipulate bytes or to convert variety
+ * Objects into bytes.
  * 
  */
 public final class ByteUtil {
@@ -54,11 +54,11 @@ public final class ByteUtil {
   private ByteUtil() {};
 
   /**
-   * Converts a byte array to a RubyArray of Byte.
+   * Converts a byte array to a {@link RubyArray} of Byte.
    * 
    * @param bytes
    *          a byte array
-   * @return a RubyArray of Byte
+   * @return a {@link RubyArray} of Byte
    */
   public static RubyArray<Byte> toList(byte[] bytes) {
     RubyArray<Byte> list = newRubyArray();

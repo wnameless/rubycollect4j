@@ -24,7 +24,7 @@ import java.util.Iterator;
 
 /**
  * 
- * TakeIterable iterates over the first n elements.
+ * {@link TakeIterable} iterates over the first n elements.
  * 
  * @param <E>
  *          the type of the elements
@@ -35,7 +35,7 @@ public final class TakeIterable<E> implements Iterable<E> {
   private final int n;
 
   /**
-   * Creates a TakeIterable.
+   * Creates a {@link TakeIterable}.
    * 
    * @param iter
    *          an Iterable

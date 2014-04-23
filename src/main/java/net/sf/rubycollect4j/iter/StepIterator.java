@@ -24,7 +24,7 @@ import java.util.Iterator;
 
 /**
  * 
- * StepIterator iterates elements by skipping n elements each time.
+ * {@link StepIterator} iterates elements by skipping n elements each time.
  * 
  * @param <E>
  *          the type of the elements
@@ -37,7 +37,7 @@ public final class StepIterator<E> implements Iterator<E> {
   private boolean isRemovable = false;
 
   /**
-   * Creates a StepIterator.
+   * Creates a {@link StepIterator}.
    * 
    * @param iter
    *          an Iterator

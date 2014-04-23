@@ -27,7 +27,7 @@ import java.util.Arrays;
 
 /**
  * 
- * RubyKernel mimics the useful Ruby p method by wrapping the Java
+ * {@link RubyKernel} mimics the useful Ruby p method by wrapping the Java
  * System.out.println method.
  * 
  */
@@ -61,7 +61,7 @@ public final class RubyKernel {
    * 
    * @param xs
    *          an array of Object
-   * @return a RubyArray of Object
+   * @return a {@link RubyArray} of Object
    */
   public static RubyArray<Object> p(Object... xs) {
     for (Object x : xs) {
@@ -87,7 +87,7 @@ public final class RubyKernel {
    * 
    * @param xs
    *          an array of String
-   * @return a RubyArray of String
+   * @return a {@link RubyArray} of String
    */
   public static RubyArray<String> p(String... xs) {
     for (String x : xs) {
@@ -113,7 +113,7 @@ public final class RubyKernel {
    * 
    * @param xs
    *          an array of Boolean
-   * @return a RubyArray of Boolean
+   * @return a {@link RubyArray} of Boolean
    */
   public static RubyArray<Boolean> p(Boolean... xs) {
     RubyArray<Boolean> rubyArray = newRubyArray();
@@ -141,7 +141,7 @@ public final class RubyKernel {
    * 
    * @param xs
    *          an array of Character
-   * @return a RubyArray of Character
+   * @return a {@link RubyArray} of Character
    */
   public static RubyArray<Character> p(Character... xs) {
     RubyArray<Character> rubyArray = newRubyArray();
@@ -169,7 +169,7 @@ public final class RubyKernel {
    * 
    * @param xs
    *          an array of char[]
-   * @return a RubyArray of char[]
+   * @return a {@link RubyArray} of char[]
    */
   public static RubyArray<char[]> p(char[]... xs) {
     RubyArray<char[]> rubyArray = newRubyArray();
@@ -197,7 +197,7 @@ public final class RubyKernel {
    * 
    * @param xs
    *          an array of Double
-   * @return a RubyArray of Double
+   * @return a {@link RubyArray} of Double
    */
   public static RubyArray<Double> p(Double... xs) {
     RubyArray<Double> rubyArray = newRubyArray();
@@ -225,7 +225,7 @@ public final class RubyKernel {
    * 
    * @param xs
    *          an array of Float
-   * @return a RubyArray of Float
+   * @return a {@link RubyArray} of Float
    */
   public static RubyArray<Float> p(Float... xs) {
     RubyArray<Float> rubyArray = newRubyArray();
@@ -253,7 +253,7 @@ public final class RubyKernel {
    * 
    * @param xs
    *          an array of Integer
-   * @return a RubyArray of Integer
+   * @return a {@link RubyArray} of Integer
    */
   public static RubyArray<Integer> p(Integer... xs) {
     RubyArray<Integer> rubyArray = newRubyArray();
@@ -281,7 +281,7 @@ public final class RubyKernel {
    * 
    * @param xs
    *          an array of Long
-   * @return a RubyArray of Long
+   * @return a {@link RubyArray} of Long
    */
   public static RubyArray<Long> p(Long... xs) {
     RubyArray<Long> rubyArray = newRubyArray();

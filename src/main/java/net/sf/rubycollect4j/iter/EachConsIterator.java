@@ -29,8 +29,9 @@ import net.sf.rubycollect4j.RubyArray;
 
 /**
  * 
- * EachConsIterator iterates each element by a window of size n. It returns a
- * RubyArray which includes n consecutive elements within this window.
+ * {@link EachConsIterator} iterates each element by a window of size n. It
+ * returns a {@link RubyArray} which includes n consecutive elements within this
+ * window.
  * 
  * @param <E>
  *          the type of the elements
@@ -42,7 +43,7 @@ public final class EachConsIterator<E> implements Iterator<RubyArray<E>> {
   private final RubyArray<E> bucket = newRubyArray();
 
   /**
-   * Creates an EachConsIterator.
+   * Creates an {@link EachConsIterator}.
    * 
    * @param iter
    *          an Iterator

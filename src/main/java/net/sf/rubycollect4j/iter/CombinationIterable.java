@@ -27,7 +27,8 @@ import net.sf.rubycollect4j.RubyArray;
 
 /**
  * 
- * CombinationIterable generates all combinations into a List with length n.
+ * {@link CombinationIterable} generates all combinations into a List with
+ * length n.
  * 
  * @param <E>
  *          the type of the elements
@@ -38,7 +39,7 @@ public class CombinationIterable<E> implements Iterable<RubyArray<E>> {
   private final int n;
 
   /**
-   * Creates a CombinationIterable.
+   * Creates a {@link CombinationIterable}.
    * 
    * @param list
    *          a List

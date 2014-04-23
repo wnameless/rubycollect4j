@@ -25,8 +25,8 @@ import java.util.NoSuchElementException;
 
 /**
  * 
- * CycleIterator iterates an Iterable n times. If n is not given, it iterates
- * the Iterable forever.
+ * {@link CycleIterator} iterates an Iterable n times. If n is not given, it
+ * iterates the Iterable forever.
  * 
  * @param <E>
  *          the type of the elements
@@ -38,7 +38,7 @@ public final class CycleIterator<E> implements Iterator<E> {
   private Iterator<? extends E> it;
 
   /**
-   * Creates a CycleIterator.
+   * Creates a {@link CycleIterator}.
    * 
    * @param iter
    *          an Iterable
@@ -55,7 +55,7 @@ public final class CycleIterator<E> implements Iterator<E> {
   }
 
   /**
-   * Creates a CycleIterator.
+   * Creates a {@link CycleIterator}.
    * 
    * @param iter
    *          an Iterable

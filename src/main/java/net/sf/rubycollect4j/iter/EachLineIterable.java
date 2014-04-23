@@ -25,7 +25,7 @@ import java.util.Iterator;
 
 /**
  * 
- * EachLineIterable iterates a File line by line.
+ * {@link EachLineIterable} iterates a File line by line.
  * 
  */
 public final class EachLineIterable implements Iterable<String> {
@@ -33,7 +33,7 @@ public final class EachLineIterable implements Iterable<String> {
   private final File file;
 
   /**
-   * Creates an EachLineIterable.
+   * Creates an {@link EachLineIterable}.
    * 
    * @param file
    *          a File

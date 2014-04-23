@@ -27,7 +27,7 @@ import net.sf.rubycollect4j.util.ComparableEntry;
 
 /**
  * 
- * EachWithObjectIterator iterates each element with an object.
+ * {@link EachWithObjectIterator} iterates each element with an object.
  * 
  * @param <E>the type of the elements
  * @param <O>
@@ -40,7 +40,7 @@ public final class EachWithObjectIterator<E, O> implements
   private final O obj;
 
   /**
-   * Creates an EachWithObjectIterator.
+   * Creates an {@link EachWithObjectIterator}.
    * 
    * @param iter
    *          an Iterator

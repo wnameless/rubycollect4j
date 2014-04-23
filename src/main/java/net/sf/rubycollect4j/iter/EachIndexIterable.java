@@ -24,7 +24,8 @@ import java.util.Iterator;
 
 /**
  * 
- * EachIndexIterable iterates indices of elements instead of elements itself.
+ * {@link EachIndexIterable} iterates indices of elements instead of elements
+ * itself.
  * 
  */
 public final class EachIndexIterable<E> implements Iterable<Integer> {
@@ -32,7 +33,7 @@ public final class EachIndexIterable<E> implements Iterable<Integer> {
   private final Iterable<? extends E> iter;
 
   /**
-   * Creates an EachIndexIterable.
+   * Creates an {@link EachIndexIterable}.
    * 
    * @param iter
    *          an Iterable

@@ -42,14 +42,14 @@ import net.sf.rubycollect4j.iter.EachLineIterable;
 
 /**
  * 
- * RubyIO implements part of the methods refer to the IO class of Ruby.
+ * {@link RubyIO} implements part of the methods refer to the IO class of Ruby.
  * 
  */
 public class RubyIO {
 
   /**
    * 
-   * This Mode enum contains all open modes of RubyIO.<br>
+   * This Mode enum contains all open modes of {@link RubyIO}.<br>
    * r : Read.<br>
    * r+ : Read and Write.<br>
    * w : Write.<br>
@@ -159,14 +159,14 @@ public class RubyIO {
   protected final Mode mode;
 
   /**
-   * Creates a RubyIO by given path and mode.
+   * Creates a {@link RubyIO} by given path and mode.
    * 
    * @param path
    *          of a File
    * @param mode
    *          r, rw, w, w+, a, a+
    * @see Mode
-   * @return a RubyIO
+   * @return a {@link RubyIO}
    */
   public static RubyIO open(String path, String mode) {
     RubyIO io = null;
@@ -180,18 +180,18 @@ public class RubyIO {
   }
 
   /**
-   * Creates a RubyIO by given file. Sets the mode to read-only.
+   * Creates a {@link RubyIO} by given file. Sets the mode to read-only.
    * 
    * @param path
    *          of a file
-   * @return a RubyIO
+   * @return a {@link RubyIO}
    */
   public static RubyIO open(String path) {
     return open(path, R.toString());
   }
 
   /**
-   * Creates an RubyIO by given File and Mode.
+   * Creates a {@link RubyIO} by given File and Mode.
    * 
    * @param file
    *          a File
@@ -244,11 +244,11 @@ public class RubyIO {
   }
 
   /**
-   * Returns a RubyEnumerator of lines in given file.
+   * Returns a {@link RubyEnumerator} of lines in given file.
    * 
    * @param path
    *          of a File
-   * @return a RubyEnumerator
+   * @return a {@link RubyEnumerator}
    */
   public static RubyEnumerator<String> foreach(String path) {
     return newRubyEnumerator(new EachLineIterable(new File(path)));
@@ -279,9 +279,9 @@ public class RubyIO {
   }
 
   /**
-   * Returns a RubyEnumerator of lines in the file.
+   * Returns a {@link RubyEnumerator} of lines in the file.
    * 
-   * @return a RubyEnumerator
+   * @return a {@link RubyEnumerator}
    * @throws IllegalStateException
    *           if file is not readable
    */

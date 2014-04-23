@@ -25,8 +25,8 @@ import java.util.Date;
 
 /**
  * 
- * RubyDate simply extends Java Date and adds few useful methods which are
- * inspired by Ruby on Rails.
+ * {@link RubyDate} simply extends Java Date and adds few useful methods which
+ * are inspired by Ruby on Rails.
  * 
  */
 public final class RubyDate extends Date {
@@ -34,12 +34,12 @@ public final class RubyDate extends Date {
   private static final long serialVersionUID = 6634492638579024503L;
 
   /**
-   * The constructor of the RubyDate.
+   * Returns a {@link RubyDate} of now.
    */
   public RubyDate() {}
 
   /**
-   * The constructor of the RubyDate.
+   * Returns a {@link RubyDate} of given Date.
    * 
    * @param date
    *          a Date
@@ -54,7 +54,7 @@ public final class RubyDate extends Date {
   }
 
   /**
-   * Returns the year of this RubyDate.
+   * Returns the year of this {@link RubyDate}.
    * 
    * @return the year
    */
@@ -65,7 +65,7 @@ public final class RubyDate extends Date {
   }
 
   /**
-   * Returns the month(1-12) of this RubyDate.
+   * Returns the month(1-12) of this {@link RubyDate}.
    * 
    * @return the month
    */
@@ -76,7 +76,7 @@ public final class RubyDate extends Date {
   }
 
   /**
-   * Returns the day(1-31) of this RubyDate.
+   * Returns the day(1-31) of this {@link RubyDate}.
    * 
    * @return the day
    */
@@ -87,7 +87,7 @@ public final class RubyDate extends Date {
   }
 
   /**
-   * Returns the day(0-6) of week of this RubyDate.<br>
+   * Returns the day(0-6) of week of this {@link RubyDate}.<br>
    * 
    * Sun : 0<br>
    * Mon : 1<br>
@@ -106,7 +106,7 @@ public final class RubyDate extends Date {
   }
 
   /**
-   * Returns the day of year of this RubyDate.
+   * Returns the day of year of this {@link RubyDate}.
    * 
    * @return the day of year
    */
@@ -117,7 +117,7 @@ public final class RubyDate extends Date {
   }
 
   /**
-   * Returns the week of year of this RubyDate.
+   * Returns the week of year of this {@link RubyDate}.
    * 
    * @return the week of year
    */
@@ -128,7 +128,7 @@ public final class RubyDate extends Date {
   }
 
   /**
-   * Returns the week of month of this RubyDate.
+   * Returns the week of month of this {@link RubyDate}.
    * 
    * @return the week of month
    */
@@ -139,7 +139,7 @@ public final class RubyDate extends Date {
   }
 
   /**
-   * Returns the hour(0-23) of this RubyDate.
+   * Returns the hour(0-23) of this {@link RubyDate}.
    * 
    * @return the hour
    */
@@ -150,7 +150,7 @@ public final class RubyDate extends Date {
   }
 
   /**
-   * Returns the minute of this RubyDate.
+   * Returns the minute of this {@link RubyDate}.
    * 
    * @return the minute
    */
@@ -161,7 +161,7 @@ public final class RubyDate extends Date {
   }
 
   /**
-   * Returns the second of this RubyDate.
+   * Returns the second of this {@link RubyDate}.
    * 
    * @return the second
    */
@@ -172,7 +172,7 @@ public final class RubyDate extends Date {
   }
 
   /**
-   * Returns the millisecond of this RubyDate.
+   * Returns the millisecond of this {@link RubyDate}.
    * 
    * @return the millisecond
    */
@@ -183,32 +183,32 @@ public final class RubyDate extends Date {
   }
 
   /**
-   * Increases an interval of time to a date by the DateShifter.
+   * Increases an interval of time to a date by the {@link DateShifter}.
    * 
    * @param interval
    *          of time to be shifted
-   * @return a DateShifter
+   * @return a {@link DateShifter}
    */
   public DateShifter add(int interval) {
     return new DateShifter(this, interval);
   }
 
   /**
-   * Decreases an interval of time to a date by the DateShifter.
+   * Decreases an interval of time to a date by the {@link DateShifter}.
    * 
    * @param interval
    *          of time to be shifted
-   * @return a DateShifter
+   * @return a {@link DateShifter}
    */
   public DateShifter minus(int interval) {
     return new DateShifter(this, -interval);
   }
 
   /**
-   * Returns a new RubyDate with time set to the beginning of day based on this
-   * RubyDate.
+   * Returns a new {@link RubyDate} with time set to the beginning of day based
+   * on this {@link RubyDate}.
    * 
-   * @return a new RubyDate
+   * @return a new {@link RubyDate}
    */
   public RubyDate beginningOfDay() {
     Calendar c = Calendar.getInstance();
@@ -221,10 +221,10 @@ public final class RubyDate extends Date {
   }
 
   /**
-   * Returns a new RubyDate with time set to the end of day based on this
-   * RubyDate.
+   * Returns a new {@link RubyDate} with time set to the end of day based on
+   * this {@link RubyDate}.
    * 
-   * @return a new RubyDate
+   * @return a new {@link RubyDate}
    */
   public RubyDate endOfDay() {
     Calendar c = Calendar.getInstance();
@@ -237,10 +237,10 @@ public final class RubyDate extends Date {
   }
 
   /**
-   * Returns a new RubyDate with time set to the beginning of week based on this
-   * RubyDate. The beginning of week is Sunday.
+   * Returns a new {@link RubyDate} with time set to the beginning of week based
+   * on this {@link RubyDate}. The beginning of week is Sunday.
    * 
-   * @return a new RubyDate
+   * @return a new {@link RubyDate}
    */
   public RubyDate beginningOfWeek() {
     Calendar c = Calendar.getInstance();
@@ -254,9 +254,9 @@ public final class RubyDate extends Date {
   }
 
   /**
-   * Creates a RubyDate of today.
+   * Creates a {@link RubyDate} of today.
    * 
-   * @return a RubyDate
+   * @return a {@link RubyDate}
    */
   public static RubyDate today() {
     Calendar c = Calendar.getInstance();
@@ -268,18 +268,18 @@ public final class RubyDate extends Date {
   }
 
   /**
-   * Creates a RubyDate of tomorrow.
+   * Creates a {@link RubyDate} of tomorrow.
    * 
-   * @return a RubyDate
+   * @return a {@link RubyDate}
    */
   public static RubyDate tomorrow() {
     return today().add(1).days();
   }
 
   /**
-   * Creates a RubyDate of yesterday.
+   * Creates a {@link RubyDate} of yesterday.
    * 
-   * @return a RubyDate
+   * @return a {@link RubyDate}
    */
   public static RubyDate yesterday() {
     return today().minus(1).days();
@@ -287,8 +287,8 @@ public final class RubyDate extends Date {
 
   /**
    * 
-   * DateShifter shifts a Date by an interval of time and creates a new RubyDate
-   * from it.
+   * {@link DateShifter} shifts a Date by an interval of time and creates a new
+   * {@link RubyDate} from it.
    * 
    */
   public final class DateShifter {
@@ -297,7 +297,7 @@ public final class RubyDate extends Date {
     private final int interval;
 
     /**
-     * The constructor of the DateShifter.
+     * Returns a {@link DateShifter}.
      * 
      * @param date
      *          a Date
@@ -312,7 +312,7 @@ public final class RubyDate extends Date {
     /**
      * Shifts the time by milliseconds.
      * 
-     * @return a RubyDate
+     * @return a {@link RubyDate}
      */
     public RubyDate milliseconds() {
       Calendar c = Calendar.getInstance();
@@ -324,7 +324,7 @@ public final class RubyDate extends Date {
     /**
      * Shifts the time by seconds.
      * 
-     * @return a RubyDate
+     * @return a {@link RubyDate}
      */
     public RubyDate seconds() {
       Calendar c = Calendar.getInstance();
@@ -336,7 +336,7 @@ public final class RubyDate extends Date {
     /**
      * Shifts the time by minutes.
      * 
-     * @return a RubyDate
+     * @return a {@link RubyDate}
      */
     public RubyDate minutes() {
       Calendar c = Calendar.getInstance();
@@ -348,7 +348,7 @@ public final class RubyDate extends Date {
     /**
      * Shifts the time by hours.
      * 
-     * @return a RubyDate
+     * @return a {@link RubyDate}
      */
     public RubyDate hours() {
       Calendar c = Calendar.getInstance();
@@ -360,7 +360,7 @@ public final class RubyDate extends Date {
     /**
      * Shifts the time by weeks.
      * 
-     * @return a RubyDate
+     * @return a {@link RubyDate}
      */
     public RubyDate weeks() {
       Calendar c = Calendar.getInstance();
@@ -372,7 +372,7 @@ public final class RubyDate extends Date {
     /**
      * Shifts the time by days.
      * 
-     * @return a RubyDate
+     * @return a {@link RubyDate}
      */
     public RubyDate days() {
       Calendar c = Calendar.getInstance();
@@ -384,7 +384,7 @@ public final class RubyDate extends Date {
     /**
      * Shifts the time by months.
      * 
-     * @return a RubyDate
+     * @return a {@link RubyDate}
      */
     public RubyDate months() {
       Calendar c = Calendar.getInstance();
@@ -396,7 +396,7 @@ public final class RubyDate extends Date {
     /**
      * Shifts the time by years.
      * 
-     * @return a RubyDate
+     * @return a {@link RubyDate}
      */
     public RubyDate years() {
       Calendar c = Calendar.getInstance();

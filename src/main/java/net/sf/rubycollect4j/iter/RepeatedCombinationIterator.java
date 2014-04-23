@@ -32,8 +32,8 @@ import net.sf.rubycollect4j.RubyArray;
 
 /**
  * 
- * RepeatedCombinationIterator generates all repeated combinations into a List
- * with length n.
+ * {@link RepeatedCombinationIterator} generates all repeated combinations into
+ * a List with length n.
  * 
  * @param <E>
  *          the type of the elements
@@ -48,7 +48,7 @@ public final class RepeatedCombinationIterator<E> implements
   private boolean hasMore = true;
 
   /**
-   * Creates a RepeatedCombinationIterator.
+   * Creates a {@link RepeatedCombinationIterator}.
    * 
    * @param list
    *          a List

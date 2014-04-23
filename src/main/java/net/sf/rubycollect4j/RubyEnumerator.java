@@ -30,9 +30,9 @@ import net.sf.rubycollect4j.util.PeekingIterator;
 
 /**
  * 
- * RubyEnumerator implements most of the methods refer to the Enumerator of Ruby
- * language. RubyEnumerator is both Iterable and Iterator and it's also a
- * peeking iterator.
+ * {@link RubyEnumerator} implements most of the methods refer to the Enumerator
+ * of Ruby language. {@link RubyEnumerator} is both Iterable and Iterator and
+ * it's also a peeking iterator.
  * 
  * @param <E>
  *          the type of the elements
@@ -49,7 +49,7 @@ public class RubyEnumerator<E> extends RubyEnumerable<E> implements
   }
 
   /**
-   * Creates a RubyEnumerator by given Iterable.
+   * Creates a {@link RubyEnumerator} by given Iterable.
    * 
    * @param iterable
    *          an Iterable
@@ -65,8 +65,8 @@ public class RubyEnumerator<E> extends RubyEnumerable<E> implements
   }
 
   /**
-   * Creates a RubyEnumerator by given Iterator. This Iterator will be converted
-   * into an Iterable. In other words, a copy will be made.
+   * Creates a {@link RubyEnumerator} by given Iterator. This Iterator will be
+   * converted into an Iterable. In other words, a copy will be made.
    * 
    * @param iterator
    *          an Iterator
@@ -90,7 +90,7 @@ public class RubyEnumerator<E> extends RubyEnumerable<E> implements
    * 
    * @param block
    *          to yield each element
-   * @return this RubyEnumerator
+   * @return this {@link RubyEnumerator}
    */
   @Override
   public RubyEnumerator<E> each(Block<? super E> block) {
@@ -101,9 +101,9 @@ public class RubyEnumerator<E> extends RubyEnumerable<E> implements
   }
 
   /**
-   * Resets the iterator of this RubyEnumerator to the beginning.
+   * Resets the iterator of this {@link RubyEnumerator} to the beginning.
    * 
-   * @return this RubyEnumerator
+   * @return this {@link RubyEnumerator}
    */
   public RubyEnumerator<E> rewind() {
     pIterator = new PeekingIterator<E>(iter.iterator());

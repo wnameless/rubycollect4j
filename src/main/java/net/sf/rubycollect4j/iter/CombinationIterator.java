@@ -32,7 +32,8 @@ import net.sf.rubycollect4j.RubyArray;
 
 /**
  * 
- * CombinationIterator generates all combinations into a List with length n.
+ * {@link CombinationIterator} generates all combinations into a List with
+ * length n.
  * 
  * @param <E>
  *          the type of the elements
@@ -45,7 +46,7 @@ public class CombinationIterator<E> implements Iterator<RubyArray<E>> {
   private boolean hasMore = true;
 
   /**
-   * Creates a CombinationIterator.
+   * Creates a {@link CombinationIterator}.
    * 
    * @param list
    *          a List

@@ -27,8 +27,8 @@ import net.sf.rubycollect4j.RubyArray;
 
 /**
  * 
- * RepeatedCombinationIterable generates all repeated combinations into a List
- * with length n.
+ * {@link RepeatedCombinationIterable} generates all repeated combinations into
+ * a List with length n.
  * 
  * @param <E>
  *          the type of the elements
@@ -40,7 +40,7 @@ public final class RepeatedCombinationIterable<E> implements
   private final int n;
 
   /**
-   * Creates a RepeatedCombinationIterable.
+   * Creates a {@link RepeatedCombinationIterable}.
    * 
    * @param list
    *          a List

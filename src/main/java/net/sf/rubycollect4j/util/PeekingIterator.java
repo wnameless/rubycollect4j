@@ -25,8 +25,8 @@ import java.util.NoSuchElementException;
 
 /**
  * 
- * PeekingIterator is an Iterator which provides a peek() method for user to
- * peek an element advanced.
+ * {@link PeekingIterator} is an Iterator which provides a peek() method for
+ * user to peek an element advanced.
  * 
  * @param <E>
  *          the type of elements
@@ -38,7 +38,7 @@ public final class PeekingIterator<E> implements Iterator<E> {
   private boolean hasPeek = false;
 
   /**
-   * Creates a PeekingIterator.
+   * Creates a {@link PeekingIterator}.
    * 
    * @param iterator
    *          an Iterator

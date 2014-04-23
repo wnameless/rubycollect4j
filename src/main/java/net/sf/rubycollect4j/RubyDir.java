@@ -35,7 +35,8 @@ import net.sf.rubycollect4j.block.TransformBlock;
 
 /**
  * 
- * RubyDir implements parts of the methods refer to the Dir class of Ruby.
+ * {@link RubyDir} implements parts of the methods refer to the Dir class of
+ * Ruby.
  * 
  */
 public final class RubyDir extends RubyEnumerable<String> {
@@ -50,11 +51,11 @@ public final class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
-   * Creates a RubyDir by given path.
+   * Creates a {@link RubyDir} by given path.
    * 
    * @param path
    *          of a file
-   * @return a RubyDir
+   * @return a {@link RubyDir}
    * @throws IllegalArgumentException
    *           if no such file or directory
    */
@@ -67,12 +68,6 @@ public final class RubyDir extends RubyEnumerable<String> {
     return new RubyDir(dir);
   }
 
-  /**
-   * Creates a RubyDir by given File.
-   * 
-   * @param directory
-   *          a File
-   */
   private RubyDir(File directory) {
     this.directory = directory;
     entries = entries(directory.getPath());
@@ -90,11 +85,11 @@ public final class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
-   * Puts entries of a folder into a RubyArray.
+   * Puts entries of a folder into a {@link RubyArray}.
    * 
    * @param path
    *          of a file
-   * @return a RubyArray
+   * @return a {@link RubyArray}
    */
   public static RubyArray<String> entries(String path) {
     File file = new File(path);
@@ -131,11 +126,11 @@ public final class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
-   * Creates a RubyEnumerator of entries of the given path.
+   * Creates a {@link RubyEnumerator} of entries of the given path.
    * 
    * @param path
    *          of a file
-   * @return a RubyEnumerator
+   * @return a {@link RubyEnumerator}
    */
   public static RubyEnumerator<String> foreach(String path) {
     return newRubyEnumerator(entries(path));
@@ -152,7 +147,7 @@ public final class RubyDir extends RubyEnumerable<String> {
    * 
    * @param pattern
    *          of target files
-   * @return a RubyArray
+   * @return a {@link RubyArray}
    */
   public static RubyArray<String> glob(String pattern) {
     if (pattern.isEmpty())
@@ -276,9 +271,9 @@ public final class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
-   * Creates a RubyEnumerator of entries of this RubyDir.
+   * Creates a {@link RubyEnumerator} of entries of this {@link RubyDir}.
    * 
-   * @return a RubyEnumerator
+   * @return a {@link RubyEnumerator}
    */
   @Override
   public RubyEnumerator<String> each() {
@@ -290,7 +285,7 @@ public final class RubyDir extends RubyEnumerable<String> {
    * 
    * @param block
    *          to yield entries
-   * @return this RubyDir
+   * @return this {@link RubyDir}
    */
   @Override
   public RubyDir each(Block<? super String> block) {
@@ -299,9 +294,9 @@ public final class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
-   * Returns the path of this RubyDir.
+   * Returns the path of this {@link RubyDir}.
    * 
-   * @return the path of this RubyDir
+   * @return the path of this {@link RubyDir}
    */
   public String path() {
     return directory.getPath();
@@ -351,11 +346,11 @@ public final class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
-   * Returns a RubyDir that entries is set to the given position.
+   * Returns a {@link RubyDir} that entries is set to the given position.
    * 
    * @param position
    *          to be searched
-   * @return a RubyDir that entries is set to the given position
+   * @return a {@link RubyDir} that entries is set to the given position
    */
   public RubyDir seek(int position) {
     RubyDir dir = RubyDir.open(directory.getPath());

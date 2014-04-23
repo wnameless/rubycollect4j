@@ -28,8 +28,8 @@ import net.sf.rubycollect4j.util.PeekingIterator;
 
 /**
  * 
- * TakeWhileIterator iterates over the elements until the returned value by the
- * block is false.
+ * {@link TakeWhileIterator} iterates over the elements until the returned value
+ * by the block is false.
  * 
  * @param <E>
  *          the type of the elements
@@ -40,7 +40,7 @@ public final class TakeWhileIterator<E> implements Iterator<E> {
   private final BooleanBlock<? super E> block;
 
   /**
-   * Creates a TakeWhileIterator.
+   * Creates a {@link TakeWhileIterator}.
    * 
    * @param iter
    *          an Iterable

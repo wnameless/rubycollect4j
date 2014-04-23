@@ -24,7 +24,7 @@ import java.util.Iterator;
 
 /**
  * 
- * DropIterator drops first n elements before iterating elements.
+ * {@link DropIterator} drops first n elements before iterating elements.
  * 
  * @param <E>
  *          the type of the elements
@@ -35,7 +35,7 @@ public final class DropIterator<E> implements Iterator<E> {
   private boolean hasFirstCall = false;
 
   /**
-   * Creates a DropIterator.
+   * Creates a {@link DropIterator}.
    * 
    * @param iter
    *          an Iterator

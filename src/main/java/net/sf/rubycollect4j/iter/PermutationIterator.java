@@ -33,7 +33,8 @@ import net.sf.rubycollect4j.RubyArray;
 
 /**
  * 
- * PermutationIterator generates all permutations into a List with length n.
+ * {@link PermutationIterator} generates all permutations into a List with
+ * length n.
  * 
  * @param <E>
  *          the type of the elements
@@ -46,7 +47,7 @@ public final class PermutationIterator<E> implements Iterator<RubyArray<E>> {
   private boolean hasMore = true;
 
   /**
-   * Creates a PermutationIterator.
+   * Creates a {@link PermutationIterator}.
    * 
    * @param list
    *          a List

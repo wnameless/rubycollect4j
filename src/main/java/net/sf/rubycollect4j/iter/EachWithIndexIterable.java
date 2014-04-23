@@ -25,7 +25,7 @@ import java.util.Map.Entry;
 
 /**
  * 
- * EachWithIndexIterable iterates each element with its index.
+ * {@link EachWithIndexIterable} iterates each element with its index.
  * 
  * @param <E>
  *          the type of the elements
@@ -36,7 +36,7 @@ public final class EachWithIndexIterable<E> implements
   private final Iterable<? extends E> iter;
 
   /**
-   * Creates an EachWithIndexIterable.
+   * Creates an {@link EachWithIndexIterable}.
    * 
    * @param iter
    *          an Iterable

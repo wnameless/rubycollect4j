@@ -34,12 +34,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.block.TransformBlock;
 import net.sf.rubycollect4j.util.ByteUtil;
 
 /**
  * 
- * Directive defines available directives for RubyArray#pack.
+ * {@link Directive} defines available directives for
+ * {@link RubyArray#pack(String)}.
  * 
  */
 public enum Directive {

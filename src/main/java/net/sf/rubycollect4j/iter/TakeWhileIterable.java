@@ -26,8 +26,8 @@ import net.sf.rubycollect4j.block.BooleanBlock;
 
 /**
  * 
- * TakeWhileIterable iterates over the elements until the returned value by the
- * block is false.
+ * {@link TakeWhileIterable} iterates over the elements until the returned value
+ * by the block is false.
  * 
  * @param <E>
  *          the type of the elements
@@ -38,7 +38,7 @@ public final class TakeWhileIterable<E> implements Iterable<E> {
   private final BooleanBlock<? super E> block;
 
   /**
-   * Creates a TakeWhileIterable.
+   * Creates a {@link TakeWhileIterable}.
    * 
    * @param iter
    *          an Iterable

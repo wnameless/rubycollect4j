@@ -28,9 +28,9 @@ import net.sf.rubycollect4j.block.BooleanBlock;
 
 /**
  * 
- * SliceBeforeIterable iterates all elements by slicing elements into different
- * parts. It performs each slicing when any element is true returned by the
- * block or matched by the pattern.
+ * {@link SliceBeforeIterable} iterates all elements by slicing elements into
+ * different parts. It performs each slicing when any element is true returned
+ * by the block or matched by the pattern.
  * 
  * @param <E>
  *          the type of the elements
@@ -42,7 +42,7 @@ public final class SliceBeforeIterable<E> implements Iterable<RubyArray<E>> {
   private final Pattern pattern;
 
   /**
-   * Creates a SliceBeforeIterable.
+   * Creates a {@link SliceBeforeIterable}.
    * 
    * @param iter
    *          an Iterable

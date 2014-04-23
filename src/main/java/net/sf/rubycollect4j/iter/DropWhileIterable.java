@@ -26,8 +26,8 @@ import net.sf.rubycollect4j.block.BooleanBlock;
 
 /**
  * 
- * DropWhileIterable drops elements until the returned value of the block is
- * false before iterating elements.
+ * {@link DropWhileIterable} drops elements until the returned value of the
+ * block is false before iterating elements.
  * 
  * @param <E>
  *          the type of the elements
@@ -38,7 +38,7 @@ public final class DropWhileIterable<E> implements Iterable<E> {
   private final BooleanBlock<? super E> block;
 
   /**
-   * Creates a DropWhileIterable.
+   * Creates a {@link DropWhileIterable}.
    * 
    * @param iter
    *          an Iterable

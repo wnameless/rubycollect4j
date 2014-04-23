@@ -22,8 +22,8 @@ package net.sf.rubycollect4j.succ;
 
 /**
  * 
- * CharacterSuccessor generates a successor of any given Character. It's a
- * singleton object.
+ * {@link CharacterSuccessor} generates a successor of any given Character. It's
+ * a singleton object.
  * 
  */
 public final class CharacterSuccessor implements Successive<Character> {
@@ -33,9 +33,9 @@ public final class CharacterSuccessor implements Successive<Character> {
   private CharacterSuccessor() {}
 
   /**
-   * Returns a CharacterSuccessor.
+   * Returns a {@link CharacterSuccessor}.
    * 
-   * @return a CharacterSuccessor
+   * @return a {@link CharacterSuccessor}
    */
   public static CharacterSuccessor getInstance() {
     return CharacterSuccessor.INSTANCE;
