@@ -49,7 +49,7 @@ public final class RubyFile extends RubyIO {
    *          of a File
    * @param mode
    *          r, rw, w, w+, a, a+
-   * @return a {@link RubyFile}
+   * @return {@link RubyFile}
    */
   public static RubyFile open(String path, String mode) {
     RubyFile rf = null;
@@ -67,7 +67,7 @@ public final class RubyFile extends RubyIO {
    * 
    * @param path
    *          of a file
-   * @return a {@link RubyFile}
+   * @return {@link RubyFile}
    */
   public static RubyFile open(String path) {
     return open(path, R.toString());
@@ -268,7 +268,7 @@ public final class RubyFile extends RubyIO {
    * 
    * @param files
    *          name of files
-   * @return a joined path
+   * @return joined path
    */
   public static String join(String... files) {
     String pathSeprator;
@@ -325,7 +325,7 @@ public final class RubyFile extends RubyIO {
    * 
    * @param path
    *          of a file
-   * @return a Long or null
+   * @return Long or null
    */
   public static Long sizeʔ(String path) {
     File file = new File(path);

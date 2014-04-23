@@ -138,7 +138,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   /**
    * Returns a copied string whose encoding is ASCII-8BIT.
    * 
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString b() {
     return rs(new String(str.getBytes(), Charset.forName("ISO-8859-1")));
@@ -147,7 +147,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   /**
    * Returns an {@link RubyArray} of Byte in {@link RubyString}.
    * 
-   * @return a {@link RubyArray} of Byte
+   * @return {@link RubyArray} of Byte
    */
   public RubyArray<Byte> bytes() {
     RubyArray<Byte> bytes = newRubyArray();
@@ -189,7 +189,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    *          begin index
    * @param length
    *          of the bytes
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString byteslice(int offset, int length) {
     RubyArray<Byte> bytes = bytes().slice(offset, length);
@@ -207,7 +207,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * Returns a copy of {@link RubyString} with the first character converted to
    * uppercase and the remainder to lowercase.
    * 
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString capitalize() {
     if (str.isEmpty())
@@ -232,7 +232,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param charSeq
    *          any CharSequence
-   * @return a negative integer, zero, or a positive integer as the specified
+   * @return negative integer, zero, or a positive integer as the specified
    *         CharSequence is greater than, equal to, or less than this String,
    *         ignoring case considerations.
    */
@@ -246,7 +246,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param width
    *          of result
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString center(int width) {
     return center(width, " ");
@@ -260,7 +260,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    *          of result
    * @param padstr
    *          used to pad in front and after the str
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString center(int width, String padstr) {
     if (stringify(padstr).isEmpty())
@@ -293,7 +293,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   // /**
   // * Returns a {@link RubyArray} of characters in str.
   // *
-  // * @return a {@link RubyArray}
+  // * @return {@link RubyArray}
   // */
   // public RubyArray<String> chars() {
   // return toA();
@@ -303,7 +303,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * Returns a new {@link RubyString} with the line separator removed from the
    * end of str.
    * 
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString chomp() {
     String result = str.replaceFirst("\r\n$", "");
@@ -333,7 +333,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param separator
    *          a line separator
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString chomp(String separator) {
     separator = separator == null ? "" : separator;
@@ -357,7 +357,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * Returns a new {@link RubyString} with the last character removed. If the
    * string ends with \r\n, both characters are removed.
    * 
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString chop() {
     if (str.isEmpty())
@@ -373,7 +373,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * Processes str as for {@link #chop}, returning str, or null if str is the
    * empty string.
    * 
-   * @return a new {@link RubyString} or null
+   * @return new {@link RubyString} or null
    */
   public RubyString chopǃ() {
     return inPlace(chop());
@@ -382,7 +382,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   /**
    * Returns a one-character string at the beginning of the string.
    * 
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString chr() {
     if (str.isEmpty())
@@ -405,7 +405,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * Returns a {@link RubyArray} of the Integer ordinals of the characters in
    * str.
    * 
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   public RubyArray<Integer> codepoints() {
     RubyArray<Integer> codepoints = newRubyArray();
@@ -503,7 +503,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param salt
    *          a secret string
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString crypt(String salt) {
     String encrypt = str + stringify(salt);
@@ -523,7 +523,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param charSet
    *          a set of characters
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString delete(final String charSet) {
     stringify(charSet);
@@ -546,7 +546,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param charSet
    *          a set of characters
-   * @return a new {@link RubyString} or null
+   * @return new {@link RubyString} or null
    */
   public RubyString deleteǃ(String charSet) {
     return inPlace(delete(charSet));
@@ -556,7 +556,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * Returns a copy of str with all uppercase letters replaced with their
    * lowercase.
    * 
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString downcase() {
     return rs(str.toLowerCase());
@@ -576,7 +576,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * characters replaced by \\nnn or \\unnnn notation and all special characters
    * escaped.
    * 
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString dump() {
     String printable = toA().map(new TransformBlock<String, String>() {
@@ -610,7 +610,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   /**
    * Returns a {@link RubyEnumerator} of each byte in str.
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<Byte> eachByte() {
     return bytes().each();
@@ -631,7 +631,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   /**
    * Returns a {@link RubyEnumerator} of each character in str.
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<String> eachChar() {
     return each();
@@ -652,7 +652,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   /**
    * Returns a {@link RubyEnumerator} of each codepoint in str.
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<Integer> eachCodepoint() {
     return newRubyEnumerator((Iterable<Integer>) each().lazy().map(
@@ -681,7 +681,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   /**
    * Returns a {@link RubyEnumerator} of each line in str.
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<String> eachLine() {
     return ra(str.split(System.getProperty("line.separator"))).each();
@@ -702,7 +702,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   /**
    * Returns a {@link RubyEnumerator} of each line by given separator in str.
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<String> eachLine(String separator) {
     return ra(str.split(stringify(separator))).each();
@@ -734,7 +734,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param encoding
    *          name of encoding
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString encode(String encoding) {
     stringify(encoding);
@@ -748,7 +748,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    *          name of destination encoding
    * @param srcEncoding
    *          name of source encoding
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString encode(String dstEncoding, String srcEncoding) {
     stringify(srcEncoding);
@@ -786,7 +786,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   /**
    * Returns UTF-8 Charset.
    * 
-   * @return a Charset
+   * @return Charset
    */
   public Charset encoding() {
     return Charset.forName("UTF-8");
@@ -841,7 +841,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param index
    *          of a byte
-   * @return a Byte or null
+   * @return Byte or null
    */
   public Byte getbyte(int index) {
     return bytes().at(index);
@@ -855,7 +855,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    *          regular expression
    * @param replacement
    *          any String
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString gsub(String regex, String replacement) {
     return rs(str.replaceAll(stringify(regex), stringify(replacement)));
@@ -870,7 +870,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    *          regular expression
    * @param map
    *          any Map
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString gsub(String regex, Map<String, ?> map) {
     if (isBlank(map))
@@ -895,7 +895,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    *          regular expression
    * @param block
    *          to do the replacement
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString gsub(String regex, TransformBlock<String, String> block) {
     String result = str;
@@ -912,7 +912,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param regex
    *          regular expression
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<String> gsub(String regex) {
     RubyArray<String> matches = newRubyArray();
@@ -958,7 +958,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param regex
    *          regular expression
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<String> gsubǃ(String regex) {
     return gsub(regex);
@@ -967,7 +967,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   /**
    * Return a hash based on the string’s length and content.
    * 
-   * @return a hashcode
+   * @return hashcode
    */
   public int hash() {
     return hashCode();
@@ -978,7 +978,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * an optional sign and an optional 0x) and returns the corresponding number.
    * Zero is returned on error.
    * 
-   * @return a long
+   * @return long
    */
   public long hex() {
     RubyString hex = slice(qr("^\\s*[+|-]?\\s*(0x)?[0-9a-f]+"));
@@ -1005,7 +1005,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param substring
    *          any String
-   * @return an Integer or null
+   * @return Integer or null
    */
   public Integer index(String substring) {
     return index(stringify(substring), 0);
@@ -1020,7 +1020,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    *          any String
    * @param offset
    *          position to begin the search
-   * @return an Integer or null
+   * @return Integer or null
    */
   public Integer index(String substring, int offset) {
     int index = str.indexOf(stringify(substring), offset);
@@ -1033,7 +1033,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param regex
    *          a Pattern
-   * @return an Integer or null
+   * @return Integer or null
    */
   public Integer index(Pattern regex) {
     if (regex == null)
@@ -1050,7 +1050,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    *          a Pattern
    * @param offset
    *          place to start
-   * @return an Integer or null
+   * @return Integer or null
    */
   public Integer index(Pattern regex, int offset) {
     if (regex == null)
@@ -1091,7 +1091,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * Returns a printable version of str, surrounded by quote marks, with special
    * characters escaped.
    * 
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString inspect() {
     String printable = toA().map(new TransformBlock<String, String>() {
@@ -1126,7 +1126,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * Returns a {@link RubyArray} of lines in str split using the supplied record
    * separator (System.getProperty("line.separator") by default).
    * 
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   public RubyArray<String> lines() {
     return eachLine().toA();
@@ -1136,7 +1136,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * Returns a {@link RubyArray} of lines in str split using given record
    * separator.
    * 
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   public RubyArray<String> lines(String separator) {
     return eachLine(separator).toA();
@@ -1149,7 +1149,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param width
    *          of new {@link RubyString}
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString ljust(int width) {
     return ljust(width, " ");
@@ -1164,7 +1164,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    *          of new {@link RubyString}
    * @param padstr
    *          used to pad on the right of new {@link RubyString}
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString ljust(int width, String padstr) {
     RubyLazyEnumerator<String> padStr = rs(stringify(padstr)).lazy().cycle();
@@ -1185,7 +1185,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   /**
    * Returns a copy of str with leading whitespace removed.
    * 
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString lstrip() {
     return rs(str.replaceFirst("^\\s+", ""));
@@ -1206,7 +1206,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param regex
    *          regular expression
-   * @return a Matcher or null
+   * @return Matcher or null
    */
   public Matcher match(String regex) {
     Matcher matcher = qr(stringify(regex)).matcher(str);
@@ -1222,7 +1222,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    *          regular expression
    * @param pos
    *          position begin to search
-   * @return a Matcher or null
+   * @return Matcher or null
    */
   public Matcher match(String regex, int pos) {
     if (pos < 0)
@@ -1238,7 +1238,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   /**
    * Returns the successor to str.
    * 
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString next() {
     return rs(StringSuccessor.getInstance().succ(str));
@@ -1247,7 +1247,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   /**
    * Equivalent to {@link #next()}, but modifies the receiver in place.
    * 
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString nextǃ() {
     str = StringSuccessor.getInstance().succ(str);
@@ -1259,7 +1259,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * optional sign) and returns the corresponding number. Returns 0 if the
    * conversion fails.
    * 
-   * @return an int
+   * @return int
    */
   public int oct() {
     return toI(8);
@@ -1268,7 +1268,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   /**
    * Return the Integer ordinal of a one-character string.
    * 
-   * @return an int
+   * @return int
    */
   public int ord() {
     if (str.isEmpty())
@@ -1282,7 +1282,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * the part after it. If it is not found, returns two empty strings and str.
    * 
    * @param sep
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   public RubyArray<String> partition(String sep) {
     if (sep == null)
@@ -1303,7 +1303,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param pattern
    *          a Pattern
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   public RubyArray<String> partition(Pattern pattern) {
     if (pattern == null)
@@ -1325,7 +1325,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param otherStr
    *          any String
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString prepend(String otherStr) {
     str = stringify(otherStr) + str;
@@ -1347,7 +1347,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   /**
    * Returns a new string with the characters from str in reverse order.
    * 
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString reverse() {
     return rs(new StringBuilder(str).reverse().toString());
@@ -1369,7 +1369,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param substring
    *          any String
-   * @return an Ineger or null
+   * @return Ineger or null
    */
   public Integer rindex(String substring) {
     return rindex(stringify(substring), str.length() - 1);
@@ -1385,7 +1385,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    *          any String
    * @param stopAt
    *          position to stop search
-   * @return an Ineger or null
+   * @return Ineger or null
    */
   public Integer rindex(String substring, int stopAt) {
     stringify(substring);
@@ -1406,7 +1406,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param pattern
    *          a Pattern
-   * @return an Integer or null
+   * @return Integer or null
    */
   public Integer rindex(Pattern pattern) {
     if (pattern == null)
@@ -1425,7 +1425,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    *          a Pattern
    * @param stopAt
    *          position to stop search
-   * @return an Integer or null
+   * @return Integer or null
    */
   public Integer rindex(Pattern pattern, int stopAt) {
     if (pattern == null)
@@ -1453,7 +1453,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param width
    *          of new {@link RubyString}
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString rjust(int width) {
     return rjust(width, " ");
@@ -1468,7 +1468,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    *          of new {@link RubyString}
    * @param padstr
    *          used to pad on the left of new RubyString
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString rjust(int width, String padstr) {
     RubyLazyEnumerator<String> padStr = rs(padstr).lazy().cycle();
@@ -1493,7 +1493,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param sep
    *          separator
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   public RubyArray<String> rpartition(String sep) {
     if (sep == null)
@@ -1514,7 +1514,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param pattern
    *          a Pattern
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   public RubyArray<String> rpartition(Pattern pattern) {
     if (pattern == null)
@@ -1539,7 +1539,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   /**
    * Returns a copy of str with trailing whitespace removed.
    * 
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    * @see #lstrip()
    * @see #strip()
    */
@@ -1564,7 +1564,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param regex
    *          regular expression
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   public RubyArray<String> scan(String regex) {
     Matcher matcher = qr(stringify(regex)).matcher(str);
@@ -1599,7 +1599,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param regex
    *          regular expression
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   public RubyArray<RubyArray<String>> scanGroups(String regex) {
     Matcher matcher = qr(stringify(regex)).matcher(str);
@@ -1639,7 +1639,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   /**
    * If the string is invalid byte sequence then replace invalid bytes with �.
    * 
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString scrub() {
     return rs(str.replaceAll("\\p{C}", "\uFFFD"));
@@ -1649,7 +1649,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * If the string is invalid byte sequence then replace invalid bytes with
    * given replacement character.
    * 
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString scrub(String repl) {
     if (repl == null)
@@ -1662,7 +1662,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * If the string is invalid byte sequence then replace invalid bytes with
    * returned value of the block.
    * 
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString scrub(final TransformBlock<RubyArray<Byte>, String> block) {
     return rs(map(new TransformBlock<String, String>() {
@@ -1714,7 +1714,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    *          position to modify
    * @param b
    *          a byte
-   * @return a byte
+   * @return byte
    */
   public byte setbyte(int index, byte b) {
     byte[] bytes = str.getBytes();
@@ -1732,7 +1732,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   /**
    * Returns the character length of str.
    * 
-   * @return an int
+   * @return int
    */
   public int size() {
     return str.length();
@@ -1743,7 +1743,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param index
    *          of the character
-   * @return a new {@link RubyString} or null
+   * @return new {@link RubyString} or null
    */
   public RubyString slice(int index) {
     String slicedStr = toA().slice(index);
@@ -1757,7 +1757,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    *          position to begin slice
    * @param length
    *          of new RubyString
-   * @return a new {@link RubyString} or null
+   * @return new {@link RubyString} or null
    */
   public RubyString slice(int index, int length) {
     RubyArray<String> slicedStr = toA().slice(index, length);
@@ -1769,7 +1769,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param pattern
    *          a Pattern
-   * @return a new {@link RubyString} or null
+   * @return new {@link RubyString} or null
    */
   public RubyString slice(Pattern pattern) {
     if (pattern == null)
@@ -1789,7 +1789,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    *          a Pattern
    * @param group
    *          number pf matched group
-   * @return a new {@link RubyString} or null
+   * @return new {@link RubyString} or null
    */
   public RubyString slice(Pattern pattern, int group) {
     Matcher matcher = pattern.matcher(str);
@@ -1807,7 +1807,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param matchStr
    *          matched string
-   * @return a new {@link RubyString} or null
+   * @return new {@link RubyString} or null
    */
   public RubyString slice(String matchStr) {
     return str.contains(matchStr) ? rs(matchStr) : null;
@@ -1818,7 +1818,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param index
    *          of the character
-   * @return a new {@link RubyString} or null
+   * @return new {@link RubyString} or null
    */
   public RubyString sliceǃ(int index) {
     RubyArray<String> chars = toA();
@@ -1837,7 +1837,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    *          position to begin slice
    * @param length
    *          of new {@link RubyString}
-   * @return a new {@link RubyString} or null
+   * @return new {@link RubyString} or null
    */
   public RubyString sliceǃ(int index, int length) {
     RubyArray<String> chars = toA();
@@ -1854,7 +1854,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param pattern
    *          a Pattern
-   * @return a new {@link RubyString} or null
+   * @return new {@link RubyString} or null
    */
   public RubyString sliceǃ(Pattern pattern) {
     RubyString slicedStr = slice(pattern);
@@ -1872,7 +1872,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    *          a Pattern
    * @param group
    *          number pf matched group
-   * @return a new {@link RubyString} or null
+   * @return new {@link RubyString} or null
    */
   public RubyString sliceǃ(Pattern pattern, int group) {
     RubyString slicedStr = slice(pattern, group);
@@ -1888,7 +1888,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param matchStr
    *          matched string
-   * @return a new {@link RubyString} or null
+   * @return new {@link RubyString} or null
    */
   public RubyString sliceǃ(String matchStr) {
     RubyString slicedStr = slice(matchStr);
@@ -1903,7 +1903,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * Divides str into substrings based on a whitespaces, returning a
    * {@link RubyArray} of these substrings.
    * 
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   public RubyArray<String> split() {
     return ra(str.trim().split(" +"));
@@ -1915,7 +1915,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param delimiter
    *          used to split str
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   public RubyArray<String> split(final String delimiter) {
     if (delimiter == null || delimiter.equals(" "))
@@ -1933,7 +1933,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    *          used to split str
    * @param limit
    *          max number of fields
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   public RubyArray<String> split(String delimiter, int limit) {
     if (delimiter == null || delimiter.equals(" ")) {
@@ -1957,7 +1957,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param pattern
    *          a Pattern
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   public RubyArray<String> split(Pattern pattern) {
     if (pattern == null)
@@ -1975,7 +1975,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    *          a Pattern
    * @param limit
    *          max number of fields
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   public RubyArray<String> split(Pattern pattern, int limit) {
     if (pattern == null)
@@ -1991,7 +1991,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * Builds a set of characters using the procedure described for
    * {@link #count()}.
    * 
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString squeeze() {
     return rs(str.replaceAll("(.)\\1+", "$1"));
@@ -2003,7 +2003,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param charSet
    *          a set of characters
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString squeeze(String charSet) {
     stringify(charSet);
@@ -2058,7 +2058,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   /**
    * Returns a copy of str with leading and trailing whitespace removed.
    * 
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString strip() {
     return rs(str.trim());
@@ -2082,7 +2082,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    *          regular expression
    * @param replacement
    *          used to replace matched string
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString sub(String regex, String replacement) {
     return rs(str.replaceFirst(stringify(regex), stringify(replacement)));
@@ -2097,7 +2097,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    *          regular expression
    * @param map
    *          any Map
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString sub(String regex, Map<String, ?> map) {
     String result = str;
@@ -2118,7 +2118,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    *          regular expression
    * @param block
    *          to do the replacement
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString sub(String regex, TransformBlock<String, String> block) {
     Matcher matcher = qr(stringify(regex)).matcher(str);
@@ -2167,7 +2167,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * another letter of the same case. Incrementing nonalphanumerics uses the
    * underlying character set’s collating sequence.
    * 
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString succ() {
     return rs(StringSuccessor.getInstance().succ(str));
@@ -2188,7 +2188,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * result is simply the sum of the binary value of each character in str
    * modulo 2**n - 1. This is not a particularly good checksum.
    * 
-   * @return an int
+   * @return int
    */
   public int sum() {
     return sum(16);
@@ -2202,7 +2202,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param n
    *          any int
-   * @return an int
+   * @return int
    */
   public int sum(int n) {
     int sum = 0;
@@ -2217,7 +2217,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * lowercase and lowercase characters converted to uppercase. Note: case
    * conversion is effective only in ASCII region.
    * 
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString swapcase() {
     final Pattern upperCase = qr("[A-Z]");
@@ -2249,7 +2249,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * ignored. If there is not a valid number at the start of str, 0.0 is
    * returned. This method never raises an exception.
    * 
-   * @return a double
+   * @return double
    */
   public double toF() {
     Matcher intMatcher =
@@ -2266,7 +2266,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * If there is not a valid number at the start of str, 0 is returned. This
    * method never raises an exception.
    * 
-   * @return an int
+   * @return int
    */
   public int toI() {
     Matcher intMatcher = qr("^\\s*[-+]?\\s*\\d+").matcher(str);
@@ -2285,7 +2285,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param radix
    *          the number of unique digits
-   * @return an int
+   * @return int
    */
   public int toI(int radix) {
     if (radix < MIN_RADIX || radix > MAX_RADIX)
@@ -2310,7 +2310,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   /**
    * Returns the receiver.
    * 
-   * @return a String
+   * @return String
    */
   public String toS() {
     return str;
@@ -2319,7 +2319,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   /**
    * Returns the receiver.
    * 
-   * @return a String
+   * @return String
    */
   public String toStr() {
     return str;
@@ -2334,7 +2334,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    *          a list of characters
    * @param toStr
    *          a list of characters
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString tr(String fromStr, String toStr) {
     fromStr = charSet2Str(stringify(fromStr));
@@ -2390,7 +2390,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    *          a list of characters
    * @param toStr
    *          a list of characters
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString trS(String fromStr, String toStr) {
     final String fromString = charSet2Str(stringify(fromStr));
@@ -2462,7 +2462,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param format
    *          format string
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    * @see RubyArray#pack(String)
    */
   public RubyArray<Object> unpack(String format) {
@@ -2474,7 +2474,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * uppercase counterparts. The operation is locale insensitive—only characters
    * “a” to “z” are affected.
    * 
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString upcase() {
     return rs(str.toUpperCase());
@@ -2483,7 +2483,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   /**
    * Upcases the contents of str, returning nil if no changes were made.
    * 
-   * @return a new {@link RubyString}
+   * @return new {@link RubyString}
    */
   public RubyString upcaseǃ() {
     return inPlace(upcase());
@@ -2496,7 +2496,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @param otherStr
    *          any String
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<String> upto(String otherStr) {
     return upto(stringify(otherStr), false);
@@ -2513,7 +2513,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    *          any String
    * @param exclusive
    *          true if the last value is ommitted, false otherwise
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<String> upto(final String otherStr, boolean exclusive) {
     stringify(otherStr);

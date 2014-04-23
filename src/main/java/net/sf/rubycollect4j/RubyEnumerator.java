@@ -113,7 +113,7 @@ public class RubyEnumerator<E> extends RubyEnumerable<E> implements
   /**
    * Returns the next element without advancing the iteration.
    * 
-   * @return an element
+   * @return element
    */
   public E peek() {
     return pIterator.peek();

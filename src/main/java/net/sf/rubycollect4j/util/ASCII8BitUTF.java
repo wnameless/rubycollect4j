@@ -144,7 +144,7 @@ public final class ASCII8BitUTF implements CharSequence {
   /**
    * Returns next character.
    * 
-   * @return a character as String
+   * @return character as String
    * @throws IllegalStateException
    *           if no more character is left
    */
@@ -169,7 +169,7 @@ public final class ASCII8BitUTF implements CharSequence {
    * 
    * @param n
    *          maximum number of chars
-   * @return a String
+   * @return String
    */
   public String nextChar(int n) {
     StringBuilder sb = new StringBuilder();
@@ -183,7 +183,7 @@ public final class ASCII8BitUTF implements CharSequence {
   /**
    * Returns next byte.
    * 
-   * @return a byte
+   * @return byte
    * @throws IllegalStateException
    *           if no more byte is left
    */
@@ -204,7 +204,7 @@ public final class ASCII8BitUTF implements CharSequence {
    * 
    * @param n
    *          maximum number of bytes
-   * @return a byte array
+   * @return byte array
    */
   public byte[] nextByte(int n) {
     List<Byte> bytes = newRubyArray();

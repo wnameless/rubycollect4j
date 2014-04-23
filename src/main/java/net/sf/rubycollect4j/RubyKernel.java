@@ -61,7 +61,7 @@ public final class RubyKernel {
    * 
    * @param xs
    *          an array of Object
-   * @return a {@link RubyArray} of Object
+   * @return {@link RubyArray} of Object
    */
   public static RubyArray<Object> p(Object... xs) {
     for (Object x : xs) {
@@ -87,7 +87,7 @@ public final class RubyKernel {
    * 
    * @param xs
    *          an array of String
-   * @return a {@link RubyArray} of String
+   * @return {@link RubyArray} of String
    */
   public static RubyArray<String> p(String... xs) {
     for (String x : xs) {
@@ -113,7 +113,7 @@ public final class RubyKernel {
    * 
    * @param xs
    *          an array of Boolean
-   * @return a {@link RubyArray} of Boolean
+   * @return {@link RubyArray} of Boolean
    */
   public static RubyArray<Boolean> p(Boolean... xs) {
     RubyArray<Boolean> rubyArray = newRubyArray();
@@ -141,7 +141,7 @@ public final class RubyKernel {
    * 
    * @param xs
    *          an array of Character
-   * @return a {@link RubyArray} of Character
+   * @return {@link RubyArray} of Character
    */
   public static RubyArray<Character> p(Character... xs) {
     RubyArray<Character> rubyArray = newRubyArray();
@@ -169,7 +169,7 @@ public final class RubyKernel {
    * 
    * @param xs
    *          an array of char[]
-   * @return a {@link RubyArray} of char[]
+   * @return {@link RubyArray} of char[]
    */
   public static RubyArray<char[]> p(char[]... xs) {
     RubyArray<char[]> rubyArray = newRubyArray();
@@ -197,7 +197,7 @@ public final class RubyKernel {
    * 
    * @param xs
    *          an array of Double
-   * @return a {@link RubyArray} of Double
+   * @return {@link RubyArray} of Double
    */
   public static RubyArray<Double> p(Double... xs) {
     RubyArray<Double> rubyArray = newRubyArray();
@@ -225,7 +225,7 @@ public final class RubyKernel {
    * 
    * @param xs
    *          an array of Float
-   * @return a {@link RubyArray} of Float
+   * @return {@link RubyArray} of Float
    */
   public static RubyArray<Float> p(Float... xs) {
     RubyArray<Float> rubyArray = newRubyArray();
@@ -253,7 +253,7 @@ public final class RubyKernel {
    * 
    * @param xs
    *          an array of Integer
-   * @return a {@link RubyArray} of Integer
+   * @return {@link RubyArray} of Integer
    */
   public static RubyArray<Integer> p(Integer... xs) {
     RubyArray<Integer> rubyArray = newRubyArray();
@@ -281,7 +281,7 @@ public final class RubyKernel {
    * 
    * @param xs
    *          an array of Long
-   * @return a {@link RubyArray} of Long
+   * @return {@link RubyArray} of Long
    */
   public static RubyArray<Long> p(Long... xs) {
     RubyArray<Long> rubyArray = newRubyArray();
@@ -297,7 +297,7 @@ public final class RubyKernel {
    * 
    * @param x
    *          an array of byte
-   * @return an array of byte
+   * @return array of byte
    */
   public static byte[] p(byte[] x) {
     out.println(Arrays.toString(x));
@@ -309,7 +309,7 @@ public final class RubyKernel {
    * 
    * @param x
    *          an array of short
-   * @return an array of short
+   * @return array of short
    */
   public static short[] p(short[] x) {
     out.println(Arrays.toString(x));
@@ -321,7 +321,7 @@ public final class RubyKernel {
    * 
    * @param x
    *          an array of int
-   * @return an array of int
+   * @return array of int
    */
   public static int[] p(int[] x) {
     out.println(Arrays.toString(x));
@@ -333,7 +333,7 @@ public final class RubyKernel {
    * 
    * @param x
    *          an array of long
-   * @return an array of long
+   * @return array of long
    */
   public static long[] p(long[] x) {
     out.println(Arrays.toString(x));
@@ -345,7 +345,7 @@ public final class RubyKernel {
    * 
    * @param x
    *          an array of float
-   * @return an array of float
+   * @return array of float
    */
   public static float[] p(float[] x) {
     out.println(Arrays.toString(x));
@@ -357,7 +357,7 @@ public final class RubyKernel {
    * 
    * @param x
    *          an array of double
-   * @return an array of double
+   * @return array of double
    */
   public static double[] p(double[] x) {
     out.println(Arrays.toString(x));
@@ -369,7 +369,7 @@ public final class RubyKernel {
    * 
    * @param x
    *          an array of boolean
-   * @return an array of boolean
+   * @return array of boolean
    */
   public static boolean[] p(boolean[] x) {
     out.println(Arrays.toString(x));

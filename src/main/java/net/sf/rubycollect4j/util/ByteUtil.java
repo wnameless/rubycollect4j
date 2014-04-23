@@ -58,7 +58,7 @@ public final class ByteUtil {
    * 
    * @param bytes
    *          a byte array
-   * @return a {@link RubyArray} of Byte
+   * @return {@link RubyArray} of Byte
    */
   public static RubyArray<Byte> toList(byte[] bytes) {
     RubyArray<Byte> list = newRubyArray();
@@ -73,7 +73,7 @@ public final class ByteUtil {
    * 
    * @param bytes
    *          a Collection of Number
-   * @return a byte array
+   * @return byte array
    */
   public static byte[] toArray(Collection<? extends Number> bytes) {
     byte[] array = new byte[bytes.size()];
@@ -91,7 +91,7 @@ public final class ByteUtil {
    *          a byte array
    * @param width
    *          of the new byte array
-   * @return a new byte array
+   * @return new byte array
    */
   public static byte[] ljust(byte[] bytes, int width) {
     if (bytes.length >= width) {
@@ -110,7 +110,7 @@ public final class ByteUtil {
    *          a byte array
    * @param width
    *          of the new byte array
-   * @return a new byte array
+   * @return new byte array
    */
   public static byte[] rjust(byte[] bytes, int width) {
     if (bytes.length >= width) {
@@ -141,7 +141,7 @@ public final class ByteUtil {
    * 
    * @param b
    *          a byte
-   * @return a byte array
+   * @return byte array
    */
   public static byte[] toByteArray(byte b) {
     return new byte[] { b };
@@ -152,7 +152,7 @@ public final class ByteUtil {
    * 
    * @param s
    *          a short
-   * @return a byte array
+   * @return byte array
    */
   public static byte[] toByteArray(short s) {
     return ByteBuffer.allocate(2).order(BIG_ENDIAN).putShort(s).array();
@@ -165,7 +165,7 @@ public final class ByteUtil {
    *          a short
    * @param bo
    *          a ByteOrder
-   * @return a byte array
+   * @return byte array
    */
   public static byte[] toByteArray(short s, ByteOrder bo) {
     return ByteBuffer.allocate(2).order(bo).putShort(s).array();
@@ -176,7 +176,7 @@ public final class ByteUtil {
    * 
    * @param i
    *          an int
-   * @return a byte array
+   * @return byte array
    */
   public static byte[] toByteArray(int i) {
     return ByteBuffer.allocate(4).order(BIG_ENDIAN).putInt(i).array();
@@ -189,7 +189,7 @@ public final class ByteUtil {
    *          an int
    * @param bo
    *          a ByteOrder
-   * @return a byte array
+   * @return byte array
    */
   public static byte[] toByteArray(int i, ByteOrder bo) {
     return ByteBuffer.allocate(4).order(bo).putInt(i).array();
@@ -200,7 +200,7 @@ public final class ByteUtil {
    * 
    * @param l
    *          a long
-   * @return a byte array
+   * @return byte array
    */
   public static byte[] toByteArray(long l) {
     return ByteBuffer.allocate(8).order(BIG_ENDIAN).putLong(l).array();
@@ -213,7 +213,7 @@ public final class ByteUtil {
    *          a long
    * @param bo
    *          a ByteOrder
-   * @return a byte array
+   * @return byte array
    */
   public static byte[] toByteArray(long l, ByteOrder bo) {
     return ByteBuffer.allocate(8).order(bo).putLong(l).array();
@@ -224,7 +224,7 @@ public final class ByteUtil {
    * 
    * @param f
    *          a float
-   * @return a byte array
+   * @return byte array
    */
   public static byte[] toByteArray(float f) {
     return ByteBuffer.allocate(4).order(BIG_ENDIAN).putFloat(f).array();
@@ -237,7 +237,7 @@ public final class ByteUtil {
    *          a float
    * @param bo
    *          a ByteOrder
-   * @return a byte array
+   * @return byte array
    */
   public static byte[] toByteArray(float f, ByteOrder bo) {
     return ByteBuffer.allocate(4).order(bo).putFloat(f).array();
@@ -248,7 +248,7 @@ public final class ByteUtil {
    * 
    * @param d
    *          a double
-   * @return a byte array
+   * @return byte array
    */
   public static byte[] toByteArray(double d) {
     return ByteBuffer.allocate(8).order(BIG_ENDIAN).putDouble(d).array();
@@ -261,7 +261,7 @@ public final class ByteUtil {
    *          a double
    * @param bo
    *          a ByteOrder
-   * @return a byte array
+   * @return byte array
    */
   public static byte[] toByteArray(double d, ByteOrder bo) {
     return ByteBuffer.allocate(8).order(bo).putDouble(d).array();
@@ -272,7 +272,7 @@ public final class ByteUtil {
    * 
    * @param b
    *          a boolean
-   * @return a byte array
+   * @return byte array
    */
   public static byte[] toByteArray(boolean b) {
     return ByteBuffer.allocate(1).put(b ? (byte) 0x01 : (byte) 0x00).array();
@@ -283,7 +283,7 @@ public final class ByteUtil {
    * 
    * @param c
    *          a char
-   * @return a byte array
+   * @return byte array
    */
   public static byte[] toByteArray(char c) {
     return ByteBuffer.allocate(2).order(BIG_ENDIAN).putChar(c).array();
@@ -296,7 +296,7 @@ public final class ByteUtil {
    *          a char
    * @param bo
    *          a ByteOrder
-   * @return a byte array
+   * @return byte array
    */
   public static byte[] toByteArray(char c, ByteOrder bo) {
     return ByteBuffer.allocate(2).order(bo).putChar(c).array();
@@ -307,7 +307,7 @@ public final class ByteUtil {
    * 
    * @param s
    *          a String
-   * @return a byte array
+   * @return byte array
    */
   public static byte[] toByteArray(String s) {
     return s.getBytes();
@@ -322,7 +322,7 @@ public final class ByteUtil {
    * 
    * @param o
    *          any Object
-   * @return a byte array
+   * @return byte array
    */
   public static byte[] toByteArray(Object o) {
     return toByteArray(o, BIG_ENDIAN);
@@ -338,7 +338,7 @@ public final class ByteUtil {
    *          an Object
    * @param bo
    *          a ByteOrder
-   * @return a byte array
+   * @return byte array
    * @throws TypeConstraintException
    *           if the Object can't be converted into bytes
    */
@@ -381,7 +381,7 @@ public final class ByteUtil {
    * 
    * @param b
    *          any byte
-   * @return a ISO-8859-1 String character
+   * @return ISO-8859-1 String character
    */
   public static String toASCII8Bit(byte b) {
     return new String(new byte[] { b }, Charset.forName("ISO-8859-1"));
@@ -396,7 +396,7 @@ public final class ByteUtil {
    *          length of ASCII String
    * @param bo
    *          a ByteOrder
-   * @return an ASCII String
+   * @return ASCII String
    */
   public static String toExtendedASCIIs(byte[] bytes, int n, ByteOrder bo) {
     RubyArray<String> ra = newRubyArray();
@@ -430,7 +430,7 @@ public final class ByteUtil {
    * 
    * @param bytes
    *          used to be converted
-   * @return an UTF String
+   * @return UTF String
    * @throws IllegalArgumentException
    *           if codePoint is less than 0 or greater than 0X10FFFF
    */
@@ -448,7 +448,7 @@ public final class ByteUtil {
    * 
    * @param bytes
    *          a byte array
-   * @return a binary String
+   * @return binary String
    */
   public static String toBinaryString(byte[] bytes) {
     return toBinaryString(bytes, true);
@@ -461,7 +461,7 @@ public final class ByteUtil {
    *          a byte array
    * @param isMSB
    *          true if MSB, false if LSB
-   * @return a binary String
+   * @return binary String
    */
   public static String toBinaryString(byte[] bytes, boolean isMSB) {
     StringBuilder sb = new StringBuilder();
@@ -482,7 +482,7 @@ public final class ByteUtil {
    * 
    * @param bytes
    *          a byte array
-   * @return a hex String
+   * @return hex String
    */
   public static String toHexString(byte[] bytes) {
     return toHexString(bytes, true);
@@ -495,7 +495,7 @@ public final class ByteUtil {
    *          a byte array
    * @param isHNF
    *          true if HNF(high nibble first), false if LNF(low nibble first)
-   * @return a hex String
+   * @return hex String
    */
   public static String toHexString(byte[] bytes, boolean isHNF) {
     StringBuilder sb = new StringBuilder();
@@ -515,7 +515,7 @@ public final class ByteUtil {
    * 
    * @param binaryStr
    *          a binary string
-   * @return a byte array
+   * @return byte array
    * @throws IllegalArgumentException
    *           if binary string is invalid
    */
@@ -537,7 +537,7 @@ public final class ByteUtil {
    * 
    * @param hexStr
    *          a hexadecimal string
-   * @return a byte array
+   * @return byte array
    * @throws IllegalArgumentException
    *           if hexadecimal string is invalid
    */

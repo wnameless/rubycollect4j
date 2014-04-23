@@ -103,10 +103,8 @@ public final class RubyRange<E> extends RubyEnumerable<E> implements
   }
 
   /**
-   * Yields each element of this {@link RubyRange} to the block.
+   * {@inheritDoc}
    * 
-   * @param block
-   *          to yield each element
    * @return this {@link RubyRange}
    */
   @Override

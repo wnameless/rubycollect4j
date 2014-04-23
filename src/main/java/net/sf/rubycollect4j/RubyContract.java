@@ -99,7 +99,7 @@ public final class RubyContract {
      *          the type of transformed elements
      * @param block
      *          to chunk elements
-     * @return an {@link Enumerator}
+     * @return {@link Enumerator}
      */
     public <S> N chunk(TransformBlock<? super E, ? extends S> block);
 
@@ -115,14 +115,14 @@ public final class RubyContract {
      *          name of a Method
      * @param args
      *          arguments of a Method
-     * @return an {@link Enumerator}
+     * @return {@link Enumerator}
      */
     public <S> N chunk(final String methodName, final Object... args);
 
     /**
      * Returns an enumerator of elements.
      * 
-     * @return an {@link Enumerator}
+     * @return {@link Enumerator}
      */
     public N collect();
 
@@ -133,7 +133,7 @@ public final class RubyContract {
      *          the type of transformed elements
      * @param block
      *          to transform elements
-     * @return an {@link Enumerable}
+     * @return {@link Enumerable}
      */
     public <S> Z collect(TransformBlock<? super E, ? extends S> block);
 
@@ -146,14 +146,14 @@ public final class RubyContract {
      *          name of a Method
      * @param args
      *          arguments of a Method
-     * @return an {@link Enumerable}
+     * @return {@link Enumerable}
      */
     public <S> Z collect(final String methodName, final Object... args);
 
     /**
      * Returns an enumerator of elements.
      * 
-     * @return an {@link Enumerator}
+     * @return {@link Enumerator}
      */
     public N collectConcat();
 
@@ -164,7 +164,7 @@ public final class RubyContract {
      *          the type of transformed elements
      * @param block
      *          to take element into a List
-     * @return an {@link Enumerable}
+     * @return {@link Enumerable}
      */
     public <S> Z collectConcat(
         TransformBlock<? super E, ? extends List<? extends S>> block);
@@ -189,7 +189,7 @@ public final class RubyContract {
      * Generates a sequence from first element to last element and so on
      * infinitely.
      * 
-     * @return an {@link Enumerator}
+     * @return {@link Enumerator}
      */
     public N cycle();
 
@@ -198,7 +198,7 @@ public final class RubyContract {
      * 
      * @param n
      *          times to repeat
-     * @return an {@link Enumerator}
+     * @return {@link Enumerator}
      */
     public N cycle(int n);
 
@@ -225,7 +225,7 @@ public final class RubyContract {
     /**
      * Returns an enumerator of elements.
      * 
-     * @return an {@link Enumerator}
+     * @return {@link Enumerator}
      */
     public N detect();
 
@@ -235,7 +235,7 @@ public final class RubyContract {
      * 
      * @param block
      *          to filter elements
-     * @return an element or null
+     * @return element or null
      */
     public E detect(BooleanBlock<? super E> block);
 
@@ -244,14 +244,14 @@ public final class RubyContract {
      * 
      * @param n
      *          number of elements to drop
-     * @return an {@link Enumerable}
+     * @return {@link Enumerable}
      */
     public Z drop(int n);
 
     /**
      * Returns an enumerator which contains only the first element.
      * 
-     * @return an {@link Enumerator}
+     * @return {@link Enumerator}
      */
     public N dropWhile();
 
@@ -261,14 +261,14 @@ public final class RubyContract {
      * 
      * @param block
      *          to define which elements to be dropped
-     * @return an {@link Enumerable}
+     * @return {@link Enumerable}
      */
     public Z dropWhile(BooleanBlock<? super E> block);
 
     /**
      * Returns an enumerator of elements.
      * 
-     * @return an {@link Enumerator}
+     * @return {@link Enumerator}
      */
     public N each();
 
@@ -277,7 +277,7 @@ public final class RubyContract {
      * 
      * @param block
      *          to yield each element
-     * @return an {@link Enumerable}
+     * @return {@link Enumerable}
      */
     public Enumerable<E, N, Z> each(Block<? super E> block);
 
@@ -287,7 +287,7 @@ public final class RubyContract {
      * 
      * @param n
      *          number of consecutive elements
-     * @return an {@link Enumerator}
+     * @return {@link Enumerator}
      */
     public N eachCons(int n);
 
@@ -305,7 +305,7 @@ public final class RubyContract {
     /**
      * Returns an enumerator of elements.
      * 
-     * @return an {@link Enumerator}
+     * @return {@link Enumerator}
      */
     public N eachEntry();
 
@@ -314,7 +314,7 @@ public final class RubyContract {
      * 
      * @param block
      *          to yield each element
-     * @return an {@link Enumerable}
+     * @return {@link Enumerable}
      */
     public Enumerable<E, N, Z> eachEntry(Block<? super E> block);
 
@@ -323,7 +323,7 @@ public final class RubyContract {
      * 
      * @param n
      *          size of each slice
-     * @return an {@link Enumerator}
+     * @return {@link Enumerator}
      */
     public N eachSlice(int n);
 
@@ -341,7 +341,7 @@ public final class RubyContract {
     /**
      * Iterates elements with their indices by Entry.
      * 
-     * @return an {@link Enumerator}
+     * @return {@link Enumerator}
      */
     public N eachWithIndex();
 
@@ -350,7 +350,7 @@ public final class RubyContract {
      * 
      * @param block
      *          to yield each element
-     * @return an {@link Enumerable}
+     * @return {@link Enumerable}
      */
     public Enumerable<E, N, Z> eachWithIndex(WithIndexBlock<? super E> block);
 
@@ -361,7 +361,7 @@ public final class RubyContract {
      *          the type of transformed elements
      * @param obj
      *          an object O
-     * @return an {@link Enumerator}
+     * @return {@link Enumerator}
      */
     public <O> N eachWithObject(O obj);
 
@@ -382,14 +382,14 @@ public final class RubyContract {
     /**
      * Puts each element into a {@link RubyArray}.
      * 
-     * @return a {@link RubyArray}
+     * @return {@link RubyArray}
      */
     public RubyArray<E> entries();
 
     /**
      * Equivalent to {@link #detect()}.
      * 
-     * @return an {@link Enumerator}
+     * @return {@link Enumerator}
      */
     public N find();
 
@@ -398,14 +398,14 @@ public final class RubyContract {
      * 
      * @param block
      *          to filter elements
-     * @return an element or null
+     * @return element or null
      */
     public E find(BooleanBlock<? super E> block);
 
     /**
      * Returns an enumerator of elements.
      * 
-     * @return an {@link Enumerator}
+     * @return {@link Enumerator}
      */
     public N findAll();
 
@@ -414,14 +414,14 @@ public final class RubyContract {
      * 
      * @param block
      *          to filter elements
-     * @return an {@link Enumerable}
+     * @return {@link Enumerable}
      */
     public Z findAll(BooleanBlock<? super E> block);
 
     /**
      * Returns an enumerator of elements.
      * 
-     * @return an {@link Enumerator}
+     * @return {@link Enumerator}
      */
     public N findIndex();
 
@@ -431,7 +431,7 @@ public final class RubyContract {
      * 
      * @param block
      *          to check elements
-     * @return an Integer or null
+     * @return Integer or null
      */
     public Integer findIndex(BooleanBlock<? super E> block);
 
@@ -441,14 +441,14 @@ public final class RubyContract {
      * 
      * @param target
      *          to be found
-     * @return an Integer or null
+     * @return Integer or null
      */
     public Integer findIndex(E target);
 
     /**
      * Returns first element. Returns null if elements are empty.
      * 
-     * @return an element or null
+     * @return element or null
      */
     public E first();
 
@@ -457,7 +457,7 @@ public final class RubyContract {
      * 
      * @param n
      *          number of elements
-     * @return a {@link RubyArray}
+     * @return {@link RubyArray}
      * @throws IllegalArgumentException
      *           if n is less than 0
      */
@@ -466,7 +466,7 @@ public final class RubyContract {
     /**
      * Equivalent to {@link #collectConcat()}.
      * 
-     * @return an {@link Enumerator}
+     * @return {@link Enumerator}
      */
     public N flatMap();
 
@@ -477,7 +477,7 @@ public final class RubyContract {
      *          the type of transformed elements
      * @param block
      *          to take element into a List
-     * @return an {@link Enumerable}
+     * @return {@link Enumerable}
      */
     public <S> Z flatMap(
         TransformBlock<? super E, ? extends List<? extends S>> block);
@@ -487,7 +487,7 @@ public final class RubyContract {
      * 
      * @param regex
      *          regular expression
-     * @return an {@link Enumerable}
+     * @return {@link Enumerable}
      */
     public Z grep(String regex);
 
@@ -501,7 +501,7 @@ public final class RubyContract {
      *          regular expression
      * @param block
      *          to transform elements
-     * @return an {@link Enumerable}
+     * @return {@link Enumerable}
      */
     public <S> Z
         grep(String regex, TransformBlock<? super E, ? extends S> block);
@@ -518,7 +518,7 @@ public final class RubyContract {
      *          name of a Method
      * @param args
      *          arguments of a Method
-     * @return an {@link Enumerable}
+     * @return {@link Enumerable}
      */
     public <S> Z grep(String regex, final String methodName,
         final Object... args);
@@ -526,7 +526,7 @@ public final class RubyContract {
     /**
      * Returns an enumerator of elements.
      * 
-     * @return an {@link Enumerator}
+     * @return {@link Enumerator}
      */
     public N groupBy();
 
@@ -538,7 +538,7 @@ public final class RubyContract {
      *          the type of transformed elements
      * @param block
      *          to group each element
-     * @return a {@link RubyHash}
+     * @return {@link RubyHash}
      */
     public <S> RubyHash<S, RubyArray<E>> groupBy(
         TransformBlock<? super E, ? extends S> block);
@@ -553,7 +553,7 @@ public final class RubyContract {
      *          name of a Method
      * @param args
      *          arguments of a Method
-     * @return a {@link RubyHash}
+     * @return {@link RubyHash}
      */
     public <S> RubyHash<S, RubyArray<E>> groupBy(String methodName,
         Object... args);
@@ -573,7 +573,7 @@ public final class RubyContract {
      * 
      * @param block
      *          to reduce each element
-     * @return an element
+     * @return element
      */
     public E inject(ReduceBlock<E> block);
 
@@ -587,7 +587,7 @@ public final class RubyContract {
      *          initial value
      * @param block
      *          to reduce each element
-     * @return an object I
+     * @return object I
      */
     public <I> I inject(I init, WithInitBlock<? super E, I> block);
 
@@ -601,7 +601,7 @@ public final class RubyContract {
      *          initial value
      * @param methodName
      *          method used to reduce elements
-     * @return an object I
+     * @return object I
      * @throws IllegalArgumentException
      *           if method not found
      * @throws RuntimeException
@@ -616,7 +616,7 @@ public final class RubyContract {
      * 
      * @param methodName
      *          method used to reduce elements
-     * @return an element
+     * @return element
      * @throws IllegalArgumentException
      *           if method not found
      * @throws RuntimeException
@@ -627,14 +627,14 @@ public final class RubyContract {
     /**
      * Returns a {@link RubyLazyEnumerator}.
      * 
-     * @return a {@link RubyLazyEnumerator}
+     * @return {@link RubyLazyEnumerator}
      */
     public RubyLazyEnumerator<E> lazy();
 
     /**
      * Returns an enumerator of elements.
      * 
-     * @return an {@link Enumerator}
+     * @return {@link Enumerator}
      */
     public N map();
 
@@ -645,7 +645,7 @@ public final class RubyContract {
      *          the type of transformed elements
      * @param block
      *          to transform elements
-     * @return an {@link Enumerable}
+     * @return {@link Enumerable}
      */
     public <S> Z map(TransformBlock<? super E, ? extends S> block);
 
@@ -658,14 +658,14 @@ public final class RubyContract {
      *          name of a Method
      * @param args
      *          arguments of a Method
-     * @return an {@link Enumerable}
+     * @return {@link Enumerable}
      */
     public <S> Z map(String methodName, Object... args);
 
     /**
      * Finds the max element. Returns null if elements are empty.
      * 
-     * @return an element or null
+     * @return element or null
      */
     public E max();
 
@@ -675,14 +675,14 @@ public final class RubyContract {
      * 
      * @param comp
      *          a Comparator
-     * @return an element or null
+     * @return element or null
      */
     public E max(Comparator<? super E> comp);
 
     /**
      * Returns an enumerator of elements.
      * 
-     * @return an {@link Enumerator}
+     * @return {@link Enumerator}
      */
     public N maxBy();
 
@@ -696,7 +696,7 @@ public final class RubyContract {
      *          a Comparator
      * @param block
      *          to transform elements
-     * @return an element or null
+     * @return element or null
      */
     public <S> E maxBy(Comparator<? super S> comp,
         TransformBlock<? super E, ? extends S> block);
@@ -709,7 +709,7 @@ public final class RubyContract {
      *          the type of transformed elements
      * @param block
      *          to transform elements
-     * @return an element or null
+     * @return element or null
      */
     public <S> E maxBy(TransformBlock<? super E, ? extends S> block);
 
@@ -723,7 +723,7 @@ public final class RubyContract {
      *          name of a Method
      * @param args
      *          arguments of a Method
-     * @return an element or null
+     * @return element or null
      */
     public <S> E maxBy(String methodName, Object... args);
 
@@ -732,14 +732,14 @@ public final class RubyContract {
      * 
      * @param target
      *          to be found
-     * @return an element or null
+     * @return element or null
      */
     public boolean memberʔ(E target);
 
     /**
      * Finds the min element. Returns null if elements are empty.
      * 
-     * @return an element or null
+     * @return element or null
      */
     public E min();
 
@@ -749,14 +749,14 @@ public final class RubyContract {
      * 
      * @param comp
      *          a Comparator
-     * @return an element or null
+     * @return element or null
      */
     public E min(Comparator<? super E> comp);
 
     /**
      * Returns an enumerator of elements.
      * 
-     * @return an {@link Enumerator}
+     * @return {@link Enumerator}
      */
     public N minBy();
 
@@ -770,7 +770,7 @@ public final class RubyContract {
      *          a Comparator
      * @param block
      *          to transform elements
-     * @return an element or null
+     * @return element or null
      */
     public <S> E minBy(Comparator<? super S> comp,
         TransformBlock<? super E, ? extends S> block);
@@ -783,7 +783,7 @@ public final class RubyContract {
      *          the type of transformed elements
      * @param block
      *          to transform elements
-     * @return an element or null
+     * @return element or null
      */
     public <S> E minBy(TransformBlock<? super E, ? extends S> block);
 
@@ -797,14 +797,14 @@ public final class RubyContract {
      *          name of a Method
      * @param args
      *          arguments of a Method
-     * @return an element or null
+     * @return element or null
      */
     public <S> E minBy(String methodName, Object... args);
 
     /**
      * Finds the min and max elements.
      * 
-     * @return a {@link RubyArray}
+     * @return {@link RubyArray}
      */
     public RubyArray<E> minmax();
 
@@ -813,14 +813,14 @@ public final class RubyContract {
      * 
      * @param comp
      *          a Comparator
-     * @return a {@link RubyArray}
+     * @return {@link RubyArray}
      */
     public RubyArray<E> minmax(Comparator<? super E> comp);
 
     /**
      * Returns an enumerator of elements.
      * 
-     * @return an {@link Enumerator}
+     * @return {@link Enumerator}
      */
     public N minmaxBy();
 
@@ -834,7 +834,7 @@ public final class RubyContract {
      *          a Comparator
      * @param block
      *          to transform elements
-     * @return a {@link RubyArray}
+     * @return {@link RubyArray}
      */
     public <S> RubyArray<E> minmaxBy(Comparator<? super S> comp,
         TransformBlock<? super E, ? extends S> block);
@@ -846,7 +846,7 @@ public final class RubyContract {
      *          the type of transformed elements
      * @param block
      *          to transform elements
-     * @return a {@link RubyArray}
+     * @return {@link RubyArray}
      */
     public <S> RubyArray<E> minmaxBy(
         TransformBlock<? super E, ? extends S> block);
@@ -861,7 +861,7 @@ public final class RubyContract {
      *          name of a Method
      * @param args
      *          arguments of a Method
-     * @return a {@link RubyArray}
+     * @return {@link RubyArray}
      */
     public <S> RubyArray<E> minmaxBy(String methodName, Object... args);
 
@@ -902,7 +902,7 @@ public final class RubyContract {
     /**
      * Returns an enumerator of elements.
      * 
-     * @return an {@link Enumerator}
+     * @return {@link Enumerator}
      */
     public N partition();
 
@@ -911,7 +911,7 @@ public final class RubyContract {
      * 
      * @param block
      *          to part elements
-     * @return a {@link RubyArray} of 2 {@link RubyArray}s
+     * @return {@link RubyArray} of 2 {@link RubyArray}s
      */
     public RubyArray<RubyArray<E>> partition(BooleanBlock<? super E> block);
 
@@ -920,7 +920,7 @@ public final class RubyContract {
      * 
      * @param block
      *          to reduce each element
-     * @return an element
+     * @return element
      */
     public E reduce(ReduceBlock<E> block);
 
@@ -933,7 +933,7 @@ public final class RubyContract {
      *          initial value
      * @param block
      *          to reduce each element
-     * @return an object I
+     * @return object I
      */
     public <I> I reduce(I init, WithInitBlock<? super E, I> block);
 
@@ -946,7 +946,7 @@ public final class RubyContract {
      *          initial value
      * @param methodName
      *          method used to reduce elements
-     * @return an object I
+     * @return object I
      * @throws IllegalArgumentException
      *           if method not found
      * @throws RuntimeException
@@ -959,7 +959,7 @@ public final class RubyContract {
      * 
      * @param methodName
      *          method used to reduce elements
-     * @return an element
+     * @return element
      * @throws IllegalArgumentException
      *           if method not found
      * @throws RuntimeException
@@ -970,7 +970,7 @@ public final class RubyContract {
     /**
      * Returns an enumerator of elements.
      * 
-     * @return an {@link Enumerator}
+     * @return {@link Enumerator}
      */
     public N reject();
 
@@ -979,14 +979,14 @@ public final class RubyContract {
      * 
      * @param block
      *          to filter elements
-     * @return an {@link Enumerable}
+     * @return {@link Enumerable}
      */
     public Z reject(BooleanBlock<? super E> block);
 
     /**
      * Returns a reversed enumerator of elements.
      * 
-     * @return an {@link Enumerator}
+     * @return {@link Enumerator}
      */
     public N reverseEach();
 
@@ -995,14 +995,14 @@ public final class RubyContract {
      * 
      * @param block
      *          to yield each element
-     * @return an {@link Enumerable}
+     * @return {@link Enumerable}
      */
     public Enumerable<E, N, Z> reverseEach(Block<? super E> block);
 
     /**
      * Returns an enumerator of elements.
      * 
-     * @return an {@link Enumerator}
+     * @return {@link Enumerator}
      */
     public N select();
 
@@ -1011,7 +1011,7 @@ public final class RubyContract {
      * 
      * @param block
      *          to filter elements
-     * @return an {@link Enumerable}
+     * @return {@link Enumerable}
      */
     public Z select(BooleanBlock<? super E> block);
 
@@ -1021,7 +1021,7 @@ public final class RubyContract {
      * 
      * @param block
      *          to check where to do slice
-     * @return an {@link Enumerator}
+     * @return {@link Enumerator}
      */
     public N sliceBefore(BooleanBlock<? super E> block);
 
@@ -1031,14 +1031,14 @@ public final class RubyContract {
      * 
      * @param regex
      *          to check where to do slice
-     * @return an {@link Enumerator}
+     * @return {@link Enumerator}
      */
     public N sliceBefore(String regex);
 
     /**
      * Sorts elements and puts them into a {@link RubyArray}.
      * 
-     * @return a {@link RubyArray}
+     * @return {@link RubyArray}
      * @throws IllegalArgumentException
      *           when any 2 elements are not comparable
      */
@@ -1050,14 +1050,14 @@ public final class RubyContract {
     // *
     // * @param comp
     // * a Comparator
-    // * @return a {@link RubyArray}
+    // * @return {@link RubyArray}
     // */
     // public RubyArray<E> sort(Comparator<? super E> comp);
 
     /**
      * Returns an enumerator of elements.
      * 
-     * @return an {@link Enumerator}
+     * @return {@link Enumerator}
      */
     public N sortBy();
 
@@ -1071,7 +1071,7 @@ public final class RubyContract {
      *          a Comparator
      * @param block
      *          to transform elements
-     * @return a {@link RubyArray}
+     * @return {@link RubyArray}
      */
     public <S> RubyArray<E> sortBy(Comparator<? super S> comp,
         TransformBlock<? super E, ? extends S> block);
@@ -1089,7 +1089,7 @@ public final class RubyContract {
      *          a Comparator for S
      * @param block
      *          to transform elements
-     * @return a {@link RubyArray}
+     * @return {@link RubyArray}
      */
     public <S> RubyArray<E> sortBy(Comparator<? super E> comp1,
         Comparator<? super S> comp2,
@@ -1103,7 +1103,7 @@ public final class RubyContract {
      *          the type of transformed elements
      * @param block
      *          to transform elements
-     * @return a {@link RubyArray}
+     * @return {@link RubyArray}
      */
     public <S> RubyArray<E>
         sortBy(TransformBlock<? super E, ? extends S> block);
@@ -1116,7 +1116,7 @@ public final class RubyContract {
      *          name of a Method
      * @param args
      *          arguments of a Method
-     * @return a {@link RubyArray}
+     * @return {@link RubyArray}
      */
     public <S> RubyArray<E> sortBy(String methodName, Object... args);
 
@@ -1125,14 +1125,14 @@ public final class RubyContract {
      * 
      * @param n
      *          number of elements
-     * @return an {@link Enumerable}
+     * @return {@link Enumerable}
      */
     public Z take(int n);
 
     /**
      * Returns an enumerator which contains only the first element.
      * 
-     * @return an {@link Enumerator}
+     * @return {@link Enumerator}
      */
     public N takeWhile();
 
@@ -1141,14 +1141,14 @@ public final class RubyContract {
      * 
      * @param block
      *          to filter elements
-     * @return an {@link Enumerable}
+     * @return {@link Enumerable}
      */
     public Z takeWhile(BooleanBlock<? super E> block);
 
     /**
      * Puts all elements into a {@link RubyArray}.
      * 
-     * @return a {@link RubyArray}
+     * @return {@link RubyArray}
      */
     public RubyArray<E> toA();
 
@@ -1158,7 +1158,7 @@ public final class RubyContract {
      * 
      * @param others
      *          an array of Iterable
-     * @return an {@link Enumerable}
+     * @return {@link Enumerable}
      */
     public Z zip(Iterable<? extends E>... others);
 
@@ -1168,7 +1168,7 @@ public final class RubyContract {
      * 
      * @param others
      *          a List of Iterable
-     * @return an {@link Enumerable}
+     * @return {@link Enumerable}
      */
     public Z zip(List<? extends Iterable<? extends E>> others);
 

@@ -83,7 +83,7 @@ public final class PeekingIterator<E> implements Iterator<E> {
    * Peeks an element advanced. Warning: remove() is temporarily out of function
    * after a peek() until a next() is called.
    * 
-   * @return an element
+   * @return element
    */
   public E peek() {
     if (!hasPeek && hasNext())

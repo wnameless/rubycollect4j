@@ -55,7 +55,7 @@ public final class RubyDir extends RubyEnumerable<String> {
    * 
    * @param path
    *          of a file
-   * @return a {@link RubyDir}
+   * @return {@link RubyDir}
    * @throws IllegalArgumentException
    *           if no such file or directory
    */
@@ -89,7 +89,7 @@ public final class RubyDir extends RubyEnumerable<String> {
    * 
    * @param path
    *          of a file
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   public static RubyArray<String> entries(String path) {
     File file = new File(path);
@@ -130,7 +130,7 @@ public final class RubyDir extends RubyEnumerable<String> {
    * 
    * @param path
    *          of a file
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   public static RubyEnumerator<String> foreach(String path) {
     return newRubyEnumerator(entries(path));
@@ -147,7 +147,7 @@ public final class RubyDir extends RubyEnumerable<String> {
    * 
    * @param pattern
    *          of target files
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   public static RubyArray<String> glob(String pattern) {
     if (pattern.isEmpty())
@@ -273,7 +273,7 @@ public final class RubyDir extends RubyEnumerable<String> {
   /**
    * Creates a {@link RubyEnumerator} of entries of this {@link RubyDir}.
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   @Override
   public RubyEnumerator<String> each() {
@@ -326,7 +326,7 @@ public final class RubyDir extends RubyEnumerable<String> {
   /**
    * Returns the next of entries.
    * 
-   * @return an entry of file
+   * @return entry of file
    */
   public String read() {
     if (position < 0 || position >= entries.size())
@@ -350,7 +350,7 @@ public final class RubyDir extends RubyEnumerable<String> {
    * 
    * @param position
    *          to be searched
-   * @return a {@link RubyDir} that entries is set to the given position
+   * @return {@link RubyDir} that entries is set to the given position
    */
   public RubyDir seek(int position) {
     RubyDir dir = RubyDir.open(directory.getPath());

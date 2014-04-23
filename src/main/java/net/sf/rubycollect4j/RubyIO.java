@@ -132,8 +132,8 @@ public class RubyIO {
      * Retrieves a Mode from a String.
      * 
      * @param mode
-     *          mode in String form
-     * @return a Mode
+     *          in String form
+     * @return Mode
      * @throws IllegalArgumentException
      *           if the permission is not matched any of the Mode
      */
@@ -166,7 +166,7 @@ public class RubyIO {
    * @param mode
    *          r, rw, w, w+, a, a+
    * @see Mode
-   * @return a {@link RubyIO}
+   * @return {@link RubyIO}
    */
   public static RubyIO open(String path, String mode) {
     RubyIO io = null;
@@ -184,7 +184,7 @@ public class RubyIO {
    * 
    * @param path
    *          of a file
-   * @return a {@link RubyIO}
+   * @return {@link RubyIO}
    */
   public static RubyIO open(String path) {
     return open(path, R.toString());
@@ -248,7 +248,7 @@ public class RubyIO {
    * 
    * @param path
    *          of a File
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   public static RubyEnumerator<String> foreach(String path) {
     return newRubyEnumerator(new EachLineIterable(new File(path)));
@@ -281,7 +281,7 @@ public class RubyIO {
   /**
    * Returns a {@link RubyEnumerator} of lines in the file.
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    * @throws IllegalStateException
    *           if file is not readable
    */
@@ -316,7 +316,7 @@ public class RubyIO {
   /**
    * Reads the content of a file.
    * 
-   * @return a String
+   * @return String
    * @throws IllegalStateException
    *           if file is not readable
    */
@@ -344,7 +344,7 @@ public class RubyIO {
    * Moves the cursor to certain position.
    * 
    * @param pos
-   *          of the file
+   *          position of the file
    */
   public void seek(long pos) {
     try {

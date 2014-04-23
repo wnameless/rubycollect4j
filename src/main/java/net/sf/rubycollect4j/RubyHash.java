@@ -222,11 +222,8 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Yields each element to given block.
-   * 
-   * @param block
-   *          to yield each entry
    * @return this {@link RubyHash}
+   * @see RubyEnumerable#each(Block)
    */
   public RubyHash<K, V> each(EntryBlock<? super K, ? super V> block) {
     for (Entry<K, V> item : map.entrySet()) {

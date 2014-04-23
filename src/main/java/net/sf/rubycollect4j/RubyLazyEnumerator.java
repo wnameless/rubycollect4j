@@ -131,7 +131,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public <S> RubyLazyEnumerator<Entry<S, RubyArray<E>>> chunk(
@@ -142,7 +142,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public <S> RubyLazyEnumerator<Entry<S, RubyArray<E>>> chunk(
@@ -161,7 +161,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> collect() {
@@ -171,7 +171,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public <S> RubyLazyEnumerator<S> collect(
@@ -182,7 +182,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public <S> RubyLazyEnumerator<S> collect(final String methodName,
@@ -200,7 +200,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> collectConcat() {
@@ -210,7 +210,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public <S> RubyLazyEnumerator<S> collectConcat(
@@ -241,7 +241,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> cycle() {
@@ -251,7 +251,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> cycle(int n) {
@@ -279,7 +279,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> detect() {
@@ -298,7 +298,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> drop(int n) {
@@ -308,7 +308,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> dropWhile() {
@@ -323,7 +323,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> dropWhile(BooleanBlock<? super E> block) {
@@ -333,7 +333,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> each() {
@@ -343,7 +343,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> each(Block<? super E> block) {
@@ -356,7 +356,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<RubyArray<E>> eachCons(int n) {
@@ -373,7 +373,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> eachEntry() {
@@ -383,7 +383,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> eachEntry(Block<? super E> block) {
@@ -396,7 +396,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<RubyArray<E>> eachSlice(int n) {
@@ -413,7 +413,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<Entry<E, Integer>> eachWithIndex() {
@@ -423,7 +423,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> eachWithIndex(WithIndexBlock<? super E> block) {
@@ -438,7 +438,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public <O> RubyLazyEnumerator<Entry<E, O>> eachWithObject(O obj) {
@@ -462,7 +462,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> find() {
@@ -472,7 +472,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> findAll() {
@@ -487,7 +487,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> findAll(BooleanBlock<? super E> block) {
@@ -497,7 +497,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> findIndex() {
@@ -554,7 +554,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> flatMap() {
@@ -564,7 +564,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public <S> RubyLazyEnumerator<S> flatMap(
@@ -575,7 +575,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> grep(String regex) {
@@ -585,7 +585,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public <S> RubyLazyEnumerator<S> grep(String regex,
@@ -597,7 +597,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public <S> RubyLazyEnumerator<S> grep(String regex, final String methodName,
@@ -615,7 +615,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> groupBy() {
@@ -711,7 +711,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> map() {
@@ -721,7 +721,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public <S> RubyLazyEnumerator<S> map(
@@ -732,7 +732,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public <S> RubyLazyEnumerator<S> map(String methodName, Object... args) {
@@ -752,7 +752,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> maxBy() {
@@ -800,7 +800,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> minBy() {
@@ -850,7 +850,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> minmaxBy() {
@@ -944,7 +944,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> partition() {
@@ -988,7 +988,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> reject() {
@@ -998,7 +998,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> reject(BooleanBlock<? super E> block) {
@@ -1008,7 +1008,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> reverseEach() {
@@ -1018,7 +1018,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> reverseEach(Block<? super E> block) {
@@ -1031,7 +1031,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> select() {
@@ -1041,7 +1041,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> select(BooleanBlock<? super E> block) {
@@ -1051,7 +1051,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<RubyArray<E>> sliceBefore(
@@ -1062,7 +1062,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<RubyArray<E>> sliceBefore(String regex) {
@@ -1093,7 +1093,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> sortBy() {
@@ -1148,7 +1148,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> take(int n) {
@@ -1158,7 +1158,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> takeWhile() {
@@ -1173,7 +1173,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<E> takeWhile(BooleanBlock<? super E> block) {
@@ -1188,7 +1188,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<RubyArray<E>> zip(Iterable<? extends E>... others) {
@@ -1198,7 +1198,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyLazyEnumerator}
+   * @return {@link RubyLazyEnumerator}
    */
   @Override
   public RubyLazyEnumerator<RubyArray<E>> zip(
@@ -1228,7 +1228,7 @@ public final class RubyLazyEnumerator<E> implements
   /**
    * Returns the next element without advancing the iteration.
    * 
-   * @return an element
+   * @return element
    */
   public E peek() {
     return pIterator.peek();

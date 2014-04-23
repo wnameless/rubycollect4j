@@ -73,7 +73,7 @@ public final class Unpacker {
    *          a String made by Directive
    * @param str
    *          target for unpacking
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   public static RubyArray<Object> unpack(String format, String str) {
     if (!Directive.verify(format))

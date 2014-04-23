@@ -209,7 +209,7 @@ public enum Directive {
    * 
    * @param bytes
    *          a List of Byte
-   * @return a binary String represented in hex or ASCII format
+   * @return binary String represented in hex or ASCII format
    */
   public String pack(List<Byte> bytes) {
     byte[] byteAry = new byte[bytes.size()];
@@ -224,7 +224,7 @@ public enum Directive {
    * 
    * @param bytes
    *          an array of byte
-   * @return a binary String represented in hex or ASCII format
+   * @return binary String represented in hex or ASCII format
    */
   public String pack(byte[] bytes) {
     switch (this) {
@@ -322,7 +322,7 @@ public enum Directive {
    * 
    * @param bytes
    *          a List of Byte
-   * @return an Object
+   * @return Object
    */
   public Object unpack(List<Byte> bytes) {
     byte[] byteAry = new byte[bytes.size()];
@@ -337,7 +337,7 @@ public enum Directive {
    * 
    * @param bytes
    *          an array of byte
-   * @return an Object
+   * @return Object
    */
   public Object unpack(byte[] bytes) {
     switch (this) {
@@ -396,7 +396,7 @@ public enum Directive {
    * 
    * @param o
    *          any Object
-   * @return a cast Object
+   * @return cast Object
    */
   public Object cast(Object o) {
     switch (this) {

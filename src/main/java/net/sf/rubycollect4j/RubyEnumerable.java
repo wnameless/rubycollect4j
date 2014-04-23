@@ -61,7 +61,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * Returns the Iterable of elements.
    * 
-   * @return an Iterable
+   * @return Iterable
    */
   protected abstract Iterable<E> getIterable();
 
@@ -88,7 +88,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   @Override
   public <S> RubyEnumerator<Entry<S, RubyArray<E>>> chunk(
@@ -99,7 +99,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   @Override
   public <S> RubyEnumerator<Entry<S, RubyArray<E>>> chunk(
@@ -118,7 +118,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   @Override
   public RubyEnumerator<E> collect() {
@@ -128,7 +128,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   @Override
   public <S> RubyArray<S> collect(TransformBlock<? super E, ? extends S> block) {
@@ -138,7 +138,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   @Override
   public <S> RubyArray<S>
@@ -157,7 +157,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   @Override
   public RubyEnumerator<E> collectConcat() {
@@ -167,7 +167,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   @Override
   public <S> RubyArray<S> collectConcat(
@@ -188,7 +188,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   @Override
   public RubyEnumerator<E> cycle() {
@@ -198,7 +198,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   @Override
   public RubyEnumerator<E> cycle(int n) {
@@ -218,7 +218,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   @Override
   public RubyEnumerator<E> detect() {
@@ -233,7 +233,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   @Override
   public RubyArray<E> drop(int n) {
@@ -243,7 +243,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   @Override
   public RubyEnumerator<E> dropWhile() {
@@ -258,7 +258,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   @Override
   public RubyArray<E> dropWhile(BooleanBlock<? super E> block) {
@@ -268,7 +268,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   @Override
   public RubyEnumerator<E> each() {
@@ -278,7 +278,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerable}
+   * @return {@link RubyEnumerable}
    */
   @Override
   public RubyEnumerable<E> each(Block<? super E> block) {
@@ -289,7 +289,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   @Override
   public RubyEnumerator<RubyArray<E>> eachCons(int n) {
@@ -304,7 +304,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   @Override
   public RubyEnumerator<E> eachEntry() {
@@ -314,7 +314,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerable}
+   * @return {@link RubyEnumerable}
    */
   @Override
   public RubyEnumerable<E> eachEntry(Block<? super E> block) {
@@ -327,7 +327,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   @Override
   public RubyEnumerator<RubyArray<E>> eachSlice(int n) {
@@ -342,7 +342,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   @Override
   public RubyEnumerator<Entry<E, Integer>> eachWithIndex() {
@@ -352,7 +352,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerable}
+   * @return {@link RubyEnumerable}
    */
   @Override
   public RubyEnumerable<E> eachWithIndex(WithIndexBlock<? super E> block) {
@@ -363,7 +363,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   @Override
   public <O> RubyEnumerator<Entry<E, O>> eachWithObject(O obj) {
@@ -385,7 +385,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   @Override
   public RubyEnumerator<E> find() {
@@ -400,7 +400,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   @Override
   public RubyEnumerator<E> findAll() {
@@ -410,7 +410,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   @Override
   public RubyArray<E> findAll(BooleanBlock<? super E> block) {
@@ -420,7 +420,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   @Override
   public RubyEnumerator<E> findIndex() {
@@ -450,7 +450,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   @Override
   public RubyEnumerator<E> flatMap() {
@@ -460,7 +460,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   @Override
   public <S> RubyArray<S> flatMap(
@@ -471,7 +471,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   @Override
   public RubyArray<E> grep(String regex) {
@@ -481,7 +481,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   @Override
   public <S> RubyArray<S> grep(String regex,
@@ -492,7 +492,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   @Override
   public <S> RubyArray<S> grep(String regex, final String methodName,
@@ -510,7 +510,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   @Override
   public RubyEnumerator<E> groupBy() {
@@ -562,7 +562,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   @Override
   public RubyEnumerator<E> map() {
@@ -572,7 +572,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   @Override
   public <S> RubyArray<S> map(TransformBlock<? super E, ? extends S> block) {
@@ -582,7 +582,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   @Override
   public <S> RubyArray<S> map(String methodName, Object... args) {
@@ -602,7 +602,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   @Override
   public RubyEnumerator<E> maxBy() {
@@ -643,7 +643,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   @Override
   public RubyEnumerator<E> minBy() {
@@ -679,7 +679,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   @Override
   public RubyEnumerator<E> minmaxBy() {
@@ -726,7 +726,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   @Override
   public RubyEnumerator<E> partition() {
@@ -761,7 +761,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   @Override
   public RubyEnumerator<E> reject() {
@@ -771,7 +771,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   @Override
   public RubyArray<E> reject(BooleanBlock<? super E> block) {
@@ -781,7 +781,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   @Override
   public RubyEnumerator<E> reverseEach() {
@@ -791,7 +791,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerable}
+   * @return {@link RubyEnumerable}
    */
   @Override
   public RubyEnumerable<E> reverseEach(Block<? super E> block) {
@@ -804,7 +804,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   @Override
   public RubyEnumerator<E> select() {
@@ -814,7 +814,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   @Override
   public RubyArray<E> select(BooleanBlock<? super E> block) {
@@ -824,7 +824,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   @Override
   public RubyEnumerator<RubyArray<E>>
@@ -835,7 +835,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   @Override
   public RubyEnumerator<RubyArray<E>> sliceBefore(String regex) {
@@ -856,7 +856,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   @Override
   public RubyEnumerator<E> sortBy() {
@@ -889,7 +889,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   @Override
   public RubyArray<E> take(int n) {
@@ -899,7 +899,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   @Override
   public RubyEnumerator<E> takeWhile() {
@@ -914,7 +914,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   @Override
   public RubyArray<E> takeWhile(BooleanBlock<? super E> block) {
@@ -929,7 +929,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   @Override
   public RubyArray<RubyArray<E>> zip(Iterable<? extends E>... others) {
@@ -939,7 +939,7 @@ public abstract class RubyEnumerable<E> implements
   /**
    * {@inheritDoc}
    * 
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   @Override
   public RubyArray<RubyArray<E>> zip(

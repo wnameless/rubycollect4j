@@ -51,7 +51,7 @@ public final class Packer {
    *          a String made by Directive
    * @param objs
    *          an array of Object
-   * @return a binary String
+   * @return binary String
    */
   public static String pack(String aTemplateString, Object... objs) {
     return pack(aTemplateString, Arrays.asList(objs));
@@ -64,7 +64,7 @@ public final class Packer {
    *          a String made by Directive
    * @param objs
    *          a List of Objects
-   * @return a binary String
+   * @return binary String
    * @throws IllegalArgumentException
    *           if template string is invalid
    * @throws IllegalArgumentException
