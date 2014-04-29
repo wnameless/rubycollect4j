@@ -142,5 +142,5 @@ import org.junit.runners.Suite.SuiteClasses;
     LinkedIdentityMap_IdentityEntryTest.class,
     LinkedIdentityMap_KeySetTest.class, LinkedIdentityMap_ValuesTest.class,
     LinkedIdentityMapTest.class, PeekingIteratorTest.class,
-    TryComparatorTest.class })
+    TryComparatorTest.class, RubyTest.class })
 public class RubyCollect4JTests {}
