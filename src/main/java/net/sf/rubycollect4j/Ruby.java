@@ -20,36 +20,20 @@
  */
 package net.sf.rubycollect4j;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map.Entry;
 
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.block.BooleanBlock;
-import net.sf.rubycollect4j.block.ReduceBlock;
 import net.sf.rubycollect4j.block.TransformBlock;
 import net.sf.rubycollect4j.block.WithIndexBlock;
-import net.sf.rubycollect4j.block.WithInitBlock;
-import net.sf.rubycollect4j.block.WithObjectBlock;
 
-public class Ruby {
+public final class Ruby {
 
   private Ruby() {}
 
   public interface Enumerable<E> extends
       RubyContract.Enumerable<E, Ruby.Enumerator<?>, RubyArray<?>> {
-
-    @Override
-    public boolean allʔ();
-
-    @Override
-    public boolean allʔ(BooleanBlock<? super E> block);
-
-    @Override
-    public boolean anyʔ();
-
-    @Override
-    public boolean anyʔ(BooleanBlock<? super E> block);
 
     /**
      * {@inheritDoc}
@@ -112,12 +96,6 @@ public class Ruby {
     public <S> RubyArray<S> collectConcat(
         TransformBlock<? super E, ? extends List<? extends S>> block);
 
-    @Override
-    public int count();
-
-    @Override
-    public int count(BooleanBlock<? super E> block);
-
     /**
      * {@inheritDoc}
      * 
@@ -134,12 +112,6 @@ public class Ruby {
     @Override
     public Ruby.Enumerator<E> cycle(int n);
 
-    @Override
-    public void cycle(int n, Block<? super E> block);
-
-    @Override
-    public void cycle(Block<? super E> block);
-
     /**
      * {@inheritDoc}
      * 
@@ -147,9 +119,6 @@ public class Ruby {
      */
     @Override
     public Ruby.Enumerator<E> detect();
-
-    @Override
-    public E detect(BooleanBlock<? super E> block);
 
     /**
      * {@inheritDoc}
@@ -226,9 +195,6 @@ public class Ruby {
     @Override
     public Ruby.Enumerator<RubyArray<E>> eachSlice(int n);
 
-    @Override
-    public void eachSlice(int n, Block<? super RubyArray<E>> block);
-
     /**
      * {@inheritDoc}
      * 
@@ -253,13 +219,6 @@ public class Ruby {
     @Override
     public <O> Ruby.Enumerator<Entry<E, O>> eachWithObject(O obj);
 
-    @Override
-    public <O> O eachWithObject(O obj,
-        WithObjectBlock<? super E, ? super O> block);
-
-    @Override
-    public RubyArray<E> entries();
-
     /**
      * {@inheritDoc}
      * 
@@ -267,9 +226,6 @@ public class Ruby {
      */
     @Override
     public Ruby.Enumerator<E> find();
-
-    @Override
-    public E find(BooleanBlock<? super E> block);
 
     /**
      * {@inheritDoc}
@@ -294,18 +250,6 @@ public class Ruby {
      */
     @Override
     public Ruby.Enumerator<E> findIndex();
-
-    @Override
-    public Integer findIndex(BooleanBlock<? super E> block);
-
-    @Override
-    public Integer findIndex(E target);
-
-    @Override
-    public E first();
-
-    @Override
-    public RubyArray<E> first(int n);
 
     /**
      * {@inheritDoc}
@@ -358,32 +302,6 @@ public class Ruby {
     @Override
     public Ruby.Enumerator<E> groupBy();
 
-    @Override
-    public <S> RubyHash<S, RubyArray<E>> groupBy(
-        TransformBlock<? super E, ? extends S> block);
-
-    @Override
-    public <S> RubyHash<S, RubyArray<E>> groupBy(final String methodName,
-        final Object... args);
-
-    @Override
-    public boolean includeʔ(E target);
-
-    @Override
-    public E inject(ReduceBlock<E> block);
-
-    @Override
-    public <I> I inject(I init, WithInitBlock<? super E, I> block);
-
-    @Override
-    public <I> I inject(I init, String methodName);
-
-    @Override
-    public E inject(String methodName);
-
-    @Override
-    public RubyLazyEnumerator<E> lazy();
-
     /**
      * {@inheritDoc}
      * 
@@ -408,12 +326,6 @@ public class Ruby {
     @Override
     public <S> RubyArray<S> map(String methodName, Object... args);
 
-    @Override
-    public E max();
-
-    @Override
-    public E max(Comparator<? super E> comp);
-
     /**
      * {@inheritDoc}
      * 
@@ -421,25 +333,6 @@ public class Ruby {
      */
     @Override
     public Ruby.Enumerator<E> maxBy();
-
-    @Override
-    public <S> E maxBy(Comparator<? super S> comp,
-        TransformBlock<? super E, ? extends S> block);
-
-    @Override
-    public <S> E maxBy(TransformBlock<? super E, ? extends S> block);
-
-    @Override
-    public <S> E maxBy(String methodName, Object... args);
-
-    @Override
-    public boolean memberʔ(E target);
-
-    @Override
-    public E min();
-
-    @Override
-    public E min(Comparator<? super E> comp);
 
     /**
      * {@inheritDoc}
@@ -449,22 +342,6 @@ public class Ruby {
     @Override
     public Ruby.Enumerator<E> minBy();
 
-    @Override
-    public <S> E minBy(Comparator<? super S> comp,
-        TransformBlock<? super E, ? extends S> block);
-
-    @Override
-    public <S> E minBy(TransformBlock<? super E, ? extends S> block);
-
-    @Override
-    public <S> E minBy(String methodName, Object... args);
-
-    @Override
-    public RubyArray<E> minmax();
-
-    @Override
-    public RubyArray<E> minmax(Comparator<? super E> comp);
-
     /**
      * {@inheritDoc}
      * 
@@ -473,29 +350,6 @@ public class Ruby {
     @Override
     public Ruby.Enumerator<E> minmaxBy();
 
-    @Override
-    public <S> RubyArray<E> minmaxBy(Comparator<? super S> comp,
-        TransformBlock<? super E, ? extends S> block);
-
-    @Override
-    public <S> RubyArray<E> minmaxBy(
-        TransformBlock<? super E, ? extends S> block);
-
-    @Override
-    public <S> RubyArray<E> minmaxBy(String methodName, Object... args);
-
-    @Override
-    public boolean noneʔ();
-
-    @Override
-    public boolean noneʔ(BooleanBlock<? super E> block);
-
-    @Override
-    public boolean oneʔ();
-
-    @Override
-    public boolean oneʔ(BooleanBlock<? super E> block);
-
     /**
      * {@inheritDoc}
      * 
@@ -503,21 +357,6 @@ public class Ruby {
      */
     @Override
     public Ruby.Enumerator<E> partition();
-
-    @Override
-    public RubyArray<RubyArray<E>> partition(BooleanBlock<? super E> block);
-
-    @Override
-    public E reduce(ReduceBlock<E> block);
-
-    @Override
-    public <I> I reduce(I init, WithInitBlock<? super E, I> block);
-
-    @Override
-    public <I> I reduce(I init, String methodName);
-
-    @Override
-    public E reduce(String methodName);
 
     /**
      * {@inheritDoc}
@@ -584,9 +423,6 @@ public class Ruby {
     @Override
     public Ruby.Enumerator<RubyArray<E>> sliceBefore(String regex);
 
-    @Override
-    public RubyArray<E> sort();
-
     /**
      * {@inheritDoc}
      * 
@@ -594,22 +430,6 @@ public class Ruby {
      */
     @Override
     public Ruby.Enumerator<E> sortBy();
-
-    @Override
-    public <S> RubyArray<E> sortBy(Comparator<? super S> comp,
-        TransformBlock<? super E, ? extends S> block);
-
-    @Override
-    public <S> RubyArray<E> sortBy(Comparator<? super E> comp1,
-        Comparator<? super S> comp2,
-        TransformBlock<? super E, ? extends S> block);
-
-    @Override
-    public <S> RubyArray<E>
-        sortBy(TransformBlock<? super E, ? extends S> block);
-
-    @Override
-    public <S> RubyArray<E> sortBy(String methodName, Object... args);
 
     /**
      * {@inheritDoc}
@@ -635,9 +455,6 @@ public class Ruby {
     @Override
     public RubyArray<E> takeWhile(BooleanBlock<? super E> block);
 
-    @Override
-    public RubyArray<E> toA();
-
     /**
      * {@inheritDoc}
      * 
@@ -655,14 +472,20 @@ public class Ruby {
     public RubyArray<RubyArray<E>> zip(
         List<? extends Iterable<? extends E>> others);
 
-    @Override
-    public void zip(List<? extends Iterable<? extends E>> others,
-        Block<? super RubyArray<E>> block);
-
   }
 
   public interface Enumerator<E> extends Enumerable<E>,
-      RubyContract.Enumerator<E, Ruby.Enumerator<?>, RubyArray<?>> {}
+      RubyContract.Enumerator<E, Ruby.Enumerator<?>, RubyArray<?>> {
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @return this {@link Ruby.Enumerator}
+     */
+    @Override
+    public Ruby.Enumerator<E> rewind();
+
+  }
 
   public interface LazyEnumerator<E>
       extends
@@ -1104,6 +927,14 @@ public class Ruby {
     @Override
     public Ruby.LazyEnumerator<RubyArray<E>> zip(
         List<? extends Iterable<? extends E>> others);
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @return this {@link Ruby.LazyEnumerator}
+     */
+    @Override
+    public Ruby.LazyEnumerator<E> rewind();
 
   }
 

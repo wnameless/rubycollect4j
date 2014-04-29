@@ -1214,20 +1214,17 @@ public final class RubyLazyEnumerator<E> implements Ruby.LazyEnumerator<E> {
   }
 
   /**
-   * Resets the iterator of this {@link RubyLazyEnumerator} to the beginning.
+   * {@inheritDoc}
    * 
    * @return this {@link RubyLazyEnumerator}
    */
+  @Override
   public RubyLazyEnumerator<E> rewind() {
     pIterator = new PeekingIterator<E>(iter.iterator());
     return this;
   }
 
-  /**
-   * Returns the next element without advancing the iteration.
-   * 
-   * @return element
-   */
+  @Override
   public E peek() {
     return pIterator.peek();
   }

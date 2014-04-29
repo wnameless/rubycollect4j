@@ -1197,6 +1197,22 @@ public final class RubyContract {
    *          the type to define if some methods are lazy or eager loading
    */
   interface Enumerator<E, N extends Enumerator<?, ?, ?>, Z extends Enumerable<?, ?, ?>>
-      extends Enumerable<E, N, Z>, Iterable<E>, Iterator<E> {}
+      extends Enumerable<E, N, Z>, Iterable<E>, Iterator<E> {
+
+    /**
+     * Rewinds this Iterator to the beginning.
+     * 
+     * @return this {@link Enumerator}
+     */
+    public N rewind();
+
+    /**
+     * Returns the next element without advancing the iteration.
+     * 
+     * @return element
+     */
+    public E peek();
+
+  }
 
 }

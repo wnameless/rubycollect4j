@@ -98,20 +98,17 @@ public class RubyEnumerator<E> extends RubyEnumerable<E> implements
   }
 
   /**
-   * Resets the iterator of this {@link RubyEnumerator} to the beginning.
+   * {@inheritDoc}
    * 
    * @return this {@link RubyEnumerator}
    */
+  @Override
   public RubyEnumerator<E> rewind() {
     pIterator = new PeekingIterator<E>(iter.iterator());
     return this;
   }
 
-  /**
-   * Returns the next element without advancing the iteration.
-   * 
-   * @return element
-   */
+  @Override
   public E peek() {
     return pIterator.peek();
   }
