@@ -22,8 +22,10 @@ package net.sf.rubycollect4j;
 
 import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -43,14 +45,18 @@ import net.sf.rubycollect4j.block.TransformBlock;
  * @param <E>
  *          the type of the elements
  */
-public final class RubySet<E> extends RubyEnumerable<E> implements Set<E> {
+public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
+    Comparable<Set<E>>, Serializable {
 
-  private LinkedHashSet<E> set;
+  private static final long serialVersionUID = 1L;
+
+  private Set<E> set;
+  private boolean isFrozen = false;
 
   /**
    * Returns a {@link RubySet} which wraps the given LinkedHashSet.
    * 
-   * @param list
+   * @param set
    *          any LinkedHashSet
    * @return {@link RubySet}
    * @throws NullPointerException
@@ -134,10 +140,7 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E> {
    * @return this {@link RubySet} or null
    */
   public RubySet<E> addʔ(E e) {
-    if (add(e))
-      return this;
-    else
-      return null;
+    return add(e) ? this : null;
   }
 
   /**
@@ -220,10 +223,7 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E> {
    * @return this {@link RubySet} or null
    */
   public RubySet<E> deleteʔ(E e) {
-    if (remove(e))
-      return this;
-    else
-      return null;
+    return remove(e) ? this : null;
   }
 
   /**
@@ -252,7 +252,7 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E> {
    * @return new {@link RubySet}
    */
   public RubySet<E> difference(Iterable<E> iter) {
-    RubySet<E> newSet = RubySet.copyOf(iter);
+    RubySet<E> newSet = RubySet.copyOf(set);
     for (E e : iter) {
       newSet.remove(e);
     }
@@ -332,24 +332,46 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E> {
    */
   @SuppressWarnings("unchecked")
   public <S> RubySet<S> flatten() {
-    RubySet<S> rubySet = new RubySet<S>();
-    List<Object> subSets = new ArrayList<Object>();
+    RubySet<S> newSet = new RubySet<S>();
+    List<Set<?>> subSets = new ArrayList<Set<?>>();
     for (E item : set) {
       if (item instanceof Set)
-        subSets.add(item);
+        subSets.add((Set<?>) item);
       else
-        rubySet.add((S) item);
+        newSet.add((S) item);
     }
     while (!subSets.isEmpty()) {
-      Set<?> subSet = (Set<?>) subSets.remove(0);
+      Set<?> subSet = subSets.remove(0);
       for (Object item : subSet) {
         if (item instanceof Set)
-          subSets.add(item);
+          subSets.add((Set<?>) item);
         else
-          rubySet.add((S) item);
+          newSet.add((S) item);
       }
     }
-    return rubySet;
+    return newSet;
+  }
+
+  /**
+   * Freezes this {@link RubySet}.
+   * 
+   * @return this {@link RubySet}
+   */
+  public RubySet<E> freeze() {
+    if (!isFrozen) {
+      set = Collections.unmodifiableSet(set);
+      isFrozen = true;
+    }
+    return this;
+  }
+
+  /**
+   * Checks if this {@link RubySet} is frozen.
+   * 
+   * @return true if this {@link RubySet} is frozen, false otherwise
+   */
+  public boolean frozenʔ() {
+    return isFrozen;
   }
 
   /**
@@ -678,6 +700,15 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E> {
   @Override
   public String toString() {
     return set.toString();
+  }
+
+  @Override
+  public int compareTo(Set<E> arg0) {
+    RubyArray<E> thisRa = RubyArray.copyOf(set);
+    RubyArray<E> thatRa = RubyArray.copyOf(arg0);
+    thisRa.sortǃ();
+    thatRa.sortǃ();
+    return thisRa.compareTo(thatRa);
   }
 
 }

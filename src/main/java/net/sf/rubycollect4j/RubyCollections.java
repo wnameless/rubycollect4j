@@ -178,6 +178,17 @@ public final class RubyCollections {
   }
 
   /**
+   * Creates a {@link RubySet} by given elements.
+   * 
+   * @param elements
+   *          varargs
+   * @return new {@link RubySet}
+   */
+  public static <E> RubySet<E> newRubySet(E... elements) {
+    return new RubySet<E>(Arrays.asList(elements));
+  }
+
+  /**
    * Creates a {@link RubyLazyEnumerator} by given Iterable.
    * 
    * @param <E>

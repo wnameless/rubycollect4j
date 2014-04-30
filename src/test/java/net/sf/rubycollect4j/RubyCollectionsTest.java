@@ -73,8 +73,7 @@ public class RubyCollectionsTest {
 
   @Test
   public void testNewRubyArray() {
-    RubyArray<Integer> ra;
-    ra = newRubyArray(Arrays.asList(1, 2));
+    RubyArray<Integer> ra = newRubyArray(Arrays.asList(1, 2));
     assertTrue(ra instanceof RubyArray);
     ra = newRubyArray(new Integer[] { 1 });
     assertTrue(ra instanceof RubyArray);
@@ -101,6 +100,7 @@ public class RubyCollectionsTest {
   public void testNewRubySet() {
     assertTrue(newRubySet() instanceof RubySet);
     assertTrue(newRubySet(Arrays.asList(1, 2, 3)) instanceof RubySet);
+    assertTrue(newRubySet(1, 2, 3, 3) instanceof RubySet);
   }
 
   @Test

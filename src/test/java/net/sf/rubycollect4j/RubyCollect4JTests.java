@@ -106,7 +106,8 @@ import org.junit.runners.Suite.SuiteClasses;
     RubyEnumerableTest.class, RubyEnumeratorTest.class, RubyFileTest.class,
     RubyHashTest.class, RubyIOTest.class, RubyKernelTest.class,
     RubyLazyEnumeratorTest.class, RubyObjectTest.class, RubyRangeTest.class,
-    RubyStringTest.class, RubyStringUnpackWithRubyArrayPackTest.class,
+    RubySetTest.class, RubyStringTest.class,
+    RubyStringUnpackWithRubyArrayPackTest.class, RubyTest.class,
     ChunkIterableTest.class, ChunkIteratorTest.class,
     CombinationIterableTest.class, CombinationIteratorTest.class,
     ComparableEntryIterableTest.class, ComparableEntryIteratorTest.class,
@@ -142,5 +143,5 @@ import org.junit.runners.Suite.SuiteClasses;
     LinkedIdentityMap_IdentityEntryTest.class,
     LinkedIdentityMap_KeySetTest.class, LinkedIdentityMap_ValuesTest.class,
     LinkedIdentityMapTest.class, PeekingIteratorTest.class,
-    TryComparatorTest.class, RubyTest.class })
+    TryComparatorTest.class })
 public class RubyCollect4JTests {}
