@@ -2,7 +2,7 @@ rubycollect4j
 =============
 Ruby Collections for Java.
 
-The rubycollect4j implements all methods refer to Ruby Array, Hash, Enumerable, Enumerator, Range and String.
+The rubycollect4j implements all methods refer to Ruby Array, Hash, Set, Enumerable, Enumerator, Range and String.
 It also implements parts of Ruby Dir, File and Date methods.
 
 For further information, please visit http://ruby-doc.org website.
@@ -66,7 +66,7 @@ map.put(2, "b");
 p( ra(map.values) );                // Output: [a, b]
 // RubyArray is Comparable if the elements are Comparable.
 p( ra(ra(3, 4), ra(1, 2)).sort() ); // Output: [[1, 2], [3, 4]]
-// RubyArray is also an List.
+// RubyArray is also a List.
 p( ra(1, 2, 3) instanceof List );   // Output: true
 ```
 
@@ -100,6 +100,28 @@ p( rh(1, 2, 3, 4) instanceof Map );    // Output: true
 LinkedHashMap<Integer, String> map = new LinkedHashMap<Integer, String>();
 map.put(1, "a");
 RubyHash<Integer, String> rh = RubyHash.of(map);
+```
+
+Demo newRubySet():
+```java
+p( newRubySet(1, 2, 3, 3) );                                // Output: [1, 2, 3]
+List<Integer> list = new ArrayList<Integer>();
+list.add(1);
+list.add(1);
+// Any Iterable object can be converted into RubySet
+p( newRubySet(list) );                                      // Output: [1]
+// RubySet is Comparable if the elements are Comparable.
+p( newRubySet(newRubySet(3, 4), newRubySet(1, 2)).sort() ); // Output: [[1, 2], [3, 4]]
+// RubySet is also a Set.
+p( newRubySet(1, 2, 3, 3) instanceof Set );                 // Output: true
+```
+
+```java
+// By default, newRubySet() makes a copy of input Set.
+// You can only wrap a LinkedHashSet up by following codes, because the elements of RubySet need to be ordered.
+LinkedHashSet<Integer> set = new LinkedHashSet<Integer>();
+set.add(1);
+RubySet<Integer> rubySet = RubySet.of(set);
 ```
 
 Demo rs() & new RubyString():
