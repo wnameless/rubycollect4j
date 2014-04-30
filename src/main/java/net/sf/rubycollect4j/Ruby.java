@@ -33,8 +33,9 @@ import net.sf.rubycollect4j.block.WithIndexBlock;
  * {@link Ruby} contains the general interfaces of RubyCollect4J
  * implementations.
  * <P>
- * For example, {@link RubyArray}, {@link RubyHash}, {@link RubySet} and
- * {@link RubyEnumerator} can all be treated as {@link Ruby.Enumerable}.
+ * For example, {@link RubyArray}, {@link RubyHash}, {@link RubySet},
+ * {@link RubyEnumerator} and {@link RubyString} can all be treated as
+ * {@link Ruby.Enumerable}.
  *
  */
 public final class Ruby {
