@@ -73,7 +73,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * 
    * @param map
    *          any Map
-   * @return a {@link RubyHash}
+   * @return {@link RubyHash}
    */
   public static <K, V> RubyHash<K, V> of(LinkedHashMap<K, V> map) {
     if (map == null)
@@ -87,7 +87,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * 
    * @param map
    *          any Map
-   * @return a {@link RubyHash}
+   * @return {@link RubyHash}
    */
   public static <K, V> RubyHash<K, V> copyOf(Map<K, V> map) {
     if (map == null)
@@ -129,7 +129,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * 
    * @param key
    *          to be found
-   * @return an Entry or null
+   * @return Entry or null
    */
   public Entry<K, V> assoc(K key) {
     if (map.containsKey(key))
@@ -179,7 +179,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   /**
    * Returns a {@link RubyEnumerator} of entries this {@link RubyHash}.
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<Entry<K, V>> deleteIf() {
     return newRubyEnumerator(new ComparableEntryIterable<K, V>(map.entrySet()));
@@ -237,7 +237,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   /**
    * Returns a {@link RubyEnumerator} of keys of this {@link RubyHash}.
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<K> eachKey() {
     return newRubyEnumerator(map.keySet());
@@ -260,7 +260,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   /**
    * Returns a {@link RubyEnumerator} of entries this {@link RubyHash}.
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<Entry<K, V>> eachPair() {
     return newRubyEnumerator(new ComparableEntryIterable<K, V>(map.entrySet()));
@@ -280,7 +280,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   /**
    * Returns a {@link RubyEnumerator} of values of this {@link RubyHash}.
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<V> eachValue() {
     return newRubyEnumerator(values());
@@ -355,7 +355,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   /**
    * Returns a {@link RubyEnumerator} of entries of this {@link RubyHash}.
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   public RubyArray<Entry<K, V>> flatten() {
     return newRubyArray(new ComparableEntryIterable<K, V>(map.entrySet()));
@@ -395,7 +395,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   /**
    * Equivalent to {@link #toString()}.
    * 
-   * @return a String
+   * @return String
    */
   public String inspect() {
     return toString();
@@ -405,7 +405,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * Creates an inverted {@link RubyHash} which gets the reversed value-key
    * entries based on this {@link RubyHash}.
    * 
-   * @return a new {@link RubyHash}
+   * @return new {@link RubyHash}
    */
   public RubyHash<V, K> invert() {
     RubyHash<V, K> invertHash = newRubyHash();
@@ -418,7 +418,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   /**
    * Returns a {@link RubyEnumerator} of entries of this {@link RubyHash}.
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<Entry<K, V>> keepIf() {
     return newRubyEnumerator(new ComparableEntryIterable<K, V>(map.entrySet()));
@@ -460,7 +460,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   /**
    * Returns a {@link RubyArray} of keys of this {@link RubyHash}.
    * 
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   public RubyArray<K> keys() {
     return newRubyArray(map.keySet());
@@ -480,7 +480,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   /**
    * Equivalent to {@link #size()}.
    * 
-   * @return the size of this {@link RubyHash}
+   * @return size of this {@link RubyHash}
    */
   public int length() {
     return map.size();
@@ -491,7 +491,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * 
    * @param otherHash
    *          any Map
-   * @return a new {@link RubyHash}
+   * @return new {@link RubyHash}
    */
   public RubyHash<K, V> merge(Map<? extends K, ? extends V> otherHash) {
     RubyHash<K, V> rubyHash = newRubyHash();
@@ -512,7 +512,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    *          any Map
    * @param block
    *          to determine which value is used when key is conflict
-   * @return a new {@link RubyHash}
+   * @return new {@link RubyHash}
    */
   public RubyHash<K, V> merge(Map<K, V> otherHash,
       EntryMergeBlock<? super K, V> block) {
@@ -552,7 +552,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    *          any Map
    * @param block
    *          to determine which value is used when key is conflict
-   * @return a new {@link RubyHash}
+   * @return new {@link RubyHash}
    */
   public RubyHash<K, V> mergeǃ(Map<? extends K, ? extends V> otherHash,
       EntryMergeBlock<? super K, V> block) {
@@ -597,7 +597,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * 
    * @param value
    *          to be found
-   * @return an Entry or null
+   * @return Entry or null
    */
   public Entry<K, V> rassoc(V value) {
     for (Entry<K, V> item : map.entrySet()) {
@@ -611,7 +611,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   /**
    * Returns a {@link RubyEnumerator} of entries of this {@link RubyHash}.
    * 
-   * @return a {@link RubyEnumerator}
+   * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<Entry<K, V>> rejectǃ() {
     return newRubyEnumerator(new ComparableEntryIterable<K, V>(map.entrySet()));
@@ -647,7 +647,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   /**
    * Removes the first Entry and returns it.
    * 
-   * @return an Entry
+   * @return Entry
    */
   public Entry<K, V> shift() {
     if (map.isEmpty()) {
@@ -695,7 +695,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   /**
    * Equivalent to {@link #toString()}.
    * 
-   * @return a String
+   * @return String
    */
   public String toS() {
     return map.toString();
@@ -719,7 +719,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    *          any Map
    * @param block
    *          to determine which value is used when key is conflict
-   * @return a new RubyHash
+   * @return new RubyHash
    */
   public RubyHash<K, V> update(Map<? extends K, ? extends V> otherHash,
       EntryMergeBlock<? super K, V> block) {
@@ -1279,7 +1279,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   /**
    * Returns a {@link RubyArray} of values of this {@link RubyHash}.
    * 
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   @Override
   public RubyArray<V> values() {
@@ -1291,7 +1291,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * 
    * @param keys
    *          to retrieve values
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   public RubyArray<V> valuesAt(Object... keys) {
     return valuesAt(Arrays.asList(keys));
@@ -1302,7 +1302,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * 
    * @param keys
    *          to retrieve values
-   * @return a {@link RubyArray}
+   * @return {@link RubyArray}
    */
   public RubyArray<V> valuesAt(Iterable<?> keys) {
     RubyArray<V> rubyArray = newRubyArray();

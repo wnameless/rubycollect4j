@@ -895,7 +895,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   /**
    * Equivalent to {@link #size()}.
    * 
-   * @return the size of this {@link RubyArray}
+   * @return size of this {@link RubyArray}
    */
   public int length() {
     return list.size();
