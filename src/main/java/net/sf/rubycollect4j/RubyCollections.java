@@ -184,6 +184,7 @@ public final class RubyCollections {
    *          varargs
    * @return new {@link RubySet}
    */
+  @SafeVarargs
   public static <E> RubySet<E> newRubySet(E... elements) {
     return new RubySet<E>(Arrays.asList(elements));
   }
