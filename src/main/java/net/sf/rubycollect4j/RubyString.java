@@ -56,8 +56,10 @@ import net.sf.rubycollect4j.succ.StringSuccessor;
 
 /**
  * 
- * {@link RubyString} implements all methods refer to the String of Ruby
- * language. {@link RubyString} is also a Java CharSequence.
+ * {@link RubyString} implements all methods refer to the String class of Ruby
+ * language.
+ * <p>
+ * {@link RubyString} is also a Java CharSequence and a {@link Ruby.Enumerable}.
  * <P>
  * To avoid the conflict of Java 8 String#chars(), {@link RubyString} doesn't
  * implement the chars() method, but instead it directly extends the

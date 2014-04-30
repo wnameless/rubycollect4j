@@ -28,10 +28,27 @@ import net.sf.rubycollect4j.block.BooleanBlock;
 import net.sf.rubycollect4j.block.TransformBlock;
 import net.sf.rubycollect4j.block.WithIndexBlock;
 
+/**
+ * 
+ * {@link Ruby} contains the general interfaces of RubyCollect4J
+ * implementations.
+ * <P>
+ * For example, {@link RubyArray}, {@link RubyHash} and {@link RubyEnumerator}
+ * can all be treated as {@link Ruby.Enumerable}.
+ *
+ */
 public final class Ruby {
 
   private Ruby() {}
 
+  /**
+   * 
+   * {@link Ruby.Enumerable} includes all methods refer to the Enumerable module
+   * of Ruby.
+   *
+   * @param <E>
+   *          the type of the elements
+   */
   public interface Enumerable<E> extends
       RubyContract.Enumerable<E, Ruby.Enumerator<?>, RubyArray<?>> {
 
@@ -474,6 +491,14 @@ public final class Ruby {
 
   }
 
+  /**
+   * 
+   * {@link Ruby.Enumerator} includes all methods refer to the Enumerator class
+   * of Ruby.
+   *
+   * @param <E>
+   *          the type of the elements
+   */
   public interface Enumerator<E> extends Enumerable<E>,
       RubyContract.Enumerator<E, Ruby.Enumerator<?>, RubyArray<?>> {
 
@@ -487,6 +512,14 @@ public final class Ruby {
 
   }
 
+  /**
+   * 
+   * {@link Ruby.LazyEnumerator} includes all methods refer to the
+   * LazyEnumerator class of Ruby.
+   *
+   * @param <E>
+   *          the type of the elements
+   */
   public interface LazyEnumerator<E>
       extends
       RubyContract.Enumerator<E, Ruby.LazyEnumerator<?>, Ruby.LazyEnumerator<?>> {

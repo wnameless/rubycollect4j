@@ -49,8 +49,10 @@ import net.sf.rubycollect4j.util.LinkedIdentityMap;
 
 /**
  * 
- * {@link RubyHash} implements all methods refer to the Hash of Ruby language.
- * {@link RubyHash} is also a Java Map.
+ * {@link RubyHash} implements all methods refer to the Hash class of Ruby
+ * language.
+ * <p>
+ * {@link RubyHash} is also a Java Map and a {@link Ruby.Enumerable}.
  * 
  * @param <K>
  *          the type of the key elements

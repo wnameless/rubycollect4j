@@ -30,8 +30,10 @@ import net.sf.rubycollect4j.util.PeekingIterator;
 /**
  * 
  * {@link RubyEnumerator} implements most of the methods refer to the Enumerator
- * of Ruby language. {@link RubyEnumerator} is both Iterable and Iterator and
- * it's also a peeking iterator.
+ * class of Ruby language.
+ * <p>
+ * {@link RubyEnumerator} is both Iterable and Iterator and it's also a peeking
+ * iterator and a {@link Ruby.Enumerable}.
  * 
  * @param <E>
  *          the type of the elements

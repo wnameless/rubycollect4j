@@ -46,8 +46,8 @@ import net.sf.rubycollect4j.util.ComparableEntry;
 
 /**
  * 
- * {@link RubyCollections} provides numerous useful static methods to make
- * rubycollect4j easy to use.
+ * {@link RubyCollections} provides numerous useful static methods to make the
+ * RubyCollect4J easy to use.
  * 
  */
 public final class RubyCollections {

@@ -34,8 +34,10 @@ import net.sf.rubycollect4j.succ.Successive;
  * 
  * {@link RubyRange} is inspired by the Range class of Ruby. It does not exactly
  * follow the implementation of Ruby, especially on the range of alphanumeric
- * strings. All objects can use the RubyRange to create a range of interval. As
- * long as it provides the corresponding Successive object.
+ * strings. All objects can use the {@link RubyRange} to create a range of
+ * interval. As long as it provides the corresponding Successive object.
+ * <p>
+ * {@link RubyRange} is also a {@link Ruby.Enumerable}.
  * 
  * @param <E>
  *          the type of elements

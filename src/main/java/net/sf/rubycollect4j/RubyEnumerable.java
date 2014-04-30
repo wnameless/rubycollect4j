@@ -50,6 +50,8 @@ import net.sf.rubycollect4j.iter.TransformIterable;
 /**
  * {@link RubyEnumerable} is an extension for any Iterable class. It includes
  * all methods refer to the Enumerable module of Ruby.
+ * <p>
+ * {@link RubyEnumerable} is also a {@link Ruby.Enumerable}.
  * 
  * @param <E>
  *          the type of the elements
@@ -57,7 +59,7 @@ import net.sf.rubycollect4j.iter.TransformIterable;
 public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
 
   /**
-   * Returns the Iterable of elements.
+   * Returns an Iterable of elements.
    * 
    * @return Iterable
    */

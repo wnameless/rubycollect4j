@@ -53,8 +53,10 @@ import net.sf.rubycollect4j.util.TryComparator;
 
 /**
  * 
- * {@link RubyArray} implements all methods refer to the Array of Ruby language.
- * {@link RubyArray} is also a Java List.
+ * {@link RubyArray} implements all methods refer to the Array class of Ruby
+ * language.
+ * <p>
+ * {@link RubyArray} is also a Java List and a {@link Ruby.Enumerable}.
  * 
  * @param <E>
  *          the type of the elements
