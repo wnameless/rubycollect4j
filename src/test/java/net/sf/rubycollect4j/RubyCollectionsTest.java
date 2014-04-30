@@ -30,7 +30,7 @@ import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
 import static net.sf.rubycollect4j.RubyCollections.newRubyLazyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.newRubyRange;
-import static net.sf.rubycollect4j.RubyCollections.newRubyString;
+import static net.sf.rubycollect4j.RubyCollections.newRubySet;
 import static net.sf.rubycollect4j.RubyCollections.qr;
 import static net.sf.rubycollect4j.RubyCollections.qw;
 import static net.sf.rubycollect4j.RubyCollections.qx;
@@ -49,7 +49,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -72,7 +71,6 @@ public class RubyCollectionsTest {
     c.newInstance();
   }
 
-  @SuppressWarnings("deprecation")
   @Test
   public void testNewRubyArray() {
     RubyArray<Integer> ra;
@@ -88,43 +86,33 @@ public class RubyCollectionsTest {
     ra = newRubyArray(ints);
     ints.set(0, 4);
     assertEquals(ra(4, 2, 3), ra);
-    ints = Arrays.asList(1, 2, 3);
-    ra = newRubyArray(ints, true);
-    ints.set(0, 4);
-    assertEquals(ra(1, 2, 3), ra);
-    ints = Arrays.asList(1, 2, 3);
-    ra = newRubyArray(ints, false);
-    ints.set(0, 4);
-    assertEquals(ra(4, 2, 3), ra);
   }
 
-  @SuppressWarnings("deprecation")
   @Test
   public void testNewRubyHash() {
-    RubyHash<Integer, Integer> rh;
-    rh = newRubyHash();
+    RubyHash<Integer, Integer> rh = newRubyHash();
     assertTrue(rh instanceof RubyHash);
     Map<Integer, Integer> map = new HashMap<Integer, Integer>();
     rh = newRubyHash(map);
     assertTrue(rh instanceof RubyHash);
-    LinkedHashMap<Integer, Integer> lhm = new LinkedHashMap<Integer, Integer>();
-    rh = newRubyHash(lhm, true);
-    assertTrue(rh instanceof RubyHash);
-    rh = newRubyHash(lhm, false);
-    assertTrue(rh instanceof RubyHash);
+  }
+
+  @Test
+  public void testNewRubySet() {
+    assertTrue(newRubySet() instanceof RubySet);
+    assertTrue(newRubySet(Arrays.asList(1, 2, 3)) instanceof RubySet);
   }
 
   @Test
   public void testNewRubyLazyEnumerator() {
-    RubyLazyEnumerator<Integer> lre;
-    lre = newRubyLazyEnumerator(Arrays.asList(1, 2, 3));
+    RubyLazyEnumerator<Integer> lre =
+        newRubyLazyEnumerator(Arrays.asList(1, 2, 3));
     assertTrue(lre instanceof RubyLazyEnumerator);
   }
 
   @Test
   public void testNewRubyEnumerator() {
-    RubyEnumerator<Integer> re;
-    re = newRubyEnumerator(Arrays.asList(1, 2, 3));
+    RubyEnumerator<Integer> re = newRubyEnumerator(Arrays.asList(1, 2, 3));
     assertTrue(re instanceof RubyEnumerator);
     re = newRubyEnumerator(Arrays.asList(0, 1).iterator());
     assertTrue(re instanceof RubyEnumerator);
@@ -138,13 +126,6 @@ public class RubyCollectionsTest {
     assertTrue(newRubyRange(1L, 9L) instanceof RubyRange);
     assertTrue(newRubyRange(1.0, 9.0) instanceof RubyRange);
     assertTrue(newRubyRange(RubyDate.today(), RubyDate.today().add(9).days()) instanceof RubyRange);
-  }
-
-  @SuppressWarnings("deprecation")
-  @Test
-  public void testNewRubyString() {
-    assertTrue(newRubyString() instanceof RubyString);
-    assertTrue(newRubyString("str") instanceof RubyString);
   }
 
   @Test

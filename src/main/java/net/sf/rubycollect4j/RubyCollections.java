@@ -112,29 +112,6 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a {@link RubyArray} by given List. It makes a defensive copy if
-   * specified.
-   * 
-   * @param <E>
-   *          the type of the elements
-   * @param list
-   *          a List
-   * @param defensiveCopy
-   *          true If defensive copy required and false otherwise
-   * @return new {@link RubyArray}
-   * @deprecated As of release 1.7.2, replaced by
-   *             {@link RubyArray#copyOf(Iterable)}
-   */
-  @Deprecated
-  public static <E> RubyArray<E> newRubyArray(List<E> list,
-      boolean defensiveCopy) {
-    if (defensiveCopy)
-      return newRubyArray(new ArrayList<E>(list));
-    else
-      return newRubyArray(list);
-  }
-
-  /**
    * Creates a {@link RubyArray} by given elements.
    * 
    * @param <E>
@@ -177,27 +154,27 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates an empty {@link RubyHash} by given LinkedHashMap. It makes a
-   * defensive copy if specified
+   * Creates an empty {@link RubySet}.
    * 
-   * @param <K>
-   *          the type of the key elements
-   * @param <V>
-   *          the type of the value elements
-   * @param map
-   *          a Map
-   * @param defensiveCopy
-   *          it makes a defensive copy if specified
-   * @return new {@link RubyHash}
-   * @deprecated As of release 1.7.2, replaced by {@link RubyHash#copyOf(Map)}
+   * @param <E>
+   *          the type of the elements
+   * @return new {@link RubySet}
    */
-  @Deprecated
-  public static <K, V> RubyHash<K, V> newRubyHash(LinkedHashMap<K, V> map,
-      boolean defensiveCopy) {
-    if (defensiveCopy)
-      return new RubyHash<K, V>(new LinkedHashMap<K, V>(map));
-    else
-      return new RubyHash<K, V>(map);
+  public static <E> RubySet<E> newRubySet() {
+    return new RubySet<E>();
+  }
+
+  /**
+   * Creates a {@link RubySet} by given Iterable.
+   * 
+   * @param <E>
+   *          the type of the elements
+   * @param iter
+   *          any Iterable
+   * @return new {@link RubySet}
+   */
+  public static <E> RubySet<E> newRubySet(Iterable<E> iter) {
+    return new RubySet<E>(iter);
   }
 
   /**
@@ -329,28 +306,6 @@ public final class RubyCollections {
   public static RubyRange<Date> newRubyRange(Date startPoint, Date endPoint) {
     return new RubyRange<Date>(DateSuccessor.getInstance(), startPoint,
         endPoint);
-  }
-
-  /**
-   * Creates a {@link RubyString}.
-   * 
-   * @return {@link RubyString}
-   * @deprecated As of release 1.7.5, replaced by {@link #rs()}
-   */
-  @Deprecated
-  public static RubyString newRubyString() {
-    return new RubyString();
-  }
-
-  /**
-   * Creates a {@link RubyString} by given Object.
-   * 
-   * @return {@link RubyString}
-   * @deprecated As of release 1.7.5, replaced by {@link #rs(Object)}
-   */
-  @Deprecated
-  public static RubyString newRubyString(Object o) {
-    return new RubyString(o);
   }
 
   /**

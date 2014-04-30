@@ -41,6 +41,7 @@ import net.sf.rubycollect4j.block.TransformBlock;
  * {@link RubySet} is also a Java Set and a {@link Ruby.Enumerable}.
  *
  * @param <E>
+ *          the type of the elements
  */
 public final class RubySet<E> extends RubyEnumerable<E> implements Set<E> {
 
@@ -52,6 +53,8 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E> {
    * @param list
    *          any LinkedHashSet
    * @return {@link RubySet}
+   * @throws NullPointerException
+   *           if set is null
    */
   public static <E> RubySet<E> of(LinkedHashSet<E> set) {
     if (set == null)
@@ -66,16 +69,14 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E> {
    * @param elements
    *          any Iterable
    * @return {@link RubySet}
+   * @throws NullPointerException
+   *           if elements is null
    */
   public static <E> RubySet<E> copyOf(Iterable<E> elements) {
     if (elements == null)
       throw new NullPointerException();
 
-    LinkedHashSet<E> set = new LinkedHashSet<E>();
-    for (E e : elements) {
-      set.add(e);
-    }
-    return new RubySet<E>(set);
+    return new RubySet<E>(elements);
   }
 
   @Override
@@ -91,24 +92,37 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E> {
   }
 
   /**
-   * Creates a {@link RubySet} by given Set.
-   * 
-   * @param set
-   *          any Set
-   */
-  public RubySet(Set<E> set) {
-    this.set = new LinkedHashSet<E>(set);
-  }
-
-  /**
    * Creates a {@link RubySet} by given LinkedHashSet. It's a wrapper
    * implementation. No defensive copy is made.
    * 
    * @param set
    *          any LinkedHashSet
+   * @throws NullPointerException
+   *           if set is null
    */
   public RubySet(LinkedHashSet<E> set) {
+    if (set == null)
+      throw new NullPointerException();
+
     this.set = set;
+  }
+
+  /**
+   * Creates a {@link RubySet} by given Set.
+   * 
+   * @param set
+   *          any Iterable
+   * @throws NullPointerException
+   *           if iter is null
+   */
+  public RubySet(Iterable<E> iter) {
+    if (iter == null)
+      throw new NullPointerException();
+
+    set = new LinkedHashSet<E>();
+    for (E e : iter) {
+      set.add(e);
+    }
   }
 
   /**

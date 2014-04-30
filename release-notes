@@ -264,3 +264,5 @@ Version 1.8.0
 + Added Ruby.Enumerable, Ruby.Enumerator and Ruby.LazyEnumerator interfaces
 
 + Added RubySet
+
+- Removed deprecated methods

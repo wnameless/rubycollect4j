@@ -34,6 +34,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -106,11 +107,18 @@ public class RubyHashTest {
     assertTrue(rh instanceof RubyHash);
     rh = new RubyHash<Integer, Integer>(new LinkedHashMap<Integer, Integer>());
     assertTrue(rh instanceof RubyHash);
+    rh = new RubyHash<Integer, Integer>(new HashMap<Integer, Integer>());
+    assertTrue(rh instanceof RubyHash);
   }
 
   @Test(expected = NullPointerException.class)
-  public void testConstructorException() {
-    new RubyHash<Integer, Integer>(null);
+  public void testConstructorException1() {
+    new RubyHash<Integer, Integer>((LinkedHashMap<Integer, Integer>) null);
+  }
+
+  @Test(expected = NullPointerException.class)
+  public void testConstructorException2() {
+    new RubyHash<Integer, Integer>((Map<Integer, Integer>) null);
   }
 
   @Test

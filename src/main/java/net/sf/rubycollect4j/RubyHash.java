@@ -74,6 +74,8 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @param map
    *          any Map
    * @return {@link RubyHash}
+   * @throws NullPointerException
+   *           if map is null
    */
   public static <K, V> RubyHash<K, V> of(LinkedHashMap<K, V> map) {
     if (map == null)
@@ -88,12 +90,14 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @param map
    *          any Map
    * @return {@link RubyHash}
+   * @throws NullPointerException
+   *           if map is null
    */
   public static <K, V> RubyHash<K, V> copyOf(Map<K, V> map) {
     if (map == null)
       throw new NullPointerException();
 
-    return new RubyHash<K, V>(new LinkedHashMap<K, V>(map));
+    return new RubyHash<K, V>(map);
   }
 
   @Override
@@ -122,6 +126,21 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
       throw new NullPointerException();
 
     this.map = map;
+  }
+
+  /**
+   * Creates a {@link RubyHash} by given Map.
+   * 
+   * @param map
+   *          any Map
+   * @throws NullPointerException
+   *           if map is null
+   */
+  public RubyHash(Map<K, V> map) {
+    if (map == null)
+      throw new NullPointerException();
+
+    this.map = new LinkedHashMap<K, V>(map);
   }
 
   /**

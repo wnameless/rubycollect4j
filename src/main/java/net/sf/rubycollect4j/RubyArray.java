@@ -75,6 +75,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * @param list
    *          any List
    * @return {@link RubyArray}
+   * @throws NullPointerException
+   *           if list is null
    */
   public static <E> RubyArray<E> of(List<E> list) {
     if (list == null)
@@ -89,16 +91,14 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * @param elements
    *          any Iterable
    * @return {@link RubyArray}
+   * @throws NullPointerException
+   *           if elements is null
    */
   public static <E> RubyArray<E> copyOf(Iterable<E> elements) {
     if (elements == null)
       throw new NullPointerException();
 
-    List<E> list = new ArrayList<E>();
-    for (E e : elements) {
-      list.add(e);
-    }
-    return new RubyArray<E>(list);
+    return new RubyArray<E>(elements);
   }
 
   @Override
@@ -134,6 +134,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * 
    * @param iter
    *          an Iterable
+   * @throws NullPointerException
+   *           if iter is null
    */
   public RubyArray(Iterable<? extends E> iter) {
     if (iter == null)
