@@ -272,3 +272,5 @@ Version 1.8.0
 + Expended RubyDate API
 
 + Added RubyEnumerable::of, RubyEnumerable::copyOf, RubyEnumerator::of, RubyEnumerator::copyOf, RubyLazyEnumerator::of & RubyLazyEnumerator::copyOf
+
+* Increased RubyCollections::rh from 20 to 26 key-value pairs
