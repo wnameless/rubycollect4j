@@ -115,7 +115,7 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
   /**
    * Creates a {@link RubySet} by given Set.
    * 
-   * @param set
+   * @param iter
    *          any Iterable
    * @throws NullPointerException
    *           if iter is null
@@ -247,7 +247,7 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
    * appears in the given Iterable.
    * 
    * @param iter
-   *          any Iterable
+   *          an Iterable
    * @return new {@link RubySet}
    */
   public RubySet<E> difference(Iterable<E> iter) {
@@ -261,8 +261,8 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
   /**
    * Returns true if the set and the given Iterable have no element in common.
    * 
-   * @param set
-   *          any Set
+   * @param iter
+   *          an Iterable
    * @return true if the set and the given Iterable have no element in common,
    *         false otherwise
    */
@@ -316,7 +316,7 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
    * (set.union(iter).subtract(set.intersection(iter))).
    * 
    * @param iter
-   *          any Iterable
+   *          an Iterable
    * @return new {@link RubySet}
    */
   public RubySet<E> exclusive(Iterable<E> iter) {
@@ -410,7 +410,7 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
    * Iterable.
    * 
    * @param iter
-   *          any Iterable
+   *          an Iterable
    * @return new {@link RubySet}
    */
   public RubySet<E> intersection(Iterable<E> iter) {
@@ -476,7 +476,7 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
    * Merges the elements of the given Iterable to the set and returns self.
    * 
    * @param iter
-   *          any Iterable
+   *          an Iterable
    * @return this {@link RubySet}
    */
   public RubySet<E> merge(Iterable<E> iter) {
@@ -543,7 +543,7 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
    * and returns self.
    * 
    * @param iter
-   *          any Iterable
+   *          an Iterable
    * @return this {@link RubySet}
    */
   public RubySet<E> replace(Iterable<E> iter) {
@@ -590,7 +590,7 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
    * Deletes every element that appears in the given Iterable and returns self.
    * 
    * @param iter
-   *          any Iterable
+   *          an Iterable
    * @return this {@link RubySet}
    */
   public RubySet<E> subtract(Iterable<E> iter) {
@@ -623,7 +623,7 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
    * Iterable.
    * 
    * @param iter
-   *          any Iterable
+   *          an Iterable
    * @return new {@link RubySet}
    */
   public RubySet<E> union(Iterable<E> iter) {

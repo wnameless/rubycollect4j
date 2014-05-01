@@ -151,7 +151,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * Finds a List element which contains the target as the first element.
    * 
    * @param <S>
-   *          the type of any List
+   *          the type of a List
    * @param target
    *          the first element of returned List
    * @return List or null
@@ -1174,7 +1174,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * Finds a List element which contains target as the last element.
    * 
    * @param <S>
-   *          the type of any List
+   *          the type of a List
    * @param target
    *          the last element of returned List
    * @return List or null
