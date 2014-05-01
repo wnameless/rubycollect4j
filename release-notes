@@ -267,10 +267,10 @@ Version 1.8.0
 
 - Removed deprecated methods
 
-- Removed newRubyRange
+- Removed RubyCollections::newRubyRange
 
 + Expended RubyDate API
 
 + Added RubyEnumerator::of, RubyEnumerator::copyOf, RubyLazyEnumerator::of & RubyLazyEnumerator::copyOf
 
-* Increased RubyCollections::rh from 20 to 26 key-value pairs
+* Increased the acceptable number of RubyCollections::rh arguments from 20 to 26 key-value pairs
