@@ -437,11 +437,11 @@ public final class RubyDate extends Date {
   }
 
   /**
-   * Creates a {@link RubyDate} of now.
+   * Creates a {@link RubyDate} of current time.
    * 
    * @return {@link RubyDate}
    */
-  public static RubyDate now() {
+  public static RubyDate current() {
     return new RubyDate();
   }
 

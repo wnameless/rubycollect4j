@@ -198,6 +198,11 @@ public class RubyDateTest {
   }
 
   @Test
+  public void testCurrent() {
+    assertTrue(Math.abs(date().getTime() - RubyDate.current().getTime()) <= 1L);
+  }
+
+  @Test
   public void testToday() {
     c.set(Calendar.HOUR_OF_DAY, 0);
     c.clear(Calendar.MINUTE);
@@ -313,21 +318,21 @@ public class RubyDateTest {
 
   @Test
   public void testFutureʔ() {
-    assertTrue(RubyDate.now().add(1).seconds().futureʔ());
-    assertFalse(RubyDate.now().minus(1).seconds().futureʔ());
+    assertTrue(RubyDate.current().add(1).seconds().futureʔ());
+    assertFalse(RubyDate.current().minus(1).seconds().futureʔ());
   }
 
   @Test
   public void testPastʔ() {
-    assertFalse(RubyDate.now().add(1).seconds().pastʔ());
-    assertTrue(RubyDate.now().minus(1).seconds().pastʔ());
+    assertFalse(RubyDate.current().add(1).seconds().pastʔ());
+    assertTrue(RubyDate.current().minus(1).seconds().pastʔ());
   }
 
   @Test
   public void testTodayʔ() {
-    assertTrue(RubyDate.now().todayʔ());
-    assertFalse(RubyDate.now().add(1).days().todayʔ());
-    assertFalse(RubyDate.now().minus(1).days().todayʔ());
+    assertTrue(RubyDate.current().todayʔ());
+    assertFalse(RubyDate.current().add(1).days().todayʔ());
+    assertFalse(RubyDate.current().minus(1).days().todayʔ());
   }
 
 }
