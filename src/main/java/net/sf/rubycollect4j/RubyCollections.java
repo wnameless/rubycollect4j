@@ -217,19 +217,6 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a {@link RubyEnumerator} by given Iterator.
-   * 
-   * @param <E>
-   *          the type of the elements
-   * @param iter
-   *          an Iterator
-   * @return new {@link RubyEnumerator}
-   */
-  public static <E> RubyEnumerator<E> newRubyEnumerator(Iterator<E> iter) {
-    return new RubyEnumerator<E>(iter);
-  }
-
-  /**
    * Creates a {@link RubyString}.
    * 
    * @return {@link RubyString}
@@ -276,7 +263,7 @@ public final class RubyCollections {
    *          to be executed
    * @return String
    * @throws RuntimeException
-   *           if command not found
+   *           if command is not found
    */
   public static String qx(String... cmd) {
     StringBuilder sb = new StringBuilder();

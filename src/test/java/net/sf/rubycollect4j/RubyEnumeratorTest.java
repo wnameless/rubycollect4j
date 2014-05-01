@@ -49,18 +49,11 @@ public class RubyEnumeratorTest {
   @Test
   public void testConstructor() {
     assertTrue(re instanceof RubyEnumerator);
-    re = new RubyEnumerator<Integer>(list.iterator());
-    assertTrue(re instanceof RubyEnumerator);
   }
 
   @Test(expected = NullPointerException.class)
-  public void testConstructorException1() {
+  public void testConstructorException() {
     new RubyEnumerator<Integer>((Iterable<Integer>) null);
-  }
-
-  @Test(expected = NullPointerException.class)
-  public void testConstructorException2() {
-    new RubyEnumerator<Integer>((Iterator<Integer>) null);
   }
 
   @Test

@@ -20,9 +20,7 @@
  */
 package net.sf.rubycollect4j;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.util.PeekingIterator;
@@ -62,27 +60,6 @@ public class RubyEnumerator<E> extends RubyEnumerable<E> implements
       throw new NullPointerException();
 
     iter = iterable;
-    pIterator = new PeekingIterator<E>(iter.iterator());
-  }
-
-  /**
-   * Creates a {@link RubyEnumerator} by given Iterator. This Iterator will be
-   * converted into an Iterable. In other words, a copy will be made.
-   * 
-   * @param iterator
-   *          an Iterator
-   * @throws NullPointerException
-   *           if iterator is null
-   */
-  public RubyEnumerator(Iterator<E> iterator) {
-    if (iterator == null)
-      throw new NullPointerException();
-
-    List<E> list = new ArrayList<E>();
-    while (iterator.hasNext()) {
-      list.add(iterator.next());
-    }
-    iter = list;
     pIterator = new PeekingIterator<E>(iter.iterator());
   }
 

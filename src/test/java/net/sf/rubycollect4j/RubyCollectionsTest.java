@@ -113,8 +113,6 @@ public class RubyCollectionsTest {
   public void testNewRubyEnumerator() {
     RubyEnumerator<Integer> re = newRubyEnumerator(Arrays.asList(1, 2, 3));
     assertTrue(re instanceof RubyEnumerator);
-    re = newRubyEnumerator(Arrays.asList(0, 1).iterator());
-    assertTrue(re instanceof RubyEnumerator);
   }
 
   @Test
