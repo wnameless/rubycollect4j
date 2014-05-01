@@ -35,7 +35,7 @@
 
 <p>Ruby Collections for Java.</p>
 
-<p>The rubycollect4j implements all methods refer to Ruby Array, Hash, Enumerable, Enumerator, Range and String.
+<p>The rubycollect4j implements all methods refer to Ruby Array, Hash, Set, Enumerable, Enumerator, Range and String.
 It also implements parts of Ruby Dir, File and Date methods.</p>
 
 <p>For further information, please visit <a href="http://ruby-doc.org">http://ruby-doc.org</a> website.</p>
@@ -47,7 +47,7 @@ It also implements parts of Ruby Dir, File and Date methods.</p>
 <div class="highlight highlight-xml"><pre><span class="nt">&lt;dependency&gt;</span>
   <span class="nt">&lt;groupId&gt;</span>net.sf.rubycollect4j<span class="nt">&lt;/groupId&gt;</span>
   <span class="nt">&lt;artifactId&gt;</span>rubycollect4j<span class="nt">&lt;/artifactId&gt;</span>
-  <span class="nt">&lt;version&gt;</span>1.7.5<span class="nt">&lt;/version&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.8.0<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 
@@ -99,7 +99,7 @@ It also implements parts of Ruby Dir, File and Date methods.</p>
 <span class="n">p</span><span class="o">(</span> <span class="n">ra</span><span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">values</span><span class="o">)</span> <span class="o">);</span>                <span class="c1">// Output: [a, b]</span>
 <span class="c1">// RubyArray is Comparable if the elements are Comparable.</span>
 <span class="n">p</span><span class="o">(</span> <span class="n">ra</span><span class="o">(</span><span class="n">ra</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">),</span> <span class="n">ra</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">)).</span><span class="na">sort</span><span class="o">()</span> <span class="o">);</span> <span class="c1">// Output: [[1, 2], [3, 4]]</span>
-<span class="c1">// RubyArray is also an List.</span>
+<span class="c1">// RubyArray is also a List.</span>
 <span class="n">p</span><span class="o">(</span> <span class="n">ra</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">)</span> <span class="k">instanceof</span> <span class="n">List</span> <span class="o">);</span>   <span class="c1">// Output: true</span>
 </pre></div>
 
@@ -133,10 +133,31 @@ It also implements parts of Ruby Dir, File and Date methods.</p>
 <span class="n">RubyHash</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">rh</span> <span class="o">=</span> <span class="n">RubyHash</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">map</span><span class="o">);</span>
 </pre></div>
 
-<p>Demo rs() &amp; newRubyString():</p>
+<p>Demo newRubySet():</p>
+
+<div class="highlight highlight-java"><pre><span class="n">p</span><span class="o">(</span> <span class="n">newRubySet</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">3</span><span class="o">)</span> <span class="o">);</span>                                <span class="c1">// Output: [1, 2, 3]</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;();</span>
+<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+<span class="c1">// Any Iterable object can be converted into RubySet</span>
+<span class="n">p</span><span class="o">(</span> <span class="n">newRubySet</span><span class="o">(</span><span class="n">list</span><span class="o">)</span> <span class="o">);</span>                                      <span class="c1">// Output: [1]</span>
+<span class="c1">// RubySet is Comparable if the elements are Comparable.</span>
+<span class="n">p</span><span class="o">(</span> <span class="n">newRubySet</span><span class="o">(</span><span class="n">newRubySet</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">),</span> <span class="n">newRubySet</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">)).</span><span class="na">sort</span><span class="o">()</span> <span class="o">);</span> <span class="c1">// Output: [[1, 2], [3, 4]]</span>
+<span class="c1">// RubySet is also a Set.</span>
+<span class="n">p</span><span class="o">(</span> <span class="n">newRubySet</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">3</span><span class="o">)</span> <span class="k">instanceof</span> <span class="n">Set</span> <span class="o">);</span>                 <span class="c1">// Output: true</span>
+</pre></div>
+
+<div class="highlight highlight-java"><pre><span class="c1">// By default, newRubySet() makes a copy of input Set.</span>
+<span class="c1">// You can only wrap a LinkedHashSet up by following codes, because the elements of RubySet need to be ordered.</span>
+<span class="n">LinkedHashSet</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">set</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedHashSet</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;();</span>
+<span class="n">set</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+<span class="n">RubySet</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">rubySet</span> <span class="o">=</span> <span class="n">RubySet</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">set</span><span class="o">);</span>
+</pre></div>
+
+<p>Demo rs() &amp; new RubyString():</p>
 
 <div class="highlight highlight-java"><pre><span class="c1">// RubyString can be created from any Object.</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">newRubyString</span><span class="o">(</span><span class="mi">1000L</span><span class="o">).</span><span class="na">count</span><span class="o">(</span><span class="s">"0"</span><span class="o">)</span> <span class="o">)</span>                   <span class="c1">// Output: 3</span>
+<span class="n">p</span><span class="o">(</span> <span class="k">new</span> <span class="n">RubyString</span><span class="o">(</span><span class="mi">1000L</span><span class="o">).</span><span class="na">count</span><span class="o">(</span><span class="s">"0"</span><span class="o">)</span> <span class="o">)</span>                  <span class="c1">// Output: 3</span>
 <span class="c1">// RubyString is also a RubyEnumerable of each character(as String).</span>
 <span class="n">p</span><span class="o">(</span> <span class="n">rs</span><span class="o">(</span><span class="s">"abc"</span><span class="o">).</span><span class="na">map</span><span class="o">(</span><span class="s">"codePointAt"</span><span class="o">,</span> <span class="mi">0</span><span class="o">)</span> <span class="o">);</span>                  <span class="c1">// Output: [97, 98, 99]</span>
 <span class="c1">// RubyString implements fluent interface.</span>
@@ -158,12 +179,11 @@ It also implements parts of Ruby Dir, File and Date methods.</p>
 <span class="o">}</span>
 </pre></div>
 
-<p>Demo newRubyEnumerator():</p>
+<p>Demo RubyEnumerator.of() &amp; RubyEnumerator.copyOf():</p>
 
 <div class="highlight highlight-java"><pre><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;()</span> <span class="o">{{</span> <span class="n">put</span><span class="o">(</span><span class="s">"a"</span><span class="o">,</span> <span class="mi">1L</span><span class="o">);</span> <span class="n">put</span><span class="o">(</span><span class="s">"b"</span><span class="o">,</span> <span class="mi">2L</span><span class="o">);</span> <span class="n">put</span><span class="o">(</span><span class="s">"c"</span><span class="o">,</span> <span class="mi">3L</span><span class="o">);</span> <span class="o">}};</span>
-<span class="c1">// Any Iterable or Iterator object can be converted into RubyEnumerator.</span>
-<span class="n">RubyEnumerator</span><span class="o">&lt;</span><span class="n">Entry</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;&gt;</span> <span class="n">re</span> <span class="o">=</span> <span class="n">newRubyEnumerator</span><span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">entrySet</span><span class="o">());</span>
-<span class="n">re</span> <span class="o">=</span> <span class="n">newRubyEnumerator</span><span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">entrySet</span><span class="o">().</span><span class="na">iterator</span><span class="o">());</span>
+<span class="c1">// Any Iterable object can be wrapped into RubyEnumerator.</span>
+<span class="n">RubyEnumerator</span><span class="o">&lt;</span><span class="n">Entry</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;&gt;</span> <span class="n">re</span> <span class="o">=</span> <span class="n">RubyEnumerator</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">entrySet</span><span class="o">());</span>
 <span class="c1">// RubyEnumerator is much like RubyEnumerable, but it is both an Iterator and an Iterable.</span>
 <span class="n">p</span><span class="o">(</span> <span class="n">re</span> <span class="k">instanceof</span> <span class="n">Iterator</span> <span class="o">);</span> <span class="c1">// Output: true</span>
 <span class="n">p</span><span class="o">(</span> <span class="n">re</span> <span class="k">instanceof</span> <span class="n">Iterable</span> <span class="o">);</span> <span class="c1">// Output: true</span>
@@ -176,12 +196,24 @@ It also implements parts of Ruby Dir, File and Date methods.</p>
 <span class="n">p</span><span class="o">(</span> <span class="n">re</span><span class="o">.</span><span class="na">next</span><span class="o">()</span> <span class="o">);</span>              <span class="c1">// Output: a=1</span>
 </pre></div>
 
-<p>Demo newRubyLazyEnumerator():</p>
+<div class="highlight highlight-java"><pre><span class="c1">// By default, RubyEnumerator.of() is just a wrapper to an existed Iterable.</span>
+<span class="c1">// You can make a defensive copy by following codes.</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;()</span> <span class="o">{{</span> <span class="n">put</span><span class="o">(</span><span class="s">"a"</span><span class="o">,</span> <span class="mi">1L</span><span class="o">);</span> <span class="n">put</span><span class="o">(</span><span class="s">"b"</span><span class="o">,</span> <span class="mi">2L</span><span class="o">);</span> <span class="n">put</span><span class="o">(</span><span class="s">"c"</span><span class="o">,</span> <span class="mi">3L</span><span class="o">);</span> <span class="o">}};</span>
+<span class="n">RubyEnumerator</span><span class="o">&lt;</span><span class="n">Entry</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;&gt;</span> <span class="n">re</span> <span class="o">=</span> <span class="n">RubyEnumerator</span><span class="o">.</span><span class="na">copyOf</span><span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">entrySet</span><span class="o">());</span>
+</pre></div>
 
-<div class="highlight highlight-java"><pre><span class="n">p</span><span class="o">(</span> <span class="n">newRubyLazyEnumerator</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">)).</span><span class="na">drop</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span> <span class="k">instanceof</span> <span class="n">RubyLazyEnumerator</span> <span class="o">)</span> <span class="c1">// Output: true</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">newRubyLazyEnumerator</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">)).</span><span class="na">drop</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="na">toA</span><span class="o">()</span> <span class="o">)</span>                         <span class="c1">// Output: [2, 3, 4]</span>
+<p>Demo RubyLazyEnumerator.of() &amp; RubyLazyEnumerator.copyOf():</p>
+
+<div class="highlight highlight-java"><pre><span class="n">p</span><span class="o">(</span> <span class="n">RubyLazyEnumerator</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">)).</span><span class="na">drop</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span> <span class="k">instanceof</span> <span class="n">RubyLazyEnumerator</span> <span class="o">)</span> <span class="c1">// Output: true</span>
+<span class="n">p</span><span class="o">(</span> <span class="n">RubyLazyEnumerator</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">)).</span><span class="na">drop</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="na">toA</span><span class="o">()</span> <span class="o">)</span>                         <span class="c1">// Output: [2, 3, 4]</span>
 <span class="c1">// A RubyLazyEnumerator can also be created by RubyArray#lazy.</span>
 <span class="n">p</span><span class="o">(</span> <span class="n">ra</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">).</span><span class="na">lazy</span><span class="o">().</span><span class="na">cycle</span><span class="o">().</span><span class="na">drop</span><span class="o">(</span><span class="mi">6</span><span class="o">).</span><span class="na">first</span><span class="o">()</span> <span class="o">)</span>                                          <span class="c1">// Output: 3</span>
+</pre></div>
+
+<div class="highlight highlight-java"><pre><span class="c1">// By default, RubyLazyEnumerator.of() is just a wrapper to an existed Iterable.</span>
+<span class="c1">// You can make a defensive copy by following codes.</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;()</span> <span class="o">{{</span> <span class="n">put</span><span class="o">(</span><span class="s">"a"</span><span class="o">,</span> <span class="mi">1L</span><span class="o">);</span> <span class="n">put</span><span class="o">(</span><span class="s">"b"</span><span class="o">,</span> <span class="mi">2L</span><span class="o">);</span> <span class="n">put</span><span class="o">(</span><span class="s">"c"</span><span class="o">,</span> <span class="mi">3L</span><span class="o">);</span> <span class="o">}};</span>
+<span class="n">RubyLazyEnumerator</span><span class="o">&lt;</span><span class="n">Entry</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;&gt;</span> <span class="n">re</span> <span class="o">=</span> <span class="n">RubyLazyEnumerator</span><span class="o">.</span><span class="na">copyOf</span><span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">entrySet</span><span class="o">());</span>
 </pre></div>
 
 <p>Demo range():</p>
@@ -205,6 +237,7 @@ It also implements parts of Ruby Dir, File and Date methods.</p>
 <span class="n">Calendar</span> <span class="n">c</span> <span class="o">=</span> <span class="n">Calendar</span><span class="o">.</span><span class="na">getInstance</span><span class="o">();</span>
 <span class="n">c</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span>
 <span class="n">p</span><span class="o">(</span> <span class="n">date</span><span class="o">(</span><span class="n">c</span><span class="o">.</span><span class="na">getTime</span><span class="o">())</span> <span class="o">);</span>                        <span class="c1">// Output: Thu Jan 01 00:00:00 CST 1970</span>
+<span class="n">p</span><span class="o">(</span> <span class="n">date</span><span class="o">(</span><span class="mi">2014</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">1</span><span class="o">).</span><span class="na">beginningOfQuarter</span><span class="o">()</span> <span class="o">);</span>    <span class="c1">// Output: Tue Apr 01 00:00:00 CST 2014</span>
 </pre></div>
 
 <p>Demo RubyObject.send():</p>
