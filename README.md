@@ -14,7 +14,7 @@ Installation with Maven:
 <dependency>
   <groupId>net.sf.rubycollect4j</groupId>
   <artifactId>rubycollect4j</artifactId>
-  <version>1.7.5</version>
+  <version>1.8.0</version>
 </dependency>
 ```
 
@@ -196,6 +196,7 @@ p( RubyDate.yesterday() );                     // Output: date of yesterday
 Calendar c = Calendar.getInstance();
 c.clear();
 p( date(c.getTime()) );                        // Output: Thu Jan 01 00:00:00 CST 1970
+p( date(2014, 5, 1).beginningOfQuarter() );    // Output: Tue Apr 01 00:00:00 CST 2014
 ```
 
 Demo RubyObject.send():
