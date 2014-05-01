@@ -268,3 +268,5 @@ Version 1.8.0
 - Removed deprecated methods
 
 - Removed newRubyRange
+
++ Expended RubyDate API

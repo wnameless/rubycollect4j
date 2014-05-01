@@ -21,11 +21,15 @@
 package net.sf.rubycollect4j;
 
 import static net.sf.rubycollect4j.RubyCollections.date;
+import static net.sf.rubycollect4j.RubyCollections.rh;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Calendar;
 import java.util.Date;
+
+import net.sf.rubycollect4j.RubyDate.DateField;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -61,6 +65,15 @@ public class RubyDateTest {
   }
 
   @Test
+  public void testChange() {
+    c.set(Calendar.YEAR, 1990);
+    c.set(Calendar.MONTH, 5);
+    c.set(Calendar.DAY_OF_MONTH, 6);
+    assertEquals(c.getTime(), rd.change(rh(DateField.YEAR, 1990,
+        DateField.MONTH, 6, DateField.DAY, 6)));
+  }
+
+  @Test
   public void testYear() {
     assertEquals(2013, date(2013).year());
   }
@@ -78,6 +91,11 @@ public class RubyDateTest {
   @Test
   public void testDayOfWeek() {
     assertEquals(4, date(2013, 7, 4).dayOfWeek());
+  }
+
+  @Test
+  public void testDayOfMonth() {
+    assertEquals(4, date(2013, 7, 4).dayOfMonth());
   }
 
   @Test
@@ -226,6 +244,90 @@ public class RubyDateTest {
     c.clear(Calendar.SECOND);
     c.clear(Calendar.MILLISECOND);
     assertEquals(c.getTime(), rd.beginningOfWeek());
+    assertEquals(0, rd.beginningOfWeek().dayOfWeek());
+  }
+
+  @Test
+  public void testEndOfWeek() {
+    c.set(Calendar.DAY_OF_WEEK, c.getFirstDayOfWeek());
+    c.add(Calendar.DAY_OF_YEAR, 6);
+    c.set(Calendar.HOUR_OF_DAY, 23);
+    c.set(Calendar.MINUTE, 59);
+    c.set(Calendar.SECOND, 59);
+    c.set(Calendar.MILLISECOND, 999);
+    assertEquals(c.getTime(), rd.endOfWeek());
+    assertEquals(6, rd.endOfWeek().dayOfWeek());
+  }
+
+  @Test
+  public void testBeginningOfMonth() {
+    c.set(Calendar.DAY_OF_MONTH, 1);
+    c.set(Calendar.HOUR_OF_DAY, 0);
+    c.clear(Calendar.MINUTE);
+    c.clear(Calendar.SECOND);
+    c.clear(Calendar.MILLISECOND);
+    assertEquals(c.getTime(), rd.beginningOfMonth());
+    assertEquals(1, rd.beginningOfMonth().dayOfMonth());
+  }
+
+  @Test
+  public void testEndOfMonth() {
+    c.set(Calendar.DAY_OF_MONTH,
+        Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
+    c.set(Calendar.HOUR_OF_DAY, 23);
+    c.set(Calendar.MINUTE, 59);
+    c.set(Calendar.SECOND, 59);
+    c.set(Calendar.MILLISECOND, 999);
+    assertEquals(c.getTime(), rd.endOfMonth());
+    assertEquals(
+        Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH), rd
+            .endOfMonth().dayOfMonth());
+  }
+
+  @Test
+  public void testBeginningOfQuarter() {
+    assertEquals(date(2014, 1, 1), date(2014, 2, 2).beginningOfQuarter());
+    assertEquals(date(2014, 4, 1), date(2014, 5, 2).beginningOfQuarter());
+    assertEquals(date(2014, 7, 1), date(2014, 8, 2).beginningOfQuarter());
+    assertEquals(date(2014, 10, 1), date(2014, 11, 2).beginningOfQuarter());
+  }
+
+  @Test
+  public void testEndOfQuarter() {
+    assertEquals(date(2014, 3, 31).endOfDay(), date(2014, 2, 2).endOfQuarter());
+    assertEquals(date(2014, 6, 30).endOfDay(), date(2014, 5, 2).endOfQuarter());
+    assertEquals(date(2014, 9, 30).endOfDay(), date(2014, 8, 2).endOfQuarter());
+    assertEquals(date(2014, 12, 31).endOfDay(), date(2014, 11, 2)
+        .endOfQuarter());
+  }
+
+  @Test
+  public void testBeginningOfYear() {
+    assertEquals(date(2014, 1, 1), date(2014, 7, 7).beginningOfYear());
+  }
+
+  @Test
+  public void testEndOfYear() {
+    assertEquals(date(2014, 12, 31).endOfDay(), date(2014, 7, 7).endOfYear());
+  }
+
+  @Test
+  public void testFutureʔ() {
+    assertTrue(RubyDate.now().add(1).seconds().futureʔ());
+    assertFalse(RubyDate.now().minus(1).seconds().futureʔ());
+  }
+
+  @Test
+  public void testPastʔ() {
+    assertFalse(RubyDate.now().add(1).seconds().pastʔ());
+    assertTrue(RubyDate.now().minus(1).seconds().pastʔ());
+  }
+
+  @Test
+  public void testTodayʔ() {
+    assertTrue(RubyDate.now().todayʔ());
+    assertFalse(RubyDate.now().add(1).days().todayʔ());
+    assertFalse(RubyDate.now().minus(1).days().todayʔ());
   }
 
 }
