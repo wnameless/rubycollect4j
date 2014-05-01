@@ -661,7 +661,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Flattens this {@link RubyArray} of Lists to 1 dimension {@link RubyArray}.
+   * Flattens this {@link RubyArray} of Lists to 1 dimensional {@link RubyArray}
+   * .
    * 
    * @param <S>
    *          the type of elements of the flatten {@link RubyArray}
@@ -669,22 +670,55 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    */
   @SuppressWarnings("unchecked")
   public <S> RubyArray<S> flatten() {
+    RubyArray<?> rubyArray = RubyArray.copyOf(list);
+    while (rubyArray.anyʔ(new BooleanBlock<Object>() {
+
+      @Override
+      public boolean yield(Object item) {
+        return item instanceof List;
+      }
+
+    })) {
+      rubyArray = flatten(rubyArray, 1);
+    }
+    return (RubyArray<S>) rubyArray;
+  }
+
+  /**
+   * Flattens this {@link RubyArray} of Lists to (current - n) dimensional
+   * {@link RubyArray}.
+   * 
+   * @param n
+   *          times to flatten
+   * @return new {@link RubyArray}
+   */
+  @SuppressWarnings("unchecked")
+  public <S> RubyArray<S> flatten(int n) {
+    RubyArray<?> rubyArray = RubyArray.copyOf(list);
+    while (n > 0 && rubyArray.anyʔ(new BooleanBlock<Object>() {
+
+      @Override
+      public boolean yield(Object item) {
+        return item instanceof List;
+      }
+
+    })) {
+      rubyArray = flatten(rubyArray, 1);
+      n--;
+    }
+    return (RubyArray<S>) rubyArray;
+  }
+
+  @SuppressWarnings("unchecked")
+  private <S> RubyArray<S> flatten(List<?> list, int n) {
     RubyArray<S> rubyArray = newRubyArray();
-    List<Object> subLists = new ArrayList<Object>();
-    for (E item : list) {
+    for (Object item : list) {
       if (item instanceof List)
-        subLists.add(item);
+        for (Object o : (List<?>) item) {
+          rubyArray.add((S) o);
+        }
       else
         rubyArray.add((S) item);
-    }
-    while (!subLists.isEmpty()) {
-      List<?> subList = (List<?>) subLists.remove(0);
-      for (Object item : subList) {
-        if (item instanceof List)
-          subLists.add(item);
-        else
-          rubyArray.add((S) item);
-      }
     }
     return rubyArray;
   }

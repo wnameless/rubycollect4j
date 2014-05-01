@@ -615,6 +615,16 @@ public class RubyArrayTest {
     RubyArray<RubyArray<RubyArray<Integer>>> layer3WithNull =
         ra(null, ints, ra(ra(null, 1), ra(2, 3)), ra(ra(4, 5, 6)));
     assertEquals(ra(null, null, 1, 2, 3, 4, 5, 6), layer3WithNull.flatten());
+    @SuppressWarnings("unchecked")
+    RubyArray<?> orderTest = ra(1, null, ra(3, 4), 5, ra(ra(6)));
+    assertEquals(ra(1, null, 3, 4, 5, 6), orderTest.flatten());
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testFlattenWitnN() {
+    assertEquals(ra(0, ra(1, 2, 3)), ra(ra(0, ra(1, 2, 3))).flatten(1));
+    assertEquals(ra(ra(0, ra(1, 2, 3))), ra(ra(0, ra(1, 2, 3))).flatten(-1));
   }
 
   @Test

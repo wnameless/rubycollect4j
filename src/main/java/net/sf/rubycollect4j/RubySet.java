@@ -23,12 +23,10 @@ package net.sf.rubycollect4j;
 import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 import net.sf.rubycollect4j.block.Block;
@@ -332,24 +330,7 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
    */
   @SuppressWarnings("unchecked")
   public <S> RubySet<S> flatten() {
-    RubySet<S> newSet = new RubySet<S>();
-    List<Set<?>> subSets = new ArrayList<Set<?>>();
-    for (E item : set) {
-      if (item instanceof Set)
-        subSets.add((Set<?>) item);
-      else
-        newSet.add((S) item);
-    }
-    while (!subSets.isEmpty()) {
-      Set<?> subSet = subSets.remove(0);
-      for (Object item : subSet) {
-        if (item instanceof Set)
-          subSets.add((Set<?>) item);
-        else
-          newSet.add((S) item);
-      }
-    }
-    return newSet;
+    return (RubySet<S>) new RubySet<Object>(RubyArray.copyOf(set).flatten());
   }
 
   /**
