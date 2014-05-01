@@ -29,7 +29,6 @@ import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
 import static net.sf.rubycollect4j.RubyCollections.newRubyLazyEnumerator;
-import static net.sf.rubycollect4j.RubyCollections.newRubyRange;
 import static net.sf.rubycollect4j.RubyCollections.newRubySet;
 import static net.sf.rubycollect4j.RubyCollections.qr;
 import static net.sf.rubycollect4j.RubyCollections.qw;
@@ -116,16 +115,6 @@ public class RubyCollectionsTest {
     assertTrue(re instanceof RubyEnumerator);
     re = newRubyEnumerator(Arrays.asList(0, 1).iterator());
     assertTrue(re instanceof RubyEnumerator);
-  }
-
-  @Test
-  public void testNewRubyRange() {
-    assertTrue(newRubyRange("a", "z") instanceof RubyRange);
-    assertTrue(newRubyRange('a', 'z') instanceof RubyRange);
-    assertTrue(newRubyRange(1, 9) instanceof RubyRange);
-    assertTrue(newRubyRange(1L, 9L) instanceof RubyRange);
-    assertTrue(newRubyRange(1.0, 9.0) instanceof RubyRange);
-    assertTrue(newRubyRange(RubyDate.today(), RubyDate.today().add(9).days()) instanceof RubyRange);
   }
 
   @Test

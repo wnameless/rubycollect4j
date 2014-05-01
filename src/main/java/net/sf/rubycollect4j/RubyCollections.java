@@ -230,97 +230,6 @@ public final class RubyCollections {
   }
 
   /**
-   * Creates a {@link RubyRange} by given Strings.
-   * 
-   * @param startPoint
-   *          where the range begins
-   * @param endPoint
-   *          where the range ends
-   * @return {@link RubyRange}
-   */
-  public static RubyRange<String> newRubyRange(String startPoint,
-      String endPoint) {
-    return new RubyRange<String>(StringSuccessor.getInstance(), startPoint,
-        endPoint);
-  }
-
-  /**
-   * Creates a {@link RubyRange} by given chars.
-   * 
-   * @param startPoint
-   *          where the range begins
-   * @param endPoint
-   *          where the range ends
-   * @return {@link RubyRange}
-   */
-  public static RubyRange<Character>
-      newRubyRange(char startPoint, char endPoint) {
-    return new RubyRange<Character>(CharacterSuccessor.getInstance(),
-        startPoint, endPoint);
-  }
-
-  /**
-   * Creates a {@link RubyRange} by given ints.
-   * 
-   * @param startPoint
-   *          where the range begins
-   * @param endPoint
-   *          where the range ends
-   * @return {@link RubyRange}
-   */
-  public static RubyRange<Integer> newRubyRange(int startPoint, int endPoint) {
-    return new RubyRange<Integer>(IntegerSuccessor.getInstance(), startPoint,
-        endPoint);
-  }
-
-  /**
-   * Creates a {@link RubyRange} by given longs.
-   * 
-   * @param startPoint
-   *          where the range begins
-   * @param endPoint
-   *          where the range ends
-   * @return {@link RubyRange}
-   */
-  public static RubyRange<Long> newRubyRange(long startPoint, long endPoint) {
-    return new RubyRange<Long>(LongSuccessor.getInstance(), startPoint,
-        endPoint);
-  }
-
-  /**
-   * Creates a {@link RubyRange} by given doubles.
-   * 
-   * @param startPoint
-   *          where the range begins
-   * @param endPoint
-   *          where the range ends
-   * @return {@link RubyRange}
-   */
-  public static RubyRange<Double> newRubyRange(double startPoint,
-      double endPoint) {
-    String startStr = String.valueOf(startPoint);
-    String endStr = String.valueOf(endPoint);
-    int startPrecision = startStr.length() - startStr.lastIndexOf('.') - 1;
-    int endPrecision = endStr.length() - endStr.lastIndexOf('.') - 1;
-    return new RubyRange<Double>(new DoubleSuccessor(Math.max(startPrecision,
-        endPrecision)), startPoint, endPoint);
-  }
-
-  /**
-   * Creates a {@link RubyRange} by given Dates.
-   * 
-   * @param startPoint
-   *          where the range begins
-   * @param endPoint
-   *          where the range ends
-   * @return {@link RubyRange}
-   */
-  public static RubyRange<Date> newRubyRange(Date startPoint, Date endPoint) {
-    return new RubyRange<Date>(DateSuccessor.getInstance(), startPoint,
-        endPoint);
-  }
-
-  /**
    * Creates a {@link RubyString}.
    * 
    * @return {@link RubyString}
@@ -1949,7 +1858,7 @@ public final class RubyCollections {
    * @return {@link RubyRange}
    */
   public static RubyRange<String> range(String start, String end) {
-    return newRubyRange(start, end);
+    return new RubyRange<String>(StringSuccessor.getInstance(), start, end);
   }
 
   /**
@@ -1962,7 +1871,8 @@ public final class RubyCollections {
    * @return {@link RubyRange}
    */
   public static RubyRange<Character> range(char start, char end) {
-    return newRubyRange(start, end);
+    return new RubyRange<Character>(CharacterSuccessor.getInstance(), start,
+        end);
   }
 
   /**
@@ -1975,7 +1885,7 @@ public final class RubyCollections {
    * @return {@link RubyRange}
    */
   public static RubyRange<Integer> range(int start, int end) {
-    return newRubyRange(start, end);
+    return new RubyRange<Integer>(IntegerSuccessor.getInstance(), start, end);
   }
 
   /**
@@ -1988,7 +1898,7 @@ public final class RubyCollections {
    * @return {@link RubyRange}
    */
   public static RubyRange<Long> range(long start, long end) {
-    return newRubyRange(start, end);
+    return new RubyRange<Long>(LongSuccessor.getInstance(), start, end);
   }
 
   /**
@@ -2001,7 +1911,12 @@ public final class RubyCollections {
    * @return {@link RubyRange}
    */
   public static RubyRange<Double> range(double start, double end) {
-    return newRubyRange(start, end);
+    String startStr = String.valueOf(start);
+    String endStr = String.valueOf(end);
+    int startPrecision = startStr.length() - startStr.lastIndexOf('.') - 1;
+    int endPrecision = endStr.length() - endStr.lastIndexOf('.') - 1;
+    return new RubyRange<Double>(new DoubleSuccessor(Math.max(startPrecision,
+        endPrecision)), start, end);
   }
 
   /**
@@ -2014,7 +1929,7 @@ public final class RubyCollections {
    * @return {@link RubyRange}
    */
   public static RubyRange<Date> range(Date start, Date end) {
-    return newRubyRange(start, end);
+    return new RubyRange<Date>(DateSuccessor.getInstance(), start, end);
   }
 
   /**
