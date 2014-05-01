@@ -21,6 +21,7 @@
 package net.sf.rubycollect4j;
 
 import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
+import static net.sf.rubycollect4j.RubyCollections.newRubySet;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -330,7 +331,32 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
    */
   @SuppressWarnings("unchecked")
   public <S> RubySet<S> flatten() {
-    return (RubySet<S>) new RubySet<Object>(RubyArray.copyOf(set).flatten());
+    RubySet<?> rubySet = RubySet.copyOf(set);
+    while (rubySet.anyʔ(new BooleanBlock<Object>() {
+
+      @Override
+      public boolean yield(Object item) {
+        return item instanceof Set;
+      }
+
+    })) {
+      rubySet = flatten(rubySet, 1);
+    }
+    return (RubySet<S>) rubySet;
+  }
+
+  @SuppressWarnings("unchecked")
+  private <S> RubySet<S> flatten(Set<?> set, int n) {
+    RubySet<S> rubySet = newRubySet();
+    for (Object item : set) {
+      if (item instanceof Set)
+        for (Object o : (RubySet<?>) item) {
+          rubySet.add((S) o);
+        }
+      else
+        rubySet.add((S) item);
+    }
+    return rubySet;
   }
 
   /**
