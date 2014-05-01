@@ -69,34 +69,6 @@ public class RubyEnumerableTest {
   }
 
   @Test
-  public void testOf() {
-    re = RubyEnumerable.of(iter);
-    Iterator<Integer> it = iter.iterator();
-    it.next();
-    it.remove();
-    assertEquals(ra(2, 3, 4), re.toA());
-  }
-
-  @Test(expected = NullPointerException.class)
-  public void testOfException() {
-    RubyEnumerable.of(null);
-  }
-
-  @Test
-  public void testCopyOf() {
-    re = RubyEnumerable.copyOf(iter);
-    Iterator<Integer> it = iter.iterator();
-    it.next();
-    it.remove();
-    assertEquals(ra(1, 2, 3, 4), re.toA());
-  }
-
-  @Test(expected = NullPointerException.class)
-  public void testCopyOfException() {
-    RubyEnumerable.copyOf(null);
-  }
-
-  @Test
   public void testInstantiation() {
     assertTrue(re instanceof RubyEnumerable);
   }
