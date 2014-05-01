@@ -115,7 +115,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
 
   /**
    * Creates a {@link RubyArray} by given List. It's a wrapper implementation.
-   * No defensive copy is made.
+   * No defensive copy has been made.
    * 
    * @param list
    *          a List

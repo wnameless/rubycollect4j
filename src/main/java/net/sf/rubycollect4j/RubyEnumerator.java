@@ -42,16 +42,50 @@ public class RubyEnumerator<E> extends RubyEnumerable<E> implements
   private final Iterable<E> iter;
   private PeekingIterator<E> pIterator;
 
+  /**
+   * Returns a {@link RubyEnumerator} which wraps the given Iterable.
+   * 
+   * @param iter
+   *          any Iterable
+   * @return {@link RubyEnumerator}
+   * @throws NullPointerException
+   *           if iter is null
+   */
+  public static <E> RubyEnumerator<E> of(Iterable<E> iter) {
+    if (iter == null)
+      throw new NullPointerException();
+
+    return new RubyEnumerator<E>(iter);
+  }
+
+  /**
+   * Returns a {@link RubyEnumerator} which copies the elements of given
+   * Iterable.
+   * 
+   * @param iter
+   *          any Iterable
+   * @return {@link RubyEnumerator}
+   * @throws NullPointerException
+   *           if iter is null
+   */
+  public static <E> RubyEnumerator<E> copyOf(Iterable<E> iter) {
+    if (iter == null)
+      throw new NullPointerException();
+
+    return new RubyEnumerator<E>(RubyArray.copyOf(iter));
+  }
+
   @Override
   protected Iterable<E> getIterable() {
     return iter;
   }
 
   /**
-   * Creates a {@link RubyEnumerator} by given Iterable.
+   * Creates a {@link RubyEnumerator} by given Iterable. It's a wrapper
+   * implementation. No defensive copy has been made.
    * 
    * @param iterable
-   *          an Iterable
+   *          any Iterable
    * @throws NullPointerException
    *           if iterable is null
    */

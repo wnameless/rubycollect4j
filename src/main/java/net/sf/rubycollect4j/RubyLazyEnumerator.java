@@ -77,10 +77,44 @@ public final class RubyLazyEnumerator<E> implements Ruby.LazyEnumerator<E> {
   private PeekingIterator<E> pIterator;
 
   /**
-   * Creates a {@link RubyLazyEnumerator} by given Iterable.
+   * Returns a {@link RubyLazyEnumerator} which wraps the given Iterable.
+   * 
+   * @param iter
+   *          any Iterable
+   * @return {@link RubyLazyEnumerator}
+   * @throws NullPointerException
+   *           if iter is null
+   */
+  public static <E> RubyLazyEnumerator<E> of(Iterable<E> iter) {
+    if (iter == null)
+      throw new NullPointerException();
+
+    return new RubyLazyEnumerator<E>(iter);
+  }
+
+  /**
+   * Returns a {@link RubyLazyEnumerator} which copies the elements of given
+   * Iterable.
+   * 
+   * @param iter
+   *          any Iterable
+   * @return {@link RubyLazyEnumerator}
+   * @throws NullPointerException
+   *           if iter is null
+   */
+  public static <E> RubyLazyEnumerator<E> copyOf(Iterable<E> iter) {
+    if (iter == null)
+      throw new NullPointerException();
+
+    return new RubyLazyEnumerator<E>(RubyArray.copyOf(iter));
+  }
+
+  /**
+   * Creates a {@link RubyLazyEnumerator} by given Iterable. It's a wrapper
+   * implementation. No defensive copy has been made.
    * 
    * @param iterable
-   *          an Iterable
+   *          any Iterable
    * @throws NullPointerException
    *           if iterable is null
    */

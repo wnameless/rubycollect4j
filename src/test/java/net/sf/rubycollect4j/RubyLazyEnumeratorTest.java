@@ -61,6 +61,30 @@ public class RubyLazyEnumeratorTest {
   }
 
   @Test
+  public void testOf() {
+    lre = RubyLazyEnumerator.of(list);
+    list.remove(0);
+    assertEquals(ra(2, 3, 4), lre.toA());
+  }
+
+  @Test(expected = NullPointerException.class)
+  public void testOfException() {
+    RubyLazyEnumerator.of(null);
+  }
+
+  @Test
+  public void testCopyOf() {
+    lre = RubyLazyEnumerator.copyOf(list);
+    list.remove(0);
+    assertEquals(ra(1, 2, 3, 4), lre.toA());
+  }
+
+  @Test(expected = NullPointerException.class)
+  public void testCopyOfException() {
+    RubyLazyEnumerator.copyOf(null);
+  }
+
+  @Test
   public void testConstructor() {
     assertTrue(lre instanceof RubyLazyEnumerator);
   }

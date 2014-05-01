@@ -59,6 +59,54 @@ import net.sf.rubycollect4j.iter.TransformIterable;
 public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
 
   /**
+   * Returns a {@link RubyEnumerable} which wraps the given Iterable.
+   * 
+   * @param iter
+   *          any Iterable
+   * @return {@link RubyEnumerable}
+   * @throws NullPointerException
+   *           if iter is null
+   */
+  public static <E> RubyEnumerable<E> of(final Iterable<E> iter) {
+    if (iter == null)
+      throw new NullPointerException();
+
+    return new RubyEnumerable<E>() {
+
+      @Override
+      protected Iterable<E> getIterable() {
+        return iter;
+      }
+
+    };
+  }
+
+  /**
+   * Returns a {@link RubyEnumerable} which copies the elements of given
+   * Iterable.
+   * 
+   * @param iter
+   *          any Iterable
+   * @return {@link RubyEnumerable}
+   * @throws NullPointerException
+   *           if iter is null
+   */
+  public static <E> RubyEnumerable<E> copyOf(final Iterable<E> iter) {
+    if (iter == null)
+      throw new NullPointerException();
+
+    final RubyArray<E> rubyArray = RubyArray.copyOf(iter);
+    return new RubyEnumerable<E>() {
+
+      @Override
+      protected Iterable<E> getIterable() {
+        return rubyArray;
+      }
+
+    };
+  }
+
+  /**
    * Returns an Iterable of elements.
    * 
    * @return Iterable

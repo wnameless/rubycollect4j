@@ -114,7 +114,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
 
   /**
    * Creates a {@link RubyHash} by given LinkedHashMap. It's a wrapper
-   * implementation. No defensive copy is made.
+   * implementation. No defensive copy has been made.
    * 
    * @param map
    *          a LinkedHashMap

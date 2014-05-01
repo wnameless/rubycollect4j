@@ -83,7 +83,7 @@ public class RubyHashTest {
 
   @Test(expected = NullPointerException.class)
   public void testStaticFactoryMethodOfException() {
-    RubyHash.of(null);
+    RubyHash.of((LinkedHashMap<?, ?>) null);
   }
 
   @Test
@@ -99,7 +99,7 @@ public class RubyHashTest {
 
   @Test(expected = NullPointerException.class)
   public void testStaticFactoryMethodCopyOfException() {
-    RubyHash.copyOf(null);
+    RubyHash.copyOf((Map<?, ?>) null);
   }
 
   @Test

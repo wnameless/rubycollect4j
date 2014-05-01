@@ -20,6 +20,7 @@
  */
 package net.sf.rubycollect4j;
 
+import static net.sf.rubycollect4j.RubyCollections.ra;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
@@ -44,6 +45,30 @@ public class RubyEnumeratorTest {
   public void setUp() throws Exception {
     list = new ArrayList<Integer>(Arrays.asList(1, 2, 3));
     re = new RubyEnumerator<Integer>(list);
+  }
+
+  @Test
+  public void testOf() {
+    re = RubyEnumerator.of(list);
+    list.remove(0);
+    assertEquals(ra(2, 3), re.toA());
+  }
+
+  @Test(expected = NullPointerException.class)
+  public void testOfException() {
+    RubyEnumerator.of(null);
+  }
+
+  @Test
+  public void testCopyOf() {
+    re = RubyEnumerator.copyOf(list);
+    list.remove(0);
+    assertEquals(ra(1, 2, 3), re.toA());
+  }
+
+  @Test(expected = NullPointerException.class)
+  public void testCopyOfException() {
+    RubyEnumerator.copyOf(null);
   }
 
   @Test

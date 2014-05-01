@@ -98,7 +98,7 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
 
   /**
    * Creates a {@link RubySet} by given LinkedHashSet. It's a wrapper
-   * implementation. No defensive copy is made.
+   * implementation. No defensive copy has been made.
    * 
    * @param set
    *          any LinkedHashSet

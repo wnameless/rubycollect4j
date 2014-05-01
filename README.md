@@ -149,12 +149,11 @@ public class YourIterableClass<E> extends RubyEnumerable<E> {
 }
 ```
 
-Demo newRubyEnumerator():
+Demo RubyEnumerator.of() & RubyEnumerator.copyOf():
 ```java
 Map<String, Long> map = new LinkedHashMap<String, Long>() {{ put("a", 1L); put("b", 2L); put("c", 3L); }};
-// Any Iterable or Iterator object can be converted into RubyEnumerator.
-RubyEnumerator<Entry<String, Long>> re = newRubyEnumerator(map.entrySet());
-re = newRubyEnumerator(map.entrySet().iterator());
+// Any Iterable object can be wrapped into RubyEnumerator.
+RubyEnumerator<Entry<String, Long>> re = RubyEnumerator.of(map.entrySet());
 // RubyEnumerator is much like RubyEnumerable, but it is both an Iterator and an Iterable.
 p( re instanceof Iterator ); // Output: true
 p( re instanceof Iterable ); // Output: true
@@ -167,12 +166,26 @@ re.rewind();
 p( re.next() );              // Output: a=1
 ```
 
-Demo newRubyLazyEnumerator():
 ```java
-p( newRubyLazyEnumerator(Arrays.asList(1, 2, 3, 4)).drop(1) instanceof RubyLazyEnumerator ) // Output: true
-p( newRubyLazyEnumerator(Arrays.asList(1, 2, 3, 4)).drop(1).toA() )                         // Output: [2, 3, 4]
+// By default, RubyEnumerator.of() is just a wrapper to an existed Iterable.
+// You can make a defensive copy by following codes.
+Map<String, Long> map = new LinkedHashMap<String, Long>() {{ put("a", 1L); put("b", 2L); put("c", 3L); }};
+RubyEnumerator<Entry<String, Long>> re = RubyEnumerator.copyOf(map.entrySet());
+```
+
+Demo RubyLazyEnumerator.of() & RubyLazyEnumerator.copyOf():
+```java
+p( RubyLazyEnumerator.of(Arrays.asList(1, 2, 3, 4)).drop(1) instanceof RubyLazyEnumerator ) // Output: true
+p( RubyLazyEnumerator.of(Arrays.asList(1, 2, 3, 4)).drop(1).toA() )                         // Output: [2, 3, 4]
 // A RubyLazyEnumerator can also be created by RubyArray#lazy.
 p( ra(1, 2, 3, 4).lazy().cycle().drop(6).first() )                                          // Output: 3
+```
+
+```java
+// By default, RubyLazyEnumerator.of() is just a wrapper to an existed Iterable.
+// You can make a defensive copy by following codes.
+Map<String, Long> map = new LinkedHashMap<String, Long>() {{ put("a", 1L); put("b", 2L); put("c", 3L); }};
+RubyLazyEnumerator<Entry<String, Long>> re = RubyLazyEnumerator.copyOf(map.entrySet());
 ```
 
 Demo range():

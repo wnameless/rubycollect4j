@@ -57,7 +57,7 @@ public class RubyEnumerableTest {
 
   @Before
   public void setUp() throws Exception {
-    iter = Arrays.asList(1, 2, 3, 4);
+    iter = newRubyArray(1, 2, 3, 4);
     re = new RubyEnumerable<Integer>() {
 
       @Override
@@ -66,6 +66,34 @@ public class RubyEnumerableTest {
       }
 
     };
+  }
+
+  @Test
+  public void testOf() {
+    re = RubyEnumerable.of(iter);
+    Iterator<Integer> it = iter.iterator();
+    it.next();
+    it.remove();
+    assertEquals(ra(2, 3, 4), re.toA());
+  }
+
+  @Test(expected = NullPointerException.class)
+  public void testOfException() {
+    RubyEnumerable.of(null);
+  }
+
+  @Test
+  public void testCopyOf() {
+    re = RubyEnumerable.copyOf(iter);
+    Iterator<Integer> it = iter.iterator();
+    it.next();
+    it.remove();
+    assertEquals(ra(1, 2, 3, 4), re.toA());
+  }
+
+  @Test(expected = NullPointerException.class)
+  public void testCopyOfException() {
+    RubyEnumerable.copyOf(null);
   }
 
   @Test
