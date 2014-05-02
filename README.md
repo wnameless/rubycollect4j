@@ -54,20 +54,21 @@ import static net.sf.rubycollect4j.RubyKernel.p;
 
 Demo ra() & newRubyArray():
 ```java
-p( ra(1, 2, 3, 4) );                // Output: [1, 2, 3, 4]
-p( ra(ra(1, 2)) );                  // Output: [[1, 2]]
+p( ra(1, 2, 3, 4) );                         // Output: [1, 2, 3, 4]
+p( ra(ra(1, 2)) );                           // Output: [[1, 2]]
 List<Integer> list = new ArrayList<Integer>();
 list.add(1);
-p( ra(list) );                      // Output: [1]
+p( ra(list) );                               // Output: [1]
 Map<Integer, String> map = new LinkedHashMap<Integer, String>();
 map.put(1, "a");
 map.put(2, "b");
 // Any Iterable or Iterator object can be converted into RubyArray.
-p( ra(map.values) );                // Output: [a, b]
+p( ra(map.values) );                         // Output: [a, b]
 // RubyArray is Comparable if the elements are Comparable.
-p( ra(ra(3, 4), ra(1, 2)).sort() ); // Output: [[1, 2], [3, 4]]
-// RubyArray is also a List.
-p( ra(1, 2, 3) instanceof List );   // Output: true
+p( ra(ra(3, 4), ra(1, 2)).sort() );          // Output: [[1, 2], [3, 4]]
+// RubyArray is both a List and a Ruby.Enumerable.
+p( ra(1, 2, 3) instanceof List );            // Output: true
+p( ra(1, 2, 3) instanceof Ruby.Enumerable ); // Output: true
 ```
 
 ```java
@@ -80,18 +81,19 @@ RubyArray<Integer> ra = RubyArray.copyOf(list);
 
 Demo rh(), hp(), Hash() & newRubyHash():
 ```java
-p( rh("a", 1, "b" ,2) );               // Output: {a=1, b=2}
+p( rh("a", 1, "b" ,2) );                        // Output: {a=1, b=2}
 Map<String, Long> map = new HashMap<String, Long>();
 map.put("abc", 123L);
 // Any Map can be converted into RubyHash.
-p( hp(map) );                          // Output: {abc=123}
+p( hp(map) );                                   // Output: {abc=123}
 // hp() simply creates an Entry and the word 'hp' means hash pair
-p( Hash(ra(hp("a", 1), hp("b" ,2))) ); // Output: {a=1, b=2}
-p( Hash(rh("a", 1, "b", 2).toA()) );   // Output: {a=1, b=2}
+p( Hash(ra(hp("a", 1), hp("b" ,2))) );          // Output: {a=1, b=2}
+p( Hash(rh("a", 1, "b", 2).toA()) );            // Output: {a=1, b=2}
 // The Entry of RubyHash is Comparable if the type of the key elements is Comparable.
-p( rh(4, 3, 2, 1).sort() );            // Output: [2=1, 4=3]
-// RubyHash is also a Map.
-p( rh(1, 2, 3, 4) instanceof Map );    // Output: true
+p( rh(4, 3, 2, 1).sort() );                     // Output: [2=1, 4=3]
+// RubyHash is both a Map and a Ruby.Enumerable.
+p( rh(1, 2, 3, 4) instanceof Map );             // Output: true
+p( rh(1, 2, 3, 4) instanceof Ruby.Enumerable ); // Output: true
 ```
 
 ```java
@@ -112,8 +114,9 @@ list.add(1);
 p( newRubySet(list) );                                      // Output: [1]
 // RubySet is Comparable if the elements are Comparable.
 p( newRubySet(newRubySet(3, 4), newRubySet(1, 2)).sort() ); // Output: [[1, 2], [3, 4]]
-// RubySet is also a Set.
+// RubySet is both a Set and a Ruby.Enumerable.
 p( newRubySet(1, 2, 3, 3) instanceof Set );                 // Output: true
+p( newRubySet(1, 2, 3, 3) instanceof Ruby.Enumerable );     // Output: true
 ```
 
 ```java
@@ -127,13 +130,15 @@ RubySet<Integer> rubySet = RubySet.of(set);
 Demo rs() & new RubyString():
 ```java
 // RubyString can be created from any Object.
-p( new RubyString(1000L).count("0") )                  // Output: 3
+p( new RubyString(1000L).count("0") );                  // Output: 3
 // RubyString is also a RubyEnumerable of each character(as String).
-p( rs("abc").map("codePointAt", 0) );                  // Output: [97, 98, 99]
+p( rs("abc").map("codePointAt", 0) );                   // Output: [97, 98, 99]
 // RubyString implements fluent interface.
 // After multiple actions, you can turn it to a Java String by calling toS().
-p( rs("ABC").chop().capitalize().concat("001").toS() ) // Output: Ab001
-
+p( rs("ABC").chop().capitalize().concat("001").toS() ); // Output: Ab001
+// RubyString is both a CharSequence and a Ruby.Enumerable.
+p( rs("abc") instanceof CharSequence );                 // Output: true
+p( rs("abc") instanceof Ruby.Enumerable );              // Output: true
 ```
 
 Demo abstract RubyEnumerable class:
@@ -147,6 +152,9 @@ public class YourIterableClass<E> extends RubyEnumerable<E> {
   @Override
   protected Iterable<E> getIterable() { return iter; }
 }
+
+// The class which extends RubyEnumerable becomes a Ruby.Enumerable.
+p( new YourIterableClass(iter) instanceof Ruby.Enumerable ); // Output: true
 ```
 
 Demo RubyEnumerator.of() & RubyEnumerator.copyOf():
@@ -155,15 +163,17 @@ Map<String, Long> map = new LinkedHashMap<String, Long>() {{ put("a", 1L); put("
 // Any Iterable object can be wrapped into RubyEnumerator.
 RubyEnumerator<Entry<String, Long>> re = RubyEnumerator.of(map.entrySet());
 // RubyEnumerator is much like RubyEnumerable, but it is both an Iterator and an Iterable.
-p( re instanceof Iterator ); // Output: true
-p( re instanceof Iterable ); // Output: true
+p( re instanceof Ruby.Enumerator ); // Output: true
+p( re instanceof Ruby.Enumerable ); // Output: true
+p( re instanceof Iterator );        // Output: true
+p( re instanceof Iterable );        // Output: true
 // It can 'peek' and 'rewind'.
-p( re.peek() );              // Output: a=1
-p( re.next() );              // Output: a=1
-p( re.next() );              // Output: b=2
-p( re.peek() );              // Output: c=3
+p( re.peek() );                     // Output: a=1
+p( re.next() );                     // Output: a=1
+p( re.next() );                     // Output: b=2
+p( re.peek() );                     // Output: c=3
 re.rewind();
-p( re.next() );              // Output: a=1
+p( re.next() );                     // Output: a=1
 ```
 
 ```java
@@ -175,10 +185,14 @@ RubyEnumerator<Entry<String, Long>> re = RubyEnumerator.copyOf(map.entrySet());
 
 Demo RubyLazyEnumerator.of() & RubyLazyEnumerator.copyOf():
 ```java
-p( RubyLazyEnumerator.of(Arrays.asList(1, 2, 3, 4)).drop(1) instanceof RubyLazyEnumerator ) // Output: true
-p( RubyLazyEnumerator.of(Arrays.asList(1, 2, 3, 4)).drop(1).toA() )                         // Output: [2, 3, 4]
+RubyLazyEnumerator rle = RubyLazyEnumerator.of(Arrays.asList(1, 2, 3, 4));
+// RubyLazyEnumerator is not a Ruby.Enumerable, but it is a Ruby.LazyEnumerator.
+p( rle.drop(1) instanceof Ruby.LazyEnumerator );    // Output: true
+p( rle instanceof Iterator );                       // Output: true
+p( rle instanceof Iterable );                       // Output: true
+p( rle.drop(1).toA() );                             // Output: [2, 3, 4]
 // A RubyLazyEnumerator can also be created by RubyArray#lazy.
-p( ra(1, 2, 3, 4).lazy().cycle().drop(6).first() )                                          // Output: 3
+p( ra(1, 2, 3, 4).lazy().cycle().drop(6).first() ); // Output: 3
 ```
 
 ```java
