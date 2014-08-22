@@ -274,3 +274,8 @@ Version 1.8.0
 + Added RubyEnumerator::of, RubyEnumerator::copyOf, RubyLazyEnumerator::of & RubyLazyEnumerator::copyOf
 
 * Increased the acceptable number of RubyCollections::rh arguments from 20 to 26 key-value pairs
+
+
+Version 1.8.1
+
+* Fixed RubyArray#sample bug

@@ -1425,7 +1425,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    */
   public E sample() {
     if (list.size() > 0)
-      return list.get((int) Math.random() * list.size());
+      return list.get((int) (Math.random() * list.size()));
     else
       return null;
   }
@@ -1448,8 +1448,8 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
 
     RubyArray<E> rubyArray = newRubyArray();
     while (rubyArray.size() < list.size() && rubyArray.size() < n) {
-      rubyArray.add(list.get(indices.remove((int) Math.random()
-          * indices.size())));
+      rubyArray.add(list.get(indices.remove((int) (Math.random() * indices
+          .size()))));
     }
     return rubyArray;
   }

@@ -20,7 +20,9 @@
  */
 package net.sf.rubycollect4j;
 
+import static net.sf.rubycollect4j.RubyCollections.newRubySet;
 import static net.sf.rubycollect4j.RubyCollections.ra;
+import static net.sf.rubycollect4j.RubyCollections.range;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -36,6 +38,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 import javax.xml.bind.TypeConstraintException;
 
@@ -1139,6 +1142,16 @@ public class RubyArrayTest {
   public void testSample() {
     assertTrue(ra.includeʔ(ra.sample()));
     assertNull(ra().sample());
+    final Set<Integer> set = newRubySet();
+    range(0, 1000).each(new Block<Integer>() {
+
+      @Override
+      public void yield(Integer item) {
+        set.add(ra.sample());
+      }
+
+    });
+    assertEquals(ra.size(), set.size());
   }
 
   @Test
@@ -1147,6 +1160,16 @@ public class RubyArrayTest {
     assertEquals(3, samples.uniq().count());
     assertEquals(4, ra.sample(5).uniq().count());
     assertEquals(ra(), ra.sample(0));
+    final Set<Integer> set = newRubySet();
+    range(0, 1000).each(new Block<Integer>() {
+
+      @Override
+      public void yield(Integer item) {
+        set.addAll(ra.sample(2));
+      }
+
+    });
+    assertEquals(ra.size(), set.size());
   }
 
   @Test(expected = IllegalArgumentException.class)
