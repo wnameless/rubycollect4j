@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,11 +27,11 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
 
+import org.junit.Test;
+
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.succ.DoubleSuccessor;
 import net.sf.rubycollect4j.succ.StringSuccessor;
-
-import org.junit.Test;
 
 public class RubyRangeTest {
 
@@ -70,16 +67,16 @@ public class RubyRangeTest {
   public void testRangeWithString() {
     assertEquals(ra("abcd", "abce"), range("abcd", "abce").toA());
     assertEquals(ra("THX1138", "THX1139"), range("THX1138", "THX1139").toA());
-    assertEquals(ra("<<koala>>", "<<koalb>>"), range("<<koala>>", "<<koalb>>")
-        .toA());
+    assertEquals(ra("<<koala>>", "<<koalb>>"),
+        range("<<koala>>", "<<koalb>>").toA());
     assertEquals(ra("1999zzz", "2000aaa"), range("1999zzz", "2000aaa").toA());
     assertEquals(ra("zzz9999", "aaaa0000"), range("zzz9999", "aaaa0000").toA());
     assertEquals(ra("***", "**+"), range("***", "**+").toA());
     assertEquals(ra("a", "b", "c", "d", "e"), range("a", "e").toA());
     assertEquals(ra("ay", "az", "ba"), range("ay", "ba").toA());
     assertEquals(ra("aY", "aZ", "bA"), range("aY", "bA").toA());
-    assertEquals(ra("999--", "1000--", "1001--"), range("999--", "1001--")
-        .toA());
+    assertEquals(ra("999--", "1000--", "1001--"),
+        range("999--", "1001--").toA());
     assertEquals(ra("999", "1000", "1001"), range("999", "1001").toA());
     assertEquals(ra("1.2", "1.3", "1.4", "1.5"), range("1.2", "1.5").toA());
     assertEquals(ra("1.49", "1.50", "1.51"), range("1.49", "1.51").toA());

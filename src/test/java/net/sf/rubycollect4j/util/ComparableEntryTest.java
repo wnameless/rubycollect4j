@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -43,9 +40,8 @@ public class ComparableEntryTest {
   @Test
   public void testConstructor() {
     assertTrue(entry instanceof ComparableEntry);
-    entry =
-        new ComparableEntry<Integer, Integer>(
-            new SimpleEntry<Integer, Integer>(0, 1));
+    entry = new ComparableEntry<Integer, Integer>(
+        new SimpleEntry<Integer, Integer>(0, 1));
     assertTrue(entry instanceof ComparableEntry);
   }
 
@@ -94,10 +90,10 @@ public class ComparableEntryTest {
     assertEquals(0, entry.compareTo(new SimpleEntry<Integer, Integer>(0, 1)));
     assertEquals(-1, entry.compareTo(new SimpleEntry<Integer, Integer>(2, 3)));
     assertEquals(1, entry.compareTo(new SimpleEntry<Integer, Integer>(0, 0)));
-    assertEquals(0, entry.compareTo(new SimpleEntry<Integer, Integer>(0, null)));
     assertEquals(0,
-        new ComparableEntry<Integer, Point>(0, new Point(1, 1))
-            .compareTo(new ComparableEntry<Integer, Point>(0, new Point(1, 1))));
+        entry.compareTo(new SimpleEntry<Integer, Integer>(0, null)));
+    assertEquals(0, new ComparableEntry<Integer, Point>(0, new Point(1, 1))
+        .compareTo(new ComparableEntry<Integer, Point>(0, new Point(1, 1))));
   }
 
   @Test(expected = IllegalArgumentException.class)

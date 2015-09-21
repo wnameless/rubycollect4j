@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -29,10 +26,10 @@ import static org.junit.Assert.assertTrue;
 import java.util.Calendar;
 import java.util.Date;
 
-import net.sf.rubycollect4j.RubyDate.DateField;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import net.sf.rubycollect4j.RubyDate.DateField;
 
 public class RubyDateTest {
 
@@ -69,8 +66,8 @@ public class RubyDateTest {
     c.set(Calendar.YEAR, 1990);
     c.set(Calendar.MONTH, 5);
     c.set(Calendar.DAY_OF_MONTH, 6);
-    assertEquals(c.getTime(), rd.change(rh(DateField.YEAR, 1990,
-        DateField.MONTH, 6, DateField.DAY, 6)));
+    assertEquals(c.getTime(), rd.change(
+        rh(DateField.YEAR, 1990, DateField.MONTH, 6, DateField.DAY, 6)));
   }
 
   @Test
@@ -284,9 +281,8 @@ public class RubyDateTest {
     c.set(Calendar.SECOND, 59);
     c.set(Calendar.MILLISECOND, 999);
     assertEquals(c.getTime(), rd.endOfMonth());
-    assertEquals(
-        Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH), rd
-            .endOfMonth().dayOfMonth());
+    assertEquals(Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH),
+        rd.endOfMonth().dayOfMonth());
   }
 
   @Test
@@ -302,8 +298,8 @@ public class RubyDateTest {
     assertEquals(date(2014, 3, 31).endOfDay(), date(2014, 2, 2).endOfQuarter());
     assertEquals(date(2014, 6, 30).endOfDay(), date(2014, 5, 2).endOfQuarter());
     assertEquals(date(2014, 9, 30).endOfDay(), date(2014, 8, 2).endOfQuarter());
-    assertEquals(date(2014, 12, 31).endOfDay(), date(2014, 11, 2)
-        .endOfQuarter());
+    assertEquals(date(2014, 12, 31).endOfDay(),
+        date(2014, 11, 2).endOfQuarter());
   }
 
   @Test

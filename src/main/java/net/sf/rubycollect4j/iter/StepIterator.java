@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -49,18 +46,15 @@ public final class StepIterator<E> implements Iterator<E> {
    *           if step is less than or equal to 0
    */
   public StepIterator(Iterator<? extends E> iter, int step) {
-    if (iter == null)
-      throw new NullPointerException();
+    if (iter == null) throw new NullPointerException();
     if (step == 0)
       throw new IllegalArgumentException("ArgumentError: step can't be 0");
-    if (step < 0)
-      throw new IllegalArgumentException(
-          "ArgumentError: step can't be negative");
+    if (step < 0) throw new IllegalArgumentException(
+        "ArgumentError: step can't be negative");
 
     this.iter = iter;
     this.step = step;
-    if (iter.hasNext())
-      hasMore = true;
+    if (iter.hasNext()) hasMore = true;
   }
 
   private void advanceCursor() {
@@ -71,8 +65,7 @@ public final class StepIterator<E> implements Iterator<E> {
         iter.next();
         step--;
       }
-      if (step == 1 && iter.hasNext())
-        hasMore = true;
+      if (step == 1 && iter.hasNext()) hasMore = true;
     }
   }
 
@@ -92,8 +85,7 @@ public final class StepIterator<E> implements Iterator<E> {
 
   @Override
   public void remove() {
-    if (!isRemovable)
-      throw new IllegalStateException();
+    if (!isRemovable) throw new IllegalStateException();
 
     isRemovable = false;
     iter.remove();

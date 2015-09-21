@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -51,8 +48,7 @@ public final class ProductIterable<E> implements Iterable<RubyArray<E>> {
    */
   public ProductIterable(List<? extends E> self,
       List<? extends List<? extends E>> others) {
-    if (self == null || others == null)
-      throw new NullPointerException();
+    if (self == null || others == null) throw new NullPointerException();
 
     lists.add(self);
     lists.addAll(others);
@@ -69,8 +65,7 @@ public final class ProductIterable<E> implements Iterable<RubyArray<E>> {
    *           if self is null
    */
   public ProductIterable(List<? extends E> self, List<? extends E>... others) {
-    if (self == null)
-      throw new NullPointerException();
+    if (self == null) throw new NullPointerException();
 
     lists.add(self);
     lists.addAll(Arrays.asList(others));

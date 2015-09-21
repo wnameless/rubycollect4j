@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -51,8 +48,7 @@ public final class TakeWhileIterator<E> implements Iterator<E> {
    */
   public TakeWhileIterator(Iterator<? extends E> iter,
       BooleanBlock<? super E> block) {
-    if (iter == null || block == null)
-      throw new NullPointerException();
+    if (iter == null || block == null) throw new NullPointerException();
 
     pIter = new PeekingIterator<E>(iter);
     this.block = block;
@@ -65,8 +61,7 @@ public final class TakeWhileIterator<E> implements Iterator<E> {
 
   @Override
   public E next() {
-    if (!hasNext())
-      throw new NoSuchElementException();
+    if (!hasNext()) throw new NoSuchElementException();
 
     return pIter.next();
   }

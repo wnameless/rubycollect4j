@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -33,8 +30,8 @@ import java.util.Map.Entry;
  * @param <V>
  *          the type of the value elements
  */
-public final class ComparableEntry<K, V> implements Entry<K, V>,
-    Comparable<Entry<? extends K, ? extends V>> {
+public final class ComparableEntry<K, V>
+    implements Entry<K, V>, Comparable<Entry<? extends K, ? extends V>> {
 
   private final Entry<K, V> entry;
 
@@ -100,8 +97,7 @@ public final class ComparableEntry<K, V> implements Entry<K, V>,
     Comparator<V> valueComp = new TryComparator<V>();
 
     int diff;
-    if ((diff = keyComp.compare(entry.getKey(), o.getKey())) != 0)
-      return diff;
+    if ((diff = keyComp.compare(entry.getKey(), o.getKey())) != 0) return diff;
 
     if (entry.getValue() instanceof Comparable
         && o.getValue() instanceof Comparable) {

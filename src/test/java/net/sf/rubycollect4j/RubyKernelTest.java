@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -125,8 +122,8 @@ public class RubyKernelTest {
 
   @Test
   public void testPCharArray() {
-    assertArrayEquals(new char[] { 'x', 'y', 'z' }, p(new char[] { 'x', 'y',
-        'z' }));
+    assertArrayEquals(new char[] { 'x', 'y', 'z' },
+        p(new char[] { 'x', 'y', 'z' }));
     assertEquals("xyz" + lineSeparator, outContent.toString());
   }
 
@@ -191,15 +188,15 @@ public class RubyKernelTest {
 
   @Test
   public void testPByteArray() {
-    assertArrayEquals(new byte[] { (byte) 0xFF, (byte) 0x00 }, p(new byte[] {
-        (byte) 0xFF, (byte) 0x00 }));
+    assertArrayEquals(new byte[] { (byte) 0xFF, (byte) 0x00 },
+        p(new byte[] { (byte) 0xFF, (byte) 0x00 }));
     assertEquals(ra(-1, 0) + lineSeparator, outContent.toString());
   }
 
   @Test
   public void testPShortArray() {
-    assertArrayEquals(new short[] { (short) 1, (short) 0 }, p(new short[] {
-        (short) 1, (short) 0 }));
+    assertArrayEquals(new short[] { (short) 1, (short) 0 },
+        p(new short[] { (short) 1, (short) 0 }));
     assertEquals(ra(1, 0) + lineSeparator, outContent.toString());
   }
 
@@ -217,8 +214,8 @@ public class RubyKernelTest {
 
   @Test
   public void testPFloatArray() {
-    assertArrayEquals(new float[] { (float) 1, (float) 0 }, p(new float[] {
-        (float) 1, (float) 0 }), (float) 0);
+    assertArrayEquals(new float[] { (float) 1, (float) 0 },
+        p(new float[] { (float) 1, (float) 0 }), (float) 0);
     assertEquals(ra((float) 1, (float) 0) + lineSeparator,
         outContent.toString());
   }

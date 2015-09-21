@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2014 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -37,12 +34,12 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.junit.Before;
+import org.junit.Test;
+
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.block.BooleanBlock;
 import net.sf.rubycollect4j.block.TransformBlock;
-
-import org.junit.Before;
-import org.junit.Test;
 
 public class RubySetTest {
 
@@ -93,7 +90,8 @@ public class RubySetTest {
   public void testConstructor() {
     assertTrue(rs instanceof RubySet);
     assertTrue(new RubySet<Integer>() instanceof RubySet);
-    assertTrue(new RubySet<Integer>(new LinkedHashSet<Integer>()) instanceof RubySet);
+    assertTrue(
+        new RubySet<Integer>(new LinkedHashSet<Integer>()) instanceof RubySet);
   }
 
   @Test(expected = NullPointerException.class)
@@ -116,8 +114,8 @@ public class RubySetTest {
   @Test
   public void testClassify() {
     RubyHash<Boolean, RubySet<Integer>> classes =
-        newRubySet(1, 2, 3, 4, 5, 6, 7, 7).classify(
-            new TransformBlock<Integer, Boolean>() {
+        newRubySet(1, 2, 3, 4, 5, 6, 7, 7)
+            .classify(new TransformBlock<Integer, Boolean>() {
 
               @Override
               public Boolean yield(Integer item) {
@@ -227,8 +225,7 @@ public class RubySetTest {
   @SuppressWarnings("unchecked")
   @Test
   public void testFlatten() {
-    assertEquals(
-        newRubySet(1, 2, 3, 4, 5),
+    assertEquals(newRubySet(1, 2, 3, 4, 5),
         newRubySet(newRubySet(1, 2, newRubySet(3)), 4,
             newRubySet(newRubySet(5))).flatten());
   }

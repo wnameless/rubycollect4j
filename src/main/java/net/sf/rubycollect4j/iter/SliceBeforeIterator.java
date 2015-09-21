@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -56,8 +53,7 @@ public final class SliceBeforeIterator<E> implements Iterator<RubyArray<E>> {
    */
   public SliceBeforeIterator(Iterator<? extends E> iter,
       BooleanBlock<? super E> block) {
-    if (iter == null || block == null)
-      throw new NullPointerException();
+    if (iter == null || block == null) throw new NullPointerException();
 
     pIter = new PeekingIterator<E>(iter);
     this.block = block;
@@ -75,8 +71,7 @@ public final class SliceBeforeIterator<E> implements Iterator<RubyArray<E>> {
    *           if iter or pattern is null
    */
   public SliceBeforeIterator(Iterator<? extends E> iter, Pattern pattern) {
-    if (iter == null || pattern == null)
-      throw new NullPointerException();
+    if (iter == null || pattern == null) throw new NullPointerException();
 
     pIter = new PeekingIterator<E>(iter);
     block = null;

@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2014 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -55,8 +52,7 @@ public final class ASCII8BitUTF implements CharSequence {
    *          any String
    */
   public ASCII8BitUTF(String str) {
-    if (str == null)
-      throw new NullPointerException();
+    if (str == null) throw new NullPointerException();
 
     this.str = str;
     chars.replace(rs(str).toA());
@@ -84,8 +80,7 @@ public final class ASCII8BitUTF implements CharSequence {
   }
 
   private RubyArray<Byte> ch2Bytes(String ch) {
-    if (ch == null)
-      return ra();
+    if (ch == null) return ra();
 
     if (ch.codePointAt(0) < 256)
       return ByteUtil.toList(
@@ -128,8 +123,9 @@ public final class ASCII8BitUTF implements CharSequence {
    * @return true if there are remaining characters, false otherwise
    */
   public boolean hasNextChar() {
-    return (currentChar != null && currentChar.getBytes().length == currentBytes
-        .size()) || chars.anyʔ();
+    return (currentChar != null
+        && currentChar.getBytes().length == currentBytes.size())
+        || chars.anyʔ();
   }
 
   /**
@@ -149,8 +145,7 @@ public final class ASCII8BitUTF implements CharSequence {
    *           if no more character is left
    */
   public String nextChar() {
-    if (!hasNextChar())
-      throw new IllegalStateException("No more character");
+    if (!hasNextChar()) throw new IllegalStateException("No more character");
 
     String ch;
     if (ch2Bytes(currentChar).size() == currentBytes.size()) {

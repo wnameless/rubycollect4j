@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -37,8 +34,8 @@ import java.util.logging.Logger;
  */
 public final class TryComparator<E> implements Comparator<E> {
 
-  private static final Logger logger = Logger.getLogger(TryComparator.class
-      .getName());
+  private static final Logger logger =
+      Logger.getLogger(TryComparator.class.getName());
 
   private final Comparator<? super E> comp;
 
@@ -69,10 +66,8 @@ public final class TryComparator<E> implements Comparator<E> {
       else
         diff = comp.compare(arg0, arg1);
     } catch (Exception e) {
-      if (arg0 == arg1)
-        return 0;
-      if (arg0 != null && arg0.equals(arg1))
-        return 0;
+      if (arg0 == arg1) return 0;
+      if (arg0 != null && arg0.equals(arg1)) return 0;
 
       logger.log(Level.SEVERE, null, e);
       throw new IllegalArgumentException("ArgumentError: comparison of "

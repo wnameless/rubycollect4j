@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2014 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -68,8 +65,8 @@ import net.sf.rubycollect4j.succ.StringSuccessor;
  * {@link RubyString}.
  * 
  */
-public final class RubyString extends RubyEnumerable<String> implements
-    CharSequence, Comparable<CharSequence>, Serializable {
+public final class RubyString extends RubyEnumerable<String>
+    implements CharSequence, Comparable<CharSequence>, Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -98,8 +95,8 @@ public final class RubyString extends RubyEnumerable<String> implements
   @Override
   protected Iterable<String> getIterable() {
     final String iterStr = str;
-    return range(0, iterStr.length() - 1).lazy().map(
-        new TransformBlock<Integer, String>() {
+    return range(0, iterStr.length() - 1).lazy()
+        .map(new TransformBlock<Integer, String>() {
 
           @Override
           public String yield(Integer item) {
@@ -110,12 +107,10 @@ public final class RubyString extends RubyEnumerable<String> implements
   }
 
   private String stringify(Object o) {
-    if (o == null)
-      throw new TypeConstraintException(
-          "TypeError: no implicit conversion of null into String");
+    if (o == null) throw new TypeConstraintException(
+        "TypeError: no implicit conversion of null into String");
 
-    if (o instanceof String)
-      return (String) o;
+    if (o instanceof String) return (String) o;
 
     if (o instanceof CharSequence) {
       CharSequence cs = (CharSequence) o;
@@ -126,8 +121,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   }
 
   private RubyString inPlace(RubyString rs) {
-    if (this.equals(rs))
-      return null;
+    if (this.equals(rs)) return null;
 
     str = rs.toS();
     return this;
@@ -183,8 +177,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    */
   public RubyString byteslice(int index) {
     Byte ch = bytes().at(index);
-    if (ch == null)
-      return null;
+    if (ch == null) return null;
 
     return rs(new String(new byte[] { ch }, Charset.forName("ISO-8859-1")));
   }
@@ -201,8 +194,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    */
   public RubyString byteslice(int offset, int length) {
     RubyArray<Byte> bytes = bytes().slice(offset, length);
-    if (bytes == null)
-      return null;
+    if (bytes == null) return null;
 
     byte[] byteAry = new byte[bytes.size()];
     for (int i = 0; i < byteAry.length; i++) {
@@ -218,11 +210,10 @@ public final class RubyString extends RubyEnumerable<String> implements
    * @return new {@link RubyString}
    */
   public RubyString capitalize() {
-    if (str.isEmpty())
-      return this;
+    if (str.isEmpty()) return this;
 
-    return rs(str.substring(0, 1).toUpperCase()
-        + str.substring(1).toLowerCase());
+    return rs(
+        str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase());
   }
 
   /**
@@ -274,8 +265,7 @@ public final class RubyString extends RubyEnumerable<String> implements
     if (stringify(padstr).isEmpty())
       throw new IllegalArgumentException("ArgumentError: zero width padding");
 
-    if (width <= str.length())
-      return rs(str);
+    if (width <= str.length()) return rs(str);
 
     RubyArray<String> centeredStr = newRubyArray();
     int start = (width - str.length()) / 2;
@@ -315,12 +305,10 @@ public final class RubyString extends RubyEnumerable<String> implements
    */
   public RubyString chomp() {
     String result = str.replaceFirst("\r\n$", "");
-    if (result.length() < str.length())
-      return rs(result);
+    if (result.length() < str.length()) return rs(result);
 
     result = result.replaceFirst("\r$", "");
-    if (result.length() < str.length())
-      return rs(result);
+    if (result.length() < str.length()) return rs(result);
 
     return rs(result.replaceFirst("\n$", ""));
   }
@@ -368,8 +356,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * @return new {@link RubyString}
    */
   public RubyString chop() {
-    if (str.isEmpty())
-      return rs(str);
+    if (str.isEmpty()) return rs(str);
 
     if (str.endsWith("\r\n"))
       return rs(str.substring(0, str.length() - 2));
@@ -393,8 +380,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * @return new {@link RubyString}
    */
   public RubyString chr() {
-    if (str.isEmpty())
-      return this;
+    if (str.isEmpty()) return this;
 
     return rs(str.substring(0, 1));
   }
@@ -465,13 +451,11 @@ public final class RubyString extends RubyEnumerable<String> implements
 
       @Override
       public boolean yield(String item) {
-        if (!isCharSetMatched(item, stringify(charSet)))
-          return false;
+        if (!isCharSetMatched(item, stringify(charSet))) return false;
 
         if (charSets != null) {
           for (String cs : charSets) {
-            if (!isCharSetMatched(item, stringify(cs)))
-              return false;
+            if (!isCharSetMatched(item, stringify(cs))) return false;
           }
         }
 
@@ -539,8 +523,7 @@ public final class RubyString extends RubyEnumerable<String> implements
 
       @Override
       public boolean yield(String item) {
-        if (!isCharSetMatched(item, charSet))
-          return false;
+        if (!isCharSetMatched(item, charSet)) return false;
 
         return true;
       }
@@ -663,8 +646,8 @@ public final class RubyString extends RubyEnumerable<String> implements
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<Integer> eachCodepoint() {
-    return newRubyEnumerator((Iterable<Integer>) each().lazy().map(
-        new TransformBlock<String, Integer>() {
+    return newRubyEnumerator((Iterable<Integer>) each().lazy()
+        .map(new TransformBlock<String, Integer>() {
 
           @Override
           public Integer yield(String item) {
@@ -808,13 +791,11 @@ public final class RubyString extends RubyEnumerable<String> implements
    * @return true if str ends with one of the suffixes given, false otherwise
    */
   public boolean endWithʔ(String suffix, String... otherSuffix) {
-    if (str.endsWith(stringify(suffix)))
-      return true;
+    if (str.endsWith(stringify(suffix))) return true;
 
     if (otherSuffix != null) {
       for (String s : otherSuffix) {
-        if (str.endsWith(stringify(s)))
-          return true;
+        if (str.endsWith(stringify(s))) return true;
       }
     }
 
@@ -881,8 +862,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * @return new {@link RubyString}
    */
   public RubyString gsub(String regex, Map<String, ?> map) {
-    if (isBlank(map))
-      return rs(str);
+    if (isBlank(map)) return rs(str);
 
     String result = str;
     Matcher matcher = qr(stringify(regex)).matcher(str);
@@ -1064,8 +1044,7 @@ public final class RubyString extends RubyEnumerable<String> implements
     if (regex == null)
       throw new TypeConstraintException("TypeError: type mismatch: null given");
 
-    if (offset < 0 || offset > str.length())
-      return null;
+    if (offset < 0 || offset > str.length()) return null;
 
     Matcher matcher = regex.matcher(str);
     if (matcher.find(offset))
@@ -1088,8 +1067,8 @@ public final class RubyString extends RubyEnumerable<String> implements
    */
   public RubyString insert(int index, String otherStr) {
     if (index < -str.length() - 1 || index > str.length())
-      throw new IndexOutOfBoundsException("IndexError: index " + index
-          + " out of string");
+      throw new IndexOutOfBoundsException(
+          "IndexError: index " + index + " out of string");
 
     str = toA().insert(index, stringify(otherStr)).join();
     return this;
@@ -1233,10 +1212,8 @@ public final class RubyString extends RubyEnumerable<String> implements
    * @return Matcher or null
    */
   public Matcher match(String regex, int pos) {
-    if (pos < 0)
-      pos = pos + str.length();
-    if (pos >= str.length() || pos < 0)
-      return null;
+    if (pos < 0) pos = pos + str.length();
+    if (pos >= str.length() || pos < 0) return null;
 
     Matcher matcher = qr(stringify(regex)).matcher(str);
     matcher.region(pos, str.length());
@@ -1297,8 +1274,7 @@ public final class RubyString extends RubyEnumerable<String> implements
       throw new TypeConstraintException("TypeError: type mismatch: null given");
 
     int sepIndex = str.indexOf(sep);
-    if (sepIndex == -1)
-      return newRubyArray(str, "", "");
+    if (sepIndex == -1) return newRubyArray(str, "", "");
 
     return newRubyArray(str.substring(0, sepIndex), sep,
         str.substring(sepIndex + sep.length()));
@@ -1398,10 +1374,8 @@ public final class RubyString extends RubyEnumerable<String> implements
   public Integer rindex(String substring, int stopAt) {
     stringify(substring);
 
-    if (stopAt < 0)
-      stopAt += str.length();
-    if (stopAt < 0)
-      return null;
+    if (stopAt < 0) stopAt += str.length();
+    if (stopAt < 0) return null;
 
     String revStr = new StringBuilder(str).reverse().toString();
     int index = revStr.indexOf(substring, str.length() - stopAt - 1);
@@ -1439,17 +1413,14 @@ public final class RubyString extends RubyEnumerable<String> implements
     if (pattern == null)
       throw new TypeConstraintException("TypeError: type mismatch: null given");
 
-    if (stopAt < 0)
-      stopAt += str.length();
-    if (stopAt < 0)
-      return null;
+    if (stopAt < 0) stopAt += str.length();
+    if (stopAt < 0) return null;
 
     Matcher matcher = pattern.matcher(str);
     int index = -1;
     while (matcher.find()) {
       int found = matcher.start();
-      if (found <= stopAt)
-        index = found;
+      if (found <= stopAt) index = found;
     }
     return index == -1 ? null : index;
   }
@@ -1508,8 +1479,7 @@ public final class RubyString extends RubyEnumerable<String> implements
       throw new TypeConstraintException("TypeError: type mismatch: null given");
 
     int sepIndex = str.lastIndexOf(sep);
-    if (sepIndex == -1)
-      return newRubyArray("", "", str);
+    if (sepIndex == -1) return newRubyArray("", "", str);
 
     return newRubyArray(str.substring(0, sepIndex), sep,
         str.substring(sepIndex + sep.length()));
@@ -1660,8 +1630,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * @return new {@link RubyString}
    */
   public RubyString scrub(String repl) {
-    if (repl == null)
-      return scrub();
+    if (repl == null) return scrub();
 
     return rs(str.replaceAll("\\p{C}", repl));
   }
@@ -1711,7 +1680,8 @@ public final class RubyString extends RubyEnumerable<String> implements
    * 
    * @return this {@link RubyString}
    */
-  public RubyString scrubǃ(final TransformBlock<RubyArray<Byte>, String> block) {
+  public RubyString scrubǃ(
+      final TransformBlock<RubyArray<Byte>, String> block) {
     return inPlace(scrub(block));
   }
 
@@ -1726,11 +1696,9 @@ public final class RubyString extends RubyEnumerable<String> implements
    */
   public byte setbyte(int index, byte b) {
     byte[] bytes = str.getBytes();
-    if (index < 0)
-      index += bytes.length;
-    if (index < 0 || index >= bytes.length)
-      throw new IndexOutOfBoundsException("IndexError: index " + index
-          + " out of string");
+    if (index < 0) index += bytes.length;
+    if (index < 0 || index >= bytes.length) throw new IndexOutOfBoundsException(
+        "IndexError: index " + index + " out of string");
 
     bytes[index] = b;
     str = new String(bytes);
@@ -1831,8 +1799,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   public RubyString sliceǃ(int index) {
     RubyArray<String> chars = toA();
     String slicedStr = chars.sliceǃ(index);
-    if (slicedStr == null)
-      return null;
+    if (slicedStr == null) return null;
 
     str = chars.join();
     return rs(slicedStr);
@@ -1850,8 +1817,7 @@ public final class RubyString extends RubyEnumerable<String> implements
   public RubyString sliceǃ(int index, int length) {
     RubyArray<String> chars = toA();
     RubyArray<String> slicedStr = chars.sliceǃ(index, length);
-    if (slicedStr == null)
-      return null;
+    if (slicedStr == null) return null;
 
     str = chars.join();
     return rs(slicedStr.join());
@@ -1866,8 +1832,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    */
   public RubyString sliceǃ(Pattern pattern) {
     RubyString slicedStr = slice(pattern);
-    if (slicedStr == null)
-      return null;
+    if (slicedStr == null) return null;
 
     str = str.replace(slicedStr, "");
     return slicedStr;
@@ -1884,8 +1849,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    */
   public RubyString sliceǃ(Pattern pattern, int group) {
     RubyString slicedStr = slice(pattern, group);
-    if (slicedStr == null)
-      return null;
+    if (slicedStr == null) return null;
 
     str = str.replace(slicedStr, "");
     return slicedStr;
@@ -1900,8 +1864,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    */
   public RubyString sliceǃ(String matchStr) {
     RubyString slicedStr = slice(matchStr);
-    if (slicedStr == null)
-      return null;
+    if (slicedStr == null) return null;
 
     str = str.replace(slicedStr, "");
     return slicedStr;
@@ -1926,8 +1889,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * @return {@link RubyArray}
    */
   public RubyArray<String> split(final String delimiter) {
-    if (delimiter == null || delimiter.equals(" "))
-      return split();
+    if (delimiter == null || delimiter.equals(" ")) return split();
 
     return newRubyArray(str.split(Pattern.quote(delimiter)));
   }
@@ -1968,8 +1930,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * @return {@link RubyArray}
    */
   public RubyArray<String> split(Pattern pattern) {
-    if (pattern == null)
-      return split();
+    if (pattern == null) return split();
 
     return newRubyArray(str.split(pattern.pattern()));
   }
@@ -1986,8 +1947,7 @@ public final class RubyString extends RubyEnumerable<String> implements
    * @return {@link RubyArray}
    */
   public RubyArray<String> split(Pattern pattern, int limit) {
-    if (pattern == null)
-      return split((String) null, limit);
+    if (pattern == null) return split((String) null, limit);
 
     if (limit <= 0)
       return newRubyArray(str.split(pattern.pattern()));
@@ -2050,13 +2010,11 @@ public final class RubyString extends RubyEnumerable<String> implements
    * @return true if str starts with one of the prefixes given, flase otherwise
    */
   public boolean startWithʔ(String prefix, String... otherPrefix) {
-    if (str.startsWith(stringify(prefix)))
-      return true;
+    if (str.startsWith(stringify(prefix))) return true;
 
     if (otherPrefix != null) {
       for (String p : otherPrefix) {
-        if (str.startsWith(p))
-          return true;
+        if (str.startsWith(p)) return true;
       }
     }
 
@@ -2233,8 +2191,8 @@ public final class RubyString extends RubyEnumerable<String> implements
 
       @Override
       public String yield(String item) {
-        return upperCase.matcher(item).matches() ? item.toLowerCase() : item
-            .toUpperCase();
+        return upperCase.matcher(item).matches() ? item.toLowerCase()
+            : item.toUpperCase();
       }
 
     }).join());
@@ -2279,8 +2237,8 @@ public final class RubyString extends RubyEnumerable<String> implements
   public int toI() {
     Matcher intMatcher = qr("^\\s*[-+]?\\s*\\d+").matcher(str);
     if (intMatcher.find())
-      return Integer.valueOf(intMatcher.group().trim()
-          .replaceAll("[\\s\\+]+", ""));
+      return Integer
+          .valueOf(intMatcher.group().trim().replaceAll("[\\s\\+]+", ""));
     else
       return 0;
   }
@@ -2297,13 +2255,13 @@ public final class RubyString extends RubyEnumerable<String> implements
    */
   public int toI(int radix) {
     if (radix < MIN_RADIX || radix > MAX_RADIX)
-      throw new IllegalArgumentException("ArgumentError: invalid radix "
-          + radix);
+      throw new IllegalArgumentException(
+          "ArgumentError: invalid radix " + radix);
 
     String digits = "0123456789abcdefghijklmnopqrstuvwxyz";
     Matcher intMatcher =
-        qr("(?i)^\\s*[-+]?\\s*[" + digits.substring(0, radix) + "]+").matcher(
-            str);
+        qr("(?i)^\\s*[-+]?\\s*[" + digits.substring(0, radix) + "]+")
+            .matcher(str);
     if (intMatcher.find()) {
       try {
         return Integer.parseInt(
@@ -2347,9 +2305,8 @@ public final class RubyString extends RubyEnumerable<String> implements
   public RubyString tr(String fromStr, String toStr) {
     fromStr = charSet2Str(stringify(fromStr));
     toStr = charSet2Str(stringify(toStr));
-    if (fromStr.startsWith("^"))
-      return rs(str.replaceAll("[" + fromStr + "]",
-          toStr.isEmpty() ? "" : rs(toStr).toA().last()));
+    if (fromStr.startsWith("^")) return rs(str.replaceAll("[" + fromStr + "]",
+        toStr.isEmpty() ? "" : rs(toStr).toA().last()));
 
     RubyArray<String> fromStrAry =
         rs(fromStr.replace("\\^", "^").replace("\\-", "-")).toA();
@@ -2357,8 +2314,8 @@ public final class RubyString extends RubyEnumerable<String> implements
     if (toStrAry.isEmpty())
       toStrAry.fill("", 0, fromStrAry.length());
     else if (toStrAry.length() < fromStrAry.length())
-      toStrAry.fill(toStrAry.last(), toStrAry.size(), fromStrAry.length()
-          - toStrAry.length());
+      toStrAry.fill(toStrAry.last(), toStrAry.size(),
+          fromStrAry.length() - toStrAry.length());
 
     @SuppressWarnings("unchecked")
     RubyHash<String, String> rh = Hash(fromStrAry.zip(toStrAry));
@@ -2429,8 +2386,7 @@ public final class RubyString extends RubyEnumerable<String> implements
 
         }).map("count");
 
-    if (toStr.isEmpty())
-      return rs(trStr);
+    if (toStr.isEmpty()) return rs(trStr);
 
     String trSqueezed = "";
     int i = 0;
@@ -2567,8 +2523,8 @@ public final class RubyString extends RubyEnumerable<String> implements
    *          to yield successive value
    * @return this {@link RubyString}
    */
-  public RubyString
-      upto(String otherStr, boolean exclusive, Block<String> block) {
+  public RubyString upto(String otherStr, boolean exclusive,
+      Block<String> block) {
     upto(stringify(otherStr), exclusive).each(block);
     return this;
   }

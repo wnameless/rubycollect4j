@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -38,8 +35,8 @@ import net.sf.rubycollect4j.RubyArray;
  * @param <E>
  *          the type of the elements
  */
-public final class RepeatedPermutationIterator<E> implements
-    Iterator<RubyArray<E>> {
+public final class RepeatedPermutationIterator<E>
+    implements Iterator<RubyArray<E>> {
 
   private final List<? extends E> list;
   private final int[] counter;
@@ -58,16 +55,14 @@ public final class RepeatedPermutationIterator<E> implements
    *           if list is null
    */
   public RepeatedPermutationIterator(List<? extends E> list, int n) {
-    if (list == null)
-      throw new NullPointerException();
+    if (list == null) throw new NullPointerException();
 
     this.list = new ArrayList<E>(list);
     end = this.list.size() - 1;
     if (n <= 0) {
       counter = new int[0];
       endStatus = new int[0];
-      if (n != 0)
-        hasMore = false;
+      if (n != 0) hasMore = false;
     } else {
       counter = new int[n];
       endStatus = new int[n];
@@ -109,8 +104,7 @@ public final class RepeatedPermutationIterator<E> implements
 
   @Override
   public RubyArray<E> next() {
-    if (!hasNext())
-      throw new NoSuchElementException();
+    if (!hasNext()) throw new NoSuchElementException();
 
     return nextElement();
   }

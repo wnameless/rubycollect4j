@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -39,15 +36,15 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+import org.junit.Before;
+import org.junit.Test;
+
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.block.EntryBlock;
 import net.sf.rubycollect4j.block.EntryBooleanBlock;
 import net.sf.rubycollect4j.block.EntryMergeBlock;
 import net.sf.rubycollect4j.block.EntryTransformBlock;
 import net.sf.rubycollect4j.util.ComparableEntry;
-
-import org.junit.Before;
-import org.junit.Test;
 
 public class RubyHashTest {
 
@@ -602,17 +599,15 @@ public class RubyHashTest {
 
   @Test
   public void testCollectConcat() {
-    assertEquals(
-        ra(3L, 7L, 11L),
-        rh.collectConcat(
-            new EntryTransformBlock<Integer, Integer, RubyArray<Long>>() {
+    assertEquals(ra(3L, 7L, 11L), rh.collectConcat(
+        new EntryTransformBlock<Integer, Integer, RubyArray<Long>>() {
 
-              @Override
-              public RubyArray<Long> yield(Integer key, Integer value) {
-                return ra(Long.valueOf(key + value));
-              }
+          @Override
+          public RubyArray<Long> yield(Integer key, Integer value) {
+            return ra(Long.valueOf(key + value));
+          }
 
-            }).toA());
+        }).toA());
   }
 
   @Test
@@ -743,17 +738,15 @@ public class RubyHashTest {
 
   @Test
   public void testFlatMap() {
-    assertEquals(
-        ra(3L, 7L, 11L),
-        rh.flatMap(
-            new EntryTransformBlock<Integer, Integer, RubyArray<Long>>() {
+    assertEquals(ra(3L, 7L, 11L), rh
+        .flatMap(new EntryTransformBlock<Integer, Integer, RubyArray<Long>>() {
 
-              @Override
-              public RubyArray<Long> yield(Integer key, Integer value) {
-                return ra(Long.valueOf(key + value));
-              }
+          @Override
+          public RubyArray<Long> yield(Integer key, Integer value) {
+            return ra(Long.valueOf(key + value));
+          }
 
-            }).toA());
+        }).toA());
   }
 
   @Test
@@ -817,17 +810,15 @@ public class RubyHashTest {
 
   @Test
   public void testMaxBy() {
-    assertEquals(
-        hp(1, 6),
-        rh(1, 6, 2, 5, 3, 4).maxBy(
-            new EntryTransformBlock<Integer, Integer, Long>() {
+    assertEquals(hp(1, 6), rh(1, 6, 2, 5, 3, 4)
+        .maxBy(new EntryTransformBlock<Integer, Integer, Long>() {
 
-              @Override
-              public Long yield(Integer key, Integer value) {
-                return Long.valueOf(value - key);
-              }
+          @Override
+          public Long yield(Integer key, Integer value) {
+            return Long.valueOf(value - key);
+          }
 
-            }));
+        }));
   }
 
   @Test
@@ -851,17 +842,15 @@ public class RubyHashTest {
 
   @Test
   public void testMinBy() {
-    assertEquals(
-        hp(3, 4),
-        rh(1, 6, 2, 5, 3, 4).minBy(
-            new EntryTransformBlock<Integer, Integer, Long>() {
+    assertEquals(hp(3, 4), rh(1, 6, 2, 5, 3, 4)
+        .minBy(new EntryTransformBlock<Integer, Integer, Long>() {
 
-              @Override
-              public Long yield(Integer key, Integer value) {
-                return Long.valueOf(value - key);
-              }
+          @Override
+          public Long yield(Integer key, Integer value) {
+            return Long.valueOf(value - key);
+          }
 
-            }));
+        }));
   }
 
   @SuppressWarnings("unchecked")
@@ -888,17 +877,15 @@ public class RubyHashTest {
   @SuppressWarnings("unchecked")
   @Test
   public void testMinmaxBy() {
-    assertEquals(
-        ra(hp(3, 4), hp(1, 6)),
-        rh(1, 6, 2, 5, 3, 4).minmaxBy(
-            new EntryTransformBlock<Integer, Integer, Long>() {
+    assertEquals(ra(hp(3, 4), hp(1, 6)), rh(1, 6, 2, 5, 3, 4)
+        .minmaxBy(new EntryTransformBlock<Integer, Integer, Long>() {
 
-              @Override
-              public Long yield(Integer key, Integer value) {
-                return Long.valueOf(value - key);
-              }
+          @Override
+          public Long yield(Integer key, Integer value) {
+            return Long.valueOf(value - key);
+          }
 
-            }));
+        }));
   }
 
   @Test
@@ -1023,17 +1010,15 @@ public class RubyHashTest {
   @SuppressWarnings("unchecked")
   @Test
   public void testSortByBy() {
-    assertEquals(
-        ra(hp(1, 6), hp(2, 5), hp(3, 4)),
-        rh(1, 6, 2, 5, 3, 4).sortBy(
-            new EntryTransformBlock<Integer, Integer, Long>() {
+    assertEquals(ra(hp(1, 6), hp(2, 5), hp(3, 4)), rh(1, 6, 2, 5, 3, 4)
+        .sortBy(new EntryTransformBlock<Integer, Integer, Long>() {
 
-              @Override
-              public Long yield(Integer key, Integer value) {
-                return Long.valueOf(key);
-              }
+          @Override
+          public Long yield(Integer key, Integer value) {
+            return Long.valueOf(key);
+          }
 
-            }));
+        }));
   }
 
   @SuppressWarnings("unchecked")

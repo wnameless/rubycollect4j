@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -35,8 +32,8 @@ import net.sf.rubycollect4j.util.ComparableEntry;
  * @param <V>
  *          the type of the value elements
  */
-public final class ComparableEntryIterable<K, V> implements
-    Iterable<Entry<K, V>> {
+public final class ComparableEntryIterable<K, V>
+    implements Iterable<Entry<K, V>> {
 
   private final Iterable<? extends Entry<? extends K, ? extends V>> iter;
 

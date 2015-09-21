@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -78,8 +75,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
   @Override
   public boolean containsValue(Object value) {
     for (V val : map.values()) {
-      if (val == null ? value == null : val.equals(value))
-        return true;
+      if (val == null ? value == null : val.equals(value)) return true;
     }
     return false;
   }
@@ -106,8 +102,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
 
   @Override
   public V put(K key, V value) {
-    if (!map.containsKey(key))
-      list.add(key);
+    if (!map.containsKey(key)) list.add(key);
     return map.put(key, value);
   }
 
@@ -215,12 +210,11 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
       if (o instanceof IdentityEntry) {
         IdentityEntry<?, ?> iEntry = (IdentityEntry<?, ?>) o;
         return iEntry.getKey() == entry.getKey()
-            && (iEntry.getValue() == null ? entry.getValue() == null : iEntry
-                .getValue().equals(entry.getValue()));
+            && (iEntry.getValue() == null ? entry.getValue() == null
+                : iEntry.getValue().equals(entry.getValue()));
       }
 
-      if (o instanceof Entry)
-        return entry.equals(o);
+      if (o instanceof Entry) return entry.equals(o);
 
       return false;
     }
@@ -281,8 +275,8 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
         Entry<?, ?> entry = (Entry<?, ?>) o;
         if (map.containsKey(entry.getKey())) {
           U val = map.get(entry.getKey());
-          if (val == null ? entry.getValue() == null : val.equals(entry
-              .getValue()))
+          if (val == null ? entry.getValue() == null
+              : val.equals(entry.getValue()))
             return true;
         }
       }
@@ -323,8 +317,8 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
         Entry<?, ?> entry = (Entry<?, ?>) o;
         if (map.containsKey(entry.getKey())) {
           U val = map.get(entry.getKey());
-          if ((val == null ? entry.getValue() == null : val.equals(entry
-              .getValue()))) {
+          if ((val == null ? entry.getValue() == null
+              : val.equals(entry.getValue()))) {
             removeByIdentity(list, entry.getKey());
             map.remove(entry.getKey());
             return true;
@@ -355,9 +349,8 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
       for (Object o : c) {
         if (o instanceof Entry) {
           Entry<?, ?> entry = (Entry<?, ?>) o;
-          hashMap.put(
-              new IdentityEntry<Object, Object>(entry.getKey(), entry
-                  .getValue()), null);
+          hashMap.put(new IdentityEntry<Object, Object>(entry.getKey(),
+              entry.getValue()), null);
         }
       }
 
@@ -658,8 +651,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
     @Override
     public boolean contains(Object o) {
       for (U val : map.values()) {
-        if (val == null ? o == null : val.equals(o))
-          return true;
+        if (val == null ? o == null : val.equals(o)) return true;
       }
       return false;
     }

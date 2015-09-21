@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -49,8 +46,7 @@ public final class PermutationIterable<E> implements Iterable<RubyArray<E>> {
    *           if list is null
    */
   public PermutationIterable(List<? extends E> list, int n) {
-    if (list == null)
-      throw new NullPointerException();
+    if (list == null) throw new NullPointerException();
 
     this.list = list;
     this.n = n;

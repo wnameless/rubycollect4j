@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -48,8 +45,8 @@ import net.sf.rubycollect4j.RubyArray;
  */
 public final class ByteUtil {
 
-  private static final Logger logger = Logger.getLogger(ByteUtil.class
-      .getName());
+  private static final Logger logger =
+      Logger.getLogger(ByteUtil.class.getName());
 
   private ByteUtil() {};
 
@@ -343,8 +340,7 @@ public final class ByteUtil {
    *           if the Object can't be converted into bytes
    */
   public static byte[] toByteArray(Object o, ByteOrder bo) {
-    if (o instanceof Byte)
-      return new byte[] { (Byte) o };
+    if (o instanceof Byte) return new byte[] { (Byte) o };
     if (o instanceof Short)
       return ByteBuffer.allocate(2).order(bo).putShort((Short) o).array();
     if (o instanceof Integer)
@@ -466,9 +462,8 @@ public final class ByteUtil {
   public static String toBinaryString(byte[] bytes, boolean isMSB) {
     StringBuilder sb = new StringBuilder();
     for (byte b : bytes) {
-      String binary =
-          String.format("%8s", Integer.toBinaryString(b & 0xFF)).replace(' ',
-              '0');
+      String binary = String.format("%8s", Integer.toBinaryString(b & 0xFF))
+          .replace(' ', '0');
       if (isMSB)
         sb.append(binary);
       else
@@ -522,8 +517,7 @@ public final class ByteUtil {
   public static byte[] fromBinaryString(String binaryStr) {
     if (!binaryStr.matches("^[01]*$"))
       throw new IllegalArgumentException("Invalid binary string");
-    if (binaryStr.isEmpty())
-      return new byte[0];
+    if (binaryStr.isEmpty()) return new byte[0];
 
     int complementary = binaryStr.length() % 8;
     if (complementary != 0)
@@ -544,12 +538,10 @@ public final class ByteUtil {
   public static byte[] fromHexString(String hexStr) {
     if (!hexStr.matches("^[0-9A-Fa-f]*$"))
       throw new IllegalArgumentException("Invalid hexadecimal string");
-    if (hexStr.isEmpty())
-      return new byte[0];
+    if (hexStr.isEmpty()) return new byte[0];
 
     int complementary = hexStr.length() % 2;
-    if (complementary != 0)
-      hexStr += "0";
+    if (complementary != 0) hexStr += "0";
     return rjust(new BigInteger(hexStr, 16).toByteArray(), hexStr.length() / 2);
   }
 

@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -57,15 +54,13 @@ public final class PermutationIterator<E> implements Iterator<RubyArray<E>> {
    *           if list is null
    */
   public PermutationIterator(List<? extends E> list, int n) {
-    if (list == null)
-      throw new NullPointerException();
+    if (list == null) throw new NullPointerException();
 
     this.list = new ArrayList<E>(list);
     if (n <= 0 || n > this.list.size()) {
       counter = new int[0];
       endStatus = new int[0];
-      if (n != 0)
-        hasMore = false;
+      if (n != 0) hasMore = false;
     } else {
       counter = new int[n];
       initCounter();
@@ -119,8 +114,7 @@ public final class PermutationIterator<E> implements Iterator<RubyArray<E>> {
 
   private int getHigherIndex(int pos) {
     int current = counter[pos];
-    if (current + 1 >= list.size())
-      return -1;
+    if (current + 1 >= list.size()) return -1;
 
     List<Integer> indice = getAllIndice();
     for (int i = 0; i <= pos; i++) {
@@ -129,8 +123,7 @@ public final class PermutationIterator<E> implements Iterator<RubyArray<E>> {
     ListIterator<Integer> iter = indice.listIterator();
     while (iter.hasNext()) {
       Integer i = iter.next();
-      if (i <= current)
-        iter.remove();
+      if (i <= current) iter.remove();
     }
     return indice.isEmpty() ? -1 : indice.get(0);
   }
@@ -158,8 +151,7 @@ public final class PermutationIterator<E> implements Iterator<RubyArray<E>> {
 
   @Override
   public RubyArray<E> next() {
-    if (!hasNext())
-      throw new NoSuchElementException();
+    if (!hasNext()) throw new NoSuchElementException();
 
     return nextElement();
   }

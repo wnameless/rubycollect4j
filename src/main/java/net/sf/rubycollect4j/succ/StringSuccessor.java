@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -49,8 +46,7 @@ public final class StringSuccessor implements Successive<String> {
 
   @Override
   public String succ(String curr) {
-    if (curr.isEmpty())
-      return "";
+    if (curr.isEmpty()) return "";
 
     List<List<Character>> parts = partition(curr);
     if (parts.size() > 1 || isAlphanumeric(parts.get(0).get(0)))
@@ -70,21 +66,16 @@ public final class StringSuccessor implements Successive<String> {
   private void nextAlphanumeric(List<List<Character>> parts) {
     boolean carry = false;
     for (int i = parts.size() - 1; i >= 0; i--) {
-      if (!(isAlphanumeric(parts.get(i).get(0))))
-        continue;
-      if (!(carry = increaseAlphanumeric(parts.get(i))))
-        break;
+      if (!(isAlphanumeric(parts.get(i).get(0)))) continue;
+      if (!(carry = increaseAlphanumeric(parts.get(i)))) break;
     }
     if (carry) {
       for (List<Character> chars : parts) {
         Character c = chars.get(0);
         if (isAlphanumeric(c)) {
-          if (isDigit(c))
-            chars.add(0, '1');
-          if (isUpperCase(c))
-            chars.add(0, 'A');
-          if (isLowerCase(c))
-            chars.add(0, 'a');
+          if (isDigit(c)) chars.add(0, '1');
+          if (isUpperCase(c)) chars.add(0, 'A');
+          if (isLowerCase(c)) chars.add(0, 'a');
           break;
         }
       }
@@ -130,8 +121,7 @@ public final class StringSuccessor implements Successive<String> {
         carry = true;
       }
     }
-    if (carry)
-      utf8.add(0, (char) 1);
+    if (carry) utf8.add(0, (char) 1);
   }
 
   private char increaseUTF8(char c) {
@@ -181,8 +171,7 @@ public final class StringSuccessor implements Successive<String> {
 
     if (o1.length() > o2.length())
       return 1;
-    else if (o1.length() < o2.length())
-      return -1;
+    else if (o1.length() < o2.length()) return -1;
 
     return o1.compareTo(o2);
   }

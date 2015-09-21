@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -61,9 +58,8 @@ public final class RubyDir extends RubyEnumerable<String> {
    */
   public static RubyDir open(String path) {
     File dir = new File(path);
-    if (!dir.exists() || !dir.isDirectory())
-      throw new IllegalArgumentException(
-          "Errno::ENOENT: No such file or directory - " + path);
+    if (!dir.exists() || !dir.isDirectory()) throw new IllegalArgumentException(
+        "Errno::ENOENT: No such file or directory - " + path);
 
     return new RubyDir(dir);
   }
@@ -150,8 +146,7 @@ public final class RubyDir extends RubyEnumerable<String> {
    * @return {@link RubyArray}
    */
   public static RubyArray<String> glob(String pattern) {
-    if (pattern.isEmpty())
-      return newRubyArray();
+    if (pattern.isEmpty()) return newRubyArray();
 
     pattern = convertWindowsPathToLinuxPath(pattern);
     boolean recursive = pattern.contains("/**/") || pattern.startsWith("**/");
@@ -186,8 +181,7 @@ public final class RubyDir extends RubyEnumerable<String> {
       String path = convertWindowsPathToLinuxPath(f.getPath());
       String fPath = f.isDirectory() ? f.getPath() + "/" : f.getPath();
       fPath = convertWindowsPathToLinuxPath(fPath);
-      if (path.matches("(\\.[^/]+.*|.*/\\.[^/]+.*)"))
-        continue;
+      if (path.matches("(\\.[^/]+.*|.*/\\.[^/]+.*)")) continue;
 
       if (emptyRoot) {
         path = path.replace("./", "");
@@ -329,8 +323,7 @@ public final class RubyDir extends RubyEnumerable<String> {
    * @return entry of file
    */
   public String read() {
-    if (position < 0 || position >= entries.size())
-      return null;
+    if (position < 0 || position >= entries.size()) return null;
 
     return entries.get(position++);
   }

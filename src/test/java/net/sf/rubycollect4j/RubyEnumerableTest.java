@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -39,6 +36,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
+import org.junit.Before;
+import org.junit.Test;
+
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.block.BooleanBlock;
 import net.sf.rubycollect4j.block.ReduceBlock;
@@ -46,9 +46,6 @@ import net.sf.rubycollect4j.block.TransformBlock;
 import net.sf.rubycollect4j.block.WithIndexBlock;
 import net.sf.rubycollect4j.block.WithInitBlock;
 import net.sf.rubycollect4j.block.WithObjectBlock;
-
-import org.junit.Before;
-import org.junit.Test;
 
 public class RubyEnumerableTest {
 
@@ -146,10 +143,12 @@ public class RubyEnumerableTest {
           }
 
         }).toA();
-    assertEquals(hp(false, newRubyArray(1)).toString(), chunk.get(0).toString());
-    assertEquals(hp(true, newRubyArray(2, 2)).toString(), chunk.get(1)
-        .toString());
-    assertEquals(hp(false, newRubyArray(3)).toString(), chunk.get(2).toString());
+    assertEquals(hp(false, newRubyArray(1)).toString(),
+        chunk.get(0).toString());
+    assertEquals(hp(true, newRubyArray(2, 2)).toString(),
+        chunk.get(1).toString());
+    assertEquals(hp(false, newRubyArray(3)).toString(),
+        chunk.get(2).toString());
     assertEquals(3, chunk.size());
   }
 
@@ -271,8 +270,7 @@ public class RubyEnumerableTest {
       @Override
       public void yield(Integer item) {
         ints.push(item);
-        if (ints.size() > 1000)
-          throw new IllegalStateException();
+        if (ints.size() > 1000) throw new IllegalStateException();
       }
 
     });
@@ -1204,8 +1202,8 @@ public class RubyEnumerableTest {
     assertEquals(ra(1, 2, 3, 3, 4), re.sort());
     assertEquals(ra("abc", "b", "cd"),
         newRubyEnumerator(Arrays.asList("b", "cd", "abc")).sort());
-    assertEquals(ra(null, null, null), newRubyEnumerator(ra(null, null, null))
-        .sort());
+    assertEquals(ra(null, null, null),
+        newRubyEnumerator(ra(null, null, null)).sort());
     re = newRubyEnumerator(Arrays.asList(1));
     assertEquals(ra(1), re.sort());
   }

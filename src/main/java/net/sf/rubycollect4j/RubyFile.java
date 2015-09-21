@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -39,8 +36,8 @@ import java.util.logging.Logger;
  */
 public final class RubyFile extends RubyIO {
 
-  private static final Logger logger = Logger.getLogger(RubyFile.class
-      .getName());
+  private static final Logger logger =
+      Logger.getLogger(RubyFile.class.getName());
 
   /**
    * Creates a {@link RubyFile} by given path and mode.
@@ -73,8 +70,8 @@ public final class RubyFile extends RubyIO {
     return open(path, R.toString());
   }
 
-  private RubyFile(File file, Mode mode) throws FileNotFoundException,
-      IOException {
+  private RubyFile(File file, Mode mode)
+      throws FileNotFoundException, IOException {
     super(file, mode);
   }
 
@@ -312,9 +309,8 @@ public final class RubyFile extends RubyIO {
    */
   public static long size(String path) {
     File file = new File(path);
-    if (!file.exists())
-      throw new IllegalArgumentException(
-          "Errno::ENOENT: No such file or directory - " + path);
+    if (!file.exists()) throw new IllegalArgumentException(
+        "Errno::ENOENT: No such file or directory - " + path);
 
     return file.length();
   }
@@ -329,8 +325,7 @@ public final class RubyFile extends RubyIO {
    */
   public static Long sizeʔ(String path) {
     File file = new File(path);
-    if (!file.exists())
-      return null;
+    if (!file.exists()) return null;
 
     Long size = file.length();
     return size == 0L ? null : size;
@@ -355,8 +350,7 @@ public final class RubyFile extends RubyIO {
    * @return true if file existed and gets 0 in length, otherwise false
    */
   public static boolean zeroʔ(String path) {
-    if (!existʔ(path))
-      return false;
+    if (!existʔ(path)) return false;
 
     return sizeʔ(path) == null;
   }

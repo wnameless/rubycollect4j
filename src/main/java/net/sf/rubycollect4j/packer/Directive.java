@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -178,9 +175,9 @@ public enum Directive {
    */
   h(false);
 
-  public static final Map<String, Directive> lookup = Hash(
-      ra(Directive.values()).map(
-          new TransformBlock<Directive, Entry<String, Directive>>() {
+  public static final Map<String, Directive> lookup =
+      Hash(ra(Directive.values())
+          .map(new TransformBlock<Directive, Entry<String, Directive>>() {
 
             @Override
             public Entry<String, Directive> yield(Directive item) {
@@ -228,92 +225,79 @@ public enum Directive {
    */
   public String pack(byte[] bytes) {
     switch (this) {
-    default: // c
-      return ByteUtil.toExtendedASCIIs(bytes, 1, nativeOrder());
-    case s:
-      return ByteUtil.toExtendedASCIIs(bytes, 2, nativeOrder());
-    case sb:
-      if (nativeOrder() != BIG_ENDIAN)
-        ByteUtil.reverse(bytes);
-      return ByteUtil.toExtendedASCIIs(bytes, 2, BIG_ENDIAN);
-    case sl:
-      if (nativeOrder() != LITTLE_ENDIAN)
-        ByteUtil.reverse(bytes);
-      return ByteUtil.toExtendedASCIIs(bytes, 2, LITTLE_ENDIAN);
-    case l:
-      return ByteUtil.toExtendedASCIIs(bytes, 4, nativeOrder());
-    case lb:
-      if (nativeOrder() != BIG_ENDIAN)
-        ByteUtil.reverse(bytes);
-      return ByteUtil.toExtendedASCIIs(bytes, 4, BIG_ENDIAN);
-    case ll:
-      if (nativeOrder() != LITTLE_ENDIAN)
-        ByteUtil.reverse(bytes);
-      return ByteUtil.toExtendedASCIIs(bytes, 4, LITTLE_ENDIAN);
-    case q:
-      return ByteUtil.toExtendedASCIIs(bytes, 8, nativeOrder());
-    case qb:
-      if (nativeOrder() != BIG_ENDIAN)
-        ByteUtil.reverse(bytes);
-      return ByteUtil.toExtendedASCIIs(bytes, 8, BIG_ENDIAN);
-    case ql:
-      if (nativeOrder() != LITTLE_ENDIAN)
-        ByteUtil.reverse(bytes);
-      return ByteUtil.toExtendedASCIIs(bytes, 8, LITTLE_ENDIAN);
-    case D:
-      return ByteUtil.toExtendedASCIIs(bytes, 8, nativeOrder());
-    case d:
-      return ByteUtil.toExtendedASCIIs(bytes, 8, nativeOrder());
-    case E:
-      if (nativeOrder() != LITTLE_ENDIAN)
-        ByteUtil.reverse(bytes);
-      return ByteUtil.toExtendedASCIIs(bytes, 8, LITTLE_ENDIAN);
-    case G:
-      if (nativeOrder() != BIG_ENDIAN)
-        ByteUtil.reverse(bytes);
-      return ByteUtil.toExtendedASCIIs(bytes, 8, BIG_ENDIAN);
-    case F:
-      return ByteUtil.toExtendedASCIIs(bytes, 4, nativeOrder());
-    case f:
-      return ByteUtil.toExtendedASCIIs(bytes, 4, nativeOrder());
-    case e:
-      if (nativeOrder() != LITTLE_ENDIAN)
-        ByteUtil.reverse(bytes);
-      return ByteUtil.toExtendedASCIIs(bytes, 4, LITTLE_ENDIAN);
-    case g:
-      if (nativeOrder() != BIG_ENDIAN)
-        ByteUtil.reverse(bytes);
-      return ByteUtil.toExtendedASCIIs(bytes, 4, BIG_ENDIAN);
-    case U:
-      if (nativeOrder() != BIG_ENDIAN)
-        ByteUtil.reverse(bytes);
-      return ByteUtil.toUTF(bytes);
-    case A:
-      return new String(bytes);
-    case a:
-      return new String(bytes);
-    case Z:
-      return new String(bytes);
-    case B:
-      return new String(bytes, Charset.forName("ISO-8859-1"));
-    case b:
-      byte[] msb = new byte[bytes.length];
-      for (int i = 0; i < msb.length; i++) {
-        msb[i] =
-            (byte) Integer.parseInt(
-                ByteUtil.toBinaryString(new byte[] { bytes[i] }, false), 2);
-      }
-      return new String(msb, Charset.forName("ISO-8859-1"));
-    case H:
-      return new String(bytes, Charset.forName("ISO-8859-1"));
-    case h:
-      byte[] lnf = new byte[bytes.length];
-      for (int i = 0; i < lnf.length; i++) {
-        lnf[i] =
-            (byte) Integer.parseInt(
-                ByteUtil.toHexString(new byte[] { bytes[i] }, false), 16);
-      }
-      return new String(lnf, Charset.forName("ISO-8859-1"));
+      default: // c
+        return ByteUtil.toExtendedASCIIs(bytes, 1, nativeOrder());
+      case s:
+        return ByteUtil.toExtendedASCIIs(bytes, 2, nativeOrder());
+      case sb:
+        if (nativeOrder() != BIG_ENDIAN) ByteUtil.reverse(bytes);
+        return ByteUtil.toExtendedASCIIs(bytes, 2, BIG_ENDIAN);
+      case sl:
+        if (nativeOrder() != LITTLE_ENDIAN) ByteUtil.reverse(bytes);
+        return ByteUtil.toExtendedASCIIs(bytes, 2, LITTLE_ENDIAN);
+      case l:
+        return ByteUtil.toExtendedASCIIs(bytes, 4, nativeOrder());
+      case lb:
+        if (nativeOrder() != BIG_ENDIAN) ByteUtil.reverse(bytes);
+        return ByteUtil.toExtendedASCIIs(bytes, 4, BIG_ENDIAN);
+      case ll:
+        if (nativeOrder() != LITTLE_ENDIAN) ByteUtil.reverse(bytes);
+        return ByteUtil.toExtendedASCIIs(bytes, 4, LITTLE_ENDIAN);
+      case q:
+        return ByteUtil.toExtendedASCIIs(bytes, 8, nativeOrder());
+      case qb:
+        if (nativeOrder() != BIG_ENDIAN) ByteUtil.reverse(bytes);
+        return ByteUtil.toExtendedASCIIs(bytes, 8, BIG_ENDIAN);
+      case ql:
+        if (nativeOrder() != LITTLE_ENDIAN) ByteUtil.reverse(bytes);
+        return ByteUtil.toExtendedASCIIs(bytes, 8, LITTLE_ENDIAN);
+      case D:
+        return ByteUtil.toExtendedASCIIs(bytes, 8, nativeOrder());
+      case d:
+        return ByteUtil.toExtendedASCIIs(bytes, 8, nativeOrder());
+      case E:
+        if (nativeOrder() != LITTLE_ENDIAN) ByteUtil.reverse(bytes);
+        return ByteUtil.toExtendedASCIIs(bytes, 8, LITTLE_ENDIAN);
+      case G:
+        if (nativeOrder() != BIG_ENDIAN) ByteUtil.reverse(bytes);
+        return ByteUtil.toExtendedASCIIs(bytes, 8, BIG_ENDIAN);
+      case F:
+        return ByteUtil.toExtendedASCIIs(bytes, 4, nativeOrder());
+      case f:
+        return ByteUtil.toExtendedASCIIs(bytes, 4, nativeOrder());
+      case e:
+        if (nativeOrder() != LITTLE_ENDIAN) ByteUtil.reverse(bytes);
+        return ByteUtil.toExtendedASCIIs(bytes, 4, LITTLE_ENDIAN);
+      case g:
+        if (nativeOrder() != BIG_ENDIAN) ByteUtil.reverse(bytes);
+        return ByteUtil.toExtendedASCIIs(bytes, 4, BIG_ENDIAN);
+      case U:
+        if (nativeOrder() != BIG_ENDIAN) ByteUtil.reverse(bytes);
+        return ByteUtil.toUTF(bytes);
+      case A:
+        return new String(bytes);
+      case a:
+        return new String(bytes);
+      case Z:
+        return new String(bytes);
+      case B:
+        return new String(bytes, Charset.forName("ISO-8859-1"));
+      case b:
+        byte[] msb = new byte[bytes.length];
+        for (int i = 0; i < msb.length; i++) {
+          msb[i] = (byte) Integer.parseInt(
+              ByteUtil.toBinaryString(new byte[] { bytes[i] }, false), 2);
+        }
+        return new String(msb, Charset.forName("ISO-8859-1"));
+      case H:
+        return new String(bytes, Charset.forName("ISO-8859-1"));
+      case h:
+        byte[] lnf = new byte[bytes.length];
+        for (int i = 0; i < lnf.length; i++) {
+          lnf[i] = (byte) Integer.parseInt(
+              ByteUtil.toHexString(new byte[] { bytes[i] }, false), 16);
+        }
+        return new String(lnf, Charset.forName("ISO-8859-1"));
     }
   }
 
@@ -341,52 +325,52 @@ public enum Directive {
    */
   public Object unpack(byte[] bytes) {
     switch (this) {
-    default: // c
-      return bytes[0];
-    case U:
-      return new String(bytes).codePointAt(0);
-    case s:
-      return ByteBuffer.wrap(bytes).order(nativeOrder()).getShort();
-    case sb:
-      return ByteBuffer.wrap(bytes).order(BIG_ENDIAN).getShort();
-    case sl:
-      return ByteBuffer.wrap(bytes).order(LITTLE_ENDIAN).getShort();
-    case l:
-      return ByteBuffer.wrap(bytes).order(nativeOrder()).getInt();
-    case lb:
-      return ByteBuffer.wrap(bytes).order(BIG_ENDIAN).getInt();
-    case ll:
-      return ByteBuffer.wrap(bytes).order(LITTLE_ENDIAN).getInt();
-    case q:
-      return ByteBuffer.wrap(bytes).order(nativeOrder()).getLong();
-    case qb:
-      return ByteBuffer.wrap(bytes).order(BIG_ENDIAN).getLong();
-    case ql:
-      return ByteBuffer.wrap(bytes).order(LITTLE_ENDIAN).getLong();
-    case D:
-      return ByteBuffer.wrap(bytes).order(nativeOrder()).getDouble();
-    case d:
-      return ByteBuffer.wrap(bytes).order(nativeOrder()).getDouble();
-    case E:
-      return ByteBuffer.wrap(bytes).order(LITTLE_ENDIAN).getDouble();
-    case G:
-      return ByteBuffer.wrap(bytes).order(BIG_ENDIAN).getDouble();
-    case F:
-      return ByteBuffer.wrap(bytes).order(nativeOrder()).getFloat();
-    case f:
-      return ByteBuffer.wrap(bytes).order(nativeOrder()).getFloat();
-    case e:
-      return ByteBuffer.wrap(bytes).order(LITTLE_ENDIAN).getFloat();
-    case g:
-      return ByteBuffer.wrap(bytes).order(BIG_ENDIAN).getFloat();
-    case B:
-      return ByteUtil.toBinaryString(bytes, true);
-    case b:
-      return ByteUtil.toBinaryString(bytes, false);
-    case H:
-      return ByteUtil.toHexString(bytes, true);
-    case h:
-      return ByteUtil.toHexString(bytes, false);
+      default: // c
+        return bytes[0];
+      case U:
+        return new String(bytes).codePointAt(0);
+      case s:
+        return ByteBuffer.wrap(bytes).order(nativeOrder()).getShort();
+      case sb:
+        return ByteBuffer.wrap(bytes).order(BIG_ENDIAN).getShort();
+      case sl:
+        return ByteBuffer.wrap(bytes).order(LITTLE_ENDIAN).getShort();
+      case l:
+        return ByteBuffer.wrap(bytes).order(nativeOrder()).getInt();
+      case lb:
+        return ByteBuffer.wrap(bytes).order(BIG_ENDIAN).getInt();
+      case ll:
+        return ByteBuffer.wrap(bytes).order(LITTLE_ENDIAN).getInt();
+      case q:
+        return ByteBuffer.wrap(bytes).order(nativeOrder()).getLong();
+      case qb:
+        return ByteBuffer.wrap(bytes).order(BIG_ENDIAN).getLong();
+      case ql:
+        return ByteBuffer.wrap(bytes).order(LITTLE_ENDIAN).getLong();
+      case D:
+        return ByteBuffer.wrap(bytes).order(nativeOrder()).getDouble();
+      case d:
+        return ByteBuffer.wrap(bytes).order(nativeOrder()).getDouble();
+      case E:
+        return ByteBuffer.wrap(bytes).order(LITTLE_ENDIAN).getDouble();
+      case G:
+        return ByteBuffer.wrap(bytes).order(BIG_ENDIAN).getDouble();
+      case F:
+        return ByteBuffer.wrap(bytes).order(nativeOrder()).getFloat();
+      case f:
+        return ByteBuffer.wrap(bytes).order(nativeOrder()).getFloat();
+      case e:
+        return ByteBuffer.wrap(bytes).order(LITTLE_ENDIAN).getFloat();
+      case g:
+        return ByteBuffer.wrap(bytes).order(BIG_ENDIAN).getFloat();
+      case B:
+        return ByteUtil.toBinaryString(bytes, true);
+      case b:
+        return ByteUtil.toBinaryString(bytes, false);
+      case H:
+        return ByteUtil.toHexString(bytes, true);
+      case h:
+        return ByteUtil.toHexString(bytes, false);
     }
   }
 
@@ -400,67 +384,49 @@ public enum Directive {
    */
   public Object cast(Object o) {
     switch (this) {
-    default: // c
-      if (o instanceof Number)
-        return ((Number) o).byteValue();
-      if (o instanceof Boolean)
-        return ((Boolean) o) ? (byte) 1 : (byte) 0;
-      if (o instanceof Character)
-        return (byte) ((Character) o).charValue();
-      break;
-    case s:
-    case sb:
-    case sl:
-      if (o instanceof Number)
-        return ((Number) o).shortValue();
-      if (o instanceof Boolean)
-        return ((Boolean) o) ? (short) 1 : (short) 0;
-      if (o instanceof Character)
-        return (short) ((Character) o).charValue();
-      break;
-    case l:
-    case lb:
-    case ll:
-    case U:
-      if (o instanceof Number)
-        return ((Number) o).intValue();
-      if (o instanceof Boolean)
-        return ((Boolean) o) ? 1 : 0;
-      if (o instanceof Character)
-        return (int) ((Character) o).charValue();
-      break;
-    case q:
-    case qb:
-    case ql:
-      if (o instanceof Number)
-        return ((Number) o).longValue();
-      if (o instanceof Boolean)
-        return ((Boolean) o) ? 1L : 0L;
-      if (o instanceof Character)
-        return (long) ((Character) o).charValue();
-      break;
-    case D:
-    case d:
-    case E:
-    case G:
-      if (o instanceof Number)
-        return ((Number) o).doubleValue();
-      if (o instanceof Boolean)
-        return ((Boolean) o) ? 1.0 : 0.0;
-      if (o instanceof Character)
-        return (double) ((Character) o).charValue();
-      break;
-    case F:
-    case f:
-    case e:
-    case g:
-      if (o instanceof Number)
-        return ((Number) o).floatValue();
-      if (o instanceof Boolean)
-        return ((Boolean) o) ? 1.0f : 0.0f;
-      if (o instanceof Character)
-        return (float) ((Character) o).charValue();
-      break;
+      default: // c
+        if (o instanceof Number) return ((Number) o).byteValue();
+        if (o instanceof Boolean) return ((Boolean) o) ? (byte) 1 : (byte) 0;
+        if (o instanceof Character) return (byte) ((Character) o).charValue();
+        break;
+      case s:
+      case sb:
+      case sl:
+        if (o instanceof Number) return ((Number) o).shortValue();
+        if (o instanceof Boolean) return ((Boolean) o) ? (short) 1 : (short) 0;
+        if (o instanceof Character) return (short) ((Character) o).charValue();
+        break;
+      case l:
+      case lb:
+      case ll:
+      case U:
+        if (o instanceof Number) return ((Number) o).intValue();
+        if (o instanceof Boolean) return ((Boolean) o) ? 1 : 0;
+        if (o instanceof Character) return (int) ((Character) o).charValue();
+        break;
+      case q:
+      case qb:
+      case ql:
+        if (o instanceof Number) return ((Number) o).longValue();
+        if (o instanceof Boolean) return ((Boolean) o) ? 1L : 0L;
+        if (o instanceof Character) return (long) ((Character) o).charValue();
+        break;
+      case D:
+      case d:
+      case E:
+      case G:
+        if (o instanceof Number) return ((Number) o).doubleValue();
+        if (o instanceof Boolean) return ((Boolean) o) ? 1.0 : 0.0;
+        if (o instanceof Character) return (double) ((Character) o).charValue();
+        break;
+      case F:
+      case f:
+      case e:
+      case g:
+        if (o instanceof Number) return ((Number) o).floatValue();
+        if (o instanceof Boolean) return ((Boolean) o) ? 1.0f : 0.0f;
+        if (o instanceof Character) return (float) ((Character) o).charValue();
+        break;
     }
     return o;
   }
@@ -473,37 +439,34 @@ public enum Directive {
    * @return true if template is valid, otherwise false
    */
   public static boolean verify(String template) {
-    return qr(
-        "(("
-            + ra(Directive.values()).map(
-                new TransformBlock<Directive, String>() {
+    return qr("(("
+        + ra(Directive.values()).map(new TransformBlock<Directive, String>() {
 
-                  @Override
-                  public String yield(Directive item) {
-                    return item.toString();
-                  }
+          @Override
+          public String yield(Directive item) {
+            return item.toString();
+          }
 
-                }).join("|") + ")(([1-9]\\d*)?\\*?)?)+").matcher(template)
-        .matches();
+        }).join("|") + ")(([1-9]\\d*)?\\*?)?)+").matcher(template).matches();
   }
 
   @Override
   public String toString() {
     switch (this) {
-    case sb:
-      return "s>";
-    case sl:
-      return "s<";
-    case lb:
-      return "l>";
-    case ll:
-      return "l<";
-    case qb:
-      return "q>";
-    case ql:
-      return "q<";
-    default:
-      return super.toString();
+      case sb:
+        return "s>";
+      case sl:
+        return "s<";
+      case lb:
+        return "l>";
+      case ll:
+        return "l<";
+      case qb:
+        return "q>";
+      case ql:
+        return "q<";
+      default:
+        return super.toString();
     }
   }
 

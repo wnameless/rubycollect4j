@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -29,10 +26,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import net.sf.rubycollect4j.RubyArray;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import net.sf.rubycollect4j.RubyArray;
 
 public class ProductIteratorTest {
 
@@ -83,9 +80,8 @@ public class ProductIteratorTest {
     assertEquals(ra(3), iter.next());
     assertFalse(iter.hasNext());
     RubyArray<List<Integer>> lists = ra();
-    iter =
-        new ProductIterator<Integer>(lists.push(ra(1, 2, 3)).push(
-            new ArrayList<Integer>()));
+    iter = new ProductIterator<Integer>(
+        lists.push(ra(1, 2, 3)).push(new ArrayList<Integer>()));
     assertFalse(iter.hasNext());
   }
 

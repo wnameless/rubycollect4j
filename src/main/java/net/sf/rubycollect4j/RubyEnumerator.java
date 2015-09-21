@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -36,8 +33,8 @@ import net.sf.rubycollect4j.util.PeekingIterator;
  * @param <E>
  *          the type of the elements
  */
-public class RubyEnumerator<E> extends RubyEnumerable<E> implements
-    Ruby.Enumerator<E> {
+public class RubyEnumerator<E> extends RubyEnumerable<E>
+    implements Ruby.Enumerator<E> {
 
   private final Iterable<E> iter;
   private PeekingIterator<E> pIterator;
@@ -52,8 +49,7 @@ public class RubyEnumerator<E> extends RubyEnumerable<E> implements
    *           if iter is null
    */
   public static <E> RubyEnumerator<E> of(Iterable<E> iter) {
-    if (iter == null)
-      throw new NullPointerException();
+    if (iter == null) throw new NullPointerException();
 
     return new RubyEnumerator<E>(iter);
   }
@@ -69,8 +65,7 @@ public class RubyEnumerator<E> extends RubyEnumerable<E> implements
    *           if iter is null
    */
   public static <E> RubyEnumerator<E> copyOf(Iterable<E> iter) {
-    if (iter == null)
-      throw new NullPointerException();
+    if (iter == null) throw new NullPointerException();
 
     return new RubyEnumerator<E>(RubyArray.copyOf(iter));
   }
@@ -90,8 +85,7 @@ public class RubyEnumerator<E> extends RubyEnumerable<E> implements
    *           if iterable is null
    */
   public RubyEnumerator(Iterable<E> iterable) {
-    if (iterable == null)
-      throw new NullPointerException();
+    if (iterable == null) throw new NullPointerException();
 
     iter = iterable;
     pIterator = new PeekingIterator<E>(iter.iterator());

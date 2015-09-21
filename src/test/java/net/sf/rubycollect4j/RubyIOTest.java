@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -27,10 +24,10 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.IOException;
 
+import org.junit.Test;
+
 import net.sf.rubycollect4j.RubyIO.Mode;
 import net.sf.rubycollect4j.block.Block;
-
-import org.junit.Test;
 
 public class RubyIOTest {
 
@@ -222,13 +219,13 @@ public class RubyIOTest {
 
   @Test
   public void testToString() throws IOException {
-    RubyIO rIO =
-        new RubyIO(new File(BASE_DIR + "ruby_io_read_only_mode.txt"),
-            RubyIO.Mode.R);
+    RubyIO rIO = new RubyIO(new File(BASE_DIR + "ruby_io_read_only_mode.txt"),
+        RubyIO.Mode.R);
     if (System.getProperty("os.name").startsWith("Windows")) {
       assertEquals(
-          ("RubyIO{path=" + BASE_DIR + "ruby_io_read_only_mode.txt, mode="
-              + "r" + "}").replaceAll("/", "\\\\"), rIO.toString());
+          ("RubyIO{path=" + BASE_DIR + "ruby_io_read_only_mode.txt, mode=" + "r"
+              + "}").replaceAll("/", "\\\\"),
+          rIO.toString());
     } else {
       assertEquals("RubyIO{path=" + BASE_DIR
           + "ruby_io_read_only_mode.txt, mode=" + "r" + "}", rIO.toString());

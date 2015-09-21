@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -59,8 +56,7 @@ public final class PeekingIterator<E> implements Iterator<E> {
 
   @Override
   public E next() {
-    if (!hasNext())
-      throw new NoSuchElementException();
+    if (!hasNext()) throw new NoSuchElementException();
 
     if (hasPeek) {
       hasPeek = false;
@@ -73,8 +69,7 @@ public final class PeekingIterator<E> implements Iterator<E> {
 
   @Override
   public void remove() {
-    if (hasPeek)
-      throw new IllegalStateException();
+    if (hasPeek) throw new IllegalStateException();
 
     iterator.remove();
   }
@@ -86,10 +81,8 @@ public final class PeekingIterator<E> implements Iterator<E> {
    * @return element
    */
   public E peek() {
-    if (!hasPeek && hasNext())
-      peeking();
-    if (!hasPeek)
-      throw new NoSuchElementException();
+    if (!hasPeek && hasNext()) peeking();
+    if (!hasPeek) throw new NoSuchElementException();
 
     return peek;
   }

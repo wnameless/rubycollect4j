@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -38,8 +35,8 @@ import net.sf.rubycollect4j.block.TransformBlock;
  * @param <K>
  *          the type of the transformed elements
  */
-public final class ChunkIterable<E, K> implements
-    Iterable<Entry<K, RubyArray<E>>> {
+public final class ChunkIterable<E, K>
+    implements Iterable<Entry<K, RubyArray<E>>> {
 
   private final Iterable<? extends E> iter;
   private final TransformBlock<? super E, ? extends K> block;
@@ -56,8 +53,7 @@ public final class ChunkIterable<E, K> implements
    */
   public ChunkIterable(Iterable<? extends E> iter,
       TransformBlock<? super E, ? extends K> block) {
-    if (iter == null || block == null)
-      throw new NullPointerException();
+    if (iter == null || block == null) throw new NullPointerException();
 
     this.iter = iter;
     this.block = block;

@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -25,10 +22,11 @@ import static java.nio.ByteOrder.nativeOrder;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import net.sf.rubycollect4j.util.ByteUtil;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import net.sf.rubycollect4j.util.ByteUtil;
 
 public class DirectiveTest {
 
@@ -40,9 +38,8 @@ public class DirectiveTest {
   @Before
   public void setUp() throws Exception {
     ABC = new byte[] { (byte) 65, (byte) 66, (byte) 67 };
-    ABCDEFGH =
-        new byte[] { (byte) 65, (byte) 66, (byte) 67, (byte) 68, (byte) 69,
-            (byte) 70, (byte) 71, (byte) 72 };
+    ABCDEFGH = new byte[] { (byte) 65, (byte) 66, (byte) 67, (byte) 68,
+        (byte) 69, (byte) 70, (byte) 71, (byte) 72 };
   }
 
   private byte[] int4407873() {
@@ -136,8 +133,10 @@ public class DirectiveTest {
     assertEquals(781.0352f, Directive.f.unpack(ABCDEFGH));
     assertEquals(781.0352f, Directive.e.unpack(ABCDEFGH));
     assertEquals(12.141422f, Directive.g.unpack(ABCDEFGH));
-    assertEquals("111001101000100010010001", Directive.B.unpack("我".getBytes()));
-    assertEquals("011001110001000110001001", Directive.b.unpack("我".getBytes()));
+    assertEquals("111001101000100010010001",
+        Directive.B.unpack("我".getBytes()));
+    assertEquals("011001110001000110001001",
+        Directive.b.unpack("我".getBytes()));
     assertEquals("e68891", Directive.H.unpack("我".getBytes()));
     assertEquals("6e8819", Directive.h.unpack("我".getBytes()));
   }

@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -31,8 +28,8 @@ import java.util.logging.Logger;
  */
 public final class RubyObject {
 
-  private static final Logger logger = Logger.getLogger(RubyObject.class
-      .getName());
+  private static final Logger logger =
+      Logger.getLogger(RubyObject.class.getName());
 
   private RubyObject() {}
 
@@ -54,8 +51,7 @@ public final class RubyObject {
         if (method.getName().equals(methodName)) {
           boolean isArgsMatched = true;
           for (int i = 0; i < method.getParameterTypes().length; i++) {
-            if (i >= args.length || args[i] == null)
-              continue;
+            if (i >= args.length || args[i] == null) continue;
 
             if (!isConvertable(method.getParameterTypes()[i],
                 args[i].getClass()))

@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2014 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -137,12 +134,13 @@ public class RubyStringUnpackWithRubyArrayPackTest {
 
   @Test
   public void testDirective_U() {
-    assertEquals(ra(97, 98, 99, 19968, 20108, 19977), rs("abc一二三").unpack("U*"));
+    assertEquals(ra(97, 98, 99, 19968, 20108, 19977),
+        rs("abc一二三").unpack("U*"));
     assertEquals("abc一二三", rs("abc一二三").unpack("U*").pack("U*"));
     assertEquals(ra(Double.valueOf("1.2926117907728089E161"), null),
         rs("abcdefgh").unpack("GG"));
-    assertEquals(ra(97, 98, 99, 19968, 20108, 19977), rs("abc一二三")
-        .unpack("U*U"));
+    assertEquals(ra(97, 98, 99, 19968, 20108, 19977),
+        rs("abc一二三").unpack("U*U"));
   }
 
   @Test

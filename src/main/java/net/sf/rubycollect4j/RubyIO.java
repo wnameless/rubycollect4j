@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -90,8 +87,8 @@ public class RubyIO {
      */
     AR("a+", true, true);
 
-    private static final Map<String, Mode> modeMap = Hash(
-        ra(values()).map(new TransformBlock<Mode, Entry<String, Mode>>() {
+    private static final Map<String, Mode> modeMap =
+        Hash(ra(values()).map(new TransformBlock<Mode, Entry<String, Mode>>() {
 
           @Override
           public Entry<String, Mode> yield(Mode item) {
@@ -204,42 +201,41 @@ public class RubyIO {
    *           if file can't not open
    */
   public RubyIO(File file, Mode mode) throws IOException {
-    if (file == null)
-      throw new NullPointerException();
+    if (file == null) throw new NullPointerException();
 
     this.file = file;
     switch (mode) {
-    case RW:
-      raFile = new RandomAccessFile(file, "rws");
-      this.mode = mode;
-      raFile.seek(0);
-      break;
-    case W:
-      raFile = new RandomAccessFile(file, "rws");
-      this.mode = mode;
-      raFile.setLength(0);
-      raFile.seek(0);
-      break;
-    case WR:
-      raFile = new RandomAccessFile(file, "rws");
-      this.mode = mode;
-      raFile.setLength(0);
-      raFile.seek(0);
-      break;
-    case A:
-      raFile = new RandomAccessFile(file, "rws");
-      this.mode = mode;
-      raFile.seek(raFile.length());
-      break;
-    case AR:
-      raFile = new RandomAccessFile(file, "rws");
-      this.mode = mode;
-      raFile.seek(raFile.length());
-      break;
-    default:
-      raFile = new RandomAccessFile(file, "r");
-      this.mode = Mode.R;
-      break;
+      case RW:
+        raFile = new RandomAccessFile(file, "rws");
+        this.mode = mode;
+        raFile.seek(0);
+        break;
+      case W:
+        raFile = new RandomAccessFile(file, "rws");
+        this.mode = mode;
+        raFile.setLength(0);
+        raFile.seek(0);
+        break;
+      case WR:
+        raFile = new RandomAccessFile(file, "rws");
+        this.mode = mode;
+        raFile.setLength(0);
+        raFile.seek(0);
+        break;
+      case A:
+        raFile = new RandomAccessFile(file, "rws");
+        this.mode = mode;
+        raFile.seek(raFile.length());
+        break;
+      case AR:
+        raFile = new RandomAccessFile(file, "rws");
+        this.mode = mode;
+        raFile.seek(raFile.length());
+        break;
+      default:
+        raFile = new RandomAccessFile(file, "r");
+        this.mode = Mode.R;
+        break;
     }
   }
 

@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -42,8 +39,8 @@ import net.sf.rubycollect4j.succ.Successive;
  * @param <E>
  *          the type of elements
  */
-public final class RubyRange<E> extends RubyEnumerable<E> implements
-    Serializable {
+public final class RubyRange<E> extends RubyEnumerable<E>
+    implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -72,8 +69,7 @@ public final class RubyRange<E> extends RubyEnumerable<E> implements
    *           if startPoint or endPoint is null
    */
   public RubyRange(Successive<E> successive, E startPoint, E endPoint) {
-    if (successive == null)
-      throw new NullPointerException();
+    if (successive == null) throw new NullPointerException();
     if (startPoint == null || endPoint == null)
       throw new IllegalArgumentException("ArgumentError: bad value for range");
 

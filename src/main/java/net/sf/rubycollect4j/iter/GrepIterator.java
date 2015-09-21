@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -49,15 +46,15 @@ public final class GrepIterator<E> implements Iterator<E> {
    *           if iter or regex is null
    */
   public GrepIterator(Iterator<? extends E> iter, String regex) {
-    if (iter == null || regex == null)
-      throw new NullPointerException();
+    if (iter == null || regex == null) throw new NullPointerException();
 
     pIter = new PeekingIterator<E>(iter);
     pattern = Pattern.compile(regex);
   }
 
   private void advanceCursor() {
-    while (pIter.hasNext() && !pattern.matcher(pIter.peek().toString()).find()) {
+    while (pIter.hasNext()
+        && !pattern.matcher(pIter.peek().toString()).find()) {
       pIter.next();
     }
   }

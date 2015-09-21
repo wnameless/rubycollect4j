@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -33,8 +30,8 @@ import net.sf.rubycollect4j.RubyArray;
  * @param <E>
  *          the type of the elements
  */
-public final class RepeatedCombinationIterable<E> implements
-    Iterable<RubyArray<E>> {
+public final class RepeatedCombinationIterable<E>
+    implements Iterable<RubyArray<E>> {
 
   private final List<? extends E> list;
   private final int n;
@@ -50,8 +47,7 @@ public final class RepeatedCombinationIterable<E> implements
    *           if list is null
    */
   public RepeatedCombinationIterable(List<? extends E> list, int n) {
-    if (list == null)
-      throw new NullPointerException();
+    if (list == null) throw new NullPointerException();
 
     this.list = list;
     this.n = n;

@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -46,8 +43,7 @@ public final class CycleIterator<E> implements Iterator<E> {
    *           if iter is null
    */
   public CycleIterator(Iterable<? extends E> iter) {
-    if (iter == null)
-      throw new NullPointerException();
+    if (iter == null) throw new NullPointerException();
 
     this.iter = iter;
     n = null;
@@ -65,8 +61,7 @@ public final class CycleIterator<E> implements Iterator<E> {
    *           if iter is null
    */
   public CycleIterator(Iterable<? extends E> iter, int n) {
-    if (iter == null)
-      throw new NullPointerException();
+    if (iter == null) throw new NullPointerException();
 
     this.iter = iter;
     this.n = n;
@@ -76,8 +71,7 @@ public final class CycleIterator<E> implements Iterator<E> {
   private E nextElement() {
     if (!it.hasNext()) {
       it = iter.iterator();
-      if (n != null)
-        n--;
+      if (n != null) n--;
     }
     return it.next();
   }
@@ -97,8 +91,7 @@ public final class CycleIterator<E> implements Iterator<E> {
 
   @Override
   public E next() {
-    if (!hasNext())
-      throw new NoSuchElementException();
+    if (!hasNext()) throw new NoSuchElementException();
 
     return nextElement();
   }

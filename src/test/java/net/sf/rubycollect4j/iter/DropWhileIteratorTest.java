@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,10 +25,10 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sf.rubycollect4j.block.BooleanBlock;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import net.sf.rubycollect4j.block.BooleanBlock;
 
 public class DropWhileIteratorTest {
 
@@ -83,9 +80,8 @@ public class DropWhileIteratorTest {
     assertEquals(Integer.valueOf(4), iter.next());
     assertEquals(Integer.valueOf(5), iter.next());
     assertFalse(iter.hasNext());
-    iter =
-        new DropWhileIterator<Integer>(new ArrayList<Integer>().iterator(),
-            block);
+    iter = new DropWhileIterator<Integer>(new ArrayList<Integer>().iterator(),
+        block);
     assertFalse(iter.hasNext());
   }
 

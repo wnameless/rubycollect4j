@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -32,8 +29,8 @@ import java.util.Map.Entry;
  * @param <O>
  *          the type of the object
  */
-public final class EachWithObjectIterable<E, O> implements
-    Iterable<Entry<E, O>> {
+public final class EachWithObjectIterable<E, O>
+    implements Iterable<Entry<E, O>> {
 
   private final Iterable<? extends E> iter;
   private final O obj;
@@ -49,8 +46,7 @@ public final class EachWithObjectIterable<E, O> implements
    *           if iter or obj is null
    */
   public EachWithObjectIterable(Iterable<? extends E> iter, O obj) {
-    if (iter == null || obj == null)
-      throw new NullPointerException();
+    if (iter == null || obj == null) throw new NullPointerException();
 
     this.iter = iter;
     this.obj = obj;

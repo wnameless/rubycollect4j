@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -59,8 +56,7 @@ public final class RubyDate extends Date {
    *           if date is null
    */
   public RubyDate(Date date) {
-    if (date == null)
-      throw new NullPointerException();
+    if (date == null) throw new NullPointerException();
 
     setTime(date.getTime());
   }
@@ -76,15 +72,15 @@ public final class RubyDate extends Date {
     c.setTime(this);
     for (DateField field : options.keySet()) {
       switch (field) {
-      case YEAR:
-        c.set(Calendar.YEAR, options.get(field));
-        break;
-      case MONTH:
-        c.set(Calendar.MONTH, options.get(field) - 1);
-        break;
-      default: // DAY
-        c.set(Calendar.DAY_OF_MONTH, options.get(field));
-        break;
+        case YEAR:
+          c.set(Calendar.YEAR, options.get(field));
+          break;
+        case MONTH:
+          c.set(Calendar.MONTH, options.get(field) - 1);
+          break;
+        default: // DAY
+          c.set(Calendar.DAY_OF_MONTH, options.get(field));
+          break;
       }
     }
     return new RubyDate(c.getTime());
@@ -347,20 +343,24 @@ public final class RubyDate extends Date {
    */
   public RubyDate beginningOfQuarter() {
     switch (month()) {
-    case 1:
-    case 2:
-    case 3:
-      return change(rh(DateField.MONTH, 1, DateField.DAY, 1)).beginningOfDay();
-    case 4:
-    case 5:
-    case 6:
-      return change(rh(DateField.MONTH, 4, DateField.DAY, 1)).beginningOfDay();
-    case 7:
-    case 8:
-    case 9:
-      return change(rh(DateField.MONTH, 7, DateField.DAY, 1)).beginningOfDay();
-    default:
-      return change(rh(DateField.MONTH, 10, DateField.DAY, 1)).beginningOfDay();
+      case 1:
+      case 2:
+      case 3:
+        return change(rh(DateField.MONTH, 1, DateField.DAY, 1))
+            .beginningOfDay();
+      case 4:
+      case 5:
+      case 6:
+        return change(rh(DateField.MONTH, 4, DateField.DAY, 1))
+            .beginningOfDay();
+      case 7:
+      case 8:
+      case 9:
+        return change(rh(DateField.MONTH, 7, DateField.DAY, 1))
+            .beginningOfDay();
+      default:
+        return change(rh(DateField.MONTH, 10, DateField.DAY, 1))
+            .beginningOfDay();
     }
   }
 
@@ -372,20 +372,20 @@ public final class RubyDate extends Date {
    */
   public RubyDate endOfQuarter() {
     switch (month()) {
-    case 1:
-    case 2:
-    case 3:
-      return change(rh(DateField.MONTH, 3, DateField.DAY, 31)).endOfDay();
-    case 4:
-    case 5:
-    case 6:
-      return change(rh(DateField.MONTH, 6, DateField.DAY, 30)).endOfDay();
-    case 7:
-    case 8:
-    case 9:
-      return change(rh(DateField.MONTH, 9, DateField.DAY, 30)).endOfDay();
-    default:
-      return change(rh(DateField.MONTH, 12, DateField.DAY, 31)).endOfDay();
+      case 1:
+      case 2:
+      case 3:
+        return change(rh(DateField.MONTH, 3, DateField.DAY, 31)).endOfDay();
+      case 4:
+      case 5:
+      case 6:
+        return change(rh(DateField.MONTH, 6, DateField.DAY, 30)).endOfDay();
+      case 7:
+      case 8:
+      case 9:
+        return change(rh(DateField.MONTH, 9, DateField.DAY, 30)).endOfDay();
+      default:
+        return change(rh(DateField.MONTH, 12, DateField.DAY, 31)).endOfDay();
     }
   }
 

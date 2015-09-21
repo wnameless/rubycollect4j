@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -50,8 +47,7 @@ public final class ProductIterator<E> implements Iterator<RubyArray<E>> {
    *           if lists is null
    */
   public ProductIterator(List<? extends List<? extends E>> lists) {
-    if (lists == null)
-      throw new NullPointerException();
+    if (lists == null) throw new NullPointerException();
 
     this.lists = new ArrayList<List<? extends E>>();
     for (List<? extends E> list : lists) {
@@ -85,8 +81,7 @@ public final class ProductIterator<E> implements Iterator<RubyArray<E>> {
 
   private boolean isLooping() {
     for (int i = 0; i < counter.length; i++) {
-      if (lists.get(i).isEmpty() || counter[i] == -1)
-        return false;
+      if (lists.get(i).isEmpty() || counter[i] == -1) return false;
     }
     return true;
   }
@@ -98,8 +93,7 @@ public final class ProductIterator<E> implements Iterator<RubyArray<E>> {
 
   @Override
   public RubyArray<E> next() {
-    if (!hasNext())
-      throw new NoSuchElementException();
+    if (!hasNext()) throw new NoSuchElementException();
 
     return nextElement();
   }

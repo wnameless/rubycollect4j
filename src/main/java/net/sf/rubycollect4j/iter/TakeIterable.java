@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -47,11 +44,9 @@ public final class TakeIterable<E> implements Iterable<E> {
    *           if n is less than 0
    */
   public TakeIterable(Iterable<? extends E> iter, int n) {
-    if (iter == null)
-      throw new NullPointerException();
-    if (n < 0)
-      throw new IllegalArgumentException(
-          "ArgumentError: attempt to take negative size");
+    if (iter == null) throw new NullPointerException();
+    if (n < 0) throw new IllegalArgumentException(
+        "ArgumentError: attempt to take negative size");
 
     this.iter = iter;
     this.n = n;

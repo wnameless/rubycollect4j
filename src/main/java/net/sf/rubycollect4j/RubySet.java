@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2014 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -44,8 +41,8 @@ import net.sf.rubycollect4j.block.TransformBlock;
  * @param <E>
  *          the type of the elements
  */
-public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
-    Comparable<Set<E>>, Serializable {
+public final class RubySet<E> extends RubyEnumerable<E>
+    implements Set<E>, Comparable<Set<E>>, Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -62,8 +59,7 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
    *           if set is null
    */
   public static <E> RubySet<E> of(LinkedHashSet<E> set) {
-    if (set == null)
-      throw new NullPointerException();
+    if (set == null) throw new NullPointerException();
 
     return new RubySet<E>(set);
   }
@@ -78,8 +74,7 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
    *           if elements is null
    */
   public static <E> RubySet<E> copyOf(Iterable<E> elements) {
-    if (elements == null)
-      throw new NullPointerException();
+    if (elements == null) throw new NullPointerException();
 
     return new RubySet<E>(elements);
   }
@@ -106,8 +101,7 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
    *           if set is null
    */
   public RubySet(LinkedHashSet<E> set) {
-    if (set == null)
-      throw new NullPointerException();
+    if (set == null) throw new NullPointerException();
 
     this.set = set;
   }
@@ -121,8 +115,7 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
    *           if iter is null
    */
   public RubySet(Iterable<E> iter) {
-    if (iter == null)
-      throw new NullPointerException();
+    if (iter == null) throw new NullPointerException();
 
     set = new LinkedHashSet<E>();
     for (E e : iter) {
@@ -155,8 +148,7 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
     RubyHash<S, RubySet<E>> hash = newRubyHash();
     for (E e : set) {
       S s = block.yield(e);
-      if (!hash.containsKey(s))
-        hash.put(s, new RubySet<E>());
+      if (!hash.containsKey(s)) hash.put(s, new RubySet<E>());
 
       hash.get(s).add(e);
     }
@@ -236,8 +228,7 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
   public RubySet<E> deleteIf(BooleanBlock<? super E> block) {
     Iterator<E> iter = set.iterator();
     while (iter.hasNext()) {
-      if (block.yield(iter.next()))
-        iter.remove();
+      if (block.yield(iter.next())) iter.remove();
     }
     return this;
   }
@@ -268,8 +259,7 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
    */
   public boolean disjointʔ(Iterable<E> iter) {
     for (E e : iter) {
-      if (set.contains(e))
-        return false;
+      if (set.contains(e)) return false;
     }
     return true;
   }
@@ -399,8 +389,7 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
    */
   public boolean intersectʔ(Iterable<E> iter) {
     for (E e : iter) {
-      if (set.contains(e))
-        return true;
+      if (set.contains(e)) return true;
     }
     return false;
   }
@@ -416,8 +405,7 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
   public RubySet<E> intersection(Iterable<E> iter) {
     RubySet<E> newSet = new RubySet<E>();
     for (E e : iter) {
-      if (set.contains(e))
-        newSet.add(e);
+      if (set.contains(e)) newSet.add(e);
     }
     return newSet;
   }
@@ -433,8 +421,7 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
   public RubySet<E> keepIf(BooleanBlock<? super E> block) {
     Iterator<E> iter = set.iterator();
     while (iter.hasNext()) {
-      if (!block.yield(iter.next()))
-        iter.remove();
+      if (!block.yield(iter.next())) iter.remove();
     }
     return this;
   }
@@ -495,12 +482,10 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
    *         otherwise
    */
   public boolean properSubsetʔ(Set<E> set) {
-    if (size() <= set.size())
-      return false;
+    if (size() <= set.size()) return false;
 
     for (E e : set) {
-      if (!this.set.contains(e))
-        return false;
+      if (!this.set.contains(e)) return false;
     }
     return true;
   }
@@ -514,12 +499,10 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
    *         otherwise
    */
   public boolean properSupersetʔ(Set<E> set) {
-    if (set.size() <= size())
-      return false;
+    if (set.size() <= size()) return false;
 
     for (E e : this.set) {
-      if (!set.contains(e))
-        return false;
+      if (!set.contains(e)) return false;
     }
     return true;
   }
@@ -576,12 +559,10 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
    * @return true if the set is a subset of the given set, false otherwise
    */
   public boolean subsetʔ(Set<E> set) {
-    if (size() < set.size())
-      return false;
+    if (size() < set.size()) return false;
 
     for (E e : set) {
-      if (!this.set.contains(e))
-        return false;
+      if (!this.set.contains(e)) return false;
     }
     return true;
   }
@@ -608,12 +589,10 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
    * @return true if the set is a superset of the given set, false otherwise
    */
   public boolean supersetʔ(Set<E> set) {
-    if (set.size() < size())
-      return false;
+    if (set.size() < size()) return false;
 
     for (E e : this.set) {
-      if (!set.contains(e))
-        return false;
+      if (!set.contains(e)) return false;
     }
     return true;
   }

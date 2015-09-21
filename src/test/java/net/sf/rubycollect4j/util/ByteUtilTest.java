@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -37,9 +34,9 @@ import java.util.List;
 
 import javax.xml.bind.TypeConstraintException;
 
-import net.sf.rubycollect4j.RubyArray;
-
 import org.junit.Test;
+
+import net.sf.rubycollect4j.RubyArray;
 
 public class ByteUtilTest {
 
@@ -128,10 +125,12 @@ public class ByteUtilTest {
 
   @Test
   public void testToByteArrayWithLong() {
-    assertArrayEquals(new byte[] { '\1', '\0', '\0', '\0', '\0', '\0', '\0',
-        '\0' }, ByteUtil.toByteArray(1L, le));
-    assertArrayEquals(new byte[] { '\1', '\0', '\0', '\0', '\0', '\0', '\0',
-        '\0' }, ByteUtil.toByteArray(Long.valueOf(1L), le));
+    assertArrayEquals(
+        new byte[] { '\1', '\0', '\0', '\0', '\0', '\0', '\0', '\0' },
+        ByteUtil.toByteArray(1L, le));
+    assertArrayEquals(
+        new byte[] { '\1', '\0', '\0', '\0', '\0', '\0', '\0', '\0' },
+        ByteUtil.toByteArray(Long.valueOf(1L), le));
     assertArrayEquals(ByteUtil.toByteArray(1L, be), ByteUtil.toByteArray(1L));
     assertArrayEquals(ByteUtil.toByteArray(Long.valueOf(1L), be),
         ByteUtil.toByteArray(Long.valueOf(1L)));
@@ -192,15 +191,19 @@ public class ByteUtilTest {
         ByteUtil.toByteArray((Object) Byte.valueOf((byte) 0), le));
     assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x00 },
         ByteUtil.toByteArray((Object) Short.valueOf((short) 0), le));
-    assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x00, (byte) 0x00,
-        (byte) 0x00 }, ByteUtil.toByteArray((Object) Integer.valueOf(0), le));
-    assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x00, (byte) 0x00,
-        (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00 },
+    assertArrayEquals(
+        new byte[] { (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00 },
+        ByteUtil.toByteArray((Object) Integer.valueOf(0), le));
+    assertArrayEquals(
+        new byte[] { (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+            (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00 },
         ByteUtil.toByteArray((Object) Long.valueOf(0L), le));
-    assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x00, (byte) 0x00,
-        (byte) 0x00 }, ByteUtil.toByteArray((Object) Float.valueOf(0f), le));
-    assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x00, (byte) 0x00,
-        (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00 },
+    assertArrayEquals(
+        new byte[] { (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00 },
+        ByteUtil.toByteArray((Object) Float.valueOf(0f), le));
+    assertArrayEquals(
+        new byte[] { (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+            (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00 },
         ByteUtil.toByteArray((Object) Double.valueOf(0d), le));
     assertArrayEquals(new byte[] { (byte) 0x00 },
         ByteUtil.toByteArray((Object) Boolean.FALSE, le));
@@ -253,15 +256,18 @@ public class ByteUtilTest {
         ByteUtil.toExtendedASCIIs(new byte[] { (byte) 65 }, 2, LITTLE_ENDIAN));
     assertEquals("\0A",
         ByteUtil.toExtendedASCIIs(new byte[] { (byte) 65 }, 2, BIG_ENDIAN));
-    assertEquals("A\177", ByteUtil.toExtendedASCIIs(new byte[] { (byte) 65,
-        (byte) 127 }, 2, BIG_ENDIAN));
+    assertEquals("A\177", ByteUtil
+        .toExtendedASCIIs(new byte[] { (byte) 65, (byte) 127 }, 2, BIG_ENDIAN));
   }
 
   @Test
   public void testToUTF() {
-    assertEquals("A", ByteUtil.toUTF(ByteBuffer.allocate(4).putInt(65).array()));
-    assertEquals("\0", ByteUtil.toUTF(ByteBuffer.allocate(4).putInt(0).array()));
-    assertEquals("\7", ByteUtil.toUTF(ByteBuffer.allocate(4).putInt(7).array()));
+    assertEquals("A",
+        ByteUtil.toUTF(ByteBuffer.allocate(4).putInt(65).array()));
+    assertEquals("\0",
+        ByteUtil.toUTF(ByteBuffer.allocate(4).putInt(0).array()));
+    assertEquals("\7",
+        ByteUtil.toUTF(ByteBuffer.allocate(4).putInt(7).array()));
     assertEquals("〹",
         ByteUtil.toUTF(ByteBuffer.allocate(4).putInt(12345).array()));
     assertEquals("\uD903",

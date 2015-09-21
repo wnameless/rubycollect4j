@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -29,10 +26,10 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
+import org.junit.Test;
+
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.block.BooleanBlock;
-
-import org.junit.Test;
 
 public class RubyDirTest {
 
@@ -98,8 +95,9 @@ public class RubyDirTest {
         RubyDir.glob(GLOB_DIR + "*").sort());
     assertEquals(ra("folder1", "folder2", "rbc4j").sort(),
         RubyDir.glob(GLOB_DIR + "**").sort());
-    assertEquals(ra("folder1" + File.separator, "folder2" + File.separator)
-        .sort(), RubyDir.glob(GLOB_DIR + "*/").sort());
+    assertEquals(
+        ra("folder1" + File.separator, "folder2" + File.separator).sort(),
+        RubyDir.glob(GLOB_DIR + "*/").sort());
     assertEquals(
         ra("folder1" + File.separator,
             "folder1" + File.separator + "folder1-1" + File.separator,
@@ -107,16 +105,13 @@ public class RubyDirTest {
             "folder2" + File.separator,
             "folder2" + File.separator + "folder2-1" + File.separator).sort(),
         RubyDir.glob(GLOB_DIR + "**/").sort());
-    assertEquals(
-        ra("file1-1", "file1-2", "file1-3", "file1-4", "folder1-1", "folder1-2"),
-        RubyDir.glob(GLOB_DIR + "folder1/*").sort());
-    assertEquals(
-        ra(
-            "folder1" + File.separator + "folder1-1" + File.separator
-                + "file1-1-1",
-            "folder1" + File.separator + "folder1-2" + File.separator
-                + "file1-2-1").sort(), RubyDir.glob(GLOB_DIR + "**/*1-*-1*")
-            .sort());
+    assertEquals(ra("file1-1", "file1-2", "file1-3", "file1-4", "folder1-1",
+        "folder1-2"), RubyDir.glob(GLOB_DIR + "folder1/*").sort());
+    assertEquals(ra(
+        "folder1" + File.separator + "folder1-1" + File.separator + "file1-1-1",
+        "folder1" + File.separator + "folder1-2" + File.separator + "file1-2-1")
+            .sort(),
+        RubyDir.glob(GLOB_DIR + "**/*1-*-1*").sort());
     assertEquals(19, RubyDir.glob(GLOB_DIR + "**/*").count());
     assertEquals(ra("file1-2", "file1-3", "folder1-2").sort(),
         RubyDir.glob(GLOB_DIR + "folder1/*[2,3]").sort());
@@ -178,8 +173,8 @@ public class RubyDirTest {
 
   @Test
   public void testPath() {
-    assertEquals(normalizePath(BASE_DIR), RubyDir.open(BASE_DIR).path()
-        + File.separator);
+    assertEquals(normalizePath(BASE_DIR),
+        RubyDir.open(BASE_DIR).path() + File.separator);
   }
 
   @Test
@@ -255,8 +250,8 @@ public class RubyDirTest {
   public void testToString() {
     assertEquals(
         normalizePath("RubyDir{path="
-            + BASE_DIR.substring(0, BASE_DIR.length() - 1) + "}"), RubyDir
-            .open(BASE_DIR).toString());
+            + BASE_DIR.substring(0, BASE_DIR.length() - 1) + "}"),
+        RubyDir.open(BASE_DIR).toString());
   }
 
   private String normalizePath(String path) {

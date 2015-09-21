@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -122,9 +119,12 @@ public class LinkedIdentityMap_EntrySetTest {
   @Test
   public void testToArrayWithGeneric() {
     assertEquals(3, entrySet.toArray().length);
-    assertSame(key1, ((Entry<?, ?>) entrySet.toArray(new Entry[3])[0]).getKey());
-    assertSame(key2, ((Entry<?, ?>) entrySet.toArray(new Entry[3])[1]).getKey());
-    assertSame(key3, ((Entry<?, ?>) entrySet.toArray(new Entry[3])[2]).getKey());
+    assertSame(key1,
+        ((Entry<?, ?>) entrySet.toArray(new Entry[3])[0]).getKey());
+    assertSame(key2,
+        ((Entry<?, ?>) entrySet.toArray(new Entry[3])[1]).getKey());
+    assertSame(key3,
+        ((Entry<?, ?>) entrySet.toArray(new Entry[3])[2]).getKey());
   }
 
   @Test(expected = UnsupportedOperationException.class)
@@ -153,8 +153,8 @@ public class LinkedIdentityMap_EntrySetTest {
   @Test
   public void testContainsAll() {
     assertTrue(entrySet.containsAll(Arrays.asList(hp(key1, 1), hp(key2, 2))));
-    assertFalse(entrySet.containsAll(Arrays.asList(hp(key1, 1),
-        hp(new String("a"), 2))));
+    assertFalse(entrySet
+        .containsAll(Arrays.asList(hp(key1, 1), hp(new String("a"), 2))));
   }
 
   @Test(expected = UnsupportedOperationException.class)
@@ -165,8 +165,8 @@ public class LinkedIdentityMap_EntrySetTest {
   @SuppressWarnings("unchecked")
   @Test
   public void testRetainAll() {
-    assertTrue(entrySet
-        .retainAll(Arrays.asList(hp(key1, 1), hp(key2, 2), null)));
+    assertTrue(
+        entrySet.retainAll(Arrays.asList(hp(key1, 1), hp(key2, 2), null)));
     assertEquals(2, list.size());
     assertSame(key1, list.get(0));
     assertSame(key2, list.get(1));

@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -83,68 +80,68 @@ public final class Packer {
     for (String template : templateList) {
       Directive d = parseDirective(template);
       template = template.replace(d.toString(), "");
-      int count =
-          template.isEmpty() ? 1 : template.equals("*") ? Integer.MAX_VALUE
-              : rs(template).toI();
+      int count = template.isEmpty() ? 1
+          : template.equals("*") ? Integer.MAX_VALUE : rs(template).toI();
 
       switch (d) {
 
-      case B:
-      case b:
-        RubyString binaryStr = rs(items.shift().toString()).slice(qr("^[01]+"));
-        if (binaryStr == null)
-          sb.append("");
-        else
-          sb.append(d.pack(ByteUtil.fromBinaryString(binaryStr.toS())));
+        case B:
+        case b:
+          RubyString binaryStr =
+              rs(items.shift().toString()).slice(qr("^[01]+"));
+          if (binaryStr == null)
+            sb.append("");
+          else
+            sb.append(d.pack(ByteUtil.fromBinaryString(binaryStr.toS())));
 
-        break;
+          break;
 
-      case H:
-      case h:
-        RubyString hexStr =
-            rs(items.shift().toString()).slice(qr("^[0-9A-Fa-f]+"));
-        if (hexStr == null)
-          sb.append("");
-        else
-          sb.append(d.pack(ByteUtil.fromHexString(hexStr.toS())));
+        case H:
+        case h:
+          RubyString hexStr =
+              rs(items.shift().toString()).slice(qr("^[0-9A-Fa-f]+"));
+          if (hexStr == null)
+            sb.append("");
+          else
+            sb.append(d.pack(ByteUtil.fromHexString(hexStr.toS())));
 
-        break;
+          break;
 
-      default:
-        ByteOrder bo = nativeOrder();
-        if (template.isEmpty()) {
-          sb.append(d.pack(toByteArray(d.cast(items.shift()), bo)));
-        } else if (d == Directive.Z && template.charAt(0) == '*') {
-          sb.append(d.pack(toByteArray(d.cast(items.shift()), bo)));
-          sb.append("\0");
-        } else if (template.charAt(0) == '*') {
-          while (items.anyʔ()) {
+        default:
+          ByteOrder bo = nativeOrder();
+          if (template.isEmpty()) {
             sb.append(d.pack(toByteArray(d.cast(items.shift()), bo)));
-          }
-        } else {
-          if (d.isWidthAdjustable()) {
-            String str = d.pack(toByteArray(d.cast(items.shift()), bo));
-            if (str.length() > count) {
-              sb.append(str.substring(0, count));
-            } else {
-              sb.append(str);
-              count -= str.length();
-              while (count > 0) {
-                if (d == Directive.A)
-                  sb.append(" ");
-                else
-                  sb.append("\0");
+          } else if (d == Directive.Z && template.charAt(0) == '*') {
+            sb.append(d.pack(toByteArray(d.cast(items.shift()), bo)));
+            sb.append("\0");
+          } else if (template.charAt(0) == '*') {
+            while (items.anyʔ()) {
+              sb.append(d.pack(toByteArray(d.cast(items.shift()), bo)));
+            }
+          } else {
+            if (d.isWidthAdjustable()) {
+              String str = d.pack(toByteArray(d.cast(items.shift()), bo));
+              if (str.length() > count) {
+                sb.append(str.substring(0, count));
+              } else {
+                sb.append(str);
+                count -= str.length();
+                while (count > 0) {
+                  if (d == Directive.A)
+                    sb.append(" ");
+                  else
+                    sb.append("\0");
 
+                  count--;
+                }
+              }
+            } else {
+              while (count > 0) {
+                sb.append(d.pack(toByteArray(d.cast(items.shift()), bo)));
                 count--;
               }
             }
-          } else {
-            while (count > 0) {
-              sb.append(d.pack(toByteArray(d.cast(items.shift()), bo)));
-              count--;
-            }
           }
-        }
 
       }
     }
@@ -171,12 +168,12 @@ public final class Packer {
 
         }).join("|")).map(new TransformBlock<RubyArray<String>, String>() {
 
-      @Override
-      public String yield(RubyArray<String> item) {
-        return item.join();
-      }
+          @Override
+          public String yield(RubyArray<String> item) {
+            return item.join();
+          }
 
-    });
+        });
   }
 
 }

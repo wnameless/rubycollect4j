@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -64,8 +61,7 @@ public class RubyFileTest {
 
   @Test
   public void testChmod() {
-    if (System.getProperty("os.name").startsWith("Windows"))
-      return;
+    if (System.getProperty("os.name").startsWith("Windows")) return;
 
     RubyFile.chmod(0000, BASE_DIR + "ruby_file_chmod_test.txt");
     assertFalse(RubyFile.readableʔ(BASE_DIR + "ruby_file_chmod_test.txt"));
@@ -108,15 +104,14 @@ public class RubyFileTest {
 
   @Test
   public void testExecutableʔ() {
-    if (System.getProperty("os.name").startsWith("Windows"))
-      return;
+    if (System.getProperty("os.name").startsWith("Windows")) return;
 
     RubyFile.chmod(0444, BASE_DIR + "ruby_file_executableQ_test.txt");
-    assertFalse(RubyFile.executableʔ(BASE_DIR
-        + "ruby_file_executableQ_test.txt"));
+    assertFalse(
+        RubyFile.executableʔ(BASE_DIR + "ruby_file_executableQ_test.txt"));
     RubyFile.chmod(0111, BASE_DIR + "ruby_file_executableQ_test.txt");
-    assertTrue(RubyFile
-        .executableʔ(BASE_DIR + "ruby_file_executableQ_test.txt"));
+    assertTrue(
+        RubyFile.executableʔ(BASE_DIR + "ruby_file_executableQ_test.txt"));
     RubyFile.chmod(0644, BASE_DIR + "ruby_file_executableQ_test.txt");
   }
 
@@ -136,19 +131,19 @@ public class RubyFileTest {
   public void testExpandPath() {
     if (System.getProperty("os.name").startsWith("Windows")) {
       assertEquals(
-          (qx("cmd", "/C", "echo %cd%").trim() + "/" + BASE_DIR + "ruby_file_exist_test.txt")
-              .replaceAll("/", "\\\\"), RubyFile.expandPath(BASE_DIR
-              + "ruby_file_exist_test.txt"));
-      assertEquals(
-          (qx("cmd", "/C", "echo %cd%").trim() + "/" + BASE_DIR + "ruby_file_exist_test.txt")
-              .replaceAll("/", "\\\\"), RubyFile.expandPath(
-              "ruby_file_exist_test.txt", BASE_DIR));
-    } else {
-      assertEquals(qx("pwd").trim() + "/" + BASE_DIR
-          + "ruby_file_exist_test.txt",
+          (qx("cmd", "/C", "echo %cd%").trim() + "/" + BASE_DIR
+              + "ruby_file_exist_test.txt").replaceAll("/", "\\\\"),
           RubyFile.expandPath(BASE_DIR + "ruby_file_exist_test.txt"));
-      assertEquals(qx("pwd").trim() + "/" + BASE_DIR
-          + "ruby_file_exist_test.txt",
+      assertEquals(
+          (qx("cmd", "/C", "echo %cd%").trim() + "/" + BASE_DIR
+              + "ruby_file_exist_test.txt").replaceAll("/", "\\\\"),
+          RubyFile.expandPath("ruby_file_exist_test.txt", BASE_DIR));
+    } else {
+      assertEquals(
+          qx("pwd").trim() + "/" + BASE_DIR + "ruby_file_exist_test.txt",
+          RubyFile.expandPath(BASE_DIR + "ruby_file_exist_test.txt"));
+      assertEquals(
+          qx("pwd").trim() + "/" + BASE_DIR + "ruby_file_exist_test.txt",
           RubyFile.expandPath("ruby_file_exist_test.txt", BASE_DIR));
     }
   }
@@ -172,19 +167,19 @@ public class RubyFileTest {
     assertEquals(
         File.separator + "ab" + File.separator + "c" + File.separator + "def"
             + File.separator,
-        RubyFile.join(File.separator + "ab" + File.separator + "c"
-            + File.separator, File.separator + "def" + File.separator));
+        RubyFile.join(
+            File.separator + "ab" + File.separator + "c" + File.separator,
+            File.separator + "def" + File.separator));
     assertEquals(
         File.separator + "home" + File.separator + "ruby" + File.separator
             + "collect",
-        RubyFile.join(File.separator + "home" + File.separator, File.separator
-            + "ruby", "collect"));
+        RubyFile.join(File.separator + "home" + File.separator,
+            File.separator + "ruby", "collect"));
   }
 
   @Test
   public void testReadableʔ() {
-    if (System.getProperty("os.name").startsWith("Windows"))
-      return;
+    if (System.getProperty("os.name").startsWith("Windows")) return;
 
     RubyFile.chmod(0222, BASE_DIR + "ruby_file_readableQ_test.txt");
     assertFalse(RubyFile.readableʔ(BASE_DIR + "ruby_file_readableQ_test.txt"));
@@ -214,8 +209,7 @@ public class RubyFileTest {
 
   @Test
   public void testWritableʔ() {
-    if (System.getProperty("os.name").startsWith("Windows"))
-      return;
+    if (System.getProperty("os.name").startsWith("Windows")) return;
 
     RubyFile.chmod(0444, BASE_DIR + "ruby_file_writableQ_test.txt");
     assertFalse(RubyFile.writableʔ(BASE_DIR + "ruby_file_writableQ_test.txt"));
@@ -277,8 +271,9 @@ public class RubyFileTest {
     rf = RubyFile.open(BASE_DIR + "ruby_file_exist_test.txt", "r");
     if (System.getProperty("os.name").startsWith("Windows")) {
       assertEquals(
-          ("RubyFile{path=" + BASE_DIR + "ruby_file_exist_test.txt, mode="
-              + "r" + "}").replaceAll("/", "\\\\"), rf.toString());
+          ("RubyFile{path=" + BASE_DIR + "ruby_file_exist_test.txt, mode=" + "r"
+              + "}").replaceAll("/", "\\\\"),
+          rf.toString());
     } else {
       assertEquals("RubyFile{path=" + BASE_DIR
           + "ruby_file_exist_test.txt, mode=" + "r" + "}", rf.toString());

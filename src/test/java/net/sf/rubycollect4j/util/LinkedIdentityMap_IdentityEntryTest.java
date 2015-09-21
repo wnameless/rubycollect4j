@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -26,10 +23,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
-import net.sf.rubycollect4j.util.LinkedIdentityMap.IdentityEntry;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import net.sf.rubycollect4j.util.LinkedIdentityMap.IdentityEntry;
 
 public class LinkedIdentityMap_IdentityEntryTest {
 
@@ -69,15 +67,15 @@ public class LinkedIdentityMap_IdentityEntryTest {
 
   @Test
   public void testEquals() {
-    assertTrue(entry.equals(new IdentityEntry<String, Integer>(key, Integer
-        .valueOf(1))));
+    assertTrue(entry
+        .equals(new IdentityEntry<String, Integer>(key, Integer.valueOf(1))));
     assertFalse(entry.equals(new IdentityEntry<String, Integer>(key, null)));
     assertTrue(entry.equals(hp(new String("a"), value)));
     assertFalse(entry.equals(null));
     entry.setValue(null);
     assertTrue(entry.equals(new IdentityEntry<String, Integer>(key, null)));
-    assertFalse(entry.equals(new IdentityEntry<String, Integer>(key, Integer
-        .valueOf(1))));
+    assertFalse(entry
+        .equals(new IdentityEntry<String, Integer>(key, Integer.valueOf(1))));
     assertFalse(entry.equals(new IdentityEntry<String, Integer>(null, null)));
   }
 

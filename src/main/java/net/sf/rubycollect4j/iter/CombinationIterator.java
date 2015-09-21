@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -56,15 +53,13 @@ public class CombinationIterator<E> implements Iterator<RubyArray<E>> {
    *           if list is null
    */
   public CombinationIterator(List<? extends E> list, int n) {
-    if (list == null)
-      throw new NullPointerException();
+    if (list == null) throw new NullPointerException();
 
     this.list = new ArrayList<E>(list);
     if (n <= 0 || n > this.list.size()) {
       counter = new int[0];
       endStatus = new int[0];
-      if (n != 0)
-        hasMore = false;
+      if (n != 0) hasMore = false;
     } else {
       counter = new int[n];
       initCounter();
@@ -119,8 +114,7 @@ public class CombinationIterator<E> implements Iterator<RubyArray<E>> {
 
   @Override
   public RubyArray<E> next() {
-    if (!hasNext())
-      throw new NoSuchElementException();
+    if (!hasNext()) throw new NoSuchElementException();
 
     return nextElement();
   }

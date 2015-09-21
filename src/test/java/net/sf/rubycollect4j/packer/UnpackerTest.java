@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2014 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -57,7 +54,8 @@ public class UnpackerTest {
 
   @Test
   public void testUnpackWith_AZ() {
-    assertEquals(ra("abc", "abc "), Unpacker.unpack("A6Z6", "abc \0\0abc \0\0"));
+    assertEquals(ra("abc", "abc "),
+        Unpacker.unpack("A6Z6", "abc \0\0abc \0\0"));
   }
 
   @Test
@@ -67,12 +65,10 @@ public class UnpackerTest {
     assertEquals(ra((byte) 97, null, null, null), Unpacker.unpack("c4", "a"));
     assertEquals(ra((byte) 97, (byte) 98, (byte) 99),
         Unpacker.unpack("c*", "abc"));
-    assertEquals(
-        ra((byte) -1, (byte) 97, (byte) 98, (byte) 99, (byte) -26, (byte) -120,
-            (byte) -111, null), Unpacker.unpack("c*c", "\377abc我"));
-    assertEquals(
-        ra((byte) -26, (byte) -120, (byte) -111, (byte) -1, (byte) 97,
-            (byte) 98, (byte) 99, null), Unpacker.unpack("c*c", "我\377abc"));
+    assertEquals(ra((byte) -1, (byte) 97, (byte) 98, (byte) 99, (byte) -26,
+        (byte) -120, (byte) -111, null), Unpacker.unpack("c*c", "\377abc我"));
+    assertEquals(ra((byte) -26, (byte) -120, (byte) -111, (byte) -1, (byte) 97,
+        (byte) 98, (byte) 99, null), Unpacker.unpack("c*c", "我\377abc"));
   }
 
   @Test
@@ -100,7 +96,8 @@ public class UnpackerTest {
   public void testUnpackWith_l() {
     assertEquals(ra((Integer) null), Unpacker.unpack("l", "\376\377"));
     assertEquals(ra(1684234849, null), Unpacker.unpack("ll", "abcde"));
-    assertEquals(ra(1684234849, 1751606885), Unpacker.unpack("l*", "abcdefghi"));
+    assertEquals(ra(1684234849, 1751606885),
+        Unpacker.unpack("l*", "abcdefghi"));
   }
 
   @Test
@@ -142,8 +139,10 @@ public class UnpackerTest {
     assertEquals(ra("616263"), Unpacker.unpack("H*", "abc"));
     assertEquals(ra("6"), Unpacker.unpack("H1", "abc"));
     assertEquals(ra("6162"), Unpacker.unpack("H4", "abc"));
-    assertEquals(ra("ff616263e68891", ""), Unpacker.unpack("H100H", "\377abc我"));
-    assertEquals(ra("e68891ff616263", ""), Unpacker.unpack("H100H", "我\377abc"));
+    assertEquals(ra("ff616263e68891", ""),
+        Unpacker.unpack("H100H", "\377abc我"));
+    assertEquals(ra("e68891ff616263", ""),
+        Unpacker.unpack("H100H", "我\377abc"));
   }
 
   @Test
@@ -151,25 +150,27 @@ public class UnpackerTest {
     assertEquals(ra("162636"), Unpacker.unpack("h*", "abc"));
     assertEquals(ra("1"), Unpacker.unpack("h1", "abc"));
     assertEquals(ra("1626"), Unpacker.unpack("h4", "abc"));
-    assertEquals(ra("ff1626366e8819", ""), Unpacker.unpack("h100h", "\377abc我"));
-    assertEquals(ra("6e8819ff162636", ""), Unpacker.unpack("h100h", "我\377abc"));
+    assertEquals(ra("ff1626366e8819", ""),
+        Unpacker.unpack("h100h", "\377abc我"));
+    assertEquals(ra("6e8819ff162636", ""),
+        Unpacker.unpack("h100h", "我\377abc"));
   }
 
   @SuppressWarnings("unchecked")
   @Test
   public void testDirective_c_b() {
-    assertEquals(ra((byte) -1, (byte) -26, "0001000110001001"), rs("\377我")
-        .unpack("c2b*"));
-    assertEquals(ra("01", (byte) -120, (byte) -111, (byte) -1), rs("我\377")
-        .unpack("b2c*"));
+    assertEquals(ra((byte) -1, (byte) -26, "0001000110001001"),
+        rs("\377我").unpack("c2b*"));
+    assertEquals(ra("01", (byte) -120, (byte) -111, (byte) -1),
+        rs("我\377").unpack("b2c*"));
   }
 
   @SuppressWarnings("unchecked")
   @Test
   public void testDirective_c_h() {
     assertEquals(ra((byte) -1, (byte) -26, "8819"), rs("\377我").unpack("c2h*"));
-    assertEquals(ra("6e", (byte) -120, (byte) -111, (byte) -1), rs("我\377")
-        .unpack("h2c*"));
+    assertEquals(ra("6e", (byte) -120, (byte) -111, (byte) -1),
+        rs("我\377").unpack("h2c*"));
   }
 
 }

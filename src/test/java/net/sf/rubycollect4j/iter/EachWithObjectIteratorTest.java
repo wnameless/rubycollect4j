@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -29,10 +26,10 @@ import static org.junit.Assert.assertTrue;
 import java.util.Collections;
 import java.util.List;
 
-import net.sf.rubycollect4j.util.ComparableEntry;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import net.sf.rubycollect4j.util.ComparableEntry;
 
 public class EachWithObjectIteratorTest {
 
@@ -44,9 +41,8 @@ public class EachWithObjectIteratorTest {
   public void setUp() throws Exception {
     emptyList = Collections.emptyList();
     list = ra(1, 2, 3);
-    iter =
-        new EachWithObjectIterator<Integer, List<Integer>>(list.iterator(),
-            emptyList);
+    iter = new EachWithObjectIterator<Integer, List<Integer>>(list.iterator(),
+        emptyList);
   }
 
   @Test

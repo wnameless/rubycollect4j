@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -37,8 +34,8 @@ import java.util.logging.Logger;
  */
 public final class EachLineIterator implements Iterator<String> {
 
-  private static final Logger logger = Logger.getLogger(EachLineIterator.class
-      .getName());
+  private static final Logger logger =
+      Logger.getLogger(EachLineIterator.class.getName());
 
   private final File file;
   private BufferedReader reader;
@@ -53,8 +50,7 @@ public final class EachLineIterator implements Iterator<String> {
    *           if file is null
    */
   public EachLineIterator(File file) {
-    if (file == null)
-      throw new NullPointerException();
+    if (file == null) throw new NullPointerException();
 
     this.file = file;
   }
@@ -64,8 +60,8 @@ public final class EachLineIterator implements Iterator<String> {
       reader = new BufferedReader(new FileReader(file));
     } catch (FileNotFoundException e) {
       logger.log(Level.SEVERE, null, e);
-      throw new RuntimeException("Errno::ENOENT: No such file or directory - "
-          + file.getName());
+      throw new RuntimeException(
+          "Errno::ENOENT: No such file or directory - " + file.getName());
     }
     nextLine();
   }
@@ -74,8 +70,7 @@ public final class EachLineIterator implements Iterator<String> {
     String next = line;
     try {
       line = reader.readLine();
-      if (line == null)
-        reader.close();
+      if (line == null) reader.close();
     } catch (IOException e) {
       logger.log(Level.SEVERE, null, e);
       throw new RuntimeException(e);
@@ -85,16 +80,14 @@ public final class EachLineIterator implements Iterator<String> {
 
   @Override
   public boolean hasNext() {
-    if (reader == null)
-      init();
+    if (reader == null) init();
 
     return line != null;
   }
 
   @Override
   public String next() {
-    if (!hasNext())
-      throw new NoSuchElementException();
+    if (!hasNext()) throw new NoSuchElementException();
 
     return nextLine();
   }

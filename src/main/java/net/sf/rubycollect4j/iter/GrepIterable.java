@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -46,8 +43,7 @@ public final class GrepIterable<E> implements Iterable<E> {
    *           if iter or regex is null
    */
   public GrepIterable(Iterable<? extends E> iter, String regex) {
-    if (iter == null || regex == null)
-      throw new NullPointerException();
+    if (iter == null || regex == null) throw new NullPointerException();
 
     this.iter = iter;
     this.regex = regex;

@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -76,8 +73,7 @@ public class CycleIteratorTest {
     iter = new CycleIterator<Integer>(ra(1, 2, 3));
     for (int i = 0; i <= 10000; i++) {
       iter.next();
-      if (i == 10000)
-        return;
+      if (i == 10000) return;
     }
     fail();
   }

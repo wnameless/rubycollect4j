@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -25,10 +22,11 @@ import static net.sf.rubycollect4j.RubyCollections.rh;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import net.sf.rubycollect4j.RubyHash;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import net.sf.rubycollect4j.RubyHash;
 
 public class ComparableEntryIteratorTest {
 
@@ -38,9 +36,8 @@ public class ComparableEntryIteratorTest {
   @Before
   public void setUp() throws Exception {
     rubyHash = rh(1, 2, 3, 4);
-    iter =
-        new ComparableEntryIterator<Integer, Integer>(rubyHash.entrySet()
-            .iterator());
+    iter = new ComparableEntryIterator<Integer, Integer>(
+        rubyHash.entrySet().iterator());
   }
 
   @Test

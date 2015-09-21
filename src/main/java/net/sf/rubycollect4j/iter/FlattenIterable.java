@@ -1,9 +1,6 @@
-/**
+/*
  *
- * @author Wei-Ming Wu
- *
- *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2013-2015 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -51,8 +48,7 @@ public final class FlattenIterable<E, S> implements Iterable<S> {
    */
   public FlattenIterable(Iterable<? extends E> iter,
       TransformBlock<? super E, ? extends List<? extends S>> block) {
-    if (iter == null || block == null)
-      throw new NullPointerException();
+    if (iter == null || block == null) throw new NullPointerException();
 
     this.iter = iter;
     this.block = block;
