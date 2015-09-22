@@ -55,9 +55,9 @@ public final class RubyContract {
       extends Iterable<E> {
 
     /**
-     * Checks if null is excluded.
+     * Checks if null and Boolean.FALSE are excluded.
      * 
-     * @return true if null is not found, false otherwise
+     * @return true if null and Boolean.FALSE are not found, false otherwise
      */
     public boolean allʔ();
 
@@ -71,9 +71,10 @@ public final class RubyContract {
     public boolean allʔ(BooleanBlock<? super E> block);
 
     /**
-     * Checks if any non-null object is included.
+     * Checks if any non-null and not Boolean.FALSE object is included.
      * 
-     * @return true if non-null object is found, false otherwise
+     * @return true if non-null and not Boolean.FALSE object is found, false
+     *         otherwise
      */
     public boolean anyʔ();
 
@@ -863,9 +864,9 @@ public final class RubyContract {
     public <S> RubyArray<E> minmaxBy(String methodName, Object... args);
 
     /**
-     * Checks if elements contain only null objects.
+     * Checks if elements contain only null or Boolean.FALSE objects.
      * 
-     * @return true if all elements are null, false otherwise
+     * @return true if all elements are null or Boolean.FALSE, false otherwise
      */
     public boolean noneʔ();
 
@@ -880,9 +881,11 @@ public final class RubyContract {
     public boolean noneʔ(BooleanBlock<? super E> block);
 
     /**
-     * Checks if elements contain only one element beside null.
+     * Checks if elements contain only one element beside null and
+     * Boolean.FALSE.
      * 
-     * @return true if only one element beside null is found, false otherwise
+     * @return true if only one element beside null and Boolean.FALSE is found,
+     *         false otherwise
      */
     public boolean oneʔ();
 

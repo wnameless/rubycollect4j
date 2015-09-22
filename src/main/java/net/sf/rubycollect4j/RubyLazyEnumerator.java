@@ -123,7 +123,7 @@ public final class RubyLazyEnumerator<E> implements Ruby.LazyEnumerator<E> {
   @Override
   public boolean allʔ() {
     for (E item : iter) {
-      if (item == null) return false;
+      if (item == null || Boolean.FALSE.equals(item)) return false;
     }
     return true;
   }
@@ -139,7 +139,7 @@ public final class RubyLazyEnumerator<E> implements Ruby.LazyEnumerator<E> {
   @Override
   public boolean anyʔ() {
     for (E item : iter) {
-      if (item != null) return true;
+      if (item != null && !Boolean.FALSE.equals(item)) return true;
     }
     return false;
   }
@@ -913,7 +913,7 @@ public final class RubyLazyEnumerator<E> implements Ruby.LazyEnumerator<E> {
   @Override
   public boolean noneʔ() {
     for (E item : iter) {
-      if (item != null) return false;
+      if (item != null && !Boolean.FALSE.equals(item)) return false;
     }
     return true;
   }
@@ -930,7 +930,7 @@ public final class RubyLazyEnumerator<E> implements Ruby.LazyEnumerator<E> {
   public boolean oneʔ() {
     int count = 0;
     for (E item : iter) {
-      if (item != null) {
+      if (item != null && !Boolean.FALSE.equals(item)) {
         count++;
         if (count > 1) return false;
       }

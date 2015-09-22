@@ -284,3 +284,5 @@ Version 1.8.1
 Version 1.8.2
 
 + Added RubyIO::open(File) and RubyIO::open(InputStream) methods
+
+* Added Boolean.False detection to RubyEnumerable#allʔ, RubyEnumerable#anyʔ, RubyEnumerable#noneʔ and RubyEnumerable#oneʔ

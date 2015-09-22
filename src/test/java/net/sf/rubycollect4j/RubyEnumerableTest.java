@@ -87,6 +87,9 @@ public class RubyEnumerableTest {
     assertTrue(re.allʔ());
     re = newRubyEnumerator(Arrays.asList(1, 2, null));
     assertFalse(re.allʔ());
+    assertFalse(newRubyEnumerator(Arrays.asList(false, true)).allʔ());
+    assertFalse(newRubyEnumerator(Arrays.asList(null, true)).allʔ());
+    assertTrue(newRubyEnumerator(Arrays.asList(true, true)).allʔ());
   }
 
   @Test
@@ -114,6 +117,8 @@ public class RubyEnumerableTest {
     List<Integer> ints = Arrays.asList(null, null);
     re = newRubyEnumerator(ints);
     assertFalse(re.anyʔ());
+    assertFalse(newRubyEnumerator(Arrays.asList(false, null)).anyʔ());
+    assertTrue(newRubyEnumerator(Arrays.asList(false, null, true)).anyʔ());
   }
 
   @Test
@@ -1000,6 +1005,8 @@ public class RubyEnumerableTest {
     assertFalse(re.noneʔ());
     re = newRubyEnumerator(Arrays.asList(1, 2, 3, null));
     assertFalse(re.noneʔ());
+    assertTrue(newRubyEnumerator(Arrays.asList(false, null)).noneʔ());
+    assertFalse(newRubyEnumerator(Arrays.asList(false, null, true)).noneʔ());
   }
 
   @Test
@@ -1033,6 +1040,9 @@ public class RubyEnumerableTest {
     List<Integer> ints = new ArrayList<Integer>();
     re = newRubyEnumerator(ints);
     assertFalse(re.oneʔ());
+    assertFalse(newRubyEnumerator(Arrays.asList(false, null)).oneʔ());
+    assertTrue(newRubyEnumerator(Arrays.asList(false, null, true)).oneʔ());
+    assertFalse(newRubyEnumerator(Arrays.asList(null, true, true)).oneʔ());
   }
 
   @Test
