@@ -22,6 +22,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import org.junit.Test;
@@ -181,6 +182,22 @@ public class RubyIOTest {
     String file = BASE_DIR + "ruby_io_read_only_mode.txt";
     assertTrue(RubyFile.foreach(file) instanceof RubyEnumerator);
     assertEquals(ra("a", "bc", "def"), RubyFile.foreach(file).toA());
+  }
+
+  @Test
+  public void testForeachWithFile() {
+    String file = BASE_DIR + "ruby_io_read_only_mode.txt";
+    assertTrue(RubyFile.foreach(new File(file)) instanceof RubyEnumerator);
+    assertEquals(ra("a", "bc", "def"), RubyFile.foreach(new File(file)).toA());
+  }
+
+  @Test
+  public void testForeachWithInputStream() throws Exception {
+    String file = BASE_DIR + "ruby_io_read_only_mode.txt";
+    assertTrue(RubyFile.foreach(
+        new FileInputStream(new File(file))) instanceof RubyEnumerator);
+    assertEquals(ra("a", "bc", "def"),
+        RubyFile.foreach(new FileInputStream(new File(file))).toA());
   }
 
   @Test

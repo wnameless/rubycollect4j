@@ -22,6 +22,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.logging.Level;
@@ -37,7 +39,8 @@ public final class EachLineIterator implements Iterator<String> {
   private static final Logger logger =
       Logger.getLogger(EachLineIterator.class.getName());
 
-  private final File file;
+  private File file;
+  private InputStream inputStream;
   private BufferedReader reader;
   private String line;
 
@@ -55,9 +58,26 @@ public final class EachLineIterator implements Iterator<String> {
     this.file = file;
   }
 
+  /**
+   * Creates an {@link EachLineIterator}.
+   * 
+   * @param inputStream
+   *          an {@link InputStream}
+   * @throws NullPointerException
+   *           if file is null
+   */
+  public EachLineIterator(InputStream inputStream) {
+    if (inputStream == null) throw new NullPointerException();
+
+    this.inputStream = inputStream;
+  }
+
   private void init() {
     try {
-      reader = new BufferedReader(new FileReader(file));
+      if (file != null)
+        reader = new BufferedReader(new FileReader(file));
+      else
+        reader = new BufferedReader(new InputStreamReader(inputStream));
     } catch (FileNotFoundException e) {
       logger.log(Level.SEVERE, null, e);
       throw new RuntimeException(

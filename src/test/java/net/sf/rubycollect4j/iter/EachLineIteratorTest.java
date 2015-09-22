@@ -22,6 +22,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.NoSuchElementException;
 
 import org.junit.Before;
@@ -37,6 +39,8 @@ public class EachLineIteratorTest {
   public void setUp() throws Exception {
     iter =
         new EachLineIterator(new File(BASE_DIR + "ruby_io_read_only_mode.txt"));
+    iter = new EachLineIterator(
+        new FileInputStream(new File(BASE_DIR + "ruby_io_read_only_mode.txt")));
     noFileIter = new EachLineIterator(new File("No such file"));
   }
 
@@ -47,11 +51,16 @@ public class EachLineIteratorTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException1() {
-    new EachLineIterator(null);
+    new EachLineIterator((File) null);
+  }
+
+  @Test(expected = NullPointerException.class)
+  public void testConstructorException2() {
+    new EachLineIterator((InputStream) null);
   }
 
   @Test(expected = RuntimeException.class)
-  public void testConstructorException2() {
+  public void testConstructorException3() {
     noFileIter.next();
   }
 

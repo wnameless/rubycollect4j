@@ -21,6 +21,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -34,6 +36,8 @@ public class EachLineIterableTest {
   public void setUp() throws Exception {
     iter =
         new EachLineIterable(new File(BASE_DIR + "ruby_io_read_only_mode.txt"));
+    iter = new EachLineIterable(
+        new FileInputStream(new File(BASE_DIR + "ruby_io_read_only_mode.txt")));
   }
 
   @Test
@@ -42,8 +46,13 @@ public class EachLineIterableTest {
   }
 
   @Test(expected = NullPointerException.class)
-  public void testConstructorException() {
-    new EachLineIterable(null);
+  public void testConstructorException1() {
+    new EachLineIterable((File) null);
+  }
+
+  @Test(expected = NullPointerException.class)
+  public void testConstructorException2() {
+    new EachLineIterable((InputStream) null);
   }
 
   @Test

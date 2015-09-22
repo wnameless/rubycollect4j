@@ -27,6 +27,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -248,6 +249,28 @@ public class RubyIO {
    */
   public static RubyEnumerator<String> foreach(String path) {
     return newRubyEnumerator(new EachLineIterable(new File(path)));
+  }
+
+  /**
+   * Returns a {@link RubyEnumerator} of lines in given file.
+   * 
+   * @param file
+   *          a File
+   * @return {@link RubyEnumerator}
+   */
+  public static RubyEnumerator<String> foreach(File file) {
+    return newRubyEnumerator(new EachLineIterable(file));
+  }
+
+  /**
+   * Returns a {@link RubyEnumerator} of lines in given {@link InputStream}.
+   * 
+   * @param inputStream
+   *          an {@link InputStream}
+   * @return {@link RubyEnumerator}
+   */
+  public static RubyEnumerator<String> foreach(InputStream inputStream) {
+    return newRubyEnumerator(new EachLineIterable(inputStream));
   }
 
   /**

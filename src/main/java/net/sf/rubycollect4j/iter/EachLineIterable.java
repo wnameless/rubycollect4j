@@ -18,6 +18,7 @@
 package net.sf.rubycollect4j.iter;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.Iterator;
 
 /**
@@ -27,7 +28,8 @@ import java.util.Iterator;
  */
 public final class EachLineIterable implements Iterable<String> {
 
-  private final File file;
+  private File file;
+  private InputStream inputStream;
 
   /**
    * Creates an {@link EachLineIterable}.
@@ -43,9 +45,26 @@ public final class EachLineIterable implements Iterable<String> {
     this.file = file;
   }
 
+  /**
+   * Creates an {@link EachLineIterable}.
+   * 
+   * @param inputStream
+   *          an {@link InputStream}
+   * @throws NullPointerException
+   *           if file is null
+   */
+  public EachLineIterable(InputStream inputStream) {
+    if (inputStream == null) throw new NullPointerException();
+
+    this.inputStream = inputStream;
+  }
+
   @Override
   public Iterator<String> iterator() {
-    return new EachLineIterator(file);
+    if (file != null)
+      return new EachLineIterator(file);
+    else
+      return new EachLineIterator(inputStream);
   }
 
   @Override
