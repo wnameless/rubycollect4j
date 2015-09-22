@@ -1,3 +1,6 @@
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.sf.rubycollect4j/rubycollect4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.sf.rubycollect4j/rubycollect4j)
+
+
 rubycollect4j
 =============
 Ruby Collections for Java.
@@ -14,7 +17,7 @@ Installation with Maven:
 <dependency>
   <groupId>net.sf.rubycollect4j</groupId>
   <artifactId>rubycollect4j</artifactId>
-  <version>1.8.1</version>
+  <version>${latest.version}</version>
 </dependency>
 ```
 
