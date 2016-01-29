@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2013-2015 Wei-Ming Wu
+ * Copyright 2013 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -33,6 +33,8 @@ import net.sf.rubycollect4j.block.WithIndexBlock;
  * For example, {@link RubyArray}, {@link RubyHash}, {@link RubySet},
  * {@link RubyEnumerator} and {@link RubyString} can all be treated as
  * {@link Ruby.Enumerable}.
+ *
+ * @author Wei-Ming Wu
  *
  */
 public final class Ruby {

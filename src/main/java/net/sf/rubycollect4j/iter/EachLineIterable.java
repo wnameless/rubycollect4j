@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2013-2015 Wei-Ming Wu
+ * Copyright 2013 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -24,6 +24,8 @@ import java.util.Iterator;
 /**
  * 
  * {@link EachLineIterable} iterates a File line by line.
+ * 
+ * @author Wei-Ming Wu
  * 
  */
 public final class EachLineIterable implements Iterable<String> {

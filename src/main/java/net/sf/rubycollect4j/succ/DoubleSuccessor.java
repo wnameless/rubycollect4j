@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2013-2015 Wei-Ming Wu
+ * Copyright 2013 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -22,6 +22,8 @@ package net.sf.rubycollect4j.succ;
  * {@link DoubleSuccessor} generates a successor of any given Double. It
  * requires a precision to determine what is the number to increase on every
  * successor.
+ * 
+ * @author Wei-Ming Wu
  * 
  */
 public final class DoubleSuccessor implements Successive<Double> {

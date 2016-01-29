@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2013-2015 Wei-Ming Wu
+ * Copyright 2013 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -26,6 +26,8 @@ import java.util.Arrays;
  * 
  * {@link RubyKernel} mimics the useful Ruby p method by wrapping the Java
  * System.out.println method.
+ * 
+ * @author Wei-Ming Wu
  * 
  */
 public final class RubyKernel {

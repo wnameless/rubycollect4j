@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2013-2015 Wei-Ming Wu
+ * Copyright 2013 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -40,6 +40,9 @@ import java.util.Set;
  *          the type of the key elements
  * @param <V>
  *          the type of the value elements
+ * 
+ * @author Wei-Ming Wu
+ * 
  */
 public final class LinkedIdentityMap<K, V> implements Map<K, V> {
 

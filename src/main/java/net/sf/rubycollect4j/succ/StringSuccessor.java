@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2013-2015 Wei-Ming Wu
+ * Copyright 2013 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -27,6 +27,8 @@ import java.util.List;
  * generate successors based on those alphanumeric characters instead of the
  * whole String. If given String is numeric only, its will generate successors
  * based on those numeric values.
+ * 
+ * @author Wei-Ming Wu
  * 
  */
 public final class StringSuccessor implements Successive<String> {
