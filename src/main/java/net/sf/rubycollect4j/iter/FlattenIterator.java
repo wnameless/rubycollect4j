@@ -49,6 +49,8 @@ public final class FlattenIterator<E, S> implements Iterator<S> {
    * 
    * @param iter
    *          an Iterator
+   * @param block
+   *          to transform elements
    * @throws NullPointerException
    *           if iter or block is null
    */

@@ -67,6 +67,8 @@ public final class RubyDate extends Date {
    * Returns a new {@link RubyDate} where one or more of the elements have been
    * changed according to the options parameter.
    * 
+   * @param options
+   *          used to describe the coming change of this {@link RubyDate}
    * @return new {@link RubyDate}
    */
   public RubyDate change(Map<DateField, Integer> options) {

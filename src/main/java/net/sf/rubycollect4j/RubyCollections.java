@@ -227,6 +227,8 @@ public final class RubyCollections {
   /**
    * Creates a {@link RubyString} by given Object.
    * 
+   * @param o
+   *          any object
    * @return {@link RubyString}
    */
   public static RubyString rs(Object o) {

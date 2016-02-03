@@ -140,7 +140,7 @@ public final class RubySet<E> extends RubyEnumerable<E>
 
   /**
    * Classifies the set by the return value of the given block and returns a
-   * {@link RubyHash} of {S value => RubySet&lt;E&gt;} pairs.
+   * {@link RubyHash} of {S value =&gt; RubySet&lt;E&gt;} pairs.
    * 
    * @param block
    *          to transform elements
