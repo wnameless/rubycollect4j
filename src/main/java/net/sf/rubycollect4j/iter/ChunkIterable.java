@@ -38,8 +38,8 @@ import net.sf.rubycollect4j.block.TransformBlock;
  * @author Wei-Ming Wu
  * 
  */
-public final class ChunkIterable<E, K>
-    implements Iterable<Entry<K, RubyArray<E>>> {
+public final class ChunkIterable<E, K> implements
+    Iterable<Entry<K, RubyArray<E>>> {
 
   private final Iterable<? extends E> iter;
   private final TransformBlock<? super E, ? extends K> block;

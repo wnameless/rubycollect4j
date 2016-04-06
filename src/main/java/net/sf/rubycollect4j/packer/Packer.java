@@ -82,8 +82,9 @@ public final class Packer {
     for (String template : templateList) {
       Directive d = parseDirective(template);
       template = template.replace(d.toString(), "");
-      int count = template.isEmpty() ? 1
-          : template.equals("*") ? Integer.MAX_VALUE : rs(template).toI();
+      int count =
+          template.isEmpty() ? 1 : template.equals("*") ? Integer.MAX_VALUE
+              : rs(template).toI();
 
       switch (d) {
 
@@ -170,12 +171,12 @@ public final class Packer {
 
         }).join("|")).map(new TransformBlock<RubyArray<String>, String>() {
 
-          @Override
-          public String yield(RubyArray<String> item) {
-            return item.join();
-          }
+      @Override
+      public String yield(RubyArray<String> item) {
+        return item.join();
+      }
 
-        });
+    });
   }
 
 }

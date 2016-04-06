@@ -33,8 +33,8 @@ import net.sf.rubycollect4j.RubyArray;
  * @author Wei-Ming Wu
  * 
  */
-public final class RepeatedPermutationIterable<E>
-    implements Iterable<RubyArray<E>> {
+public final class RepeatedPermutationIterable<E> implements
+    Iterable<RubyArray<E>> {
 
   private final List<? extends E> list;
   private final int n;

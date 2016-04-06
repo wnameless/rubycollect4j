@@ -42,8 +42,8 @@ import net.sf.rubycollect4j.succ.Successive;
  * @author Wei-Ming Wu
  * 
  */
-public final class RubyRange<E> extends RubyEnumerable<E>
-    implements Serializable {
+public final class RubyRange<E> extends RubyEnumerable<E> implements
+    Serializable {
 
   private static final long serialVersionUID = 1L;
 

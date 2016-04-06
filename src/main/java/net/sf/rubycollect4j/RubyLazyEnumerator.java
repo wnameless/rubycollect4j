@@ -174,8 +174,8 @@ public final class RubyLazyEnumerator<E> implements Ruby.LazyEnumerator<E> {
   @Override
   public <S> RubyLazyEnumerator<Entry<S, RubyArray<E>>> chunk(
       final String methodName, final Object... args) {
-    return newRubyLazyEnumerator(
-        new ChunkIterable<E, S>(iter, new TransformBlock<E, S>() {
+    return newRubyLazyEnumerator(new ChunkIterable<E, S>(iter,
+        new TransformBlock<E, S>() {
 
           @Override
           public S yield(E item) {
@@ -471,8 +471,7 @@ public final class RubyLazyEnumerator<E> implements Ruby.LazyEnumerator<E> {
   }
 
   @Override
-  public <O> O eachWithObject(O obj,
-      WithObjectBlock<? super E, ? super O> block) {
+  public <O> O eachWithObject(O obj, WithObjectBlock<? super E, ? super O> block) {
     for (E item : iter) {
       block.yield(item, obj);
     }
@@ -562,8 +561,9 @@ public final class RubyLazyEnumerator<E> implements Ruby.LazyEnumerator<E> {
 
   @Override
   public RubyArray<E> first(int n) {
-    if (n < 0) throw new IllegalArgumentException(
-        "ArgumentError: attempt to take negative size");
+    if (n < 0)
+      throw new IllegalArgumentException(
+          "ArgumentError: attempt to take negative size");
 
     Iterator<E> elements = iter.iterator();
     RubyArray<E> rubyArray = newRubyArray();
@@ -612,8 +612,8 @@ public final class RubyLazyEnumerator<E> implements Ruby.LazyEnumerator<E> {
   @Override
   public <S> RubyLazyEnumerator<S> grep(String regex,
       TransformBlock<? super E, ? extends S> block) {
-    return newRubyLazyEnumerator(
-        new TransformIterable<E, S>(new GrepIterable<E>(iter, regex), block));
+    return newRubyLazyEnumerator(new TransformIterable<E, S>(
+        new GrepIterable<E>(iter, regex), block));
   }
 
   /**
@@ -895,8 +895,7 @@ public final class RubyLazyEnumerator<E> implements Ruby.LazyEnumerator<E> {
   }
 
   @Override
-  public <S> RubyArray<E> minmaxBy(
-      TransformBlock<? super E, ? extends S> block) {
+  public <S> RubyArray<E> minmaxBy(TransformBlock<? super E, ? extends S> block) {
     return minmaxBy(null, block);
   }
 
@@ -1078,8 +1077,8 @@ public final class RubyLazyEnumerator<E> implements Ruby.LazyEnumerator<E> {
    */
   @Override
   public RubyLazyEnumerator<RubyArray<E>> sliceBefore(String regex) {
-    return newRubyLazyEnumerator(
-        new SliceBeforeIterable<E>(iter, Pattern.compile(regex)));
+    return newRubyLazyEnumerator(new SliceBeforeIterable<E>(iter,
+        Pattern.compile(regex)));
   }
 
   @Override
@@ -1124,8 +1123,7 @@ public final class RubyLazyEnumerator<E> implements Ruby.LazyEnumerator<E> {
 
   @Override
   public <S> RubyArray<E> sortBy(Comparator<? super E> comp1,
-      Comparator<? super S> comp2,
-      TransformBlock<? super E, ? extends S> block) {
+      Comparator<? super S> comp2, TransformBlock<? super E, ? extends S> block) {
     RubyHash<S, RubyArray<E>> rubyHash = groupBy(block);
     RubyArray<E> rubyArray = newRubyArray();
     for (S key : rubyHash.keys().sortǃ(comp2)) {
@@ -1145,8 +1143,7 @@ public final class RubyLazyEnumerator<E> implements Ruby.LazyEnumerator<E> {
   }
 
   @Override
-  public <S> RubyArray<E> sortBy(final String methodName,
-      final Object... args) {
+  public <S> RubyArray<E> sortBy(final String methodName, final Object... args) {
     return sortBy(new TransformBlock<E, S>() {
 
       @Override

@@ -30,8 +30,8 @@ import java.util.logging.Logger;
  */
 public final class RubyObject {
 
-  private static final Logger logger =
-      Logger.getLogger(RubyObject.class.getName());
+  private static final Logger logger = Logger.getLogger(RubyObject.class
+      .getName());
 
   private RubyObject() {}
 
@@ -56,8 +56,7 @@ public final class RubyObject {
             if (i >= args.length || args[i] == null) continue;
 
             if (!isConvertable(method.getParameterTypes()[i],
-                args[i].getClass()))
-              isArgsMatched = false;
+                args[i].getClass())) isArgsMatched = false;
           }
           if (isArgsMatched && method.getParameterTypes().length == args.length)
             return (E) method.invoke(o, args);

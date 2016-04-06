@@ -48,8 +48,9 @@ public final class DropIterator<E> implements Iterator<E> {
    */
   public DropIterator(Iterator<? extends E> iter, int drop) {
     if (iter == null) throw new NullPointerException();
-    if (drop < 0) throw new IllegalArgumentException(
-        "ArgumentError: attempt to drop negative size");
+    if (drop < 0)
+      throw new IllegalArgumentException(
+          "ArgumentError: attempt to drop negative size");
 
     while (iter.hasNext() && drop > 0) {
       iter.next();

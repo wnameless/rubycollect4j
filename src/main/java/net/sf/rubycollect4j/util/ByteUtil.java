@@ -47,8 +47,8 @@ import net.sf.rubycollect4j.RubyArray;
  */
 public final class ByteUtil {
 
-  private static final Logger logger =
-      Logger.getLogger(ByteUtil.class.getName());
+  private static final Logger logger = Logger.getLogger(ByteUtil.class
+      .getName());
 
   private ByteUtil() {};
 
@@ -363,8 +363,7 @@ public final class ByteUtil {
       Method mothod = null;
       for (Method m : c.getMethods()) {
         if (m.getReturnType() == byte[].class
-            && m.getParameterTypes().length == 0)
-          mothod = m;
+            && m.getParameterTypes().length == 0) mothod = m;
       }
       return (byte[]) mothod.invoke(o);
     } catch (Exception e) {
@@ -464,8 +463,9 @@ public final class ByteUtil {
   public static String toBinaryString(byte[] bytes, boolean isMSB) {
     StringBuilder sb = new StringBuilder();
     for (byte b : bytes) {
-      String binary = String.format("%8s", Integer.toBinaryString(b & 0xFF))
-          .replace(' ', '0');
+      String binary =
+          String.format("%8s", Integer.toBinaryString(b & 0xFF)).replace(' ',
+              '0');
       if (isMSB)
         sb.append(binary);
       else

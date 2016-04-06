@@ -61,8 +61,8 @@ import net.sf.rubycollect4j.util.TryComparator;
  * @author Wei-Ming Wu
  * 
  */
-public final class RubyArray<E> extends RubyEnumerable<E>
-    implements List<E>, Comparable<List<E>>, Serializable {
+public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
+    Comparable<List<E>>, Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -607,8 +607,7 @@ public final class RubyArray<E> extends RubyEnumerable<E>
    *          to transform elements to be filled
    * @return this {@link RubyArray}
    */
-  public RubyArray<E> fill(int start,
-      TransformBlock<Integer, ? extends E> block) {
+  public RubyArray<E> fill(int start, TransformBlock<Integer, ? extends E> block) {
     if (start <= -list.size()) return fill(block);
 
     if (start < 0) start += list.size();
@@ -1167,9 +1166,8 @@ public final class RubyArray<E> extends RubyEnumerable<E>
         @SuppressWarnings("unchecked")
         List<S> lst = (List<S>) item;
         if (lst.size() > 0) {
-          if (target == null ? lst.get(lst.size() - 1) == null
-              : target.equals(lst.get(lst.size() - 1)))
-            return RubyArray.copyOf(lst);
+          if (target == null ? lst.get(lst.size() - 1) == null : target
+              .equals(lst.get(lst.size() - 1))) return RubyArray.copyOf(lst);
         }
       }
     }
@@ -1419,15 +1417,16 @@ public final class RubyArray<E> extends RubyEnumerable<E>
    *           if n is less than 0
    */
   public RubyArray<E> sample(int n) {
-    if (n < 0) throw new IllegalArgumentException(
-        "ArgumentError: negative sample number");
+    if (n < 0)
+      throw new IllegalArgumentException(
+          "ArgumentError: negative sample number");
 
     List<Integer> indices = eachIndex().toA();
 
     RubyArray<E> rubyArray = newRubyArray();
     while (rubyArray.size() < list.size() && rubyArray.size() < n) {
-      rubyArray.add(
-          list.get(indices.remove((int) (Math.random() * indices.size()))));
+      rubyArray.add(list.get(indices.remove((int) (Math.random() * indices
+          .size()))));
     }
     return rubyArray;
   }
@@ -1659,8 +1658,7 @@ public final class RubyArray<E> extends RubyEnumerable<E>
    * @return this {@link RubyArray}
    */
   public <S> RubyArray<E> sortByǃ(Comparator<? super E> comp1,
-      Comparator<? super S> comp2,
-      TransformBlock<? super E, ? extends S> block) {
+      Comparator<? super S> comp2, TransformBlock<? super E, ? extends S> block) {
     RubyHash<S, RubyArray<E>> rubyHash = groupBy(block);
     list.clear();
     for (S key : rubyHash.keys().sortǃ(comp2)) {
@@ -1679,8 +1677,7 @@ public final class RubyArray<E> extends RubyEnumerable<E>
    *          to transform elements
    * @return this {@link RubyArray}
    */
-  public <S> RubyArray<E> sortByǃ(
-      TransformBlock<? super E, ? extends S> block) {
+  public <S> RubyArray<E> sortByǃ(TransformBlock<? super E, ? extends S> block) {
     RubyHash<S, RubyArray<E>> rubyHash = groupBy(block);
     list.clear();
     for (S key : rubyHash.keys().sortǃ()) {
@@ -1699,8 +1696,7 @@ public final class RubyArray<E> extends RubyEnumerable<E>
    *          arguments of a Method
    * @return this {@link RubyArray}
    */
-  public <S> RubyArray<E> sortByǃ(final String methodName,
-      final Object... args) {
+  public <S> RubyArray<E> sortByǃ(final String methodName, final Object... args) {
     return sortByǃ(new TransformBlock<E, S>() {
 
       @Override
@@ -1751,15 +1747,17 @@ public final class RubyArray<E> extends RubyEnumerable<E>
 
     Integer size = null;
     for (E item : list) {
-      if (!(item instanceof List)) throw new TypeConstraintException(
-          "TypeError: no implicit conversion of " + item.getClass().toString()
-              + " into List");
+      if (!(item instanceof List))
+        throw new TypeConstraintException(
+            "TypeError: no implicit conversion of "
+                + item.getClass().toString() + " into List");
 
       if (size == null)
         size = ((List<?>) item).size();
       else if (size != ((List<?>) item).size())
-        throw new IndexOutOfBoundsException("IndexError: element size differs ("
-            + ((List<?>) item).size() + " should be " + size + ")");
+        throw new IndexOutOfBoundsException(
+            "IndexError: element size differs (" + ((List<?>) item).size()
+                + " should be " + size + ")");
     }
     RubyArray<RubyArray<S>> rubyArray = newRubyArray();
     for (int i = 0; i < size; i++) {

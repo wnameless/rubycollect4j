@@ -59,8 +59,8 @@ import net.sf.rubycollect4j.util.LinkedIdentityMap;
  * @author Wei-Ming Wu
  * 
  */
-public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
-    implements Map<K, V>, Serializable {
+public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
+    Map<K, V>, Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -207,8 +207,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
    *          to filter elements
    * @return this {@link RubyHash}
    */
-  public RubyHash<K, V> deleteIf(
-      EntryBooleanBlock<? super K, ? super V> block) {
+  public RubyHash<K, V> deleteIf(EntryBooleanBlock<? super K, ? super V> block) {
     Iterator<Entry<K, V>> iter = map.entrySet().iterator();
     while (iter.hasNext()) {
       Entry<K, V> item = iter.next();
@@ -463,9 +462,8 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
    */
   public K key(V value) {
     for (Entry<K, V> item : map.entrySet()) {
-      if (value == null ? item.getValue() == null
-          : value.equals(item.getValue()))
-        return item.getKey();
+      if (value == null ? item.getValue() == null : value.equals(item
+          .getValue())) return item.getKey();
     }
     return null;
   }
@@ -532,8 +530,11 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
     RubyHash<K, V> rubyHash = newRubyHash(map);
     for (Entry<K, V> item : otherHash.entrySet()) {
       if (rubyHash.containsKey(item.getKey()))
-        rubyHash.put(item.getKey(), block.yield(item.getKey(),
-            map.get(item.getKey()), item.getValue()));
+        rubyHash
+            .put(
+                item.getKey(),
+                block.yield(item.getKey(), map.get(item.getKey()),
+                    item.getValue()));
       else
         rubyHash.put(item);
     }
@@ -568,8 +569,8 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
       EntryMergeBlock<? super K, V> block) {
     for (Entry<? extends K, ? extends V> item : otherHash.entrySet()) {
       if (containsKey(item.getKey()))
-        map.put(item.getKey(), block.yield(item.getKey(),
-            map.get(item.getKey()), item.getValue()));
+        map.put(item.getKey(),
+            block.yield(item.getKey(), map.get(item.getKey()), item.getValue()));
       else
         put(item);
     }
@@ -611,9 +612,8 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
    */
   public Entry<K, V> rassoc(V value) {
     for (Entry<K, V> item : map.entrySet()) {
-      if (value == null ? item.getValue() == null
-          : value.equals(item.getValue()))
-        return new ComparableEntry<K, V>(item);
+      if (value == null ? item.getValue() == null : value.equals(item
+          .getValue())) return new ComparableEntry<K, V>(item);
     }
     return null;
   }
@@ -873,8 +873,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
    * 
    * @see RubyEnumerable#detect(BooleanBlock)
    */
-  public Entry<K, V> detect(
-      final EntryBooleanBlock<? super K, ? super V> block) {
+  public Entry<K, V> detect(final EntryBooleanBlock<? super K, ? super V> block) {
     return detect(new BooleanBlock<Entry<K, V>>() {
 
       @Override
@@ -951,8 +950,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
    * 
    * @see RubyEnumerable#findIndex(BooleanBlock)
    */
-  public Integer findIndex(
-      final EntryBooleanBlock<? super K, ? super V> block) {
+  public Integer findIndex(final EntryBooleanBlock<? super K, ? super V> block) {
     return findIndex(new BooleanBlock<Entry<K, V>>() {
 
       @Override

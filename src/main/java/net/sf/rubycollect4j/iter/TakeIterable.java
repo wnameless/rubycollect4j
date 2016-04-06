@@ -48,8 +48,9 @@ public final class TakeIterable<E> implements Iterable<E> {
    */
   public TakeIterable(Iterable<? extends E> iter, int n) {
     if (iter == null) throw new NullPointerException();
-    if (n < 0) throw new IllegalArgumentException(
-        "ArgumentError: attempt to take negative size");
+    if (n < 0)
+      throw new IllegalArgumentException(
+          "ArgumentError: attempt to take negative size");
 
     this.iter = iter;
     this.n = n;

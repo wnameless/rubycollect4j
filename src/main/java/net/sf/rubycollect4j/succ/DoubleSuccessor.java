@@ -37,7 +37,8 @@ public final class DoubleSuccessor implements Successive<Double> {
    *          of each successor
    */
   public DoubleSuccessor(int precision) {
-    if (precision < 0) throw new IllegalArgumentException("negative precision");
+    if (precision < 0)
+      throw new IllegalArgumentException("negative precision");
 
     this.precision = precision;
   }

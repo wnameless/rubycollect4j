@@ -90,8 +90,8 @@ public class RubyIO {
      */
     AR("a+", true, true);
 
-    private static final Map<String, Mode> modeMap =
-        Hash(ra(values()).map(new TransformBlock<Mode, Entry<String, Mode>>() {
+    private static final Map<String, Mode> modeMap = Hash(
+        ra(values()).map(new TransformBlock<Mode, Entry<String, Mode>>() {
 
           @Override
           public Entry<String, Mode> yield(Mode item) {

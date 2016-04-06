@@ -42,8 +42,8 @@ import net.sf.rubycollect4j.util.PeekingIterator;
  * @author Wei-Ming Wu
  * 
  */
-public final class ChunkIterator<E, K>
-    implements Iterator<Entry<K, RubyArray<E>>> {
+public final class ChunkIterator<E, K> implements
+    Iterator<Entry<K, RubyArray<E>>> {
 
   private final PeekingIterator<E> pIter;
   private final TransformBlock<? super E, ? extends K> block;

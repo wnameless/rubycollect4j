@@ -125,9 +125,8 @@ public final class ASCII8BitUTF implements CharSequence {
    * @return true if there are remaining characters, false otherwise
    */
   public boolean hasNextChar() {
-    return (currentChar != null
-        && currentChar.getBytes().length == currentBytes.size())
-        || chars.anyʔ();
+    return (currentChar != null && currentChar.getBytes().length == currentBytes
+        .size()) || chars.anyʔ();
   }
 
   /**

@@ -67,8 +67,8 @@ import net.sf.rubycollect4j.succ.StringSuccessor;
  * @author Wei-Ming Wu
  * 
  */
-public final class RubyString extends RubyEnumerable<String>
-    implements CharSequence, Comparable<CharSequence>, Serializable {
+public final class RubyString extends RubyEnumerable<String> implements
+    CharSequence, Comparable<CharSequence>, Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -97,8 +97,8 @@ public final class RubyString extends RubyEnumerable<String>
   @Override
   protected Iterable<String> getIterable() {
     final String iterStr = str;
-    return range(0, iterStr.length() - 1).lazy()
-        .map(new TransformBlock<Integer, String>() {
+    return range(0, iterStr.length() - 1).lazy().map(
+        new TransformBlock<Integer, String>() {
 
           @Override
           public String yield(Integer item) {
@@ -109,8 +109,9 @@ public final class RubyString extends RubyEnumerable<String>
   }
 
   private String stringify(Object o) {
-    if (o == null) throw new TypeConstraintException(
-        "TypeError: no implicit conversion of null into String");
+    if (o == null)
+      throw new TypeConstraintException(
+          "TypeError: no implicit conversion of null into String");
 
     if (o instanceof String) return (String) o;
 
@@ -214,8 +215,8 @@ public final class RubyString extends RubyEnumerable<String>
   public RubyString capitalize() {
     if (str.isEmpty()) return this;
 
-    return rs(
-        str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase());
+    return rs(str.substring(0, 1).toUpperCase()
+        + str.substring(1).toLowerCase());
   }
 
   /**
@@ -648,8 +649,8 @@ public final class RubyString extends RubyEnumerable<String>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<Integer> eachCodepoint() {
-    return newRubyEnumerator((Iterable<Integer>) each().lazy()
-        .map(new TransformBlock<String, Integer>() {
+    return newRubyEnumerator((Iterable<Integer>) each().lazy().map(
+        new TransformBlock<String, Integer>() {
 
           @Override
           public Integer yield(String item) {
@@ -1069,8 +1070,8 @@ public final class RubyString extends RubyEnumerable<String>
    */
   public RubyString insert(int index, String otherStr) {
     if (index < -str.length() - 1 || index > str.length())
-      throw new IndexOutOfBoundsException(
-          "IndexError: index " + index + " out of string");
+      throw new IndexOutOfBoundsException("IndexError: index " + index
+          + " out of string");
 
     str = toA().insert(index, stringify(otherStr)).join();
     return this;
@@ -1682,8 +1683,7 @@ public final class RubyString extends RubyEnumerable<String>
    * 
    * @return this {@link RubyString}
    */
-  public RubyString scrubǃ(
-      final TransformBlock<RubyArray<Byte>, String> block) {
+  public RubyString scrubǃ(final TransformBlock<RubyArray<Byte>, String> block) {
     return inPlace(scrub(block));
   }
 
@@ -1699,8 +1699,9 @@ public final class RubyString extends RubyEnumerable<String>
   public byte setbyte(int index, byte b) {
     byte[] bytes = str.getBytes();
     if (index < 0) index += bytes.length;
-    if (index < 0 || index >= bytes.length) throw new IndexOutOfBoundsException(
-        "IndexError: index " + index + " out of string");
+    if (index < 0 || index >= bytes.length)
+      throw new IndexOutOfBoundsException("IndexError: index " + index
+          + " out of string");
 
     bytes[index] = b;
     str = new String(bytes);
@@ -2193,8 +2194,8 @@ public final class RubyString extends RubyEnumerable<String>
 
       @Override
       public String yield(String item) {
-        return upperCase.matcher(item).matches() ? item.toLowerCase()
-            : item.toUpperCase();
+        return upperCase.matcher(item).matches() ? item.toLowerCase() : item
+            .toUpperCase();
       }
 
     }).join());
@@ -2239,8 +2240,8 @@ public final class RubyString extends RubyEnumerable<String>
   public int toI() {
     Matcher intMatcher = qr("^\\s*[-+]?\\s*\\d+").matcher(str);
     if (intMatcher.find())
-      return Integer
-          .valueOf(intMatcher.group().trim().replaceAll("[\\s\\+]+", ""));
+      return Integer.valueOf(intMatcher.group().trim()
+          .replaceAll("[\\s\\+]+", ""));
     else
       return 0;
   }
@@ -2257,13 +2258,13 @@ public final class RubyString extends RubyEnumerable<String>
    */
   public int toI(int radix) {
     if (radix < MIN_RADIX || radix > MAX_RADIX)
-      throw new IllegalArgumentException(
-          "ArgumentError: invalid radix " + radix);
+      throw new IllegalArgumentException("ArgumentError: invalid radix "
+          + radix);
 
     String digits = "0123456789abcdefghijklmnopqrstuvwxyz";
     Matcher intMatcher =
-        qr("(?i)^\\s*[-+]?\\s*[" + digits.substring(0, radix) + "]+")
-            .matcher(str);
+        qr("(?i)^\\s*[-+]?\\s*[" + digits.substring(0, radix) + "]+").matcher(
+            str);
     if (intMatcher.find()) {
       try {
         return Integer.parseInt(
@@ -2307,8 +2308,9 @@ public final class RubyString extends RubyEnumerable<String>
   public RubyString tr(String fromStr, String toStr) {
     fromStr = charSet2Str(stringify(fromStr));
     toStr = charSet2Str(stringify(toStr));
-    if (fromStr.startsWith("^")) return rs(str.replaceAll("[" + fromStr + "]",
-        toStr.isEmpty() ? "" : rs(toStr).toA().last()));
+    if (fromStr.startsWith("^"))
+      return rs(str.replaceAll("[" + fromStr + "]",
+          toStr.isEmpty() ? "" : rs(toStr).toA().last()));
 
     RubyArray<String> fromStrAry =
         rs(fromStr.replace("\\^", "^").replace("\\-", "-")).toA();
@@ -2316,8 +2318,8 @@ public final class RubyString extends RubyEnumerable<String>
     if (toStrAry.isEmpty())
       toStrAry.fill("", 0, fromStrAry.length());
     else if (toStrAry.length() < fromStrAry.length())
-      toStrAry.fill(toStrAry.last(), toStrAry.size(),
-          fromStrAry.length() - toStrAry.length());
+      toStrAry.fill(toStrAry.last(), toStrAry.size(), fromStrAry.length()
+          - toStrAry.length());
 
     @SuppressWarnings("unchecked")
     RubyHash<String, String> rh = Hash(fromStrAry.zip(toStrAry));
@@ -2525,8 +2527,7 @@ public final class RubyString extends RubyEnumerable<String>
    *          to yield successive value
    * @return this {@link RubyString}
    */
-  public RubyString upto(String otherStr, boolean exclusive,
-      Block<String> block) {
+  public RubyString upto(String otherStr, boolean exclusive, Block<String> block) {
     upto(stringify(otherStr), exclusive).each(block);
     return this;
   }

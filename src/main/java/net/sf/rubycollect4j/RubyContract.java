@@ -503,8 +503,7 @@ public final class RubyContract {
      *          to transform elements
      * @return {@link Enumerable}
      */
-    public <S> Z grep(String regex,
-        TransformBlock<? super E, ? extends S> block);
+    public <S> Z grep(String regex, TransformBlock<? super E, ? extends S> block);
 
     /**
      * Finds all elements which are matched by the regular expression and
@@ -1107,8 +1106,7 @@ public final class RubyContract {
      *          to transform elements
      * @return {@link RubyArray}
      */
-    public <S> RubyArray<E> sortBy(
-        TransformBlock<? super E, ? extends S> block);
+    public <S> RubyArray<E> sortBy(TransformBlock<? super E, ? extends S> block);
 
     /**
      * Sorts elements by the ordering of the outputs invoked by given method

@@ -49,8 +49,8 @@ public final class Ruby {
    * @param <E>
    *          the type of the elements
    */
-  public interface Enumerable<E>
-      extends RubyContract.Enumerable<E, Ruby.Enumerator<?>, RubyArray<?>> {
+  public interface Enumerable<E> extends
+      RubyContract.Enumerable<E, Ruby.Enumerator<?>, RubyArray<?>> {
 
     /**
      * {@inheritDoc}
@@ -84,8 +84,7 @@ public final class Ruby {
      * @return {@link RubyArray}
      */
     @Override
-    public <S> RubyArray<S> collect(
-        TransformBlock<? super E, ? extends S> block);
+    public <S> RubyArray<S> collect(TransformBlock<? super E, ? extends S> block);
 
     /**
      * {@inheritDoc}
@@ -520,7 +519,8 @@ public final class Ruby {
    * @param <E>
    *          the type of the elements
    */
-  public interface LazyEnumerator<E> extends
+  public interface LazyEnumerator<E>
+      extends
       RubyContract.Enumerator<E, Ruby.LazyEnumerator<?>, Ruby.LazyEnumerator<?>> {
 
     /**
@@ -694,8 +694,7 @@ public final class Ruby {
      * @return {@link Ruby.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> eachWithIndex(
-        WithIndexBlock<? super E> block);
+    public Ruby.LazyEnumerator<E> eachWithIndex(WithIndexBlock<? super E> block);
 
     /**
      * {@inheritDoc}

@@ -32,8 +32,8 @@ import net.sf.rubycollect4j.util.ComparableEntry;
  * @author Wei-Ming Wu
  * 
  */
-public final class EachWithIndexIterator<E>
-    implements Iterator<Entry<E, Integer>> {
+public final class EachWithIndexIterator<E> implements
+    Iterator<Entry<E, Integer>> {
 
   private final Iterator<? extends E> iter;
   private int index = 0;

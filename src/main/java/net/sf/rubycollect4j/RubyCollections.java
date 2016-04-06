@@ -51,8 +51,8 @@ import net.sf.rubycollect4j.util.ComparableEntry;
  */
 public final class RubyCollections {
 
-  private static final Logger logger =
-      Logger.getLogger(RubyCollections.class.getName());
+  private static final Logger logger = Logger.getLogger(RubyCollections.class
+      .getName());
 
   private RubyCollections() {}
 
@@ -197,8 +197,7 @@ public final class RubyCollections {
    *          an Iterable
    * @return new {@link RubyLazyEnumerator}
    */
-  public static <E> RubyLazyEnumerator<E> newRubyLazyEnumerator(
-      Iterable<E> iter) {
+  public static <E> RubyLazyEnumerator<E> newRubyLazyEnumerator(Iterable<E> iter) {
     return new RubyLazyEnumerator<E>(iter);
   }
 
@@ -809,8 +808,7 @@ public final class RubyCollections {
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
       K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
-      K key7, V value7, K key8, V value8, K key9, V value9, K key10,
-      V value10) {
+      K key7, V value7, K key8, V value8, K key9, V value9, K key10, V value10) {
     RubyHash<K, V> rh = newRubyHash();
     rh.put(key1, value1);
     rh.put(key2, value2);
@@ -2731,9 +2729,8 @@ public final class RubyCollections {
     String endStr = String.valueOf(end);
     int startPrecision = startStr.length() - startStr.lastIndexOf('.') - 1;
     int endPrecision = endStr.length() - endStr.lastIndexOf('.') - 1;
-    return new RubyRange<Double>(
-        new DoubleSuccessor(Math.max(startPrecision, endPrecision)), start,
-        end);
+    return new RubyRange<Double>(new DoubleSuccessor(Math.max(startPrecision,
+        endPrecision)), start, end);
   }
 
   /**

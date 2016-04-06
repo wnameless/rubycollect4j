@@ -48,8 +48,9 @@ public final class DropIterable<E> implements Iterable<E> {
    */
   public DropIterable(Iterable<? extends E> iter, int drop) {
     if (iter == null) throw new NullPointerException();
-    if (drop < 0) throw new IllegalArgumentException(
-        "ArgumentError: attempt to drop negative size");
+    if (drop < 0)
+      throw new IllegalArgumentException(
+          "ArgumentError: attempt to drop negative size");
 
     this.iter = iter;
     this.drop = drop;
