@@ -29,12 +29,14 @@ import java.util.regex.Pattern;
 
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.block.BooleanBlock;
+import net.sf.rubycollect4j.block.EntryBooleanBlock;
 import net.sf.rubycollect4j.block.ReduceBlock;
 import net.sf.rubycollect4j.block.TransformBlock;
 import net.sf.rubycollect4j.block.WithIndexBlock;
 import net.sf.rubycollect4j.block.WithInitBlock;
 import net.sf.rubycollect4j.block.WithObjectBlock;
 import net.sf.rubycollect4j.iter.ChunkIterable;
+import net.sf.rubycollect4j.iter.ChunkWhileIterable;
 import net.sf.rubycollect4j.iter.CycleIterable;
 import net.sf.rubycollect4j.iter.EachConsIterable;
 import net.sf.rubycollect4j.iter.EachSliceIterable;
@@ -116,6 +118,17 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
           }
 
         }));
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @return {@link RubyEnumerator}
+   */
+  @Override
+  public RubyEnumerator<RubyArray<E>> chunkWhile(
+      EntryBooleanBlock<? super E, ? super E> block) {
+    return newRubyEnumerator(new ChunkWhileIterable<E>(getIterable(), block));
   }
 
   /**

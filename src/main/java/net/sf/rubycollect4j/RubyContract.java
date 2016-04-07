@@ -23,6 +23,7 @@ import java.util.List;
 
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.block.BooleanBlock;
+import net.sf.rubycollect4j.block.EntryBooleanBlock;
 import net.sf.rubycollect4j.block.ReduceBlock;
 import net.sf.rubycollect4j.block.TransformBlock;
 import net.sf.rubycollect4j.block.WithIndexBlock;
@@ -121,6 +122,16 @@ public final class RubyContract {
      */
     @Deprecated
     public <S> N chunk(final String methodName, final Object... args);
+
+    /**
+     * Chunks elements into entries. The value of entry is a {@link RubyArray}.
+     * This method creates a new chunk whenever the block returns false.
+     * 
+     * @param block
+     *          to define which elements to be chunked
+     * @return {@link Enumerator}
+     */
+    public N chunkWhile(EntryBooleanBlock<? super E, ? super E> block);
 
     /**
      * Returns an enumerator of elements.

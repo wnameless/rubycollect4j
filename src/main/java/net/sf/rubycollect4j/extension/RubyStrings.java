@@ -612,6 +612,15 @@ public final class RubyStrings {
   }
 
   /**
+   * @see net.sf.rubycollect4j.RubyString#setbyte(int, byte)
+   */
+  public static String setbyte(CharSequence in, int index, byte b) {
+    RubyString rs = rs(in);
+    rs.setbyte(index, b);
+    return rs.toS();
+  }
+
+  /**
    * @see net.sf.rubycollect4j.RubyString#slice(int)
    */
   public static String slice(CharSequence in, int index) {

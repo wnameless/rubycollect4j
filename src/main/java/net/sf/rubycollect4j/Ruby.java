@@ -22,6 +22,7 @@ import java.util.Map.Entry;
 
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.block.BooleanBlock;
+import net.sf.rubycollect4j.block.EntryBooleanBlock;
 import net.sf.rubycollect4j.block.TransformBlock;
 import net.sf.rubycollect4j.block.WithIndexBlock;
 
@@ -72,6 +73,15 @@ public final class Ruby {
     @Override
     public <S> Ruby.Enumerator<Entry<S, RubyArray<E>>> chunk(
         final String methodName, final Object... args);
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @return {@link Ruby.Enumerator}
+     */
+    @Override
+    public Ruby.Enumerator<RubyArray<E>> chunkWhile(
+        EntryBooleanBlock<? super E, ? super E> block);
 
     /**
      * {@inheritDoc}

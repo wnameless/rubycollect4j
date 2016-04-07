@@ -51,7 +51,6 @@ import org.junit.Test;
 public class RubyStringsTest {
 
   String rs;
-  CharSequence cs;
 
   @Before
   public void setUp() throws Exception {
@@ -895,6 +894,12 @@ public class RubyStringsTest {
           }
 
         }));
+  }
+
+  @Test
+  public void testSetbyte() {
+    assertEquals("aba", RubyStrings.setbyte(rs, 2, (byte) 97));
+    assertEquals("aac", RubyStrings.setbyte(rs, -2, (byte) 97));
   }
 
   @Test

@@ -31,12 +31,14 @@ import java.util.regex.Pattern;
 
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.block.BooleanBlock;
+import net.sf.rubycollect4j.block.EntryBooleanBlock;
 import net.sf.rubycollect4j.block.ReduceBlock;
 import net.sf.rubycollect4j.block.TransformBlock;
 import net.sf.rubycollect4j.block.WithIndexBlock;
 import net.sf.rubycollect4j.block.WithInitBlock;
 import net.sf.rubycollect4j.block.WithObjectBlock;
 import net.sf.rubycollect4j.iter.ChunkIterable;
+import net.sf.rubycollect4j.iter.ChunkWhileIterable;
 import net.sf.rubycollect4j.iter.CycleIterable;
 import net.sf.rubycollect4j.iter.DropIterable;
 import net.sf.rubycollect4j.iter.DropWhileIterable;
@@ -186,6 +188,17 @@ public final class RubyLazyEnumerator<E> implements Ruby.LazyEnumerator<E> {
           }
 
         }));
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @return {@link RubyLazyEnumerator}
+   */
+  @Override
+  public RubyLazyEnumerator<RubyArray<E>> chunkWhile(
+      EntryBooleanBlock<? super E, ? super E> block) {
+    return newRubyLazyEnumerator(new ChunkWhileIterable<E>(iter, block));
   }
 
   /**

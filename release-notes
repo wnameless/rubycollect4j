@@ -5,27 +5,27 @@ Version 1.0.1
 
 Version 1.1.0
 
-+ Added RubyRange
++ Add RubyRange
 
 
 Version 1.2.0
 
-+ Added RubyDate
++ Add RubyDate
 
-* Changed the generic of Successive interface from <E extends Comparable<E>> to <E>
+* Change the generic of Successive interface from <E extends Comparable<E>> to <E>
 
-+ Added net.sf.rubycollect4j.succ package
++ Add net.sf.rubycollect4j.succ package
 
-* Moved net.sf.rubycollect4j.range to net.sf.rubycollect4j.succ
+* Move net.sf.rubycollect4j.range to net.sf.rubycollect4j.succ
 
-- Removed net.sf.rubycollect4j.range package
+- Remove net.sf.rubycollect4j.range package
 
 * Made constructors of utility classes private
 
-* Changed RubyCollections::date behavior to close human nature
+* Change RubyCollections::date behavior to close human nature
   Ex: date(2013, 7, 1) will create RubyDate(2013, Jul, 1) instead of RubyDate(2013, Aug, 1)
 
-* Fixed RubyRange::range behavior on the range of double
+* Fix RubyRange::range behavior on the range of double
   range(1.09, 1.11).toA() will generate [1.09, 1.10, 1.11] instead of [1.09, 1.10]
 
 * DoubleSuccessor constructor requires a precision now and it is not a singleton anymore
@@ -35,119 +35,119 @@ Version 1.2.1
 
 * Bug fixed: RubyDir.glob("**/*") missed to retrieve the files of the very top level directory
 
-+ Added weeks() to DateShifter which means date(2013, 1, 1).add(7).weeks() is able to use
++ Add weeks() to DateShifter which means date(2013, 1, 1).add(7).weeks() is able to use
 
-+ Made rh() accept up to 20 pairs
++ Make rh() accept up to 20 pairs
 
-+ Added year(), month(), day(), dayOfWeek(), dayOfYear(), week(), weekOfMonth(), hour(), minute(), second() & millisecond() to RubyDate
++ Add year(), month(), day(), dayOfWeek(), dayOfYear(), week(), weekOfMonth(), hour(), minute(), second() & millisecond() to RubyDate
 
 
 Version 1.3.0
 
-* Improved RubyDir.glob() compatibility on Windows 
+* Improve RubyDir.glob() compatibility on Windows 
 
-+ Throws RuntimeExceptions while Exceptions are caught
++ Throw RuntimeExceptions while Exceptions are caught
 
 + The binarySearch() of RubyArray now accepts block
 
-+ Added compareByIdentity() feature for RubyHash
++ Add compareByIdentity() feature for RubyHash
 
 * RubyRange not requires Comparable objects to initialize anymore
 
 * Moved newRubyArray(), newRubyHash(), newRubyEnumerable(), newRubyRnumerator(), newRubyRange() to RubyCollections
 
-- Removed U(), X(), Ⴖ(), ㄍ(), ㄧ(), 十() from RubyArray
+- Remove U(), X(), Ⴖ(), ㄍ(), ㄧ(), 十() from RubyArray
 
 * Made RubyEnumerable an abstract class
 
-* Changed constructors of RubyArray & RubyHash to public
+* Change constructors of RubyArray & RubyHash to public
 
-* Changed foreach() of RubyIO to accept only a block
+* Change foreach() of RubyIO to accept only a block
 
 
 Version 1.3.1
 
-* Fixed the bugs when max(), maxBy(), min(), minBy(), minmax(), minmaxBy() of RubyEnumerable are called on an empty Iterable
+* Fix the bugs when max(), maxBy(), min(), minBy(), minmax(), minmaxBy() of RubyEnumerable are called on an empty Iterable
 
-* Added date() to RubyCollections
+* Add date() to RubyCollections
 
 
 Version 1.4.0
 
-- Removed google guava dependency
+- Remove google guava dependency
 
-+ Implemented RubyArray#pack()
++ Implement RubyArray#pack()
 
-+ Added RubyFile::join
++ Add RubyFile::join
 
-* Added return value to RubyKernel::p
+* Add return value to RubyKernel::p
 
 
 Version 1.4.1
 
-* Fixed CycleIterator#hasNext bug
+* Fix CycleIterator#hasNext bug
 
-* Fixed EachLineIterator#next bug
+* Fix EachLineIterator#next bug
 
-* Changed UnsupportedOperationException to IllegalStateException in RubyIO
+* Change UnsupportedOperationException to IllegalStateException in RubyIO
 
-* Changed NoSuchElementException to IllegalArgumentException in RubyIO
+* Change NoSuchElementException to IllegalArgumentException in RubyIO
 
-* Overrode toString() methods of all Iterables
+* Override toString() methods of all Iterables
 
-* Made RubyArray#push accept varargs
+* Make RubyArray#push accept varargs
 
-* Fixed the bug of RubyArray#delete which happens while deleting null objects
+* Fix the bug of RubyArray#delete which happens while deleting null objects
 
-* Fixed the bugs of RubyArray#assoc & RubyArray#rassoc while encountering null objects
+* Fix the bugs of RubyArray#assoc & RubyArray#rassoc while encountering null objects
 
-* Fixed the bugs of RubyHash#rassoc & RubyHash#key while encountering null objects
+* Fix the bugs of RubyHash#rassoc & RubyHash#key while encountering null objects
 
-* Fixed the bug of RubyEnumerable#sortBy ordering
+* Fix the bug of RubyEnumerable#sortBy ordering
 
-* Increased acceptable comparators of RubyEnumerable#sort & RubyEnumerable#sortBy
+* Increase acceptable comparators of RubyEnumerable#sort & RubyEnumerable#sortBy
 
-* Increased acceptable comparators of RubyArray#sortByǃ
+* Increase acceptable comparators of RubyArray#sortByǃ
 
-* Changed RubyHash entries to ComparableEntry
+* Change RubyHash entries to ComparableEntry
 
-* Fixed the bug of RubyFile#join
+* Fix the bug of RubyFile#join
 
-* Made RubyArray Comparable
+* Make RubyArray Comparable
 
 
 Version 1.4.2
 
-* Changed all returned ComparableEntry to Entry
+* Change all returned ComparableEntry to Entry
 
-* Changed all Iterable<ComparableEntry<K, V>> to Iterable<Entry<K, V>> 
+* Change all Iterable<ComparableEntry<K, V>> to Iterable<Entry<K, V>> 
 
-* Changed all Iterator<ComparableEntry<K, V>> to Iterator<Entry<K, V>> 
+* Change all Iterator<ComparableEntry<K, V>> to Iterator<Entry<K, V>> 
 
 
 Version 1.5.0
 
-+ Implemented RubyEnumerable#lazy
++ Implement RubyEnumerable#lazy
 
-+ Added freeze() & frozen?() to RubyArray & RubyHash
++ Add freeze() & frozen?() to RubyArray & RubyHash
 
-* Checked 'false' in RubyEnumerable#all? & RubyEnumerable#any?
+* Check 'false' in RubyEnumerable#all? & RubyEnumerable#any?
 
-+ Added RubyArray#collectǃ & RubyArray#mapǃ
++ Add RubyArray#collectǃ & RubyArray#mapǃ
 
 
 Version 1.5.1
 
-* Changed LazyRubyEnumerator to RubyLazyEnumerator
+* Change LazyRubyEnumerator to RubyLazyEnumerator
 
 
 Version 1.5.2
 
-- Removed RubyEnumerable#sort(Comparator comp) to adapt new Java8 List Interface
+- Remove RubyEnumerable#sort(Comparator comp) to adapt new Java8 List Interface
 
-* Fixed the bug of RubyIO UTF reading & writing
+* Fix the bug of RubyIO UTF reading & writing
 
-* Fixed RubyFile#join bug on Windows
+* Fix RubyFile#join bug on Windows
 
 
 Version 1.5.3
@@ -165,7 +165,7 @@ Version 1.5.3
 
 Version 1.6.0
 
-+ Added RubyObject#send
++ Add RubyObject#send
 
 + Most of the TransformBlocks in RubyCollect4J can now be replaced with method name and arguments (invoke method using Reflection)
 
@@ -174,11 +174,11 @@ Version 1.6.0
 
 Version 1.6.1
 
-* Added RubyFile::size & RubyFile::expandPath(file, dir)
+* Add RubyFile::size & RubyFile::expandPath(file, dir)
 
-* Fixed the remove logic of StepIterator
+* Fix the remove logic of StepIterator
 
-* Fixed the potential bug of RubyArray#pack
+* Fix the potential bug of RubyArray#pack
 
 * Defensive copies are made while constructing CombinationIterator, PermutationIterator, RepeatedCombinationIterator, RepeatedPermutationIterator, ProductIterator and ZipIterator
 
@@ -187,109 +187,111 @@ Version 1.6.1
 
 Version 1.6.2
 
-+ Added @SafeVarargs annotations
++ Add @SafeVarargs annotations
 
 * RubyArray#last(int n) throws IllegalArgumentException if n is < 0
 
-* Reimplemented LinkedIdentityMap
+* Reimplement LinkedIdentityMap
 
 * RubyEnumerable#allʔ, anyʔ, oneʔ do not check Boolean.False anymore
 
-* Fixed the bug of RubyEnumerable#findIndex while finding the index of a null object 
+* Fix the bug of RubyEnumerable#findIndex while finding the index of a null object 
 
 
 Version 1.6.3
 
-* Avoided file lock by initiating EachLineIterator lazily
+* Avoid file lock by initiating EachLineIterator lazily
 
 
 Version 1.7.0
 
-+ Added RubyString
++ Add RubyString
 
-+ Added CharacterSuccessor and extended RubyRange by it
++ Add CharacterSuccessor and extended RubyRange by it
 
-+ Added RubyCollections#isBlank & RubyCollections#isNotBlank
++ Add RubyCollections#isBlank & RubyCollections#isNotBlank
 
-* Corrected the behavior of RubyArray#pack & RubyString#unpack
+* Correct the behavior of RubyArray#pack & RubyString#unpack
 
-* Fixed the bug of RubyArray#insert while using negative index
+* Fix the bug of RubyArray#insert while using negative index
 
-+ Added Serializable to RubyArray, RubyHash, RubyRange & RubyString
++ Add Serializable to RubyArray, RubyHash, RubyRange & RubyString
 
 
 Version 1.7.1
 
-* Used bounded wildcards to increased API flexibility
+* Use bounded wildcards to increased API flexibility
 
 
 Version 1.7.2
 
-+ Added static factory methods #of, #copyOf to RubyArray and RubyHash
++ Add static factory methods #of, #copyOf to RubyArray and RubyHash
 
-* Deprecated RubyCollections#newRubyArray(List, boolean) and  RubyCollections#newRubyHash(LinkedHashMap, boolean)
+* Deprecate RubyCollections#newRubyArray(List, boolean) and  RubyCollections#newRubyHash(LinkedHashMap, boolean)
 
-- Removed RubyString#chars to solve the API conflict with Java 8 CharSequence
+- Remove RubyString#chars to solve the API conflict with Java 8 CharSequence
 
 
 Version 1.7.3
 
-* Fixed RubyString#unpack Directive H,h,B,b bugs
+* Fix RubyString#unpack Directive H,h,B,b bugs
 
-* Modified RubyKernel#p behavior toward primitive arrays
+* Modify RubyKernel#p behavior toward primitive arrays
 
-* Changed RubyArray#copyOf(List) to RubyArray#copyOf(Iterable)
+* Change RubyArray#copyOf(List) to RubyArray#copyOf(Iterable)
 
 
 Version 1.7.4
 
-* Changed RubyString#unpack to use ASCII-8bit encoding by adding ASCII8BitUTF
+* Change RubyString#unpack to use ASCII-8bit encoding by adding ASCII8BitUTF
 
-* Moved ByteUtil to net.sf.rubycollect4j.util package
+* Move ByteUtil to net.sf.rubycollect4j.util package
 
 
 Version 1.7.5
 
-* Increased the flexibility of RubyArray API by accepting Collection in certain methods
+* Increase the flexibility of RubyArray API by accepting Collection in certain methods
 
-* Changed Comparable<RubyArray> to Comparable<List> in RubyArray
+* Change Comparable<RubyArray> to Comparable<List> in RubyArray
 
-* Improved the quality of entire JavaDoc
+* Improve the quality of entire JavaDoc
 
-* Deprecated RubyCollections#newRubyString
+* Deprecate RubyCollections#newRubyString
 
 
 Version 1.8.0
 
-+ Added Ruby.Enumerable, Ruby.Enumerator and Ruby.LazyEnumerator interfaces
++ Add Ruby.Enumerable, Ruby.Enumerator and Ruby.LazyEnumerator interfaces
 
-+ Added RubySet
++ Add RubySet
 
-- Removed deprecated methods
+- Remove deprecated methods
 
-- Removed RubyCollections::newRubyRange
+- Remove RubyCollections::newRubyRange
 
-+ Expended RubyDate API
++ Expend RubyDate API
 
-+ Added RubyEnumerator::of, RubyEnumerator::copyOf, RubyLazyEnumerator::of & RubyLazyEnumerator::copyOf
++ Add RubyEnumerator::of, RubyEnumerator::copyOf, RubyLazyEnumerator::of & RubyLazyEnumerator::copyOf
 
-* Increased the acceptable number of RubyCollections::rh arguments from 20 to 26 key-value pairs
+* Increase the acceptable number of RubyCollections::rh arguments from 20 to 26 key-value pairs
 
 
 Version 1.8.1
 
-* Fixed RubyArray#sample bug
+* Fix RubyArray#sample bug
 
 
 Version 1.8.2
 
-+ Added RubyIO::open(File) and RubyIO::open(InputStream) methods
++ Add RubyIO::open(File) and RubyIO::open(InputStream) methods
 
-* Added Boolean.False detection to RubyEnumerable#allʔ, RubyEnumerable#anyʔ, RubyEnumerable#noneʔ and RubyEnumerable#oneʔ
+* Add Boolean.False detection to RubyEnumerable#allʔ, RubyEnumerable#anyʔ, RubyEnumerable#noneʔ and RubyEnumerable#oneʔ
 
 
 Version 1.9.0
 
-+ Added RubyIterables & RubyStrings
++ Add RubyIterables & RubyStrings
 
-* Deprecated all methods which require Java reflection
+* Deprecate all methods which require Java reflection
+
++ Add ChunkWhile method to Enumerable

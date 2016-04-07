@@ -21,6 +21,8 @@ import net.sf.rubycollect4j.extension.RubyIterablesTest;
 import net.sf.rubycollect4j.extension.RubyStringsTest;
 import net.sf.rubycollect4j.iter.ChunkIterableTest;
 import net.sf.rubycollect4j.iter.ChunkIteratorTest;
+import net.sf.rubycollect4j.iter.ChunkWhileIterableTest;
+import net.sf.rubycollect4j.iter.ChunkWhileIteratorTest;
 import net.sf.rubycollect4j.iter.CombinationIterableTest;
 import net.sf.rubycollect4j.iter.CombinationIteratorTest;
 import net.sf.rubycollect4j.iter.ComparableEntryIterableTest;
@@ -108,6 +110,7 @@ import org.junit.runners.Suite.SuiteClasses;
     RubySetTest.class, RubyStringTest.class,
     RubyStringUnpackWithRubyArrayPackTest.class, RubyTest.class,
     ChunkIterableTest.class, ChunkIteratorTest.class,
+    ChunkWhileIterableTest.class, ChunkWhileIteratorTest.class,
     CombinationIterableTest.class, CombinationIteratorTest.class,
     ComparableEntryIterableTest.class, ComparableEntryIteratorTest.class,
     CycleIterableTest.class, CycleIteratorTest.class, DropIterableTest.class,

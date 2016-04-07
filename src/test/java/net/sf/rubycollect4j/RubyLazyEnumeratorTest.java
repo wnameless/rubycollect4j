@@ -31,6 +31,7 @@ import java.util.List;
 
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.block.BooleanBlock;
+import net.sf.rubycollect4j.block.EntryBooleanBlock;
 import net.sf.rubycollect4j.block.TransformBlock;
 import net.sf.rubycollect4j.block.WithIndexBlock;
 
@@ -99,6 +100,23 @@ public class RubyLazyEnumeratorTest {
     lre = newRubyLazyEnumerator(Arrays.asList(1, 2, 2, 3));
     assertEquals(ra(hp(false, ra(1)), hp(true, ra(2, 2)), hp(false, ra(3))),
         lre.chunk(block).toA());
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testChunkWhile() {
+    lre = newRubyLazyEnumerator(Arrays.asList(1, 2, 2, 3));
+    EntryBooleanBlock<Integer, Integer> block =
+        new EntryBooleanBlock<Integer, Integer>() {
+
+          @Override
+          public boolean yield(Integer key, Integer value) {
+            return value - key == 1;
+          }
+
+        };
+    assertTrue(lre.chunkWhile(block) instanceof RubyLazyEnumerator);
+    assertEquals(ra(ra(1, 2), ra(2, 3)), lre.chunkWhile(block).toA());
   }
 
   @SuppressWarnings("unchecked")

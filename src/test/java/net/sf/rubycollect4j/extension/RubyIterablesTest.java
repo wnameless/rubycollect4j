@@ -41,6 +41,7 @@ import net.sf.rubycollect4j.RubyEnumerable;
 import net.sf.rubycollect4j.RubyLazyEnumerator;
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.block.BooleanBlock;
+import net.sf.rubycollect4j.block.EntryBooleanBlock;
 import net.sf.rubycollect4j.block.ReduceBlock;
 import net.sf.rubycollect4j.block.TransformBlock;
 import net.sf.rubycollect4j.block.WithIndexBlock;
@@ -141,6 +142,24 @@ public class RubyIterablesTest {
         .toString());
     assertEquals(hp(false, newRubyArray(3)).toString(), chunk.get(2).toString());
     assertEquals(3, chunk.size());
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testChunkWhile() {
+    Iterable<Integer> re =
+        Arrays.asList(1, 2, 4, 9, 10, 11, 12, 15, 16, 19, 20, 21);
+    assertEquals(
+        ra(ra(1, 2), ra(4), ra(9, 10, 11, 12), ra(15, 16), ra(19, 20, 21)),
+        RubyIterables.toA(RubyIterables.chunkWhile(re,
+            new EntryBooleanBlock<Integer, Integer>() {
+
+              @Override
+              public boolean yield(Integer key, Integer value) {
+                return key + 1 == value;
+              }
+
+            })));
   }
 
   @SuppressWarnings("unchecked")

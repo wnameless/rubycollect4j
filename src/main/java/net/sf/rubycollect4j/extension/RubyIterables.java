@@ -30,12 +30,14 @@ import java.util.regex.Pattern;
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.block.BooleanBlock;
+import net.sf.rubycollect4j.block.EntryBooleanBlock;
 import net.sf.rubycollect4j.block.ReduceBlock;
 import net.sf.rubycollect4j.block.TransformBlock;
 import net.sf.rubycollect4j.block.WithIndexBlock;
 import net.sf.rubycollect4j.block.WithInitBlock;
 import net.sf.rubycollect4j.block.WithObjectBlock;
 import net.sf.rubycollect4j.iter.ChunkIterable;
+import net.sf.rubycollect4j.iter.ChunkWhileIterable;
 import net.sf.rubycollect4j.iter.CycleIterable;
 import net.sf.rubycollect4j.iter.EachConsIterable;
 import net.sf.rubycollect4j.iter.EachSliceIterable;
@@ -90,6 +92,14 @@ public final class RubyIterables {
   public static <E, S> Iterable<Entry<S, RubyArray<E>>> chunk(Iterable<E> in,
       TransformBlock<? super E, ? extends S> block) {
     return newRubyEnumerator(new ChunkIterable<E, S>(in, block));
+  }
+
+  /**
+   * @see net.sf.rubycollect4j.RubyEnumerable#chunkWhile(EntryBooleanBlock)
+   */
+  public static <E> Iterable<RubyArray<E>> chunkWhile(Iterable<E> in,
+      EntryBooleanBlock<? super E, ? super E> block) {
+    return newRubyEnumerator(new ChunkWhileIterable<E>(in, block));
   }
 
   /**
