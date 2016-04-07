@@ -17,10 +17,8 @@
  */
 package net.sf.rubycollect4j;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
-
+import net.sf.rubycollect4j.extension.RubyIterablesTest;
+import net.sf.rubycollect4j.extension.RubyStringsTest;
 import net.sf.rubycollect4j.iter.ChunkIterableTest;
 import net.sf.rubycollect4j.iter.ChunkIteratorTest;
 import net.sf.rubycollect4j.iter.CombinationIterableTest;
@@ -97,6 +95,10 @@ import net.sf.rubycollect4j.util.LinkedIdentityMap_ValuesTest;
 import net.sf.rubycollect4j.util.PeekingIteratorTest;
 import net.sf.rubycollect4j.util.TryComparatorTest;
 
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
+
 @RunWith(Suite.class)
 @SuiteClasses({ RubyArrayTest.class, RubyCollectionsTest.class,
     RubyContractTest.class, RubyDateTest.class, RubyDirTest.class,
@@ -140,5 +142,5 @@ import net.sf.rubycollect4j.util.TryComparatorTest;
     LinkedIdentityMap_IdentityEntryTest.class,
     LinkedIdentityMap_KeySetTest.class, LinkedIdentityMap_ValuesTest.class,
     LinkedIdentityMapTest.class, PeekingIteratorTest.class,
-    TryComparatorTest.class })
+    TryComparatorTest.class, RubyIterablesTest.class, RubyStringsTest.class })
 public class RubyCollect4JTests {}

@@ -41,12 +41,12 @@ import java.util.regex.Pattern;
 
 import javax.xml.bind.TypeConstraintException;
 
-import org.junit.Before;
-import org.junit.Test;
-
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.block.TransformBlock;
 import net.sf.rubycollect4j.succ.StringSuccessor;
+
+import org.junit.Before;
+import org.junit.Test;
 
 public class RubyStringTest {
 
@@ -340,8 +340,8 @@ public class RubyStringTest {
   public void testEachBytes() {
     assertEquals(
         ra((byte) 'a', (byte) 'b', (byte) 'c', (byte) '\n', "我".getBytes()[0],
-            "我".getBytes()[1], "我".getBytes()[2]),
-        rs("abc\n我").eachByte().toA());
+            "我".getBytes()[1], "我".getBytes()[2]), rs("abc\n我").eachByte()
+            .toA());
   }
 
   @Test
@@ -1034,12 +1034,12 @@ public class RubyStringTest {
   @SuppressWarnings("unchecked")
   @Test
   public void testScanGroups() {
-    assertEquals(ra(ra("cru"), ra("el "), ra("wor")),
-        rs("cruel world").scanGroups("(...)"));
-    assertEquals(ra(ra("cr", "ue"), ra("l ", "wo")),
-        rs("cruel world").scanGroups("(..)(..)"));
-    assertEquals(ra(ra("cru"), ra("el "), ra("wor")),
-        rs("cruel world").scanGroups("..."));
+    assertEquals(ra(ra("cru"), ra("el "), ra("wor")), rs("cruel world")
+        .scanGroups("(...)"));
+    assertEquals(ra(ra("cr", "ue"), ra("l ", "wo")), rs("cruel world")
+        .scanGroups("(..)(..)"));
+    assertEquals(ra(ra("cru"), ra("el "), ra("wor")), rs("cruel world")
+        .scanGroups("..."));
   }
 
   @Test(expected = TypeConstraintException.class)
@@ -1248,8 +1248,7 @@ public class RubyStringTest {
     assertEquals(ra("a", "bc", "def"), rs("  a   bc   def ").split(" "));
     assertEquals(ra("a", "bc", "def"),
         rs("  a   bc   def ").split((String) null));
-    assertEquals(ra("", "a", " bc", " def "),
-        rs("  a   bc   def ").split("  "));
+    assertEquals(ra("", "a", " bc", " def "), rs("  a   bc   def ").split("  "));
   }
 
   @Test
@@ -1267,12 +1266,12 @@ public class RubyStringTest {
 
   @Test
   public void testSplitWithPatternAndDelimiter() {
-    assertEquals(ra("", "a", "bc", "def"),
-        rs("  a   bc   def ").split(qr(" +")));
+    assertEquals(ra("", "a", "bc", "def"), rs("  a   bc   def ")
+        .split(qr(" +")));
     assertEquals(ra("a", "bc", "def"),
         rs("  a   bc   def ").split((Pattern) null));
-    assertEquals(ra("", "a", "bc", "def"),
-        rs("  a   bc   def ").split(qr(" +")));
+    assertEquals(ra("", "a", "bc", "def"), rs("  a   bc   def ")
+        .split(qr(" +")));
   }
 
   @Test
@@ -1283,8 +1282,8 @@ public class RubyStringTest {
         rs("  a   bc   def ").split((Pattern) null, 0));
     assertEquals(ra("", "a", "bc", "def"),
         rs("  a   bc   def ").split(qr(" +"), -1));
-    assertEquals(ra("  a   bc   def "),
-        rs("  a   bc   def ").split(qr(" +"), 1));
+    assertEquals(ra("  a   bc   def "), rs("  a   bc   def ")
+        .split(qr(" +"), 1));
     assertEquals(ra("", "a   bc   def "),
         rs("  a   bc   def ").split(qr(" +"), 2));
     assertEquals(ra("", "a   bc   def "),
@@ -1501,13 +1500,13 @@ public class RubyStringTest {
     assertEquals((Integer) 0, (Integer) rs("hello").toI());
     assertEquals((Integer) 101, (Integer) rs(" + 1100101").toI(2));
     assertEquals((Integer) 294977, (Integer) rs("1100101").toI(8));
-    assertEquals((Integer) rs("1100101").toI(8),
-        (Integer) rs("11001019").toI(8));
+    assertEquals((Integer) rs("1100101").toI(8), (Integer) rs("11001019")
+        .toI(8));
     assertEquals((Integer) rs("11001").toI(8), (Integer) rs("110019").toI(8));
     assertEquals((Integer) 1100101, (Integer) rs("1100101").toI(10));
     assertEquals((Integer) 17826049, (Integer) rs("1100101").toI(16));
-    assertEquals((Integer) rs("1100101F").toI(16),
-        (Integer) rs("1100101fg").toI(16));
+    assertEquals((Integer) rs("1100101F").toI(16), (Integer) rs("1100101fg")
+        .toI(16));
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -1710,8 +1709,8 @@ public class RubyStringTest {
   @Test
   public void testComparable() {
     assertEquals(rs.toS().compareTo("def"), rs.compareTo("def"));
-    assertEquals(ra(rs("a"), rs("b"), rs("c")),
-        ra(rs("c"), rs("b"), rs("a")).sort());
+    assertEquals(ra(rs("a"), rs("b"), rs("c")), ra(rs("c"), rs("b"), rs("a"))
+        .sort());
   }
 
 }

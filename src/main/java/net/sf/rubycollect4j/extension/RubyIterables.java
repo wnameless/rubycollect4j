@@ -44,6 +44,12 @@ import net.sf.rubycollect4j.iter.EachWithObjectIterable;
 import net.sf.rubycollect4j.iter.ReverseEachIterable;
 import net.sf.rubycollect4j.iter.SliceBeforeIterable;
 
+/**
+ * 
+ * {@link RubyIterables} is simply a utility class. It provides the Ruby style
+ * way to manipulate any Iterable.
+ *
+ */
 public final class RubyIterables {
 
   private RubyIterables() {}
@@ -430,6 +436,13 @@ public final class RubyIterables {
   public static <S, E> E minBy(Iterable<E> in, Comparator<? super S> comp,
       TransformBlock<? super E, ? extends S> block) {
     return newRubyLazyEnumerator(in).minBy(comp, block);
+  }
+
+  /**
+   * @see net.sf.rubycollect4j.RubyEnumerable#minmax()
+   */
+  public static <E> List<E> minmax(Iterable<E> in) {
+    return newRubyLazyEnumerator(in).minmax();
   }
 
   /**

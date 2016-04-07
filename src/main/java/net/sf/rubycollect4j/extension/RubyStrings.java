@@ -25,9 +25,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sf.rubycollect4j.RubyArray;
+import net.sf.rubycollect4j.RubyString;
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.block.TransformBlock;
 
+/**
+ * 
+ * {@link RubyStrings} is simply a utility class. It provides the Ruby style way
+ * to manipulate any CharSequence.
+ *
+ */
 public final class RubyStrings {
 
   private RubyStrings() {}
@@ -64,14 +71,16 @@ public final class RubyStrings {
    * @see net.sf.rubycollect4j.RubyString#byteslice(int)
    */
   public static String byteslice(CharSequence in, int index) {
-    return rs(in).byteslice(index).toS();
+    RubyString rs = rs(in).byteslice(index);
+    return rs == null ? null : rs.toS();
   }
 
   /**
    * @see net.sf.rubycollect4j.RubyString#byteslice(int, int)
    */
   public static String byteslice(CharSequence in, int offset, int length) {
-    return rs(in).byteslice(offset, length).toS();
+    RubyString rs = rs(in).byteslice(offset, length);
+    return rs == null ? null : rs.toS();
   }
 
   /**
@@ -479,13 +488,6 @@ public final class RubyStrings {
   }
 
   /**
-   * @see net.sf.rubycollect4j.RubyString#replace(String)
-   */
-  public static String replace(CharSequence in, String otherStr) {
-    return rs(in).replace(otherStr).toS();
-  }
-
-  /**
    * @see net.sf.rubycollect4j.RubyString#reverse()
    */
   public static String reverse(CharSequence in) {
@@ -611,35 +613,40 @@ public final class RubyStrings {
    * @see net.sf.rubycollect4j.RubyString#slice(int)
    */
   public static String slice(CharSequence in, int index) {
-    return rs(in).slice(index).toS();
+    RubyString rs = rs(in).slice(index);
+    return rs == null ? null : rs.toS();
   }
 
   /**
    * @see net.sf.rubycollect4j.RubyString#slice(Pattern)
    */
   public static String slice(CharSequence in, Pattern pattern) {
-    return rs(in).slice(pattern).toS();
+    RubyString rs = rs(in).slice(pattern);
+    return rs == null ? null : rs.toS();
   }
 
   /**
    * @see net.sf.rubycollect4j.RubyString#slice(String)
    */
   public static String slice(CharSequence in, String matchStr) {
-    return rs(in).slice(matchStr).toS();
+    RubyString rs = rs(in).slice(matchStr);
+    return rs == null ? null : rs.toS();
   }
 
   /**
    * @see net.sf.rubycollect4j.RubyString#slice(int, int)
    */
   public static String slice(CharSequence in, int index, int length) {
-    return rs(in).slice(index, length).toS();
+    RubyString rs = rs(in).slice(index, length);
+    return rs == null ? null : rs.toS();
   }
 
   /**
    * @see net.sf.rubycollect4j.RubyString#slice(Pattern, int)
    */
   public static String slice(CharSequence in, Pattern pattern, int group) {
-    return rs(in).slice(pattern, group).toS();
+    RubyString rs = rs(in).slice(pattern, group);
+    return rs == null ? null : rs.toS();
   }
 
   /**
