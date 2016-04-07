@@ -49,6 +49,19 @@ p(words);
 // Output: [A, BLEPHAROCONJUNCTIVITIS]
 ```
 
+Since v1.9.0,<br/>
+RubyIterables & RubyStrings are added, they are simply utility classes just like java.util.Arrays.<br/>
+They provide the Ruby style ways to manipulate any Iterable and String (or CharSequence).<br/>
+Highly recommended to use with the @ExtensionMethod of [Project Lombok](https://projectlombok.org/).
+```java
+Iterable<Integer> ints = Arrays.asList(3, 6, 7, 2);
+int max = RubyIterables.max(ints);
+System.out.println(max);   // Output: 7
+
+String trStr = RubyStrings.tr("Mississippi", "i", "I");
+System.out.println(trStr); // Output: MIssIssIppI
+```
+
 Please add following lines before running examples:
 ```java
 import static net.sf.rubycollect4j.RubyCollections.*;
