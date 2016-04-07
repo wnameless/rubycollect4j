@@ -33,6 +33,8 @@ import net.sf.rubycollect4j.block.TransformBlock;
  * 
  * {@link RubyStrings} is simply a utility class. It provides the Ruby style way
  * to manipulate any CharSequence.
+ * 
+ * @author Wei-Ming Wu
  *
  */
 public final class RubyStrings {

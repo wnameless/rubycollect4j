@@ -48,6 +48,8 @@ import net.sf.rubycollect4j.iter.SliceBeforeIterable;
  * 
  * {@link RubyIterables} is simply a utility class. It provides the Ruby style
  * way to manipulate any Iterable.
+ * 
+ * @author Wei-Ming Wu
  *
  */
 public final class RubyIterables {
