@@ -184,7 +184,10 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
    * @param args
    *          arguments of a Method
    * @return this {@link RubySet}
+   * 
+   * @deprecated since 1.9.0, using Java 8 Lambda instead
    */
+  @Deprecated
   public RubySet<E> collectǃ(final String methodName, final Object... args) {
     return collectǃ(new TransformBlock<E, E>() {
 
@@ -457,7 +460,10 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
    * @param args
    *          arguments of a Method
    * @return this {@link RubySet}
+   * 
+   * @deprecated since 1.9.0, using Java 8 Lambda instead
    */
+  @Deprecated
   public RubySet<E> mapǃ(String methodName, Object... args) {
     return collectǃ(methodName, args);
   }

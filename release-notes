@@ -291,3 +291,5 @@ Version 1.8.2
 Version 1.9.0
 
 + Added RubyIterables & RubyStrings
+
+* Deprecated all methods which require Java reflection

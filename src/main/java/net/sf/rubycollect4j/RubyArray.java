@@ -265,7 +265,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * @param args
    *          arguments of a Method
    * @return this {@link RubyArray}
+   * 
+   * @deprecated since 1.9.0, using Java 8 Lambda instead
    */
+  @Deprecated
   public RubyArray<E> collectǃ(final String methodName, final Object... args) {
     return collectǃ(new TransformBlock<E, E>() {
 
@@ -937,7 +940,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * @param args
    *          arguments of a Method
    * @return this {@link RubyArray}
+   * 
+   * @deprecated since 1.9.0, using Java 8 Lambda instead
    */
+  @Deprecated
   public RubyArray<E> mapǃ(String methodName, Object... args) {
     return collectǃ(methodName, args);
   }
@@ -1695,7 +1701,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * @param args
    *          arguments of a Method
    * @return this {@link RubyArray}
+   * 
+   * @deprecated since 1.9.0, using Java 8 Lambda instead
    */
+  @Deprecated
   public <S> RubyArray<E> sortByǃ(final String methodName, final Object... args) {
     return sortByǃ(new TransformBlock<E, S>() {
 
@@ -1823,7 +1832,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * @param args
    *          arguments of a Method
    * @return new {@link RubyArray}
+   * 
+   * @deprecated since 1.9.0, using Java 8 Lambda instead
    */
+  @Deprecated
   public <S> RubyArray<E> uniq(final String methodName, final Object... args) {
     return uniq(new TransformBlock<E, S>() {
 
@@ -1859,7 +1871,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * @param args
    *          arguments of a Method
    * @return this {@link RubyArray} or null
+   * 
+   * @deprecated since 1.9.0, using Java 8 Lambda instead
    */
+  @Deprecated
   public <S> RubyArray<E> uniqǃ(final String methodName, final Object... args) {
     return uniqǃ(new TransformBlock<E, S>() {
 

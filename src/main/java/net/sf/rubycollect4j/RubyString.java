@@ -2388,7 +2388,14 @@ public final class RubyString extends RubyEnumerable<String> implements
             }
           }
 
-        }).map("count");
+        }).map(new TransformBlock<RubyArray<Boolean>, Integer>() {
+
+          @Override
+          public Integer yield(RubyArray<Boolean> item) {
+            return item.count();
+          }
+
+        });
 
     if (toStr.isEmpty()) return rs(trStr);
 

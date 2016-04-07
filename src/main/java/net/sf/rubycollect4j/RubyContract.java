@@ -116,7 +116,10 @@ public final class RubyContract {
      * @param args
      *          arguments of a Method
      * @return {@link Enumerator}
+     * 
+     * @deprecated since 1.9.0, using Java 8 Lambda instead
      */
+    @Deprecated
     public <S> N chunk(final String methodName, final Object... args);
 
     /**
@@ -147,7 +150,10 @@ public final class RubyContract {
      * @param args
      *          arguments of a Method
      * @return {@link Enumerable}
+     * 
+     * @deprecated since 1.9.0, using Java 8 Lambda instead
      */
+    @Deprecated
     public <S> Z collect(final String methodName, final Object... args);
 
     /**
@@ -518,7 +524,10 @@ public final class RubyContract {
      * @param args
      *          arguments of a Method
      * @return {@link Enumerable}
+     * 
+     * @deprecated since 1.9.0, using Java 8 Lambda instead
      */
+    @Deprecated
     public <S> Z grep(String regex, final String methodName,
         final Object... args);
 
@@ -553,7 +562,10 @@ public final class RubyContract {
      * @param args
      *          arguments of a Method
      * @return {@link RubyHash}
+     * 
+     * @deprecated since 1.9.0, using Java 8 Lambda instead
      */
+    @Deprecated
     public <S> RubyHash<S, RubyArray<E>> groupBy(String methodName,
         Object... args);
 
@@ -605,7 +617,10 @@ public final class RubyContract {
      *           if method not found
      * @throws RuntimeException
      *           if invocation failed
+     * 
+     * @deprecated since 1.9.0, using Java 8 Lambda instead
      */
+    @Deprecated
     public <I> I inject(I init, String methodName);
 
     /**
@@ -620,7 +635,10 @@ public final class RubyContract {
      *           if method not found
      * @throws RuntimeException
      *           if invocation failed
+     * 
+     * @deprecated since 1.9.0, using Java 8 Lambda instead
      */
+    @Deprecated
     public E inject(String methodName);
 
     /**
@@ -658,7 +676,10 @@ public final class RubyContract {
      * @param args
      *          arguments of a Method
      * @return {@link Enumerable}
+     * 
+     * @deprecated since 1.9.0, using Java 8 Lambda instead
      */
+    @Deprecated
     public <S> Z map(String methodName, Object... args);
 
     /**
@@ -723,7 +744,10 @@ public final class RubyContract {
      * @param args
      *          arguments of a Method
      * @return element or null
+     * 
+     * @deprecated since 1.9.0, using Java 8 Lambda instead
      */
+    @Deprecated
     public <S> E maxBy(String methodName, Object... args);
 
     /**
@@ -797,7 +821,10 @@ public final class RubyContract {
      * @param args
      *          arguments of a Method
      * @return element or null
+     * 
+     * @deprecated since 1.9.0, using Java 8 Lambda instead
      */
+    @Deprecated
     public <S> E minBy(String methodName, Object... args);
 
     /**
@@ -861,7 +888,10 @@ public final class RubyContract {
      * @param args
      *          arguments of a Method
      * @return {@link RubyArray}
+     * 
+     * @deprecated since 1.9.0, using Java 8 Lambda instead
      */
+    @Deprecated
     public <S> RubyArray<E> minmaxBy(String methodName, Object... args);
 
     /**
@@ -952,7 +982,10 @@ public final class RubyContract {
      *           if method not found
      * @throws RuntimeException
      *           if invocation failed
+     * 
+     * @deprecated since 1.9.0, using Java 8 Lambda instead
      */
+    @Deprecated
     public <I> I reduce(I init, String methodName);
 
     /**
@@ -965,7 +998,10 @@ public final class RubyContract {
      *           if method not found
      * @throws RuntimeException
      *           if invocation failed
+     * 
+     * @deprecated since 1.9.0, using Java 8 Lambda instead
      */
+    @Deprecated
     public E reduce(String methodName);
 
     /**
@@ -1117,7 +1153,10 @@ public final class RubyContract {
      * @param args
      *          arguments of a Method
      * @return {@link RubyArray}
+     * 
+     * @deprecated since 1.9.0, using Java 8 Lambda instead
      */
+    @Deprecated
     public <S> RubyArray<E> sortBy(String methodName, Object... args);
 
     /**

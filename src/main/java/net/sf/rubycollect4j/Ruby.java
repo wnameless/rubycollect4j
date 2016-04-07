@@ -65,7 +65,10 @@ public final class Ruby {
      * {@inheritDoc}
      * 
      * @return {@link Ruby.Enumerator}
+     * 
+     * @deprecated since 1.9.0, using Java 8 Lambda instead
      */
+    @Deprecated
     @Override
     public <S> Ruby.Enumerator<Entry<S, RubyArray<E>>> chunk(
         final String methodName, final Object... args);
@@ -90,7 +93,10 @@ public final class Ruby {
      * {@inheritDoc}
      * 
      * @return {@link RubyArray}
+     * 
+     * @deprecated since 1.9.0, using Java 8 Lambda instead
      */
+    @Deprecated
     @Override
     public <S> RubyArray<S> collect(final String methodName,
         final Object... args);
@@ -305,7 +311,10 @@ public final class Ruby {
      * {@inheritDoc}
      * 
      * @return {@link RubyArray}
+     * 
+     * @deprecated since 1.9.0, using Java 8 Lambda instead
      */
+    @Deprecated
     @Override
     public <S> RubyArray<S> grep(String regex, final String methodName,
         final Object... args);
@@ -338,7 +347,10 @@ public final class Ruby {
      * {@inheritDoc}
      * 
      * @return {@link RubyArray}
+     * 
+     * @deprecated since 1.9.0, using Java 8 Lambda instead
      */
+    @Deprecated
     @Override
     public <S> RubyArray<S> map(String methodName, Object... args);
 
@@ -536,7 +548,10 @@ public final class Ruby {
      * {@inheritDoc}
      * 
      * @return {@link Ruby.LazyEnumerator}
+     * 
+     * @deprecated since 1.9.0, using Java 8 Lambda instead
      */
+    @Deprecated
     @Override
     public <S> Ruby.LazyEnumerator<Entry<S, RubyArray<E>>> chunk(
         final String methodName, final Object... args);
@@ -562,7 +577,10 @@ public final class Ruby {
      * {@inheritDoc}
      * 
      * @return {@link Ruby.LazyEnumerator}
+     * 
+     * @deprecated since 1.9.0, using Java 8 Lambda instead
      */
+    @Deprecated
     @Override
     public <S> Ruby.LazyEnumerator<S> collect(final String methodName,
         final Object... args);
@@ -774,7 +792,10 @@ public final class Ruby {
      * {@inheritDoc}
      * 
      * @return {@link Ruby.LazyEnumerator}
+     * 
+     * @deprecated since 1.9.0, using Java 8 Lambda instead
      */
+    @Deprecated
     @Override
     public <S> Ruby.LazyEnumerator<S> grep(String regex,
         final String methodName, final Object... args);
@@ -808,7 +829,10 @@ public final class Ruby {
      * {@inheritDoc}
      * 
      * @return {@link Ruby.LazyEnumerator}
+     * 
+     * @deprecated since 1.9.0, using Java 8 Lambda instead
      */
+    @Deprecated
     @Override
     public <S> Ruby.LazyEnumerator<S> map(String methodName, Object... args);
 

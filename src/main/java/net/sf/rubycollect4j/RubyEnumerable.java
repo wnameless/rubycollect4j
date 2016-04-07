@@ -100,7 +100,10 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    * {@inheritDoc}
    * 
    * @return {@link RubyEnumerator}
+   * 
+   * @deprecated since 1.9.0, using Java 8 Lambda instead
    */
+  @Deprecated
   @Override
   public <S> RubyEnumerator<Entry<S, RubyArray<E>>> chunk(
       final String methodName, final Object... args) {
@@ -139,7 +142,10 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    * {@inheritDoc}
    * 
    * @return {@link RubyArray}
+   * 
+   * @deprecated since 1.9.0, using Java 8 Lambda instead
    */
+  @Deprecated
   @Override
   public <S> RubyArray<S> collect(final String methodName, final Object... args) {
     return newRubyLazyEnumerator(
@@ -491,7 +497,10 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    * {@inheritDoc}
    * 
    * @return {@link RubyArray}
+   * 
+   * @deprecated since 1.9.0, using Java 8 Lambda instead
    */
+  @Deprecated
   @Override
   public <S> RubyArray<S> grep(String regex, final String methodName,
       final Object... args) {
@@ -521,6 +530,7 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
     return newRubyLazyEnumerator(getIterable()).groupBy(block);
   }
 
+  @Deprecated
   @Override
   public <S> RubyHash<S, RubyArray<E>> groupBy(final String methodName,
       final Object... args) {
@@ -542,11 +552,13 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
     return newRubyLazyEnumerator(getIterable()).inject(init, block);
   }
 
+  @Deprecated
   @Override
   public <I> I inject(I init, String methodName) {
     return newRubyLazyEnumerator(getIterable()).inject(init, methodName);
   }
 
+  @Deprecated
   @Override
   public E inject(String methodName) {
     return newRubyLazyEnumerator(getIterable()).inject(methodName);
@@ -581,7 +593,10 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    * {@inheritDoc}
    * 
    * @return {@link RubyArray}
+   * 
+   * @deprecated since 1.9.0, using Java 8 Lambda instead
    */
+  @Deprecated
   @Override
   public <S> RubyArray<S> map(String methodName, Object... args) {
     return collect(methodName, args);
@@ -618,6 +633,7 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
     return newRubyLazyEnumerator(getIterable()).maxBy(block);
   }
 
+  @Deprecated
   @Override
   public <S> E maxBy(String methodName, Object... args) {
     return newRubyLazyEnumerator(getIterable()).maxBy(methodName, args);
@@ -659,6 +675,7 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
     return newRubyLazyEnumerator(getIterable()).minBy(block);
   }
 
+  @Deprecated
   @Override
   public <S> E minBy(String methodName, Object... args) {
     return newRubyLazyEnumerator(getIterable()).minBy(methodName, args);
@@ -695,6 +712,7 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
     return newRubyLazyEnumerator(getIterable()).minmaxBy(block);
   }
 
+  @Deprecated
   @Override
   public <S> RubyArray<E> minmaxBy(String methodName, Object... args) {
     return newRubyLazyEnumerator(getIterable()).minmaxBy(methodName, args);
@@ -745,11 +763,13 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
     return newRubyLazyEnumerator(getIterable()).reduce(init, block);
   }
 
+  @Deprecated
   @Override
   public <I> I reduce(I init, String methodName) {
     return newRubyLazyEnumerator(getIterable()).reduce(init, methodName);
   }
 
+  @Deprecated
   @Override
   public E reduce(String methodName) {
     return newRubyLazyEnumerator(getIterable()).reduce(methodName);
@@ -876,6 +896,7 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
     return newRubyLazyEnumerator(getIterable()).sortBy(block);
   }
 
+  @Deprecated
   @Override
   public <S> RubyArray<E> sortBy(String methodName, Object... args) {
     return newRubyLazyEnumerator(getIterable()).sortBy(methodName, args);

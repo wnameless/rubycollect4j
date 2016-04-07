@@ -29,14 +29,15 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.block.BooleanBlock;
 import net.sf.rubycollect4j.block.TransformBlock;
 import net.sf.rubycollect4j.block.WithIndexBlock;
 
+import org.junit.Before;
+import org.junit.Test;
+
+@SuppressWarnings("deprecation")
 public class RubyLazyEnumeratorTest {
 
   RubyLazyEnumerator<Integer> lre;
@@ -105,8 +106,8 @@ public class RubyLazyEnumeratorTest {
   public void testChunkWithMethodName() {
     lre = newRubyLazyEnumerator(Arrays.asList(1, 2, 2, 3));
     assertTrue(lre.chunk("toString") instanceof RubyLazyEnumerator);
-    assertEquals(ra(hp("1", ra(1)), hp("2", ra(2, 2)), hp("3", ra(3))),
-        lre.chunk("toString").toA());
+    assertEquals(ra(hp("1", ra(1)), hp("2", ra(2, 2)), hp("3", ra(3))), lre
+        .chunk("toString").toA());
   }
 
   @Test
