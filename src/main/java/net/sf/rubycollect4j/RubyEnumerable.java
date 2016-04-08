@@ -17,6 +17,7 @@
  */
 package net.sf.rubycollect4j;
 
+import static net.sf.rubycollect4j.RubyCollections.Hash;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.newRubyLazyEnumerator;
@@ -1008,6 +1009,12 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
   @Override
   public RubyArray<E> toA() {
     return newRubyArray(getIterable());
+  }
+
+  @SuppressWarnings("unchecked")
+  @Override
+  public <K, V> RubyHash<K, V> toH() {
+    return (RubyHash<K, V>) Hash((RubyArray<? extends List<E>>) toA());
   }
 
   /**

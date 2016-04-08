@@ -689,6 +689,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * 
    * @return this {@link RubyHash}
    */
+  @SuppressWarnings("unchecked")
   public RubyHash<K, V> toH() {
     return this;
   }

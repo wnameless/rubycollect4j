@@ -17,6 +17,7 @@
  */
 package net.sf.rubycollect4j;
 
+import static net.sf.rubycollect4j.RubyCollections.Hash;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
 import static net.sf.rubycollect4j.RubyCollections.newRubyLazyEnumerator;
@@ -1283,6 +1284,12 @@ public final class RubyLazyEnumerator<E> implements Ruby.LazyEnumerator<E> {
   @Override
   public RubyArray<E> toA() {
     return newRubyArray(iter);
+  }
+
+  @SuppressWarnings("unchecked")
+  @Override
+  public <K, V> RubyHash<K, V> toH() {
+    return (RubyHash<K, V>) Hash((RubyArray<? extends List<E>>) toA());
   }
 
   /**

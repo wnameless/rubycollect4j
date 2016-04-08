@@ -20,6 +20,7 @@ package net.sf.rubycollect4j;
 import static net.sf.rubycollect4j.RubyCollections.hp;
 import static net.sf.rubycollect4j.RubyCollections.newRubyLazyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.ra;
+import static net.sf.rubycollect4j.RubyCollections.rh;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
@@ -510,6 +511,25 @@ public class RubyLazyEnumeratorTest {
     intsIt.next();
     intsIt.remove();
     assertEquals(ints, list);
+  }
+
+  @SuppressWarnings("serial")
+  @Test
+  public void testToH() {
+    List<List<Integer>> pairs = new ArrayList<List<Integer>>();
+    pairs.add(new ArrayList<Integer>() {
+      {
+        add(1);
+        add(2);
+      }
+    });
+    pairs.add(new ArrayList<Integer>() {
+      {
+        add(3);
+        add(4);
+      }
+    });
+    assertEquals(rh(1, 2, 3, 4), newRubyLazyEnumerator(pairs).toH());
   }
 
   @Test

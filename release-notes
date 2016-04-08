@@ -301,3 +301,5 @@ Version 1.9.0
 + Add sliceAfter method to Enumerable
 
 + Add sliceWhen method to Enumerable
+
++ Add toH method to Enumerable

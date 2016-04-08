@@ -28,6 +28,7 @@ import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import net.sf.rubycollect4j.RubyArray;
+import net.sf.rubycollect4j.RubyHash;
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.block.BooleanBlock;
 import net.sf.rubycollect4j.block.EntryBooleanBlock;
@@ -676,6 +677,13 @@ public final class RubyIterables {
    */
   public static <E> List<E> toA(Iterable<E> in) {
     return newRubyArray(in);
+  }
+
+  /**
+   * @see net.sf.rubycollect4j.RubyEnumerable#toH()
+   */
+  public static <E, K, V> RubyHash<K, V> toH(Iterable<E> in) {
+    return newRubyArray(in).toH();
   }
 
   /**

@@ -1180,6 +1180,12 @@ public class RubyIterablesTest {
 
   @SuppressWarnings("unchecked")
   @Test
+  public void testToAH() {
+    assertEquals(rh(1, 2, 3, 4), RubyIterables.toH(ra(ra(1, 2), ra(3, 4))));
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
   public void testZip() {
     iter = Arrays.asList(1, 2, 3);
     assertEquals(ra(ra(1, 4), ra(2, 5), ra(3, null)),

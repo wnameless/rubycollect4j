@@ -1436,6 +1436,21 @@ public class RubyEnumerableTest {
     assertEquals(ra(1, 2, 3, 4), re.toA());
   }
 
+  @Test
+  public void testToH() {
+    assertEquals(rh(1, 2, 3, 4), new RubyEnumerable<List<Integer>>() {
+
+      @SuppressWarnings("unchecked")
+      @Override
+      protected Iterable<List<Integer>> getIterable() {
+        List<Integer> l1 = ra(1, 2);
+        List<Integer> l2 = ra(3, 4);
+        return Arrays.asList(l1, l2);
+      }
+
+    }.toH());
+  }
+
   @SuppressWarnings("unchecked")
   @Test
   public void testZip() {

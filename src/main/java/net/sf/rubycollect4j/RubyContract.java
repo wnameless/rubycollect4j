@@ -1257,6 +1257,14 @@ public final class RubyContract {
     public RubyArray<E> toA();
 
     /**
+     * Assumes all elements are Lists and each List contains only 2 items. Puts
+     * those items into entries of a {@link RubyHash}.
+     * 
+     * @return {@link RubyHash}
+     */
+    public <K, V> RubyHash<K, V> toH();
+
+    /**
      * Groups elements which get the same indices among all other Iterables into
      * {@link RubyArray}s.
      * 
