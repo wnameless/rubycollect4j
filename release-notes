@@ -303,3 +303,5 @@ Version 1.9.0
 + Add sliceWhen method to Enumerable
 
 + Add toH method to Enumerable
+
+- Remove @SafeVarargs

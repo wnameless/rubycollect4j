@@ -172,8 +172,7 @@ public final class RubyStrings {
   /**
    * @see net.sf.rubycollect4j.RubyString#count(String, String...)
    */
-  public static int count(CharSequence in, final String charSet,
-      final String... charSets) {
+  public static int count(CharSequence in, String charSet, String... charSets) {
     return rs(in).count(charSet, charSets);
   }
 
@@ -187,7 +186,7 @@ public final class RubyStrings {
   /**
    * @see net.sf.rubycollect4j.RubyString#delete(String)
    */
-  public static String delete(CharSequence in, final String charSet) {
+  public static String delete(CharSequence in, String charSet) {
     return rs(in).delete(charSet).toS();
   }
 
@@ -607,7 +606,7 @@ public final class RubyStrings {
    * @see net.sf.rubycollect4j.RubyString#scrub(TransformBlock)
    */
   public static String scrub(CharSequence in,
-      final TransformBlock<RubyArray<Byte>, String> block) {
+      TransformBlock<RubyArray<Byte>, String> block) {
     return rs(in).scrub(block).toS();
   }
 
@@ -677,7 +676,7 @@ public final class RubyStrings {
   /**
    * @see net.sf.rubycollect4j.RubyString#split(String)
    */
-  public static List<String> split(CharSequence in, final String delimiter) {
+  public static List<String> split(CharSequence in, String delimiter) {
     return rs(in).split(delimiter);
   }
 
@@ -855,7 +854,7 @@ public final class RubyStrings {
   /**
    * @see net.sf.rubycollect4j.RubyString#upto(String, boolean)
    */
-  public static Iterable<String> upto(CharSequence in, final String otherStr,
+  public static Iterable<String> upto(CharSequence in, String otherStr,
       boolean exclusive) {
     return rs(in).upto(otherStr, exclusive);
   }
