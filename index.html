@@ -6,7 +6,7 @@
     <title>rubycollect4j by wnameless</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
     <script src="javascripts/scale.fix.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
@@ -31,7 +31,7 @@
       </header>
       <section>
         <h1>
-<a name="rubycollect4j" class="anchor" href="#rubycollect4j"><span class="octicon octicon-link"></span></a>rubycollect4j</h1>
+<a id="rubycollect4j" class="anchor" href="#rubycollect4j" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>rubycollect4j</h1>
 
 <p>Ruby Collections for Java.</p>
 
@@ -44,246 +44,224 @@ It also implements parts of Ruby Dir, File and Date methods.</p>
 
 <p>Installation with Maven:</p>
 
-<div class="highlight highlight-xml"><pre><span class="nt">&lt;dependency&gt;</span>
-  <span class="nt">&lt;groupId&gt;</span>net.sf.rubycollect4j<span class="nt">&lt;/groupId&gt;</span>
-  <span class="nt">&lt;artifactId&gt;</span>rubycollect4j<span class="nt">&lt;/artifactId&gt;</span>
-  <span class="nt">&lt;version&gt;</span>1.8.1<span class="nt">&lt;/version&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-</pre></div>
+<div class="highlight highlight-text-xml"><pre>&lt;<span class="pl-ent">dependency</span>&gt;
+  &lt;<span class="pl-ent">groupId</span>&gt;net.sf.rubycollect4j&lt;/<span class="pl-ent">groupId</span>&gt;
+  &lt;<span class="pl-ent">artifactId</span>&gt;rubycollect4j&lt;/<span class="pl-ent">artifactId</span>&gt;
+  &lt;<span class="pl-ent">version</span>&gt;1.8.1&lt;/<span class="pl-ent">version</span>&gt;
+&lt;/<span class="pl-ent">dependency</span>&gt;</pre></div>
 
 <p>Java 8 with rubycollect4j:</p>
 
-<div class="highlight highlight-java"><pre><span class="c1">// Sorts the characters by its frequency based on the word 'Mississippi' case-insensitively.</span>
-<span class="n">RubyString</span> <span class="n">word</span> <span class="o">=</span> <span class="n">rs</span><span class="o">(</span><span class="s">"Mississippi"</span><span class="o">);</span> <span class="c1">// Equivalent to new RubyString("Mississippi")</span>
+<div class="highlight highlight-source-java"><pre><span class="pl-c">// Sorts the characters by its frequency based on the word 'Mississippi' case-insensitively.</span>
+<span class="pl-smi">RubyString</span> word <span class="pl-k">=</span> rs(<span class="pl-s"><span class="pl-pds">"</span>Mississippi<span class="pl-pds">"</span></span>); <span class="pl-c">// Equivalent to new RubyString("Mississippi")</span>
 
-<span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="n">word</span><span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="nl">String:</span><span class="o">:</span><span class="n">toLowerCase</span><span class="o">).</span><span class="na">sortBy</span><span class="o">((</span><span class="n">c</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
-      <span class="k">return</span> <span class="n">word</span><span class="o">.</span><span class="na">count</span><span class="o">(</span><span class="n">c</span><span class="o">);</span>
-    <span class="o">}).</span><span class="na">uniq</span><span class="o">().</span><span class="na">join</span><span class="o">();</span>
+<span class="pl-smi">String</span> result <span class="pl-k">=</span> word<span class="pl-k">.</span>map(<span class="pl-smi">String</span><span class="pl-k">::</span>toLowerCase)<span class="pl-k">.</span>sortBy((c) <span class="pl-k">-</span><span class="pl-k">&gt;</span> {
+      <span class="pl-k">return</span> word<span class="pl-k">.</span>count(c);
+    })<span class="pl-k">.</span>uniq()<span class="pl-k">.</span>join();
 
-<span class="n">p</span><span class="o">(</span><span class="n">result</span><span class="o">);</span>
-<span class="c1">// Output: "mpis"</span>
-</pre></div>
+p(result);
+<span class="pl-c">// Output: "mpis"</span></pre></div>
 
 <p>Java 6 with rubycollect4j:</p>
 
-<div class="highlight highlight-java"><pre><span class="c1">// Finds 2 words which get the least and the most unique letters in upper case.</span>
-<span class="n">RubyArray</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">words</span> <span class="o">=</span>
-  <span class="n">RubyFile</span><span class="o">.</span><span class="na">foreach</span><span class="o">(</span><span class="s">"/usr/share/dict/web2"</span><span class="o">)</span> <span class="c1">// Dictionary of Mac OS</span>
-    <span class="o">.</span><span class="na">minmaxBy</span><span class="o">(</span><span class="k">new</span> <span class="n">TransformBlock</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;()</span> <span class="o">{</span>
-      <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">yield</span><span class="o">(</span><span class="n">String</span> <span class="n">item</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="nf">RubyString</span><span class="o">(</span><span class="n">item</span><span class="o">).</span><span class="na">toA</span><span class="o">().</span><span class="na">uniq</span><span class="o">().</span><span class="na">count</span><span class="o">();</span>
-      <span class="o">}</span>
-    <span class="o">}).</span><span class="na">mapǃ</span><span class="o">(</span><span class="s">"toUpperCase"</span><span class="o">);</span>
+<div class="highlight highlight-source-java"><pre><span class="pl-c">// Finds 2 words which get the least and the most unique letters in upper case.</span>
+<span class="pl-k">RubyArray&lt;<span class="pl-smi">String</span>&gt;</span> words <span class="pl-k">=</span>
+  <span class="pl-smi">RubyFile</span><span class="pl-k">.</span>foreach(<span class="pl-s"><span class="pl-pds">"</span>/usr/share/dict/web2<span class="pl-pds">"</span></span>) <span class="pl-c">// Dictionary of Mac OS</span>
+    .minmaxBy(<span class="pl-k">new</span> <span class="pl-k">TransformBlock&lt;<span class="pl-smi">String</span>, <span class="pl-smi">Integer</span>&gt;</span>() {
+      <span class="pl-k">public</span> <span class="pl-smi">Integer</span> <span class="pl-en">yield</span>(<span class="pl-smi">String</span> <span class="pl-v">item</span>) {
+        <span class="pl-k">return</span> <span class="pl-k">new</span> <span class="pl-smi">RubyString</span>(item)<span class="pl-k">.</span>toA()<span class="pl-k">.</span>uniq()<span class="pl-k">.</span>count();
+      }
+    })<span class="pl-k">.</span>mapǃ(<span class="pl-s"><span class="pl-pds">"</span>toUpperCase<span class="pl-pds">"</span></span>);
 
-<span class="n">p</span><span class="o">(</span><span class="n">words</span><span class="o">);</span>
-<span class="c1">// Output: [A, BLEPHAROCONJUNCTIVITIS]</span>
-</pre></div>
+p(words);
+<span class="pl-c">// Output: [A, BLEPHAROCONJUNCTIVITIS]</span></pre></div>
 
 <p>Please add following lines before running examples:</p>
 
-<div class="highlight highlight-java"><pre><span class="kn">import</span> <span class="nn">static</span> <span class="n">net</span><span class="o">.</span><span class="na">sf</span><span class="o">.</span><span class="na">rubycollect4j</span><span class="o">.</span><span class="na">RubyCollections</span><span class="o">.*;</span>
-<span class="kn">import</span> <span class="nn">static</span> <span class="n">net</span><span class="o">.</span><span class="na">sf</span><span class="o">.</span><span class="na">rubycollect4j</span><span class="o">.</span><span class="na">RubyKernel</span><span class="o">.</span><span class="na">p</span><span class="o">;</span>
-</pre></div>
+<div class="highlight highlight-source-java"><pre><span class="pl-k">import static</span> <span class="pl-smi">net.sf.rubycollect4j.RubyCollections.*</span>;
+<span class="pl-k">import static</span> <span class="pl-smi">net.sf.rubycollect4j.RubyKernel.p</span>;</pre></div>
 
 <p>Demo ra() &amp; newRubyArray():</p>
 
-<div class="highlight highlight-java"><pre><span class="n">p</span><span class="o">(</span> <span class="n">ra</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">)</span> <span class="o">);</span>                         <span class="c1">// Output: [1, 2, 3, 4]</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">ra</span><span class="o">(</span><span class="n">ra</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">))</span> <span class="o">);</span>                           <span class="c1">// Output: [[1, 2]]</span>
-<span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;();</span>
-<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">ra</span><span class="o">(</span><span class="n">list</span><span class="o">)</span> <span class="o">);</span>                               <span class="c1">// Output: [1]</span>
-<span class="n">Map</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;();</span>
-<span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s">"a"</span><span class="o">);</span>
-<span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="s">"b"</span><span class="o">);</span>
-<span class="c1">// Any Iterable or Iterator object can be converted into RubyArray.</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">ra</span><span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">values</span><span class="o">)</span> <span class="o">);</span>                         <span class="c1">// Output: [a, b]</span>
-<span class="c1">// RubyArray is Comparable if the elements are Comparable.</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">ra</span><span class="o">(</span><span class="n">ra</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">),</span> <span class="n">ra</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">)).</span><span class="na">sort</span><span class="o">()</span> <span class="o">);</span>          <span class="c1">// Output: [[1, 2], [3, 4]]</span>
-<span class="c1">// RubyArray is both a List and a Ruby.Enumerable.</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">ra</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">)</span> <span class="k">instanceof</span> <span class="n">List</span> <span class="o">);</span>            <span class="c1">// Output: true</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">ra</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">)</span> <span class="k">instanceof</span> <span class="n">Ruby</span><span class="o">.</span><span class="na">Enumerable</span> <span class="o">);</span> <span class="c1">// Output: true</span>
-</pre></div>
+<div class="highlight highlight-source-java"><pre>p( ra(<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>, <span class="pl-c1">4</span>) );                         <span class="pl-c">// Output: [1, 2, 3, 4]</span>
+p( ra(ra(<span class="pl-c1">1</span>, <span class="pl-c1">2</span>)) );                           <span class="pl-c">// Output: [[1, 2]]</span>
+<span class="pl-k">List&lt;<span class="pl-smi">Integer</span>&gt;</span> list <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">ArrayList&lt;<span class="pl-smi">Integer</span>&gt;</span>();
+list<span class="pl-k">.</span>add(<span class="pl-c1">1</span>);
+p( ra(list) );                               <span class="pl-c">// Output: [1]</span>
+<span class="pl-k">Map&lt;<span class="pl-smi">Integer</span>, <span class="pl-smi">String</span>&gt;</span> map <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">LinkedHashMap&lt;<span class="pl-smi">Integer</span>, <span class="pl-smi">String</span>&gt;</span>();
+map<span class="pl-k">.</span>put(<span class="pl-c1">1</span>, <span class="pl-s"><span class="pl-pds">"</span>a<span class="pl-pds">"</span></span>);
+map<span class="pl-k">.</span>put(<span class="pl-c1">2</span>, <span class="pl-s"><span class="pl-pds">"</span>b<span class="pl-pds">"</span></span>);
+<span class="pl-c">// Any Iterable or Iterator object can be converted into RubyArray.</span>
+p( ra(map<span class="pl-k">.</span>values) );                         <span class="pl-c">// Output: [a, b]</span>
+<span class="pl-c">// RubyArray is Comparable if the elements are Comparable.</span>
+p( ra(ra(<span class="pl-c1">3</span>, <span class="pl-c1">4</span>), ra(<span class="pl-c1">1</span>, <span class="pl-c1">2</span>))<span class="pl-k">.</span>sort() );          <span class="pl-c">// Output: [[1, 2], [3, 4]]</span>
+<span class="pl-c">// RubyArray is both a List and a Ruby.Enumerable.</span>
+p( ra(<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>) <span class="pl-k">instanceof</span> <span class="pl-smi">List</span> );            <span class="pl-c">// Output: true</span>
+p( ra(<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>) <span class="pl-k">instanceof</span> <span class="pl-smi">Ruby</span><span class="pl-k">.</span><span class="pl-smi">Enumerable</span> ); <span class="pl-c">// Output: true</span></pre></div>
 
-<div class="highlight highlight-java"><pre><span class="c1">// By default, ra() is just a wrapper to an existed List.</span>
-<span class="c1">// You can make a defensive copy by following codes.</span>
-<span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;();</span>
-<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
-<span class="n">RubyArray</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">ra</span> <span class="o">=</span> <span class="n">RubyArray</span><span class="o">.</span><span class="na">copyOf</span><span class="o">(</span><span class="n">list</span><span class="o">);</span>
-</pre></div>
+<div class="highlight highlight-source-java"><pre><span class="pl-c">// By default, ra() is just a wrapper to an existed List.</span>
+<span class="pl-c">// You can make a defensive copy by following codes.</span>
+<span class="pl-k">List&lt;<span class="pl-smi">Integer</span>&gt;</span> list <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">ArrayList&lt;<span class="pl-smi">Integer</span>&gt;</span>();
+list<span class="pl-k">.</span>add(<span class="pl-c1">1</span>);
+<span class="pl-k">RubyArray&lt;<span class="pl-smi">Integer</span>&gt;</span> ra <span class="pl-k">=</span> <span class="pl-smi">RubyArray</span><span class="pl-k">.</span>copyOf(list);</pre></div>
 
 <p>Demo rh(), hp(), Hash() &amp; newRubyHash():</p>
 
-<div class="highlight highlight-java"><pre><span class="n">p</span><span class="o">(</span> <span class="n">rh</span><span class="o">(</span><span class="s">"a"</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="s">"b"</span> <span class="o">,</span><span class="mi">2</span><span class="o">)</span> <span class="o">);</span>                        <span class="c1">// Output: {a=1, b=2}</span>
-<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;();</span>
-<span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"abc"</span><span class="o">,</span> <span class="mi">123L</span><span class="o">);</span>
-<span class="c1">// Any Map can be converted into RubyHash.</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">hp</span><span class="o">(</span><span class="n">map</span><span class="o">)</span> <span class="o">);</span>                                   <span class="c1">// Output: {abc=123}</span>
-<span class="c1">// hp() simply creates an Entry and the word 'hp' means hash pair</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">Hash</span><span class="o">(</span><span class="n">ra</span><span class="o">(</span><span class="n">hp</span><span class="o">(</span><span class="s">"a"</span><span class="o">,</span> <span class="mi">1</span><span class="o">),</span> <span class="n">hp</span><span class="o">(</span><span class="s">"b"</span> <span class="o">,</span><span class="mi">2</span><span class="o">)))</span> <span class="o">);</span>          <span class="c1">// Output: {a=1, b=2}</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">Hash</span><span class="o">(</span><span class="n">rh</span><span class="o">(</span><span class="s">"a"</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="s">"b"</span><span class="o">,</span> <span class="mi">2</span><span class="o">).</span><span class="na">toA</span><span class="o">())</span> <span class="o">);</span>            <span class="c1">// Output: {a=1, b=2}</span>
-<span class="c1">// The Entry of RubyHash is Comparable if the type of the key elements is Comparable.</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">rh</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">1</span><span class="o">).</span><span class="na">sort</span><span class="o">()</span> <span class="o">);</span>                     <span class="c1">// Output: [2=1, 4=3]</span>
-<span class="c1">// RubyHash is both a Map and a Ruby.Enumerable.</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">rh</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">)</span> <span class="k">instanceof</span> <span class="n">Map</span> <span class="o">);</span>             <span class="c1">// Output: true</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">rh</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">)</span> <span class="k">instanceof</span> <span class="n">Ruby</span><span class="o">.</span><span class="na">Enumerable</span> <span class="o">);</span> <span class="c1">// Output: true</span>
-</pre></div>
+<div class="highlight highlight-source-java"><pre>p( rh(<span class="pl-s"><span class="pl-pds">"</span>a<span class="pl-pds">"</span></span>, <span class="pl-c1">1</span>, <span class="pl-s"><span class="pl-pds">"</span>b<span class="pl-pds">"</span></span> ,<span class="pl-c1">2</span>) );                        <span class="pl-c">// Output: {a=1, b=2}</span>
+<span class="pl-k">Map&lt;<span class="pl-smi">String</span>, <span class="pl-smi">Long</span>&gt;</span> map <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">HashMap&lt;<span class="pl-smi">String</span>, <span class="pl-smi">Long</span>&gt;</span>();
+map<span class="pl-k">.</span>put(<span class="pl-s"><span class="pl-pds">"</span>abc<span class="pl-pds">"</span></span>, <span class="pl-c1">123L</span>);
+<span class="pl-c">// Any Map can be converted into RubyHash.</span>
+p( hp(map) );                                   <span class="pl-c">// Output: {abc=123}</span>
+<span class="pl-c">// hp() simply creates an Entry and the word 'hp' means hash pair</span>
+p( Hash(ra(hp(<span class="pl-s"><span class="pl-pds">"</span>a<span class="pl-pds">"</span></span>, <span class="pl-c1">1</span>), hp(<span class="pl-s"><span class="pl-pds">"</span>b<span class="pl-pds">"</span></span> ,<span class="pl-c1">2</span>))) );          <span class="pl-c">// Output: {a=1, b=2}</span>
+p( Hash(rh(<span class="pl-s"><span class="pl-pds">"</span>a<span class="pl-pds">"</span></span>, <span class="pl-c1">1</span>, <span class="pl-s"><span class="pl-pds">"</span>b<span class="pl-pds">"</span></span>, <span class="pl-c1">2</span>)<span class="pl-k">.</span>toA()) );            <span class="pl-c">// Output: {a=1, b=2}</span>
+<span class="pl-c">// The Entry of RubyHash is Comparable if the type of the key elements is Comparable.</span>
+p( rh(<span class="pl-c1">4</span>, <span class="pl-c1">3</span>, <span class="pl-c1">2</span>, <span class="pl-c1">1</span>)<span class="pl-k">.</span>sort() );                     <span class="pl-c">// Output: [2=1, 4=3]</span>
+<span class="pl-c">// RubyHash is both a Map and a Ruby.Enumerable.</span>
+p( rh(<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>, <span class="pl-c1">4</span>) <span class="pl-k">instanceof</span> <span class="pl-smi">Map</span> );             <span class="pl-c">// Output: true</span>
+p( rh(<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>, <span class="pl-c1">4</span>) <span class="pl-k">instanceof</span> <span class="pl-smi">Ruby</span><span class="pl-k">.</span><span class="pl-smi">Enumerable</span> ); <span class="pl-c">// Output: true</span></pre></div>
 
-<div class="highlight highlight-java"><pre><span class="c1">// By default, rh() makes a copy of input Map.</span>
-<span class="c1">// You can only wrap a LinkedHashMap up by following codes, because the keys of RubyHash need to be ordered.</span>
-<span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;();</span>
-<span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s">"a"</span><span class="o">);</span>
-<span class="n">RubyHash</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">rh</span> <span class="o">=</span> <span class="n">RubyHash</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">map</span><span class="o">);</span>
-</pre></div>
+<div class="highlight highlight-source-java"><pre><span class="pl-c">// By default, rh() makes a copy of input Map.</span>
+<span class="pl-c">// You can only wrap a LinkedHashMap up by following codes, because the keys of RubyHash need to be ordered.</span>
+<span class="pl-k">LinkedHashMap&lt;<span class="pl-smi">Integer</span>, <span class="pl-smi">String</span>&gt;</span> map <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">LinkedHashMap&lt;<span class="pl-smi">Integer</span>, <span class="pl-smi">String</span>&gt;</span>();
+map<span class="pl-k">.</span>put(<span class="pl-c1">1</span>, <span class="pl-s"><span class="pl-pds">"</span>a<span class="pl-pds">"</span></span>);
+<span class="pl-k">RubyHash&lt;<span class="pl-smi">Integer</span>, <span class="pl-smi">String</span>&gt;</span> rh <span class="pl-k">=</span> <span class="pl-smi">RubyHash</span><span class="pl-k">.</span>of(map);</pre></div>
 
 <p>Demo newRubySet():</p>
 
-<div class="highlight highlight-java"><pre><span class="n">p</span><span class="o">(</span> <span class="n">newRubySet</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">3</span><span class="o">)</span> <span class="o">);</span>                                <span class="c1">// Output: [1, 2, 3]</span>
-<span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;();</span>
-<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
-<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
-<span class="c1">// Any Iterable object can be converted into RubySet</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">newRubySet</span><span class="o">(</span><span class="n">list</span><span class="o">)</span> <span class="o">);</span>                                      <span class="c1">// Output: [1]</span>
-<span class="c1">// RubySet is Comparable if the elements are Comparable.</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">newRubySet</span><span class="o">(</span><span class="n">newRubySet</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">),</span> <span class="n">newRubySet</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">)).</span><span class="na">sort</span><span class="o">()</span> <span class="o">);</span> <span class="c1">// Output: [[1, 2], [3, 4]]</span>
-<span class="c1">// RubySet is both a Set and a Ruby.Enumerable.</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">newRubySet</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">3</span><span class="o">)</span> <span class="k">instanceof</span> <span class="n">Set</span> <span class="o">);</span>                 <span class="c1">// Output: true</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">newRubySet</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">3</span><span class="o">)</span> <span class="k">instanceof</span> <span class="n">Ruby</span><span class="o">.</span><span class="na">Enumerable</span> <span class="o">);</span>     <span class="c1">// Output: true</span>
-</pre></div>
+<div class="highlight highlight-source-java"><pre>p( newRubySet(<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>, <span class="pl-c1">3</span>) );                                <span class="pl-c">// Output: [1, 2, 3]</span>
+<span class="pl-k">List&lt;<span class="pl-smi">Integer</span>&gt;</span> list <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">ArrayList&lt;<span class="pl-smi">Integer</span>&gt;</span>();
+list<span class="pl-k">.</span>add(<span class="pl-c1">1</span>);
+list<span class="pl-k">.</span>add(<span class="pl-c1">1</span>);
+<span class="pl-c">// Any Iterable object can be converted into RubySet</span>
+p( newRubySet(list) );                                      <span class="pl-c">// Output: [1]</span>
+<span class="pl-c">// RubySet is Comparable if the elements are Comparable.</span>
+p( newRubySet(newRubySet(<span class="pl-c1">3</span>, <span class="pl-c1">4</span>), newRubySet(<span class="pl-c1">1</span>, <span class="pl-c1">2</span>))<span class="pl-k">.</span>sort() ); <span class="pl-c">// Output: [[1, 2], [3, 4]]</span>
+<span class="pl-c">// RubySet is both a Set and a Ruby.Enumerable.</span>
+p( newRubySet(<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>, <span class="pl-c1">3</span>) <span class="pl-k">instanceof</span> <span class="pl-smi">Set</span> );                 <span class="pl-c">// Output: true</span>
+p( newRubySet(<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>, <span class="pl-c1">3</span>) <span class="pl-k">instanceof</span> <span class="pl-smi">Ruby</span><span class="pl-k">.</span><span class="pl-smi">Enumerable</span> );     <span class="pl-c">// Output: true</span></pre></div>
 
-<div class="highlight highlight-java"><pre><span class="c1">// By default, newRubySet() makes a copy of input Set.</span>
-<span class="c1">// You can only wrap a LinkedHashSet up by following codes, because the elements of RubySet need to be ordered.</span>
-<span class="n">LinkedHashSet</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">set</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedHashSet</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;();</span>
-<span class="n">set</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
-<span class="n">RubySet</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">rubySet</span> <span class="o">=</span> <span class="n">RubySet</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">set</span><span class="o">);</span>
-</pre></div>
+<div class="highlight highlight-source-java"><pre><span class="pl-c">// By default, newRubySet() makes a copy of input Set.</span>
+<span class="pl-c">// You can only wrap a LinkedHashSet up by following codes, because the elements of RubySet need to be ordered.</span>
+<span class="pl-k">LinkedHashSet&lt;<span class="pl-smi">Integer</span>&gt;</span> set <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">LinkedHashSet&lt;<span class="pl-smi">Integer</span>&gt;</span>();
+set<span class="pl-k">.</span>add(<span class="pl-c1">1</span>);
+<span class="pl-k">RubySet&lt;<span class="pl-smi">Integer</span>&gt;</span> rubySet <span class="pl-k">=</span> <span class="pl-smi">RubySet</span><span class="pl-k">.</span>of(set);</pre></div>
 
 <p>Demo rs() &amp; new RubyString():</p>
 
-<div class="highlight highlight-java"><pre><span class="c1">// RubyString can be created from any Object.</span>
-<span class="n">p</span><span class="o">(</span> <span class="k">new</span> <span class="nf">RubyString</span><span class="o">(</span><span class="mi">1000L</span><span class="o">).</span><span class="na">count</span><span class="o">(</span><span class="s">"0"</span><span class="o">)</span> <span class="o">);</span>                  <span class="c1">// Output: 3</span>
-<span class="c1">// RubyString is also a RubyEnumerable of each character(as String).</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">rs</span><span class="o">(</span><span class="s">"abc"</span><span class="o">).</span><span class="na">map</span><span class="o">(</span><span class="s">"codePointAt"</span><span class="o">,</span> <span class="mi">0</span><span class="o">)</span> <span class="o">);</span>                   <span class="c1">// Output: [97, 98, 99]</span>
-<span class="c1">// RubyString implements fluent interface.</span>
-<span class="c1">// After multiple actions, you can turn it to a Java String by calling toS().</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">rs</span><span class="o">(</span><span class="s">"ABC"</span><span class="o">).</span><span class="na">chop</span><span class="o">().</span><span class="na">capitalize</span><span class="o">().</span><span class="na">concat</span><span class="o">(</span><span class="s">"001"</span><span class="o">).</span><span class="na">toS</span><span class="o">()</span> <span class="o">);</span> <span class="c1">// Output: Ab001</span>
-<span class="c1">// RubyString is both a CharSequence and a Ruby.Enumerable.</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">rs</span><span class="o">(</span><span class="s">"abc"</span><span class="o">)</span> <span class="k">instanceof</span> <span class="n">CharSequence</span> <span class="o">);</span>                 <span class="c1">// Output: true</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">rs</span><span class="o">(</span><span class="s">"abc"</span><span class="o">)</span> <span class="k">instanceof</span> <span class="n">Ruby</span><span class="o">.</span><span class="na">Enumerable</span> <span class="o">);</span>              <span class="c1">// Output: true</span>
-</pre></div>
+<div class="highlight highlight-source-java"><pre><span class="pl-c">// RubyString can be created from any Object.</span>
+p( <span class="pl-k">new</span> <span class="pl-smi">RubyString</span>(<span class="pl-c1">1000L</span>)<span class="pl-k">.</span>count(<span class="pl-s"><span class="pl-pds">"</span>0<span class="pl-pds">"</span></span>) );                  <span class="pl-c">// Output: 3</span>
+<span class="pl-c">// RubyString is also a RubyEnumerable of each character(as String).</span>
+p( rs(<span class="pl-s"><span class="pl-pds">"</span>abc<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>map(<span class="pl-s"><span class="pl-pds">"</span>codePointAt<span class="pl-pds">"</span></span>, <span class="pl-c1">0</span>) );                   <span class="pl-c">// Output: [97, 98, 99]</span>
+<span class="pl-c">// RubyString implements fluent interface.</span>
+<span class="pl-c">// After multiple actions, you can turn it to a Java String by calling toS().</span>
+p( rs(<span class="pl-s"><span class="pl-pds">"</span>ABC<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>chop()<span class="pl-k">.</span>capitalize()<span class="pl-k">.</span>concat(<span class="pl-s"><span class="pl-pds">"</span>001<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>toS() ); <span class="pl-c">// Output: Ab001</span>
+<span class="pl-c">// RubyString is both a CharSequence and a Ruby.Enumerable.</span>
+p( rs(<span class="pl-s"><span class="pl-pds">"</span>abc<span class="pl-pds">"</span></span>) <span class="pl-k">instanceof</span> <span class="pl-smi">CharSequence</span> );                 <span class="pl-c">// Output: true</span>
+p( rs(<span class="pl-s"><span class="pl-pds">"</span>abc<span class="pl-pds">"</span></span>) <span class="pl-k">instanceof</span> <span class="pl-smi">Ruby</span><span class="pl-k">.</span><span class="pl-smi">Enumerable</span> );              <span class="pl-c">// Output: true</span></pre></div>
 
 <p>Demo abstract RubyEnumerable class:</p>
 
-<div class="highlight highlight-java"><pre><span class="c1">// You can simply make your class inherit all the RubyEnumerable methods by extending it.</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">YourIterableClass</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">RubyEnumerable</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="o">{</span>
-  <span class="kd">private</span> <span class="kd">final</span> <span class="n">Iterable</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="n">iter</span><span class="o">;</span>
+<div class="highlight highlight-source-java"><pre><span class="pl-c">// You can simply make your class inherit all the RubyEnumerable methods by extending it.</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">YourIterableClass</span>&lt;E&gt; <span class="pl-k">extends</span> <span class="pl-e">RubyEnumerable&lt;<span class="pl-smi">E</span>&gt;</span> {
+  <span class="pl-k">private</span> <span class="pl-k">final</span> <span class="pl-k">Iterable&lt;<span class="pl-smi">E</span>&gt;</span> iter;
 
-  <span class="kd">public</span> <span class="nf">YourIterableClass</span><span class="o">(</span><span class="n">Iterable</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="n">iter</span><span class="o">)</span> <span class="o">{</span> <span class="k">this</span><span class="o">.</span><span class="na">iter</span> <span class="o">=</span> <span class="n">iter</span><span class="o">;</span> <span class="o">}</span>
+  <span class="pl-k">public</span> <span class="pl-en">YourIterableClass</span>(<span class="pl-k">Iterable&lt;<span class="pl-smi">E</span>&gt;</span> <span class="pl-v">iter</span>) { <span class="pl-v">this</span><span class="pl-k">.</span>iter <span class="pl-k">=</span> iter; }
 
-  <span class="nd">@Override</span>
-  <span class="kd">protected</span> <span class="n">Iterable</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">getIterable</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">iter</span><span class="o">;</span> <span class="o">}</span>
-<span class="o">}</span>
+  <span class="pl-k">@Override</span>
+  <span class="pl-k">protected</span> <span class="pl-k">Iterable&lt;<span class="pl-smi">E</span>&gt;</span> <span class="pl-en">getIterable</span>() { <span class="pl-k">return</span> iter; }
+}
 
-<span class="c1">// The class which extends RubyEnumerable becomes a Ruby.Enumerable.</span>
-<span class="n">p</span><span class="o">(</span> <span class="k">new</span> <span class="nf">YourIterableClass</span><span class="o">(</span><span class="n">iter</span><span class="o">)</span> <span class="k">instanceof</span> <span class="n">Ruby</span><span class="o">.</span><span class="na">Enumerable</span> <span class="o">);</span> <span class="c1">// Output: true</span>
-</pre></div>
+<span class="pl-c">// The class which extends RubyEnumerable becomes a Ruby.Enumerable.</span>
+p( <span class="pl-k">new</span> <span class="pl-smi">YourIterableClass</span>(iter) <span class="pl-k">instanceof</span> <span class="pl-smi">Ruby</span><span class="pl-k">.</span><span class="pl-smi">Enumerable</span> ); <span class="pl-c">// Output: true</span></pre></div>
 
 <p>Demo RubyEnumerator.of() &amp; RubyEnumerator.copyOf():</p>
 
-<div class="highlight highlight-java"><pre><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;()</span> <span class="o">{{</span> <span class="n">put</span><span class="o">(</span><span class="s">"a"</span><span class="o">,</span> <span class="mi">1L</span><span class="o">);</span> <span class="n">put</span><span class="o">(</span><span class="s">"b"</span><span class="o">,</span> <span class="mi">2L</span><span class="o">);</span> <span class="n">put</span><span class="o">(</span><span class="s">"c"</span><span class="o">,</span> <span class="mi">3L</span><span class="o">);</span> <span class="o">}};</span>
-<span class="c1">// Any Iterable object can be wrapped into RubyEnumerator.</span>
-<span class="n">RubyEnumerator</span><span class="o">&lt;</span><span class="n">Entry</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;&gt;</span> <span class="n">re</span> <span class="o">=</span> <span class="n">RubyEnumerator</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">entrySet</span><span class="o">());</span>
-<span class="c1">// RubyEnumerator is much like RubyEnumerable, but it is both an Iterator and an Iterable.</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">re</span> <span class="k">instanceof</span> <span class="n">Ruby</span><span class="o">.</span><span class="na">Enumerator</span> <span class="o">);</span> <span class="c1">// Output: true</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">re</span> <span class="k">instanceof</span> <span class="n">Ruby</span><span class="o">.</span><span class="na">Enumerable</span> <span class="o">);</span> <span class="c1">// Output: true</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">re</span> <span class="k">instanceof</span> <span class="n">Iterator</span> <span class="o">);</span>        <span class="c1">// Output: true</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">re</span> <span class="k">instanceof</span> <span class="n">Iterable</span> <span class="o">);</span>        <span class="c1">// Output: true</span>
-<span class="c1">// It can 'peek' and 'rewind'.</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">re</span><span class="o">.</span><span class="na">peek</span><span class="o">()</span> <span class="o">);</span>                     <span class="c1">// Output: a=1</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">re</span><span class="o">.</span><span class="na">next</span><span class="o">()</span> <span class="o">);</span>                     <span class="c1">// Output: a=1</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">re</span><span class="o">.</span><span class="na">next</span><span class="o">()</span> <span class="o">);</span>                     <span class="c1">// Output: b=2</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">re</span><span class="o">.</span><span class="na">peek</span><span class="o">()</span> <span class="o">);</span>                     <span class="c1">// Output: c=3</span>
-<span class="n">re</span><span class="o">.</span><span class="na">rewind</span><span class="o">();</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">re</span><span class="o">.</span><span class="na">next</span><span class="o">()</span> <span class="o">);</span>                     <span class="c1">// Output: a=1</span>
-</pre></div>
+<div class="highlight highlight-source-java"><pre><span class="pl-k">Map&lt;<span class="pl-smi">String</span>, <span class="pl-smi">Long</span>&gt;</span> map <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">LinkedHashMap&lt;<span class="pl-smi">String</span>, <span class="pl-smi">Long</span>&gt;</span>() {{ put(<span class="pl-s"><span class="pl-pds">"</span>a<span class="pl-pds">"</span></span>, <span class="pl-c1">1L</span>); put(<span class="pl-s"><span class="pl-pds">"</span>b<span class="pl-pds">"</span></span>, <span class="pl-c1">2L</span>); put(<span class="pl-s"><span class="pl-pds">"</span>c<span class="pl-pds">"</span></span>, <span class="pl-c1">3L</span>); }};
+<span class="pl-c">// Any Iterable object can be wrapped into RubyEnumerator.</span>
+<span class="pl-k">RubyEnumerator&lt;<span class="pl-k">Entry&lt;<span class="pl-smi">String</span>, <span class="pl-smi">Long</span>&gt;</span>&gt;</span> re <span class="pl-k">=</span> <span class="pl-smi">RubyEnumerator</span><span class="pl-k">.</span>of(map<span class="pl-k">.</span>entrySet());
+<span class="pl-c">// RubyEnumerator is much like RubyEnumerable, but it is both an Iterator and an Iterable.</span>
+p( re <span class="pl-k">instanceof</span> <span class="pl-smi">Ruby</span><span class="pl-k">.</span><span class="pl-smi">Enumerator</span> ); <span class="pl-c">// Output: true</span>
+p( re <span class="pl-k">instanceof</span> <span class="pl-smi">Ruby</span><span class="pl-k">.</span><span class="pl-smi">Enumerable</span> ); <span class="pl-c">// Output: true</span>
+p( re <span class="pl-k">instanceof</span> <span class="pl-smi">Iterator</span> );        <span class="pl-c">// Output: true</span>
+p( re <span class="pl-k">instanceof</span> <span class="pl-smi">Iterable</span> );        <span class="pl-c">// Output: true</span>
+<span class="pl-c">// It can 'peek' and 'rewind'.</span>
+p( re<span class="pl-k">.</span>peek() );                     <span class="pl-c">// Output: a=1</span>
+p( re<span class="pl-k">.</span>next() );                     <span class="pl-c">// Output: a=1</span>
+p( re<span class="pl-k">.</span>next() );                     <span class="pl-c">// Output: b=2</span>
+p( re<span class="pl-k">.</span>peek() );                     <span class="pl-c">// Output: c=3</span>
+re<span class="pl-k">.</span>rewind();
+p( re<span class="pl-k">.</span>next() );                     <span class="pl-c">// Output: a=1</span></pre></div>
 
-<div class="highlight highlight-java"><pre><span class="c1">// By default, RubyEnumerator.of() is just a wrapper to an existed Iterable.</span>
-<span class="c1">// You can make a defensive copy by following codes.</span>
-<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;()</span> <span class="o">{{</span> <span class="n">put</span><span class="o">(</span><span class="s">"a"</span><span class="o">,</span> <span class="mi">1L</span><span class="o">);</span> <span class="n">put</span><span class="o">(</span><span class="s">"b"</span><span class="o">,</span> <span class="mi">2L</span><span class="o">);</span> <span class="n">put</span><span class="o">(</span><span class="s">"c"</span><span class="o">,</span> <span class="mi">3L</span><span class="o">);</span> <span class="o">}};</span>
-<span class="n">RubyEnumerator</span><span class="o">&lt;</span><span class="n">Entry</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;&gt;</span> <span class="n">re</span> <span class="o">=</span> <span class="n">RubyEnumerator</span><span class="o">.</span><span class="na">copyOf</span><span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">entrySet</span><span class="o">());</span>
-</pre></div>
+<div class="highlight highlight-source-java"><pre><span class="pl-c">// By default, RubyEnumerator.of() is just a wrapper to an existed Iterable.</span>
+<span class="pl-c">// You can make a defensive copy by following codes.</span>
+<span class="pl-k">Map&lt;<span class="pl-smi">String</span>, <span class="pl-smi">Long</span>&gt;</span> map <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">LinkedHashMap&lt;<span class="pl-smi">String</span>, <span class="pl-smi">Long</span>&gt;</span>() {{ put(<span class="pl-s"><span class="pl-pds">"</span>a<span class="pl-pds">"</span></span>, <span class="pl-c1">1L</span>); put(<span class="pl-s"><span class="pl-pds">"</span>b<span class="pl-pds">"</span></span>, <span class="pl-c1">2L</span>); put(<span class="pl-s"><span class="pl-pds">"</span>c<span class="pl-pds">"</span></span>, <span class="pl-c1">3L</span>); }};
+<span class="pl-k">RubyEnumerator&lt;<span class="pl-k">Entry&lt;<span class="pl-smi">String</span>, <span class="pl-smi">Long</span>&gt;</span>&gt;</span> re <span class="pl-k">=</span> <span class="pl-smi">RubyEnumerator</span><span class="pl-k">.</span>copyOf(map<span class="pl-k">.</span>entrySet());</pre></div>
 
 <p>Demo RubyLazyEnumerator.of() &amp; RubyLazyEnumerator.copyOf():</p>
 
-<div class="highlight highlight-java"><pre><span class="n">RubyLazyEnumerator</span> <span class="n">rle</span> <span class="o">=</span> <span class="n">RubyLazyEnumerator</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">));</span>
-<span class="c1">// RubyLazyEnumerator is not a Ruby.Enumerable, but it is a Ruby.LazyEnumerator.</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">rle</span><span class="o">.</span><span class="na">drop</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span> <span class="k">instanceof</span> <span class="n">Ruby</span><span class="o">.</span><span class="na">LazyEnumerator</span> <span class="o">);</span>    <span class="c1">// Output: true</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">rle</span> <span class="k">instanceof</span> <span class="n">Iterator</span> <span class="o">);</span>                       <span class="c1">// Output: true</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">rle</span> <span class="k">instanceof</span> <span class="n">Iterable</span> <span class="o">);</span>                       <span class="c1">// Output: true</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">rle</span><span class="o">.</span><span class="na">drop</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="na">toA</span><span class="o">()</span> <span class="o">);</span>                             <span class="c1">// Output: [2, 3, 4]</span>
-<span class="c1">// A RubyLazyEnumerator can also be created by RubyArray#lazy.</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">ra</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">).</span><span class="na">lazy</span><span class="o">().</span><span class="na">cycle</span><span class="o">().</span><span class="na">drop</span><span class="o">(</span><span class="mi">6</span><span class="o">).</span><span class="na">first</span><span class="o">()</span> <span class="o">);</span> <span class="c1">// Output: 3</span>
-</pre></div>
+<div class="highlight highlight-source-java"><pre><span class="pl-smi">RubyLazyEnumerator</span> rle <span class="pl-k">=</span> <span class="pl-smi">RubyLazyEnumerator</span><span class="pl-k">.</span>of(<span class="pl-smi">Arrays</span><span class="pl-k">.</span>asList(<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>, <span class="pl-c1">4</span>));
+<span class="pl-c">// RubyLazyEnumerator is not a Ruby.Enumerable, but it is a Ruby.LazyEnumerator.</span>
+p( rle<span class="pl-k">.</span>drop(<span class="pl-c1">1</span>) <span class="pl-k">instanceof</span> <span class="pl-smi">Ruby</span><span class="pl-k">.</span><span class="pl-smi">LazyEnumerator</span> );    <span class="pl-c">// Output: true</span>
+p( rle <span class="pl-k">instanceof</span> <span class="pl-smi">Iterator</span> );                       <span class="pl-c">// Output: true</span>
+p( rle <span class="pl-k">instanceof</span> <span class="pl-smi">Iterable</span> );                       <span class="pl-c">// Output: true</span>
+p( rle<span class="pl-k">.</span>drop(<span class="pl-c1">1</span>)<span class="pl-k">.</span>toA() );                             <span class="pl-c">// Output: [2, 3, 4]</span>
+<span class="pl-c">// A RubyLazyEnumerator can also be created by RubyArray#lazy.</span>
+p( ra(<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>, <span class="pl-c1">4</span>)<span class="pl-k">.</span>lazy()<span class="pl-k">.</span>cycle()<span class="pl-k">.</span>drop(<span class="pl-c1">6</span>)<span class="pl-k">.</span>first() ); <span class="pl-c">// Output: 3</span></pre></div>
 
-<div class="highlight highlight-java"><pre><span class="c1">// By default, RubyLazyEnumerator.of() is just a wrapper to an existed Iterable.</span>
-<span class="c1">// You can make a defensive copy by following codes.</span>
-<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;()</span> <span class="o">{{</span> <span class="n">put</span><span class="o">(</span><span class="s">"a"</span><span class="o">,</span> <span class="mi">1L</span><span class="o">);</span> <span class="n">put</span><span class="o">(</span><span class="s">"b"</span><span class="o">,</span> <span class="mi">2L</span><span class="o">);</span> <span class="n">put</span><span class="o">(</span><span class="s">"c"</span><span class="o">,</span> <span class="mi">3L</span><span class="o">);</span> <span class="o">}};</span>
-<span class="n">RubyLazyEnumerator</span><span class="o">&lt;</span><span class="n">Entry</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;&gt;</span> <span class="n">re</span> <span class="o">=</span> <span class="n">RubyLazyEnumerator</span><span class="o">.</span><span class="na">copyOf</span><span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">entrySet</span><span class="o">());</span>
-</pre></div>
+<div class="highlight highlight-source-java"><pre><span class="pl-c">// By default, RubyLazyEnumerator.of() is just a wrapper to an existed Iterable.</span>
+<span class="pl-c">// You can make a defensive copy by following codes.</span>
+<span class="pl-k">Map&lt;<span class="pl-smi">String</span>, <span class="pl-smi">Long</span>&gt;</span> map <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">LinkedHashMap&lt;<span class="pl-smi">String</span>, <span class="pl-smi">Long</span>&gt;</span>() {{ put(<span class="pl-s"><span class="pl-pds">"</span>a<span class="pl-pds">"</span></span>, <span class="pl-c1">1L</span>); put(<span class="pl-s"><span class="pl-pds">"</span>b<span class="pl-pds">"</span></span>, <span class="pl-c1">2L</span>); put(<span class="pl-s"><span class="pl-pds">"</span>c<span class="pl-pds">"</span></span>, <span class="pl-c1">3L</span>); }};
+<span class="pl-k">RubyLazyEnumerator&lt;<span class="pl-k">Entry&lt;<span class="pl-smi">String</span>, <span class="pl-smi">Long</span>&gt;</span>&gt;</span> re <span class="pl-k">=</span> <span class="pl-smi">RubyLazyEnumerator</span><span class="pl-k">.</span>copyOf(map<span class="pl-k">.</span>entrySet());</pre></div>
 
 <p>Demo range():</p>
 
-<div class="highlight highlight-java"><pre><span class="n">p</span><span class="o">(</span> <span class="n">range</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">5</span><span class="o">).</span><span class="na">toA</span><span class="o">()</span> <span class="o">);</span>                                   <span class="c1">// Output: [1, 2, 3, 4, 5]</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">range</span><span class="o">(</span><span class="s">"Z"</span><span class="o">,</span> <span class="s">"AB"</span><span class="o">).</span><span class="na">toA</span><span class="o">()</span> <span class="o">);</span>                              <span class="c1">// Output: [Z, AA, AB]</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">range</span><span class="o">(</span><span class="s">"ZZ-999"</span><span class="o">,</span> <span class="s">"AAA-001"</span><span class="o">).</span><span class="na">toA</span><span class="o">()</span> <span class="o">);</span>                    <span class="c1">// Output: [ZZ-999, AAA-000, AAA-001]</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">range</span><span class="o">(</span><span class="mf">1.08</span><span class="o">,</span> <span class="mf">1.1</span><span class="o">).</span><span class="na">toA</span><span class="o">()</span> <span class="o">);</span>                              <span class="c1">// Output: [1.08, 1.09, 1.10]</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">range</span><span class="o">(</span><span class="s">"1.08"</span><span class="o">,</span> <span class="s">"1.1"</span><span class="o">).</span><span class="na">toA</span><span class="o">()</span> <span class="o">);</span>                          <span class="c1">// Output: [1.08, 1.09, 1.10]</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">range</span><span class="o">(</span><span class="n">date</span><span class="o">(</span><span class="mi">2013</span><span class="o">,</span> <span class="mi">06</span><span class="o">,</span> <span class="mi">30</span><span class="o">),</span> <span class="n">date</span><span class="o">(</span><span class="mi">2013</span><span class="o">,</span> <span class="mi">07</span><span class="o">,</span> <span class="mi">01</span><span class="o">)).</span><span class="na">toA</span><span class="o">()</span> <span class="o">);</span> <span class="c1">// Output: [Sun Jun 30 00:00:00 CST 2013, Mon Jul 01 00:00:00 CST 2013]</span>
-</pre></div>
+<div class="highlight highlight-source-java"><pre>p( range(<span class="pl-c1">1</span>, <span class="pl-c1">5</span>)<span class="pl-k">.</span>toA() );                                   <span class="pl-c">// Output: [1, 2, 3, 4, 5]</span>
+p( range(<span class="pl-s"><span class="pl-pds">"</span>Z<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>AB<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>toA() );                              <span class="pl-c">// Output: [Z, AA, AB]</span>
+p( range(<span class="pl-s"><span class="pl-pds">"</span>ZZ-999<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>AAA-001<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>toA() );                    <span class="pl-c">// Output: [ZZ-999, AAA-000, AAA-001]</span>
+p( range(<span class="pl-c1">1.08</span>, <span class="pl-c1">1.1</span>)<span class="pl-k">.</span>toA() );                              <span class="pl-c">// Output: [1.08, 1.09, 1.10]</span>
+p( range(<span class="pl-s"><span class="pl-pds">"</span>1.08<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>1.1<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>toA() );                          <span class="pl-c">// Output: [1.08, 1.09, 1.10]</span>
+p( range(date(<span class="pl-c1">2013</span>, <span class="pl-c1">06</span>, <span class="pl-c1">30</span>), date(<span class="pl-c1">2013</span>, <span class="pl-c1">07</span>, <span class="pl-c1">01</span>))<span class="pl-k">.</span>toA() ); <span class="pl-c">// Output: [Sun Jun 30 00:00:00 CST 2013, Mon Jul 01 00:00:00 CST 2013]</span></pre></div>
 
 <p>Demo date():</p>
 
-<div class="highlight highlight-java"><pre><span class="n">p</span><span class="o">(</span> <span class="n">date</span><span class="o">(</span><span class="mi">2013</span><span class="o">,</span> <span class="mi">7</span><span class="o">,</span> <span class="mi">1</span><span class="o">).</span><span class="na">add</span><span class="o">(</span><span class="mi">10</span><span class="o">).</span><span class="na">days</span><span class="o">()</span> <span class="o">);</span>          <span class="c1">// Output: Thu Jul 11 00:00:00 CST 2013</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">date</span><span class="o">(</span><span class="mi">2013</span><span class="o">,</span> <span class="mi">7</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">21</span><span class="o">).</span><span class="na">minus</span><span class="o">(</span><span class="mi">30</span><span class="o">).</span><span class="na">minutes</span><span class="o">()</span> <span class="o">);</span> <span class="c1">// Output: Mon Jul 01 20:30:00 CST 2013</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">date</span><span class="o">(</span><span class="mi">2013</span><span class="o">,</span> <span class="mi">7</span><span class="o">,</span> <span class="mi">7</span><span class="o">,</span> <span class="mi">16</span><span class="o">,</span> <span class="mi">15</span><span class="o">,</span> <span class="mi">14</span><span class="o">).</span><span class="na">endOfDay</span><span class="o">()</span> <span class="o">);</span>  <span class="c1">// Output: Sun Jul 07 23:59:59 CST 2013</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">date</span><span class="o">(</span><span class="mi">2013</span><span class="o">,</span> <span class="mi">7</span><span class="o">,</span> <span class="mi">11</span><span class="o">).</span><span class="na">beginningOfWeek</span><span class="o">()</span> <span class="o">);</span>      <span class="c1">// Output: Sun Jul 07 00:00:00 CST 2013</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">RubyDate</span><span class="o">.</span><span class="na">today</span><span class="o">()</span> <span class="o">);</span>                         <span class="c1">// Output: date of today</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">RubyDate</span><span class="o">.</span><span class="na">yesterday</span><span class="o">()</span> <span class="o">);</span>                     <span class="c1">// Output: date of yesterday</span>
-<span class="n">Calendar</span> <span class="n">c</span> <span class="o">=</span> <span class="n">Calendar</span><span class="o">.</span><span class="na">getInstance</span><span class="o">();</span>
-<span class="n">c</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">date</span><span class="o">(</span><span class="n">c</span><span class="o">.</span><span class="na">getTime</span><span class="o">())</span> <span class="o">);</span>                        <span class="c1">// Output: Thu Jan 01 00:00:00 CST 1970</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">date</span><span class="o">(</span><span class="mi">2014</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">1</span><span class="o">).</span><span class="na">beginningOfQuarter</span><span class="o">()</span> <span class="o">);</span>    <span class="c1">// Output: Tue Apr 01 00:00:00 CST 2014</span>
-</pre></div>
+<div class="highlight highlight-source-java"><pre>p( date(<span class="pl-c1">2013</span>, <span class="pl-c1">7</span>, <span class="pl-c1">1</span>)<span class="pl-k">.</span>add(<span class="pl-c1">10</span>)<span class="pl-k">.</span>days() );          <span class="pl-c">// Output: Thu Jul 11 00:00:00 CST 2013</span>
+p( date(<span class="pl-c1">2013</span>, <span class="pl-c1">7</span>, <span class="pl-c1">1</span>, <span class="pl-c1">21</span>)<span class="pl-k">.</span>minus(<span class="pl-c1">30</span>)<span class="pl-k">.</span>minutes() ); <span class="pl-c">// Output: Mon Jul 01 20:30:00 CST 2013</span>
+p( date(<span class="pl-c1">2013</span>, <span class="pl-c1">7</span>, <span class="pl-c1">7</span>, <span class="pl-c1">16</span>, <span class="pl-c1">15</span>, <span class="pl-c1">14</span>)<span class="pl-k">.</span>endOfDay() );  <span class="pl-c">// Output: Sun Jul 07 23:59:59 CST 2013</span>
+p( date(<span class="pl-c1">2013</span>, <span class="pl-c1">7</span>, <span class="pl-c1">11</span>)<span class="pl-k">.</span>beginningOfWeek() );      <span class="pl-c">// Output: Sun Jul 07 00:00:00 CST 2013</span>
+p( <span class="pl-smi">RubyDate</span><span class="pl-k">.</span>today() );                         <span class="pl-c">// Output: date of today</span>
+p( <span class="pl-smi">RubyDate</span><span class="pl-k">.</span>yesterday() );                     <span class="pl-c">// Output: date of yesterday</span>
+<span class="pl-smi">Calendar</span> c <span class="pl-k">=</span> <span class="pl-smi">Calendar</span><span class="pl-k">.</span>getInstance();
+c<span class="pl-k">.</span>clear();
+p( date(c<span class="pl-k">.</span>getTime()) );                        <span class="pl-c">// Output: Thu Jan 01 00:00:00 CST 1970</span>
+p( date(<span class="pl-c1">2014</span>, <span class="pl-c1">5</span>, <span class="pl-c1">1</span>)<span class="pl-k">.</span>beginningOfQuarter() );    <span class="pl-c">// Output: Tue Apr 01 00:00:00 CST 2014</span></pre></div>
 
 <p>Demo RubyObject.send():</p>
 
-<div class="highlight highlight-java"><pre><span class="n">RubyHash</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">profile</span> <span class="o">=</span> <span class="n">rh</span><span class="o">(</span><span class="s">"Name"</span><span class="o">,</span> <span class="s">"John Doe"</span><span class="o">,</span> <span class="s">"Gender"</span><span class="o">,</span> <span class="s">"Male"</span><span class="o">,</span> <span class="s">"Birthday"</span><span class="o">,</span> <span class="s">"2001/10/01"</span><span class="o">);</span>
-<span class="c1">// Assumes Object person has 3 setters: setName, setGender, setBirthday.</span>
-<span class="n">profile</span><span class="o">.</span><span class="na">each</span><span class="o">(</span><span class="k">new</span> <span class="n">EntryBlock</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
-  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">yield</span><span class="o">(</span><span class="n">String</span> <span class="n">key</span><span class="o">,</span> <span class="n">String</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
-    <span class="n">RubyObject</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">person</span><span class="o">,</span> <span class="s">"set"</span> <span class="o">+</span> <span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
-  <span class="o">}</span>
-<span class="o">});</span>
-<span class="c1">// As you can see, RubyObject.send() is a wrapper to Java Reflection.</span>
-</pre></div>
+<div class="highlight highlight-source-java"><pre><span class="pl-k">RubyHash&lt;<span class="pl-smi">String</span>, <span class="pl-smi">String</span>&gt;</span> profile <span class="pl-k">=</span> rh(<span class="pl-s"><span class="pl-pds">"</span>Name<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>John Doe<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>Gender<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>Male<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>Birthday<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>2001/10/01<span class="pl-pds">"</span></span>);
+<span class="pl-c">// Assumes Object person has 3 setters: setName, setGender, setBirthday.</span>
+profile<span class="pl-k">.</span>each(<span class="pl-k">new</span> <span class="pl-k">EntryBlock&lt;<span class="pl-smi">String</span>, <span class="pl-smi">String</span>&gt;</span>() {
+  <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">yield</span>(<span class="pl-smi">String</span> <span class="pl-v">key</span>, <span class="pl-smi">String</span> <span class="pl-v">value</span>) {
+    <span class="pl-smi">RubyObject</span><span class="pl-k">.</span>send(person, <span class="pl-s"><span class="pl-pds">"</span>set<span class="pl-pds">"</span></span> <span class="pl-k">+</span> key, value);
+  }
+});
+<span class="pl-c">// As you can see, RubyObject.send() is a wrapper to Java Reflection.</span></pre></div>
 
 <p>Demo qw():</p>
 
-<div class="highlight highlight-java"><pre><span class="n">p</span><span class="o">(</span> <span class="n">qw</span><span class="o">(</span><span class="s">"a bc def"</span><span class="o">)</span> <span class="o">);</span> <span class="c1">// Output: [a, bc, def]</span>
-</pre></div>
+<div class="highlight highlight-source-java"><pre>p( qw(<span class="pl-s"><span class="pl-pds">"</span>a bc def<span class="pl-pds">"</span></span>) ); <span class="pl-c">// Output: [a, bc, def]</span></pre></div>
 
 <p>Demo qx():</p>
 
-<div class="highlight highlight-java"><pre><span class="n">p</span><span class="o">(</span> <span class="n">qx</span><span class="o">(</span><span class="s">"echo"</span><span class="o">,</span> <span class="s">"hello"</span><span class="o">)</span> <span class="o">);</span> <span class="c1">// Output: hello</span>
-</pre></div>
+<div class="highlight highlight-source-java"><pre>p( qx(<span class="pl-s"><span class="pl-pds">"</span>echo<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>hello<span class="pl-pds">"</span></span>) ); <span class="pl-c">// Output: hello</span></pre></div>
 
 <p>Demo qr():</p>
 
-<div class="highlight highlight-java"><pre><span class="n">p</span><span class="o">(</span> <span class="n">qr</span><span class="o">(</span><span class="s">"^\\d+$"</span><span class="o">).</span><span class="na">matcher</span><span class="o">(</span><span class="s">"123"</span><span class="o">).</span><span class="na">find</span><span class="o">()</span> <span class="o">);</span> <span class="c1">// Output: true</span>
-</pre></div>
+<div class="highlight highlight-source-java"><pre>p( qr(<span class="pl-s"><span class="pl-pds">"</span>^<span class="pl-cce">\\</span>d+$<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>matcher(<span class="pl-s"><span class="pl-pds">"</span>123<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>find() ); <span class="pl-c">// Output: true</span></pre></div>
 
 <p>Demo RubyDir:</p>
 
-<div class="highlight highlight-text"><pre>folder1
+<pre lang="text"><code>folder1
        /folder1-1
                  /file1-1-1
                  /file1-1-2
@@ -295,34 +273,32 @@ It also implements parts of Ruby Dir, File and Date methods.</p>
        /file1-2
        /file1-3
        /file1-4
-</pre></div>
+</code></pre>
 
-<div class="highlight highlight-java"><pre><span class="n">p</span><span class="o">(</span> <span class="n">RubyDir</span><span class="o">.</span><span class="na">glob</span><span class="o">(</span><span class="s">"folder1/*"</span><span class="o">).</span><span class="na">sort</span><span class="o">()</span> <span class="o">);</span>                 <span class="c1">// Output: [file1-1, file1-2, file1-3, file1-4, folder1-1, folder1-2]</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">RubyDir</span><span class="o">.</span><span class="na">glob</span><span class="o">(</span><span class="n">GLOB_DIR</span> <span class="o">+</span> <span class="s">"**/*1-*-1*"</span><span class="o">).</span><span class="na">sort</span><span class="o">()</span> <span class="o">);</span>     <span class="c1">// Output: [folder1/folder1-1/file1-1-1, folder1/folder1-2/file1-2-1]</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">RubyDir</span><span class="o">.</span><span class="na">glob</span><span class="o">(</span><span class="n">GLOB_DIR</span> <span class="o">+</span> <span class="s">"folder1/*[2,3]"</span><span class="o">).</span><span class="na">sort</span><span class="o">()</span> <span class="o">);</span> <span class="c1">// Output: [file1-2, file1-3, folder1-2]</span>
-</pre></div>
+<div class="highlight highlight-source-java"><pre>p( <span class="pl-smi">RubyDir</span><span class="pl-k">.</span>glob(<span class="pl-s"><span class="pl-pds">"</span>folder1/*<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>sort() );                 <span class="pl-c">// Output: [file1-1, file1-2, file1-3, file1-4, folder1-1, folder1-2]</span>
+p( <span class="pl-smi">RubyDir</span><span class="pl-k">.</span>glob(<span class="pl-c1">GLOB_DIR</span> <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>**/*1-*-1*<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>sort() );     <span class="pl-c">// Output: [folder1/folder1-1/file1-1-1, folder1/folder1-2/file1-2-1]</span>
+p( <span class="pl-smi">RubyDir</span><span class="pl-k">.</span>glob(<span class="pl-c1">GLOB_DIR</span> <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>folder1/*[2,3]<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>sort() ); <span class="pl-c">// Output: [file1-2, file1-3, folder1-2]</span></pre></div>
 
 <p>Demo RubyFile:</p>
 
-<div class="highlight highlight-java"><pre><span class="n">RubyFile</span> <span class="n">rf</span> <span class="o">=</span> <span class="n">RubyFile</span><span class="o">.</span><span class="na">open</span><span class="o">(</span><span class="s">"test.txt"</span><span class="o">,</span> <span class="s">"r+"</span><span class="o">);</span>
-<span class="n">rf</span><span class="o">.</span><span class="na">puts</span><span class="o">(</span><span class="s">"a"</span><span class="o">);</span>
-<span class="n">rf</span><span class="o">.</span><span class="na">puts</span><span class="o">(</span><span class="s">"bc"</span><span class="o">);</span>
-<span class="n">rf</span><span class="o">.</span><span class="na">puts</span><span class="o">(</span><span class="s">"def"</span><span class="o">);</span>
-<span class="n">rf</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-<span class="n">rf</span> <span class="o">=</span> <span class="n">RubyFile</span><span class="o">.</span><span class="na">open</span><span class="o">(</span><span class="s">"test.txt"</span><span class="o">,</span> <span class="s">"r"</span><span class="o">);</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">rf</span><span class="o">.</span><span class="na">eachLine</span><span class="o">().</span><span class="na">toA</span><span class="o">()</span> <span class="o">);</span>                         <span class="c1">// Output: [a, bc, def]</span>
-<span class="n">rf</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-<span class="c1">// The method foreach() closes the stream automatically.</span>
-<span class="n">RubyFile</span><span class="o">.</span><span class="na">foreach</span><span class="o">(</span><span class="s">"test.txt"</span><span class="o">,</span> <span class="k">new</span> <span class="n">Block</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
-  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">yield</span><span class="o">(</span><span class="n">String</span> <span class="n">item</span><span class="o">)</span> <span class="o">{</span>
-    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span> <span class="n">item</span> <span class="o">);</span>
-  <span class="o">}</span>
-<span class="o">});</span>                                               <span class="c1">// Output: abcdef</span>
-<span class="n">p</span><span class="o">(</span> <span class="n">RubyFile</span><span class="o">.</span><span class="na">join</span><span class="o">(</span><span class="s">"/home/"</span><span class="o">,</span> <span class="s">"/ruby"</span><span class="o">,</span> <span class="s">"collect"</span><span class="o">)</span> <span class="o">);</span> <span class="c1">// Output: "/home/ruby/collect"</span>
-</pre></div>
+<div class="highlight highlight-source-java"><pre><span class="pl-smi">RubyFile</span> rf <span class="pl-k">=</span> <span class="pl-smi">RubyFile</span><span class="pl-k">.</span>open(<span class="pl-s"><span class="pl-pds">"</span>test.txt<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>r+<span class="pl-pds">"</span></span>);
+rf<span class="pl-k">.</span>puts(<span class="pl-s"><span class="pl-pds">"</span>a<span class="pl-pds">"</span></span>);
+rf<span class="pl-k">.</span>puts(<span class="pl-s"><span class="pl-pds">"</span>bc<span class="pl-pds">"</span></span>);
+rf<span class="pl-k">.</span>puts(<span class="pl-s"><span class="pl-pds">"</span>def<span class="pl-pds">"</span></span>);
+rf<span class="pl-k">.</span>close();
+rf <span class="pl-k">=</span> <span class="pl-smi">RubyFile</span><span class="pl-k">.</span>open(<span class="pl-s"><span class="pl-pds">"</span>test.txt<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>r<span class="pl-pds">"</span></span>);
+p( rf<span class="pl-k">.</span>eachLine()<span class="pl-k">.</span>toA() );                         <span class="pl-c">// Output: [a, bc, def]</span>
+rf<span class="pl-k">.</span>close();
+<span class="pl-c">// The method foreach() closes the stream automatically.</span>
+<span class="pl-smi">RubyFile</span><span class="pl-k">.</span>foreach(<span class="pl-s"><span class="pl-pds">"</span>test.txt<span class="pl-pds">"</span></span>, <span class="pl-k">new</span> <span class="pl-k">Block&lt;<span class="pl-smi">String</span>&gt;</span>() {
+  <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">yield</span>(<span class="pl-smi">String</span> <span class="pl-v">item</span>) {
+    <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>print( item );
+  }
+});                                               <span class="pl-c">// Output: abcdef</span>
+p( <span class="pl-smi">RubyFile</span><span class="pl-k">.</span>join(<span class="pl-s"><span class="pl-pds">"</span>/home/<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>/ruby<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>collect<span class="pl-pds">"</span></span>) ); <span class="pl-c">// Output: "/home/ruby/collect"</span></pre></div>
       </section>
       <footer>
-        <p><small>Hosted on <a href="http://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
       </footer>
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
