@@ -30,7 +30,9 @@
 
       </header>
       <section>
-        <h1>
+        <p><a href="https://maven-badges.herokuapp.com/maven-central/net.sf.rubycollect4j/rubycollect4j"><img src="https://maven-badges.herokuapp.com/maven-central/net.sf.rubycollect4j/rubycollect4j/badge.svg" alt="Maven Central"></a></p>
+
+<h1>
 <a id="rubycollect4j" class="anchor" href="#rubycollect4j" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>rubycollect4j</h1>
 
 <p>Ruby Collections for Java.</p>
@@ -47,7 +49,7 @@ It also implements parts of Ruby Dir, File and Date methods.</p>
 <div class="highlight highlight-text-xml"><pre>&lt;<span class="pl-ent">dependency</span>&gt;
   &lt;<span class="pl-ent">groupId</span>&gt;net.sf.rubycollect4j&lt;/<span class="pl-ent">groupId</span>&gt;
   &lt;<span class="pl-ent">artifactId</span>&gt;rubycollect4j&lt;/<span class="pl-ent">artifactId</span>&gt;
-  &lt;<span class="pl-ent">version</span>&gt;1.8.1&lt;/<span class="pl-ent">version</span>&gt;
+  &lt;<span class="pl-ent">version</span>&gt;${latest.version}&lt;/<span class="pl-ent">version</span>&gt;
 &lt;/<span class="pl-ent">dependency</span>&gt;</pre></div>
 
 <p>Java 8 with rubycollect4j:</p>
@@ -75,6 +77,18 @@ p(result);
 
 p(words);
 <span class="pl-c">// Output: [A, BLEPHAROCONJUNCTIVITIS]</span></pre></div>
+
+<p>Since v1.9.0,<br>
+RubyIterables &amp; RubyStrings are added, they are simply utility classes just like java.util.Arrays.<br>
+They provide the Ruby style ways to manipulate any Iterable and String (or CharSequence).<br>
+Highly recommended to use with the @ExtensionMethod of <a href="https://projectlombok.org/">Project Lombok</a>.</p>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-k">Iterable&lt;<span class="pl-smi">Integer</span>&gt;</span> ints <span class="pl-k">=</span> <span class="pl-smi">Arrays</span><span class="pl-k">.</span>asList(<span class="pl-c1">3</span>, <span class="pl-c1">6</span>, <span class="pl-c1">7</span>, <span class="pl-c1">2</span>);
+<span class="pl-k">int</span> max <span class="pl-k">=</span> <span class="pl-smi">RubyIterables</span><span class="pl-k">.</span>max(ints);
+<span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(max);   <span class="pl-c">// Output: 7</span>
+
+<span class="pl-smi">String</span> trStr <span class="pl-k">=</span> <span class="pl-smi">RubyStrings</span><span class="pl-k">.</span>tr(<span class="pl-s"><span class="pl-pds">"</span>Mississippi<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>i<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>I<span class="pl-pds">"</span></span>);
+<span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(trStr); <span class="pl-c">// Output: MIssIssIppI</span></pre></div>
 
 <p>Please add following lines before running examples:</p>
 
