@@ -1088,6 +1088,26 @@ public final class RubyContract {
     public Z select(BooleanBlock<? super E> block);
 
     /**
+     * Groups elements into {@link RubyArray}s and the last element of each
+     * {@link RubyArray} should get true returned by the block.
+     * 
+     * @param block
+     *          to check where to do slice
+     * @return {@link Enumerator}
+     */
+    public N sliceAfter(BooleanBlock<? super E> block);
+
+    /**
+     * Groups elements into {@link RubyArray}s and the last element of each
+     * {@link RubyArray} should be matched by the regex.
+     * 
+     * @param regex
+     *          to check where to do slice
+     * @return {@link Enumerator}
+     */
+    public N sliceAfter(String regex);
+
+    /**
      * Groups elements into {@link RubyArray}s and the first element of each
      * {@link RubyArray} should get true returned by the block.
      * 

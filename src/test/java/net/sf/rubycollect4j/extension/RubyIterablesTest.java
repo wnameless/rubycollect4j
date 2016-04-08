@@ -1012,6 +1012,30 @@ public class RubyIterablesTest {
 
   @SuppressWarnings("unchecked")
   @Test
+  public void testSliceAfterWithBlock() {
+    iter = newRubyEnumerator(Arrays.asList(1, 3, 3, 4));
+    assertEquals(ra(ra(1), ra(3), ra(3), ra(4)),
+        RubyIterables.toA(RubyIterables.sliceAfter(iter,
+            new BooleanBlock<Integer>() {
+
+              @Override
+              public boolean yield(Integer item) {
+                return item % 2 == 1;
+              }
+
+            })));
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testSliceAfterWithRegex() {
+    iter = Arrays.asList(1, 2, 3, 3);
+    assertEquals(ra(ra(1, 2, 3), ra(3)),
+        RubyIterables.toA(RubyIterables.sliceAfter(iter, "3")));
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
   public void testSliceBeforeWithBlock() {
     iter = newRubyEnumerator(Arrays.asList(1, 3, 3, 4));
     assertEquals(ra(ra(1), ra(3), ra(3, 4)), RubyIterables.toA(RubyIterables

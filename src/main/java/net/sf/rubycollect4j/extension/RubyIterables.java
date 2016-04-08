@@ -44,6 +44,7 @@ import net.sf.rubycollect4j.iter.EachSliceIterable;
 import net.sf.rubycollect4j.iter.EachWithIndexIterable;
 import net.sf.rubycollect4j.iter.EachWithObjectIterable;
 import net.sf.rubycollect4j.iter.ReverseEachIterable;
+import net.sf.rubycollect4j.iter.SliceAfterIterable;
 import net.sf.rubycollect4j.iter.SliceBeforeIterable;
 
 /**
@@ -577,6 +578,23 @@ public final class RubyIterables {
    */
   public static <E> List<E> select(Iterable<E> in, BooleanBlock<? super E> block) {
     return findAll(in, block);
+  }
+
+  /**
+   * @see net.sf.rubycollect4j.RubyEnumerable#sliceAfter(BooleanBlock)
+   */
+  public static <E> Iterable<? extends List<E>> sliceAfter(Iterable<E> in,
+      BooleanBlock<? super E> block) {
+    return newRubyEnumerator(new SliceAfterIterable<E>(in, block));
+  }
+
+  /**
+   * @see net.sf.rubycollect4j.RubyEnumerable#sliceAfter(String)
+   */
+  public static <E> Iterable<? extends List<E>> sliceAfter(Iterable<E> in,
+      String regex) {
+    return newRubyEnumerator(new SliceAfterIterable<E>(in,
+        Pattern.compile(regex)));
   }
 
   /**

@@ -294,6 +294,8 @@ Version 1.9.0
 
 * Deprecate all methods which require Java reflection
 
-+ Add ChunkWhile method to Enumerable
++ Add chunkWhile method to Enumerable
 
-+ Add GrepV method to Enumerable
++ Add grepV method to Enumerable
+
++ Add sliceAfter method to Enumerable

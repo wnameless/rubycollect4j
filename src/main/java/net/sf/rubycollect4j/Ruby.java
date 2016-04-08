@@ -468,6 +468,23 @@ public final class Ruby {
      * @return {@link Ruby.Enumerator}
      */
     @Override
+    public Ruby.Enumerator<RubyArray<E>> sliceAfter(
+        BooleanBlock<? super E> block);
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @return {@link Ruby.Enumerator}
+     */
+    @Override
+    public Ruby.Enumerator<RubyArray<E>> sliceAfter(String regex);
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @return {@link Ruby.Enumerator}
+     */
+    @Override
     public Ruby.Enumerator<RubyArray<E>> sliceBefore(
         BooleanBlock<? super E> block);
 

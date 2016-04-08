@@ -1222,6 +1222,28 @@ public class RubyEnumerableTest {
 
   @SuppressWarnings("unchecked")
   @Test
+  public void testSliceAfterWithBlock() {
+    re = newRubyEnumerator(Arrays.asList(1, 3, 4, 7));
+    assertEquals(ra(ra(1), ra(3), ra(4, 7)),
+        re.sliceAfter(new BooleanBlock<Integer>() {
+
+          @Override
+          public boolean yield(Integer item) {
+            return item % 2 == 1;
+          }
+
+        }).toA());
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testSliceAfterWithRegex() {
+    re = newRubyEnumerator(Arrays.asList(1, 2, 3, 3));
+    assertEquals(ra(ra(1, 2, 3), ra(3)), re.sliceAfter("3").toA());
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
   public void testSliceBeforeWithBlock() {
     re = newRubyEnumerator(Arrays.asList(1, 3, 3, 4));
     assertEquals(ra(ra(1), ra(3), ra(3, 4)),

@@ -43,6 +43,7 @@ import net.sf.rubycollect4j.iter.EachSliceIterable;
 import net.sf.rubycollect4j.iter.EachWithIndexIterable;
 import net.sf.rubycollect4j.iter.EachWithObjectIterable;
 import net.sf.rubycollect4j.iter.ReverseEachIterable;
+import net.sf.rubycollect4j.iter.SliceAfterIterable;
 import net.sf.rubycollect4j.iter.SliceBeforeIterable;
 import net.sf.rubycollect4j.iter.TransformIterable;
 
@@ -870,6 +871,27 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
   @Override
   public RubyArray<E> select(BooleanBlock<? super E> block) {
     return findAll(block);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @return {@link RubyEnumerator}
+   */
+  @Override
+  public RubyEnumerator<RubyArray<E>> sliceAfter(BooleanBlock<? super E> block) {
+    return newRubyEnumerator(new SliceAfterIterable<E>(getIterable(), block));
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @return {@link RubyEnumerator}
+   */
+  @Override
+  public RubyEnumerator<RubyArray<E>> sliceAfter(String regex) {
+    return newRubyEnumerator(new SliceAfterIterable<E>(getIterable(),
+        Pattern.compile(regex)));
   }
 
   /**

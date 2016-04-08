@@ -420,6 +420,26 @@ public class RubyLazyEnumeratorTest {
 
   @SuppressWarnings("unchecked")
   @Test
+  public void testSliceAfter() {
+    BooleanBlock<Integer> block = new BooleanBlock<Integer>() {
+
+      @Override
+      public boolean yield(Integer item) {
+        return item == 3;
+      }
+
+    };
+    assertTrue(lre.sliceAfter(block) instanceof RubyLazyEnumerator);
+    assertEquals(ra(ra(1, 2, 3), ra(4)), lre.sliceAfter(block).toA());
+  }
+
+  @Test
+  public void testSliceAfterWithRegex() {
+    assertTrue(lre.sliceAfter("") instanceof RubyLazyEnumerator);
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
   public void testSliceBefore() {
     BooleanBlock<Integer> block = new BooleanBlock<Integer>() {
 
