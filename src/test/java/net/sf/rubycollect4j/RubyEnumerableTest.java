@@ -646,6 +646,24 @@ public class RubyEnumerableTest {
   }
 
   @Test
+  public void testGrepV() {
+    assertEquals(ra(1, 3), re.grepV("[24]"));
+  }
+
+  @Test
+  public void testGrepVWithBlock() {
+    assertEquals(ra("1", "3"),
+        re.grepV("[24]", new TransformBlock<Integer, String>() {
+
+          @Override
+          public String yield(Integer item) {
+            return item.toString();
+          }
+
+        }));
+  }
+
+  @Test
   public void testGroupBy() {
     assertEquals(RubyEnumerator.class, re.groupBy().getClass());
     assertEquals(ra(1, 2, 3, 4), re.groupBy().toA());

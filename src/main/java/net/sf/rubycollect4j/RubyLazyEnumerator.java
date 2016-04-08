@@ -49,6 +49,7 @@ import net.sf.rubycollect4j.iter.EachWithObjectIterable;
 import net.sf.rubycollect4j.iter.FindAllIterable;
 import net.sf.rubycollect4j.iter.FlattenIterable;
 import net.sf.rubycollect4j.iter.GrepIterable;
+import net.sf.rubycollect4j.iter.GrepVIterable;
 import net.sf.rubycollect4j.iter.RejectIterable;
 import net.sf.rubycollect4j.iter.ReverseEachIterable;
 import net.sf.rubycollect4j.iter.SliceBeforeIterable;
@@ -654,6 +655,28 @@ public final class RubyLazyEnumerator<E> implements Ruby.LazyEnumerator<E> {
       }
 
     });
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @return {@link RubyLazyEnumerator}
+   */
+  @Override
+  public RubyLazyEnumerator<E> grepV(String regex) {
+    return newRubyLazyEnumerator(new GrepVIterable<E>(iter, regex));
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @return {@link RubyLazyEnumerator}
+   */
+  @Override
+  public <S> RubyLazyEnumerator<S> grepV(String regex,
+      TransformBlock<? super E, ? extends S> block) {
+    return newRubyLazyEnumerator(new TransformIterable<E, S>(
+        new GrepVIterable<E>(iter, regex), block));
   }
 
   /**

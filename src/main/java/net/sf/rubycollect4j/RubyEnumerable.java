@@ -530,6 +530,27 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
   /**
    * {@inheritDoc}
    * 
+   * @return {@link RubyArray}
+   */
+  @Override
+  public RubyArray<E> grepV(String regex) {
+    return newRubyLazyEnumerator(getIterable()).grepV(regex).toA();
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @return {@link RubyArray}
+   */
+  @Override
+  public <S> RubyArray<S> grepV(String regex,
+      TransformBlock<? super E, ? extends S> block) {
+    return newRubyLazyEnumerator(getIterable()).grepV(regex, block).toA();
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @return {@link RubyEnumerator}
    */
   @Override

@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2016 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -26,9 +26,9 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-public class GrepIterableTest {
+public class GrepVIterableTest {
 
-  GrepIterable<Integer> iter;
+  GrepVIterable<Integer> iter;
   List<Integer> list;
   String regex;
 
@@ -36,32 +36,32 @@ public class GrepIterableTest {
   public void setUp() throws Exception {
     list = ra(1, 2, 3);
     regex = "2|3";
-    iter = new GrepIterable<Integer>(list, regex);
+    iter = new GrepVIterable<Integer>(list, regex);
   }
 
   @Test
   public void testConstructor() {
-    assertTrue(iter instanceof GrepIterable);
+    assertTrue(iter instanceof GrepVIterable);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException1() {
-    new GrepIterable<Integer>(list, null);
+    new GrepVIterable<Integer>(list, null);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    new GrepIterable<Integer>(null, regex);
+    new GrepVIterable<Integer>(null, regex);
   }
 
   @Test
   public void testIterator() {
-    assertTrue(iter.iterator() instanceof GrepIterator);
+    assertTrue(iter.iterator() instanceof GrepVIterator);
   }
 
   @Test
   public void testToString() {
-    assertEquals("[2, 3]", iter.toString());
+    assertEquals("[1]", iter.toString());
   }
 
 }

@@ -339,6 +339,21 @@ public final class RubyIterables {
   }
 
   /**
+   * @see net.sf.rubycollect4j.RubyEnumerable#grepV(String)
+   */
+  public static <E> List<E> grepV(Iterable<E> in, String regex) {
+    return newRubyLazyEnumerator(in).grepV(regex).toA();
+  }
+
+  /**
+   * @see net.sf.rubycollect4j.RubyEnumerable#grepV(String, TransformBlock)
+   */
+  public static <S, E> List<S> grepV(Iterable<E> in, String regex,
+      TransformBlock<? super E, ? extends S> block) {
+    return newRubyLazyEnumerator(in).grepV(regex, block).toA();
+  }
+
+  /**
    * @see net.sf.rubycollect4j.RubyEnumerable#groupBy(TransformBlock)
    */
   public static <S, E> Map<S, ? extends List<E>> groupBy(Iterable<E> in,

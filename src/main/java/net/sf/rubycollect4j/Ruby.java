@@ -1,5 +1,6 @@
 /*
  *
+
  * Copyright 2013 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -328,6 +329,23 @@ public final class Ruby {
     @Override
     public <S> RubyArray<S> grep(String regex, final String methodName,
         final Object... args);
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @return {@link RubyArray}
+     */
+    @Override
+    public RubyArray<E> grepV(String regex);
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @return {@link RubyArray}
+     */
+    @Override
+    public <S> RubyArray<S> grepV(String regex,
+        TransformBlock<? super E, ? extends S> block);
 
     /**
      * {@inheritDoc}

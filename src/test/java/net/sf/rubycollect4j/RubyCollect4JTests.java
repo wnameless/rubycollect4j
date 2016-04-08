@@ -51,6 +51,8 @@ import net.sf.rubycollect4j.iter.FlattenIterableTest;
 import net.sf.rubycollect4j.iter.FlattenIteratorTest;
 import net.sf.rubycollect4j.iter.GrepIterableTest;
 import net.sf.rubycollect4j.iter.GrepIteratorTest;
+import net.sf.rubycollect4j.iter.GrepVIterableTest;
+import net.sf.rubycollect4j.iter.GrepVIteratorTest;
 import net.sf.rubycollect4j.iter.PermutationIterableTest;
 import net.sf.rubycollect4j.iter.PermutationIteratorTest;
 import net.sf.rubycollect4j.iter.ProductIterableTest;
@@ -124,6 +126,7 @@ import org.junit.runners.Suite.SuiteClasses;
     EachWithObjectIteratorTest.class, FindAllIterableTest.class,
     FindAllIteratorTest.class, FlattenIterableTest.class,
     FlattenIteratorTest.class, GrepIterableTest.class, GrepIteratorTest.class,
+    GrepVIterableTest.class, GrepVIteratorTest.class,
     PermutationIterableTest.class, PermutationIteratorTest.class,
     ProductIterableTest.class, ProductIteratorTest.class,
     RangeIterableTest.class, RangeIteratorTest.class, RejectIterableTest.class,

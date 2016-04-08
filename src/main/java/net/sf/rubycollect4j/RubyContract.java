@@ -543,6 +543,30 @@ public final class RubyContract {
         final Object... args);
 
     /**
+     * Finds all elements which are not matched by the regular expression.
+     * 
+     * @param regex
+     *          regular expression
+     * @return {@link Enumerable}
+     */
+    public Z grepV(String regex);
+
+    /**
+     * Finds all elements which are not matched by the regular expression and
+     * transforms them.
+     * 
+     * @param <S>
+     *          the type of transformed elements
+     * @param regex
+     *          regular expression
+     * @param block
+     *          to transform elements
+     * @return {@link Enumerable}
+     */
+    public <S> Z grepV(String regex,
+        TransformBlock<? super E, ? extends S> block);
+
+    /**
      * Returns an enumerator of elements.
      * 
      * @return {@link Enumerator}

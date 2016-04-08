@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2013 Wei-Ming Wu
+ * Copyright 2016 Wei-Ming Wu
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -19,6 +19,7 @@ package net.sf.rubycollect4j.iter;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -26,9 +27,9 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-public class GrepIterableTest {
+public class GrepVIteratorTest {
 
-  GrepIterable<Integer> iter;
+  GrepVIterator<Integer> iter;
   List<Integer> list;
   String regex;
 
@@ -36,32 +37,44 @@ public class GrepIterableTest {
   public void setUp() throws Exception {
     list = ra(1, 2, 3);
     regex = "2|3";
-    iter = new GrepIterable<Integer>(list, regex);
+    iter = new GrepVIterator<Integer>(list.iterator(), regex);
   }
 
   @Test
   public void testConstructor() {
-    assertTrue(iter instanceof GrepIterable);
+    assertTrue(iter instanceof GrepVIterator);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException1() {
-    new GrepIterable<Integer>(list, null);
+    new GrepVIterator<Integer>(list.iterator(), null);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    new GrepIterable<Integer>(null, regex);
+    new GrepVIterator<Integer>(null, regex);
   }
 
   @Test
-  public void testIterator() {
-    assertTrue(iter.iterator() instanceof GrepIterator);
+  public void testHasNext() {
+    assertTrue(iter.hasNext());
+    while (iter.hasNext()) {
+      iter.next();
+    }
+    assertFalse(iter.hasNext());
   }
 
   @Test
-  public void testToString() {
-    assertEquals("[2, 3]", iter.toString());
+  public void testNext() {
+    assertEquals(Integer.valueOf(1), iter.next());
+    assertFalse(iter.hasNext());
+  }
+
+  @Test
+  public void testRemove() {
+    iter.next();
+    iter.remove();
+    assertEquals(ra(2, 3), list);
   }
 
 }

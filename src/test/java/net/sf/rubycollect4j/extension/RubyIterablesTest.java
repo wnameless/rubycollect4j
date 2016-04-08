@@ -556,6 +556,24 @@ public class RubyIterablesTest {
   }
 
   @Test
+  public void testGrepV() {
+    assertEquals(ra(1, 3), RubyIterables.grepV(iter, "[24]"));
+  }
+
+  @Test
+  public void testGrepVWithBlock() {
+    assertEquals(ra("1", "3"), RubyIterables.grepV(iter, "[24]",
+        new TransformBlock<Integer, String>() {
+
+          @Override
+          public String yield(Integer item) {
+            return item.toString();
+          }
+
+        }));
+  }
+
+  @Test
   public void testGroupByWithBlock() {
     assertEquals(rh(1, ra(1, 4), 2, ra(2), 0, ra(3)),
         RubyIterables.groupBy(iter, new TransformBlock<Integer, Integer>() {
