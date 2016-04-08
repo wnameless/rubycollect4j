@@ -1013,7 +1013,7 @@ public class RubyIterablesTest {
   @SuppressWarnings("unchecked")
   @Test
   public void testSliceAfterWithBlock() {
-    iter = newRubyEnumerator(Arrays.asList(1, 3, 3, 4));
+    iter = Arrays.asList(1, 3, 3, 4);
     assertEquals(ra(ra(1), ra(3), ra(3), ra(4)),
         RubyIterables.toA(RubyIterables.sliceAfter(iter,
             new BooleanBlock<Integer>() {
@@ -1024,6 +1024,21 @@ public class RubyIterablesTest {
               }
 
             })));
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testSliceWhen() {
+    iter = newRubyEnumerator(Arrays.asList(1, 3, 3, 4));
+    assertEquals(ra(ra(1, 3, 3), ra(4)), RubyIterables.toA(RubyIterables
+        .sliceWhen(iter, new EntryBooleanBlock<Integer, Integer>() {
+
+          @Override
+          public boolean yield(Integer item1, Integer item2) {
+            return item1 + 1 == item2;
+          }
+
+        })));
   }
 
   @SuppressWarnings("unchecked")

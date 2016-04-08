@@ -1128,6 +1128,16 @@ public final class RubyContract {
     public N sliceBefore(String regex);
 
     /**
+     * Groups elements into {@link RubyArray}s and the first element of each
+     * {@link RubyArray} should get true returned by the block.
+     * 
+     * @param block
+     *          to check where to do slice
+     * @return {@link Enumerator}
+     */
+    public N sliceWhen(EntryBooleanBlock<? super E, ? super E> block);
+
+    /**
      * Sorts elements and puts them into a {@link RubyArray}.
      * 
      * @return {@link RubyArray}

@@ -45,6 +45,7 @@ import net.sf.rubycollect4j.iter.EachWithObjectIterable;
 import net.sf.rubycollect4j.iter.ReverseEachIterable;
 import net.sf.rubycollect4j.iter.SliceAfterIterable;
 import net.sf.rubycollect4j.iter.SliceBeforeIterable;
+import net.sf.rubycollect4j.iter.SliceWhenIterable;
 import net.sf.rubycollect4j.iter.TransformIterable;
 
 /**
@@ -913,6 +914,17 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
   public RubyEnumerator<RubyArray<E>> sliceBefore(String regex) {
     return newRubyEnumerator(new SliceBeforeIterable<E>(getIterable(),
         Pattern.compile(regex)));
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @return {@link RubyEnumerator}
+   */
+  @Override
+  public RubyEnumerator<RubyArray<E>> sliceWhen(
+      EntryBooleanBlock<? super E, ? super E> block) {
+    return newRubyEnumerator(new SliceWhenIterable<E>(getIterable(), block));
   }
 
   @Override

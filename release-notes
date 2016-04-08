@@ -299,3 +299,5 @@ Version 1.9.0
 + Add grepV method to Enumerable
 
 + Add sliceAfter method to Enumerable
+
++ Add sliceWhen method to Enumerable

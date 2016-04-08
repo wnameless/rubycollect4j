@@ -502,6 +502,15 @@ public final class Ruby {
      * @return {@link Ruby.Enumerator}
      */
     @Override
+    public Ruby.Enumerator<RubyArray<E>> sliceWhen(
+        EntryBooleanBlock<? super E, ? super E> block);
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @return {@link Ruby.Enumerator}
+     */
+    @Override
     public Ruby.Enumerator<E> sortBy();
 
     /**

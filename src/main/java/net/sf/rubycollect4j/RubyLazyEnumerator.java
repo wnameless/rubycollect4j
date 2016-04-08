@@ -54,6 +54,7 @@ import net.sf.rubycollect4j.iter.RejectIterable;
 import net.sf.rubycollect4j.iter.ReverseEachIterable;
 import net.sf.rubycollect4j.iter.SliceAfterIterable;
 import net.sf.rubycollect4j.iter.SliceBeforeIterable;
+import net.sf.rubycollect4j.iter.SliceWhenIterable;
 import net.sf.rubycollect4j.iter.TakeIterable;
 import net.sf.rubycollect4j.iter.TakeWhileIterable;
 import net.sf.rubycollect4j.iter.TransformIterable;
@@ -1157,6 +1158,17 @@ public final class RubyLazyEnumerator<E> implements Ruby.LazyEnumerator<E> {
   public RubyLazyEnumerator<RubyArray<E>> sliceBefore(String regex) {
     return newRubyLazyEnumerator(new SliceBeforeIterable<E>(iter,
         Pattern.compile(regex)));
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @return {@link RubyLazyEnumerator}
+   */
+  @Override
+  public RubyLazyEnumerator<RubyArray<E>> sliceWhen(
+      EntryBooleanBlock<? super E, ? super E> block) {
+    return newRubyLazyEnumerator(new SliceWhenIterable<E>(iter, block));
   }
 
   @Override

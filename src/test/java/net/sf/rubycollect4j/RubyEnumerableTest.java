@@ -1264,6 +1264,21 @@ public class RubyEnumerableTest {
     assertEquals(ra(ra(1, 2), ra(3), ra(3)), re.sliceBefore("3").toA());
   }
 
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testSliceWhen() {
+    re = newRubyEnumerator(Arrays.asList(1, 3, 3, 4));
+    assertEquals(ra(ra(1, 3, 3), ra(4)),
+        re.sliceWhen(new EntryBooleanBlock<Integer, Integer>() {
+
+          @Override
+          public boolean yield(Integer item1, Integer item2) {
+            return item1 + 1 == item2;
+          }
+
+        }).toA());
+  }
+
   @Test
   public void testSort() {
     re = newRubyEnumerator(Arrays.asList(4, 1, 2, 3, 3));
