@@ -20,9 +20,9 @@ package net.sf.rubycollect4j.iter;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 
 import java.util.Iterator;
+import java.util.function.BiPredicate;
 
 import net.sf.rubycollect4j.RubyArray;
-import net.sf.rubycollect4j.block.EntryBooleanBlock;
 import net.sf.rubycollect4j.util.PeekingIterator;
 
 /**
@@ -40,7 +40,7 @@ import net.sf.rubycollect4j.util.PeekingIterator;
 public final class SliceWhenIterator<E> implements Iterator<RubyArray<E>> {
 
   private final PeekingIterator<E> pIter;
-  private final EntryBooleanBlock<? super E, ? super E> block;
+  private final BiPredicate<? super E, ? super E> block;
 
   /**
    * Creates a {@link SliceWhenIterator}.
@@ -53,7 +53,7 @@ public final class SliceWhenIterator<E> implements Iterator<RubyArray<E>> {
    *           if iter or block is null
    */
   public SliceWhenIterator(Iterator<? extends E> iter,
-      EntryBooleanBlock<? super E, ? super E> block) {
+      BiPredicate<? super E, ? super E> block) {
     if (iter == null || block == null) throw new NullPointerException();
 
     pIter = new PeekingIterator<E>(iter);
@@ -64,7 +64,7 @@ public final class SliceWhenIterator<E> implements Iterator<RubyArray<E>> {
     RubyArray<E> element = newRubyArray();
     do {
       element.add(pIter.next());
-    } while (pIter.hasNext() && !block.yield(element.last(), pIter.peek()));
+    } while (pIter.hasNext() && !block.test(element.last(), pIter.peek()));
     return element;
   }
 

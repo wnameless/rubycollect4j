@@ -35,15 +35,13 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import net.sf.rubycollect4j.block.Block;
-import net.sf.rubycollect4j.block.EntryBlock;
-import net.sf.rubycollect4j.block.EntryBooleanBlock;
-import net.sf.rubycollect4j.block.EntryMergeBlock;
-import net.sf.rubycollect4j.block.EntryTransformBlock;
 import net.sf.rubycollect4j.util.ComparableEntry;
 
 public class RubyHashTest {
@@ -159,15 +157,7 @@ public class RubyHashTest {
 
   @Test
   public void testDeleteIfWithBlock() {
-    assertEquals(rh(3, 4, 5, 6),
-        rh.deleteIf(new EntryBooleanBlock<Integer, Integer>() {
-
-          @Override
-          public boolean yield(Integer key, Integer value) {
-            return key + value < 7;
-          }
-
-        }));
+    assertEquals(rh(3, 4, 5, 6), rh.deleteIf((key, value) -> key + value < 7));
     assertEquals(rh(3, 4, 5, 6), rh);
   }
 
@@ -181,14 +171,9 @@ public class RubyHashTest {
   @Test
   public void testEachWithBlock() {
     final RubyArray<Integer> ints = ra();
-    assertEquals(rh, rh.each(new EntryBlock<Integer, Integer>() {
-
-      @Override
-      public void yield(Integer key, Integer value) {
-        ints.push(key);
-        ints.push(value);
-      }
-
+    assertEquals(rh, rh.each((BiConsumer<Integer, Integer>) (key, value) -> {
+      ints.push(key);
+      ints.push(value);
     }));
     assertEquals(ra(1, 2, 3, 4, 5, 6), ints);
   }
@@ -202,14 +187,7 @@ public class RubyHashTest {
   @Test
   public void testEachKeyWithBlock() {
     final RubyArray<Integer> ints = ra();
-    assertEquals(rh, rh.eachKey(new Block<Integer>() {
-
-      @Override
-      public void yield(Integer key) {
-        ints.push(key);
-      }
-
-    }));
+    assertEquals(rh, rh.eachKey(key -> ints.push(key)));
     assertEquals(ra(1, 3, 5), ints);
   }
 
@@ -223,14 +201,9 @@ public class RubyHashTest {
   @Test
   public void testEachPairWithBlock() {
     final RubyArray<Integer> ints = ra();
-    assertEquals(rh, rh.eachPair(new EntryBlock<Integer, Integer>() {
-
-      @Override
-      public void yield(Integer key, Integer value) {
-        ints.push(key);
-        ints.push(value);
-      }
-
+    assertEquals(rh, rh.eachPair((key, value) -> {
+      ints.push(key);
+      ints.push(value);
     }));
     assertEquals(ra(1, 2, 3, 4, 5, 6), ints);
   }
@@ -244,14 +217,7 @@ public class RubyHashTest {
   @Test
   public void testEachValueWithBlock() {
     final RubyArray<Integer> ints = ra();
-    assertEquals(rh, rh.eachValue(new Block<Integer>() {
-
-      @Override
-      public void yield(Integer key) {
-        ints.push(key);
-      }
-
-    }));
+    assertEquals(rh, rh.eachValue(key -> ints.push(key)));
     assertEquals(ra(2, 4, 6), ints);
   }
 
@@ -344,14 +310,7 @@ public class RubyHashTest {
 
   @Test
   public void testKeepIfWithBlock() {
-    assertEquals(rh(1, 2), rh.keepIf(new EntryBooleanBlock<Integer, Integer>() {
-
-      @Override
-      public boolean yield(Integer key, Integer value) {
-        return key + value < 7;
-      }
-
-    }));
+    assertEquals(rh(1, 2), rh.keepIf((key, value) -> key + value < 7));
     assertEquals(rh(1, 2), rh);
   }
 
@@ -387,15 +346,8 @@ public class RubyHashTest {
 
   @Test
   public void testMergeWithBlock() {
-    assertEquals(rh(1, 3, 3, 4, 5, 6, 0, 1),
-        rh.merge(rh(0, 1, 1, 3, 3, 2), new EntryMergeBlock<Integer, Integer>() {
-
-          @Override
-          public Integer yield(Integer key, Integer oldval, Integer newval) {
-            return Math.max(oldval, newval);
-          }
-
-        }));
+    assertEquals(rh(1, 3, 3, 4, 5, 6, 0, 1), rh.merge(rh(0, 1, 1, 3, 3, 2),
+        (key, oldval, newval) -> Math.max(oldval, newval)));
   }
 
   @Test
@@ -407,14 +359,7 @@ public class RubyHashTest {
   @Test
   public void testMergeǃWithBlock() {
     assertEquals(rh(1, 3, 3, 4, 5, 6, 0, 1), rh.mergeǃ(rh(0, 1, 1, 3, 3, 2),
-        new EntryMergeBlock<Integer, Integer>() {
-
-          @Override
-          public Integer yield(Integer key, Integer oldval, Integer newval) {
-            return Math.max(oldval, newval);
-          }
-
-        }));
+        (key, oldval, newval) -> Math.max(oldval, newval)));
     assertEquals(rh(1, 3, 3, 4, 5, 6, 0, 1), rh);
   }
 
@@ -444,15 +389,7 @@ public class RubyHashTest {
 
   @Test
   public void testRejectǃWithBlock() {
-    EntryBooleanBlock<Integer, Integer> block =
-        new EntryBooleanBlock<Integer, Integer>() {
-
-          @Override
-          public boolean yield(Integer key, Integer value) {
-            return key + value == 7;
-          }
-
-        };
+    BiPredicate<Integer, Integer> block = (key, value) -> key + value == 7;
     assertEquals(rh(1, 2, 5, 6), rh.rejectǃ(block));
     assertEquals(rh(1, 2, 5, 6), rh);
     assertNull(rh.rejectǃ(block));
@@ -506,14 +443,7 @@ public class RubyHashTest {
   @Test
   public void testUpdateWithBlock() {
     assertEquals(rh(1, 3, 3, 4, 5, 6, 0, 1), rh.update(rh(0, 1, 1, 3, 3, 2),
-        new EntryMergeBlock<Integer, Integer>() {
-
-          @Override
-          public Integer yield(Integer key, Integer oldval, Integer newval) {
-            return Math.max(oldval, newval);
-          }
-
-        }));
+        (key, oldval, newval) -> Math.max(oldval, newval)));
     assertEquals(rh(1, 3, 3, 4, 5, 6, 0, 1), rh);
   }
 
@@ -539,15 +469,7 @@ public class RubyHashTest {
   // Tests for entry blocks of RubyEnumerable methods
   @Test
   public void testAllʔ() {
-    EntryBooleanBlock<Integer, Integer> block =
-        new EntryBooleanBlock<Integer, Integer>() {
-
-          @Override
-          public boolean yield(Integer key, Integer value) {
-            return key > 0;
-          }
-
-        };
+    BiPredicate<Integer, Integer> block = (key, value) -> key > 0;
     assertTrue(rh.allʔ(block));
     rh = rh(0, 1, 2, 3);
     assertFalse(rh.allʔ(block));
@@ -555,15 +477,7 @@ public class RubyHashTest {
 
   @Test
   public void testAnyʔ() {
-    EntryBooleanBlock<Integer, Integer> block =
-        new EntryBooleanBlock<Integer, Integer>() {
-
-          @Override
-          public boolean yield(Integer key, Integer value) {
-            return key > 0;
-          }
-
-        };
+    BiPredicate<Integer, Integer> block = (key, value) -> key > 0;
     assertTrue(rh.anyʔ(block));
     rh = rh(0, -1);
     assertFalse(rh.anyʔ(block));
@@ -574,163 +488,89 @@ public class RubyHashTest {
   public void testChunk() {
     assertEquals(
         ra(hp(3L, ra(hp(1, 2))), hp(7L, ra(hp(3, 4))), hp(11L, ra(hp(5, 6)))),
-        rh.chunk(new EntryTransformBlock<Integer, Integer, Long>() {
-
-          @Override
-          public Long yield(Integer key, Integer value) {
-            return Long.valueOf(key + value);
-          }
-
-        }).toA());
+        rh.chunk((BiFunction<Integer, Integer, Long>) (key, value) -> Long
+            .valueOf(key + value)).toA());
   }
 
   @Test
   public void testCollect() {
     assertEquals(ra(3L, 7L, 11L),
-        rh.collect(new EntryTransformBlock<Integer, Integer, Long>() {
-
-          @Override
-          public Long yield(Integer key, Integer value) {
-            return Long.valueOf(key + value);
-          }
-
-        }));
+        rh.collect((BiFunction<Integer, Integer, Long>) (key, value) -> Long
+            .valueOf(key + value)));
   }
 
   @Test
   public void testCollectConcat() {
-    assertEquals(ra(3L, 7L, 11L), rh.collectConcat(
-        new EntryTransformBlock<Integer, Integer, RubyArray<Long>>() {
-
-          @Override
-          public RubyArray<Long> yield(Integer key, Integer value) {
-            return ra(Long.valueOf(key + value));
-          }
-
-        }).toA());
+    assertEquals(ra(3L, 7L, 11L),
+        rh.collectConcat((BiFunction<Integer, Integer, RubyArray<Long>>) (key,
+            value) -> ra(Long.valueOf(key + value))).toA());
   }
 
   @Test
   public void testCount() {
-    assertEquals(1, rh.count(new EntryBooleanBlock<Integer, Integer>() {
-
-      @Override
-      public boolean yield(Integer key, Integer value) {
-        return key == 1;
-      }
-
-    }));
+    assertEquals(1,
+        rh.count((BiPredicate<Integer, Integer>) (key, value) -> key == 1));
   }
 
   @Test(expected = IllegalStateException.class)
   public void testCycle() {
     final RubyArray<Integer> ints = ra();
-    rh.cycle(new EntryBlock<Integer, Integer>() {
-
-      @Override
-      public void yield(Integer key, Integer value) {
-        ints.add(key);
-        ints.add(value);
-        if (ints.size() > 1000) {
-          throw new IllegalStateException();
-        }
+    rh.cycle((BiConsumer<Integer, Integer>) (key, value) -> {
+      ints.add(key);
+      ints.add(value);
+      if (ints.size() > 1000) {
+        throw new IllegalStateException();
       }
-
     });
   }
 
   @Test
   public void testCycleWithN() {
     final RubyArray<Integer> ints = ra();
-    rh.cycle(2, new EntryBlock<Integer, Integer>() {
-
-      @Override
-      public void yield(Integer key, Integer value) {
-        ints.add(key);
-        ints.add(value);
-      }
-
+    rh.cycle(2, (BiConsumer<Integer, Integer>) (key, value) -> {
+      ints.add(key);
+      ints.add(value);
     });
     assertEquals(ra(1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6), ints);
   }
 
   @Test
   public void testDetect() {
-    assertEquals(hp(3, 4), rh.detect(new EntryBooleanBlock<Integer, Integer>() {
-
-      @Override
-      public boolean yield(Integer key, Integer value) {
-        return value == 4;
-      }
-
-    }));
+    assertEquals(hp(3, 4),
+        rh.detect((BiPredicate<Integer, Integer>) (key, value) -> value == 4));
   }
 
   @SuppressWarnings("unchecked")
   @Test
   public void testDropWhile() {
-    assertEquals(ra(hp(3, 4), hp(5, 6)),
-        rh.dropWhile(new EntryBooleanBlock<Integer, Integer>() {
-
-          @Override
-          public boolean yield(Integer key, Integer value) {
-            return key + value <= 4;
-          }
-
-        }));
+    assertEquals(ra(hp(3, 4), hp(5, 6)), rh.dropWhile(
+        (BiPredicate<Integer, Integer>) (key, value) -> key + value <= 4));
   }
 
   @Test
   public void testEachEntry() {
     final RubyArray<Integer> ints = ra();
-    rh.eachEntry(new EntryBlock<Integer, Integer>() {
-
-      @Override
-      public void yield(Integer key, Integer value) {
-        ints.push(value);
-      }
-
-    });
+    rh.eachEntry(
+        (BiConsumer<Integer, Integer>) (key, value) -> ints.push(value));
     assertEquals(ra(2, 4, 6), ints);
   }
 
   @Test
   public void testFind() {
-    assertEquals(hp(3, 4), rh.find(new EntryBooleanBlock<Integer, Integer>() {
-
-      @Override
-      public boolean yield(Integer key, Integer value) {
-        return value == 4;
-      }
-
-    }));
+    assertEquals(hp(3, 4),
+        rh.find((BiPredicate<Integer, Integer>) (key, value) -> value == 4));
   }
 
   @SuppressWarnings("unchecked")
   @Test
   public void testFindAll() {
     assertEquals(ra(hp(1, 2), hp(3, 4)),
-        rh.findAll(new EntryBooleanBlock<Integer, Integer>() {
-
-          @Override
-          public boolean yield(Integer key, Integer value) {
-            return key < 4;
-          }
-
-        }));
+        rh.findAll((BiPredicate<Integer, Integer>) (key, value) -> key < 4));
   }
 
   @Test
   public void testFindIndex() {
-    EntryBooleanBlock<Integer, Integer> block =
-        new EntryBooleanBlock<Integer, Integer>() {
-
-          @Override
-          public boolean yield(Integer key, Integer value) {
-            return key < 4;
-          }
-
-        };
+    BiPredicate<Integer, Integer> block = (key, value) -> key < 4;
     assertEquals(Integer.valueOf(0), rh.findIndex(block));
     rh = rh(5, 6);
     assertNull(rh.findIndex(block));
@@ -738,167 +578,85 @@ public class RubyHashTest {
 
   @Test
   public void testFlatMap() {
-    assertEquals(ra(3L, 7L, 11L), rh
-        .flatMap(new EntryTransformBlock<Integer, Integer, RubyArray<Long>>() {
-
-          @Override
-          public RubyArray<Long> yield(Integer key, Integer value) {
-            return ra(Long.valueOf(key + value));
-          }
-
-        }).toA());
+    assertEquals(ra(3L, 7L, 11L),
+        rh.flatMap((BiFunction<Integer, Integer, RubyArray<Long>>) (key,
+            value) -> ra(Long.valueOf(key + value))).toA());
   }
 
   @Test
   public void testGrep() {
-    assertEquals(ra(7L),
-        rh.grep("4", new EntryTransformBlock<Integer, Integer, Long>() {
-
-          @Override
-          public Long yield(Integer key, Integer value) {
-            return Long.valueOf(key + value);
-          }
-
-        }));
+    assertEquals(ra(7L), rh.grep("4", (BiFunction<Integer, Integer, Long>) (key,
+        value) -> Long.valueOf(key + value)));
   }
 
   @SuppressWarnings("unchecked")
   @Test
   public void testGroupBy() {
     assertEquals(rh(true, ra(hp(1, 2), hp(3, 4)), false, ra(hp(5, 6))),
-        rh.groupBy(new EntryTransformBlock<Integer, Integer, Boolean>() {
-
-          @Override
-          public Boolean yield(Integer key, Integer value) {
-            return key + value < 10;
-          }
-
-        }));
+        rh.groupBy((BiFunction<Integer, Integer, Boolean>) (key,
+            value) -> key + value < 10));
   }
 
   @Test
   public void testMap() {
     assertEquals(ra(3L, 7L, 11L),
-        rh.map(new EntryTransformBlock<Integer, Integer, Long>() {
-
-          @Override
-          public Long yield(Integer key, Integer value) {
-            return Long.valueOf(key + value);
-          }
-
-        }));
+        rh.map((BiFunction<Integer, Integer, Long>) (key, value) -> Long
+            .valueOf(key + value)));
   }
 
   @Test
   public void testMaxByWithComparator() {
-    assertEquals(hp(3, 4), rh(1, 6, 2, 5, 3, 4).maxBy(new Comparator<Long>() {
-
-      @Override
-      public int compare(Long o1, Long o2) {
-        return (int) (o2 - o1);
-      }
-
-    }, new EntryTransformBlock<Integer, Integer, Long>() {
-
-      @Override
-      public Long yield(Integer key, Integer value) {
-        return Long.valueOf(value - key);
-      }
-
-    }));
+    assertEquals(hp(3, 4),
+        rh(1, 6, 2, 5, 3, 4).maxBy(
+            (Comparator<Long>) (o1, o2) -> (int) (o2 - o1),
+            (BiFunction<Integer, Integer, Long>) (key, value) -> Long
+                .valueOf(value - key)));
   }
 
   @Test
   public void testMaxBy() {
-    assertEquals(hp(1, 6), rh(1, 6, 2, 5, 3, 4)
-        .maxBy(new EntryTransformBlock<Integer, Integer, Long>() {
-
-          @Override
-          public Long yield(Integer key, Integer value) {
-            return Long.valueOf(value - key);
-          }
-
-        }));
+    assertEquals(hp(1, 6),
+        rh(1, 6, 2, 5, 3, 4).maxBy((BiFunction<Integer, Integer, Long>) (key,
+            value) -> Long.valueOf(value - key)));
   }
 
   @Test
   public void testMinByWithComparator() {
-    assertEquals(hp(1, 6), rh(1, 6, 2, 5, 3, 4).minBy(new Comparator<Long>() {
-
-      @Override
-      public int compare(Long o1, Long o2) {
-        return (int) (o2 - o1);
-      }
-
-    }, new EntryTransformBlock<Integer, Integer, Long>() {
-
-      @Override
-      public Long yield(Integer key, Integer value) {
-        return Long.valueOf(value - key);
-      }
-
-    }));
+    assertEquals(hp(1, 6),
+        rh(1, 6, 2, 5, 3, 4).minBy(
+            (Comparator<Long>) (o1, o2) -> (int) (o2 - o1),
+            (BiFunction<Integer, Integer, Long>) (key, value) -> Long
+                .valueOf(value - key)));
   }
 
   @Test
   public void testMinBy() {
-    assertEquals(hp(3, 4), rh(1, 6, 2, 5, 3, 4)
-        .minBy(new EntryTransformBlock<Integer, Integer, Long>() {
-
-          @Override
-          public Long yield(Integer key, Integer value) {
-            return Long.valueOf(value - key);
-          }
-
-        }));
+    assertEquals(hp(3, 4),
+        rh(1, 6, 2, 5, 3, 4).minBy((BiFunction<Integer, Integer, Long>) (key,
+            value) -> Long.valueOf(value - key)));
   }
 
   @SuppressWarnings("unchecked")
   @Test
   public void testMinmaxByWithComparator() {
     assertEquals(ra(hp(1, 6), hp(3, 4)),
-        rh(1, 6, 2, 5, 3, 4).minmaxBy(new Comparator<Long>() {
-
-          @Override
-          public int compare(Long o1, Long o2) {
-            return (int) (o2 - o1);
-          }
-
-        }, new EntryTransformBlock<Integer, Integer, Long>() {
-
-          @Override
-          public Long yield(Integer key, Integer value) {
-            return Long.valueOf(value - key);
-          }
-
-        }));
+        rh(1, 6, 2, 5, 3, 4).minmaxBy(
+            (Comparator<Long>) (o1, o2) -> (int) (o2 - o1),
+            (BiFunction<Integer, Integer, Long>) (key, value) -> Long
+                .valueOf(value - key)));
   }
 
   @SuppressWarnings("unchecked")
   @Test
   public void testMinmaxBy() {
-    assertEquals(ra(hp(3, 4), hp(1, 6)), rh(1, 6, 2, 5, 3, 4)
-        .minmaxBy(new EntryTransformBlock<Integer, Integer, Long>() {
-
-          @Override
-          public Long yield(Integer key, Integer value) {
-            return Long.valueOf(value - key);
-          }
-
-        }));
+    assertEquals(ra(hp(3, 4), hp(1, 6)),
+        rh(1, 6, 2, 5, 3, 4).minmaxBy((BiFunction<Integer, Integer, Long>) (key,
+            value) -> Long.valueOf(value - key)));
   }
 
   @Test
   public void testNoneʔ() {
-    EntryBooleanBlock<Integer, Integer> block =
-        new EntryBooleanBlock<Integer, Integer>() {
-
-          @Override
-          public boolean yield(Integer key, Integer value) {
-            return value >= 10;
-          }
-
-        };
+    BiPredicate<Integer, Integer> block = (key, value) -> value >= 10;
     assertTrue(rh.noneʔ(block));
     rh = rh(9, 10);
     assertFalse(rh.noneʔ(block));
@@ -906,55 +664,29 @@ public class RubyHashTest {
 
   @Test
   public void testOneʔ() {
-    assertFalse(rh.oneʔ(new EntryBooleanBlock<Integer, Integer>() {
-
-      @Override
-      public boolean yield(Integer key, Integer value) {
-        return value > 3;
-      }
-
-    }));
+    assertFalse(
+        rh.oneʔ((BiPredicate<Integer, Integer>) (key, value) -> value > 3));
   }
 
   @SuppressWarnings("unchecked")
   @Test
   public void testPartition() {
     assertEquals(ra(ra(hp(1, 2)), ra(hp(3, 4), hp(5, 6))),
-        rh.partition(new EntryBooleanBlock<Integer, Integer>() {
-
-          @Override
-          public boolean yield(Integer key, Integer value) {
-            return key == 1;
-          }
-
-        }));
+        rh.partition((BiPredicate<Integer, Integer>) (key, value) -> key == 1));
   }
 
   @SuppressWarnings("unchecked")
   @Test
   public void testReject() {
     assertEquals(ra(hp(3, 4), hp(5, 6)),
-        rh.reject(new EntryBooleanBlock<Integer, Integer>() {
-
-          @Override
-          public boolean yield(Integer key, Integer value) {
-            return key == 1;
-          }
-
-        }));
+        rh.reject((BiPredicate<Integer, Integer>) (key, value) -> key == 1));
   }
 
   @Test
   public void testReverseEach() {
     final RubyArray<Integer> ints = ra();
-    rh.reverseEach(new EntryBlock<Integer, Integer>() {
-
-      @Override
-      public void yield(Integer key, Integer value) {
-        ints.push(key);
-      }
-
-    });
+    rh.reverseEach(
+        (BiConsumer<Integer, Integer>) (key, value) -> ints.push(key));
     assertEquals(ra(5, 3, 1), ints);
   }
 
@@ -962,77 +694,40 @@ public class RubyHashTest {
   @Test
   public void testSelect() {
     assertEquals(ra(hp(1, 2), hp(3, 4)),
-        rh.select(new EntryBooleanBlock<Integer, Integer>() {
-
-          @Override
-          public boolean yield(Integer key, Integer value) {
-            return key < 4;
-          }
-
-        }));
+        rh.select((BiPredicate<Integer, Integer>) (key, value) -> key < 4));
   }
 
   @SuppressWarnings("unchecked")
   @Test
   public void testSliceBefore() {
     assertEquals(ra(ra(hp(1, 2), hp(3, 4)), ra(hp(5, 6))),
-        rh.sliceBefore(new EntryBooleanBlock<Integer, Integer>() {
-
-          @Override
-          public boolean yield(Integer key, Integer value) {
-            return key > 4;
-          }
-
-        }).toA());
+        rh.sliceBefore((BiPredicate<Integer, Integer>) (key, value) -> key > 4)
+            .toA());
   }
 
   @SuppressWarnings("unchecked")
   @Test
   public void testSortByWithComparator() {
     assertEquals(ra(hp(3, 4), hp(2, 5), hp(1, 6)),
-        rh(1, 6, 2, 5, 3, 4).sortBy(new Comparator<Long>() {
-
-          @Override
-          public int compare(Long o1, Long o2) {
-            return (int) (o2 - o1);
-          }
-
-        }, new EntryTransformBlock<Integer, Integer, Long>() {
-
-          @Override
-          public Long yield(Integer key, Integer value) {
-            return Long.valueOf(key);
-          }
-
-        }));
+        rh(1, 6, 2, 5, 3, 4).sortBy(
+            (Comparator<Long>) (o1, o2) -> (int) (o2 - o1),
+            (BiFunction<Integer, Integer, Long>) (key, value) -> Long
+                .valueOf(key)));
   }
 
   @SuppressWarnings("unchecked")
   @Test
   public void testSortByBy() {
-    assertEquals(ra(hp(1, 6), hp(2, 5), hp(3, 4)), rh(1, 6, 2, 5, 3, 4)
-        .sortBy(new EntryTransformBlock<Integer, Integer, Long>() {
-
-          @Override
-          public Long yield(Integer key, Integer value) {
-            return Long.valueOf(key);
-          }
-
-        }));
+    assertEquals(ra(hp(1, 6), hp(2, 5), hp(3, 4)),
+        rh(1, 6, 2, 5, 3, 4).sortBy((BiFunction<Integer, Integer, Long>) (key,
+            value) -> Long.valueOf(key)));
   }
 
   @SuppressWarnings("unchecked")
   @Test
   public void testTakeWhile() {
     assertEquals(ra(hp(1, 2), hp(3, 4)),
-        rh.takeWhile(new EntryBooleanBlock<Integer, Integer>() {
-
-          @Override
-          public boolean yield(Integer key, Integer value) {
-            return key < 5;
-          }
-
-        }));
+        rh.takeWhile((BiPredicate<Integer, Integer>) (key, value) -> key < 5));
   }
 
   @Test

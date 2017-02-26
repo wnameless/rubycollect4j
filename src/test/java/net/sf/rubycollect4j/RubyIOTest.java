@@ -28,7 +28,6 @@ import java.io.IOException;
 import org.junit.Test;
 
 import net.sf.rubycollect4j.RubyIO.Mode;
-import net.sf.rubycollect4j.block.Block;
 
 public class RubyIOTest {
 
@@ -180,38 +179,31 @@ public class RubyIOTest {
   @Test
   public void testForeach() {
     String file = BASE_DIR + "ruby_io_read_only_mode.txt";
-    assertTrue(RubyFile.foreach(file) instanceof RubyEnumerator);
-    assertEquals(ra("a", "bc", "def"), RubyFile.foreach(file).toA());
+    assertTrue(RubyIO.foreach(file) instanceof RubyEnumerator);
+    assertEquals(ra("a", "bc", "def"), RubyIO.foreach(file).toA());
   }
 
   @Test
   public void testForeachWithFile() {
     String file = BASE_DIR + "ruby_io_read_only_mode.txt";
-    assertTrue(RubyFile.foreach(new File(file)) instanceof RubyEnumerator);
-    assertEquals(ra("a", "bc", "def"), RubyFile.foreach(new File(file)).toA());
+    assertTrue(RubyIO.foreach(new File(file)) instanceof RubyEnumerator);
+    assertEquals(ra("a", "bc", "def"), RubyIO.foreach(new File(file)).toA());
   }
 
   @Test
   public void testForeachWithInputStream() throws Exception {
     String file = BASE_DIR + "ruby_io_read_only_mode.txt";
-    assertTrue(RubyFile.foreach(
+    assertTrue(RubyIO.foreach(
         new FileInputStream(new File(file))) instanceof RubyEnumerator);
     assertEquals(ra("a", "bc", "def"),
-        RubyFile.foreach(new FileInputStream(new File(file))).toA());
+        RubyIO.foreach(new FileInputStream(new File(file))).toA());
   }
 
   @Test
   public void testForeachWithBlock() {
     final RubyArray<String> ra = ra();
     RubyIO.foreach(BASE_DIR + "ruby_io_read_only_mode.txt",
-        new Block<String>() {
-
-          @Override
-          public void yield(String item) {
-            ra.add(item);
-          }
-
-        });
+        item -> ra.add(item));
     assertEquals("a" + "bc" + "def", ra.join());
   }
 

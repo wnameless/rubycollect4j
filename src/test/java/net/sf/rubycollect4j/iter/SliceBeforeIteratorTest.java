@@ -24,31 +24,23 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import net.sf.rubycollect4j.block.BooleanBlock;
-
 public class SliceBeforeIteratorTest {
 
   SliceBeforeIterator<Integer> iter;
   List<Integer> list;
-  BooleanBlock<Integer> block;
+  Predicate<Integer> block;
   Pattern pattern;
 
   @Before
   public void setUp() throws Exception {
     list = ra(1, 2, 3, 4, 5);
-    block = new BooleanBlock<Integer>() {
-
-      @Override
-      public boolean yield(Integer item) {
-        return item % 3 == 0;
-      }
-
-    };
+    block = item -> item % 3 == 0;
     pattern = qr("3");
     iter = new SliceBeforeIterator<Integer>(list.iterator(), block);
   }
@@ -68,7 +60,7 @@ public class SliceBeforeIteratorTest {
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
     new SliceBeforeIterator<Integer>(list.iterator(),
-        (BooleanBlock<Integer>) null);
+        (Predicate<Integer>) null);
   }
 
   @Test(expected = NullPointerException.class)

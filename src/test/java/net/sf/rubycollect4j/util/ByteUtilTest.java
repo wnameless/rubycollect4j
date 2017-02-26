@@ -186,31 +186,31 @@ public class ByteUtilTest {
   @Test
   public void testToByteArrayWithObject() {
     assertArrayEquals(new byte[] { (byte) 0x41 },
-        ByteUtil.toByteArray((Object) "A", le));
+        ByteUtil.toByteArray("A", le));
     assertArrayEquals(new byte[] { (byte) 0x00 },
-        ByteUtil.toByteArray((Object) Byte.valueOf((byte) 0), le));
+        ByteUtil.toByteArray(Byte.valueOf((byte) 0), le));
     assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x00 },
-        ByteUtil.toByteArray((Object) Short.valueOf((short) 0), le));
+        ByteUtil.toByteArray(Short.valueOf((short) 0), le));
     assertArrayEquals(
         new byte[] { (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00 },
-        ByteUtil.toByteArray((Object) Integer.valueOf(0), le));
+        ByteUtil.toByteArray(Integer.valueOf(0), le));
     assertArrayEquals(
         new byte[] { (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
             (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00 },
-        ByteUtil.toByteArray((Object) Long.valueOf(0L), le));
+        ByteUtil.toByteArray(Long.valueOf(0L), le));
     assertArrayEquals(
         new byte[] { (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00 },
-        ByteUtil.toByteArray((Object) Float.valueOf(0f), le));
+        ByteUtil.toByteArray(Float.valueOf(0f), le));
     assertArrayEquals(
         new byte[] { (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
             (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00 },
-        ByteUtil.toByteArray((Object) Double.valueOf(0d), le));
+        ByteUtil.toByteArray(Double.valueOf(0d), le));
     assertArrayEquals(new byte[] { (byte) 0x00 },
-        ByteUtil.toByteArray((Object) Boolean.FALSE, le));
+        ByteUtil.toByteArray(Boolean.FALSE, le));
     assertArrayEquals(new byte[] { (byte) 0x01 },
-        ByteUtil.toByteArray((Object) Boolean.TRUE, le));
+        ByteUtil.toByteArray(Boolean.TRUE, le));
     assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x00 },
-        ByteUtil.toByteArray((Object) Character.valueOf((char) 0), le));
+        ByteUtil.toByteArray(Character.valueOf((char) 0), le));
   }
 
   @Test(expected = TypeConstraintException.class)

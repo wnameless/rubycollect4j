@@ -20,7 +20,6 @@ package net.sf.rubycollect4j;
 import static net.sf.rubycollect4j.RubyCollections.Hash;
 import static net.sf.rubycollect4j.RubyCollections.hp;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
-import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyIO.Mode.R;
 
 import java.io.BufferedReader;
@@ -29,13 +28,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
+import java.util.Arrays;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
-import net.sf.rubycollect4j.block.Block;
-import net.sf.rubycollect4j.block.TransformBlock;
 import net.sf.rubycollect4j.iter.EachLineIterable;
 
 /**
@@ -91,14 +90,8 @@ public class RubyIO {
     AR("a+", true, true);
 
     private static final Map<String, Mode> modeMap = Hash(
-        ra(values()).map(new TransformBlock<Mode, Entry<String, Mode>>() {
-
-          @Override
-          public Entry<String, Mode> yield(Mode item) {
-            return hp(item.toString(), item);
-          }
-
-        })).freeze();
+        Arrays.asList(values()).stream().map(item -> hp(item.toString(), item))
+            .collect(Collectors.toList())).freeze();
 
     private final String mode;
     private final boolean isReadable;
@@ -283,7 +276,7 @@ public class RubyIO {
    * @param block
    *          to process each line
    */
-  public static void foreach(String path, Block<String> block) {
+  public static void foreach(String path, Consumer<String> block) {
     newRubyEnumerator(new EachLineIterable(new File(path))).each(block);
   }
 

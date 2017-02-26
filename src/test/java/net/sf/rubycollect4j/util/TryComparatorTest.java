@@ -21,7 +21,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -39,14 +38,7 @@ public class TryComparatorTest {
   @Before
   public void setUp() throws Exception {
     intComp = new TryComparator<Integer>();
-    revIntComp = new TryComparator<Integer>(new Comparator<Integer>() {
-
-      @Override
-      public int compare(Integer o1, Integer o2) {
-        return o2 - o1;
-      }
-
-    });
+    revIntComp = new TryComparator<Integer>((o1, o2) -> o2 - o1);
     setComp = new TryComparator<Set<Integer>>();
     emptySet = Collections.emptySet();
     singleSet = Collections.singleton(1);

@@ -32,14 +32,14 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
-import net.sf.rubycollect4j.block.Block;
-import net.sf.rubycollect4j.block.BooleanBlock;
-import net.sf.rubycollect4j.block.EntryBlock;
-import net.sf.rubycollect4j.block.EntryBooleanBlock;
-import net.sf.rubycollect4j.block.EntryMergeBlock;
-import net.sf.rubycollect4j.block.EntryTransformBlock;
-import net.sf.rubycollect4j.block.TransformBlock;
+import net.sf.rubycollect4j.function.TriFunction;
 import net.sf.rubycollect4j.iter.ComparableEntryIterable;
 import net.sf.rubycollect4j.util.ComparableEntry;
 import net.sf.rubycollect4j.util.LinkedIdentityMap;
@@ -59,8 +59,8 @@ import net.sf.rubycollect4j.util.LinkedIdentityMap;
  * @author Wei-Ming Wu
  * 
  */
-public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
-    Map<K, V>, Serializable {
+public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
+    implements Map<K, V>, Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -207,11 +207,11 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    *          to filter elements
    * @return this {@link RubyHash}
    */
-  public RubyHash<K, V> deleteIf(EntryBooleanBlock<? super K, ? super V> block) {
+  public RubyHash<K, V> deleteIf(BiPredicate<? super K, ? super V> block) {
     Iterator<Entry<K, V>> iter = map.entrySet().iterator();
     while (iter.hasNext()) {
       Entry<K, V> item = iter.next();
-      if (block.yield(item.getKey(), item.getValue())) iter.remove();
+      if (block.test(item.getKey(), item.getValue())) iter.remove();
     }
     return this;
   }
@@ -239,11 +239,11 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
 
   /**
    * @return this {@link RubyHash}
-   * @see RubyEnumerable#each(Block)
+   * @see RubyEnumerable#each(Consumer)
    */
-  public RubyHash<K, V> each(EntryBlock<? super K, ? super V> block) {
+  public RubyHash<K, V> each(BiConsumer<? super K, ? super V> block) {
     for (Entry<K, V> item : map.entrySet()) {
-      block.yield(item.getKey(), item.getValue());
+      block.accept(item.getKey(), item.getValue());
     }
     return this;
   }
@@ -264,9 +264,9 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    *          to yield each key
    * @return this {@link RubyHash}
    */
-  public RubyHash<K, V> eachKey(Block<? super K> block) {
+  public RubyHash<K, V> eachKey(Consumer<? super K> block) {
     for (K item : map.keySet()) {
-      block.yield(item);
+      block.accept(item);
     }
     return this;
   }
@@ -281,13 +281,13 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Equivalent to {@link #each(EntryBlock)}.
+   * Equivalent to {@link #each(BiComsumer)}.
    * 
    * @param block
    *          to yield each entry
    * @return this {@link RubyHash}
    */
-  public RubyHash<K, V> eachPair(EntryBlock<? super K, ? super V> block) {
+  public RubyHash<K, V> eachPair(BiConsumer<? super K, ? super V> block) {
     return each(block);
   }
 
@@ -307,9 +307,9 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    *          to yield each value
    * @return this {@link RubyHash}
    */
-  public RubyHash<K, V> eachValue(Block<? super V> block) {
+  public RubyHash<K, V> eachValue(Consumer<? super V> block) {
     for (V item : values()) {
-      block.yield(item);
+      block.accept(item);
     }
     return this;
   }
@@ -444,11 +444,11 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    *          to filter elements
    * @return this {@link RubyHash}
    */
-  public RubyHash<K, V> keepIf(EntryBooleanBlock<? super K, ? super V> block) {
+  public RubyHash<K, V> keepIf(BiPredicate<? super K, ? super V> block) {
     Iterator<Entry<K, V>> iter = map.entrySet().iterator();
     while (iter.hasNext()) {
       Entry<K, V> item = iter.next();
-      if (!block.yield(item.getKey(), item.getValue())) iter.remove();
+      if (!block.test(item.getKey(), item.getValue())) iter.remove();
     }
     return this;
   }
@@ -462,8 +462,9 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    */
   public K key(V value) {
     for (Entry<K, V> item : map.entrySet()) {
-      if (value == null ? item.getValue() == null : value.equals(item
-          .getValue())) return item.getKey();
+      if (value == null ? item.getValue() == null
+          : value.equals(item.getValue()))
+        return item.getKey();
     }
     return null;
   }
@@ -526,15 +527,12 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @return new {@link RubyHash}
    */
   public RubyHash<K, V> merge(Map<K, V> otherHash,
-      EntryMergeBlock<? super K, V> block) {
+      TriFunction<? super K, V, V, V> block) {
     RubyHash<K, V> rubyHash = newRubyHash(map);
     for (Entry<K, V> item : otherHash.entrySet()) {
       if (rubyHash.containsKey(item.getKey()))
-        rubyHash
-            .put(
-                item.getKey(),
-                block.yield(item.getKey(), map.get(item.getKey()),
-                    item.getValue()));
+        rubyHash.put(item.getKey(), block.apply(item.getKey(),
+            map.get(item.getKey()), item.getValue()));
       else
         rubyHash.put(item);
     }
@@ -566,11 +564,11 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @return new {@link RubyHash}
    */
   public RubyHash<K, V> mergeǃ(Map<? extends K, ? extends V> otherHash,
-      EntryMergeBlock<? super K, V> block) {
+      TriFunction<? super K, V, V, V> block) {
     for (Entry<? extends K, ? extends V> item : otherHash.entrySet()) {
       if (containsKey(item.getKey()))
-        map.put(item.getKey(),
-            block.yield(item.getKey(), map.get(item.getKey()), item.getValue()));
+        map.put(item.getKey(), block.apply(item.getKey(),
+            map.get(item.getKey()), item.getValue()));
       else
         put(item);
     }
@@ -612,8 +610,9 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    */
   public Entry<K, V> rassoc(V value) {
     for (Entry<K, V> item : map.entrySet()) {
-      if (value == null ? item.getValue() == null : value.equals(item
-          .getValue())) return new ComparableEntry<K, V>(item);
+      if (value == null ? item.getValue() == null
+          : value.equals(item.getValue()))
+        return new ComparableEntry<K, V>(item);
     }
     return null;
   }
@@ -635,7 +634,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    *          to filter elements
    * @return this {@link RubyHash} or null
    */
-  public RubyHash<K, V> rejectǃ(EntryBooleanBlock<? super K, ? super V> block) {
+  public RubyHash<K, V> rejectǃ(BiPredicate<? super K, ? super V> block) {
     int beforeSize = size();
     deleteIf(block);
     return map.size() == beforeSize ? null : this;
@@ -689,6 +688,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * 
    * @return this {@link RubyHash}
    */
+  @Override
   @SuppressWarnings("unchecked")
   public RubyHash<K, V> toH() {
     return this;
@@ -724,7 +724,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   }
 
   /**
-   * Equivalent to {@link #mergeǃ(Map, EntryMergeBlock)}.
+   * Equivalent to {@link #mergeǃ(Map, TriFunction)}.
    * 
    * @param otherHash
    *          any Map
@@ -733,7 +733,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
    * @return new RubyHash
    */
   public RubyHash<K, V> update(Map<? extends K, ? extends V> otherHash,
-      EntryMergeBlock<? super K, V> block) {
+      TriFunction<? super K, V, V, V> block) {
     return mergeǃ(otherHash, block);
   }
 
@@ -741,549 +741,362 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>> implements
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#allʔ(BooleanBlock)
+   * @see RubyEnumerable#allʔ(Predicate)
    */
-  public boolean allʔ(final EntryBooleanBlock<? super K, ? super V> block) {
-    return allʔ(new BooleanBlock<Entry<K, V>>() {
-
-      @Override
-      public boolean yield(Entry<K, V> item) {
-        return block.yield(item.getKey(), item.getValue());
-      }
-
-    });
+  public boolean allʔ(final BiPredicate<? super K, ? super V> block) {
+    return allʔ((Predicate<java.util.Map.Entry<K, V>>) item -> block
+        .test(item.getKey(), item.getValue()));
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#anyʔ(BooleanBlock)
+   * @see RubyEnumerable#anyʔ(Predicate)
    */
-  public boolean anyʔ(final EntryBooleanBlock<? super K, ? super V> block) {
-    return anyʔ(new BooleanBlock<Entry<K, V>>() {
-
-      @Override
-      public boolean yield(Entry<K, V> item) {
-        return block.yield(item.getKey(), item.getValue());
-      }
-
-    });
+  public boolean anyʔ(final BiPredicate<? super K, ? super V> block) {
+    return anyʔ((Predicate<java.util.Map.Entry<K, V>>) item -> block
+        .test(item.getKey(), item.getValue()));
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#chunk(TransformBlock)
+   * @see RubyEnumerable#chunk(Function)
    */
   public <S> RubyEnumerator<Entry<S, RubyArray<Entry<K, V>>>> chunk(
-      final EntryTransformBlock<? super K, ? super V, ? extends S> block) {
-    return chunk(new TransformBlock<Entry<K, V>, S>() {
-
-      @Override
-      public S yield(Entry<K, V> item) {
-        return block.yield(item.getKey(), item.getValue());
-      }
-
-    });
+      final BiFunction<? super K, ? super V, ? extends S> block) {
+    return chunk((Function<java.util.Map.Entry<K, V>, S>) item -> block
+        .apply(item.getKey(), item.getValue()));
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#collect(TransformBlock)
+   * @see RubyEnumerable#collect(Function)
    */
   public <S> RubyArray<S> collect(
-      final EntryTransformBlock<? super K, ? super V, ? extends S> block) {
-    return collect(new TransformBlock<Entry<K, V>, S>() {
-
-      @Override
-      public S yield(Entry<K, V> item) {
-        return block.yield(item.getKey(), item.getValue());
-      }
-
-    });
+      final BiFunction<? super K, ? super V, ? extends S> block) {
+    return collect((Function<java.util.Map.Entry<K, V>, S>) item -> block
+        .apply(item.getKey(), item.getValue()));
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#collectConcat(TransformBlock)
+   * @see RubyEnumerable#collectConcat(Function)
    */
   public <S> RubyArray<S> collectConcat(
-      final EntryTransformBlock<? super K, ? super V, ? extends List<S>> block) {
-    return collectConcat(new TransformBlock<Entry<K, V>, RubyArray<S>>() {
-
-      @Override
-      public RubyArray<S> yield(Entry<K, V> item) {
-        return newRubyArray(block.yield(item.getKey(), item.getValue()));
-      }
-
-    });
+      final BiFunction<? super K, ? super V, ? extends List<S>> block) {
+    return collectConcat(
+        (Function<java.util.Map.Entry<K, V>, RubyArray<S>>) item -> newRubyArray(
+            block.apply(item.getKey(), item.getValue())));
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#count(BooleanBlock)
+   * @see RubyEnumerable#count(Predicate)
    */
-  public int count(final EntryBooleanBlock<? super K, ? super V> block) {
-    return count(new BooleanBlock<Entry<K, V>>() {
-
-      @Override
-      public boolean yield(Entry<K, V> item) {
-        return block.yield(item.getKey(), item.getValue());
-      }
-
-    });
+  public int count(final BiPredicate<? super K, ? super V> block) {
+    return count((Predicate<java.util.Map.Entry<K, V>>) item -> block
+        .test(item.getKey(), item.getValue()));
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#cycle(Block)
+   * @see RubyEnumerable#cycle(Consumer)
    */
-  public void cycle(final EntryBlock<? super K, ? super V> block) {
-    cycle(new Block<Entry<K, V>>() {
-
-      @Override
-      public void yield(Entry<K, V> item) {
-        block.yield(item.getKey(), item.getValue());
-      }
-
-    });
+  public void cycle(final BiConsumer<? super K, ? super V> block) {
+    cycle(item -> block.accept(item.getKey(), item.getValue()));
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#cycle(int, Block)
+   * @see RubyEnumerable#cycle(int, Consumer)
    */
-  public void cycle(int n, final EntryBlock<? super K, ? super V> block) {
-    cycle(n, new Block<Entry<K, V>>() {
-
-      @Override
-      public void yield(Entry<K, V> item) {
-        block.yield(item.getKey(), item.getValue());
-      }
-
-    });
+  public void cycle(int n, final BiConsumer<? super K, ? super V> block) {
+    cycle(n, item -> block.accept(item.getKey(), item.getValue()));
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#detect(BooleanBlock)
+   * @see RubyEnumerable#detect(Predicate)
    */
-  public Entry<K, V> detect(final EntryBooleanBlock<? super K, ? super V> block) {
-    return detect(new BooleanBlock<Entry<K, V>>() {
-
-      @Override
-      public boolean yield(Entry<K, V> item) {
-        return block.yield(item.getKey(), item.getValue());
-      }
-
-    });
+  public Entry<K, V> detect(final BiPredicate<? super K, ? super V> block) {
+    return detect((Predicate<java.util.Map.Entry<K, V>>) item -> block
+        .test(item.getKey(), item.getValue()));
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#dropWhile(BooleanBlock)
+   * @see RubyEnumerable#dropWhile(Predicate)
    */
   public RubyArray<Entry<K, V>> dropWhile(
-      final EntryBooleanBlock<? super K, ? super V> block) {
-    return dropWhile(new BooleanBlock<Entry<K, V>>() {
-
-      @Override
-      public boolean yield(Entry<K, V> item) {
-        return block.yield(item.getKey(), item.getValue());
-      }
-
-    });
+      final BiPredicate<? super K, ? super V> block) {
+    return dropWhile((Predicate<java.util.Map.Entry<K, V>>) item -> block
+        .test(item.getKey(), item.getValue()));
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#eachEntry(Block)
+   * @see RubyEnumerable#eachEntry(Consumer)
    */
   public RubyEnumerable<Entry<K, V>> eachEntry(
-      final EntryBlock<? super K, ? super V> block) {
-    return eachEntry(new Block<Entry<K, V>>() {
-
-      @Override
-      public void yield(Entry<K, V> item) {
-        block.yield(item.getKey(), item.getValue());
-      }
-
-    });
+      final BiConsumer<? super K, ? super V> block) {
+    return eachEntry((Consumer<java.util.Map.Entry<K, V>>) item -> block
+        .accept(item.getKey(), item.getValue()));
 
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#find(BooleanBlock)
+   * @see RubyEnumerable#find(Predicate)
    */
-  public Entry<K, V> find(final EntryBooleanBlock<? super K, ? super V> block) {
+  public Entry<K, V> find(final BiPredicate<? super K, ? super V> block) {
     return detect(block);
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#findAll(BooleanBlock)
+   * @see RubyEnumerable#findAll(Predicate)
    */
   public RubyArray<Entry<K, V>> findAll(
-      final EntryBooleanBlock<? super K, ? super V> block) {
-    return findAll(new BooleanBlock<Entry<K, V>>() {
-
-      @Override
-      public boolean yield(Entry<K, V> item) {
-        return block.yield(item.getKey(), item.getValue());
-      }
-
-    });
+      final BiPredicate<? super K, ? super V> block) {
+    return findAll((Predicate<java.util.Map.Entry<K, V>>) item -> block
+        .test(item.getKey(), item.getValue()));
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#findIndex(BooleanBlock)
+   * @see RubyEnumerable#findIndex(Predicate)
    */
-  public Integer findIndex(final EntryBooleanBlock<? super K, ? super V> block) {
-    return findIndex(new BooleanBlock<Entry<K, V>>() {
-
-      @Override
-      public boolean yield(Entry<K, V> item) {
-        return block.yield(item.getKey(), item.getValue());
-      }
-
-    });
+  public Integer findIndex(final BiPredicate<? super K, ? super V> block) {
+    return findIndex((Predicate<java.util.Map.Entry<K, V>>) item -> block
+        .test(item.getKey(), item.getValue()));
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#flatMap(TransformBlock)
+   * @see RubyEnumerable#flatMap(Function)
    */
   public <S> RubyArray<S> flatMap(
-      final EntryTransformBlock<? super K, ? super V, ? extends List<S>> block) {
+      final BiFunction<? super K, ? super V, ? extends List<S>> block) {
     return collectConcat(block);
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#grep(String, TransformBlock)
+   * @see RubyEnumerable#grep(String, Function)
    */
   public <S> RubyArray<S> grep(String regex,
-      final EntryTransformBlock<? super K, ? super V, ? extends S> block) {
-    return grep(regex, new TransformBlock<Entry<K, V>, S>() {
-
-      @Override
-      public S yield(Entry<K, V> item) {
-        return block.yield(item.getKey(), item.getValue());
-      }
-
-    });
+      final BiFunction<? super K, ? super V, ? extends S> block) {
+    return grep(regex, (Function<java.util.Map.Entry<K, V>, S>) item -> block
+        .apply(item.getKey(), item.getValue()));
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#groupBy(TransformBlock)
+   * @see RubyEnumerable#groupBy(Function)
    */
   public <S> RubyHash<S, RubyArray<Entry<K, V>>> groupBy(
-      final EntryTransformBlock<? super K, ? super V, ? extends S> block) {
-    return groupBy(new TransformBlock<Entry<K, V>, S>() {
-
-      @Override
-      public S yield(Entry<K, V> item) {
-        return block.yield(item.getKey(), item.getValue());
-      }
-
-    });
+      final BiFunction<? super K, ? super V, ? extends S> block) {
+    return groupBy((Function<java.util.Map.Entry<K, V>, S>) item -> block
+        .apply(item.getKey(), item.getValue()));
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#map(TransformBlock)
+   * @see RubyEnumerable#map(Function)
    */
   public <S> RubyArray<S> map(
-      final EntryTransformBlock<? super K, ? super V, ? extends S> block) {
-    return map(new TransformBlock<Entry<K, V>, S>() {
-
-      @Override
-      public S yield(Entry<K, V> item) {
-        return block.yield(item.getKey(), item.getValue());
-      }
-
-    });
+      final BiFunction<? super K, ? super V, ? extends S> block) {
+    return map((Function<java.util.Map.Entry<K, V>, S>) item -> block
+        .apply(item.getKey(), item.getValue()));
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#maxBy(Comparator, TransformBlock)
+   * @see RubyEnumerable#maxBy(Comparator, Function)
    */
   public <S> Entry<K, V> maxBy(Comparator<? super S> comp,
-      final EntryTransformBlock<? super K, ? super V, ? extends S> block) {
-    return maxBy(comp, new TransformBlock<Entry<K, V>, S>() {
-
-      @Override
-      public S yield(Entry<K, V> item) {
-        return block.yield(item.getKey(), item.getValue());
-      }
-
-    });
+      final BiFunction<? super K, ? super V, ? extends S> block) {
+    return maxBy(comp, (Function<java.util.Map.Entry<K, V>, S>) item -> block
+        .apply(item.getKey(), item.getValue()));
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#maxBy(TransformBlock)
+   * @see RubyEnumerable#maxBy(Function)
    */
   public <S> Entry<K, V> maxBy(
-      final EntryTransformBlock<? super K, ? super V, ? extends S> block) {
-    return maxBy(new TransformBlock<Entry<K, V>, S>() {
-
-      @Override
-      public S yield(Entry<K, V> item) {
-        return block.yield(item.getKey(), item.getValue());
-      }
-
-    });
+      final BiFunction<? super K, ? super V, ? extends S> block) {
+    return maxBy((Function<java.util.Map.Entry<K, V>, S>) item -> block
+        .apply(item.getKey(), item.getValue()));
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#minBy(Comparator, TransformBlock)
+   * @see RubyEnumerable#minBy(Comparator, Function)
    */
   public <S> Entry<K, V> minBy(Comparator<? super S> comp,
-      final EntryTransformBlock<? super K, ? super V, ? extends S> block) {
-    return minBy(comp, new TransformBlock<Entry<K, V>, S>() {
-
-      @Override
-      public S yield(Entry<K, V> item) {
-        return block.yield(item.getKey(), item.getValue());
-      }
-
-    });
+      final BiFunction<? super K, ? super V, ? extends S> block) {
+    return minBy(comp, (Function<java.util.Map.Entry<K, V>, S>) item -> block
+        .apply(item.getKey(), item.getValue()));
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#minBy(TransformBlock)
+   * @see RubyEnumerable#minBy(Function)
    */
   public <S> Entry<K, V> minBy(
-      final EntryTransformBlock<? super K, ? super V, ? extends S> block) {
-    return minBy(new TransformBlock<Entry<K, V>, S>() {
-
-      @Override
-      public S yield(Entry<K, V> item) {
-        return block.yield(item.getKey(), item.getValue());
-      }
-
-    });
+      final BiFunction<? super K, ? super V, ? extends S> block) {
+    return minBy((Function<java.util.Map.Entry<K, V>, S>) item -> block
+        .apply(item.getKey(), item.getValue()));
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#minmaxBy(Comparator, TransformBlock)
+   * @see RubyEnumerable#minmaxBy(Comparator, Function)
    */
   public <S> RubyArray<Entry<K, V>> minmaxBy(Comparator<? super S> comp,
-      final EntryTransformBlock<? super K, ? super V, ? extends S> block) {
-    return minmaxBy(comp, new TransformBlock<Entry<K, V>, S>() {
-
-      @Override
-      public S yield(Entry<K, V> item) {
-        return block.yield(item.getKey(), item.getValue());
-      }
-
-    });
+      final BiFunction<? super K, ? super V, ? extends S> block) {
+    return minmaxBy(comp, (Function<java.util.Map.Entry<K, V>, S>) item -> block
+        .apply(item.getKey(), item.getValue()));
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#minmaxBy(TransformBlock)
+   * @see RubyEnumerable#minmaxBy(Function)
    */
   public <S> RubyArray<Entry<K, V>> minmaxBy(
-      final EntryTransformBlock<? super K, ? super V, ? extends S> block) {
-    return minmaxBy(new TransformBlock<Entry<K, V>, S>() {
-
-      @Override
-      public S yield(Entry<K, V> item) {
-        return block.yield(item.getKey(), item.getValue());
-      }
-
-    });
+      final BiFunction<? super K, ? super V, ? extends S> block) {
+    return minmaxBy((Function<java.util.Map.Entry<K, V>, S>) item -> block
+        .apply(item.getKey(), item.getValue()));
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#noneʔ(BooleanBlock)
+   * @see RubyEnumerable#noneʔ(Predicate)
    */
-  public boolean noneʔ(final EntryBooleanBlock<? super K, ? super V> block) {
-    return noneʔ(new BooleanBlock<Entry<K, V>>() {
-
-      @Override
-      public boolean yield(Entry<K, V> item) {
-        return block.yield(item.getKey(), item.getValue());
-      }
-
-    });
+  public boolean noneʔ(final BiPredicate<? super K, ? super V> block) {
+    return noneʔ((Predicate<java.util.Map.Entry<K, V>>) item -> block
+        .test(item.getKey(), item.getValue()));
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#oneʔ(BooleanBlock)
+   * @see RubyEnumerable#oneʔ(Predicate)
    */
-  public boolean oneʔ(final EntryBooleanBlock<? super K, ? super V> block) {
-    return oneʔ(new BooleanBlock<Entry<K, V>>() {
-
-      @Override
-      public boolean yield(Entry<K, V> item) {
-        return block.yield(item.getKey(), item.getValue());
-      }
-
-    });
+  public boolean oneʔ(final BiPredicate<? super K, ? super V> block) {
+    return oneʔ((Predicate<java.util.Map.Entry<K, V>>) item -> block
+        .test(item.getKey(), item.getValue()));
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#partition(BooleanBlock)
+   * @see RubyEnumerable#partition(Predicate)
    */
   public RubyArray<RubyArray<Entry<K, V>>> partition(
-      final EntryBooleanBlock<? super K, ? super V> block) {
-    return partition(new BooleanBlock<Entry<K, V>>() {
-
-      @Override
-      public boolean yield(Entry<K, V> item) {
-        return block.yield(item.getKey(), item.getValue());
-      }
-
-    });
+      final BiPredicate<? super K, ? super V> block) {
+    return partition((Predicate<java.util.Map.Entry<K, V>>) item -> block
+        .test(item.getKey(), item.getValue()));
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#reject(BooleanBlock)
+   * @see RubyEnumerable#reject(Predicate)
    */
   public RubyArray<Entry<K, V>> reject(
-      final EntryBooleanBlock<? super K, ? super V> block) {
-    return reject(new BooleanBlock<Entry<K, V>>() {
-
-      @Override
-      public boolean yield(Entry<K, V> item) {
-        return block.yield(item.getKey(), item.getValue());
-      }
-
-    });
+      final BiPredicate<? super K, ? super V> block) {
+    return reject((Predicate<java.util.Map.Entry<K, V>>) item -> block
+        .test(item.getKey(), item.getValue()));
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#reverseEach(Block)
+   * @see RubyEnumerable#reverseEach(Consumer)
    */
   public RubyEnumerable<Entry<K, V>> reverseEach(
-      final EntryBlock<? super K, ? super V> block) {
-    return reverseEach(new Block<Entry<K, V>>() {
-
-      @Override
-      public void yield(Entry<K, V> item) {
-        block.yield(item.getKey(), item.getValue());
-      }
-
-    });
+      final BiConsumer<? super K, ? super V> block) {
+    return reverseEach((Consumer<java.util.Map.Entry<K, V>>) item -> block
+        .accept(item.getKey(), item.getValue()));
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#select(BooleanBlock)
+   * @see RubyEnumerable#select(Predicate)
    */
   public RubyArray<Entry<K, V>> select(
-      final EntryBooleanBlock<? super K, ? super V> block) {
+      final BiPredicate<? super K, ? super V> block) {
     return findAll(block);
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#sliceBefore(BooleanBlock)
+   * @see RubyEnumerable#sliceBefore(Predicate)
    */
   public RubyEnumerator<RubyArray<Entry<K, V>>> sliceBefore(
-      final EntryBooleanBlock<? super K, ? super V> block) {
-    return sliceBefore(new BooleanBlock<Entry<K, V>>() {
-
-      @Override
-      public boolean yield(Entry<K, V> item) {
-        return block.yield(item.getKey(), item.getValue());
-      }
-
-    });
+      final BiPredicate<? super K, ? super V> block) {
+    return sliceBefore((Predicate<java.util.Map.Entry<K, V>>) item -> block
+        .test(item.getKey(), item.getValue()));
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#sortBy(Comparator, TransformBlock)
+   * @see RubyEnumerable#sortBy(Comparator, Function)
    */
   public <S> RubyArray<Entry<K, V>> sortBy(Comparator<? super S> comp,
-      final EntryTransformBlock<? super K, ? super V, ? extends S> block) {
-    return sortBy(comp, new TransformBlock<Entry<K, V>, S>() {
-
-      @Override
-      public S yield(Entry<K, V> item) {
-        return block.yield(item.getKey(), item.getValue());
-      }
-
-    });
+      final BiFunction<? super K, ? super V, ? extends S> block) {
+    return sortBy(comp, (Function<java.util.Map.Entry<K, V>, S>) item -> block
+        .apply(item.getKey(), item.getValue()));
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#sortBy(TransformBlock)
+   * @see RubyEnumerable#sortBy(Function)
    */
   public <S> RubyArray<Entry<K, V>> sortBy(
-      final EntryTransformBlock<? super K, ? super V, ? extends S> block) {
-    return sortBy(new TransformBlock<Entry<K, V>, S>() {
-
-      @Override
-      public S yield(Entry<K, V> item) {
-        return block.yield(item.getKey(), item.getValue());
-      }
-
-    });
+      final BiFunction<? super K, ? super V, ? extends S> block) {
+    return sortBy((Function<java.util.Map.Entry<K, V>, S>) item -> block
+        .apply(item.getKey(), item.getValue()));
   }
 
   /**
    * An adapter method.
    * 
-   * @see RubyEnumerable#takeWhile(BooleanBlock)
+   * @see RubyEnumerable#takeWhile(Predicate)
    */
   public RubyArray<Entry<K, V>> takeWhile(
-      final EntryBooleanBlock<? super K, ? super V> block) {
-    return takeWhile(new BooleanBlock<Entry<K, V>>() {
-
-      @Override
-      public boolean yield(Entry<K, V> item) {
-        return block.yield(item.getKey(), item.getValue());
-      }
-
-    });
+      final BiPredicate<? super K, ? super V> block) {
+    return takeWhile((Predicate<java.util.Map.Entry<K, V>>) item -> block
+        .test(item.getKey(), item.getValue()));
   }
 
   /**

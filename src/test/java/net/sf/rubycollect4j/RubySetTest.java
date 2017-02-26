@@ -33,10 +33,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
-
-import net.sf.rubycollect4j.block.Block;
-import net.sf.rubycollect4j.block.BooleanBlock;
-import net.sf.rubycollect4j.block.TransformBlock;
+import java.util.function.Predicate;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -91,7 +88,8 @@ public class RubySetTest {
   public void testConstructor() {
     assertTrue(rs instanceof RubySet);
     assertTrue(new RubySet<Integer>() instanceof RubySet);
-    assertTrue(new RubySet<Integer>(new LinkedHashSet<Integer>()) instanceof RubySet);
+    assertTrue(
+        new RubySet<Integer>(new LinkedHashSet<Integer>()) instanceof RubySet);
   }
 
   @Test(expected = NullPointerException.class)
@@ -114,29 +112,14 @@ public class RubySetTest {
   @Test
   public void testClassify() {
     RubyHash<Boolean, RubySet<Integer>> classes =
-        newRubySet(1, 2, 3, 4, 5, 6, 7, 7).classify(
-            new TransformBlock<Integer, Boolean>() {
-
-              @Override
-              public Boolean yield(Integer item) {
-                return item % 2 == 0;
-              }
-
-            });
+        newRubySet(1, 2, 3, 4, 5, 6, 7, 7).classify(item -> item % 2 == 0);
     assertEquals(rh(false, newRubySet(1, 3, 5, 7), true, newRubySet(2, 4, 6)),
         classes);
   }
 
   @Test
   public void testCollectǃ() {
-    assertSame(rs, rs.collectǃ(new TransformBlock<Integer, Integer>() {
-
-      @Override
-      public Integer yield(Integer item) {
-        return item + 1;
-      }
-
-    }));
+    assertSame(rs, rs.collectǃ(item -> item + 1));
     assertEquals(newRubySet(2, 3, 4), rs);
   }
 
@@ -161,14 +144,7 @@ public class RubySetTest {
 
   @Test
   public void testDeleteIf() {
-    assertSame(rs, rs.deleteIf(new BooleanBlock<Integer>() {
-
-      @Override
-      public boolean yield(Integer item) {
-        return item == 1;
-      }
-
-    }));
+    assertSame(rs, rs.deleteIf(item -> item == 1));
     assertEquals(newRubySet(2, 3), rs);
   }
 
@@ -187,27 +163,13 @@ public class RubySetTest {
   @Test
   public void testDivide() {
     assertEquals(newRubySet(newRubySet(1, 3), newRubySet(2)),
-        rs.divide(new TransformBlock<Integer, Boolean>() {
-
-          @Override
-          public Boolean yield(Integer item) {
-            return item % 2 == 0;
-          }
-
-        }));
+        rs.divide(item -> item % 2 == 0));
   }
 
   @Test
   public void testEach() {
     final RubyArray<Integer> ra = ra();
-    assertSame(rs, rs.each(new Block<Integer>() {
-
-      @Override
-      public void yield(Integer item) {
-        ra.add(item);
-      }
-
-    }));
+    assertSame(rs, rs.each(item -> ra.add(item)));
     assertEquals(ra, rs.toA());
   }
 
@@ -225,8 +187,7 @@ public class RubySetTest {
   @SuppressWarnings("unchecked")
   @Test
   public void testFlatten() {
-    assertEquals(
-        newRubySet(1, 2, 3, 4, 5),
+    assertEquals(newRubySet(1, 2, 3, 4, 5),
         newRubySet(newRubySet(1, 2, newRubySet(3)), 4,
             newRubySet(newRubySet(5))).flatten());
   }
@@ -261,14 +222,7 @@ public class RubySetTest {
 
   @Test
   public void testKeepIf() {
-    assertSame(rs, rs.keepIf(new BooleanBlock<Integer>() {
-
-      @Override
-      public boolean yield(Integer item) {
-        return item % 2 == 0;
-      }
-
-    }));
+    assertSame(rs, rs.keepIf(item -> item % 2 == 0));
     assertEquals(ra(2), rs.toA());
   }
 
@@ -279,14 +233,7 @@ public class RubySetTest {
 
   @Test
   public void testMapǃ() {
-    assertSame(rs, rs.mapǃ(new TransformBlock<Integer, Integer>() {
-
-      @Override
-      public Integer yield(Integer item) {
-        return item + 1;
-      }
-
-    }));
+    assertSame(rs, rs.mapǃ(item -> item + 1));
     assertEquals(newRubySet(2, 3, 4), rs);
   }
 
@@ -318,14 +265,7 @@ public class RubySetTest {
 
   @Test
   public void testRejectǃ() {
-    BooleanBlock<Integer> block = new BooleanBlock<Integer>() {
-
-      @Override
-      public boolean yield(Integer item) {
-        return item == 1;
-      }
-
-    };
+    Predicate<Integer> block = item -> item == 1;
     assertSame(rs, rs.rejectǃ(block));
     assertEquals(ra(2, 3), rs.toA());
     assertNull(rs.rejectǃ(block));
@@ -339,14 +279,7 @@ public class RubySetTest {
 
   @Test
   public void testSelectǃ() {
-    BooleanBlock<Integer> block = new BooleanBlock<Integer>() {
-
-      @Override
-      public boolean yield(Integer item) {
-        return item == 1;
-      }
-
-    };
+    Predicate<Integer> block = item -> item == 1;
     assertSame(rs, rs.selectǃ(block));
     assertEquals(ra(1), rs.toA());
     assertNull(rs.selectǃ(block));

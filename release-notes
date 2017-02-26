@@ -305,3 +305,8 @@ Version 1.9.0
 + Add toH method to Enumerable
 
 - Remove @SafeVarargs
+
+Version 2.0.0
+
+* JDK 1.8
+

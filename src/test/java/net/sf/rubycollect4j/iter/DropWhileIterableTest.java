@@ -22,28 +22,20 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import net.sf.rubycollect4j.block.BooleanBlock;
 
 public class DropWhileIterableTest {
 
   DropWhileIterable<Integer> iter;
   List<Integer> list;
-  BooleanBlock<Integer> block;
+  Predicate<Integer> block;
 
   @Before
   public void setUp() throws Exception {
-    block = new BooleanBlock<Integer>() {
-
-      @Override
-      public boolean yield(Integer item) {
-        return item < 3;
-      }
-
-    };
+    block = item -> item < 3;
     list = ra(1, 2, 3, 4, 5);
     iter = new DropWhileIterable<Integer>(list, block);
   }

@@ -18,8 +18,7 @@
 package net.sf.rubycollect4j.iter;
 
 import java.util.Iterator;
-
-import net.sf.rubycollect4j.block.BooleanBlock;
+import java.util.function.Predicate;
 
 /**
  * 
@@ -35,7 +34,7 @@ import net.sf.rubycollect4j.block.BooleanBlock;
 public final class FindAllIterable<E> implements Iterable<E> {
 
   private final Iterable<? extends E> iter;
-  private final BooleanBlock<? super E> block;
+  private final Predicate<? super E> block;
 
   /**
    * Creates a {@link FindAllIterable}.
@@ -48,7 +47,7 @@ public final class FindAllIterable<E> implements Iterable<E> {
    *           if iter or block is null
    */
   public FindAllIterable(Iterable<? extends E> iter,
-      BooleanBlock<? super E> block) {
+      Predicate<? super E> block) {
     if (iter == null || block == null) throw new NullPointerException();
 
     this.iter = iter;

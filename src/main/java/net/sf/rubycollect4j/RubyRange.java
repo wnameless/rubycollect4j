@@ -21,8 +21,8 @@ import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 
 import java.io.Serializable;
+import java.util.function.Consumer;
 
-import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.iter.RangeIterable;
 import net.sf.rubycollect4j.iter.StepIterable;
 import net.sf.rubycollect4j.succ.Successive;
@@ -42,8 +42,8 @@ import net.sf.rubycollect4j.succ.Successive;
  * @author Wei-Ming Wu
  * 
  */
-public final class RubyRange<E> extends RubyEnumerable<E> implements
-    Serializable {
+public final class RubyRange<E> extends RubyEnumerable<E>
+    implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -109,7 +109,7 @@ public final class RubyRange<E> extends RubyEnumerable<E> implements
    * @return this {@link RubyRange}
    */
   @Override
-  public RubyRange<E> each(Block<? super E> block) {
+  public RubyRange<E> each(Consumer<? super E> block) {
     eachEntry(block);
     return this;
   }
@@ -212,9 +212,9 @@ public final class RubyRange<E> extends RubyEnumerable<E> implements
    *          to yield each element
    * @return this {@link RubyRange}
    */
-  public RubyRange<E> step(int n, Block<E> block) {
+  public RubyRange<E> step(int n, Consumer<E> block) {
     for (E item : step(n)) {
-      block.yield(item);
+      block.accept(item);
     }
     return this;
   }

@@ -214,8 +214,8 @@ public class RubyKernelTest {
 
   @Test
   public void testPFloatArray() {
-    assertArrayEquals(new float[] { (float) 1, (float) 0 },
-        p(new float[] { (float) 1, (float) 0 }), (float) 0);
+    assertArrayEquals(new float[] { 1, 0 },
+        p(new float[] { 1, 0 }), 0);
     assertEquals(ra((float) 1, (float) 0) + lineSeparator,
         outContent.toString());
   }

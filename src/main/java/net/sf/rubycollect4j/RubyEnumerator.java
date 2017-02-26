@@ -18,8 +18,8 @@
 package net.sf.rubycollect4j;
 
 import java.util.Iterator;
+import java.util.function.Consumer;
 
-import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.util.PeekingIterator;
 
 /**
@@ -36,8 +36,8 @@ import net.sf.rubycollect4j.util.PeekingIterator;
  * @author Wei-Ming Wu
  * 
  */
-public class RubyEnumerator<E> extends RubyEnumerable<E> implements
-    Ruby.Enumerator<E> {
+public class RubyEnumerator<E> extends RubyEnumerable<E>
+    implements Ruby.Enumerator<E> {
 
   private final Iterable<E> iter;
   private PeekingIterator<E> pIterator;
@@ -100,9 +100,9 @@ public class RubyEnumerator<E> extends RubyEnumerable<E> implements
    * @return this {@link RubyEnumerator}
    */
   @Override
-  public RubyEnumerator<E> each(Block<? super E> block) {
+  public RubyEnumerator<E> each(Consumer<? super E> block) {
     for (E item : iter) {
-      block.yield(item);
+      block.accept(item);
     }
     return this;
   }

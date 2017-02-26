@@ -20,15 +20,12 @@ package net.sf.rubycollect4j;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-
-import net.sf.rubycollect4j.block.Block;
-import net.sf.rubycollect4j.block.BooleanBlock;
-import net.sf.rubycollect4j.block.EntryBooleanBlock;
-import net.sf.rubycollect4j.block.ReduceBlock;
-import net.sf.rubycollect4j.block.TransformBlock;
-import net.sf.rubycollect4j.block.WithIndexBlock;
-import net.sf.rubycollect4j.block.WithInitBlock;
-import net.sf.rubycollect4j.block.WithObjectBlock;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * 
@@ -71,7 +68,7 @@ public final class RubyContract {
      *          to check elements
      * @return true if all result are true, false otherwise
      */
-    public boolean allʔ(BooleanBlock<? super E> block);
+    public boolean allʔ(Predicate<? super E> block);
 
     /**
      * Checks if any non-null and not Boolean.FALSE object is included.
@@ -88,7 +85,7 @@ public final class RubyContract {
      *          to check elements
      * @return true if any result are true, false otherwise
      */
-    public boolean anyʔ(BooleanBlock<? super E> block);
+    public boolean anyʔ(Predicate<? super E> block);
 
     /**
      * Chunks elements into entries. The key of entry is the result returned by
@@ -102,26 +99,7 @@ public final class RubyContract {
      *          to chunk elements
      * @return {@link Enumerator}
      */
-    public <S> N chunk(TransformBlock<? super E, ? extends S> block);
-
-    /**
-     * Chunks elements into entries. The key of entry is the result invoked by
-     * the given method name. The value of entry is a {@link RubyArray} which
-     * contains elements having the same result returned by the block and aside
-     * to each other.
-     * 
-     * @param <S>
-     *          the type of transformed elements
-     * @param methodName
-     *          name of a Method
-     * @param args
-     *          arguments of a Method
-     * @return {@link Enumerator}
-     * 
-     * @deprecated since 1.9.0, using Java 8 Lambda instead
-     */
-    @Deprecated
-    public <S> N chunk(final String methodName, final Object... args);
+    public <S> N chunk(Function<? super E, ? extends S> block);
 
     /**
      * Chunks elements into entries. The value of entry is a {@link RubyArray}.
@@ -131,7 +109,7 @@ public final class RubyContract {
      *          to define which elements to be chunked
      * @return {@link Enumerator}
      */
-    public N chunkWhile(EntryBooleanBlock<? super E, ? super E> block);
+    public N chunkWhile(BiPredicate<? super E, ? super E> block);
 
     /**
      * Returns an enumerator of elements.
@@ -149,23 +127,7 @@ public final class RubyContract {
      *          to transform elements
      * @return {@link Enumerable}
      */
-    public <S> Z collect(TransformBlock<? super E, ? extends S> block);
-
-    /**
-     * Transforms each element by given method.
-     * 
-     * @param <S>
-     *          the type of transformed elements
-     * @param methodName
-     *          name of a Method
-     * @param args
-     *          arguments of a Method
-     * @return {@link Enumerable}
-     * 
-     * @deprecated since 1.9.0, using Java 8 Lambda instead
-     */
-    @Deprecated
-    public <S> Z collect(final String methodName, final Object... args);
+    public <S> Z collect(Function<? super E, ? extends S> block);
 
     /**
      * Returns an enumerator of elements.
@@ -184,7 +146,7 @@ public final class RubyContract {
      * @return {@link Enumerable}
      */
     public <S> Z collectConcat(
-        TransformBlock<? super E, ? extends List<? extends S>> block);
+        Function<? super E, ? extends List<? extends S>> block);
 
     /**
      * Counts the elements.
@@ -200,7 +162,7 @@ public final class RubyContract {
      *          to define elements to be counted
      * @return the total number
      */
-    public int count(BooleanBlock<? super E> block);
+    public int count(Predicate<? super E> block);
 
     /**
      * Generates a sequence from first element to last element and so on
@@ -228,7 +190,7 @@ public final class RubyContract {
      * @param block
      *          to yield each element
      */
-    public void cycle(int n, Block<? super E> block);
+    public void cycle(int n, Consumer<? super E> block);
 
     /**
      * Generates a sequence from start element to end element and so on
@@ -237,7 +199,7 @@ public final class RubyContract {
      * @param block
      *          to yield each element
      */
-    public void cycle(Block<? super E> block);
+    public void cycle(Consumer<? super E> block);
 
     /**
      * Returns an enumerator of elements.
@@ -254,7 +216,7 @@ public final class RubyContract {
      *          to filter elements
      * @return element or null
      */
-    public E detect(BooleanBlock<? super E> block);
+    public E detect(Predicate<? super E> block);
 
     /**
      * Drops the first n elements.
@@ -280,7 +242,7 @@ public final class RubyContract {
      *          to define which elements to be dropped
      * @return {@link Enumerable}
      */
-    public Z dropWhile(BooleanBlock<? super E> block);
+    public Z dropWhile(Predicate<? super E> block);
 
     /**
      * Returns an enumerator of elements.
@@ -296,7 +258,7 @@ public final class RubyContract {
      *          to yield each element
      * @return {@link Enumerable}
      */
-    public Enumerable<E, N, Z> each(Block<? super E> block);
+    public Enumerable<E, N, Z> each(Consumer<? super E> block);
 
     /**
      * Iterates each element and puts the element with n - 1 consecutive
@@ -317,7 +279,7 @@ public final class RubyContract {
      * @param block
      *          to yield the List of consecutive elements
      */
-    public void eachCons(int n, Block<? super RubyArray<E>> block);
+    public void eachCons(int n, Consumer<? super RubyArray<E>> block);
 
     /**
      * Returns an enumerator of elements.
@@ -333,7 +295,7 @@ public final class RubyContract {
      *          to yield each element
      * @return {@link Enumerable}
      */
-    public Enumerable<E, N, Z> eachEntry(Block<? super E> block);
+    public Enumerable<E, N, Z> eachEntry(Consumer<? super E> block);
 
     /**
      * Slices elements into {@link RubyArray}s with length n.
@@ -353,7 +315,7 @@ public final class RubyContract {
      * @param block
      *          to yield each slice
      */
-    public void eachSlice(int n, Block<? super RubyArray<E>> block);
+    public void eachSlice(int n, Consumer<? super RubyArray<E>> block);
 
     /**
      * Iterates elements with their indices by Entry.
@@ -369,7 +331,8 @@ public final class RubyContract {
      *          to yield each element
      * @return {@link Enumerable}
      */
-    public Enumerable<E, N, Z> eachWithIndex(WithIndexBlock<? super E> block);
+    public Enumerable<E, N, Z> eachWithIndex(
+        BiConsumer<? super E, Integer> block);
 
     /**
      * Iterates elements with an object O.
@@ -393,8 +356,7 @@ public final class RubyContract {
      *          to yield each Entry
      * @return the object O
      */
-    public <O> O eachWithObject(O obj,
-        WithObjectBlock<? super E, ? super O> block);
+    public <O> O eachWithObject(O obj, BiConsumer<? super E, ? super O> block);
 
     /**
      * Puts each element into a {@link RubyArray}.
@@ -411,13 +373,13 @@ public final class RubyContract {
     public N find();
 
     /**
-     * Equivalent to {@link #detect(BooleanBlock)}.
+     * Equivalent to {@link #detect(Predicate)}.
      * 
      * @param block
      *          to filter elements
      * @return element or null
      */
-    public E find(BooleanBlock<? super E> block);
+    public E find(Predicate<? super E> block);
 
     /**
      * Returns an enumerator of elements.
@@ -433,7 +395,7 @@ public final class RubyContract {
      *          to filter elements
      * @return {@link Enumerable}
      */
-    public Z findAll(BooleanBlock<? super E> block);
+    public Z findAll(Predicate<? super E> block);
 
     /**
      * Returns an enumerator of elements.
@@ -450,7 +412,7 @@ public final class RubyContract {
      *          to check elements
      * @return Integer or null
      */
-    public Integer findIndex(BooleanBlock<? super E> block);
+    public Integer findIndex(Predicate<? super E> block);
 
     /**
      * Returns the index of the target element. Returns null if the target is
@@ -488,7 +450,7 @@ public final class RubyContract {
     public N flatMap();
 
     /**
-     * Equivalent to {@link #collectConcat(TransformBlock)}.
+     * Equivalent to {@link #collectConcat(Function)}.
      * 
      * @param <S>
      *          the type of transformed elements
@@ -497,7 +459,7 @@ public final class RubyContract {
      * @return {@link Enumerable}
      */
     public <S> Z flatMap(
-        TransformBlock<? super E, ? extends List<? extends S>> block);
+        Function<? super E, ? extends List<? extends S>> block);
 
     /**
      * Finds all elements which are matched by the regular expression.
@@ -520,27 +482,7 @@ public final class RubyContract {
      *          to transform elements
      * @return {@link Enumerable}
      */
-    public <S> Z grep(String regex, TransformBlock<? super E, ? extends S> block);
-
-    /**
-     * Finds all elements which are matched by the regular expression and
-     * invokes them by given method name.
-     * 
-     * @param <S>
-     *          the type of transformed elements
-     * @param regex
-     *          regular expression
-     * @param methodName
-     *          name of a Method
-     * @param args
-     *          arguments of a Method
-     * @return {@link Enumerable}
-     * 
-     * @deprecated since 1.9.0, using Java 8 Lambda instead
-     */
-    @Deprecated
-    public <S> Z grep(String regex, final String methodName,
-        final Object... args);
+    public <S> Z grep(String regex, Function<? super E, ? extends S> block);
 
     /**
      * Finds all elements which are not matched by the regular expression.
@@ -563,8 +505,7 @@ public final class RubyContract {
      *          to transform elements
      * @return {@link Enumerable}
      */
-    public <S> Z grepV(String regex,
-        TransformBlock<? super E, ? extends S> block);
+    public <S> Z grepV(String regex, Function<? super E, ? extends S> block);
 
     /**
      * Returns an enumerator of elements.
@@ -584,25 +525,7 @@ public final class RubyContract {
      * @return {@link RubyHash}
      */
     public <S> RubyHash<S, RubyArray<E>> groupBy(
-        TransformBlock<? super E, ? extends S> block);
-
-    /**
-     * Puts elements with the same result S invoked by given method name into a
-     * Entry&#60;S, RubyArray&#60;E&#62;&#62;y of a {@link RubyHash}.
-     * 
-     * @param <S>
-     *          the type of transformed elements
-     * @param methodName
-     *          name of a Method
-     * @param args
-     *          arguments of a Method
-     * @return {@link RubyHash}
-     * 
-     * @deprecated since 1.9.0, using Java 8 Lambda instead
-     */
-    @Deprecated
-    public <S> RubyHash<S, RubyArray<E>> groupBy(String methodName,
-        Object... args);
+        Function<? super E, ? extends S> block);
 
     /**
      * Checks if target element is included.
@@ -621,7 +544,7 @@ public final class RubyContract {
      *          to reduce each element
      * @return element
      */
-    public E inject(ReduceBlock<E> block);
+    public E inject(BiFunction<E, E, E> block);
 
     /**
      * Reduces each element with block, then assigns the result back to initial
@@ -635,46 +558,7 @@ public final class RubyContract {
      *          to reduce each element
      * @return object I
      */
-    public <I> I inject(I init, WithInitBlock<? super E, I> block);
-
-    /**
-     * Reduces each element with initial value by a method of S, then assigns
-     * the result back to initial value and so on.
-     * 
-     * @param <I>
-     *          the type of transformed elements
-     * @param init
-     *          initial value
-     * @param methodName
-     *          method used to reduce elements
-     * @return object I
-     * @throws IllegalArgumentException
-     *           if method not found
-     * @throws RuntimeException
-     *           if invocation failed
-     * 
-     * @deprecated since 1.9.0, using Java 8 Lambda instead
-     */
-    @Deprecated
-    public <I> I inject(I init, String methodName);
-
-    /**
-     * Assigns the first element as the initial value. Reduces each element with
-     * initial value by a method of S, then assigns the result back to initial
-     * value and so on.
-     * 
-     * @param methodName
-     *          method used to reduce elements
-     * @return element
-     * @throws IllegalArgumentException
-     *           if method not found
-     * @throws RuntimeException
-     *           if invocation failed
-     * 
-     * @deprecated since 1.9.0, using Java 8 Lambda instead
-     */
-    @Deprecated
-    public E inject(String methodName);
+    public <I> I inject(I init, BiFunction<I, ? super E, I> block);
 
     /**
      * Returns a {@link RubyLazyEnumerator}.
@@ -691,7 +575,7 @@ public final class RubyContract {
     public N map();
 
     /**
-     * Equivalent to {@link #collect(TransformBlock)}.
+     * Equivalent to {@link #collect(Function)}.
      * 
      * @param <S>
      *          the type of transformed elements
@@ -699,23 +583,7 @@ public final class RubyContract {
      *          to transform elements
      * @return {@link Enumerable}
      */
-    public <S> Z map(TransformBlock<? super E, ? extends S> block);
-
-    /**
-     * Equivalent to {@link #collect(String, Object...)}.
-     * 
-     * @param <S>
-     *          the type of transformed elements
-     * @param methodName
-     *          name of a Method
-     * @param args
-     *          arguments of a Method
-     * @return {@link Enumerable}
-     * 
-     * @deprecated since 1.9.0, using Java 8 Lambda instead
-     */
-    @Deprecated
-    public <S> Z map(String methodName, Object... args);
+    public <S> Z map(Function<? super E, ? extends S> block);
 
     /**
      * Finds the max element. Returns null if elements are empty.
@@ -754,7 +622,7 @@ public final class RubyContract {
      * @return element or null
      */
     public <S> E maxBy(Comparator<? super S> comp,
-        TransformBlock<? super E, ? extends S> block);
+        Function<? super E, ? extends S> block);
 
     /**
      * Finds the max element for outputs transformed by the block. Returns null
@@ -766,24 +634,7 @@ public final class RubyContract {
      *          to transform elements
      * @return element or null
      */
-    public <S> E maxBy(TransformBlock<? super E, ? extends S> block);
-
-    /**
-     * Finds the max element for outputs invoked by given method name. Returns
-     * null if elements are empty.
-     * 
-     * @param <S>
-     *          the type of transformed elements
-     * @param methodName
-     *          name of a Method
-     * @param args
-     *          arguments of a Method
-     * @return element or null
-     * 
-     * @deprecated since 1.9.0, using Java 8 Lambda instead
-     */
-    @Deprecated
-    public <S> E maxBy(String methodName, Object... args);
+    public <S> E maxBy(Function<? super E, ? extends S> block);
 
     /**
      * Equivalent to {@link #includeʔ(Object)}.
@@ -831,7 +682,7 @@ public final class RubyContract {
      * @return element or null
      */
     public <S> E minBy(Comparator<? super S> comp,
-        TransformBlock<? super E, ? extends S> block);
+        Function<? super E, ? extends S> block);
 
     /**
      * Finds the min element for outputs transformed by the block. Returns null
@@ -843,24 +694,7 @@ public final class RubyContract {
      *          to transform elements
      * @return element or null
      */
-    public <S> E minBy(TransformBlock<? super E, ? extends S> block);
-
-    /**
-     * Finds min element for outputs invoked by given method name. Returns null
-     * if elements are empty.
-     * 
-     * @param <S>
-     *          the type of transformed elements
-     * @param methodName
-     *          name of a Method
-     * @param args
-     *          arguments of a Method
-     * @return element or null
-     * 
-     * @deprecated since 1.9.0, using Java 8 Lambda instead
-     */
-    @Deprecated
-    public <S> E minBy(String methodName, Object... args);
+    public <S> E minBy(Function<? super E, ? extends S> block);
 
     /**
      * Finds the min and max elements.
@@ -898,7 +732,7 @@ public final class RubyContract {
      * @return {@link RubyArray}
      */
     public <S> RubyArray<E> minmaxBy(Comparator<? super S> comp,
-        TransformBlock<? super E, ? extends S> block);
+        Function<? super E, ? extends S> block);
 
     /**
      * Finds the min and max elements for outputs transformed by the block.
@@ -909,25 +743,7 @@ public final class RubyContract {
      *          to transform elements
      * @return {@link RubyArray}
      */
-    public <S> RubyArray<E> minmaxBy(
-        TransformBlock<? super E, ? extends S> block);
-
-    /**
-     * Finds the min and max elements for outputs invoked by given method name.
-     * Returns null if elements are empty.
-     * 
-     * @param <S>
-     *          the type of transformed elements
-     * @param methodName
-     *          name of a Method
-     * @param args
-     *          arguments of a Method
-     * @return {@link RubyArray}
-     * 
-     * @deprecated since 1.9.0, using Java 8 Lambda instead
-     */
-    @Deprecated
-    public <S> RubyArray<E> minmaxBy(String methodName, Object... args);
+    public <S> RubyArray<E> minmaxBy(Function<? super E, ? extends S> block);
 
     /**
      * Checks if elements contain only null or Boolean.FALSE objects.
@@ -944,7 +760,7 @@ public final class RubyContract {
      *          to check elements
      * @return true if all results of block are false, false otherwise
      */
-    public boolean noneʔ(BooleanBlock<? super E> block);
+    public boolean noneʔ(Predicate<? super E> block);
 
     /**
      * Checks if elements contain only one element beside null and
@@ -963,7 +779,7 @@ public final class RubyContract {
      *          to check elements
      * @return true if only one result of block is true, false otherwise
      */
-    public boolean oneʔ(BooleanBlock<? super E> block);
+    public boolean oneʔ(Predicate<? super E> block);
 
     /**
      * Returns an enumerator of elements.
@@ -979,7 +795,7 @@ public final class RubyContract {
      *          to part elements
      * @return {@link RubyArray} of 2 {@link RubyArray}s
      */
-    public RubyArray<RubyArray<E>> partition(BooleanBlock<? super E> block);
+    public RubyArray<RubyArray<E>> partition(Predicate<? super E> block);
 
     /**
      * Equivalent to {@link #inject(ReduceBlock)}.
@@ -988,7 +804,7 @@ public final class RubyContract {
      *          to reduce each element
      * @return element
      */
-    public E reduce(ReduceBlock<E> block);
+    public E reduce(BiFunction<E, E, E> block);
 
     /**
      * Equivalent to {@link #inject(Object, WithInitBlock)}.
@@ -1001,43 +817,7 @@ public final class RubyContract {
      *          to reduce each element
      * @return object I
      */
-    public <I> I reduce(I init, WithInitBlock<? super E, I> block);
-
-    /**
-     * Equivalent to {@link #inject(Object, String)}.
-     * 
-     * @param <I>
-     *          the type of transformed elements
-     * @param init
-     *          initial value
-     * @param methodName
-     *          method used to reduce elements
-     * @return object I
-     * @throws IllegalArgumentException
-     *           if method not found
-     * @throws RuntimeException
-     *           if invocation failed
-     * 
-     * @deprecated since 1.9.0, using Java 8 Lambda instead
-     */
-    @Deprecated
-    public <I> I reduce(I init, String methodName);
-
-    /**
-     * Equivalent to {@link #inject(String)}.
-     * 
-     * @param methodName
-     *          method used to reduce elements
-     * @return element
-     * @throws IllegalArgumentException
-     *           if method not found
-     * @throws RuntimeException
-     *           if invocation failed
-     * 
-     * @deprecated since 1.9.0, using Java 8 Lambda instead
-     */
-    @Deprecated
-    public E reduce(String methodName);
+    public <I> I reduce(I init, BiFunction<I, ? super E, I> block);
 
     /**
      * Returns an enumerator of elements.
@@ -1053,7 +833,7 @@ public final class RubyContract {
      *          to filter elements
      * @return {@link Enumerable}
      */
-    public Z reject(BooleanBlock<? super E> block);
+    public Z reject(Predicate<? super E> block);
 
     /**
      * Returns a reversed enumerator of elements.
@@ -1069,7 +849,7 @@ public final class RubyContract {
      *          to yield each element
      * @return {@link Enumerable}
      */
-    public Enumerable<E, N, Z> reverseEach(Block<? super E> block);
+    public Enumerable<E, N, Z> reverseEach(Consumer<? super E> block);
 
     /**
      * Returns an enumerator of elements.
@@ -1079,13 +859,13 @@ public final class RubyContract {
     public N select();
 
     /**
-     * Equivalent to {@link #findAll(BooleanBlock)}
+     * Equivalent to {@link #findAll(Predicate)}
      * 
      * @param block
      *          to filter elements
      * @return {@link Enumerable}
      */
-    public Z select(BooleanBlock<? super E> block);
+    public Z select(Predicate<? super E> block);
 
     /**
      * Groups elements into {@link RubyArray}s and the last element of each
@@ -1095,7 +875,7 @@ public final class RubyContract {
      *          to check where to do slice
      * @return {@link Enumerator}
      */
-    public N sliceAfter(BooleanBlock<? super E> block);
+    public N sliceAfter(Predicate<? super E> block);
 
     /**
      * Groups elements into {@link RubyArray}s and the last element of each
@@ -1115,7 +895,7 @@ public final class RubyContract {
      *          to check where to do slice
      * @return {@link Enumerator}
      */
-    public N sliceBefore(BooleanBlock<? super E> block);
+    public N sliceBefore(Predicate<? super E> block);
 
     /**
      * Groups elements into {@link RubyArray}s and the first element of each
@@ -1135,7 +915,7 @@ public final class RubyContract {
      *          to check where to do slice
      * @return {@link Enumerator}
      */
-    public N sliceWhen(EntryBooleanBlock<? super E, ? super E> block);
+    public N sliceWhen(BiPredicate<? super E, ? super E> block);
 
     /**
      * Sorts elements and puts them into a {@link RubyArray}.
@@ -1176,7 +956,7 @@ public final class RubyContract {
      * @return {@link RubyArray}
      */
     public <S> RubyArray<E> sortBy(Comparator<? super S> comp,
-        TransformBlock<? super E, ? extends S> block);
+        Function<? super E, ? extends S> block);
 
     /**
      * Sorts elements by the ordering of outputs transformed by the block
@@ -1194,8 +974,7 @@ public final class RubyContract {
      * @return {@link RubyArray}
      */
     public <S> RubyArray<E> sortBy(Comparator<? super E> comp1,
-        Comparator<? super S> comp2,
-        TransformBlock<? super E, ? extends S> block);
+        Comparator<? super S> comp2, Function<? super E, ? extends S> block);
 
     /**
      * Sorts elements by the ordering of outputs transformed by the block, then
@@ -1207,22 +986,7 @@ public final class RubyContract {
      *          to transform elements
      * @return {@link RubyArray}
      */
-    public <S> RubyArray<E> sortBy(TransformBlock<? super E, ? extends S> block);
-
-    /**
-     * Sorts elements by the ordering of the outputs invoked by given method
-     * name, then puts them into a {@link RubyArray}.
-     * 
-     * @param methodName
-     *          name of a Method
-     * @param args
-     *          arguments of a Method
-     * @return {@link RubyArray}
-     * 
-     * @deprecated since 1.9.0, using Java 8 Lambda instead
-     */
-    @Deprecated
-    public <S> RubyArray<E> sortBy(String methodName, Object... args);
+    public <S> RubyArray<E> sortBy(Function<? super E, ? extends S> block);
 
     /**
      * Takes the first n elements.
@@ -1247,7 +1011,7 @@ public final class RubyContract {
      *          to filter elements
      * @return {@link Enumerable}
      */
-    public Z takeWhile(BooleanBlock<? super E> block);
+    public Z takeWhile(Predicate<? super E> block);
 
     /**
      * Puts all elements into a {@link RubyArray}.
@@ -1294,7 +1058,7 @@ public final class RubyContract {
      *          to yield zipped elements
      */
     public void zip(List<? extends Iterable<? extends E>> others,
-        Block<? super RubyArray<E>> block);
+        Consumer<? super RubyArray<E>> block);
   }
 
   /**

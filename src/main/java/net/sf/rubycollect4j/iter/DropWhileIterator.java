@@ -18,8 +18,8 @@
 package net.sf.rubycollect4j.iter;
 
 import java.util.Iterator;
+import java.util.function.Predicate;
 
-import net.sf.rubycollect4j.block.BooleanBlock;
 import net.sf.rubycollect4j.util.PeekingIterator;
 
 /**
@@ -49,11 +49,11 @@ public final class DropWhileIterator<E> implements Iterator<E> {
    *           if iter or block is null
    */
   public DropWhileIterator(Iterator<? extends E> iter,
-      BooleanBlock<? super E> block) {
+      Predicate<? super E> block) {
     if (iter == null || block == null) throw new NullPointerException();
 
     pIter = new PeekingIterator<E>(iter);
-    while (pIter.hasNext() && block.yield(pIter.peek())) {
+    while (pIter.hasNext() && block.test(pIter.peek())) {
       pIter.next();
     }
   }

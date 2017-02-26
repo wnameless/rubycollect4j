@@ -21,13 +21,13 @@ import static net.sf.rubycollect4j.RubyCollections.rs;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.RubyString;
-import net.sf.rubycollect4j.block.Block;
-import net.sf.rubycollect4j.block.TransformBlock;
 
 /**
  * 
@@ -212,9 +212,9 @@ public final class RubyStrings {
   }
 
   /**
-   * @see net.sf.rubycollect4j.RubyString#eachByte(Block)
+   * @see net.sf.rubycollect4j.RubyString#eachByte(Consumer)
    */
-  public static String eachByte(CharSequence in, Block<Byte> block) {
+  public static String eachByte(CharSequence in, Consumer<Byte> block) {
     return rs(in).eachByte(block).toS();
   }
 
@@ -226,9 +226,9 @@ public final class RubyStrings {
   }
 
   /**
-   * @see net.sf.rubycollect4j.RubyString#eachChar(Block)
+   * @see net.sf.rubycollect4j.RubyString#eachChar(Consumer)
    */
-  public static String eachChar(CharSequence in, Block<String> block) {
+  public static String eachChar(CharSequence in, Consumer<String> block) {
     return rs(in).eachChar(block).toS();
   }
 
@@ -240,9 +240,9 @@ public final class RubyStrings {
   }
 
   /**
-   * @see net.sf.rubycollect4j.RubyString#eachCodepoint(Block)
+   * @see net.sf.rubycollect4j.RubyString#eachCodepoint(Consumer)
    */
-  public static String eachCodepoint(CharSequence in, Block<Integer> block) {
+  public static String eachCodepoint(CharSequence in, Consumer<Integer> block) {
     return rs(in).eachCodepoint(block).toS();
   }
 
@@ -254,9 +254,9 @@ public final class RubyStrings {
   }
 
   /**
-   * @see net.sf.rubycollect4j.RubyString#eachLine(Block)
+   * @see net.sf.rubycollect4j.RubyString#eachLine(Consumer)
    */
-  public static String eachLine(CharSequence in, Block<String> block) {
+  public static String eachLine(CharSequence in, Consumer<String> block) {
     return rs(in).eachLine(block).toS();
   }
 
@@ -268,10 +268,10 @@ public final class RubyStrings {
   }
 
   /**
-   * @see net.sf.rubycollect4j.RubyString#eachLine(String, Block)
+   * @see net.sf.rubycollect4j.RubyString#eachLine(String, Consumer)
    */
   public static String eachLine(CharSequence in, String separator,
-      Block<String> block) {
+      Consumer<String> block) {
     return rs(in).eachLine(separator, block).toS();
   }
 
@@ -341,10 +341,10 @@ public final class RubyStrings {
   }
 
   /**
-   * @see net.sf.rubycollect4j.RubyString#gsub(String, TransformBlock)
+   * @see net.sf.rubycollect4j.RubyString#gsub(String, Function)
    */
   public static String gsub(CharSequence in, String regex,
-      TransformBlock<String, String> block) {
+      Function<String, String> block) {
     return rs(in).gsub(regex, block).toS();
   }
 
@@ -566,9 +566,10 @@ public final class RubyStrings {
   }
 
   /**
-   * @see net.sf.rubycollect4j.RubyString#scan(String, Block)
+   * @see net.sf.rubycollect4j.RubyString#scan(String, Consumer)
    */
-  public static String scan(CharSequence in, String regex, Block<String> block) {
+  public static String scan(CharSequence in, String regex,
+      Consumer<String> block) {
     return rs(in).scan(regex, block).toS();
   }
 
@@ -581,10 +582,10 @@ public final class RubyStrings {
   }
 
   /**
-   * @see net.sf.rubycollect4j.RubyString#scanGroups(String, Block)
+   * @see net.sf.rubycollect4j.RubyString#scanGroups(String, Consumer)
    */
   public static String scanGroups(CharSequence in, String regex,
-      Block<RubyArray<String>> block) {
+      Consumer<RubyArray<String>> block) {
     return rs(in).scanGroups(regex, block).toS();
   }
 
@@ -603,10 +604,10 @@ public final class RubyStrings {
   }
 
   /**
-   * @see net.sf.rubycollect4j.RubyString#scrub(TransformBlock)
+   * @see net.sf.rubycollect4j.RubyString#scrub(Function)
    */
   public static String scrub(CharSequence in,
-      TransformBlock<RubyArray<Byte>, String> block) {
+      Function<RubyArray<Byte>, String> block) {
     return rs(in).scrub(block).toS();
   }
 
@@ -683,14 +684,16 @@ public final class RubyStrings {
   /**
    * @see net.sf.rubycollect4j.RubyString#split(Pattern, int)
    */
-  public static List<String> split(CharSequence in, Pattern pattern, int limit) {
+  public static List<String> split(CharSequence in, Pattern pattern,
+      int limit) {
     return rs(in).split(pattern, limit);
   }
 
   /**
    * @see net.sf.rubycollect4j.RubyString#split(String, int)
    */
-  public static List<String> split(CharSequence in, String delimiter, int limit) {
+  public static List<String> split(CharSequence in, String delimiter,
+      int limit) {
     return rs(in).split(delimiter, limit);
   }
 
@@ -738,10 +741,10 @@ public final class RubyStrings {
   }
 
   /**
-   * @see net.sf.rubycollect4j.RubyString#sub(String, TransformBlock)
+   * @see net.sf.rubycollect4j.RubyString#sub(String, Function)
    */
   public static String sub(CharSequence in, String regex,
-      TransformBlock<String, String> block) {
+      Function<String, String> block) {
     return rs(in).sub(regex, block).toS();
   }
 
@@ -844,10 +847,10 @@ public final class RubyStrings {
   }
 
   /**
-   * @see net.sf.rubycollect4j.RubyString#upto(String, Block)
+   * @see net.sf.rubycollect4j.RubyString#upto(String, Consumer)
    */
   public static String upto(CharSequence in, String otherStr,
-      Block<String> block) {
+      Consumer<String> block) {
     return rs(in).upto(otherStr, block).toS();
   }
 
@@ -860,10 +863,10 @@ public final class RubyStrings {
   }
 
   /**
-   * @see net.sf.rubycollect4j.RubyString#upto(String, boolean, Block)
+   * @see net.sf.rubycollect4j.RubyString#upto(String, boolean, Consumer)
    */
-  public static String upto(CharSequence in, String otherStr,
-      boolean exclusive, Block<String> block) {
+  public static String upto(CharSequence in, String otherStr, boolean exclusive,
+      Consumer<String> block) {
     return rs(in).upto(otherStr, exclusive, block).toS();
   }
 

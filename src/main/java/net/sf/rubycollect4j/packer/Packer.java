@@ -26,10 +26,10 @@ import static net.sf.rubycollect4j.util.ByteUtil.toByteArray;
 import java.nio.ByteOrder;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.RubyString;
-import net.sf.rubycollect4j.block.TransformBlock;
 import net.sf.rubycollect4j.util.ByteUtil;
 
 /**
@@ -82,9 +82,8 @@ public final class Packer {
     for (String template : templateList) {
       Directive d = parseDirective(template);
       template = template.replace(d.toString(), "");
-      int count =
-          template.isEmpty() ? 1 : template.equals("*") ? Integer.MAX_VALUE
-              : rs(template).toI();
+      int count = template.isEmpty() ? 1
+          : template.equals("*") ? Integer.MAX_VALUE : rs(template).toI();
 
       switch (d) {
 
@@ -162,21 +161,21 @@ public final class Packer {
 
   static List<String> parseTemplate(String template) {
     return ra(template.split("(?!^)")).sliceBefore(
-        ra(Directive.values()).map(new TransformBlock<Directive, String>() {
+        ra(Directive.values()).map(new Function<Directive, String>() {
 
           @Override
-          public String yield(Directive item) {
+          public String apply(Directive item) {
             return item.toString();
           }
 
-        }).join("|")).map(new TransformBlock<RubyArray<String>, String>() {
+        }).join("|")).map(new Function<RubyArray<String>, String>() {
 
-      @Override
-      public String yield(RubyArray<String> item) {
-        return item.join();
-      }
+          @Override
+          public String apply(RubyArray<String> item) {
+            return item.join();
+          }
 
-    });
+        });
   }
 
 }

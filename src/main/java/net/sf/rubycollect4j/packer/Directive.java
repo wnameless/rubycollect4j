@@ -30,9 +30,9 @@ import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.Function;
 
 import net.sf.rubycollect4j.RubyArray;
-import net.sf.rubycollect4j.block.TransformBlock;
 import net.sf.rubycollect4j.util.ByteUtil;
 
 /**
@@ -177,12 +177,12 @@ public enum Directive {
    */
   h(false);
 
-  public static final Map<String, Directive> lookup = Hash(
-      ra(Directive.values()).map(
-          new TransformBlock<Directive, Entry<String, Directive>>() {
+  public static final Map<String, Directive> lookup =
+      Hash(ra(Directive.values())
+          .map(new Function<Directive, Entry<String, Directive>>() {
 
             @Override
-            public Entry<String, Directive> yield(Directive item) {
+            public Entry<String, Directive> apply(Directive item) {
               return hp(item.toString(), item);
             }
 
@@ -287,9 +287,8 @@ public enum Directive {
       case b:
         byte[] msb = new byte[bytes.length];
         for (int i = 0; i < msb.length; i++) {
-          msb[i] =
-              (byte) Integer.parseInt(
-                  ByteUtil.toBinaryString(new byte[] { bytes[i] }, false), 2);
+          msb[i] = (byte) Integer.parseInt(
+              ByteUtil.toBinaryString(new byte[] { bytes[i] }, false), 2);
         }
         return new String(msb, Charset.forName("ISO-8859-1"));
       case H:
@@ -297,9 +296,8 @@ public enum Directive {
       case h:
         byte[] lnf = new byte[bytes.length];
         for (int i = 0; i < lnf.length; i++) {
-          lnf[i] =
-              (byte) Integer.parseInt(
-                  ByteUtil.toHexString(new byte[] { bytes[i] }, false), 16);
+          lnf[i] = (byte) Integer.parseInt(
+              ByteUtil.toHexString(new byte[] { bytes[i] }, false), 16);
         }
         return new String(lnf, Charset.forName("ISO-8859-1"));
     }
@@ -421,8 +419,7 @@ public enum Directive {
       case G:
         if (o instanceof Number) return ((Number) o).doubleValue();
         if (o instanceof Boolean) return ((Boolean) o) ? 1.0 : 0.0;
-        if (o instanceof Character)
-          return (double) ((Character) o).charValue();
+        if (o instanceof Character) return (double) ((Character) o).charValue();
         break;
       case F:
       case f:
@@ -445,17 +442,14 @@ public enum Directive {
    */
   public static boolean verify(String template) {
     return qr(
-        "(("
-            + ra(Directive.values()).map(
-                new TransformBlock<Directive, String>() {
+        "((" + ra(Directive.values()).map(new Function<Directive, String>() {
 
-                  @Override
-                  public String yield(Directive item) {
-                    return item.toString();
-                  }
+          @Override
+          public String apply(Directive item) {
+            return item.toString();
+          }
 
-                }).join("|") + ")(([1-9]\\d*)?\\*?)?)+").matcher(template)
-        .matches();
+        }).join("|") + ")(([1-9]\\d*)?\\*?)?)+").matcher(template).matches();
   }
 
   @Override

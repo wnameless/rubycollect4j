@@ -167,22 +167,22 @@ public class DirectiveTest {
     assertEquals((short) 123, Directive.sl.cast((char) 123));
     assertEquals("123", Directive.sl.cast("123"));
 
-    assertEquals((int) 123, Directive.l.cast(123));
-    assertEquals((int) 0, Directive.l.cast(false));
-    assertEquals((int) 1, Directive.l.cast(true));
-    assertEquals((int) 123, Directive.l.cast((char) 123));
+    assertEquals(123, Directive.l.cast(123));
+    assertEquals(0, Directive.l.cast(false));
+    assertEquals(1, Directive.l.cast(true));
+    assertEquals(123, Directive.l.cast((char) 123));
     assertEquals("123", Directive.l.cast("123"));
 
-    assertEquals((int) 123, Directive.lb.cast(123));
-    assertEquals((int) 0, Directive.lb.cast(false));
-    assertEquals((int) 1, Directive.lb.cast(true));
-    assertEquals((int) 123, Directive.lb.cast((char) 123));
+    assertEquals(123, Directive.lb.cast(123));
+    assertEquals(0, Directive.lb.cast(false));
+    assertEquals(1, Directive.lb.cast(true));
+    assertEquals(123, Directive.lb.cast((char) 123));
     assertEquals("123", Directive.lb.cast("123"));
 
-    assertEquals((int) 123, Directive.ll.cast(123));
-    assertEquals((int) 0, Directive.ll.cast(false));
-    assertEquals((int) 1, Directive.ll.cast(true));
-    assertEquals((int) 123, Directive.ll.cast((char) 123));
+    assertEquals(123, Directive.ll.cast(123));
+    assertEquals(0, Directive.ll.cast(false));
+    assertEquals(1, Directive.ll.cast(true));
+    assertEquals(123, Directive.ll.cast((char) 123));
     assertEquals("123", Directive.ll.cast("123"));
 
     assertEquals((long) 123, Directive.q.cast(123));
@@ -251,10 +251,10 @@ public class DirectiveTest {
     assertEquals((float) 123, Directive.g.cast((char) 123));
     assertEquals("123", Directive.g.cast("123"));
 
-    assertEquals((int) 123, Directive.U.cast(123));
-    assertEquals((int) 0, Directive.U.cast(false));
-    assertEquals((int) 1, Directive.U.cast(true));
-    assertEquals((int) 123, Directive.U.cast((char) 123));
+    assertEquals(123, Directive.U.cast(123));
+    assertEquals(0, Directive.U.cast(false));
+    assertEquals(1, Directive.U.cast(true));
+    assertEquals(123, Directive.U.cast((char) 123));
     assertEquals("123", Directive.U.cast("123"));
   }
 

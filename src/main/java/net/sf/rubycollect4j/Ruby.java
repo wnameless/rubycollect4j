@@ -20,12 +20,11 @@ package net.sf.rubycollect4j;
 
 import java.util.List;
 import java.util.Map.Entry;
-
-import net.sf.rubycollect4j.block.Block;
-import net.sf.rubycollect4j.block.BooleanBlock;
-import net.sf.rubycollect4j.block.EntryBooleanBlock;
-import net.sf.rubycollect4j.block.TransformBlock;
-import net.sf.rubycollect4j.block.WithIndexBlock;
+import java.util.function.BiConsumer;
+import java.util.function.BiPredicate;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * 
@@ -51,8 +50,8 @@ public final class Ruby {
    * @param <E>
    *          the type of the elements
    */
-  public interface Enumerable<E> extends
-      RubyContract.Enumerable<E, Ruby.Enumerator<?>, RubyArray<?>> {
+  public interface Enumerable<E>
+      extends RubyContract.Enumerable<E, Ruby.Enumerator<?>, RubyArray<?>> {
 
     /**
      * {@inheritDoc}
@@ -61,19 +60,7 @@ public final class Ruby {
      */
     @Override
     public <S> Ruby.Enumerator<Entry<S, RubyArray<E>>> chunk(
-        TransformBlock<? super E, ? extends S> block);
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @return {@link Ruby.Enumerator}
-     * 
-     * @deprecated since 1.9.0, using Java 8 Lambda instead
-     */
-    @Deprecated
-    @Override
-    public <S> Ruby.Enumerator<Entry<S, RubyArray<E>>> chunk(
-        final String methodName, final Object... args);
+        Function<? super E, ? extends S> block);
 
     /**
      * {@inheritDoc}
@@ -82,7 +69,7 @@ public final class Ruby {
      */
     @Override
     public Ruby.Enumerator<RubyArray<E>> chunkWhile(
-        EntryBooleanBlock<? super E, ? super E> block);
+        BiPredicate<? super E, ? super E> block);
 
     /**
      * {@inheritDoc}
@@ -98,19 +85,7 @@ public final class Ruby {
      * @return {@link RubyArray}
      */
     @Override
-    public <S> RubyArray<S> collect(TransformBlock<? super E, ? extends S> block);
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @return {@link RubyArray}
-     * 
-     * @deprecated since 1.9.0, using Java 8 Lambda instead
-     */
-    @Deprecated
-    @Override
-    public <S> RubyArray<S> collect(final String methodName,
-        final Object... args);
+    public <S> RubyArray<S> collect(Function<? super E, ? extends S> block);
 
     /**
      * {@inheritDoc}
@@ -127,7 +102,7 @@ public final class Ruby {
      */
     @Override
     public <S> RubyArray<S> collectConcat(
-        TransformBlock<? super E, ? extends List<? extends S>> block);
+        Function<? super E, ? extends List<? extends S>> block);
 
     /**
      * {@inheritDoc}
@@ -175,7 +150,7 @@ public final class Ruby {
      * @return {@link RubyArray}
      */
     @Override
-    public RubyArray<E> dropWhile(BooleanBlock<? super E> block);
+    public RubyArray<E> dropWhile(Predicate<? super E> block);
 
     /**
      * {@inheritDoc}
@@ -191,7 +166,7 @@ public final class Ruby {
      * @return {@link Ruby.Enumerable}
      */
     @Override
-    public Ruby.Enumerable<E> each(Block<? super E> block);
+    public Ruby.Enumerable<E> each(Consumer<? super E> block);
 
     /**
      * {@inheritDoc}
@@ -202,7 +177,7 @@ public final class Ruby {
     public Ruby.Enumerator<RubyArray<E>> eachCons(int n);
 
     @Override
-    public void eachCons(int n, Block<? super RubyArray<E>> block);
+    public void eachCons(int n, Consumer<? super RubyArray<E>> block);
 
     /**
      * {@inheritDoc}
@@ -218,7 +193,7 @@ public final class Ruby {
      * @return {@link Ruby.Enumerable}
      */
     @Override
-    public Ruby.Enumerable<E> eachEntry(Block<? super E> block);
+    public Ruby.Enumerable<E> eachEntry(Consumer<? super E> block);
 
     /**
      * {@inheritDoc}
@@ -242,7 +217,8 @@ public final class Ruby {
      * @return {@link Ruby.Enumerable}
      */
     @Override
-    public Ruby.Enumerable<E> eachWithIndex(WithIndexBlock<? super E> block);
+    public Ruby.Enumerable<E> eachWithIndex(
+        BiConsumer<? super E, Integer> block);
 
     /**
      * {@inheritDoc}
@@ -274,7 +250,7 @@ public final class Ruby {
      * @return {@link RubyArray}
      */
     @Override
-    public RubyArray<E> findAll(BooleanBlock<? super E> block);
+    public RubyArray<E> findAll(Predicate<? super E> block);
 
     /**
      * {@inheritDoc}
@@ -299,7 +275,7 @@ public final class Ruby {
      */
     @Override
     public <S> RubyArray<S> flatMap(
-        TransformBlock<? super E, ? extends List<? extends S>> block);
+        Function<? super E, ? extends List<? extends S>> block);
 
     /**
      * {@inheritDoc}
@@ -316,19 +292,7 @@ public final class Ruby {
      */
     @Override
     public <S> RubyArray<S> grep(String regex,
-        TransformBlock<? super E, ? extends S> block);
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @return {@link RubyArray}
-     * 
-     * @deprecated since 1.9.0, using Java 8 Lambda instead
-     */
-    @Deprecated
-    @Override
-    public <S> RubyArray<S> grep(String regex, final String methodName,
-        final Object... args);
+        Function<? super E, ? extends S> block);
 
     /**
      * {@inheritDoc}
@@ -345,7 +309,7 @@ public final class Ruby {
      */
     @Override
     public <S> RubyArray<S> grepV(String regex,
-        TransformBlock<? super E, ? extends S> block);
+        Function<? super E, ? extends S> block);
 
     /**
      * {@inheritDoc}
@@ -369,18 +333,7 @@ public final class Ruby {
      * @return {@link RubyArray}
      */
     @Override
-    public <S> RubyArray<S> map(TransformBlock<? super E, ? extends S> block);
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @return {@link RubyArray}
-     * 
-     * @deprecated since 1.9.0, using Java 8 Lambda instead
-     */
-    @Deprecated
-    @Override
-    public <S> RubyArray<S> map(String methodName, Object... args);
+    public <S> RubyArray<S> map(Function<? super E, ? extends S> block);
 
     /**
      * {@inheritDoc}
@@ -428,7 +381,7 @@ public final class Ruby {
      * @return {@link RubyArray}
      */
     @Override
-    public RubyArray<E> reject(BooleanBlock<? super E> block);
+    public RubyArray<E> reject(Predicate<? super E> block);
 
     /**
      * {@inheritDoc}
@@ -444,7 +397,7 @@ public final class Ruby {
      * @return {@link Ruby.Enumerable}
      */
     @Override
-    public Ruby.Enumerable<E> reverseEach(Block<? super E> block);
+    public Ruby.Enumerable<E> reverseEach(Consumer<? super E> block);
 
     /**
      * {@inheritDoc}
@@ -460,7 +413,7 @@ public final class Ruby {
      * @return {@link RubyArray}
      */
     @Override
-    public RubyArray<E> select(BooleanBlock<? super E> block);
+    public RubyArray<E> select(Predicate<? super E> block);
 
     /**
      * {@inheritDoc}
@@ -468,8 +421,7 @@ public final class Ruby {
      * @return {@link Ruby.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<RubyArray<E>> sliceAfter(
-        BooleanBlock<? super E> block);
+    public Ruby.Enumerator<RubyArray<E>> sliceAfter(Predicate<? super E> block);
 
     /**
      * {@inheritDoc}
@@ -486,7 +438,7 @@ public final class Ruby {
      */
     @Override
     public Ruby.Enumerator<RubyArray<E>> sliceBefore(
-        BooleanBlock<? super E> block);
+        Predicate<? super E> block);
 
     /**
      * {@inheritDoc}
@@ -503,7 +455,7 @@ public final class Ruby {
      */
     @Override
     public Ruby.Enumerator<RubyArray<E>> sliceWhen(
-        EntryBooleanBlock<? super E, ? super E> block);
+        BiPredicate<? super E, ? super E> block);
 
     /**
      * {@inheritDoc}
@@ -535,7 +487,7 @@ public final class Ruby {
      * @return {@link RubyArray}
      */
     @Override
-    public RubyArray<E> takeWhile(BooleanBlock<? super E> block);
+    public RubyArray<E> takeWhile(Predicate<? super E> block);
 
     /**
      * {@inheritDoc}
@@ -585,8 +537,7 @@ public final class Ruby {
    * @param <E>
    *          the type of the elements
    */
-  public interface LazyEnumerator<E>
-      extends
+  public interface LazyEnumerator<E> extends
       RubyContract.Enumerator<E, Ruby.LazyEnumerator<?>, Ruby.LazyEnumerator<?>> {
 
     /**
@@ -596,19 +547,7 @@ public final class Ruby {
      */
     @Override
     public <S> Ruby.LazyEnumerator<Entry<S, RubyArray<E>>> chunk(
-        TransformBlock<? super E, ? extends S> block);
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @return {@link Ruby.LazyEnumerator}
-     * 
-     * @deprecated since 1.9.0, using Java 8 Lambda instead
-     */
-    @Deprecated
-    @Override
-    public <S> Ruby.LazyEnumerator<Entry<S, RubyArray<E>>> chunk(
-        final String methodName, final Object... args);
+        Function<? super E, ? extends S> block);
 
     /**
      * {@inheritDoc}
@@ -625,19 +564,7 @@ public final class Ruby {
      */
     @Override
     public <S> Ruby.LazyEnumerator<S> collect(
-        TransformBlock<? super E, ? extends S> block);
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @return {@link Ruby.LazyEnumerator}
-     * 
-     * @deprecated since 1.9.0, using Java 8 Lambda instead
-     */
-    @Deprecated
-    @Override
-    public <S> Ruby.LazyEnumerator<S> collect(final String methodName,
-        final Object... args);
+        Function<? super E, ? extends S> block);
 
     /**
      * {@inheritDoc}
@@ -654,7 +581,7 @@ public final class Ruby {
      */
     @Override
     public <S> Ruby.LazyEnumerator<S> collectConcat(
-        TransformBlock<? super E, ? extends List<? extends S>> block);
+        Function<? super E, ? extends List<? extends S>> block);
 
     /**
      * {@inheritDoc}
@@ -702,7 +629,7 @@ public final class Ruby {
      * @return {@link Ruby.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> dropWhile(BooleanBlock<? super E> block);
+    public Ruby.LazyEnumerator<E> dropWhile(Predicate<? super E> block);
 
     /**
      * {@inheritDoc}
@@ -718,7 +645,7 @@ public final class Ruby {
      * @return {@link Ruby.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> each(Block<? super E> block);
+    public Ruby.LazyEnumerator<E> each(Consumer<? super E> block);
 
     /**
      * {@inheritDoc}
@@ -742,7 +669,7 @@ public final class Ruby {
      * @return {@link Ruby.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> eachEntry(Block<? super E> block);
+    public Ruby.LazyEnumerator<E> eachEntry(Consumer<? super E> block);
 
     /**
      * {@inheritDoc}
@@ -766,7 +693,8 @@ public final class Ruby {
      * @return {@link Ruby.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> eachWithIndex(WithIndexBlock<? super E> block);
+    public Ruby.LazyEnumerator<E> eachWithIndex(
+        BiConsumer<? super E, Integer> block);
 
     /**
      * {@inheritDoc}
@@ -798,7 +726,7 @@ public final class Ruby {
      * @return {@link Ruby.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> findAll(BooleanBlock<? super E> block);
+    public Ruby.LazyEnumerator<E> findAll(Predicate<? super E> block);
 
     /**
      * {@inheritDoc}
@@ -823,7 +751,7 @@ public final class Ruby {
      */
     @Override
     public <S> Ruby.LazyEnumerator<S> flatMap(
-        TransformBlock<? super E, ? extends List<? extends S>> block);
+        Function<? super E, ? extends List<? extends S>> block);
 
     /**
      * {@inheritDoc}
@@ -840,19 +768,7 @@ public final class Ruby {
      */
     @Override
     public <S> Ruby.LazyEnumerator<S> grep(String regex,
-        TransformBlock<? super E, ? extends S> block);
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @return {@link Ruby.LazyEnumerator}
-     * 
-     * @deprecated since 1.9.0, using Java 8 Lambda instead
-     */
-    @Deprecated
-    @Override
-    public <S> Ruby.LazyEnumerator<S> grep(String regex,
-        final String methodName, final Object... args);
+        Function<? super E, ? extends S> block);
 
     /**
      * {@inheritDoc}
@@ -877,18 +793,7 @@ public final class Ruby {
      */
     @Override
     public <S> Ruby.LazyEnumerator<S> map(
-        TransformBlock<? super E, ? extends S> block);
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @return {@link Ruby.LazyEnumerator}
-     * 
-     * @deprecated since 1.9.0, using Java 8 Lambda instead
-     */
-    @Deprecated
-    @Override
-    public <S> Ruby.LazyEnumerator<S> map(String methodName, Object... args);
+        Function<? super E, ? extends S> block);
 
     /**
      * {@inheritDoc}
@@ -936,7 +841,7 @@ public final class Ruby {
      * @return {@link Ruby.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> reject(BooleanBlock<? super E> block);
+    public Ruby.LazyEnumerator<E> reject(Predicate<? super E> block);
 
     /**
      * {@inheritDoc}
@@ -952,7 +857,7 @@ public final class Ruby {
      * @return {@link Ruby.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> reverseEach(Block<? super E> block);
+    public Ruby.LazyEnumerator<E> reverseEach(Consumer<? super E> block);
 
     /**
      * {@inheritDoc}
@@ -968,7 +873,7 @@ public final class Ruby {
      * @return {@link Ruby.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> select(BooleanBlock<? super E> block);
+    public Ruby.LazyEnumerator<E> select(Predicate<? super E> block);
 
     /**
      * {@inheritDoc}
@@ -977,7 +882,7 @@ public final class Ruby {
      */
     @Override
     public Ruby.LazyEnumerator<RubyArray<E>> sliceBefore(
-        BooleanBlock<? super E> block);
+        Predicate<? super E> block);
 
     /**
      * {@inheritDoc}
@@ -1017,7 +922,7 @@ public final class Ruby {
      * @return {@link Ruby.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> takeWhile(BooleanBlock<? super E> block);
+    public Ruby.LazyEnumerator<E> takeWhile(Predicate<? super E> block);
 
     /**
      * {@inheritDoc}

@@ -20,10 +20,10 @@ package net.sf.rubycollect4j.iter;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 
 import java.util.Iterator;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 import net.sf.rubycollect4j.RubyArray;
-import net.sf.rubycollect4j.block.BooleanBlock;
 import net.sf.rubycollect4j.util.PeekingIterator;
 
 /**
@@ -41,7 +41,7 @@ import net.sf.rubycollect4j.util.PeekingIterator;
 public final class SliceAfterIterator<E> implements Iterator<RubyArray<E>> {
 
   private final PeekingIterator<E> pIter;
-  private final BooleanBlock<? super E> block;
+  private final Predicate<? super E> block;
   private final Pattern pattern;
 
   /**
@@ -55,7 +55,7 @@ public final class SliceAfterIterator<E> implements Iterator<RubyArray<E>> {
    *           if iter or block is null
    */
   public SliceAfterIterator(Iterator<? extends E> iter,
-      BooleanBlock<? super E> block) {
+      Predicate<? super E> block) {
     if (iter == null || block == null) throw new NullPointerException();
 
     pIter = new PeekingIterator<E>(iter);
@@ -86,8 +86,8 @@ public final class SliceAfterIterator<E> implements Iterator<RubyArray<E>> {
     if (block != null) {
       do {
         element.add(pIter.next());
-        if (block.yield(element.last())) return element;
-      } while (pIter.hasNext() && !block.yield(pIter.peek()));
+        if (block.test(element.last())) return element;
+      } while (pIter.hasNext() && !block.test(pIter.peek()));
     } else {
       do {
         element.add(pIter.next());

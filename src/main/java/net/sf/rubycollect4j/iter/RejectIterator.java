@@ -18,8 +18,8 @@
 package net.sf.rubycollect4j.iter;
 
 import java.util.Iterator;
+import java.util.function.Predicate;
 
-import net.sf.rubycollect4j.block.BooleanBlock;
 import net.sf.rubycollect4j.util.PeekingIterator;
 
 /**
@@ -36,7 +36,7 @@ import net.sf.rubycollect4j.util.PeekingIterator;
 public final class RejectIterator<E> implements Iterator<E> {
 
   private final PeekingIterator<E> pIter;
-  private final BooleanBlock<? super E> block;
+  private final Predicate<? super E> block;
 
   /**
    * Creates a {@link RejectIterator}.
@@ -49,7 +49,7 @@ public final class RejectIterator<E> implements Iterator<E> {
    *           if iter or block is null
    */
   public RejectIterator(Iterator<? extends E> iter,
-      BooleanBlock<? super E> block) {
+      Predicate<? super E> block) {
     if (iter == null || block == null) throw new NullPointerException();
 
     pIter = new PeekingIterator<E>(iter);
@@ -57,7 +57,7 @@ public final class RejectIterator<E> implements Iterator<E> {
   }
 
   private void advanceCursor() {
-    while (pIter.hasNext() && block.yield(pIter.peek())) {
+    while (pIter.hasNext() && block.test(pIter.peek())) {
       pIter.next();
     }
   }

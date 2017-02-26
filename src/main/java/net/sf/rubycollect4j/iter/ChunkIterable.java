@@ -19,9 +19,9 @@ package net.sf.rubycollect4j.iter;
 
 import java.util.Iterator;
 import java.util.Map.Entry;
+import java.util.function.Function;
 
 import net.sf.rubycollect4j.RubyArray;
-import net.sf.rubycollect4j.block.TransformBlock;
 
 /**
  * 
@@ -38,11 +38,11 @@ import net.sf.rubycollect4j.block.TransformBlock;
  * @author Wei-Ming Wu
  * 
  */
-public final class ChunkIterable<E, K> implements
-    Iterable<Entry<K, RubyArray<E>>> {
+public final class ChunkIterable<E, K>
+    implements Iterable<Entry<K, RubyArray<E>>> {
 
   private final Iterable<? extends E> iter;
-  private final TransformBlock<? super E, ? extends K> block;
+  private final Function<? super E, ? extends K> block;
 
   /**
    * Creates a {@link ChunkIterable}.
@@ -55,7 +55,7 @@ public final class ChunkIterable<E, K> implements
    *           if iterable or block is null
    */
   public ChunkIterable(Iterable<? extends E> iter,
-      TransformBlock<? super E, ? extends K> block) {
+      Function<? super E, ? extends K> block) {
     if (iter == null || block == null) throw new NullPointerException();
 
     this.iter = iter;

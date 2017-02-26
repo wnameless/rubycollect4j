@@ -22,29 +22,21 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
+import java.util.function.Function;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import net.sf.rubycollect4j.block.TransformBlock;
 
 public class TransformIterableTest {
 
   TransformIterable<Integer, Double> iter;
   List<Integer> list;
-  TransformBlock<Integer, Double> block;
+  Function<Integer, Double> block;
 
   @Before
   public void setUp() throws Exception {
     list = ra(1, 2, 3, 4);
-    block = new TransformBlock<Integer, Double>() {
-
-      @Override
-      public Double yield(Integer item) {
-        return item.doubleValue();
-      }
-
-    };
+    block = item -> item.doubleValue();
     iter = new TransformIterable<Integer, Double>(list, block);
   }
 

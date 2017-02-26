@@ -21,28 +21,23 @@ import static net.sf.rubycollect4j.RubyCollections.ra;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import net.sf.rubycollect4j.RubyArray;
-import net.sf.rubycollect4j.block.EntryBooleanBlock;
+
+import java.util.function.BiPredicate;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import net.sf.rubycollect4j.RubyArray;
 
 public class ChunkWhileIteratorTest {
 
   ChunkWhileIterator<Integer> iter;
   RubyArray<Integer> nums;
-  EntryBooleanBlock<Integer, Integer> block;
+  BiPredicate<Integer, Integer> block;
 
   @Before
   public void setUp() throws Exception {
-    block = new EntryBooleanBlock<Integer, Integer>() {
-
-      @Override
-      public boolean yield(Integer item1, Integer item2) {
-        return item1 + 1 == item2;
-      }
-
-    };
+    block = (item1, item2) -> item1 + 1 == item2;
     nums = ra(1, 2, 4, 9, 10, 11, 12, 15, 16, 19, 20, 21);
     iter = new ChunkWhileIterator<Integer>(nums.iterator(), block);
   }

@@ -35,18 +35,18 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.xml.bind.TypeConstraintException;
 
-import net.sf.rubycollect4j.RubyArray;
-import net.sf.rubycollect4j.block.Block;
-import net.sf.rubycollect4j.block.TransformBlock;
-import net.sf.rubycollect4j.succ.StringSuccessor;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import net.sf.rubycollect4j.RubyArray;
+import net.sf.rubycollect4j.succ.StringSuccessor;
 
 public class RubyStringsTest {
 
@@ -121,7 +121,8 @@ public class RubyStringsTest {
 
   @Test
   public void testCenterWithPadstr() {
-    assertEquals("1231231hello12312312", RubyStrings.center("hello", 20, "123"));
+    assertEquals("1231231hello12312312",
+        RubyStrings.center("hello", 20, "123"));
     assertEquals("12312312311231231231", RubyStrings.center("", 20, "123"));
   }
 
@@ -257,14 +258,7 @@ public class RubyStringsTest {
   @Test
   public void testEachBytesWithBlock() {
     final RubyArray<Integer> ints = newRubyArray();
-    assertSame(rs, RubyStrings.eachByte(rs, new Block<Byte>() {
-
-      @Override
-      public void yield(Byte item) {
-        ints.add((int) item);
-      }
-
-    }));
+    assertSame(rs, RubyStrings.eachByte(rs, item -> ints.add((int) item)));
     assertEquals(ra(97, 98, 99), ints);
   }
 
@@ -277,14 +271,7 @@ public class RubyStringsTest {
   @Test
   public void testEachCharsWithBlock() {
     final RubyArray<String> chars = newRubyArray();
-    assertSame(rs, RubyStrings.eachChar(rs, new Block<String>() {
-
-      @Override
-      public void yield(String item) {
-        chars.add(item);
-      }
-
-    }));
+    assertSame(rs, RubyStrings.eachChar(rs, item -> chars.add(item)));
     assertEquals(ra("a", "b", "c"), chars);
   }
 
@@ -297,14 +284,7 @@ public class RubyStringsTest {
   @Test
   public void testEachCodepointWithBlock() {
     final RubyArray<Integer> ints = newRubyArray();
-    assertSame(rs, RubyStrings.eachCodepoint(rs, new Block<Integer>() {
-
-      @Override
-      public void yield(Integer item) {
-        ints.add(item);
-      }
-
-    }));
+    assertSame(rs, RubyStrings.eachCodepoint(rs, item -> ints.add(item)));
     assertEquals(ra(97, 98, 99), ints);
   }
 
@@ -318,14 +298,7 @@ public class RubyStringsTest {
   public void testEachLineWithBlock() {
     rs = "a\n\r\nbc\n";
     final RubyArray<String> lines = newRubyArray();
-    assertSame(rs, RubyStrings.eachLine(rs, new Block<String>() {
-
-      @Override
-      public void yield(String item) {
-        lines.add(item);
-      }
-
-    }));
+    assertSame(rs, RubyStrings.eachLine(rs, item -> lines.add(item)));
     assertEquals(ra("a", "\r", "bc"), lines);
   }
 
@@ -344,25 +317,13 @@ public class RubyStringsTest {
   public void testEachLineWithSeparatorAndBlock() {
     rs = "a\n\r\nbc\n";
     final RubyArray<String> lines = newRubyArray();
-    assertSame(rs, RubyStrings.eachLine(rs, "\r", new Block<String>() {
-
-      @Override
-      public void yield(String item) {
-        lines.add(item);
-      }
-
-    }));
+    assertSame(rs, RubyStrings.eachLine(rs, "\r", item -> lines.add(item)));
     assertEquals(ra("a\n", "\nbc\n"), lines);
   }
 
   @Test(expected = TypeConstraintException.class)
   public void testEachLineWithSeparatorAndBlockException() {
-    RubyStrings.eachLine(rs, (String) null, new Block<String>() {
-
-      @Override
-      public void yield(String item) {}
-
-    });
+    RubyStrings.eachLine(rs, (String) null, item -> {});
   }
 
   @Test
@@ -455,27 +416,13 @@ public class RubyStringsTest {
 
   @Test
   public void testGsubWithBlock() {
-    assertEquals("ab40c560", RubyStrings.gsub("ab4c56", "\\d+",
-        new TransformBlock<String, String>() {
-
-          @Override
-          public String yield(String item) {
-            return item + "0";
-          }
-
-        }));
+    assertEquals("ab40c560",
+        RubyStrings.gsub("ab4c56", "\\d+", item -> item + "0"));
   }
 
   @Test(expected = TypeConstraintException.class)
   public void testGsubWithBlockException() {
-    RubyStrings.gsub("ab4c56", null, new TransformBlock<String, String>() {
-
-      @Override
-      public String yield(String item) {
-        return item + "0";
-      }
-
-    });
+    RubyStrings.gsub("ab4c56", null, item -> item + "0");
   }
 
   @Test
@@ -597,7 +544,8 @@ public class RubyStringsTest {
 
   @Test
   public void testLjustWithPadstr() {
-    assertEquals("hello123412341234123", RubyStrings.ljust("hello", 20, "1234"));
+    assertEquals("hello123412341234123",
+        RubyStrings.ljust("hello", 20, "1234"));
   }
 
   @Test(expected = TypeConstraintException.class)
@@ -768,7 +716,8 @@ public class RubyStringsTest {
   @Test
   public void testRjustWithPadstr() {
     assertEquals("hello", RubyStrings.rjust("hello", -1, "1234"));
-    assertEquals("123412341234123hello", RubyStrings.rjust("hello", 20, "1234"));
+    assertEquals("123412341234123hello",
+        RubyStrings.rjust("hello", 20, "1234"));
   }
 
   @Test
@@ -784,8 +733,10 @@ public class RubyStringsTest {
 
   @Test
   public void testRpartitionWithPattern() {
-    assertEquals(ra("he", "ll", "o"), RubyStrings.rpartition("hello", qr(".l")));
-    assertEquals(ra("", "", "hello"), RubyStrings.rpartition("hello", qr(".x")));
+    assertEquals(ra("he", "ll", "o"),
+        RubyStrings.rpartition("hello", qr(".l")));
+    assertEquals(ra("", "", "hello"),
+        RubyStrings.rpartition("hello", qr(".x")));
   }
 
   @Test(expected = TypeConstraintException.class)
@@ -815,14 +766,7 @@ public class RubyStringsTest {
   public void testScanWithBlock() {
     final RubyArray<String> strs = newRubyArray();
     rs = "cruel world";
-    assertSame(rs, RubyStrings.scan(rs, "\\w+", new Block<String>() {
-
-      @Override
-      public void yield(String item) {
-        strs.add(item);
-      }
-
-    }));
+    assertSame(rs, RubyStrings.scan(rs, "\\w+", item -> strs.add(item)));
     assertEquals(ra("cruel", "world"), strs);
   }
 
@@ -852,14 +796,7 @@ public class RubyStringsTest {
     final RubyArray<String> strs = newRubyArray();
     rs = "cruel world";
     assertSame(rs,
-        RubyStrings.scanGroups(rs, "(...)", new Block<RubyArray<String>>() {
-
-          @Override
-          public void yield(RubyArray<String> item) {
-            strs.concat(item);
-          }
-
-        }));
+        RubyStrings.scanGroups(rs, "(...)", item -> strs.concat(item)));
     assertEquals(ra("cru", "el ", "wor"), strs);
   }
 
@@ -883,17 +820,11 @@ public class RubyStringsTest {
 
   @Test
   public void testScrubWithBlock() {
-    assertEquals("abcあ?", RubyStrings.scrub("abc\u3042\0",
-        new TransformBlock<RubyArray<Byte>, String>() {
-
-          @Override
-          public String yield(RubyArray<Byte> item) {
-            assertEquals(1, item.size());
-            assertEquals(new Byte((byte) 0), item.get(0));
-            return "?";
-          }
-
-        }));
+    assertEquals("abcあ?", RubyStrings.scrub("abc\u3042\0", item -> {
+      assertEquals(1, item.size());
+      assertEquals(new Byte((byte) 0), item.get(0));
+      return "?";
+    }));
   }
 
   @Test
@@ -1071,22 +1002,14 @@ public class RubyStringsTest {
 
   @Test
   public void testSubWithBlock() {
-    TransformBlock<String, String> block =
-        new TransformBlock<String, String>() {
-
-          @Override
-          public String yield(String item) {
-            return "0";
-
-          }
-        };
+    Function<String, String> block = item -> "0";
     assertEquals("h0llo", RubyStrings.sub("hello", "[aeiou]", block));
     assertEquals("hello", RubyStrings.sub("hello", "x", block));
   }
 
   @Test(expected = TypeConstraintException.class)
   public void testSubWithBlockException() {
-    RubyStrings.sub(rs, null, (TransformBlock<String, String>) null);
+    RubyStrings.sub(rs, null, (Function<String, String>) null);
   }
 
   @Test
@@ -1221,8 +1144,10 @@ public class RubyStringsTest {
   public void testUnpack() {
     assertEquals(ra("abc", "abc "),
         RubyStrings.unpack("abc \0\0abc \0\0", "A6Z6"));
-    assertEquals(ra("abc", " \000\000"), RubyStrings.unpack("abc \0\0", "a3a3"));
-    assertEquals(ra("abc ", "abc "), RubyStrings.unpack("abc \0abc \0", "Z*Z*"));
+    assertEquals(ra("abc", " \000\000"),
+        RubyStrings.unpack("abc \0\0", "a3a3"));
+    assertEquals(ra("abc ", "abc "),
+        RubyStrings.unpack("abc \0abc \0", "Z*Z*"));
     assertEquals(ra("10000110", "01100001"), RubyStrings.unpack("aa", "b8B8"));
     assertEquals(ra("16", "61", (byte) 97), RubyStrings.unpack("aaa", "h2H2c"));
   }
@@ -1267,39 +1192,25 @@ public class RubyStringsTest {
   @Test
   public void testUptoWithBlock() {
     final RubyArray<String> strs = newRubyArray();
-    assertSame(rs, RubyStrings.upto(rs, "abe", new Block<String>() {
-
-      @Override
-      public void yield(String item) {
-        strs.add(item);
-      }
-
-    }));
+    assertSame(rs, RubyStrings.upto(rs, "abe", item -> strs.add(item)));
     assertEquals(ra("abc", "abd", "abe"), strs);
   }
 
   @Test(expected = TypeConstraintException.class)
   public void testUptoWithBlockException() {
-    RubyStrings.upto(rs, null, (Block<String>) null);
+    RubyStrings.upto(rs, null, (Consumer<String>) null);
   }
 
   @Test
   public void testUptoWithExclusiveAndBlock() {
     final RubyArray<String> strs = newRubyArray();
-    assertSame(rs, RubyStrings.upto(rs, "abe", true, new Block<String>() {
-
-      @Override
-      public void yield(String item) {
-        strs.add(item);
-      }
-
-    }));
+    assertSame(rs, RubyStrings.upto(rs, "abe", true, item -> strs.add(item)));
     assertEquals(ra("abc", "abd"), strs);
   }
 
   @Test(expected = TypeConstraintException.class)
   public void testUptoWithExclusiveAndBlockException() {
-    RubyStrings.upto(rs, null, true, (Block<String>) null);
+    RubyStrings.upto(rs, null, true, (Consumer<String>) null);
   }
 
   @Test

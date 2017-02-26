@@ -18,12 +18,11 @@
 package net.sf.rubycollect4j.iter;
 
 import java.util.Iterator;
-
-import net.sf.rubycollect4j.block.TransformBlock;
+import java.util.function.Function;
 
 /**
  * {@link TransformIterator} converts any type of Iterator to another type by
- * given {@link TransformBlock}.
+ * given {@link Function}.
  * 
  * @param <E>
  *          the type of the elements
@@ -36,7 +35,7 @@ import net.sf.rubycollect4j.block.TransformBlock;
 public final class TransformIterator<E, S> implements Iterator<S> {
 
   private final Iterator<? extends E> iter;
-  private final TransformBlock<? super E, ? extends S> block;
+  private final Function<? super E, ? extends S> block;
 
   /**
    * Creates a {@link TransformIterator}.
@@ -49,7 +48,7 @@ public final class TransformIterator<E, S> implements Iterator<S> {
    *           if iter or block is null
    */
   public TransformIterator(Iterator<? extends E> iter,
-      TransformBlock<? super E, ? extends S> block) {
+      Function<? super E, ? extends S> block) {
     if (iter == null || block == null) throw new NullPointerException();
 
     this.iter = iter;
@@ -63,7 +62,7 @@ public final class TransformIterator<E, S> implements Iterator<S> {
 
   @Override
   public S next() {
-    return block.yield(iter.next());
+    return block.apply(iter.next());
   }
 
   @Override

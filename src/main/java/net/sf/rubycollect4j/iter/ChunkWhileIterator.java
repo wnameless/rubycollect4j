@@ -20,9 +20,9 @@ package net.sf.rubycollect4j.iter;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 
 import java.util.Iterator;
+import java.util.function.BiPredicate;
 
 import net.sf.rubycollect4j.RubyArray;
-import net.sf.rubycollect4j.block.EntryBooleanBlock;
 import net.sf.rubycollect4j.util.PeekingIterator;
 
 /**
@@ -41,7 +41,7 @@ import net.sf.rubycollect4j.util.PeekingIterator;
 public final class ChunkWhileIterator<E> implements Iterator<RubyArray<E>> {
 
   private final PeekingIterator<E> pIter;
-  private final EntryBooleanBlock<? super E, ? super E> block;
+  private final BiPredicate<? super E, ? super E> block;
 
   /**
    * Creates a {@link ChunkWhileIterator}.
@@ -54,7 +54,7 @@ public final class ChunkWhileIterator<E> implements Iterator<RubyArray<E>> {
    *           if iterator or block is null
    */
   public ChunkWhileIterator(Iterator<? extends E> iter,
-      EntryBooleanBlock<? super E, ? super E> block) {
+      BiPredicate<? super E, ? super E> block) {
     if (iter == null || block == null) throw new NullPointerException();
 
     pIter = new PeekingIterator<E>(iter);
@@ -67,7 +67,7 @@ public final class ChunkWhileIterator<E> implements Iterator<RubyArray<E>> {
     bucket.add(left);
     if (pIter.hasNext()) {
       E right = pIter.peek();
-      while (pIter.hasNext() && block.yield(left, right)) {
+      while (pIter.hasNext() && block.test(left, right)) {
         bucket.add(right);
         left = pIter.next();
         if (pIter.hasNext()) right = pIter.peek();

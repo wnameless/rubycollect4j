@@ -22,8 +22,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
-
-import net.sf.rubycollect4j.block.EntryBooleanBlock;
+import java.util.function.BiPredicate;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -32,19 +31,12 @@ public class SliceWhenIterableTest {
 
   SliceWhenIterable<Integer> iter;
   List<Integer> list;
-  EntryBooleanBlock<Integer, Integer> block;
+  BiPredicate<Integer, Integer> block;
 
   @Before
   public void setUp() throws Exception {
     list = ra(1, 2, 4, 9, 10, 11, 12, 15, 16, 19, 20, 21);
-    block = new EntryBooleanBlock<Integer, Integer>() {
-
-      @Override
-      public boolean yield(Integer item1, Integer item2) {
-        return item1 + 1 != item2;
-      }
-
-    };
+    block = (item1, item2) -> item1 + 1 != item2;
     iter = new SliceWhenIterable<Integer>(list, block);
   }
 
@@ -60,8 +52,7 @@ public class SliceWhenIterableTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    new SliceWhenIterable<Integer>(list,
-        (EntryBooleanBlock<Integer, Integer>) null);
+    new SliceWhenIterable<Integer>(list, (BiPredicate<Integer, Integer>) null);
   }
 
   @Test

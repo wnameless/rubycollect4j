@@ -24,30 +24,23 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.function.Function;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import net.sf.rubycollect4j.RubyArray;
-import net.sf.rubycollect4j.block.TransformBlock;
 
 public class FlattenIteratorTest {
 
   FlattenIterator<Integer, Double> iter;
   List<Integer> list;
-  TransformBlock<Integer, RubyArray<Double>> block;
+  Function<Integer, RubyArray<Double>> block;
 
   @Before
   public void setUp() throws Exception {
     list = ra(1, 2, 3);
-    block = new TransformBlock<Integer, RubyArray<Double>>() {
-
-      @Override
-      public RubyArray<Double> yield(Integer item) {
-        return ra(item.doubleValue(), item.doubleValue());
-      }
-
-    };
+    block = item -> ra(item.doubleValue(), item.doubleValue());
     iter = new FlattenIterator<Integer, Double>(list.iterator(), block);
   }
 

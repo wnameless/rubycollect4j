@@ -19,8 +19,8 @@ package net.sf.rubycollect4j.iter;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.function.Predicate;
 
-import net.sf.rubycollect4j.block.BooleanBlock;
 import net.sf.rubycollect4j.util.PeekingIterator;
 
 /**
@@ -37,7 +37,7 @@ import net.sf.rubycollect4j.util.PeekingIterator;
 public final class TakeWhileIterator<E> implements Iterator<E> {
 
   private final PeekingIterator<E> pIter;
-  private final BooleanBlock<? super E> block;
+  private final Predicate<? super E> block;
 
   /**
    * Creates a {@link TakeWhileIterator}.
@@ -50,7 +50,7 @@ public final class TakeWhileIterator<E> implements Iterator<E> {
    *           if iter or block is null
    */
   public TakeWhileIterator(Iterator<? extends E> iter,
-      BooleanBlock<? super E> block) {
+      Predicate<? super E> block) {
     if (iter == null || block == null) throw new NullPointerException();
 
     pIter = new PeekingIterator<E>(iter);
@@ -59,7 +59,7 @@ public final class TakeWhileIterator<E> implements Iterator<E> {
 
   @Override
   public boolean hasNext() {
-    return pIter.hasNext() && block.yield(pIter.peek());
+    return pIter.hasNext() && block.test(pIter.peek());
   }
 
   @Override

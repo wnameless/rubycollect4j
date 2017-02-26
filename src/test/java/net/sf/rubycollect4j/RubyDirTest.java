@@ -28,9 +28,6 @@ import java.io.File;
 
 import org.junit.Test;
 
-import net.sf.rubycollect4j.block.Block;
-import net.sf.rubycollect4j.block.BooleanBlock;
-
 public class RubyDirTest {
 
   static final String BASE_DIR = "src/test/resources/";
@@ -116,14 +113,7 @@ public class RubyDirTest {
     assertEquals(ra("file1-2", "file1-3", "folder1-2").sort(),
         RubyDir.glob(GLOB_DIR + "folder1/*[2,3]").sort());
     assertEquals(ra(GLOB_DIR + "rbc4j"),
-        RubyDir.glob("**/*c4j").select(new BooleanBlock<String>() {
-
-          @Override
-          public boolean yield(String item) {
-            return item.startsWith("src");
-          }
-
-        }));
+        RubyDir.glob("**/*c4j").select(item -> item.startsWith("src")));
   }
 
   @Test
@@ -161,13 +151,7 @@ public class RubyDirTest {
   @Test
   public void testEachWithBlock() {
     final RubyArray<String> entries = ra();
-    RubyDir.open(BASE_DIR + "glob_test/folder2").each(new Block<String>() {
-
-      @Override
-      public void yield(String item) {
-        entries.push(item);
-      }
-    });
+    RubyDir.open(BASE_DIR + "glob_test/folder2").each(item -> entries.push(item));
     assertEquals(ra(".", "..", "folder2-1", "file2-1").sort(), entries);
   }
 

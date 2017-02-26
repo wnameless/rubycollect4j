@@ -48,7 +48,7 @@ public class RubyObjectTest {
   public void testSend() {
     RubyObject.send(tester, "setBytes", Byte.MAX_VALUE, (byte) 0x00);
     RubyObject.send(tester, "setShorts", Short.MAX_VALUE, (short) 0x00);
-    RubyObject.send(tester, "setIntegers", Integer.MAX_VALUE, (int) 0x00);
+    RubyObject.send(tester, "setIntegers", Integer.MAX_VALUE, 0x00);
     RubyObject.send(tester, "setLongs", Long.MAX_VALUE, (long) 0x00);
     RubyObject.send(tester, "setFloats", Float.MAX_VALUE, (float) 0x00);
     RubyObject.send(tester, "setDoubles", Double.MAX_VALUE, (double) 0x00);

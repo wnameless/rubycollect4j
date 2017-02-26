@@ -32,12 +32,12 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 import javax.xml.bind.TypeConstraintException;
 
-import net.sf.rubycollect4j.block.Block;
-import net.sf.rubycollect4j.block.BooleanBlock;
-import net.sf.rubycollect4j.block.TransformBlock;
 import net.sf.rubycollect4j.iter.CombinationIterable;
 import net.sf.rubycollect4j.iter.EachIndexIterable;
 import net.sf.rubycollect4j.iter.PermutationIterable;
@@ -61,8 +61,8 @@ import net.sf.rubycollect4j.util.TryComparator;
  * @author Wei-Ming Wu
  * 
  */
-public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
-    Comparable<List<E>>, Serializable {
+public final class RubyArray<E> extends RubyEnumerable<E>
+    implements List<E>, Comparable<List<E>>, Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -225,18 +225,18 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    *          to filter elements
    * @return element if target found, null otherwise
    */
-  public E bsearch(TransformBlock<? super E, Integer> block) {
+  public E bsearch(Function<? super E, Integer> block) {
     return binarySearch(0, list.size() - 1, block);
   }
 
   private E binarySearch(int left, int right,
-      TransformBlock<? super E, Integer> block) {
+      Function<? super E, Integer> block) {
     if (right < left) return null;
 
     int mid = (left + right) >>> 1;
-    if (block.yield(list.get(mid)) > 0)
+    if (block.apply(list.get(mid)) > 0)
       return binarySearch(left, mid - 1, block);
-    else if (block.yield(list.get(mid)) < 0)
+    else if (block.apply(list.get(mid)) < 0)
       return binarySearch(mid + 1, right, block);
     else
       return list.get(mid);
@@ -249,10 +249,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    *          to transform elements
    * @return this {@link RubyArray}
    */
-  public RubyArray<E> collectǃ(TransformBlock<? super E, ? extends E> block) {
+  public RubyArray<E> collectǃ(Function<? super E, ? extends E> block) {
     ListIterator<E> li = list.listIterator();
     while (li.hasNext()) {
-      li.set(block.yield(li.next()));
+      li.set(block.apply(li.next()));
     }
     return this;
   }
@@ -270,14 +270,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    */
   @Deprecated
   public RubyArray<E> collectǃ(final String methodName, final Object... args) {
-    return collectǃ(new TransformBlock<E, E>() {
-
-      @Override
-      public E yield(E item) {
-        return RubyObject.send(item, methodName, args);
-      }
-
-    });
+    return collectǃ(item -> RubyObject.send(item, methodName, args));
   }
 
   /**
@@ -301,9 +294,9 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    *          to yield each combination
    * @return this {@link RubyArray}
    */
-  public RubyArray<E> combination(int n, Block<? super RubyArray<E>> block) {
+  public RubyArray<E> combination(int n, Consumer<? super RubyArray<E>> block) {
     for (RubyArray<E> c : combination(n)) {
-      block.yield(c);
+      block.accept(c);
     }
     return this;
   }
@@ -380,10 +373,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    *          to yield if nothing is deleted
    * @return element
    */
-  public E delete(E target, TransformBlock<? super E, ? extends E> block) {
+  public E delete(E target, Function<? super E, ? extends E> block) {
     int beforeSize = list.size();
     delete(target);
-    return list.size() == beforeSize ? block.yield(target) : target;
+    return list.size() == beforeSize ? block.apply(target) : target;
   }
 
   /**
@@ -421,11 +414,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    *          to filter elements
    * @return this {@link RubyArray}
    */
-  public RubyArray<E> deleteIf(BooleanBlock<? super E> block) {
+  public RubyArray<E> deleteIf(Predicate<? super E> block) {
     Iterator<E> iter = list.iterator();
     while (iter.hasNext()) {
       E item = iter.next();
-      if (block.yield(item)) iter.remove();
+      if (block.test(item)) iter.remove();
     }
     return this;
   }
@@ -436,9 +429,9 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * @return this {@link RubyArray}
    */
   @Override
-  public RubyArray<E> each(Block<? super E> block) {
+  public RubyArray<E> each(Consumer<? super E> block) {
     for (E item : list) {
-      block.yield(item);
+      block.accept(item);
     }
     return this;
   }
@@ -459,9 +452,9 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    *          to yield elements
    * @return this {@link RubyArray}
    */
-  public RubyArray<E> eachIndex(Block<Integer> block) {
+  public RubyArray<E> eachIndex(Consumer<Integer> block) {
     for (int i = 0; i < list.size(); i++) {
-      block.yield(i);
+      block.accept(i);
     }
     return this;
   }
@@ -527,9 +520,9 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    *          to yield if index is not found
    * @return element or null
    */
-  public E fetch(int index, Block<Integer> block) {
+  public E fetch(int index, Consumer<Integer> block) {
     if (index >= list.size() || index < -list.size()) {
-      block.yield(index);
+      block.accept(index);
       return null;
     }
     return at(index);
@@ -556,14 +549,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * @return this {@link RubyArray}
    */
   public RubyArray<E> fill(final E item, int start) {
-    return fill(start, new TransformBlock<Integer, E>() {
-
-      @Override
-      public E yield(Integer i) {
-        return item;
-      }
-
-    });
+    return fill(start, i -> item);
   }
 
   /**
@@ -579,14 +565,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * @return this {@link RubyArray}
    */
   public RubyArray<E> fill(final E item, int start, int length) {
-    return fill(start, length, new TransformBlock<Integer, E>() {
-
-      @Override
-      public E yield(Integer i) {
-        return item;
-      }
-
-    });
+    return fill(start, length, i -> item);
   }
 
   /**
@@ -596,7 +575,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    *          to transform elements to be filled
    * @return this {@link RubyArray}
    */
-  public RubyArray<E> fill(TransformBlock<Integer, ? extends E> block) {
+  public RubyArray<E> fill(Function<Integer, ? extends E> block) {
     return fill(0, block);
   }
 
@@ -610,7 +589,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    *          to transform elements to be filled
    * @return this {@link RubyArray}
    */
-  public RubyArray<E> fill(int start, TransformBlock<Integer, ? extends E> block) {
+  public RubyArray<E> fill(int start, Function<Integer, ? extends E> block) {
     if (start <= -list.size()) return fill(block);
 
     if (start < 0) start += list.size();
@@ -631,7 +610,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * @return this {@link RubyArray}
    */
   public RubyArray<E> fill(int start, int length,
-      TransformBlock<Integer, ? extends E> block) {
+      Function<Integer, ? extends E> block) {
     if (start < 0) {
       start += list.size();
       if (start < 0) start = 0;
@@ -642,10 +621,10 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
       }
     }
     for (int i = start; i < list.size() && i < start + length; i++) {
-      list.set(i, block.yield(i));
+      list.set(i, block.apply(i));
     }
     for (int i = list.size(); i < start + length; i++) {
-      list.add(block.yield(i));
+      list.add(block.apply(i));
     }
     return this;
   }
@@ -661,14 +640,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   @SuppressWarnings("unchecked")
   public <S> RubyArray<S> flatten() {
     RubyArray<?> rubyArray = RubyArray.copyOf(list);
-    while (rubyArray.anyʔ(new BooleanBlock<Object>() {
-
-      @Override
-      public boolean yield(Object item) {
-        return item instanceof List;
-      }
-
-    })) {
+    while (rubyArray.anyʔ(item -> item instanceof List)) {
       rubyArray = flatten(rubyArray, 1);
     }
     return (RubyArray<S>) rubyArray;
@@ -685,14 +657,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   @SuppressWarnings("unchecked")
   public <S> RubyArray<S> flatten(int n) {
     RubyArray<?> rubyArray = RubyArray.copyOf(list);
-    while (n > 0 && rubyArray.anyʔ(new BooleanBlock<Object>() {
-
-      @Override
-      public boolean yield(Object item) {
-        return item instanceof List;
-      }
-
-    })) {
+    while (n > 0 && rubyArray.anyʔ(item -> item instanceof List)) {
       rubyArray = flatten(rubyArray, 1);
       n--;
     }
@@ -751,9 +716,9 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    *          to filter elements
    * @return element or null
    */
-  public Integer index(BooleanBlock<? super E> block) {
+  public Integer index(Predicate<? super E> block) {
     for (int i = 0; i < list.size(); i++) {
-      if (block.yield(list.get(i))) return i;
+      if (block.test(list.get(i))) return i;
     }
     return null;
   }
@@ -869,11 +834,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    *          to filter elements
    * @return this {@link RubyArray}
    */
-  public RubyArray<E> keepIf(BooleanBlock<? super E> block) {
+  public RubyArray<E> keepIf(Predicate<? super E> block) {
     Iterator<E> iter = list.iterator();
     while (iter.hasNext()) {
       E item = iter.next();
-      if (!block.yield(item)) iter.remove();
+      if (!block.test(item)) iter.remove();
     }
     return this;
   }
@@ -922,13 +887,13 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
   }
 
   /**
-   * Equivalent to {@link #collectǃ(TransformBlock)}.
+   * Equivalent to {@link #collectǃ(Function)}.
    * 
    * @param block
    *          to transform elements
    * @return this {@link RubyArray}
    */
-  public RubyArray<E> mapǃ(TransformBlock<? super E, ? extends E> block) {
+  public RubyArray<E> mapǃ(Function<? super E, ? extends E> block) {
     return collectǃ(block);
   }
 
@@ -1024,9 +989,9 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    *          to yield each permutation
    * @return this {@link RubyArray}
    */
-  public RubyArray<E> permutation(int n, Block<? super RubyArray<E>> block) {
+  public RubyArray<E> permutation(int n, Consumer<? super RubyArray<E>> block) {
     for (RubyArray<E> item : permutation(n)) {
-      block.yield(item);
+      block.accept(item);
     }
     return this;
   }
@@ -1038,9 +1003,9 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    *          to yield each permutation
    * @return this {@link RubyArray}
    */
-  public RubyArray<E> permutation(Block<? super RubyArray<E>> block) {
+  public RubyArray<E> permutation(Consumer<? super RubyArray<E>> block) {
     for (RubyArray<E> item : permutation()) {
-      block.yield(item);
+      block.accept(item);
     }
     return this;
   }
@@ -1126,9 +1091,9 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * @return this {@link RubyArray}
    */
   public RubyArray<E> product(List<? extends List<? extends E>> others,
-      Block<RubyArray<E>> block) {
+      Consumer<RubyArray<E>> block) {
     for (RubyArray<E> comb : product(others)) {
-      block.yield(comb);
+      block.accept(comb);
     }
     return this;
   }
@@ -1172,8 +1137,9 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
         @SuppressWarnings("unchecked")
         List<S> lst = (List<S>) item;
         if (lst.size() > 0) {
-          if (target == null ? lst.get(lst.size() - 1) == null : target
-              .equals(lst.get(lst.size() - 1))) return RubyArray.copyOf(lst);
+          if (target == null ? lst.get(lst.size() - 1) == null
+              : target.equals(lst.get(lst.size() - 1)))
+            return RubyArray.copyOf(lst);
         }
       }
     }
@@ -1196,7 +1162,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    *          to filter elements
    * @return this {@link RubyArray}
    */
-  public RubyArray<E> rejectǃ(BooleanBlock<? super E> block) {
+  public RubyArray<E> rejectǃ(Predicate<? super E> block) {
     int beforeSize = list.size();
     RubyArray<E> rubyArray = deleteIf(block);
     return rubyArray.size() == beforeSize ? null : rubyArray;
@@ -1224,9 +1190,9 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * @return this {@link RubyArray}
    */
   public RubyArray<E> repeatedCombination(int n,
-      Block<? super RubyArray<E>> block) {
+      Consumer<? super RubyArray<E>> block) {
     for (RubyArray<E> c : repeatedCombination(n)) {
-      block.yield(c);
+      block.accept(c);
     }
     return this;
   }
@@ -1254,9 +1220,9 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * @return this {@link RubyArray}
    */
   public RubyArray<E> repeatedPermutation(int n,
-      Block<? super RubyArray<E>> block) {
+      Consumer<? super RubyArray<E>> block) {
     for (RubyArray<E> perm : repeatedPermutation(n)) {
-      block.yield(perm);
+      block.accept(perm);
     }
     return this;
   }
@@ -1314,9 +1280,9 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    *          to filter the element
    * @return element or null
    */
-  public Integer rindex(BooleanBlock<? super E> block) {
+  public Integer rindex(Predicate<? super E> block) {
     for (int i = list.size() - 1; i >= 0; i--) {
-      if (block.yield(list.get(i))) return i;
+      if (block.test(list.get(i))) return i;
     }
     return null;
   }
@@ -1423,16 +1389,15 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    *           if n is less than 0
    */
   public RubyArray<E> sample(int n) {
-    if (n < 0)
-      throw new IllegalArgumentException(
-          "ArgumentError: negative sample number");
+    if (n < 0) throw new IllegalArgumentException(
+        "ArgumentError: negative sample number");
 
     List<Integer> indices = eachIndex().toA();
 
     RubyArray<E> rubyArray = newRubyArray();
     while (rubyArray.size() < list.size() && rubyArray.size() < n) {
-      rubyArray.add(list.get(indices.remove((int) (Math.random() * indices
-          .size()))));
+      rubyArray.add(
+          list.get(indices.remove((int) (Math.random() * indices.size()))));
     }
     return rubyArray;
   }
@@ -1454,7 +1419,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    *          to filter elements
    * @return this {@link RubyArray} or null
    */
-  public RubyArray<E> selectǃ(BooleanBlock<? super E> block) {
+  public RubyArray<E> selectǃ(Predicate<? super E> block) {
     int beforeSize = list.size();
     keepIf(block);
     return list.size() == beforeSize ? null : this;
@@ -1639,7 +1604,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * @return this {@link RubyArray}
    */
   public <S> RubyArray<E> sortByǃ(Comparator<? super S> comp,
-      TransformBlock<? super E, ? extends S> block) {
+      Function<? super E, ? extends S> block) {
     RubyHash<S, RubyArray<E>> rubyHash = groupBy(block);
     list.clear();
     for (S key : rubyHash.keys().sortǃ(comp)) {
@@ -1664,7 +1629,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * @return this {@link RubyArray}
    */
   public <S> RubyArray<E> sortByǃ(Comparator<? super E> comp1,
-      Comparator<? super S> comp2, TransformBlock<? super E, ? extends S> block) {
+      Comparator<? super S> comp2, Function<? super E, ? extends S> block) {
     RubyHash<S, RubyArray<E>> rubyHash = groupBy(block);
     list.clear();
     for (S key : rubyHash.keys().sortǃ(comp2)) {
@@ -1683,7 +1648,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    *          to transform elements
    * @return this {@link RubyArray}
    */
-  public <S> RubyArray<E> sortByǃ(TransformBlock<? super E, ? extends S> block) {
+  public <S> RubyArray<E> sortByǃ(Function<? super E, ? extends S> block) {
     RubyHash<S, RubyArray<E>> rubyHash = groupBy(block);
     list.clear();
     for (S key : rubyHash.keys().sortǃ()) {
@@ -1705,15 +1670,9 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    * @deprecated since 1.9.0, using Java 8 Lambda instead
    */
   @Deprecated
-  public <S> RubyArray<E> sortByǃ(final String methodName, final Object... args) {
-    return sortByǃ(new TransformBlock<E, S>() {
-
-      @Override
-      public S yield(E item) {
-        return RubyObject.send(item, methodName, args);
-      }
-
-    });
+  public <S> RubyArray<E> sortByǃ(final String methodName,
+      final Object... args) {
+    return sortByǃ(item -> RubyObject.send(item, methodName, args));
   }
 
   /**
@@ -1756,17 +1715,15 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
 
     Integer size = null;
     for (E item : list) {
-      if (!(item instanceof List))
-        throw new TypeConstraintException(
-            "TypeError: no implicit conversion of "
-                + item.getClass().toString() + " into List");
+      if (!(item instanceof List)) throw new TypeConstraintException(
+          "TypeError: no implicit conversion of " + item.getClass().toString()
+              + " into List");
 
       if (size == null)
         size = ((List<?>) item).size();
       else if (size != ((List<?>) item).size())
-        throw new IndexOutOfBoundsException(
-            "IndexError: element size differs (" + ((List<?>) item).size()
-                + " should be " + size + ")");
+        throw new IndexOutOfBoundsException("IndexError: element size differs ("
+            + ((List<?>) item).size() + " should be " + size + ")");
     }
     RubyArray<RubyArray<S>> rubyArray = newRubyArray();
     for (int i = 0; i < size; i++) {
@@ -1814,11 +1771,11 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    *          to transform elements
    * @return new {@link RubyArray}
    */
-  public <S> RubyArray<E> uniq(TransformBlock<? super E, ? extends S> block) {
+  public <S> RubyArray<E> uniq(Function<? super E, ? extends S> block) {
     RubyArray<E> rubyArray = newRubyArray();
     Set<S> set = new HashSet<S>();
     for (E item : list) {
-      if (set.add(block.yield(item))) rubyArray.add(item);
+      if (set.add(block.apply(item))) rubyArray.add(item);
     }
     return rubyArray;
   }
@@ -1837,14 +1794,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    */
   @Deprecated
   public <S> RubyArray<E> uniq(final String methodName, final Object... args) {
-    return uniq(new TransformBlock<E, S>() {
-
-      @Override
-      public S yield(E item) {
-        return RubyObject.send(item, methodName, args);
-      }
-
-    });
+    return uniq(item -> RubyObject.send(item, methodName, args));
   }
 
   /**
@@ -1876,14 +1826,7 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    */
   @Deprecated
   public <S> RubyArray<E> uniqǃ(final String methodName, final Object... args) {
-    return uniqǃ(new TransformBlock<E, S>() {
-
-      @Override
-      public S yield(E item) {
-        return RubyObject.send(item, methodName, args);
-      }
-
-    });
+    return uniqǃ(item -> RubyObject.send(item, methodName, args));
   }
 
   /**
@@ -1895,12 +1838,12 @@ public final class RubyArray<E> extends RubyEnumerable<E> implements List<E>,
    *          to transform elements
    * @return this {@link RubyArray}
    */
-  public <S> RubyArray<E> uniqǃ(TransformBlock<? super E, ? extends S> block) {
+  public <S> RubyArray<E> uniqǃ(Function<? super E, ? extends S> block) {
     int beforeSize = list.size();
     Set<S> set = new HashSet<S>();
     ListIterator<E> li = list.listIterator();
     while (li.hasNext()) {
-      if (!set.add(block.yield(li.next()))) li.remove();
+      if (!set.add(block.apply(li.next()))) li.remove();
     }
     return list.size() == beforeSize ? null : this;
   }

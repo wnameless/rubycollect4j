@@ -25,10 +25,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import net.sf.rubycollect4j.block.Block;
-import net.sf.rubycollect4j.block.BooleanBlock;
-import net.sf.rubycollect4j.block.TransformBlock;
+import java.util.function.Consumer;
 
 /**
  * 
@@ -60,9 +57,8 @@ public final class RubyDir extends RubyEnumerable<String> {
    */
   public static RubyDir open(String path) {
     File dir = new File(path);
-    if (!dir.exists() || !dir.isDirectory())
-      throw new IllegalArgumentException(
-          "Errno::ENOENT: No such file or directory - " + path);
+    if (!dir.exists() || !dir.isDirectory()) throw new IllegalArgumentException(
+        "Errno::ENOENT: No such file or directory - " + path);
 
     return new RubyDir(dir);
   }
@@ -92,14 +88,7 @@ public final class RubyDir extends RubyEnumerable<String> {
    */
   public static RubyArray<String> entries(String path) {
     File file = new File(path);
-    return ra(file.listFiles()).map(new TransformBlock<File, String>() {
-
-      @Override
-      public String yield(File item) {
-        return item.getName();
-      }
-
-    }).unshift("..").unshift(".");
+    return ra(file.listFiles()).map(item -> item.getName()).unshift("..").unshift(".");
   }
 
   /**
@@ -156,14 +145,7 @@ public final class RubyDir extends RubyEnumerable<String> {
     boolean emptyRoot = false;
 
     String rootPath =
-        ra(pattern.split("/")).takeWhile(new BooleanBlock<String>() {
-
-          @Override
-          public boolean yield(String item) {
-            return !item.contains("*");
-          }
-
-        }).join("/");
+        ra(pattern.split("/")).takeWhile(item -> !item.contains("*")).join("/");
 
     if (rootPath.isEmpty()) {
       rootPath = "./";
@@ -285,7 +267,7 @@ public final class RubyDir extends RubyEnumerable<String> {
    * @return this {@link RubyDir}
    */
   @Override
-  public RubyDir each(Block<? super String> block) {
+  public RubyDir each(Consumer<? super String> block) {
     eachEntry(block);
     return this;
   }

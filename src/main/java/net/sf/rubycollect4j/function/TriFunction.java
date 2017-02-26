@@ -15,20 +15,23 @@
  * the License.
  *
  */
-package net.sf.rubycollect4j.block;
+package net.sf.rubycollect4j.function;
 
 /**
  * 
- * An interface for lambda expression to yield 2 elements and reduce them.
+ * An interface for lambda expression to yield the key and values of 2 Map
+ * entries and return one of the values.
  * 
- * @param <E>
- *          the type of the elements
+ * @param <K>
+ *          the type of key elements
+ * @param <V>
+ *          the type of value elements
  * 
  * @author Wei-Ming Wu
  * 
  */
-public interface ReduceBlock<E> {
+public interface TriFunction<K, V1, V2, S> {
 
-  public E yield(E memo, E item);
+  public S apply(K key, V1 oldval, V2 newval);
 
 }

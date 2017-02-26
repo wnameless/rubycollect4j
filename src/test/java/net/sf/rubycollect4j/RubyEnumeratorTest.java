@@ -31,8 +31,6 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import net.sf.rubycollect4j.block.Block;
-
 public class RubyEnumeratorTest {
 
   RubyEnumerator<Integer> re;
@@ -86,14 +84,7 @@ public class RubyEnumeratorTest {
   @Test
   public void testEachWithBlock() {
     final List<Integer> ints = new ArrayList<Integer>();
-    assertSame(re, re.each(new Block<Integer>() {
-
-      @Override
-      public void yield(Integer item) {
-        ints.add(item);
-      }
-
-    }));
+    assertSame(re, re.each(item -> ints.add(item)));
     assertEquals(Arrays.asList(1, 2, 3), ints);
   }
 

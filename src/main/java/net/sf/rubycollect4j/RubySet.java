@@ -26,10 +26,9 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
-
-import net.sf.rubycollect4j.block.Block;
-import net.sf.rubycollect4j.block.BooleanBlock;
-import net.sf.rubycollect4j.block.TransformBlock;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * 
@@ -44,8 +43,8 @@ import net.sf.rubycollect4j.block.TransformBlock;
  * @author Wei-Ming Wu
  * 
  */
-public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
-    Comparable<Set<E>>, Serializable {
+public final class RubySet<E> extends RubyEnumerable<E>
+    implements Set<E>, Comparable<Set<E>>, Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -147,10 +146,10 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
    * @return {@link RubyHash}
    */
   public <S> RubyHash<S, RubySet<E>> classify(
-      TransformBlock<? super E, ? extends S> block) {
+      Function<? super E, ? extends S> block) {
     RubyHash<S, RubySet<E>> hash = newRubyHash();
     for (E e : set) {
-      S s = block.yield(e);
+      S s = block.apply(e);
       if (!hash.containsKey(s)) hash.put(s, new RubySet<E>());
 
       hash.get(s).add(e);
@@ -159,17 +158,16 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
   }
 
   /**
-   * Replaces the elements with ones returned by
-   * {@link #collect(TransformBlock)}.
+   * Replaces the elements with ones returned by {@link #collect(Function)}.
    * 
    * @param block
    *          to transform elements
    * @return this {@link RubySet}
    */
-  public RubySet<E> collectǃ(TransformBlock<? super E, ? extends E> block) {
+  public RubySet<E> collectǃ(Function<? super E, ? extends E> block) {
     LinkedHashSet<E> lhs = new LinkedHashSet<E>();
     for (E e : set) {
-      lhs.add(block.yield(e));
+      lhs.add(block.apply(e));
     }
     set.clear();
     set.addAll(lhs);
@@ -189,14 +187,7 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
    */
   @Deprecated
   public RubySet<E> collectǃ(final String methodName, final Object... args) {
-    return collectǃ(new TransformBlock<E, E>() {
-
-      @Override
-      public E yield(E item) {
-        return RubyObject.send(item, methodName, args);
-      }
-
-    });
+    return collectǃ(item -> RubyObject.send(item, methodName, args));
   }
 
   /**
@@ -231,10 +222,10 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
    *          to filter elements
    * @return this {@link RubySet}
    */
-  public RubySet<E> deleteIf(BooleanBlock<? super E> block) {
+  public RubySet<E> deleteIf(Predicate<? super E> block) {
     Iterator<E> iter = set.iterator();
     while (iter.hasNext()) {
-      if (block.yield(iter.next())) iter.remove();
+      if (block.test(iter.next())) iter.remove();
     }
     return this;
   }
@@ -279,7 +270,7 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
    * @return new {@link RubySet} of {@link RubySet}s
    */
   public <S> RubySet<RubySet<E>> divide(
-      TransformBlock<? super E, ? extends S> block) {
+      Function<? super E, ? extends S> block) {
     RubyHash<S, RubySet<E>> hash = classify(block);
     return RubySet.copyOf(hash.values());
   }
@@ -290,9 +281,9 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
    * @return this {@link RubySet}
    */
   @Override
-  public RubySet<E> each(Block<? super E> block) {
+  public RubySet<E> each(Consumer<? super E> block) {
     for (E e : set) {
-      block.yield(e);
+      block.accept(e);
     }
     return this;
   }
@@ -328,14 +319,7 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
   @SuppressWarnings("unchecked")
   public <S> RubySet<S> flatten() {
     RubySet<?> rubySet = RubySet.copyOf(set);
-    while (rubySet.anyʔ(new BooleanBlock<Object>() {
-
-      @Override
-      public boolean yield(Object item) {
-        return item instanceof Set;
-      }
-
-    })) {
+    while (rubySet.anyʔ(item -> item instanceof Set)) {
       rubySet = flatten(rubySet, 1);
     }
     return (RubySet<S>) rubySet;
@@ -424,10 +408,10 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
    *          to filter elements
    * @return this {@link RubySet}
    */
-  public RubySet<E> keepIf(BooleanBlock<? super E> block) {
+  public RubySet<E> keepIf(Predicate<? super E> block) {
     Iterator<E> iter = set.iterator();
     while (iter.hasNext()) {
-      if (!block.yield(iter.next())) iter.remove();
+      if (!block.test(iter.next())) iter.remove();
     }
     return this;
   }
@@ -442,13 +426,13 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
   }
 
   /**
-   * Equivalent to {@link #collectǃ(TransformBlock)}.
+   * Equivalent to {@link #collectǃ(Function)}.
    * 
    * @param block
    *          to transform elements
    * @return this {@link RubySet}
    */
-  public RubySet<E> mapǃ(TransformBlock<? super E, ? extends E> block) {
+  public RubySet<E> mapǃ(Function<? super E, ? extends E> block) {
     return collectǃ(block);
   }
 
@@ -517,14 +501,14 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
   }
 
   /**
-   * Equivalent to {@link #deleteIf(BooleanBlock)}, but returns null if no
-   * changes were made.
+   * Equivalent to {@link #deleteIf(Predicate)}, but returns null if no changes
+   * were made.
    * 
    * @param block
    *          to transform elements
    * @return this {@link RubySet} or null
    */
-  public RubySet<E> rejectǃ(BooleanBlock<? super E> block) {
+  public RubySet<E> rejectǃ(Predicate<? super E> block) {
     int beforeSize = size();
     deleteIf(block);
     return size() == beforeSize ? null : this;
@@ -547,14 +531,14 @@ public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
   }
 
   /**
-   * Equivalent to {@link #keepIf(BooleanBlock)}, but returns null if no changes
+   * Equivalent to {@link #keepIf(Predicate)}, but returns null if no changes
    * were made.
    * 
    * @param block
    *          to transform elements
    * @return this {@link RubySet} or null
    */
-  public RubySet<E> selectǃ(BooleanBlock<? super E> block) {
+  public RubySet<E> selectǃ(Predicate<? super E> block) {
     int beforeSize = size();
     keepIf(block);
     return size() == beforeSize ? null : this;

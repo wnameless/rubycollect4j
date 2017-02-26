@@ -26,16 +26,14 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
-import net.sf.rubycollect4j.block.Block;
-import net.sf.rubycollect4j.block.BooleanBlock;
-import net.sf.rubycollect4j.block.EntryBooleanBlock;
-import net.sf.rubycollect4j.block.ReduceBlock;
-import net.sf.rubycollect4j.block.TransformBlock;
-import net.sf.rubycollect4j.block.WithIndexBlock;
-import net.sf.rubycollect4j.block.WithInitBlock;
-import net.sf.rubycollect4j.block.WithObjectBlock;
 import net.sf.rubycollect4j.iter.ChunkIterable;
 import net.sf.rubycollect4j.iter.ChunkWhileIterable;
 import net.sf.rubycollect4j.iter.CycleIterable;
@@ -47,7 +45,6 @@ import net.sf.rubycollect4j.iter.ReverseEachIterable;
 import net.sf.rubycollect4j.iter.SliceAfterIterable;
 import net.sf.rubycollect4j.iter.SliceBeforeIterable;
 import net.sf.rubycollect4j.iter.SliceWhenIterable;
-import net.sf.rubycollect4j.iter.TransformIterable;
 
 /**
  * {@link RubyEnumerable} is an extension for any Iterable class. It includes
@@ -76,7 +73,7 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
   }
 
   @Override
-  public boolean allʔ(BooleanBlock<? super E> block) {
+  public boolean allʔ(Predicate<? super E> block) {
     return newRubyLazyEnumerator(getIterable()).allʔ(block);
   }
 
@@ -86,7 +83,7 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
   }
 
   @Override
-  public boolean anyʔ(BooleanBlock<? super E> block) {
+  public boolean anyʔ(Predicate<? super E> block) {
     return newRubyLazyEnumerator(getIterable()).anyʔ(block);
   }
 
@@ -97,30 +94,8 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    */
   @Override
   public <S> RubyEnumerator<Entry<S, RubyArray<E>>> chunk(
-      TransformBlock<? super E, ? extends S> block) {
+      Function<? super E, ? extends S> block) {
     return newRubyEnumerator(new ChunkIterable<E, S>(getIterable(), block));
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @return {@link RubyEnumerator}
-   * 
-   * @deprecated since 1.9.0, using Java 8 Lambda instead
-   */
-  @Deprecated
-  @Override
-  public <S> RubyEnumerator<Entry<S, RubyArray<E>>> chunk(
-      final String methodName, final Object... args) {
-    return newRubyEnumerator(new ChunkIterable<E, S>(getIterable(),
-        new TransformBlock<E, S>() {
-
-          @Override
-          public S yield(E item) {
-            return RubyObject.send(item, methodName, args);
-          }
-
-        }));
   }
 
   /**
@@ -130,7 +105,7 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    */
   @Override
   public RubyEnumerator<RubyArray<E>> chunkWhile(
-      EntryBooleanBlock<? super E, ? super E> block) {
+      BiPredicate<? super E, ? super E> block) {
     return newRubyEnumerator(new ChunkWhileIterable<E>(getIterable(), block));
   }
 
@@ -150,29 +125,9 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    * @return {@link RubyArray}
    */
   @Override
-  public <S> RubyArray<S> collect(TransformBlock<? super E, ? extends S> block) {
-    return newRubyLazyEnumerator(getIterable()).collect(block).toA();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @return {@link RubyArray}
-   * 
-   * @deprecated since 1.9.0, using Java 8 Lambda instead
-   */
-  @Deprecated
-  @Override
-  public <S> RubyArray<S> collect(final String methodName, final Object... args) {
-    return newRubyLazyEnumerator(
-        new TransformIterable<E, S>(getIterable(), new TransformBlock<E, S>() {
-
-          @Override
-          public S yield(E item) {
-            return RubyObject.send(item, methodName, args);
-          }
-
-        })).toA();
+  public <S> RubyArray<S> collect(Function<? super E, ? extends S> block) {
+    return (RubyArray<S>) newRubyLazyEnumerator(getIterable()).collect(block)
+        .toA();
   }
 
   /**
@@ -192,8 +147,9 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    */
   @Override
   public <S> RubyArray<S> collectConcat(
-      TransformBlock<? super E, ? extends List<? extends S>> block) {
-    return newRubyLazyEnumerator(getIterable()).collectConcat(block).toA();
+      Function<? super E, ? extends List<? extends S>> block) {
+    return (RubyArray<S>) newRubyLazyEnumerator(getIterable())
+        .collectConcat(block).toA();
   }
 
   @Override
@@ -202,7 +158,7 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
   }
 
   @Override
-  public int count(BooleanBlock<? super E> block) {
+  public int count(Predicate<? super E> block) {
     return newRubyLazyEnumerator(getIterable()).count(block);
   }
 
@@ -227,12 +183,12 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
   }
 
   @Override
-  public void cycle(int n, Block<? super E> block) {
+  public void cycle(int n, Consumer<? super E> block) {
     newRubyLazyEnumerator(getIterable()).cycle(n, block);
   }
 
   @Override
-  public void cycle(Block<? super E> block) {
+  public void cycle(Consumer<? super E> block) {
     newRubyLazyEnumerator(getIterable()).cycle(block);
   }
 
@@ -247,7 +203,7 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
   }
 
   @Override
-  public E detect(BooleanBlock<? super E> block) {
+  public E detect(Predicate<? super E> block) {
     return newRubyLazyEnumerator(getIterable()).detect(block);
   }
 
@@ -282,7 +238,7 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    * @return {@link RubyArray}
    */
   @Override
-  public RubyArray<E> dropWhile(BooleanBlock<? super E> block) {
+  public RubyArray<E> dropWhile(Predicate<? super E> block) {
     return newRubyLazyEnumerator(getIterable()).dropWhile(block).toA();
   }
 
@@ -302,7 +258,7 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    * @return {@link RubyEnumerable}
    */
   @Override
-  public RubyEnumerable<E> each(Block<? super E> block) {
+  public RubyEnumerable<E> each(Consumer<? super E> block) {
     newRubyEnumerator(getIterable()).each(block);
     return this;
   }
@@ -318,7 +274,7 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
   }
 
   @Override
-  public void eachCons(int n, Block<? super RubyArray<E>> block) {
+  public void eachCons(int n, Consumer<? super RubyArray<E>> block) {
     newRubyLazyEnumerator(getIterable()).eachCons(n, block);
   }
 
@@ -338,10 +294,8 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    * @return {@link RubyEnumerable}
    */
   @Override
-  public RubyEnumerable<E> eachEntry(Block<? super E> block) {
-    for (E item : getIterable()) {
-      block.yield(item);
-    }
+  public RubyEnumerable<E> eachEntry(Consumer<? super E> block) {
+    getIterable().forEach(item -> block.accept(item));
     return this;
   }
 
@@ -356,7 +310,7 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
   }
 
   @Override
-  public void eachSlice(int n, Block<? super RubyArray<E>> block) {
+  public void eachSlice(int n, Consumer<? super RubyArray<E>> block) {
     newRubyLazyEnumerator(getIterable()).eachSlice(n, block);
   }
 
@@ -376,7 +330,7 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    * @return {@link RubyEnumerable}
    */
   @Override
-  public RubyEnumerable<E> eachWithIndex(WithIndexBlock<? super E> block) {
+  public RubyEnumerable<E> eachWithIndex(BiConsumer<? super E, Integer> block) {
     newRubyLazyEnumerator(getIterable()).eachWithIndex(block);
     return this;
   }
@@ -388,12 +342,12 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    */
   @Override
   public <O> RubyEnumerator<Entry<E, O>> eachWithObject(O obj) {
-    return newRubyEnumerator(new EachWithObjectIterable<E, O>(getIterable(),
-        obj));
+    return newRubyEnumerator(
+        new EachWithObjectIterable<E, O>(getIterable(), obj));
   }
 
   @Override
-  public <O> O eachWithObject(O obj, WithObjectBlock<? super E, ? super O> block) {
+  public <O> O eachWithObject(O obj, BiConsumer<? super E, ? super O> block) {
     return newRubyLazyEnumerator(getIterable()).eachWithObject(obj, block);
   }
 
@@ -413,7 +367,7 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
   }
 
   @Override
-  public E find(BooleanBlock<? super E> block) {
+  public E find(Predicate<? super E> block) {
     return newRubyLazyEnumerator(getIterable()).find(block);
   }
 
@@ -433,7 +387,7 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    * @return {@link RubyArray}
    */
   @Override
-  public RubyArray<E> findAll(BooleanBlock<? super E> block) {
+  public RubyArray<E> findAll(Predicate<? super E> block) {
     return newRubyLazyEnumerator(getIterable()).findAll(block).toA();
   }
 
@@ -448,7 +402,7 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
   }
 
   @Override
-  public Integer findIndex(BooleanBlock<? super E> block) {
+  public Integer findIndex(Predicate<? super E> block) {
     return newRubyLazyEnumerator(getIterable()).findIndex(block);
   }
 
@@ -484,8 +438,9 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    */
   @Override
   public <S> RubyArray<S> flatMap(
-      TransformBlock<? super E, ? extends List<? extends S>> block) {
-    return newRubyLazyEnumerator(getIterable()).flatMap(block).toA();
+      Function<? super E, ? extends List<? extends S>> block) {
+    return (RubyArray<S>) newRubyLazyEnumerator(getIterable()).flatMap(block)
+        .toA();
   }
 
   /**
@@ -505,29 +460,9 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    */
   @Override
   public <S> RubyArray<S> grep(String regex,
-      TransformBlock<? super E, ? extends S> block) {
-    return newRubyLazyEnumerator(getIterable()).grep(regex, block).toA();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @return {@link RubyArray}
-   * 
-   * @deprecated since 1.9.0, using Java 8 Lambda instead
-   */
-  @Deprecated
-  @Override
-  public <S> RubyArray<S> grep(String regex, final String methodName,
-      final Object... args) {
-    return grep(regex, new TransformBlock<E, S>() {
-
-      @Override
-      public S yield(E item) {
-        return RubyObject.send(item, methodName, args);
-      }
-
-    });
+      Function<? super E, ? extends S> block) {
+    return (RubyArray<S>) newRubyLazyEnumerator(getIterable())
+        .grep(regex, block).toA();
   }
 
   /**
@@ -547,8 +482,9 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    */
   @Override
   public <S> RubyArray<S> grepV(String regex,
-      TransformBlock<? super E, ? extends S> block) {
-    return newRubyLazyEnumerator(getIterable()).grepV(regex, block).toA();
+      Function<? super E, ? extends S> block) {
+    return (RubyArray<S>) newRubyLazyEnumerator(getIterable())
+        .grepV(regex, block).toA();
   }
 
   /**
@@ -563,15 +499,8 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
 
   @Override
   public <S> RubyHash<S, RubyArray<E>> groupBy(
-      TransformBlock<? super E, ? extends S> block) {
+      Function<? super E, ? extends S> block) {
     return newRubyLazyEnumerator(getIterable()).groupBy(block);
-  }
-
-  @Deprecated
-  @Override
-  public <S> RubyHash<S, RubyArray<E>> groupBy(final String methodName,
-      final Object... args) {
-    return newRubyLazyEnumerator(getIterable()).groupBy(methodName, args);
   }
 
   @Override
@@ -580,25 +509,13 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
   }
 
   @Override
-  public E inject(ReduceBlock<E> block) {
+  public E inject(BiFunction<E, E, E> block) {
     return newRubyLazyEnumerator(getIterable()).inject(block);
   }
 
   @Override
-  public <I> I inject(I init, WithInitBlock<? super E, I> block) {
+  public <I> I inject(I init, BiFunction<I, ? super E, I> block) {
     return newRubyLazyEnumerator(getIterable()).inject(init, block);
-  }
-
-  @Deprecated
-  @Override
-  public <I> I inject(I init, String methodName) {
-    return newRubyLazyEnumerator(getIterable()).inject(init, methodName);
-  }
-
-  @Deprecated
-  @Override
-  public E inject(String methodName) {
-    return newRubyLazyEnumerator(getIterable()).inject(methodName);
   }
 
   @Override
@@ -622,21 +539,8 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    * @return {@link RubyArray}
    */
   @Override
-  public <S> RubyArray<S> map(TransformBlock<? super E, ? extends S> block) {
-    return newRubyLazyEnumerator(getIterable()).map(block).toA();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @return {@link RubyArray}
-   * 
-   * @deprecated since 1.9.0, using Java 8 Lambda instead
-   */
-  @Deprecated
-  @Override
-  public <S> RubyArray<S> map(String methodName, Object... args) {
-    return collect(methodName, args);
+  public <S> RubyArray<S> map(Function<? super E, ? extends S> block) {
+    return (RubyArray<S>) newRubyLazyEnumerator(getIterable()).map(block).toA();
   }
 
   @Override
@@ -661,19 +565,13 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
 
   @Override
   public <S> E maxBy(Comparator<? super S> comp,
-      TransformBlock<? super E, ? extends S> block) {
+      Function<? super E, ? extends S> block) {
     return newRubyLazyEnumerator(getIterable()).maxBy(comp, block);
   }
 
   @Override
-  public <S> E maxBy(TransformBlock<? super E, ? extends S> block) {
+  public <S> E maxBy(Function<? super E, ? extends S> block) {
     return newRubyLazyEnumerator(getIterable()).maxBy(block);
-  }
-
-  @Deprecated
-  @Override
-  public <S> E maxBy(String methodName, Object... args) {
-    return newRubyLazyEnumerator(getIterable()).maxBy(methodName, args);
   }
 
   @Override
@@ -703,19 +601,13 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
 
   @Override
   public <S> E minBy(Comparator<? super S> comp,
-      TransformBlock<? super E, ? extends S> block) {
+      Function<? super E, ? extends S> block) {
     return newRubyLazyEnumerator(getIterable()).minBy(comp, block);
   }
 
   @Override
-  public <S> E minBy(TransformBlock<? super E, ? extends S> block) {
+  public <S> E minBy(Function<? super E, ? extends S> block) {
     return newRubyLazyEnumerator(getIterable()).minBy(block);
-  }
-
-  @Deprecated
-  @Override
-  public <S> E minBy(String methodName, Object... args) {
-    return newRubyLazyEnumerator(getIterable()).minBy(methodName, args);
   }
 
   @Override
@@ -740,19 +632,13 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
 
   @Override
   public <S> RubyArray<E> minmaxBy(Comparator<? super S> comp,
-      TransformBlock<? super E, ? extends S> block) {
+      Function<? super E, ? extends S> block) {
     return newRubyLazyEnumerator(getIterable()).minmaxBy(comp, block);
   }
 
   @Override
-  public <S> RubyArray<E> minmaxBy(TransformBlock<? super E, ? extends S> block) {
+  public <S> RubyArray<E> minmaxBy(Function<? super E, ? extends S> block) {
     return newRubyLazyEnumerator(getIterable()).minmaxBy(block);
-  }
-
-  @Deprecated
-  @Override
-  public <S> RubyArray<E> minmaxBy(String methodName, Object... args) {
-    return newRubyLazyEnumerator(getIterable()).minmaxBy(methodName, args);
   }
 
   @Override
@@ -761,7 +647,7 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
   }
 
   @Override
-  public boolean noneʔ(BooleanBlock<? super E> block) {
+  public boolean noneʔ(Predicate<? super E> block) {
     return newRubyLazyEnumerator(getIterable()).noneʔ(block);
   }
 
@@ -771,7 +657,7 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
   }
 
   @Override
-  public boolean oneʔ(BooleanBlock<? super E> block) {
+  public boolean oneʔ(Predicate<? super E> block) {
     return newRubyLazyEnumerator(getIterable()).oneʔ(block);
   }
 
@@ -786,30 +672,18 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
   }
 
   @Override
-  public RubyArray<RubyArray<E>> partition(BooleanBlock<? super E> block) {
+  public RubyArray<RubyArray<E>> partition(Predicate<? super E> block) {
     return newRubyLazyEnumerator(getIterable()).partition(block);
   }
 
   @Override
-  public E reduce(ReduceBlock<E> block) {
+  public E reduce(BiFunction<E, E, E> block) {
     return newRubyLazyEnumerator(getIterable()).reduce(block);
   }
 
   @Override
-  public <I> I reduce(I init, WithInitBlock<? super E, I> block) {
+  public <I> I reduce(I init, BiFunction<I, ? super E, I> block) {
     return newRubyLazyEnumerator(getIterable()).reduce(init, block);
-  }
-
-  @Deprecated
-  @Override
-  public <I> I reduce(I init, String methodName) {
-    return newRubyLazyEnumerator(getIterable()).reduce(init, methodName);
-  }
-
-  @Deprecated
-  @Override
-  public E reduce(String methodName) {
-    return newRubyLazyEnumerator(getIterable()).reduce(methodName);
   }
 
   /**
@@ -828,7 +702,7 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    * @return {@link RubyArray}
    */
   @Override
-  public RubyArray<E> reject(BooleanBlock<? super E> block) {
+  public RubyArray<E> reject(Predicate<? super E> block) {
     return newRubyLazyEnumerator(getIterable()).reject(block).toA();
   }
 
@@ -848,9 +722,9 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    * @return {@link RubyEnumerable}
    */
   @Override
-  public RubyEnumerable<E> reverseEach(Block<? super E> block) {
+  public RubyEnumerable<E> reverseEach(Consumer<? super E> block) {
     for (E item : reverseEach()) {
-      block.yield(item);
+      block.accept(item);
     }
     return this;
   }
@@ -871,7 +745,7 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    * @return {@link RubyArray}
    */
   @Override
-  public RubyArray<E> select(BooleanBlock<? super E> block) {
+  public RubyArray<E> select(Predicate<? super E> block) {
     return findAll(block);
   }
 
@@ -881,7 +755,7 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public RubyEnumerator<RubyArray<E>> sliceAfter(BooleanBlock<? super E> block) {
+  public RubyEnumerator<RubyArray<E>> sliceAfter(Predicate<? super E> block) {
     return newRubyEnumerator(new SliceAfterIterable<E>(getIterable(), block));
   }
 
@@ -892,8 +766,8 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    */
   @Override
   public RubyEnumerator<RubyArray<E>> sliceAfter(String regex) {
-    return newRubyEnumerator(new SliceAfterIterable<E>(getIterable(),
-        Pattern.compile(regex)));
+    return newRubyEnumerator(
+        new SliceAfterIterable<E>(getIterable(), Pattern.compile(regex)));
   }
 
   /**
@@ -902,7 +776,7 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public RubyEnumerator<RubyArray<E>> sliceBefore(BooleanBlock<? super E> block) {
+  public RubyEnumerator<RubyArray<E>> sliceBefore(Predicate<? super E> block) {
     return newRubyEnumerator(new SliceBeforeIterable<E>(getIterable(), block));
   }
 
@@ -913,8 +787,8 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    */
   @Override
   public RubyEnumerator<RubyArray<E>> sliceBefore(String regex) {
-    return newRubyEnumerator(new SliceBeforeIterable<E>(getIterable(),
-        Pattern.compile(regex)));
+    return newRubyEnumerator(
+        new SliceBeforeIterable<E>(getIterable(), Pattern.compile(regex)));
   }
 
   /**
@@ -924,7 +798,7 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    */
   @Override
   public RubyEnumerator<RubyArray<E>> sliceWhen(
-      EntryBooleanBlock<? super E, ? super E> block) {
+      BiPredicate<? super E, ? super E> block) {
     return newRubyEnumerator(new SliceWhenIterable<E>(getIterable(), block));
   }
 
@@ -950,25 +824,19 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
 
   @Override
   public <S> RubyArray<E> sortBy(Comparator<? super S> comp,
-      TransformBlock<? super E, ? extends S> block) {
+      Function<? super E, ? extends S> block) {
     return newRubyLazyEnumerator(getIterable()).sortBy(comp, block);
   }
 
   @Override
   public <S> RubyArray<E> sortBy(Comparator<? super E> comp1,
-      Comparator<? super S> comp2, TransformBlock<? super E, ? extends S> block) {
+      Comparator<? super S> comp2, Function<? super E, ? extends S> block) {
     return newRubyLazyEnumerator(getIterable()).sortBy(comp1, comp2, block);
   }
 
   @Override
-  public <S> RubyArray<E> sortBy(TransformBlock<? super E, ? extends S> block) {
+  public <S> RubyArray<E> sortBy(Function<? super E, ? extends S> block) {
     return newRubyLazyEnumerator(getIterable()).sortBy(block);
-  }
-
-  @Deprecated
-  @Override
-  public <S> RubyArray<E> sortBy(String methodName, Object... args) {
-    return newRubyLazyEnumerator(getIterable()).sortBy(methodName, args);
   }
 
   /**
@@ -1002,7 +870,7 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    * @return {@link RubyArray}
    */
   @Override
-  public RubyArray<E> takeWhile(BooleanBlock<? super E> block) {
+  public RubyArray<E> takeWhile(Predicate<? super E> block) {
     return newRubyLazyEnumerator(getIterable()).takeWhile(block).toA();
   }
 
@@ -1040,7 +908,7 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
 
   @Override
   public void zip(List<? extends Iterable<? extends E>> others,
-      Block<? super RubyArray<E>> block) {
+      Consumer<? super RubyArray<E>> block) {
     newRubyLazyEnumerator(getIterable()).zip(others, block);
   }
 

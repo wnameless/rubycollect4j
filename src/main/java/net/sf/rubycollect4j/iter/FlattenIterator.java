@@ -22,9 +22,9 @@ import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.function.Function;
 
 import net.sf.rubycollect4j.RubyArray;
-import net.sf.rubycollect4j.block.TransformBlock;
 
 /**
  * 
@@ -41,7 +41,7 @@ import net.sf.rubycollect4j.block.TransformBlock;
 public final class FlattenIterator<E, S> implements Iterator<S> {
 
   private final Iterator<? extends E> iter;
-  private final TransformBlock<? super E, ? extends List<? extends S>> block;
+  private final Function<? super E, ? extends List<? extends S>> block;
   private final RubyArray<S> buffer = newRubyArray();
 
   /**
@@ -55,7 +55,7 @@ public final class FlattenIterator<E, S> implements Iterator<S> {
    *           if iter or block is null
    */
   public FlattenIterator(Iterator<? extends E> iter,
-      TransformBlock<? super E, ? extends List<? extends S>> block) {
+      Function<? super E, ? extends List<? extends S>> block) {
     if (iter == null || block == null) throw new NullPointerException();
 
     this.iter = iter;
@@ -68,7 +68,7 @@ public final class FlattenIterator<E, S> implements Iterator<S> {
       if (item == null)
         buffer.add(null);
       else
-        buffer.concat(block.yield(item));
+        buffer.concat(block.apply(item));
     }
   }
 

@@ -21,9 +21,9 @@ import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 
 import java.util.Iterator;
 import java.util.Map.Entry;
+import java.util.function.Function;
 
 import net.sf.rubycollect4j.RubyArray;
-import net.sf.rubycollect4j.block.TransformBlock;
 import net.sf.rubycollect4j.util.ComparableEntry;
 import net.sf.rubycollect4j.util.PeekingIterator;
 
@@ -42,11 +42,11 @@ import net.sf.rubycollect4j.util.PeekingIterator;
  * @author Wei-Ming Wu
  * 
  */
-public final class ChunkIterator<E, K> implements
-    Iterator<Entry<K, RubyArray<E>>> {
+public final class ChunkIterator<E, K>
+    implements Iterator<Entry<K, RubyArray<E>>> {
 
   private final PeekingIterator<E> pIter;
-  private final TransformBlock<? super E, ? extends K> block;
+  private final Function<? super E, ? extends K> block;
 
   /**
    * Creates a {@link ChunkIterator}.
@@ -59,7 +59,7 @@ public final class ChunkIterator<E, K> implements
    *           if iterator or block is null
    */
   public ChunkIterator(Iterator<? extends E> iter,
-      TransformBlock<? super E, ? extends K> block) {
+      Function<? super E, ? extends K> block) {
     if (iter == null || block == null) throw new NullPointerException();
 
     pIter = new PeekingIterator<E>(iter);
@@ -67,9 +67,9 @@ public final class ChunkIterator<E, K> implements
   }
 
   private Entry<K, RubyArray<E>> nextElement() {
-    K key = block.yield(pIter.peek());
+    K key = block.apply(pIter.peek());
     RubyArray<E> bucket = newRubyArray();
-    while (pIter.hasNext() && key.equals(block.yield(pIter.peek()))) {
+    while (pIter.hasNext() && key.equals(block.apply(pIter.peek()))) {
       bucket.add(pIter.next());
     }
     return new ComparableEntry<K, RubyArray<E>>(key, bucket);

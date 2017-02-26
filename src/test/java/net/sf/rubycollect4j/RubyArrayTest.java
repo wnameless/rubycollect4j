@@ -36,12 +36,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 import javax.xml.bind.TypeConstraintException;
-
-import net.sf.rubycollect4j.block.Block;
-import net.sf.rubycollect4j.block.BooleanBlock;
-import net.sf.rubycollect4j.block.TransformBlock;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -51,29 +50,15 @@ public class RubyArrayTest {
 
   RubyArray<Integer> ra;
   RubyArray<Integer> frozenRa;
-  TransformBlock<Integer, Integer> block;
+  Function<Integer, Integer> block;
   Comparator<Integer> comp;
 
   @Before
   public void setUp() throws Exception {
     ra = ra(1, 2, 3, 4);
     frozenRa = ra(1, 2, 3, 4).freeze();
-    block = new TransformBlock<Integer, Integer>() {
-
-      @Override
-      public Integer yield(Integer item) {
-        return item * 2;
-      }
-
-    };
-    comp = new Comparator<Integer>() {
-
-      @Override
-      public int compare(Integer o1, Integer o2) {
-        return o2 - o1;
-      }
-
-    };
+    block = item -> item * 2;
+    comp = (o1, o2) -> o2 - o1;
   }
 
   @Test
@@ -163,14 +148,7 @@ public class RubyArrayTest {
 
   @Test
   public void testBsearchWithComparator() {
-    Comparator<Integer> comp = new Comparator<Integer>() {
-
-      @Override
-      public int compare(Integer arg0, Integer arg1) {
-        return arg1 - arg0;
-      }
-
-    };
+    Comparator<Integer> comp = (arg0, arg1) -> arg1 - arg0;
     assertNull(ra.bsearch(3, comp));
     ra = ra(4, 3, 2, 1);
     assertEquals(Integer.valueOf(3), ra.bsearch(3, comp));
@@ -179,32 +157,9 @@ public class RubyArrayTest {
   @Test
   public void testBsearchWithBlock() {
     ra = ra(1, 2, 3, 4, 5, 6, 7);
-    assertEquals(Integer.valueOf(6),
-        ra.bsearch(new TransformBlock<Integer, Integer>() {
-
-          @Override
-          public Integer yield(Integer item) {
-            return item - 6;
-          }
-
-        }));
-    assertEquals(Integer.valueOf(3),
-        ra.bsearch(new TransformBlock<Integer, Integer>() {
-
-          @Override
-          public Integer yield(Integer item) {
-            return item - 3;
-          }
-
-        }));
-    assertNull(ra.bsearch(new TransformBlock<Integer, Integer>() {
-
-      @Override
-      public Integer yield(Integer item) {
-        return item - 0;
-      }
-
-    }));
+    assertEquals(Integer.valueOf(6), ra.bsearch(item -> item - 6));
+    assertEquals(Integer.valueOf(3), ra.bsearch(item -> item - 3));
+    assertNull(ra.bsearch(item -> item - 0));
   }
 
   @Test
@@ -227,25 +182,17 @@ public class RubyArrayTest {
     assertEquals(ra(ra()), ra.combination(0).toA());
     assertEquals(ra(), ra.combination(5).toA());
     assertEquals(ra(ra(1), ra(2), ra(3), ra(4)), ra.combination(1).toA());
-    assertEquals(
-        ra(ra(1, 2), ra(1, 3), ra(1, 4), ra(2, 3), ra(2, 4), ra(3, 4)), ra
-            .combination(2).toA());
-    assertEquals(ra(ra(1, 2, 3), ra(1, 2, 4), ra(1, 3, 4), ra(2, 3, 4)), ra
-        .combination(3).toA());
+    assertEquals(ra(ra(1, 2), ra(1, 3), ra(1, 4), ra(2, 3), ra(2, 4), ra(3, 4)),
+        ra.combination(2).toA());
+    assertEquals(ra(ra(1, 2, 3), ra(1, 2, 4), ra(1, 3, 4), ra(2, 3, 4)),
+        ra.combination(3).toA());
     assertEquals(ra(ra(1, 2, 3, 4)), ra.combination(4).toA());
   }
 
   @Test
   public void testCombinationWithBlock() {
     final RubyArray<Integer> ints = ra();
-    assertEquals(ra, ra.combination(3, new Block<RubyArray<Integer>>() {
-
-      @Override
-      public void yield(RubyArray<Integer> item) {
-        ints.concat(item);
-      }
-
-    }));
+    assertEquals(ra, ra.combination(3, item -> ints.concat(item)));
     assertEquals(ra(1, 2, 3, 1, 2, 4, 1, 3, 4, 2, 3, 4), ints);
   }
 
@@ -293,15 +240,7 @@ public class RubyArrayTest {
     ra = ra(1, 2, 3, 3);
     assertEquals(Integer.valueOf(3), ra.delete(3, block));
     assertEquals(ra(1, 2), ra);
-    assertEquals(Integer.valueOf(27),
-        ra.delete(9, new TransformBlock<Integer, Integer>() {
-
-          @Override
-          public Integer yield(Integer item) {
-            return item * 3;
-          }
-
-        }));
+    assertEquals(Integer.valueOf(27), ra.delete(9, item -> item * 3));
     assertEquals(ra(1, 2), ra);
     ra = ra(1, 2, null, null);
     assertNull(ra.delete(null, block));
@@ -327,23 +266,9 @@ public class RubyArrayTest {
 
   @Test
   public void testDeleteIfWithBlock() {
-    assertEquals(ra(1, 2, 3, 4), ra.deleteIf(new BooleanBlock<Integer>() {
-
-      @Override
-      public boolean yield(Integer item) {
-        return item > 5;
-      }
-
-    }));
+    assertEquals(ra(1, 2, 3, 4), ra.deleteIf(item -> item > 5));
     assertEquals(ra(1, 2, 3, 4), ra);
-    assertEquals(ra(3, 4), ra.deleteIf(new BooleanBlock<Integer>() {
-
-      @Override
-      public boolean yield(Integer item) {
-        return item < 3;
-      }
-
-    }));
+    assertEquals(ra(3, 4), ra.deleteIf(item -> item < 3));
     assertEquals(ra(3, 4), ra);
   }
 
@@ -356,14 +281,7 @@ public class RubyArrayTest {
   @Test
   public void testEachWithBlock() {
     final RubyArray<Integer> ints = ra();
-    assertEquals(ra, ra.each(new Block<Integer>() {
-
-      @Override
-      public void yield(Integer item) {
-        ints.push(item * 2);
-      }
-
-    }));
+    assertEquals(ra, ra.each(item -> ints.push(item * 2)));
     assertEquals(ra(2, 4, 6, 8), ints);
   }
 
@@ -376,14 +294,7 @@ public class RubyArrayTest {
   @Test
   public void testEachIndexWithBlock() {
     final RubyArray<Integer> ints = ra();
-    assertEquals(ra, ra.eachIndex(new Block<Integer>() {
-
-      @Override
-      public void yield(Integer index) {
-        ints.push(index * 2);
-      }
-
-    }));
+    assertEquals(ra, ra.eachIndex(index -> ints.push(index * 2)));
     assertEquals(ra(0, 2, 4, 6), ints);
   }
 
@@ -429,26 +340,12 @@ public class RubyArrayTest {
   @Test
   public void testFetchWithBlock() {
     final RubyArray<Integer> ints = ra();
-    Block<Integer> block = new Block<Integer>() {
-
-      @Override
-      public void yield(Integer index) {
-        ints.push(index);
-      }
-
-    };
+    Consumer<Integer> block = index -> ints.push(index);
     assertEquals(Integer.valueOf(3), ra.fetch(2, block));
     assertEquals(null, ra.fetch(4, block));
     assertEquals(ra(4), ints);
     ints.clear();
-    assertEquals(null, ra.fetch(-5, new Block<Integer>() {
-
-      @Override
-      public void yield(Integer index) {
-        ints.push(index);
-      }
-
-    }));
+    assertEquals(null, ra.fetch(-5, index -> ints.push(index)));
     assertEquals(ra(-5), ints);
   }
 
@@ -493,51 +390,19 @@ public class RubyArrayTest {
 
   @Test
   public void testFillWithBlock() {
-    assertEquals(ra(0, 1, 2, 3),
-        ra.fill(new TransformBlock<Integer, Integer>() {
-
-          @Override
-          public Integer yield(Integer index) {
-            return index;
-          }
-
-        }));
+    assertEquals(ra(0, 1, 2, 3), ra.fill(index -> index));
     assertEquals(ra(0, 1, 2, 3), ra);
   }
 
   @Test
   public void testFillWithBlockAndStart() {
-    assertEquals(ra(1, 2, 2, 3),
-        ra.fill(2, new TransformBlock<Integer, Integer>() {
-
-          @Override
-          public Integer yield(Integer index) {
-            return index;
-          }
-
-        }));
+    assertEquals(ra(1, 2, 2, 3), ra.fill(2, index -> index));
     assertEquals(ra(1, 2, 2, 3), ra);
     ra = ra(1, 2, 3, 4);
-    assertEquals(ra(1, 2, 2, 3),
-        ra.fill(-2, new TransformBlock<Integer, Integer>() {
-
-          @Override
-          public Integer yield(Integer index) {
-            return index;
-          }
-
-        }));
+    assertEquals(ra(1, 2, 2, 3), ra.fill(-2, index -> index));
     assertEquals(ra(1, 2, 2, 3), ra);
     ra = ra(1, 2, 3, 4);
-    assertEquals(ra(0, 1, 2, 3),
-        ra.fill(-4, new TransformBlock<Integer, Integer>() {
-
-          @Override
-          public Integer yield(Integer index) {
-            return index;
-          }
-
-        }));
+    assertEquals(ra(0, 1, 2, 3), ra.fill(-4, index -> index));
     assertEquals(ra(0, 1, 2, 3), ra);
     ra = ra(1, 2, 3, 4);
     assertEquals(ra(1, 2, 3, 4), ra.fill(4, block));
@@ -546,59 +411,20 @@ public class RubyArrayTest {
 
   @Test
   public void testFillWithBlockAndStartAndLength() {
-    assertEquals(ra(1, 2, 2, 4),
-        ra.fill(2, 1, new TransformBlock<Integer, Integer>() {
-
-          @Override
-          public Integer yield(Integer index) {
-            return index;
-          }
-
-        }));
+    assertEquals(ra(1, 2, 2, 4), ra.fill(2, 1, index -> index));
     assertEquals(ra(1, 2, 2, 4), ra);
     ra = ra(1, 2, 3, 4);
-    assertEquals(ra(1, 2, 2, 4),
-        ra.fill(-2, 1, new TransformBlock<Integer, Integer>() {
-
-          @Override
-          public Integer yield(Integer index) {
-            return index;
-          }
-
-        }));
+    assertEquals(ra(1, 2, 2, 4), ra.fill(-2, 1, index -> index));
     assertEquals(ra(1, 2, 2, 4), ra);
     ra = ra(1, 2, 3, 4);
-    assertEquals(ra(0, 2, 3, 4),
-        ra.fill(-7, 1, new TransformBlock<Integer, Integer>() {
-
-          @Override
-          public Integer yield(Integer index) {
-            return index;
-          }
-
-        }));
+    assertEquals(ra(0, 2, 3, 4), ra.fill(-7, 1, index -> index));
     assertEquals(ra(0, 2, 3, 4), ra);
     ra = ra(1, 2, 3, 4);
     assertEquals(ra(1, 2, 3, 4, null, null, 6, 7),
-        ra.fill(6, 2, new TransformBlock<Integer, Integer>() {
-
-          @Override
-          public Integer yield(Integer index) {
-            return index;
-          }
-
-        }));
+        ra.fill(6, 2, index -> index));
     assertEquals(ra(1, 2, 3, 4, null, null, 6, 7), ra);
     ra = ra(1, 2, 3, 4);
-    assertEquals(ra(0, 1, 2, 3, 4, 5, 6),
-        ra.fill(0, 7, new TransformBlock<Integer, Integer>() {
-
-          @Override
-          public Integer yield(Integer index) {
-            return index;
-          }
-
-        }));
+    assertEquals(ra(0, 1, 2, 3, 4, 5, 6), ra.fill(0, 7, index -> index));
     assertEquals(ra(0, 1, 2, 3, 4, 5, 6), ra);
   }
 
@@ -656,22 +482,8 @@ public class RubyArrayTest {
 
   @Test
   public void testIndexWithBlock() {
-    assertEquals(Integer.valueOf(1), ra.index(new BooleanBlock<Integer>() {
-
-      @Override
-      public boolean yield(Integer item) {
-        return item >= 2;
-      }
-
-    }));
-    assertNull(ra.index(new BooleanBlock<Integer>() {
-
-      @Override
-      public boolean yield(Integer item) {
-        return item > 4;
-      }
-
-    }));
+    assertEquals(Integer.valueOf(1), ra.index(item -> item >= 2));
+    assertNull(ra.index(item -> item > 4));
   }
 
   @Test
@@ -735,14 +547,7 @@ public class RubyArrayTest {
 
   @Test
   public void testKeepIfWithBlock() {
-    assertEquals(ra(1, 3), ra.keepIf(new BooleanBlock<Integer>() {
-
-      @Override
-      public boolean yield(Integer item) {
-        return item % 2 == 1;
-      }
-
-    }));
+    assertEquals(ra(1, 3), ra.keepIf(item -> item % 2 == 1));
     assertEquals(ra(1, 3), ra);
   }
 
@@ -774,14 +579,7 @@ public class RubyArrayTest {
 
   @Test
   public void testMapǃ() {
-    assertSame(ra, ra.mapǃ(new TransformBlock<Integer, Integer>() {
-
-      @Override
-      public Integer yield(Integer item) {
-        return item * 2;
-      }
-
-    }));
+    assertSame(ra, ra.mapǃ(item -> item * 2));
     assertEquals(ra(2, 4, 6, 8), ra);
   }
 
@@ -824,9 +622,8 @@ public class RubyArrayTest {
   public void testPermutaion() {
     ra = ra(1, 2, 3);
     assertEquals(RubyEnumerator.class, ra.permutation().getClass());
-    assertEquals(
-        ra(ra(1, 2, 3), ra(1, 3, 2), ra(2, 1, 3), ra(2, 3, 1), ra(3, 1, 2),
-            ra(3, 2, 1)), ra.permutation().toA());
+    assertEquals(ra(ra(1, 2, 3), ra(1, 3, 2), ra(2, 1, 3), ra(2, 3, 1),
+        ra(3, 1, 2), ra(3, 2, 1)), ra.permutation().toA());
   }
 
   @SuppressWarnings("unchecked")
@@ -837,12 +634,10 @@ public class RubyArrayTest {
     assertEquals(ra(), ra.permutation(-1).toA());
     assertEquals(ra(ra()), ra.permutation(0).toA());
     assertEquals(ra(ra(1), ra(2), ra(3)), ra.permutation(1).toA());
-    assertEquals(
-        ra(ra(1, 2), ra(1, 3), ra(2, 1), ra(2, 3), ra(3, 1), ra(3, 2)), ra
-            .permutation(2).toA());
-    assertEquals(
-        ra(ra(1, 2, 3), ra(1, 3, 2), ra(2, 1, 3), ra(2, 3, 1), ra(3, 1, 2),
-            ra(3, 2, 1)), ra.permutation(3).toA());
+    assertEquals(ra(ra(1, 2), ra(1, 3), ra(2, 1), ra(2, 3), ra(3, 1), ra(3, 2)),
+        ra.permutation(2).toA());
+    assertEquals(ra(ra(1, 2, 3), ra(1, 3, 2), ra(2, 1, 3), ra(2, 3, 1),
+        ra(3, 1, 2), ra(3, 2, 1)), ra.permutation(3).toA());
     assertEquals(ra(), ra.permutation(4).toA());
   }
 
@@ -850,14 +645,7 @@ public class RubyArrayTest {
   public void testPermutaionWithNAndBlock() {
     ra = ra(1, 2, 3);
     final RubyArray<Integer> ints = ra();
-    assertEquals(ra, ra.permutation(1, new Block<RubyArray<Integer>>() {
-
-      @Override
-      public void yield(RubyArray<Integer> item) {
-        ints.concat(item);
-      }
-
-    }));
+    assertEquals(ra, ra.permutation(1, item -> ints.concat(item)));
     assertEquals(ra(1, 2, 3), ints);
   }
 
@@ -865,15 +653,9 @@ public class RubyArrayTest {
   public void testPermutaionWithBlock() {
     ra = ra(1, 2, 3);
     final RubyArray<Integer> ints = ra();
-    assertEquals(ra, ra.permutation(new Block<RubyArray<Integer>>() {
-
-      @Override
-      public void yield(RubyArray<Integer> item) {
-        ints.concat(item);
-      }
-
-    }));
-    assertEquals(ra(1, 2, 3, 1, 3, 2, 2, 1, 3, 2, 3, 1, 3, 1, 2, 3, 2, 1), ints);
+    assertEquals(ra, ra.permutation(item -> ints.concat(item)));
+    assertEquals(ra(1, 2, 3, 1, 3, 2, 2, 1, 3, 2, 3, 1, 3, 1, 2, 3, 2, 1),
+        ints);
   }
 
   @Test
@@ -921,14 +703,7 @@ public class RubyArrayTest {
   public void testProductWithBlock() {
     ra = ra(1, 2);
     final RubyArray<Integer> ints = ra();
-    assertEquals(ra, ra.product(ra(ra(3, 4)), new Block<RubyArray<Integer>>() {
-
-      @Override
-      public void yield(RubyArray<Integer> item) {
-        ints.concat(item);
-      }
-
-    }));
+    assertEquals(ra, ra.product(ra(ra(3, 4)), item -> ints.concat(item)));
     assertEquals(ra(1, 3, 1, 4, 2, 3, 2, 4), ints);
   }
 
@@ -973,14 +748,7 @@ public class RubyArrayTest {
 
   @Test
   public void testRejectǃWithBlock() {
-    BooleanBlock<Integer> block = new BooleanBlock<Integer>() {
-
-      @Override
-      public boolean yield(Integer item) {
-        return item > 2;
-      }
-
-    };
+    Predicate<Integer> block = item -> item > 2;
     assertEquals(ra(1, 2), ra.rejectǃ(block));
     assertEquals(ra(1, 2), ra);
     assertNull(ra.rejectǃ(block));
@@ -994,24 +762,17 @@ public class RubyArrayTest {
     assertEquals(ra(), ra.repeatedCombination(-1).toA());
     assertEquals(ra(ra()), ra.repeatedCombination(0).toA());
     assertEquals(ra(ra(1), ra(2)), ra.repeatedCombination(1).toA());
-    assertEquals(ra(ra(1, 1), ra(1, 2), ra(2, 2)), ra.repeatedCombination(2)
-        .toA());
-    assertEquals(ra(ra(1, 1, 1), ra(1, 1, 2), ra(1, 2, 2), ra(2, 2, 2)), ra
-        .repeatedCombination(3).toA());
+    assertEquals(ra(ra(1, 1), ra(1, 2), ra(2, 2)),
+        ra.repeatedCombination(2).toA());
+    assertEquals(ra(ra(1, 1, 1), ra(1, 1, 2), ra(1, 2, 2), ra(2, 2, 2)),
+        ra.repeatedCombination(3).toA());
   }
 
   @Test
   public void testRepeatedCombinationWithBlock() {
     ra = ra(1, 2);
     final RubyArray<Integer> ints = ra();
-    assertEquals(ra, ra.repeatedCombination(2, new Block<RubyArray<Integer>>() {
-
-      @Override
-      public void yield(RubyArray<Integer> item) {
-        ints.concat(item);
-      }
-
-    }));
+    assertEquals(ra, ra.repeatedCombination(2, item -> ints.concat(item)));
     assertEquals(ra(1, 1, 1, 2, 2, 2), ints);
   }
 
@@ -1023,26 +784,19 @@ public class RubyArrayTest {
     assertEquals(ra(), ra.repeatedPermutation(-1).toA());
     assertEquals(ra(ra()), ra.repeatedPermutation(0).toA());
     assertEquals(ra(ra(1), ra(2)), ra.repeatedPermutation(1).toA());
-    assertEquals(ra(ra(1, 1), ra(1, 2), ra(2, 1), ra(2, 2)), ra
-        .repeatedPermutation(2).toA());
+    assertEquals(ra(ra(1, 1), ra(1, 2), ra(2, 1), ra(2, 2)),
+        ra.repeatedPermutation(2).toA());
     assertEquals(
         ra(ra(1, 1, 1), ra(1, 1, 2), ra(1, 2, 1), ra(1, 2, 2), ra(2, 1, 1),
-            ra(2, 1, 2), ra(2, 2, 1), ra(2, 2, 2)), ra.repeatedPermutation(3)
-            .toA());
+            ra(2, 1, 2), ra(2, 2, 1), ra(2, 2, 2)),
+        ra.repeatedPermutation(3).toA());
   }
 
   @Test
   public void testRepeatedPermutaionWithBlock() {
     ra = ra(1, 2);
     final RubyArray<Integer> ints = ra();
-    assertEquals(ra, ra.repeatedPermutation(2, new Block<RubyArray<Integer>>() {
-
-      @Override
-      public void yield(RubyArray<Integer> item) {
-        ints.concat(item);
-      }
-
-    }));
+    assertEquals(ra, ra.repeatedPermutation(2, item -> ints.concat(item)));
     assertEquals(ra(1, 1, 1, 2, 2, 1, 2, 2), ints);
   }
 
@@ -1072,14 +826,7 @@ public class RubyArrayTest {
 
   @Test
   public void testRindexWithBlock() {
-    BooleanBlock<Integer> block = new BooleanBlock<Integer>() {
-
-      @Override
-      public boolean yield(Integer item) {
-        return item > 1;
-      }
-
-    };
+    Predicate<Integer> block = item -> item > 1;
     assertEquals(Integer.valueOf(3), ra.rindex(block));
     ra = ra(0, -1, -2, -3);
     assertNull(ra.rindex(block));
@@ -1141,14 +888,7 @@ public class RubyArrayTest {
     assertTrue(ra.includeʔ(ra.sample()));
     assertNull(ra().sample());
     final Set<Integer> set = newRubySet();
-    range(0, 1000).each(new Block<Integer>() {
-
-      @Override
-      public void yield(Integer item) {
-        set.add(ra.sample());
-      }
-
-    });
+    range(0, 1000).each(item -> set.add(ra.sample()));
     assertEquals(ra.size(), set.size());
   }
 
@@ -1159,14 +899,7 @@ public class RubyArrayTest {
     assertEquals(4, ra.sample(5).uniq().count());
     assertEquals(ra(), ra.sample(0));
     final Set<Integer> set = newRubySet();
-    range(0, 1000).each(new Block<Integer>() {
-
-      @Override
-      public void yield(Integer item) {
-        set.addAll(ra.sample(2));
-      }
-
-    });
+    range(0, 1000).each(item -> set.addAll(ra.sample(2)));
     assertEquals(ra.size(), set.size());
   }
 
@@ -1183,14 +916,7 @@ public class RubyArrayTest {
 
   @Test
   public void testSelectǃWithBlock() {
-    BooleanBlock<Integer> block = new BooleanBlock<Integer>() {
-
-      @Override
-      public boolean yield(Integer item) {
-        return item % 2 == 1;
-      }
-
-    };
+    Predicate<Integer> block = item -> item % 2 == 1;
     assertEquals(ra(1, 3), ra.selectǃ(block));
     assertEquals(ra(1, 3), ra);
     assertNull(ra.selectǃ(block));
@@ -1219,44 +945,16 @@ public class RubyArrayTest {
 
   @Test
   public void testShuffle() {
-    ra = ra(0).fill(0, 1000, new TransformBlock<Integer, Integer>() {
-
-      @Override
-      public Integer yield(Integer index) {
-        return index;
-      }
-
-    });
+    ra = ra(0).fill(0, 1000, index -> index);
     assertFalse(ra.equals(ra.shuffle()));
-    assertEquals(ra(0).fill(0, 1000, new TransformBlock<Integer, Integer>() {
-
-      @Override
-      public Integer yield(Integer index) {
-        return index;
-      }
-
-    }), ra);
+    assertEquals(ra(0).fill(0, 1000, index -> index), ra);
   }
 
   @Test
   public void testShuffleǃ() {
-    ra = ra(0).fill(0, 1000, new TransformBlock<Integer, Integer>() {
-
-      @Override
-      public Integer yield(Integer index) {
-        return index;
-      }
-
-    });
+    ra = ra(0).fill(0, 1000, index -> index);
     ra.shuffleǃ();
-    assertFalse(ra(0).fill(0, 1000, new TransformBlock<Integer, Integer>() {
-
-      @Override
-      public Integer yield(Integer index) {
-        return index;
-      }
-
-    }).equals(ra));
+    assertFalse(ra(0).fill(0, 1000, index -> index).equals(ra));
   }
 
   @Test
@@ -1326,14 +1024,7 @@ public class RubyArrayTest {
   public void testSortByǃWithComparatorAndBlock() {
     RubyArray<String> ra = ra("aaaa", "bbb", "ff", "cc", "d");
     assertEquals(ra("aaaa", "bbb", "ff", "cc", "d"),
-        ra.sortByǃ(comp, new TransformBlock<String, Integer>() {
-
-          @Override
-          public Integer yield(String item) {
-            return item.length();
-          }
-
-        }));
+        ra.sortByǃ(comp, item -> item.length()));
     assertEquals(ra("aaaa", "bbb", "ff", "cc", "d"), ra);
   }
 
@@ -1341,21 +1032,7 @@ public class RubyArrayTest {
   public void testSortByǃWith2ComparatorAndBlock() {
     RubyArray<String> ra = ra("aaaa", "bbb", "cc", "ff", "d");
     assertEquals(ra("aaaa", "bbb", "ff", "cc", "d"),
-        ra.sortByǃ(new Comparator<String>() {
-
-          @Override
-          public int compare(String o1, String o2) {
-            return o2.compareTo(o1);
-          }
-
-        }, comp, new TransformBlock<String, Integer>() {
-
-          @Override
-          public Integer yield(String item) {
-            return item.length();
-          }
-
-        }));
+        ra.sortByǃ((o1, o2) -> o2.compareTo(o1), comp, item -> item.length()));
     assertEquals(ra("aaaa", "bbb", "ff", "cc", "d"), ra);
   }
 
@@ -1363,14 +1040,7 @@ public class RubyArrayTest {
   public void testSortByǃWithBlock() {
     RubyArray<String> ra = ra("aaaa", "bbb", "ff", "cc", "d");
     assertEquals(ra("d", "ff", "cc", "bbb", "aaaa"),
-        ra.sortByǃ(new TransformBlock<String, Integer>() {
-
-          @Override
-          public Integer yield(String item) {
-            return item.length();
-          }
-
-        }));
+        ra.sortByǃ(item -> item.length()));
     assertEquals(ra("d", "ff", "cc", "bbb", "aaaa"), ra);
   }
 
@@ -1427,15 +1097,7 @@ public class RubyArrayTest {
   @Test
   public void testUniqWithBlock() {
     RubyArray<String> ra = ra("aa", "bb", "ccc", "ddd", "f");
-    assertEquals(ra("aa", "ccc", "f"),
-        ra.uniq(new TransformBlock<String, Integer>() {
-
-          @Override
-          public Integer yield(String item) {
-            return item.length();
-          }
-
-        }));
+    assertEquals(ra("aa", "ccc", "f"), ra.uniq(item -> item.length()));
   }
 
   @Test
@@ -1456,25 +1118,10 @@ public class RubyArrayTest {
   @Test
   public void testUniqǃWithBlock() {
     RubyArray<String> ra = ra("aa", "bb", "ccc", "ddd", "f");
-    assertEquals(ra("aa", "ccc", "f"),
-        ra.uniqǃ(new TransformBlock<String, Integer>() {
-
-          @Override
-          public Integer yield(String item) {
-            return item.length();
-          }
-
-        }));
+    assertEquals(ra("aa", "ccc", "f"), ra.uniqǃ(item -> item.length()));
     assertEquals(ra("aa", "ccc", "f"), ra);
     ra = ra("a", "bb", "ccc", "dddd");
-    assertNull(ra.uniqǃ(new TransformBlock<String, Integer>() {
-
-      @Override
-      public Integer yield(String item) {
-        return item.length();
-      }
-
-    }));
+    assertNull(ra.uniqǃ(item -> item.length()));
   }
 
   @Test
@@ -1494,7 +1141,8 @@ public class RubyArrayTest {
   @Test
   public void testValuesAt() {
     assertEquals(ra(4, 1, null, null), ra.valuesAt(-1, 0, 5, -6));
-    assertEquals(ra(4, 1, null, null), ra.valuesAt(Arrays.asList(-1, 0, 5, -6)));
+    assertEquals(ra(4, 1, null, null),
+        ra.valuesAt(Arrays.asList(-1, 0, 5, -6)));
   }
 
   @Test

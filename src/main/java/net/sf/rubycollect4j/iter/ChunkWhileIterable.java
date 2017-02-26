@@ -18,9 +18,9 @@
 package net.sf.rubycollect4j.iter;
 
 import java.util.Iterator;
+import java.util.function.BiPredicate;
 
 import net.sf.rubycollect4j.RubyArray;
-import net.sf.rubycollect4j.block.EntryBooleanBlock;
 
 /**
  * 
@@ -38,7 +38,7 @@ import net.sf.rubycollect4j.block.EntryBooleanBlock;
 public final class ChunkWhileIterable<E> implements Iterable<RubyArray<E>> {
 
   private final Iterable<? extends E> iter;
-  private final EntryBooleanBlock<? super E, ? super E> block;
+  private final BiPredicate<? super E, ? super E> block;
 
   /**
    * Creates a {@link ChunkWhileIterable}.
@@ -51,7 +51,7 @@ public final class ChunkWhileIterable<E> implements Iterable<RubyArray<E>> {
    *           if iterable or block is null
    */
   public ChunkWhileIterable(Iterable<? extends E> iter,
-      EntryBooleanBlock<? super E, ? super E> block) {
+      BiPredicate<? super E, ? super E> block) {
     if (iter == null || block == null) throw new NullPointerException();
 
     this.iter = iter;

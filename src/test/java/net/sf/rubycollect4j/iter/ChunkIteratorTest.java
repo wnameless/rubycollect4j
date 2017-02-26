@@ -23,29 +23,23 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.function.Function;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import net.sf.rubycollect4j.RubyArray;
-import net.sf.rubycollect4j.block.TransformBlock;
 import net.sf.rubycollect4j.util.ComparableEntry;
 
 public class ChunkIteratorTest {
 
   ChunkIterator<Number, String> iter;
   RubyArray<Number> nums;
-  TransformBlock<Number, String> block;
+  Function<Number, String> block;
 
   @Before
   public void setUp() throws Exception {
-    block = new TransformBlock<Number, String>() {
-
-      @Override
-      public String yield(Number item) {
-        return item.toString();
-      }
-
-    };
+    block = item -> item.toString();
     nums = ra((Number) 1, (Number) 1.0, (Number) 1.0f, (Number) 2, (Number) 2L);
     iter = new ChunkIterator<Number, String>(nums.iterator(), block);
   }
