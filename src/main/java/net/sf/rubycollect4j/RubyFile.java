@@ -62,6 +62,26 @@ public final class RubyFile extends RubyIO {
   }
 
   /**
+   * Creates a {@link RubyFile} by given path and mode.
+   * 
+   * @param path
+   *          of a File
+   * @param mode
+   *          a {@link Mode}
+   * @return {@link RubyFile}
+   */
+  public static RubyFile open(String path, Mode mode) {
+    RubyFile rf = null;
+    try {
+      rf = new RubyFile(new File(path), mode);
+    } catch (IOException e) {
+      logger.log(Level.SEVERE, null, e);
+      throw new RuntimeException(e);
+    }
+    return rf;
+  }
+
+  /**
    * Creates a {@link RubyFile} by given file. Sets the mode to read-only.
    * 
    * @param path
