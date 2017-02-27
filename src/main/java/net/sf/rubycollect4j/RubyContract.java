@@ -1036,7 +1036,8 @@ final class RubyContract {
      *          an array of Iterable
      * @return {@link Enumerable}
      */
-    public Z zip(Iterable<? extends E>... others);
+    public Z zip(
+        @SuppressWarnings("unchecked") Iterable<? extends E>... others);
 
     /**
      * Groups elements which get the same indices among all other Lists into

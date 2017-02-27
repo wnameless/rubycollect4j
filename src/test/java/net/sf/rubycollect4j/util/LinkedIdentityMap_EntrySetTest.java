@@ -149,7 +149,6 @@ public class LinkedIdentityMap_EntrySetTest {
     assertTrue(entrySet.remove(hp(null, null)));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testContainsAll() {
     assertTrue(entrySet.containsAll(Arrays.asList(hp(key1, 1), hp(key2, 2))));
@@ -162,7 +161,6 @@ public class LinkedIdentityMap_EntrySetTest {
     entrySet.addAll(null);
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testRetainAll() {
     assertTrue(
@@ -172,7 +170,6 @@ public class LinkedIdentityMap_EntrySetTest {
     assertSame(key2, list.get(1));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testRemoveAll() {
     assertTrue(entrySet.removeAll(Arrays.asList(hp(key1, 1), hp(key2, 2))));

@@ -745,7 +745,8 @@ public final class RubyArray<E> extends RubyEnumerable<E>
    * @throws IndexOutOfBoundsException
    *           if index is less than -size
    */
-  public RubyArray<E> insert(int index, E... args) {
+  public RubyArray<E> insert(int index,
+      @SuppressWarnings("unchecked") E... args) {
     if (index < -list.size() - 1)
       throw new IndexOutOfBoundsException("IndexError: index " + index
           + " too small for array; minimum: " + -list.size());
@@ -1063,7 +1064,8 @@ public final class RubyArray<E> extends RubyEnumerable<E>
    *          Lists
    * @return new {@link RubyArray} of {@link RubyArray}s
    */
-  public RubyArray<RubyArray<E>> product(List<? extends E>... others) {
+  public RubyArray<RubyArray<E>> product(
+      @SuppressWarnings("unchecked") List<? extends E>... others) {
     return newRubyEnumerator(new ProductIterable<E>(this, others)).toA();
   }
 
@@ -1116,7 +1118,7 @@ public final class RubyArray<E> extends RubyEnumerable<E>
    *          an array of element
    * @return this {@link RubyArray}
    */
-  public RubyArray<E> push(E... items) {
+  public RubyArray<E> push(@SuppressWarnings("unchecked") E... items) {
     list.addAll(Arrays.asList(items));
     return this;
   }

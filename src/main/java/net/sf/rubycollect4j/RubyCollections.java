@@ -117,6 +117,7 @@ public final class RubyCollections {
    *          varargs
    * @return new {@link RubyArray}
    */
+  @SafeVarargs
   public static <E> RubyArray<E> newRubyArray(E... elements) {
     return new RubyArray<E>(new ArrayList<E>(Arrays.asList(elements)));
   }
@@ -180,6 +181,7 @@ public final class RubyCollections {
    *          varargs
    * @return new {@link RubySet}
    */
+  @SafeVarargs
   public static <E> RubySet<E> newRubySet(E... elements) {
     return new RubySet<E>(Arrays.asList(elements));
   }
@@ -307,6 +309,7 @@ public final class RubyCollections {
    *          elements
    * @return {@link RubyArray}
    */
+  @SafeVarargs
   public static <E> RubyArray<E> ra(E... args) {
     return newRubyArray(args);
   }

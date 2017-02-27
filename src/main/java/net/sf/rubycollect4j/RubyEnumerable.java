@@ -124,6 +124,7 @@ public abstract class RubyEnumerable<E> implements RubyBase.Enumerable<E> {
    * 
    * @return {@link RubyArray}
    */
+  @SuppressWarnings("unchecked")
   @Override
   public <S> RubyArray<S> collect(Function<? super E, ? extends S> block) {
     return (RubyArray<S>) newRubyLazyEnumerator(getIterable()).collect(block)
@@ -145,6 +146,7 @@ public abstract class RubyEnumerable<E> implements RubyBase.Enumerable<E> {
    * 
    * @return {@link RubyArray}
    */
+  @SuppressWarnings("unchecked")
   @Override
   public <S> RubyArray<S> collectConcat(
       Function<? super E, ? extends List<? extends S>> block) {
@@ -436,6 +438,7 @@ public abstract class RubyEnumerable<E> implements RubyBase.Enumerable<E> {
    * 
    * @return {@link RubyArray}
    */
+  @SuppressWarnings("unchecked")
   @Override
   public <S> RubyArray<S> flatMap(
       Function<? super E, ? extends List<? extends S>> block) {
@@ -458,6 +461,7 @@ public abstract class RubyEnumerable<E> implements RubyBase.Enumerable<E> {
    * 
    * @return {@link RubyArray}
    */
+  @SuppressWarnings("unchecked")
   @Override
   public <S> RubyArray<S> grep(String regex,
       Function<? super E, ? extends S> block) {
@@ -480,6 +484,7 @@ public abstract class RubyEnumerable<E> implements RubyBase.Enumerable<E> {
    * 
    * @return {@link RubyArray}
    */
+  @SuppressWarnings("unchecked")
   @Override
   public <S> RubyArray<S> grepV(String regex,
       Function<? super E, ? extends S> block) {
@@ -538,6 +543,7 @@ public abstract class RubyEnumerable<E> implements RubyBase.Enumerable<E> {
    * 
    * @return {@link RubyArray}
    */
+  @SuppressWarnings("unchecked")
   @Override
   public <S> RubyArray<S> map(Function<? super E, ? extends S> block) {
     return (RubyArray<S>) newRubyLazyEnumerator(getIterable()).map(block).toA();
@@ -891,7 +897,8 @@ public abstract class RubyEnumerable<E> implements RubyBase.Enumerable<E> {
    * @return {@link RubyArray}
    */
   @Override
-  public RubyArray<RubyArray<E>> zip(Iterable<? extends E>... others) {
+  public RubyArray<RubyArray<E>> zip(
+      @SuppressWarnings("unchecked") Iterable<? extends E>... others) {
     return newRubyLazyEnumerator(getIterable()).zip(others).toA();
   }
 

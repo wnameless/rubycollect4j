@@ -595,7 +595,8 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
    *          an array of entries
    * @return this {@link RubyHash}
    */
-  public RubyHash<K, V> put(Entry<? extends K, ? extends V>... entries) {
+  public RubyHash<K, V> put(
+      @SuppressWarnings("unchecked") Entry<? extends K, ? extends V>... entries) {
     for (Entry<? extends K, ? extends V> e : entries) {
       map.put(e.getKey(), e.getValue());
     }

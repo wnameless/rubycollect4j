@@ -106,6 +106,7 @@ public final class RubyIterables {
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#collect(Function)
    */
+  @SuppressWarnings("unchecked")
   public static <E, S> List<S> collect(Iterable<E> in,
       Function<? super E, ? extends S> block) {
     return (List<S>) newRubyLazyEnumerator(in).collect(block).toA();
@@ -114,6 +115,7 @@ public final class RubyIterables {
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#collectConcat(Function)
    */
+  @SuppressWarnings("unchecked")
   public static <E, S> List<S> collectConcat(Iterable<E> in,
       Function<? super E, ? extends List<? extends S>> block) {
     return (List<S>) newRubyLazyEnumerator(in).collectConcat(block).toA();
@@ -324,6 +326,7 @@ public final class RubyIterables {
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#flatMap(Function)
    */
+  @SuppressWarnings("unchecked")
   public static <S, E> List<S> flatMap(Iterable<E> in,
       Function<? super E, ? extends List<? extends S>> block) {
     return (List<S>) newRubyLazyEnumerator(in).flatMap(block).toA();
@@ -339,6 +342,7 @@ public final class RubyIterables {
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#grep(String, Function)
    */
+  @SuppressWarnings("unchecked")
   public static <S, E> List<S> grep(Iterable<E> in, String regex,
       Function<? super E, ? extends S> block) {
     return (List<S>) newRubyLazyEnumerator(in).grep(regex, block).toA();
@@ -354,6 +358,7 @@ public final class RubyIterables {
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#grepV(String, Function)
    */
+  @SuppressWarnings("unchecked")
   public static <S, E> List<S> grepV(Iterable<E> in, String regex,
       Function<? super E, ? extends S> block) {
     return (List<S>) newRubyLazyEnumerator(in).grepV(regex, block).toA();
@@ -399,6 +404,7 @@ public final class RubyIterables {
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#map(Function)
    */
+  @SuppressWarnings("unchecked")
   public static <S, E> List<S> map(Iterable<E> in,
       Function<? super E, ? extends S> block) {
     return (List<S>) newRubyLazyEnumerator(in).map(block).toA();
@@ -692,7 +698,7 @@ public final class RubyIterables {
    * @see net.sf.rubycollect4j.RubyEnumerable#zip(Iterable...)
    */
   public static <E> List<? extends List<E>> zip(Iterable<E> in,
-      Iterable<? extends E>... others) {
+      @SuppressWarnings("unchecked") Iterable<? extends E>... others) {
     return newRubyLazyEnumerator(in).zip(others).toA();
   }
 

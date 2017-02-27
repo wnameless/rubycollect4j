@@ -780,7 +780,6 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
     return this;
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public <S> RubyArray<E> minmaxBy(Comparator<? super S> comp,
       Function<? super E, ? extends S> block) {
@@ -853,7 +852,6 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
     return this;
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public RubyArray<RubyArray<E>> partition(Predicate<? super E> block) {
     RubyArray<E> trueList = newRubyArray();
@@ -1108,7 +1106,8 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
    * @return {@link RubyLazyEnumerator}
    */
   @Override
-  public RubyLazyEnumerator<RubyArray<E>> zip(Iterable<? extends E>... others) {
+  public RubyLazyEnumerator<RubyArray<E>> zip(
+      @SuppressWarnings("unchecked") Iterable<? extends E>... others) {
     return zip(Arrays.asList(others));
   }
 

@@ -496,7 +496,8 @@ final class RubyBase {
      * @return {@link RubyArray}
      */
     @Override
-    public RubyArray<RubyArray<E>> zip(Iterable<? extends E>... others);
+    public RubyArray<RubyArray<E>> zip(
+        @SuppressWarnings("unchecked") Iterable<? extends E>... others);
 
     /**
      * {@inheritDoc}
@@ -932,7 +933,7 @@ final class RubyBase {
      */
     @Override
     public RubyBase.LazyEnumerator<RubyArray<E>> zip(
-        Iterable<? extends E>... others);
+        @SuppressWarnings("unchecked") Iterable<? extends E>... others);
 
     /**
      * {@inheritDoc}

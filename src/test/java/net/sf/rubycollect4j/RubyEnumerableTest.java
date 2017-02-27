@@ -42,7 +42,6 @@ import java.util.function.Predicate;
 import org.junit.Before;
 import org.junit.Test;
 
-@SuppressWarnings("deprecation")
 public class RubyEnumerableTest {
 
   RubyEnumerable<Integer> re;
@@ -132,7 +131,6 @@ public class RubyEnumerableTest {
     assertEquals(3, chunk.size());
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testChunkWhile() {
     RubyEnumerator<Integer> re = newRubyEnumerator(
@@ -272,7 +270,6 @@ public class RubyEnumerableTest {
   @Test
   public void testEachCons() {
     assertEquals(RubyEnumerator.class, re.eachCons(2).getClass());
-    @SuppressWarnings("unchecked")
     RubyArray<RubyArray<Integer>> ra = ra(ra(1, 2), ra(2, 3), ra(3, 4));
     assertEquals(ra, re.eachCons(2).toA());
   }
@@ -311,7 +308,6 @@ public class RubyEnumerableTest {
   @Test
   public void testEachSlice() {
     assertEquals(RubyEnumerator.class, re.eachSlice(3).getClass());
-    @SuppressWarnings("unchecked")
     RubyArray<RubyArray<Integer>> ra = ra(ra(1, 2, 3), ra(4));
     assertEquals(ra, re.eachSlice(3).toA());
   }
@@ -337,7 +333,6 @@ public class RubyEnumerableTest {
   @Test
   public void testEachWithIndex() {
     assertEquals(RubyEnumerator.class, re.eachWithIndex().getClass());
-    @SuppressWarnings("unchecked")
     RubyArray<? extends Entry<Integer, Integer>> ra =
         ra(hp(1, 0), hp(2, 1), hp(3, 2), hp(4, 3));
     assertEquals(ra, re.eachWithIndex().toA());
@@ -355,7 +350,6 @@ public class RubyEnumerableTest {
   public void testEachWithObject() {
     Long obj = 0L;
     assertEquals(RubyEnumerator.class, re.eachWithObject(obj).getClass());
-    @SuppressWarnings("unchecked")
     RubyArray<? extends Entry<Integer, Long>> ra =
         ra(hp(1, obj), hp(2, obj), hp(3, obj), hp(4, obj));
     assertEquals(ra, re.eachWithObject(obj).toA());
@@ -715,7 +709,6 @@ public class RubyEnumerableTest {
     assertEquals(ra(1, 2, 3, 4), re.partition().toA());
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testPartitionWithBlock() {
     assertEquals(ra(ra(1, 3), ra(2, 4)), re.partition(item -> item % 2 == 1));
@@ -782,7 +775,6 @@ public class RubyEnumerableTest {
     assertEquals(ra(3, 4), re.select(item -> item >= 3));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testSliceAfterWithBlock() {
     re = newRubyEnumerator(Arrays.asList(1, 3, 4, 7));
@@ -790,14 +782,12 @@ public class RubyEnumerableTest {
         re.sliceAfter(item -> item % 2 == 1).toA());
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testSliceAfterWithRegex() {
     re = newRubyEnumerator(Arrays.asList(1, 2, 3, 3));
     assertEquals(ra(ra(1, 2, 3), ra(3)), re.sliceAfter("3").toA());
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testSliceBeforeWithBlock() {
     re = newRubyEnumerator(Arrays.asList(1, 3, 3, 4));
@@ -805,14 +795,12 @@ public class RubyEnumerableTest {
         re.sliceBefore(item -> item % 2 == 1).toA());
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testSliceBeforeWithRegex() {
     re = newRubyEnumerator(Arrays.asList(1, 2, 3, 3));
     assertEquals(ra(ra(1, 2), ra(3), ra(3)), re.sliceBefore("3").toA());
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testSliceWhen() {
     re = newRubyEnumerator(Arrays.asList(1, 3, 3, 4));
@@ -926,7 +914,6 @@ public class RubyEnumerableTest {
   public void testToH() {
     assertEquals(rh(1, 2, 3, 4), new RubyEnumerable<List<Integer>>() {
 
-      @SuppressWarnings("unchecked")
       @Override
       protected Iterable<List<Integer>> getIterable() {
         List<Integer> l1 = ra(1, 2);
@@ -948,7 +935,6 @@ public class RubyEnumerableTest {
         re.zip(ra(ra(4, 5, 6), ra(7, 8, 9))));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testZipWithBlock() {
     re = newRubyEnumerator(Arrays.asList(1, 2, 3));

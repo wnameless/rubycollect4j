@@ -36,7 +36,6 @@ import java.util.function.Predicate;
 import org.junit.Before;
 import org.junit.Test;
 
-@SuppressWarnings("deprecation")
 public class RubyLazyEnumeratorTest {
 
   RubyLazyEnumerator<Integer> lre;
@@ -84,7 +83,6 @@ public class RubyLazyEnumeratorTest {
     newRubyLazyEnumerator(null);
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testChunk() {
     assertTrue(lre.chunk(block) instanceof RubyLazyEnumerator);
@@ -93,7 +91,6 @@ public class RubyLazyEnumeratorTest {
         lre.chunk(block).toA());
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testChunkWhile() {
     lre = newRubyLazyEnumerator(Arrays.asList(1, 2, 2, 3));
@@ -175,7 +172,6 @@ public class RubyLazyEnumeratorTest {
     assertTrue(lre.eachCons(3) instanceof RubyLazyEnumerator);
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testEachConsWithBlock() {
     final RubyArray<RubyArray<Integer>> rubyArray = ra();
@@ -321,7 +317,6 @@ public class RubyLazyEnumeratorTest {
     assertEquals(ra(), lre.takeWhile().toA());
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testSliceAfter() {
     Predicate<Integer> block = item -> item == 3;
@@ -334,7 +329,6 @@ public class RubyLazyEnumeratorTest {
     assertTrue(lre.sliceAfter("") instanceof RubyLazyEnumerator);
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testSliceBefore() {
     Predicate<Integer> block = item -> item == 3;
@@ -342,7 +336,6 @@ public class RubyLazyEnumeratorTest {
     assertEquals(ra(ra(1, 2), ra(3, 4)), lre.sliceBefore(block).toA());
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testSliceWhen() {
     BiPredicate<Integer, Integer> block = (item1, item2) -> item1 + 1 == item2;
