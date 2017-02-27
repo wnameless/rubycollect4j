@@ -213,8 +213,8 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
       if (o instanceof IdentityEntry) {
         IdentityEntry<?, ?> iEntry = (IdentityEntry<?, ?>) o;
         return iEntry.getKey() == entry.getKey()
-            && (iEntry.getValue() == null ? entry.getValue() == null : iEntry
-                .getValue().equals(entry.getValue()));
+            && (iEntry.getValue() == null ? entry.getValue() == null
+                : iEntry.getValue().equals(entry.getValue()));
       }
 
       if (o instanceof Entry) return entry.equals(o);
@@ -278,8 +278,9 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
         Entry<?, ?> entry = (Entry<?, ?>) o;
         if (map.containsKey(entry.getKey())) {
           U val = map.get(entry.getKey());
-          if (val == null ? entry.getValue() == null : val.equals(entry
-              .getValue())) return true;
+          if (val == null ? entry.getValue() == null
+              : val.equals(entry.getValue()))
+            return true;
         }
       }
       return false;
@@ -319,8 +320,8 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
         Entry<?, ?> entry = (Entry<?, ?>) o;
         if (map.containsKey(entry.getKey())) {
           U val = map.get(entry.getKey());
-          if ((val == null ? entry.getValue() == null : val.equals(entry
-              .getValue()))) {
+          if ((val == null ? entry.getValue() == null
+              : val.equals(entry.getValue()))) {
             removeByIdentity(list, entry.getKey());
             map.remove(entry.getKey());
             return true;
@@ -351,9 +352,8 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
       for (Object o : c) {
         if (o instanceof Entry) {
           Entry<?, ?> entry = (Entry<?, ?>) o;
-          hashMap.put(
-              new IdentityEntry<Object, Object>(entry.getKey(), entry
-                  .getValue()), null);
+          hashMap.put(new IdentityEntry<Object, Object>(entry.getKey(),
+              entry.getValue()), null);
         }
       }
 

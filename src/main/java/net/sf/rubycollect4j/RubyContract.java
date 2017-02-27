@@ -36,7 +36,7 @@ import java.util.function.Predicate;
  * @author Wei-Ming Wu
  * 
  */
-public final class RubyContract {
+final class RubyContract {
 
   private RubyContract() {}
 

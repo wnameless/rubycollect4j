@@ -23,6 +23,7 @@ import static net.sf.rubycollect4j.RubyCollections.rs;
 
 import java.nio.ByteBuffer;
 import java.util.List;
+import java.util.Objects;
 
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.RubyString;
@@ -54,7 +55,7 @@ public final class ASCII8BitUTF implements CharSequence {
    *          any String
    */
   public ASCII8BitUTF(String str) {
-    if (str == null) throw new NullPointerException();
+    Objects.requireNonNull(str);
 
     this.str = str;
     chars.replace(rs(str).toA());
@@ -125,8 +126,9 @@ public final class ASCII8BitUTF implements CharSequence {
    * @return true if there are remaining characters, false otherwise
    */
   public boolean hasNextChar() {
-    return (currentChar != null && currentChar.getBytes().length == currentBytes
-        .size()) || chars.anyʔ();
+    return (currentChar != null
+        && currentChar.getBytes().length == currentBytes.size())
+        || chars.anyʔ();
   }
 
   /**

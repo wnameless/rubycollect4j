@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 import net.sf.rubycollect4j.RubyArray;
 
@@ -57,7 +58,7 @@ public final class PermutationIterator<E> implements Iterator<RubyArray<E>> {
    *           if list is null
    */
   public PermutationIterator(List<? extends E> list, int n) {
-    if (list == null) throw new NullPointerException();
+    Objects.requireNonNull(list);
 
     this.list = new ArrayList<E>(list);
     if (n <= 0 || n > this.list.size()) {

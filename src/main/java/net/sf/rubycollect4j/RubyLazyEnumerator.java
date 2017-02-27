@@ -28,6 +28,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
@@ -75,7 +76,7 @@ import net.sf.rubycollect4j.util.TryComparator;
  * @author Wei-Ming Wu
  * 
  */
-public final class RubyLazyEnumerator<E> implements Ruby.LazyEnumerator<E> {
+public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
 
   private final Iterable<E> iter;
   private PeekingIterator<E> pIterator;
@@ -90,7 +91,7 @@ public final class RubyLazyEnumerator<E> implements Ruby.LazyEnumerator<E> {
    *           if iter is null
    */
   public static <E> RubyLazyEnumerator<E> of(Iterable<E> iter) {
-    if (iter == null) throw new NullPointerException();
+    Objects.requireNonNull(iter);
 
     return new RubyLazyEnumerator<E>(iter);
   }
@@ -106,7 +107,7 @@ public final class RubyLazyEnumerator<E> implements Ruby.LazyEnumerator<E> {
    *           if iter is null
    */
   public static <E> RubyLazyEnumerator<E> copyOf(Iterable<E> iter) {
-    if (iter == null) throw new NullPointerException();
+    Objects.requireNonNull(iter);
 
     return new RubyLazyEnumerator<E>(RubyArray.copyOf(iter));
   }
@@ -121,7 +122,7 @@ public final class RubyLazyEnumerator<E> implements Ruby.LazyEnumerator<E> {
    *           if iterable is null
    */
   public RubyLazyEnumerator(Iterable<E> iterable) {
-    if (iterable == null) throw new NullPointerException();
+    Objects.requireNonNull(iterable);
 
     iter = iterable;
     pIterator = new PeekingIterator<E>(iter.iterator());

@@ -19,6 +19,7 @@ package net.sf.rubycollect4j.iter;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import net.sf.rubycollect4j.RubyArray;
 
@@ -49,7 +50,7 @@ public final class PermutationIterable<E> implements Iterable<RubyArray<E>> {
    *           if list is null
    */
   public PermutationIterable(List<? extends E> list, int n) {
-    if (list == null) throw new NullPointerException();
+    Objects.requireNonNull(list);
 
     this.list = list;
     this.n = n;

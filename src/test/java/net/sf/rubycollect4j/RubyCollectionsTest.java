@@ -20,8 +20,6 @@ package net.sf.rubycollect4j;
 import static net.sf.rubycollect4j.RubyCollections.Hash;
 import static net.sf.rubycollect4j.RubyCollections.date;
 import static net.sf.rubycollect4j.RubyCollections.hp;
-import static net.sf.rubycollect4j.RubyCollections.isBlank;
-import static net.sf.rubycollect4j.RubyCollections.isNotBlank;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
@@ -35,7 +33,6 @@ import static net.sf.rubycollect4j.RubyCollections.range;
 import static net.sf.rubycollect4j.RubyCollections.rh;
 import static net.sf.rubycollect4j.RubyCollections.rs;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Constructor;
@@ -417,68 +414,6 @@ public class RubyCollectionsTest {
     c.set(Calendar.SECOND, 33);
     c.set(Calendar.MILLISECOND, 999);
     assertEquals(c.getTime(), date(2013, 7, 7, 11, 22, 33, 999));
-  }
-
-  @Test
-  public void testIsBlank() {
-    assertTrue(isBlank(""));
-    assertTrue(isBlank("   "));
-    assertTrue(isBlank((String) null));
-    assertFalse(isBlank("?"));
-    assertTrue(isBlank(ra()));
-    assertTrue(isBlank((Iterable<?>) null));
-    assertFalse(isBlank(ra(1, 2, 3)));
-    assertTrue(isBlank(new HashMap<Integer, String>()));
-    assertTrue(isBlank((Map<?, ?>) null));
-    assertFalse(isBlank(new HashMap<Integer, String>() {
-
-      private static final long serialVersionUID = 1L;
-
-      {
-        put(1, "a");
-        put(2, "b");
-      }
-
-    }));
-    assertTrue(isBlank(false));
-    assertTrue(isBlank((Boolean) null));
-    assertFalse(isBlank(true));
-    assertTrue(isBlank((Integer) null));
-    assertFalse(isBlank(1));
-    assertTrue(isBlank(rh()));
-    assertTrue(isBlank((RubyHash<?, ?>) null));
-    assertFalse(isBlank(rh(1, "a", 2, "b")));
-  }
-
-  @Test
-  public void testIsNotBlank() {
-    assertFalse(isNotBlank(""));
-    assertFalse(isNotBlank("   "));
-    assertFalse(isNotBlank((String) null));
-    assertTrue(isNotBlank("?"));
-    assertFalse(isNotBlank(ra()));
-    assertFalse(isNotBlank((Iterable<?>) null));
-    assertTrue(isNotBlank(ra(1, 2, 3)));
-    assertFalse(isNotBlank(new HashMap<Integer, String>()));
-    assertFalse(isNotBlank((Map<?, ?>) null));
-    assertTrue(isNotBlank(new HashMap<Integer, String>() {
-
-      private static final long serialVersionUID = 1L;
-
-      {
-        put(1, "a");
-        put(2, "b");
-      }
-
-    }));
-    assertFalse(isNotBlank(false));
-    assertFalse(isNotBlank((Boolean) null));
-    assertTrue(isNotBlank(true));
-    assertFalse(isNotBlank((Integer) null));
-    assertTrue(isNotBlank(1));
-    assertFalse(isNotBlank(rh()));
-    assertFalse(isNotBlank((RubyHash<?, ?>) null));
-    assertTrue(isNotBlank(rh(1, "a", 2, "b")));
   }
 
 }

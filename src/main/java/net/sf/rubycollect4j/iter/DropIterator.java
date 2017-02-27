@@ -18,6 +18,7 @@
 package net.sf.rubycollect4j.iter;
 
 import java.util.Iterator;
+import java.util.Objects;
 
 /**
  * 
@@ -47,10 +48,9 @@ public final class DropIterator<E> implements Iterator<E> {
    *           if step is less than or equal to 0
    */
   public DropIterator(Iterator<? extends E> iter, int drop) {
-    if (iter == null) throw new NullPointerException();
-    if (drop < 0)
-      throw new IllegalArgumentException(
-          "ArgumentError: attempt to drop negative size");
+    Objects.requireNonNull(iter);
+    if (drop < 0) throw new IllegalArgumentException(
+        "ArgumentError: attempt to drop negative size");
 
     while (iter.hasNext() && drop > 0) {
       iter.next();

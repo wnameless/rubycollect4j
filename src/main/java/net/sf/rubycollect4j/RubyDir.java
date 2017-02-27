@@ -88,7 +88,8 @@ public final class RubyDir extends RubyEnumerable<String> {
    */
   public static RubyArray<String> entries(String path) {
     File file = new File(path);
-    return ra(file.listFiles()).map(item -> item.getName()).unshift("..").unshift(".");
+    return ra(file.listFiles()).map(item -> item.getName()).unshift("..")
+        .unshift(".");
   }
 
   /**

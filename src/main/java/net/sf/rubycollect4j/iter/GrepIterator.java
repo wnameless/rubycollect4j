@@ -56,7 +56,8 @@ public final class GrepIterator<E> implements Iterator<E> {
   }
 
   private void advanceCursor() {
-    while (pIter.hasNext() && !pattern.matcher(pIter.peek().toString()).find()) {
+    while (pIter.hasNext()
+        && !pattern.matcher(pIter.peek().toString()).find()) {
       pIter.next();
     }
   }

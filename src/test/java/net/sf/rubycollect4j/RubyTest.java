@@ -28,7 +28,7 @@ public class RubyTest {
 
   @Test
   public void testPrivateConstructor() throws Exception {
-    Constructor<Ruby> c = Ruby.class.getDeclaredConstructor();
+    Constructor<RubyBase> c = RubyBase.class.getDeclaredConstructor();
     assertTrue(Modifier.isPrivate(c.getModifiers()));
     c.setAccessible(true);
     c.newInstance();

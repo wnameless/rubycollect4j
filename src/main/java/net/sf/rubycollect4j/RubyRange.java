@@ -21,6 +21,7 @@ import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 import net.sf.rubycollect4j.iter.RangeIterable;
@@ -34,7 +35,7 @@ import net.sf.rubycollect4j.succ.Successive;
  * strings. All objects can use the {@link RubyRange} to create a range of
  * interval. As long as it provides the corresponding Successive object.
  * <p>
- * {@link RubyRange} is also a {@link Ruby.Enumerable}.
+ * {@link RubyRange} is also a {@link RubyBase.Enumerable}.
  * 
  * @param <E>
  *          the type of elements
@@ -72,7 +73,7 @@ public final class RubyRange<E> extends RubyEnumerable<E>
    *           if startPoint or endPoint is null
    */
   public RubyRange(Successive<E> successive, E startPoint, E endPoint) {
-    if (successive == null) throw new NullPointerException();
+    Objects.requireNonNull(successive);
     if (startPoint == null || endPoint == null)
       throw new IllegalArgumentException("ArgumentError: bad value for range");
 

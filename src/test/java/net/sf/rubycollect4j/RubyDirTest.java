@@ -151,7 +151,8 @@ public class RubyDirTest {
   @Test
   public void testEachWithBlock() {
     final RubyArray<String> entries = ra();
-    RubyDir.open(BASE_DIR + "glob_test/folder2").each(item -> entries.push(item));
+    RubyDir.open(BASE_DIR + "glob_test/folder2")
+        .each(item -> entries.push(item));
     assertEquals(ra(".", "..", "folder2-1", "file2-1").sort(), entries);
   }
 

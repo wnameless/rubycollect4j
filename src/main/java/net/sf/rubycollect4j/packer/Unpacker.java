@@ -60,9 +60,9 @@ public final class Unpacker {
 
   private static final int ж = Integer.MAX_VALUE;
   private static final Byte NUL = Byte.valueOf((byte) '\0');
-  private static final RubyHash<Directive, Integer> NUMBER_LENGTH_IN_BYTE = rh(
-      s, 2, sb, 2, sl, 2, l, 4, lb, 4, ll, 4, F, 4, f, 4, e, 4, g, 4, q, 8, qb,
-      8, ql, 8, D, 8, d, 8, E, 8, G, 8).freeze();
+  private static final RubyHash<Directive, Integer> NUMBER_LENGTH_IN_BYTE =
+      rh(s, 2, sb, 2, sl, 2, l, 4, lb, 4, ll, 4, F, 4, f, 4, e, 4, g, 4, q, 8,
+          qb, 8, ql, 8, D, 8, d, 8, E, 8, G, 8).freeze();
 
   private Unpacker() {}
 

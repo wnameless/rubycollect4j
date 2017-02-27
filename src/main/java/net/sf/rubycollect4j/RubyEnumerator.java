@@ -18,6 +18,7 @@
 package net.sf.rubycollect4j;
 
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 import net.sf.rubycollect4j.util.PeekingIterator;
@@ -28,7 +29,7 @@ import net.sf.rubycollect4j.util.PeekingIterator;
  * class of Ruby language.
  * <p>
  * {@link RubyEnumerator} is both Iterable and Iterator and it's also a peeking
- * iterator and a {@link Ruby.Enumerable}.
+ * iterator and a {@link RubyBase.Enumerable}.
  * 
  * @param <E>
  *          the type of the elements
@@ -37,7 +38,7 @@ import net.sf.rubycollect4j.util.PeekingIterator;
  * 
  */
 public class RubyEnumerator<E> extends RubyEnumerable<E>
-    implements Ruby.Enumerator<E> {
+    implements RubyBase.Enumerator<E> {
 
   private final Iterable<E> iter;
   private PeekingIterator<E> pIterator;
@@ -52,7 +53,7 @@ public class RubyEnumerator<E> extends RubyEnumerable<E>
    *           if iter is null
    */
   public static <E> RubyEnumerator<E> of(Iterable<E> iter) {
-    if (iter == null) throw new NullPointerException();
+    Objects.requireNonNull(iter);
 
     return new RubyEnumerator<E>(iter);
   }
@@ -68,7 +69,7 @@ public class RubyEnumerator<E> extends RubyEnumerable<E>
    *           if iter is null
    */
   public static <E> RubyEnumerator<E> copyOf(Iterable<E> iter) {
-    if (iter == null) throw new NullPointerException();
+    Objects.requireNonNull(iter);
 
     return new RubyEnumerator<E>(RubyArray.copyOf(iter));
   }
@@ -88,7 +89,7 @@ public class RubyEnumerator<E> extends RubyEnumerable<E>
    *           if iterable is null
    */
   public RubyEnumerator(Iterable<E> iterable) {
-    if (iterable == null) throw new NullPointerException();
+    Objects.requireNonNull(iterable);
 
     iter = iterable;
     pIterator = new PeekingIterator<E>(iter.iterator());

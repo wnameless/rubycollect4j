@@ -20,6 +20,7 @@ package net.sf.rubycollect4j.iter;
 import java.io.File;
 import java.io.InputStream;
 import java.util.Iterator;
+import java.util.Objects;
 
 /**
  * 
@@ -42,7 +43,7 @@ public final class EachLineIterable implements Iterable<String> {
    *           if file is null
    */
   public EachLineIterable(File file) {
-    if (file == null) throw new NullPointerException();
+    Objects.requireNonNull(file);
 
     this.file = file;
   }
@@ -56,7 +57,7 @@ public final class EachLineIterable implements Iterable<String> {
    *           if file is null
    */
   public EachLineIterable(InputStream inputStream) {
-    if (inputStream == null) throw new NullPointerException();
+    Objects.requireNonNull(inputStream);
 
     this.inputStream = inputStream;
   }

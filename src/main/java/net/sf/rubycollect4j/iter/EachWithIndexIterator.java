@@ -19,6 +19,7 @@ package net.sf.rubycollect4j.iter;
 
 import java.util.Iterator;
 import java.util.Map.Entry;
+import java.util.Objects;
 
 import net.sf.rubycollect4j.util.ComparableEntry;
 
@@ -32,8 +33,8 @@ import net.sf.rubycollect4j.util.ComparableEntry;
  * @author Wei-Ming Wu
  * 
  */
-public final class EachWithIndexIterator<E> implements
-    Iterator<Entry<E, Integer>> {
+public final class EachWithIndexIterator<E>
+    implements Iterator<Entry<E, Integer>> {
 
   private final Iterator<? extends E> iter;
   private int index = 0;
@@ -47,7 +48,7 @@ public final class EachWithIndexIterator<E> implements
    *           if iter is null
    */
   public EachWithIndexIterator(Iterator<? extends E> iter) {
-    if (iter == null) throw new NullPointerException();
+    Objects.requireNonNull(iter);
 
     this.iter = iter;
   }

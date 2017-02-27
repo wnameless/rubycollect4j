@@ -21,6 +21,7 @@ import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 import net.sf.rubycollect4j.RubyArray;
 
@@ -55,7 +56,7 @@ public final class EachConsIterator<E> implements Iterator<RubyArray<E>> {
    *           if size is less than or equal to 0
    */
   public EachConsIterator(Iterator<? extends E> iter, int size) {
-    if (iter == null) throw new NullPointerException();
+    Objects.requireNonNull(iter);
     if (size <= 0)
       throw new IllegalArgumentException("ArgumentError: invalid size");
 

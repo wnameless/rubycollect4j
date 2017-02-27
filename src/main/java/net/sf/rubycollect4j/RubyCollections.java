@@ -51,8 +51,8 @@ import net.sf.rubycollect4j.util.ComparableEntry;
  */
 public final class RubyCollections {
 
-  private static final Logger logger = Logger.getLogger(RubyCollections.class
-      .getName());
+  private static final Logger logger =
+      Logger.getLogger(RubyCollections.class.getName());
 
   private RubyCollections() {}
 
@@ -91,9 +91,7 @@ public final class RubyCollections {
    */
   public static <E> RubyArray<E> newRubyArray(Iterator<E> iter) {
     RubyArray<E> rubyArray = new RubyArray<E>();
-    while (iter.hasNext()) {
-      rubyArray.add(iter.next());
-    }
+    iter.forEachRemaining(e -> rubyArray.add(e));
     return rubyArray;
   }
 
@@ -195,7 +193,8 @@ public final class RubyCollections {
    *          an Iterable
    * @return new {@link RubyLazyEnumerator}
    */
-  public static <E> RubyLazyEnumerator<E> newRubyLazyEnumerator(Iterable<E> iter) {
+  public static <E> RubyLazyEnumerator<E> newRubyLazyEnumerator(
+      Iterable<E> iter) {
     return new RubyLazyEnumerator<E>(iter);
   }
 
@@ -805,7 +804,8 @@ public final class RubyCollections {
    */
   public static <K, V> RubyHash<K, V> rh(K key1, V value1, K key2, V value2,
       K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
-      K key7, V value7, K key8, V value8, K key9, V value9, K key10, V value10) {
+      K key7, V value7, K key8, V value8, K key9, V value9, K key10,
+      V value10) {
     RubyHash<K, V> rh = newRubyHash();
     rh.put(key1, value1);
     rh.put(key2, value2);
@@ -2726,8 +2726,9 @@ public final class RubyCollections {
     String endStr = String.valueOf(end);
     int startPrecision = startStr.length() - startStr.lastIndexOf('.') - 1;
     int endPrecision = endStr.length() - endStr.lastIndexOf('.') - 1;
-    return new RubyRange<Double>(new DoubleSuccessor(Math.max(startPrecision,
-        endPrecision)), start, end);
+    return new RubyRange<Double>(
+        new DoubleSuccessor(Math.max(startPrecision, endPrecision)), start,
+        end);
   }
 
   /**
@@ -2940,140 +2941,6 @@ public final class RubyCollections {
     c.set(Calendar.SECOND, sec);
     c.set(Calendar.MILLISECOND, millisec);
     return new RubyDate(c.getTime());
-  }
-
-  /**
-   * Checks if a String is null or blank(only white-spaces).
-   * 
-   * @param str
-   *          any String
-   * @return true if given String is null or blank, false otherwise
-   */
-  public static boolean isBlank(String str) {
-    return str == null || str.trim().isEmpty();
-  }
-
-  /**
-   * Checks if a String is not null or blank(only white-spaces).
-   * 
-   * 
-   * @param str
-   *          any String
-   * @return true if given String is not null or blank, false otherwise
-   */
-  public static boolean isNotBlank(String str) {
-    return !isBlank(str);
-  }
-
-  /**
-   * Checks if an Iterable is null or empty.
-   * 
-   * @param iter
-   *          any Iterable
-   * @return true if given Iterable is null or empty, false otherwise
-   */
-  public static boolean isBlank(Iterable<?> iter) {
-    return iter == null || !iter.iterator().hasNext();
-  }
-
-  /**
-   * Checks if an Iterable is not null or empty.
-   * 
-   * @param iter
-   *          any Iterable
-   * @return true if given Iterable is not null or empty, false otherwise
-   */
-  public static boolean isNotBlank(Iterable<?> iter) {
-    return !isBlank(iter);
-  }
-
-  /**
-   * Checks if a Map is null or empty.
-   * 
-   * @param map
-   *          any Map
-   * @return true if given Map is null or empty, false otherwise
-   */
-  public static boolean isBlank(Map<?, ?> map) {
-    return map == null || map.isEmpty();
-  }
-
-  /**
-   * Checks if a Map is not null or empty.
-   * 
-   * @param map
-   *          any Map
-   * @return true if given Map is not null or empty, false otherwise
-   */
-  public static boolean isNotBlank(Map<?, ?> map) {
-    return !isBlank(map);
-  }
-
-  /**
-   * Checks if a {@link RubyHash} is null or empty.
-   * 
-   * @param rubyHash
-   *          any {@link RubyHash}
-   * @return true if given {@link RubyHash} is null or empty, false otherwise
-   */
-  public static boolean isBlank(RubyHash<?, ?> rubyHash) {
-    return rubyHash == null || rubyHash.isEmpty();
-  }
-
-  /**
-   * Checks if a {@link RubyHash} is not null or empty.
-   * 
-   * @param rubyHash
-   *          any {@link RubyHash}
-   * @return true if given {@link RubyHash} is not null or empty, false
-   *         otherwise
-   */
-  public static boolean isNotBlank(RubyHash<?, ?> rubyHash) {
-    return !isBlank(rubyHash);
-  }
-
-  /**
-   * Checks if a Boolean is null or false.
-   * 
-   * @param bool
-   *          any Boolean
-   * @return true if given Boolean is null or False, false otherwise
-   */
-  public static boolean isBlank(Boolean bool) {
-    return bool == null || bool.equals(Boolean.FALSE);
-  }
-
-  /**
-   * Checks if a Boolean is not null or false.
-   * 
-   * @param bool
-   *          any Boolean
-   * @return true if given Boolean is not null or False, false otherwise
-   */
-  public static boolean isNotBlank(Boolean bool) {
-    return !isBlank(bool);
-  }
-
-  /**
-   * Checks if an Object is null.
-   * 
-   * @param o
-   *          any Object
-   * @return true if given Object is null, false otherwise
-   */
-  public static boolean isBlank(Object o) {
-    return o == null;
-  }
-
-  /**
-   * Checks if an Object is not null.
-   * 
-   * @param o
-   *          any Object
-   * @return true if given Object is not null, false otherwise
-   */
-  public static boolean isNotBlank(Object o) {
-    return o != null;
   }
 
 }

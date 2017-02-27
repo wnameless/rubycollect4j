@@ -18,6 +18,7 @@
 package net.sf.rubycollect4j.iter;
 
 import java.util.Iterator;
+import java.util.Objects;
 
 /**
  * 
@@ -44,7 +45,7 @@ public final class CycleIterable<E> implements Iterable<E> {
    *           if iter is null
    */
   public CycleIterable(Iterable<? extends E> iter) {
-    if (iter == null) throw new NullPointerException();
+    Objects.requireNonNull(iter);
 
     this.iter = iter;
     n = null;
@@ -61,7 +62,7 @@ public final class CycleIterable<E> implements Iterable<E> {
    *           if iter is null
    */
   public CycleIterable(Iterable<E> iter, int n) {
-    if (iter == null) throw new NullPointerException();
+    Objects.requireNonNull(iter);
 
     this.iter = iter;
     this.n = n;

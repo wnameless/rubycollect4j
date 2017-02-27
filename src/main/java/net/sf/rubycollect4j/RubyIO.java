@@ -30,6 +30,7 @@ import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -197,7 +198,7 @@ public class RubyIO {
    *           if file can't not open
    */
   public RubyIO(File file, Mode mode) throws IOException {
-    if (file == null) throw new NullPointerException();
+    Objects.requireNonNull(file);
 
     this.file = file;
     switch (mode) {

@@ -18,6 +18,7 @@
 package net.sf.rubycollect4j;
 
 import java.lang.reflect.Method;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,8 +31,8 @@ import java.util.logging.Logger;
  */
 public final class RubyObject {
 
-  private static final Logger logger = Logger.getLogger(RubyObject.class
-      .getName());
+  private static final Logger logger =
+      Logger.getLogger(RubyObject.class.getName());
 
   private RubyObject() {}
 
@@ -56,7 +57,8 @@ public final class RubyObject {
             if (i >= args.length || args[i] == null) continue;
 
             if (!isConvertable(method.getParameterTypes()[i],
-                args[i].getClass())) isArgsMatched = false;
+                args[i].getClass()))
+              isArgsMatched = false;
           }
           if (isArgsMatched && method.getParameterTypes().length == args.length)
             return (E) method.invoke(o, args);
@@ -380,6 +382,140 @@ public final class RubyObject {
     } catch (Exception e) {
       return send(o, methodName, (Object) arg);
     }
+  }
+
+  /**
+   * Checks if a String is null or blank(only white-spaces).
+   * 
+   * @param str
+   *          any String
+   * @return true if given String is null or blank, false otherwise
+   */
+  public static boolean isBlank(String str) {
+    return str == null || str.trim().isEmpty();
+  }
+
+  /**
+   * Checks if a String is not null or blank(only white-spaces).
+   * 
+   * 
+   * @param str
+   *          any String
+   * @return true if given String is not null or blank, false otherwise
+   */
+  public static boolean isNotBlank(String str) {
+    return !isBlank(str);
+  }
+
+  /**
+   * Checks if an Iterable is null or empty.
+   * 
+   * @param iter
+   *          any Iterable
+   * @return true if given Iterable is null or empty, false otherwise
+   */
+  public static boolean isBlank(Iterable<?> iter) {
+    return iter == null || !iter.iterator().hasNext();
+  }
+
+  /**
+   * Checks if an Iterable is not null or empty.
+   * 
+   * @param iter
+   *          any Iterable
+   * @return true if given Iterable is not null or empty, false otherwise
+   */
+  public static boolean isNotBlank(Iterable<?> iter) {
+    return !isBlank(iter);
+  }
+
+  /**
+   * Checks if a Map is null or empty.
+   * 
+   * @param map
+   *          any Map
+   * @return true if given Map is null or empty, false otherwise
+   */
+  public static boolean isBlank(Map<?, ?> map) {
+    return map == null || map.isEmpty();
+  }
+
+  /**
+   * Checks if a Map is not null or empty.
+   * 
+   * @param map
+   *          any Map
+   * @return true if given Map is not null or empty, false otherwise
+   */
+  public static boolean isNotBlank(Map<?, ?> map) {
+    return !isBlank(map);
+  }
+
+  /**
+   * Checks if a {@link RubyHash} is null or empty.
+   * 
+   * @param rubyHash
+   *          any {@link RubyHash}
+   * @return true if given {@link RubyHash} is null or empty, false otherwise
+   */
+  public static boolean isBlank(RubyHash<?, ?> rubyHash) {
+    return rubyHash == null || rubyHash.isEmpty();
+  }
+
+  /**
+   * Checks if a {@link RubyHash} is not null or empty.
+   * 
+   * @param rubyHash
+   *          any {@link RubyHash}
+   * @return true if given {@link RubyHash} is not null or empty, false
+   *         otherwise
+   */
+  public static boolean isNotBlank(RubyHash<?, ?> rubyHash) {
+    return !isBlank(rubyHash);
+  }
+
+  /**
+   * Checks if a Boolean is null or false.
+   * 
+   * @param bool
+   *          any Boolean
+   * @return true if given Boolean is null or False, false otherwise
+   */
+  public static boolean isBlank(Boolean bool) {
+    return bool == null || bool.equals(Boolean.FALSE);
+  }
+
+  /**
+   * Checks if a Boolean is not null or false.
+   * 
+   * @param bool
+   *          any Boolean
+   * @return true if given Boolean is not null or False, false otherwise
+   */
+  public static boolean isNotBlank(Boolean bool) {
+    return !isBlank(bool);
+  }
+
+  /**
+   * Checks if an Object is null.
+   * 
+   * @param o
+   *          any Object
+   * @return true if given Object is null, false otherwise
+   */
+  public static boolean isBlank(Object o) {
+    return o == null;
+  }
+
+  /**
+   * Checks if an Object is not null.
+   * 
+   * @param o
+   *          any Object
+   * @return true if given Object is not null, false otherwise
+   */
+  public static boolean isNotBlank(Object o) {
+    return o != null;
   }
 
 }

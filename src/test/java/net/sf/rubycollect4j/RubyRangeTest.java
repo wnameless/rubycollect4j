@@ -130,7 +130,8 @@ public class RubyRangeTest {
   @Test
   public void testEachWithBlock() {
     final RubyArray<Integer> ints = ra();
-    assertEquals(RubyRange.class, range(1, 10).each(item -> ints.push(item)).getClass());
+    assertEquals(RubyRange.class,
+        range(1, 10).each(item -> ints.push(item)).getClass());
     assertEquals(ra(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), ints);
   }
 
@@ -199,7 +200,8 @@ public class RubyRangeTest {
   public void testStepWithBlock() {
     final RubyArray<Integer> ints = ra();
     assertTrue(range(1, 10).step(3) instanceof RubyEnumerator);
-    assertEquals(RubyRange.class, range(1, 10).step(3, item -> ints.push(item)).getClass());
+    assertEquals(RubyRange.class,
+        range(1, 10).step(3, item -> ints.push(item)).getClass());
     assertEquals(ra(1, 4, 7, 10), ints);
   }
 

@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
@@ -49,7 +50,7 @@ import net.sf.rubycollect4j.util.LinkedIdentityMap;
  * {@link RubyHash} implements all methods refer to the Hash class of Ruby
  * language.
  * <p>
- * {@link RubyHash} is also a Java Map and a {@link Ruby.Enumerable}.
+ * {@link RubyHash} is also a Java Map and a {@link RubyBase.Enumerable}.
  * 
  * @param <K>
  *          the type of the key elements
@@ -78,7 +79,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
    *           if map is null
    */
   public static <K, V> RubyHash<K, V> of(LinkedHashMap<K, V> map) {
-    if (map == null) throw new NullPointerException();
+    Objects.requireNonNull(map);
 
     return new RubyHash<K, V>(map);
   }
@@ -93,7 +94,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
    *           if map is null
    */
   public static <K, V> RubyHash<K, V> copyOf(Map<K, V> map) {
-    if (map == null) throw new NullPointerException();
+    Objects.requireNonNull(map);
 
     return new RubyHash<K, V>(map);
   }
@@ -120,7 +121,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
    *           if map is null
    */
   public RubyHash(LinkedHashMap<K, V> map) {
-    if (map == null) throw new NullPointerException();
+    Objects.requireNonNull(map);
 
     this.map = map;
   }
@@ -134,7 +135,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
    *           if map is null
    */
   public RubyHash(Map<K, V> map) {
-    if (map == null) throw new NullPointerException();
+    Objects.requireNonNull(map);
 
     this.map = new LinkedHashMap<K, V>(map);
   }

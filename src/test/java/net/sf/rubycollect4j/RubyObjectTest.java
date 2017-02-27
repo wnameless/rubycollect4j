@@ -17,12 +17,19 @@
  */
 package net.sf.rubycollect4j;
 
+import static net.sf.rubycollect4j.RubyCollections.ra;
+import static net.sf.rubycollect4j.RubyCollections.rh;
+import static net.sf.rubycollect4j.RubyObject.isBlank;
+import static net.sf.rubycollect4j.RubyObject.isNotBlank;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -287,6 +294,68 @@ public class RubyObjectTest {
     @SuppressWarnings("unused")
     public void setCharacters(char v1, Character v2) {}
 
+  }
+
+  @Test
+  public void testIsBlank() {
+    assertTrue(isBlank(""));
+    assertTrue(isBlank("   "));
+    assertTrue(isBlank((String) null));
+    assertFalse(isBlank("?"));
+    assertTrue(isBlank(ra()));
+    assertTrue(isBlank((Iterable<?>) null));
+    assertFalse(isBlank(ra(1, 2, 3)));
+    assertTrue(isBlank(new HashMap<Integer, String>()));
+    assertTrue(isBlank((Map<?, ?>) null));
+    assertFalse(isBlank(new HashMap<Integer, String>() {
+
+      private static final long serialVersionUID = 1L;
+
+      {
+        put(1, "a");
+        put(2, "b");
+      }
+
+    }));
+    assertTrue(isBlank(false));
+    assertTrue(isBlank((Boolean) null));
+    assertFalse(isBlank(true));
+    assertTrue(isBlank((Integer) null));
+    assertFalse(isBlank(1));
+    assertTrue(isBlank(rh()));
+    assertTrue(isBlank((RubyHash<?, ?>) null));
+    assertFalse(isBlank(rh(1, "a", 2, "b")));
+  }
+
+  @Test
+  public void testIsNotBlank() {
+    assertFalse(isNotBlank(""));
+    assertFalse(isNotBlank("   "));
+    assertFalse(isNotBlank((String) null));
+    assertTrue(isNotBlank("?"));
+    assertFalse(isNotBlank(ra()));
+    assertFalse(isNotBlank((Iterable<?>) null));
+    assertTrue(isNotBlank(ra(1, 2, 3)));
+    assertFalse(isNotBlank(new HashMap<Integer, String>()));
+    assertFalse(isNotBlank((Map<?, ?>) null));
+    assertTrue(isNotBlank(new HashMap<Integer, String>() {
+
+      private static final long serialVersionUID = 1L;
+
+      {
+        put(1, "a");
+        put(2, "b");
+      }
+
+    }));
+    assertFalse(isNotBlank(false));
+    assertFalse(isNotBlank((Boolean) null));
+    assertTrue(isNotBlank(true));
+    assertFalse(isNotBlank((Integer) null));
+    assertTrue(isNotBlank(1));
+    assertFalse(isNotBlank(rh()));
+    assertFalse(isNotBlank((RubyHash<?, ?>) null));
+    assertTrue(isNotBlank(rh(1, "a", 2, "b")));
   }
 
 }

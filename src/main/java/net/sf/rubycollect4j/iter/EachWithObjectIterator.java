@@ -26,15 +26,16 @@ import net.sf.rubycollect4j.util.ComparableEntry;
  * 
  * {@link EachWithObjectIterator} iterates each element with an object.
  * 
- * @param <E>the type of the elements
+ * @param <E>the
+ *          type of the elements
  * @param <O>
  *          the type of the object
  * 
  * @author Wei-Ming Wu
  * 
  */
-public final class EachWithObjectIterator<E, O> implements
-    Iterator<Entry<E, O>> {
+public final class EachWithObjectIterator<E, O>
+    implements Iterator<Entry<E, O>> {
 
   private final Iterator<? extends E> iter;
   private final O obj;

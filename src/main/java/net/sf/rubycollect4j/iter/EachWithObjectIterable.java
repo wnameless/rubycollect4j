@@ -32,8 +32,8 @@ import java.util.Map.Entry;
  * @author Wei-Ming Wu
  * 
  */
-public final class EachWithObjectIterable<E, O> implements
-    Iterable<Entry<E, O>> {
+public final class EachWithObjectIterable<E, O>
+    implements Iterable<Entry<E, O>> {
 
   private final Iterable<? extends E> iter;
   private final O obj;

@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,8 +39,8 @@ import java.util.logging.Logger;
  */
 public final class EachLineIterator implements Iterator<String> {
 
-  private static final Logger logger = Logger.getLogger(EachLineIterator.class
-      .getName());
+  private static final Logger logger =
+      Logger.getLogger(EachLineIterator.class.getName());
 
   private File file;
   private InputStream inputStream;
@@ -55,7 +56,7 @@ public final class EachLineIterator implements Iterator<String> {
    *           if file is null
    */
   public EachLineIterator(File file) {
-    if (file == null) throw new NullPointerException();
+    Objects.requireNonNull(file);
 
     this.file = file;
   }
@@ -69,7 +70,7 @@ public final class EachLineIterator implements Iterator<String> {
    *           if file is null
    */
   public EachLineIterator(InputStream inputStream) {
-    if (inputStream == null) throw new NullPointerException();
+    Objects.requireNonNull(inputStream);
 
     this.inputStream = inputStream;
   }
@@ -82,8 +83,8 @@ public final class EachLineIterator implements Iterator<String> {
         reader = new BufferedReader(new InputStreamReader(inputStream));
     } catch (FileNotFoundException e) {
       logger.log(Level.SEVERE, null, e);
-      throw new RuntimeException("Errno::ENOENT: No such file or directory - "
-          + file.getName());
+      throw new RuntimeException(
+          "Errno::ENOENT: No such file or directory - " + file.getName());
     }
     nextLine();
   }

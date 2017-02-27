@@ -68,7 +68,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testInterface() {
-    assertTrue(re instanceof Ruby.Enumerable);
+    assertTrue(re instanceof RubyBase.Enumerable);
   }
 
   @Test

@@ -20,14 +20,14 @@ package net.sf.rubycollect4j;
 import static java.lang.Character.MAX_RADIX;
 import static java.lang.Character.MIN_RADIX;
 import static net.sf.rubycollect4j.RubyCollections.Hash;
-import static net.sf.rubycollect4j.RubyCollections.isBlank;
-import static net.sf.rubycollect4j.RubyCollections.isNotBlank;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.qr;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.range;
 import static net.sf.rubycollect4j.RubyCollections.rs;
+import static net.sf.rubycollect4j.RubyObject.isBlank;
+import static net.sf.rubycollect4j.RubyObject.isNotBlank;
 
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -55,7 +55,8 @@ import net.sf.rubycollect4j.succ.StringSuccessor;
  * {@link RubyString} implements all methods refer to the String class of Ruby
  * language.
  * <p>
- * {@link RubyString} is also a Java CharSequence and a {@link Ruby.Enumerable}.
+ * {@link RubyString} is also a Java CharSequence and a
+ * {@link RubyBase.Enumerable}.
  * <P>
  * To avoid the conflict of Java 8 String#chars(), {@link RubyString} doesn't
  * implement the chars() method, but instead it directly extends the

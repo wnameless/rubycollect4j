@@ -50,7 +50,7 @@ import net.sf.rubycollect4j.iter.SliceWhenIterable;
  * {@link RubyEnumerable} is an extension for any Iterable class. It includes
  * all methods refer to the Enumerable module of Ruby.
  * <p>
- * {@link RubyEnumerable} is also a {@link Ruby.Enumerable}.
+ * {@link RubyEnumerable} is also a {@link RubyBase.Enumerable}.
  * 
  * @param <E>
  *          the type of the elements
@@ -58,7 +58,7 @@ import net.sf.rubycollect4j.iter.SliceWhenIterable;
  * @author Wei-Ming Wu
  * 
  */
-public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
+public abstract class RubyEnumerable<E> implements RubyBase.Enumerable<E> {
 
   /**
    * Returns an Iterable of elements.

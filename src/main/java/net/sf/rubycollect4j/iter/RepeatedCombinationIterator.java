@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 import net.sf.rubycollect4j.RubyArray;
 
@@ -38,8 +39,8 @@ import net.sf.rubycollect4j.RubyArray;
  * @author Wei-Ming Wu
  * 
  */
-public final class RepeatedCombinationIterator<E> implements
-    Iterator<RubyArray<E>> {
+public final class RepeatedCombinationIterator<E>
+    implements Iterator<RubyArray<E>> {
 
   private final List<? extends E> list;
   private final int[] counter;
@@ -58,7 +59,7 @@ public final class RepeatedCombinationIterator<E> implements
    *           if list is null
    */
   public RepeatedCombinationIterator(List<? extends E> list, int n) {
-    if (list == null) throw new NullPointerException();
+    Objects.requireNonNull(list);
 
     this.list = new ArrayList<E>(list);
     end = this.list.size() - 1;

@@ -19,6 +19,7 @@ package net.sf.rubycollect4j.iter;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import net.sf.rubycollect4j.RubyArray;
 
@@ -33,8 +34,8 @@ import net.sf.rubycollect4j.RubyArray;
  * @author Wei-Ming Wu
  * 
  */
-public final class RepeatedCombinationIterable<E> implements
-    Iterable<RubyArray<E>> {
+public final class RepeatedCombinationIterable<E>
+    implements Iterable<RubyArray<E>> {
 
   private final List<? extends E> list;
   private final int n;
@@ -50,7 +51,7 @@ public final class RepeatedCombinationIterable<E> implements
    *           if list is null
    */
   public RepeatedCombinationIterable(List<? extends E> list, int n) {
-    if (list == null) throw new NullPointerException();
+    Objects.requireNonNull(list);
 
     this.list = list;
     this.n = n;

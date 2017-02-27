@@ -33,8 +33,8 @@ import java.util.Map.Entry;
  * @author Wei-Ming Wu
  * 
  */
-public final class ComparableEntry<K, V> implements Entry<K, V>,
-    Comparable<Entry<? extends K, ? extends V>> {
+public final class ComparableEntry<K, V>
+    implements Entry<K, V>, Comparable<Entry<? extends K, ? extends V>> {
 
   private final Entry<K, V> entry;
 

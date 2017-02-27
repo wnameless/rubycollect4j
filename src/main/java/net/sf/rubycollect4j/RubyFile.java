@@ -38,8 +38,8 @@ import java.util.logging.Logger;
  */
 public final class RubyFile extends RubyIO {
 
-  private static final Logger logger = Logger.getLogger(RubyFile.class
-      .getName());
+  private static final Logger logger =
+      Logger.getLogger(RubyFile.class.getName());
 
   /**
    * Creates a {@link RubyFile} by given path and mode.
@@ -72,8 +72,8 @@ public final class RubyFile extends RubyIO {
     return open(path, R.toString());
   }
 
-  private RubyFile(File file, Mode mode) throws FileNotFoundException,
-      IOException {
+  private RubyFile(File file, Mode mode)
+      throws FileNotFoundException, IOException {
     super(file, mode);
   }
 
@@ -311,9 +311,8 @@ public final class RubyFile extends RubyIO {
    */
   public static long size(String path) {
     File file = new File(path);
-    if (!file.exists())
-      throw new IllegalArgumentException(
-          "Errno::ENOENT: No such file or directory - " + path);
+    if (!file.exists()) throw new IllegalArgumentException(
+        "Errno::ENOENT: No such file or directory - " + path);
 
     return file.length();
   }

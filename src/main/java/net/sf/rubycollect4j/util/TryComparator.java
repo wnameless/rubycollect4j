@@ -37,8 +37,8 @@ import java.util.logging.Logger;
  */
 public final class TryComparator<E> implements Comparator<E> {
 
-  private static final Logger logger = Logger.getLogger(TryComparator.class
-      .getName());
+  private static final Logger logger =
+      Logger.getLogger(TryComparator.class.getName());
 
   private final Comparator<? super E> comp;
 

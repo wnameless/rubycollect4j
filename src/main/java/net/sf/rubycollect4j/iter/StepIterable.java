@@ -18,6 +18,7 @@
 package net.sf.rubycollect4j.iter;
 
 import java.util.Iterator;
+import java.util.Objects;
 
 /**
  * 
@@ -47,12 +48,11 @@ public final class StepIterable<E> implements Iterable<E> {
    *           if step is less than or equal to 0
    */
   public StepIterable(Iterable<? extends E> iter, int step) {
-    if (iter == null) throw new NullPointerException();
+    Objects.requireNonNull(iter);
     if (step == 0)
       throw new IllegalArgumentException("ArgumentError: step can't be 0");
-    if (step < 0)
-      throw new IllegalArgumentException(
-          "ArgumentError: step can't be negative");
+    if (step < 0) throw new IllegalArgumentException(
+        "ArgumentError: step can't be negative");
 
     this.iter = iter;
     this.step = step;

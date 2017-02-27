@@ -25,6 +25,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -35,7 +36,7 @@ import java.util.function.Predicate;
  * {@link RubySet} implements all methods refer to the Set class of Ruby
  * language.
  * <p>
- * {@link RubySet} is also a Java Set and a {@link Ruby.Enumerable}.
+ * {@link RubySet} is also a Java Set and a {@link RubyBase.Enumerable}.
  *
  * @param <E>
  *          the type of the elements
@@ -61,7 +62,7 @@ public final class RubySet<E> extends RubyEnumerable<E>
    *           if set is null
    */
   public static <E> RubySet<E> of(LinkedHashSet<E> set) {
-    if (set == null) throw new NullPointerException();
+    Objects.requireNonNull(set);
 
     return new RubySet<E>(set);
   }
@@ -76,7 +77,7 @@ public final class RubySet<E> extends RubyEnumerable<E>
    *           if elements is null
    */
   public static <E> RubySet<E> copyOf(Iterable<E> elements) {
-    if (elements == null) throw new NullPointerException();
+    Objects.requireNonNull(elements);
 
     return new RubySet<E>(elements);
   }
@@ -103,7 +104,7 @@ public final class RubySet<E> extends RubyEnumerable<E>
    *           if set is null
    */
   public RubySet(LinkedHashSet<E> set) {
-    if (set == null) throw new NullPointerException();
+    Objects.requireNonNull(set);
 
     this.set = set;
   }
@@ -117,12 +118,10 @@ public final class RubySet<E> extends RubyEnumerable<E>
    *           if iter is null
    */
   public RubySet(Iterable<E> iter) {
-    if (iter == null) throw new NullPointerException();
+    Objects.requireNonNull(iter);
 
     set = new LinkedHashSet<E>();
-    for (E e : iter) {
-      set.add(e);
-    }
+    iter.forEach(e -> set.add(e));
   }
 
   /**
@@ -148,12 +147,12 @@ public final class RubySet<E> extends RubyEnumerable<E>
   public <S> RubyHash<S, RubySet<E>> classify(
       Function<? super E, ? extends S> block) {
     RubyHash<S, RubySet<E>> hash = newRubyHash();
-    for (E e : set) {
+    set.forEach(e -> {
       S s = block.apply(e);
       if (!hash.containsKey(s)) hash.put(s, new RubySet<E>());
 
       hash.get(s).add(e);
-    }
+    });
     return hash;
   }
 
@@ -166,9 +165,7 @@ public final class RubySet<E> extends RubyEnumerable<E>
    */
   public RubySet<E> collectǃ(Function<? super E, ? extends E> block) {
     LinkedHashSet<E> lhs = new LinkedHashSet<E>();
-    for (E e : set) {
-      lhs.add(block.apply(e));
-    }
+    set.forEach(e -> lhs.add(block.apply(e)));
     set.clear();
     set.addAll(lhs);
     return this;
@@ -240,9 +237,7 @@ public final class RubySet<E> extends RubyEnumerable<E>
    */
   public RubySet<E> difference(Iterable<E> iter) {
     RubySet<E> newSet = RubySet.copyOf(set);
-    for (E e : iter) {
-      newSet.remove(e);
-    }
+    iter.forEach(e -> newSet.remove(e));
     return newSet;
   }
 
@@ -282,9 +277,7 @@ public final class RubySet<E> extends RubyEnumerable<E>
    */
   @Override
   public RubySet<E> each(Consumer<? super E> block) {
-    for (E e : set) {
-      block.accept(e);
-    }
+    set.forEach(e -> block.accept(e));
     return this;
   }
 
@@ -394,9 +387,9 @@ public final class RubySet<E> extends RubyEnumerable<E>
    */
   public RubySet<E> intersection(Iterable<E> iter) {
     RubySet<E> newSet = new RubySet<E>();
-    for (E e : iter) {
+    iter.forEach(e -> {
       if (set.contains(e)) newSet.add(e);
-    }
+    });
     return newSet;
   }
 
@@ -460,9 +453,7 @@ public final class RubySet<E> extends RubyEnumerable<E>
    * @return this {@link RubySet}
    */
   public RubySet<E> merge(Iterable<E> iter) {
-    for (E e : iter) {
-      set.add(e);
-    }
+    iter.forEach(e -> set.add(e));
     return this;
   }
 
@@ -524,9 +515,7 @@ public final class RubySet<E> extends RubyEnumerable<E>
    */
   public RubySet<E> replace(Iterable<E> iter) {
     set.clear();
-    for (E e : iter) {
-      set.add(e);
-    }
+    iter.forEach(e -> set.add(e));
     return this;
   }
 
@@ -568,9 +557,7 @@ public final class RubySet<E> extends RubyEnumerable<E>
    * @return this {@link RubySet}
    */
   public RubySet<E> subtract(Iterable<E> iter) {
-    for (E e : iter) {
-      set.remove(e);
-    }
+    iter.forEach(e -> set.remove(e));
     return this;
   }
 
@@ -600,9 +587,7 @@ public final class RubySet<E> extends RubyEnumerable<E>
    */
   public RubySet<E> union(Iterable<E> iter) {
     RubySet<E> newSet = RubySet.copyOf(set);
-    for (E e : iter) {
-      newSet.add(e);
-    }
+    iter.forEach(e -> newSet.add(e));
     return newSet;
   }
 

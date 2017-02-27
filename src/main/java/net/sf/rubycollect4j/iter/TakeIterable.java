@@ -18,6 +18,7 @@
 package net.sf.rubycollect4j.iter;
 
 import java.util.Iterator;
+import java.util.Objects;
 
 /**
  * 
@@ -47,10 +48,9 @@ public final class TakeIterable<E> implements Iterable<E> {
    *           if n is less than 0
    */
   public TakeIterable(Iterable<? extends E> iter, int n) {
-    if (iter == null) throw new NullPointerException();
-    if (n < 0)
-      throw new IllegalArgumentException(
-          "ArgumentError: attempt to take negative size");
+    Objects.requireNonNull(iter);
+    if (n < 0) throw new IllegalArgumentException(
+        "ArgumentError: attempt to take negative size");
 
     this.iter = iter;
     this.n = n;

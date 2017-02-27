@@ -22,6 +22,7 @@ import static net.sf.rubycollect4j.RubyCollections.rh;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 
@@ -58,7 +59,7 @@ public final class RubyDate extends Date {
    *           if date is null
    */
   public RubyDate(Date date) {
-    if (date == null) throw new NullPointerException();
+    Objects.requireNonNull(date);
 
     setTime(date.getTime());
   }

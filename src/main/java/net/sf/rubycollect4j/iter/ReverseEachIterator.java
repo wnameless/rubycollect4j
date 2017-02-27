@@ -20,6 +20,7 @@ package net.sf.rubycollect4j.iter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 
@@ -45,7 +46,7 @@ public final class ReverseEachIterator<E> implements Iterator<E> {
    *           if iter is null
    */
   public ReverseEachIterator(Iterator<? extends E> iter) {
-    if (iter == null) throw new NullPointerException();
+    Objects.requireNonNull(iter);
 
     this.iter = iter;
   }

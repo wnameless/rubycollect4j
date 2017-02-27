@@ -18,6 +18,7 @@
 package net.sf.rubycollect4j.iter;
 
 import java.util.Iterator;
+import java.util.Objects;
 
 import net.sf.rubycollect4j.RubyArray;
 
@@ -51,7 +52,7 @@ public final class EachConsIterable<E> implements Iterable<RubyArray<E>> {
    *           if size is less than or equal to 0
    */
   public EachConsIterable(Iterable<? extends E> iter, int size) {
-    if (iter == null) throw new NullPointerException();
+    Objects.requireNonNull(iter);
     if (size <= 0)
       throw new IllegalArgumentException("ArgumentError: invalid size");
 

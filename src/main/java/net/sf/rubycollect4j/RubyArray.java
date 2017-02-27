@@ -31,6 +31,7 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -53,7 +54,7 @@ import net.sf.rubycollect4j.util.TryComparator;
  * {@link RubyArray} implements all methods refer to the Array class of Ruby
  * language.
  * <p>
- * {@link RubyArray} is also a Java List and a {@link Ruby.Enumerable}.
+ * {@link RubyArray} is also a Java List and a {@link RubyBase.Enumerable}.
  * 
  * @param <E>
  *          the type of the elements
@@ -79,7 +80,7 @@ public final class RubyArray<E> extends RubyEnumerable<E>
    *           if list is null
    */
   public static <E> RubyArray<E> of(List<E> list) {
-    if (list == null) throw new NullPointerException();
+    Objects.requireNonNull(list);
 
     return new RubyArray<E>(list);
   }
@@ -94,7 +95,7 @@ public final class RubyArray<E> extends RubyEnumerable<E>
    *           if elements is null
    */
   public static <E> RubyArray<E> copyOf(Iterable<E> elements) {
-    if (elements == null) throw new NullPointerException();
+    Objects.requireNonNull(elements);
 
     return new RubyArray<E>(elements);
   }
@@ -121,7 +122,7 @@ public final class RubyArray<E> extends RubyEnumerable<E>
    *           if list is null
    */
   public RubyArray(List<E> list) {
-    if (list == null) throw new NullPointerException();
+    Objects.requireNonNull(list);
 
     this.list = list;
   }
@@ -135,12 +136,10 @@ public final class RubyArray<E> extends RubyEnumerable<E>
    *           if iter is null
    */
   public RubyArray(Iterable<? extends E> iter) {
-    if (iter == null) throw new NullPointerException();
+    Objects.requireNonNull(iter);
 
     list = new ArrayList<E>();
-    for (E item : iter) {
-      list.add(item);
-    }
+    iter.forEach(item -> list.add(item));
   }
 
   /**
