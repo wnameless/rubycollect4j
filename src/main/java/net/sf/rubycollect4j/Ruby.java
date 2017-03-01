@@ -70,10 +70,28 @@ public final class Ruby {
       return new RubyArray<>();
     }
 
+    /**
+     * Creates a {@link RubyArray} by given List.
+     * 
+     * @param <E>
+     *          the type of the elements
+     * @param list
+     *          a List
+     * @return new {@link RubyArray}
+     */
     public static <E> RubyArray<E> of(List<E> list) {
       return new RubyArray<>(list);
     }
 
+    /**
+     * Creates a {@link RubyArray} by given elements.
+     * 
+     * @param first
+     *          the first element
+     * @param others
+     *          the other elements
+     * @return new {@link RubyArray}
+     */
     @SafeVarargs
     public static <E> RubyArray<E> of(E first, E... others) {
       RubyArray<E> rubyArray = new RubyArray<>();
@@ -82,11 +100,25 @@ public final class Ruby {
       return rubyArray;
     }
 
+    /**
+     * Creates a {@link RubyArray} which contains the given {@link RubyArray}.
+     * 
+     * @param rubyArray
+     *          a {@link RubyArray}
+     * @return {@link RubyArray} of {@link RubyArray}
+     */
     public static <E> RubyArray<RubyArray<E>> of(RubyArray<E> rubyArray) {
       RubyArray<RubyArray<E>> ra = new RubyArray<>();
       return ra.push(rubyArray);
     }
 
+    /**
+     * Creates a {@link RubyArray} by given elements.
+     * 
+     * @param elements
+     *          an array of elements
+     * @return new {@link RubyArray}
+     */
     public static <E> RubyArray<E> copyOf(E[] elements) {
       RubyArray<E> rubyArray = new RubyArray<>();
       Arrays.asList(elements).forEach(e -> rubyArray.add(e));
@@ -2430,6 +2462,11 @@ public final class Ruby {
 
     private Set() {}
 
+    /**
+     * Creates an empty {@link RubySet}.
+     * 
+     * @return {@link RubySet}
+     */
     public static <E> RubySet<E> create() {
       return new RubySet<>();
     }
@@ -2445,6 +2482,15 @@ public final class Ruby {
       return new RubySet<>(set);
     }
 
+    /**
+     * Creates a {@link RubySet} by given elements.
+     * 
+     * @param first
+     *          the first element
+     * @param others
+     *          the other elements
+     * @return {@link RubySet}
+     */
     @SafeVarargs
     public static <E> RubySet<E> of(E first, E... others) {
       RubySet<E> rs = new RubySet<>();
