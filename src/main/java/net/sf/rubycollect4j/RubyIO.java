@@ -17,8 +17,6 @@
  */
 package net.sf.rubycollect4j;
 
-import static net.sf.rubycollect4j.RubyCollections.Hash;
-import static net.sf.rubycollect4j.RubyCollections.hp;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyIO.Mode.R;
 
@@ -28,13 +26,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 import net.sf.rubycollect4j.iter.EachLineIterable;
 
@@ -90,9 +86,9 @@ public class RubyIO {
      */
     AR("a+", true, true);
 
-    private static final Map<String, Mode> modeMap = Hash(
-        Arrays.asList(values()).stream().map(item -> hp(item.toString(), item))
-            .collect(Collectors.toList())).freeze();
+    private static final Map<String, Mode> modeMap =
+        Ruby.Hash.create(Ruby.Array.copyOf(values())
+            .map(item -> Ruby.Entry.of(item.toString(), item))).freeze();
 
     private final String mode;
     private final boolean isReadable;

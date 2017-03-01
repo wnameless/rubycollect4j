@@ -34,7 +34,6 @@ public class ZipIteratorTest {
   List<Integer> list;
   List<? extends Iterator<Integer>> others;
 
-  @SuppressWarnings("unchecked")
   @Before
   public void setUp() throws Exception {
     list = ra(1, 2, 3);

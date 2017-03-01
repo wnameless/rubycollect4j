@@ -25,9 +25,6 @@ import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
 import static net.sf.rubycollect4j.RubyCollections.newRubyLazyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.newRubySet;
-import static net.sf.rubycollect4j.RubyCollections.qr;
-import static net.sf.rubycollect4j.RubyCollections.qw;
-import static net.sf.rubycollect4j.RubyCollections.qx;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.range;
 import static net.sf.rubycollect4j.RubyCollections.rh;
@@ -47,7 +44,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 import org.junit.Test;
 
@@ -113,36 +109,6 @@ public class RubyCollectionsTest {
   public void testRs() {
     assertTrue(rs() instanceof RubyString);
     assertTrue(rs("str") instanceof RubyString);
-  }
-
-  @Test
-  public void testQr() {
-    assertTrue(qr("\\d+") instanceof Pattern);
-    assertTrue(qr("\\d+").matcher("asf324ds").find());
-  }
-
-  @Test
-  public void testQw() {
-    assertTrue(qw("a b c") instanceof RubyArray);
-    assertEquals(ra("a", "b", "c"), qw("a b c"));
-  }
-
-  @Test
-  public void testQx() {
-    if (System.getProperty("os.name").startsWith("Windows")) {
-      assertEquals("Hello world!" + System.getProperty("line.separator"),
-          qx("cmd", "/C", "echo Hello world!"));
-    } else {
-      assertEquals("Hello world!" + System.getProperty("line.separator"),
-          qx("echo", "Hello world!"));
-      assertEquals("Hello world!" + System.getProperty("line.separator"),
-          qx(new String[] { "sh", "-c", "echo Hello world! 1>&2" }));
-    }
-  }
-
-  @Test(expected = RuntimeException.class)
-  public void testQxException() {
-    qx("lls");
   }
 
   @Test
@@ -255,20 +221,17 @@ public class RubyCollectionsTest {
     assertEquals(new ComparableEntry<Integer, Integer>(1, 1), hp(1, 1));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testHash() {
     assertEquals(rh(1, 2, 3, 4, 5, 6), Hash(ra(hp(1, 2), hp(3, 4), hp(5, 6))));
     assertEquals(rh(1, 2, 3, 4, 5, 6), Hash(ra(ra(1, 2), ra(3, 4), ra(5, 6))));
   }
 
-  @SuppressWarnings("unchecked")
   @Test(expected = IllegalArgumentException.class)
   public void testHashException1() {
     Hash(ra(ra(1, 2), ra(3, 4), ra(5, 6, 7)));
   }
 
-  @SuppressWarnings("unchecked")
   @Test(expected = IllegalArgumentException.class)
   public void testHashException2() {
     Hash(ra(ra(1, 2), ra(3, 4), new RubyArray<Integer>()));

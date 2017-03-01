@@ -17,9 +17,6 @@
  */
 package net.sf.rubycollect4j;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -29,9 +26,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.regex.Pattern;
 
 import net.sf.rubycollect4j.succ.CharacterSuccessor;
 import net.sf.rubycollect4j.succ.DateSuccessor;
@@ -50,9 +44,6 @@ import net.sf.rubycollect4j.util.ComparableEntry;
  * 
  */
 public final class RubyCollections {
-
-  private static final Logger logger =
-      Logger.getLogger(RubyCollections.class.getName());
 
   private RubyCollections() {}
 
@@ -231,62 +222,6 @@ public final class RubyCollections {
    */
   public static RubyString rs(Object o) {
     return new RubyString(o);
-  }
-
-  /**
-   * Creates a regular expression Pattern.
-   * 
-   * @param regex
-   *          regular expression
-   * @return Pattern
-   */
-  public static Pattern qr(String regex) {
-    return Pattern.compile(regex);
-  }
-
-  /**
-   * Creates a {@link RubyArray} of Strings.
-   * 
-   * @param str
-   *          words separated by spaces
-   * @return {@link RubyArray}
-   */
-  public static RubyArray<String> qw(String str) {
-    return newRubyArray(str.trim().split("\\s+"));
-  }
-
-  /**
-   * Executes a system command and returns its result.
-   * 
-   * @param cmd
-   *          to be executed
-   * @return String
-   * @throws RuntimeException
-   *           if command is not found
-   */
-  public static String qx(String... cmd) {
-    StringBuilder sb = new StringBuilder();
-
-    try {
-      Process proc = Runtime.getRuntime().exec(cmd);
-      BufferedReader stdInput =
-          new BufferedReader(new InputStreamReader(proc.getInputStream()));
-      BufferedReader stdError =
-          new BufferedReader(new InputStreamReader(proc.getErrorStream()));
-
-      String s;
-      while ((s = stdInput.readLine()) != null) {
-        sb.append(s).append(System.getProperty("line.separator"));
-      }
-      while ((s = stdError.readLine()) != null) {
-        sb.append(s).append(System.getProperty("line.separator"));
-      }
-    } catch (IOException e) {
-      logger.log(Level.SEVERE, null, e);
-      throw new RuntimeException(e);
-    }
-
-    return sb.toString();
   }
 
   /**
@@ -2650,9 +2585,10 @@ public final class RubyCollections {
    *          a {@link RubyArray} of List
    * @return {@link RubyHash}
    */
-  public static <E> RubyHash<E, E> Hash(RubyArray<? extends List<E>> lists) {
+  public static <E> RubyHash<E, E> Hash(
+      RubyArray<? extends List<? extends E>> lists) {
     RubyHash<E, E> rubyHash = newRubyHash();
-    for (List<E> list : lists) {
+    for (List<? extends E> list : lists) {
       if (list.size() < 1 || list.size() > 2)
         throw new IllegalArgumentException(
             "ArgumentError: invalid number of elements (" + list.size()

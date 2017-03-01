@@ -18,9 +18,9 @@
 package net.sf.rubycollect4j.packer;
 
 import static java.nio.ByteOrder.nativeOrder;
-import static net.sf.rubycollect4j.RubyCollections.qr;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.rs;
+import static net.sf.rubycollect4j.RubyLiterals.qr;
 import static net.sf.rubycollect4j.util.ByteUtil.toByteArray;
 
 import java.nio.ByteOrder;

@@ -20,7 +20,7 @@ package net.sf.rubycollect4j;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.rh;
 import static net.sf.rubycollect4j.RubyObject.isBlank;
-import static net.sf.rubycollect4j.RubyObject.isNotBlank;
+import static net.sf.rubycollect4j.RubyObject.isPresent;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -325,20 +325,22 @@ public class RubyObjectTest {
     assertTrue(isBlank(rh()));
     assertTrue(isBlank((RubyHash<?, ?>) null));
     assertFalse(isBlank(rh(1, "a", 2, "b")));
+    assertTrue(isBlank(ra().iterator()));
+    assertFalse(isBlank(ra(1, 2, 3).iterator()));
   }
 
   @Test
-  public void testIsNotBlank() {
-    assertFalse(isNotBlank(""));
-    assertFalse(isNotBlank("   "));
-    assertFalse(isNotBlank((String) null));
-    assertTrue(isNotBlank("?"));
-    assertFalse(isNotBlank(ra()));
-    assertFalse(isNotBlank((Iterable<?>) null));
-    assertTrue(isNotBlank(ra(1, 2, 3)));
-    assertFalse(isNotBlank(new HashMap<Integer, String>()));
-    assertFalse(isNotBlank((Map<?, ?>) null));
-    assertTrue(isNotBlank(new HashMap<Integer, String>() {
+  public void testIsPresent() {
+    assertFalse(isPresent(""));
+    assertFalse(isPresent("   "));
+    assertFalse(isPresent((String) null));
+    assertTrue(isPresent("?"));
+    assertFalse(isPresent(ra()));
+    assertFalse(isPresent((Iterable<?>) null));
+    assertTrue(isPresent(ra(1, 2, 3)));
+    assertFalse(isPresent(new HashMap<Integer, String>()));
+    assertFalse(isPresent((Map<?, ?>) null));
+    assertTrue(isPresent(new HashMap<Integer, String>() {
 
       private static final long serialVersionUID = 1L;
 
@@ -348,14 +350,16 @@ public class RubyObjectTest {
       }
 
     }));
-    assertFalse(isNotBlank(false));
-    assertFalse(isNotBlank((Boolean) null));
-    assertTrue(isNotBlank(true));
-    assertFalse(isNotBlank((Integer) null));
-    assertTrue(isNotBlank(1));
-    assertFalse(isNotBlank(rh()));
-    assertFalse(isNotBlank((RubyHash<?, ?>) null));
-    assertTrue(isNotBlank(rh(1, "a", 2, "b")));
+    assertFalse(isPresent(false));
+    assertFalse(isPresent((Boolean) null));
+    assertTrue(isPresent(true));
+    assertFalse(isPresent((Integer) null));
+    assertTrue(isPresent(1));
+    assertFalse(isPresent(rh()));
+    assertFalse(isPresent((RubyHash<?, ?>) null));
+    assertTrue(isPresent(rh(1, "a", 2, "b")));
+    assertFalse(isPresent(ra().iterator()));
+    assertTrue(isPresent(ra(1, 2, 3).iterator()));
   }
 
 }

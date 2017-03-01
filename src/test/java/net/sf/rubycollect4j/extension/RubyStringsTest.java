@@ -18,10 +18,10 @@
 package net.sf.rubycollect4j.extension;
 
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
-import static net.sf.rubycollect4j.RubyCollections.qr;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.rh;
 import static net.sf.rubycollect4j.RubyCollections.rs;
+import static net.sf.rubycollect4j.RubyLiterals.qr;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -775,7 +775,6 @@ public class RubyStringsTest {
     RubyStrings.scan(rs, null, null);
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testScanGroups() {
     assertEquals(ra(ra("cru"), ra("el "), ra("wor")),
@@ -1139,7 +1138,6 @@ public class RubyStringsTest {
     RubyStrings.trS(rs, "", null);
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testUnpack() {
     assertEquals(ra("abc", "abc "),

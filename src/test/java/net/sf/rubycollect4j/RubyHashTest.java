@@ -148,7 +148,6 @@ public class RubyHashTest {
     assertEquals(rh.getDefault(), rh.delete(3));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testDeleteIf() {
     assertTrue(rh.deleteIf() instanceof RubyEnumerator);
@@ -161,7 +160,6 @@ public class RubyHashTest {
     assertEquals(rh(3, 4, 5, 6), rh);
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testEach() {
     assertTrue(rh.each() instanceof RubyEnumerator);
@@ -191,7 +189,6 @@ public class RubyHashTest {
     assertEquals(ra(1, 3, 5), ints);
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testEachPair() {
     assertTrue(rh.eachPair() instanceof RubyEnumerator);
@@ -256,7 +253,6 @@ public class RubyHashTest {
     assertEquals(Integer.valueOf(10), rh.fetch(7, 10));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testFlatten() {
     assertEquals(ra(hp(1, 2), hp(3, 4), hp(5, 6)), rh.flatten());
@@ -301,7 +297,6 @@ public class RubyHashTest {
     assertEquals(rh(2, 1, 5, 4), rh.invert());
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testKeepIf() {
     assertTrue(rh.keepIf() instanceof RubyEnumerator);
@@ -380,7 +375,6 @@ public class RubyHashTest {
     assertEquals(hp(3, null), rh.rassoc(null));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testRejectǃ() {
     assertTrue(rh.rejectǃ() instanceof RubyEnumerator);
@@ -483,7 +477,6 @@ public class RubyHashTest {
     assertFalse(rh.anyʔ(block));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testChunk() {
     assertEquals(
@@ -540,7 +533,6 @@ public class RubyHashTest {
         rh.detect((BiPredicate<Integer, Integer>) (key, value) -> value == 4));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testDropWhile() {
     assertEquals(ra(hp(3, 4), hp(5, 6)), rh.dropWhile(
@@ -561,7 +553,6 @@ public class RubyHashTest {
         rh.find((BiPredicate<Integer, Integer>) (key, value) -> value == 4));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testFindAll() {
     assertEquals(ra(hp(1, 2), hp(3, 4)),
@@ -589,7 +580,6 @@ public class RubyHashTest {
         value) -> Long.valueOf(key + value)));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testGroupBy() {
     assertEquals(rh(true, ra(hp(1, 2), hp(3, 4)), false, ra(hp(5, 6))),
@@ -636,7 +626,6 @@ public class RubyHashTest {
             value) -> Long.valueOf(value - key)));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testMinmaxByWithComparator() {
     assertEquals(ra(hp(1, 6), hp(3, 4)),
@@ -646,7 +635,6 @@ public class RubyHashTest {
                 .valueOf(value - key)));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testMinmaxBy() {
     assertEquals(ra(hp(3, 4), hp(1, 6)),
@@ -668,14 +656,12 @@ public class RubyHashTest {
         rh.oneʔ((BiPredicate<Integer, Integer>) (key, value) -> value > 3));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testPartition() {
     assertEquals(ra(ra(hp(1, 2)), ra(hp(3, 4), hp(5, 6))),
         rh.partition((BiPredicate<Integer, Integer>) (key, value) -> key == 1));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testReject() {
     assertEquals(ra(hp(3, 4), hp(5, 6)),
@@ -690,14 +676,12 @@ public class RubyHashTest {
     assertEquals(ra(5, 3, 1), ints);
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testSelect() {
     assertEquals(ra(hp(1, 2), hp(3, 4)),
         rh.select((BiPredicate<Integer, Integer>) (key, value) -> key < 4));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testSliceBefore() {
     assertEquals(ra(ra(hp(1, 2), hp(3, 4)), ra(hp(5, 6))),
@@ -705,7 +689,6 @@ public class RubyHashTest {
             .toA());
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testSortByWithComparator() {
     assertEquals(ra(hp(3, 4), hp(2, 5), hp(1, 6)),
@@ -715,7 +698,6 @@ public class RubyHashTest {
                 .valueOf(key)));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testSortByBy() {
     assertEquals(ra(hp(1, 6), hp(2, 5), hp(3, 4)),
@@ -723,7 +705,6 @@ public class RubyHashTest {
             value) -> Long.valueOf(key)));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testTakeWhile() {
     assertEquals(ra(hp(1, 2), hp(3, 4)),

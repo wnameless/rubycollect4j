@@ -119,7 +119,6 @@ public class RubyIterablesTest {
     assertEquals(3, chunk.size());
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testChunkWhile() {
     Iterable<Integer> re =
@@ -130,7 +129,6 @@ public class RubyIterablesTest {
             RubyIterables.chunkWhile(re, (key, value) -> key + 1 == value)));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testChunkWithMethodName() {
     Iterable<String> iter = Arrays.asList("aa", "bb", "bc", "cd");
@@ -261,7 +259,6 @@ public class RubyIterablesTest {
 
   @Test
   public void testEachSlice() {
-    @SuppressWarnings("unchecked")
     RubyArray<RubyArray<Integer>> ra = ra(ra(1, 2, 3), ra(4));
     assertEquals(ra, RubyIterables.toA(RubyIterables.eachSlice(iter, 3)));
   }
@@ -286,7 +283,6 @@ public class RubyIterablesTest {
 
   @Test
   public void testEachWithIndex() {
-    @SuppressWarnings("unchecked")
     RubyArray<? extends Entry<Integer, Integer>> ra =
         ra(hp(1, 0), hp(2, 1), hp(3, 2), hp(4, 3));
     assertEquals(ra, RubyIterables.toA(RubyIterables.eachWithIndex(iter)));
@@ -303,7 +299,6 @@ public class RubyIterablesTest {
   @Test
   public void testEachWithObject() {
     Long obj = 0L;
-    @SuppressWarnings("unchecked")
     RubyArray<? extends Entry<Integer, Long>> ra =
         ra(hp(1, obj), hp(2, obj), hp(3, obj), hp(4, obj));
     assertEquals(ra,
@@ -601,7 +596,6 @@ public class RubyIterablesTest {
     assertFalse(RubyIterables.oneʔ(iter, null));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testPartitionWithBlock() {
     assertEquals(ra(ra(1, 3), ra(2, 4)),
@@ -645,7 +639,6 @@ public class RubyIterablesTest {
     assertEquals(ra(3, 4), RubyIterables.select(iter, item -> item >= 3));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testSliceAfterWithBlock() {
     iter = Arrays.asList(1, 3, 3, 4);
@@ -653,7 +646,6 @@ public class RubyIterablesTest {
         .toA(RubyIterables.sliceAfter(iter, item -> item % 2 == 1)));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testSliceWhen() {
     iter = newRubyEnumerator(Arrays.asList(1, 3, 3, 4));
@@ -661,7 +653,6 @@ public class RubyIterablesTest {
         RubyIterables.sliceWhen(iter, (item1, item2) -> item1 + 1 == item2)));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testSliceAfterWithRegex() {
     iter = Arrays.asList(1, 2, 3, 3);
@@ -669,7 +660,6 @@ public class RubyIterablesTest {
         RubyIterables.toA(RubyIterables.sliceAfter(iter, "3")));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testSliceBeforeWithBlock() {
     iter = newRubyEnumerator(Arrays.asList(1, 3, 3, 4));
@@ -677,7 +667,6 @@ public class RubyIterablesTest {
         .toA(RubyIterables.sliceBefore(iter, item -> item % 2 == 1)));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testSliceBeforeWithRegex() {
     iter = Arrays.asList(1, 2, 3, 3);
@@ -744,13 +733,11 @@ public class RubyIterablesTest {
     assertEquals(ra(1, 2, 3, 4), RubyIterables.toA(iter));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testToAH() {
     assertEquals(rh(1, 2, 3, 4), RubyIterables.toH(ra(ra(1, 2), ra(3, 4))));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testZip() {
     iter = Arrays.asList(1, 2, 3);
@@ -762,7 +749,6 @@ public class RubyIterablesTest {
         RubyIterables.zip(iter, ra(ra(4, 5, 6), ra(7, 8, 9))));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testZipWithBlock() {
     iter = Arrays.asList(1, 2, 3);

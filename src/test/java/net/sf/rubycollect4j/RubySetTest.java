@@ -38,7 +38,6 @@ import java.util.function.Predicate;
 import org.junit.Before;
 import org.junit.Test;
 
-@SuppressWarnings("deprecation")
 public class RubySetTest {
 
   RubySet<Integer> rs;
@@ -124,12 +123,6 @@ public class RubySetTest {
   }
 
   @Test
-  public void testCollectǃWithMethodName() {
-    assertSame(rs, rs.collectǃ("intValue"));
-    assertEquals(newRubySet(1, 2, 3), rs);
-  }
-
-  @Test
   public void testDelete() {
     assertSame(rs, rs.delete(1));
     assertEquals(newRubySet(2, 3), rs);
@@ -159,7 +152,6 @@ public class RubySetTest {
     assertFalse(rs.disjointʔ(ra(3, 4, 5)));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testDivide() {
     assertEquals(newRubySet(newRubySet(1, 3), newRubySet(2)),
@@ -184,7 +176,6 @@ public class RubySetTest {
     assertEquals(newRubySet(1, 2, 4, 5), rs.exclusive(ra(3, 4, 5)));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testFlatten() {
     assertEquals(newRubySet(1, 2, 3, 4, 5),
@@ -235,12 +226,6 @@ public class RubySetTest {
   public void testMapǃ() {
     assertSame(rs, rs.mapǃ(item -> item + 1));
     assertEquals(newRubySet(2, 3, 4), rs);
-  }
-
-  @Test
-  public void testMapǃWithMethodName() {
-    assertSame(rs, rs.mapǃ("intValue"));
-    assertEquals(newRubySet(1, 2, 3), rs);
   }
 
   @Test

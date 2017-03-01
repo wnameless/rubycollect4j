@@ -30,16 +30,16 @@ import java.util.Arrays;
  * @author Wei-Ming Wu
  * 
  */
-public final class RubyKernel {
+public class RubyKernel {
 
-  private RubyKernel() {}
+  RubyKernel() {}
 
   /**
    * Returns null.
    * 
    * @return null
    */
-  public static Object p() {
+  public static <T> T p() {
     return null;
   }
 
@@ -50,7 +50,7 @@ public final class RubyKernel {
    *          any Object
    * @return the Object
    */
-  public static Object p(Object x) {
+  public static <T> T p(T x) {
     out.println(x);
     return x;
   }
@@ -58,15 +58,19 @@ public final class RubyKernel {
   /**
    * Calls System.out.println() and returns arguments.
    * 
+   * @param x
+   *          any Object
    * @param xs
    *          an array of Object
    * @return {@link RubyArray} of Object
    */
-  public static RubyArray<Object> p(Object... xs) {
-    for (Object x : xs) {
-      out.println(x);
+  @SafeVarargs
+  public static <T> RubyArray<T> p(T x, T... xs) {
+    out.println(x);
+    for (T e : xs) {
+      out.println(e);
     }
-    return newRubyArray(xs);
+    return newRubyArray(xs).unshift(x);
   }
 
   /**

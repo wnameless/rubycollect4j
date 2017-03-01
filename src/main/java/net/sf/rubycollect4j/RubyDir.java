@@ -25,6 +25,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
@@ -35,7 +36,7 @@ import java.util.function.Consumer;
  * @author Wei-Ming Wu
  * 
  */
-public final class RubyDir extends RubyEnumerable<String> {
+public class RubyDir extends RubyEnumerable<String> {
 
   private final File directory;
   private final RubyArray<String> entries;
@@ -57,13 +58,16 @@ public final class RubyDir extends RubyEnumerable<String> {
    */
   public static RubyDir open(String path) {
     File dir = new File(path);
-    if (!dir.exists() || !dir.isDirectory()) throw new IllegalArgumentException(
-        "Errno::ENOENT: No such file or directory - " + path);
-
     return new RubyDir(dir);
   }
 
-  private RubyDir(File directory) {
+  public RubyDir(File directory) {
+    Objects.requireNonNull(directory);
+    if (!directory.exists() || !directory.isDirectory())
+      throw new IllegalArgumentException(
+          "Errno::ENOENT: No such file or directory - "
+              + directory.getAbsolutePath());
+
     this.directory = directory;
     entries = entries(directory.getPath());
   }

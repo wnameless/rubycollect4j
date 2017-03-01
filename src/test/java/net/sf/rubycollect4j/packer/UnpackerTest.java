@@ -156,7 +156,6 @@ public class UnpackerTest {
         Unpacker.unpack("h100h", "我\377abc"));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testDirective_c_b() {
     assertEquals(ra((byte) -1, (byte) -26, "0001000110001001"),
@@ -165,7 +164,6 @@ public class UnpackerTest {
         rs("我\377").unpack("b2c*"));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testDirective_c_h() {
     assertEquals(ra((byte) -1, (byte) -26, "8819"), rs("\377我").unpack("c2h*"));

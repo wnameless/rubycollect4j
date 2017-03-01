@@ -17,8 +17,8 @@
  */
 package net.sf.rubycollect4j;
 
-import static net.sf.rubycollect4j.RubyCollections.qx;
 import static net.sf.rubycollect4j.RubyCollections.ra;
+import static net.sf.rubycollect4j.RubyLiterals.qx;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;

@@ -36,7 +36,7 @@ import java.util.logging.Logger;
  * @author Wei-Ming Wu
  * 
  */
-public final class RubyFile extends RubyIO {
+public class RubyFile extends RubyIO {
 
   private static final Logger logger =
       Logger.getLogger(RubyFile.class.getName());
@@ -92,7 +92,7 @@ public final class RubyFile extends RubyIO {
     return open(path, R.toString());
   }
 
-  private RubyFile(File file, Mode mode)
+  public RubyFile(File file, Mode mode)
       throws FileNotFoundException, IOException {
     super(file, mode);
   }

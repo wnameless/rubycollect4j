@@ -697,8 +697,9 @@ public final class RubyIterables {
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#zip(Iterable...)
    */
+  @SafeVarargs
   public static <E> List<? extends List<E>> zip(Iterable<E> in,
-      @SuppressWarnings("unchecked") Iterable<? extends E>... others) {
+      Iterable<? extends E>... others) {
     return newRubyLazyEnumerator(in).zip(others).toA();
   }
 

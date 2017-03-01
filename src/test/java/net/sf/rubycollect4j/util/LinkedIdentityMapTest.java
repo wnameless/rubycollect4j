@@ -85,7 +85,6 @@ public class LinkedIdentityMapTest {
     assertTrue(map.containsValue(null));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testEntrySet() {
     map.clear();
@@ -148,7 +147,6 @@ public class LinkedIdentityMapTest {
     assertEquals(2, map.size());
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testPutAll() {
     map.clear();

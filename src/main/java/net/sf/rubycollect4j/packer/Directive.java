@@ -22,8 +22,8 @@ import static java.nio.ByteOrder.LITTLE_ENDIAN;
 import static java.nio.ByteOrder.nativeOrder;
 import static net.sf.rubycollect4j.RubyCollections.Hash;
 import static net.sf.rubycollect4j.RubyCollections.hp;
-import static net.sf.rubycollect4j.RubyCollections.qr;
 import static net.sf.rubycollect4j.RubyCollections.ra;
+import static net.sf.rubycollect4j.RubyLiterals.qr;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;

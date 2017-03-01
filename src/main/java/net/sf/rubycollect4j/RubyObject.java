@@ -18,6 +18,7 @@
 package net.sf.rubycollect4j;
 
 import java.lang.reflect.Method;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -385,137 +386,49 @@ public final class RubyObject {
   }
 
   /**
-   * Checks if a String is null or blank(only white-spaces).
-   * 
-   * @param str
-   *          any String
-   * @return true if given String is null or blank, false otherwise
-   */
-  public static boolean isBlank(String str) {
-    return str == null || str.trim().isEmpty();
-  }
-
-  /**
-   * Checks if a String is not null or blank(only white-spaces).
-   * 
-   * 
-   * @param str
-   *          any String
-   * @return true if given String is not null or blank, false otherwise
-   */
-  public static boolean isNotBlank(String str) {
-    return !isBlank(str);
-  }
-
-  /**
-   * Checks if an Iterable is null or empty.
-   * 
-   * @param iter
-   *          any Iterable
-   * @return true if given Iterable is null or empty, false otherwise
-   */
-  public static boolean isBlank(Iterable<?> iter) {
-    return iter == null || !iter.iterator().hasNext();
-  }
-
-  /**
-   * Checks if an Iterable is not null or empty.
-   * 
-   * @param iter
-   *          any Iterable
-   * @return true if given Iterable is not null or empty, false otherwise
-   */
-  public static boolean isNotBlank(Iterable<?> iter) {
-    return !isBlank(iter);
-  }
-
-  /**
-   * Checks if a Map is null or empty.
-   * 
-   * @param map
-   *          any Map
-   * @return true if given Map is null or empty, false otherwise
-   */
-  public static boolean isBlank(Map<?, ?> map) {
-    return map == null || map.isEmpty();
-  }
-
-  /**
-   * Checks if a Map is not null or empty.
-   * 
-   * @param map
-   *          any Map
-   * @return true if given Map is not null or empty, false otherwise
-   */
-  public static boolean isNotBlank(Map<?, ?> map) {
-    return !isBlank(map);
-  }
-
-  /**
-   * Checks if a {@link RubyHash} is null or empty.
-   * 
-   * @param rubyHash
-   *          any {@link RubyHash}
-   * @return true if given {@link RubyHash} is null or empty, false otherwise
-   */
-  public static boolean isBlank(RubyHash<?, ?> rubyHash) {
-    return rubyHash == null || rubyHash.isEmpty();
-  }
-
-  /**
-   * Checks if a {@link RubyHash} is not null or empty.
-   * 
-   * @param rubyHash
-   *          any {@link RubyHash}
-   * @return true if given {@link RubyHash} is not null or empty, false
-   *         otherwise
-   */
-  public static boolean isNotBlank(RubyHash<?, ?> rubyHash) {
-    return !isBlank(rubyHash);
-  }
-
-  /**
-   * Checks if a Boolean is null or false.
-   * 
-   * @param bool
-   *          any Boolean
-   * @return true if given Boolean is null or False, false otherwise
-   */
-  public static boolean isBlank(Boolean bool) {
-    return bool == null || bool.equals(Boolean.FALSE);
-  }
-
-  /**
-   * Checks if a Boolean is not null or false.
-   * 
-   * @param bool
-   *          any Boolean
-   * @return true if given Boolean is not null or False, false otherwise
-   */
-  public static boolean isNotBlank(Boolean bool) {
-    return !isBlank(bool);
-  }
-
-  /**
-   * Checks if an Object is null.
+   * Checks if an Object is null, empty Iterable, empty Iterator, empty Map,
+   * empty CharSequence or Boolean.false.
    * 
    * @param o
    *          any Object
-   * @return true if given Object is null, false otherwise
+   * @return true if given Object is empty, false otherwise
    */
-  public static boolean isBlank(Object o) {
+  public static boolean isBlank(java.lang.Object o) {
+    if (o instanceof CharSequence) {
+      CharSequence cs = (CharSequence) o;
+      return cs == null || new StringBuilder(cs.length()).append(cs).toString()
+          .trim().isEmpty();
+    }
+    if (o instanceof Iterable) {
+      Iterable<?> iter = (Iterable<?>) o;
+      return iter == null || !iter.iterator().hasNext();
+    }
+    if (o instanceof Iterator) {
+      Iterator<?> iter = (Iterator<?>) o;
+      return iter == null || !iter.hasNext();
+    }
+    if (o instanceof Map) {
+      Map<?, ?> map = (Map<?, ?>) o;
+      return map == null || map.isEmpty();
+    }
+    if (o instanceof Boolean) {
+      Boolean bool = (Boolean) o;
+      return bool == null || bool.equals(Boolean.FALSE);
+    }
+
     return o == null;
   }
 
   /**
-   * Checks if an Object is not null.
+   * Checks if an Object is NOT null, empty Iterable, empty Iterator, empty Map,
+   * empty CharSequence or Boolean.false.
    * 
    * @param o
    *          any Object
-   * @return true if given Object is not null, false otherwise
+   * @return true if given Object is not empty, false otherwise
    */
-  public static boolean isNotBlank(Object o) {
-    return o != null;
+  public static boolean isPresent(java.lang.Object o) {
+    return !isBlank(o);
   }
 
 }

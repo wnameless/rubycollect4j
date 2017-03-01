@@ -115,7 +115,6 @@ public class RubyArrayTest {
     new RubyArray<Integer>((Iterable<Integer>) null);
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testAssoc() {
     RubyArray<? extends List<Integer>> ra = ra(ra(1, 2, 3), ra(4, 5, 6));
@@ -174,7 +173,6 @@ public class RubyArrayTest {
     assertEquals(ra(1, 2, 3, 4), ra);
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testCombination() {
     assertEquals(RubyEnumerator.class, ra.combination(0).getClass());
@@ -430,24 +428,19 @@ public class RubyArrayTest {
 
   @Test
   public void testFlatten() {
-    @SuppressWarnings("unchecked")
     RubyArray<RubyArray<Integer>> layer2 = ra(ra(1), ra(2, 3), ra(4, 5, 6));
     assertEquals(ra(1, 2, 3, 4, 5, 6), layer2.flatten());
-    @SuppressWarnings("unchecked")
     RubyArray<RubyArray<RubyArray<Integer>>> layer3 =
         ra(ra(ra(1), ra(2, 3)), ra(ra(4, 5, 6)));
     assertEquals(ra(1, 2, 3, 4, 5, 6), layer3.flatten());
     RubyArray<RubyArray<Integer>> ints = ra();
-    @SuppressWarnings("unchecked")
     RubyArray<RubyArray<RubyArray<Integer>>> layer3WithNull =
         ra(null, ints, ra(ra(null, 1), ra(2, 3)), ra(ra(4, 5, 6)));
     assertEquals(ra(null, null, 1, 2, 3, 4, 5, 6), layer3WithNull.flatten());
-    @SuppressWarnings("unchecked")
     RubyArray<?> orderTest = ra(1, null, ra(3, 4), 5, ra(ra(6)));
     assertEquals(ra(1, null, 3, 4, 5, 6), orderTest.flatten());
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testFlattenWitnN() {
     assertEquals(ra(0, ra(1, 2, 3)), ra(ra(0, ra(1, 2, 3))).flatten(1));
@@ -584,12 +577,6 @@ public class RubyArrayTest {
   }
 
   @Test
-  public void testMapǃWithMethodName() {
-    assertSame(ra, ra.mapǃ("intValue"));
-    assertEquals(ra(1, 2, 3, 4), ra);
-  }
-
-  @Test
   public void testMinus() {
     assertEquals(ra(1, 3), ra.minus(ra(2, 4)));
   }
@@ -617,7 +604,6 @@ public class RubyArrayTest {
     assertEquals("ABC", ra(65, 66, 67).pack("ccc"));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testPermutaion() {
     ra = ra(1, 2, 3);
@@ -626,7 +612,6 @@ public class RubyArrayTest {
         ra(3, 1, 2), ra(3, 2, 1)), ra.permutation().toA());
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testPermutaionWithN() {
     ra = ra(1, 2, 3);
@@ -725,7 +710,6 @@ public class RubyArrayTest {
     assertEquals(ra(1, 2, 3, 4, null, 6), ra);
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testRassoc() {
     RubyArray<? extends List<Integer>> ra =
@@ -754,7 +738,6 @@ public class RubyArrayTest {
     assertNull(ra.rejectǃ(block));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testRepeatedCombination() {
     ra = ra(1, 2);
@@ -776,7 +759,6 @@ public class RubyArrayTest {
     assertEquals(ra(1, 1, 1, 2, 2, 2), ints);
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testRepeatedPermutaion() {
     ra = ra(1, 2);
@@ -1063,7 +1045,6 @@ public class RubyArrayTest {
     assertEquals(ra.toString(), ra.toS());
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testTranspose() {
     assertEquals(ra(), ra().transpose());
@@ -1076,7 +1057,6 @@ public class RubyArrayTest {
     ra.transpose();
   }
 
-  @SuppressWarnings("unchecked")
   @Test(expected = IndexOutOfBoundsException.class)
   public void testTransposeException2() {
     ra(ra(1, 2, 3), ra(4, 5)).transpose();
@@ -1359,7 +1339,6 @@ public class RubyArrayTest {
     assertEquals(ints.toString(), ra.toString());
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testCompareTo() {
     assertEquals(

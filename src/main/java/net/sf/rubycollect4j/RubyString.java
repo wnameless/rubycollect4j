@@ -22,12 +22,12 @@ import static java.lang.Character.MIN_RADIX;
 import static net.sf.rubycollect4j.RubyCollections.Hash;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
-import static net.sf.rubycollect4j.RubyCollections.qr;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.range;
 import static net.sf.rubycollect4j.RubyCollections.rs;
+import static net.sf.rubycollect4j.RubyLiterals.qr;
 import static net.sf.rubycollect4j.RubyObject.isBlank;
-import static net.sf.rubycollect4j.RubyObject.isNotBlank;
+import static net.sf.rubycollect4j.RubyObject.isPresent;
 
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -2033,7 +2033,7 @@ public final class RubyString extends RubyEnumerable<String>
     Matcher matcher = qr(stringify(regex)).matcher(str);
     if (matcher.find()) {
       String target = matcher.group();
-      if (isNotBlank(map) && map.containsKey(target))
+      if (isPresent(map) && map.containsKey(target))
         result = result.replace(target, map.get(target).toString());
     }
     return rs(result);

@@ -898,22 +898,6 @@ public final class RubyArray<E> extends RubyEnumerable<E>
   }
 
   /**
-   * Equivalent to {@link #collectǃ(String, Object...)}.
-   * 
-   * @param methodName
-   *          name of a Method
-   * @param args
-   *          arguments of a Method
-   * @return this {@link RubyArray}
-   * 
-   * @deprecated since 1.9.0, using Java 8 Lambda instead
-   */
-  @Deprecated
-  public RubyArray<E> mapǃ(String methodName, Object... args) {
-    return collectǃ(methodName, args);
-  }
-
-  /**
    * Multiplies this {@link RubyArray} by n times.
    * 
    * @param n

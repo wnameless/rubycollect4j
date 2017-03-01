@@ -32,7 +32,7 @@ import java.util.Objects;
  * @author Wei-Ming Wu
  * 
  */
-public final class RubyDate extends Date {
+public class RubyDate extends Date {
 
   private static final long serialVersionUID = 6634492638579024503L;
 

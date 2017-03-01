@@ -172,22 +172,6 @@ public final class RubySet<E> extends RubyEnumerable<E>
   }
 
   /**
-   * Transforms each element by given method name in self.
-   * 
-   * @param methodName
-   *          name of a Method
-   * @param args
-   *          arguments of a Method
-   * @return this {@link RubySet}
-   * 
-   * @deprecated since 1.9.0, using Java 8 Lambda instead
-   */
-  @Deprecated
-  public RubySet<E> collectǃ(final String methodName, final Object... args) {
-    return collectǃ(item -> RubyObject.send(item, methodName, args));
-  }
-
-  /**
    * Deletes the given object from the set and returns self.
    * 
    * @param e
@@ -427,22 +411,6 @@ public final class RubySet<E> extends RubyEnumerable<E>
    */
   public RubySet<E> mapǃ(Function<? super E, ? extends E> block) {
     return collectǃ(block);
-  }
-
-  /**
-   * Equivalent to {@link #collectǃ(String, Object...)}.
-   * 
-   * @param methodName
-   *          name of a Method
-   * @param args
-   *          arguments of a Method
-   * @return this {@link RubySet}
-   * 
-   * @deprecated since 1.9.0, using Java 8 Lambda instead
-   */
-  @Deprecated
-  public RubySet<E> mapǃ(String methodName, Object... args) {
-    return collectǃ(methodName, args);
   }
 
   /**
