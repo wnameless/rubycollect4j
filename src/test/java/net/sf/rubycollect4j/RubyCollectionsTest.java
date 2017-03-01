@@ -155,7 +155,7 @@ public class RubyCollectionsTest {
   }
 
   @Test
-  public void testRhWith1To20Pairs() {
+  public void testRhWith1To26Pairs() {
     assertEquals(rh(1, 1), rh(1, 1));
     assertEquals(rh(1, 1), rh(1, 1, 1, 1));
     assertEquals(rh(1, 1), rh(1, 1, 1, 1, 1, 1));
@@ -220,7 +220,6 @@ public class RubyCollectionsTest {
 
   @Test
   public void testHash() {
-    assertEquals(rh(1, 2, 3, 4, 5, 6), Hash(ra(hp(1, 2), hp(3, 4), hp(5, 6))));
     assertEquals(rh(1, 2, 3, 4, 5, 6), Hash(ra(ra(1, 2), ra(3, 4), ra(5, 6))));
   }
 

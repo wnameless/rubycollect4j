@@ -19,6 +19,7 @@ package net.sf.rubycollect4j;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -2557,42 +2558,23 @@ public final class RubyCollections {
   }
 
   /**
-   * Turns a List of Entries into a {@link RubyHash}.
-   * 
-   * @param <K>
-   *          the type of the key elements
-   * @param <V>
-   *          the type of the value elements
-   * @param list
-   *          a List of Entries
-   * @return {@link RubyHash}
-   */
-  public static <K, V> RubyHash<K, V> Hash(List<? extends Entry<K, V>> list) {
-    RubyHash<K, V> rubyHash = newRubyHash();
-    for (Entry<K, V> entry : list) {
-      rubyHash.put(entry);
-    }
-    return rubyHash;
-  }
-
-  /**
-   * Turns a {@link RubyArray} of Lists into a {@link RubyHash}.
+   * Turns a {@link Collection} of Lists into a {@link RubyHash}.
    * 
    * @param <E>
    *          the type of the elements
-   * @param lists
-   *          a {@link RubyArray} of List
+   * @param cols
+   *          a {@link Collection} of Collections
    * @return {@link RubyHash}
    */
   public static <E> RubyHash<E, E> Hash(
-      RubyArray<? extends List<? extends E>> lists) {
+      Collection<? extends Collection<? extends E>> cols) {
     RubyHash<E, E> rubyHash = newRubyHash();
-    for (List<? extends E> list : lists) {
-      if (list.size() < 1 || list.size() > 2)
-        throw new IllegalArgumentException(
-            "ArgumentError: invalid number of elements (" + list.size()
-                + " for 1..2)");
-      rubyHash.put(list.get(0), ra(list).at(1));
+    for (Collection<? extends E> col : cols) {
+      if (col.size() < 1 || col.size() > 2) throw new IllegalArgumentException(
+          "ArgumentError: invalid number of elements (" + col.size()
+              + " for 1..2)");
+      Iterator<? extends E> iter = col.iterator();
+      rubyHash.put(iter.next(), iter.hasNext() ? iter.next() : null);
     }
     return rubyHash;
   }

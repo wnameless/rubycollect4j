@@ -62,8 +62,6 @@ public final class RubySet<E> extends RubyEnumerable<E>
    *           if set is null
    */
   public static <E> RubySet<E> of(LinkedHashSet<E> set) {
-    Objects.requireNonNull(set);
-
     return new RubySet<E>(set);
   }
 
@@ -77,8 +75,6 @@ public final class RubySet<E> extends RubyEnumerable<E>
    *           if elements is null
    */
   public static <E> RubySet<E> copyOf(Iterable<E> elements) {
-    Objects.requireNonNull(elements);
-
     return new RubySet<E>(elements);
   }
 

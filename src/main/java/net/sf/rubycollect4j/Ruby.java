@@ -71,7 +71,8 @@ public final class Ruby {
     }
 
     /**
-     * Creates a {@link RubyArray} by given List.
+     * Creates a {@link RubyArray} by given List. It's a wrapper implementation.
+     * No defensive copy has been made.
      * 
      * @param <E>
      *          the type of the elements
@@ -125,6 +126,13 @@ public final class Ruby {
       return rubyArray;
     }
 
+    /**
+     * Creates a {@link RubyArray} by given List.
+     * 
+     * @param list
+     *          any List
+     * @return new {@link RubyArray}
+     */
     public static <E> RubyArray<E> copyOf(List<E> list) {
       return RubyArray.copyOf(list);
     }
@@ -159,6 +167,14 @@ public final class Ruby {
 
   }
 
+  /**
+   * 
+   * {@link Hash} provides numerous useful static methods to make the
+   * {@link RubyHash} easy to use.
+   * 
+   * @author Wei-Ming Wu
+   *
+   */
   public static final class Hash {
 
     private Hash() {}
@@ -172,7 +188,7 @@ public final class Ruby {
      *          the type of the value elements
      * @return new {@link RubyHash}
      */
-    public <K, V> RubyHash<K, V> create() {
+    public static <K, V> RubyHash<K, V> create() {
       return new RubyHash<>();
     }
 
@@ -186,7 +202,7 @@ public final class Ruby {
      *           if map is null
      */
     public static <K, V> RubyHash<K, V> of(LinkedHashMap<K, V> map) {
-      return new RubyHash<>(map);
+      return RubyHash.of(map);
     }
 
     /**
@@ -199,7 +215,7 @@ public final class Ruby {
      *           if map is null
      */
     public static <K, V> RubyHash<K, V> copyOf(Map<K, V> map) {
-      return new RubyHash<>(new LinkedHashMap<>(map));
+      return RubyHash.copyOf(map);
     }
 
     /**
@@ -2435,6 +2451,14 @@ public final class Ruby {
 
   }
 
+  /**
+   * 
+   * {@link Entry} provides numerous useful static methods to make the
+   * {@link ComparableEntry} easy to use.
+   * 
+   * @author Wei-Ming Wu
+   *
+   */
   public static final class Entry {
 
     private Entry() {}
@@ -2458,6 +2482,14 @@ public final class Ruby {
 
   }
 
+  /**
+   * 
+   * {@link Set} provides numerous useful static methods to make the
+   * {@link RubySet} easy to use.
+   * 
+   * @author Wei-Ming Wu
+   *
+   */
   public static final class Set {
 
     private Set() {}
@@ -2479,7 +2511,7 @@ public final class Ruby {
      * @return {@link RubySet}
      */
     public static <E> RubySet<E> of(LinkedHashSet<E> set) {
-      return new RubySet<>(set);
+      return RubySet.of(set);
     }
 
     /**
@@ -2507,7 +2539,7 @@ public final class Ruby {
      * @return {@link RubySet}
      */
     public static <E> RubySet<E> copyOf(Iterable<E> iter) {
-      return new RubySet<>(iter);
+      return RubySet.copyOf(iter);
     }
 
     /**
@@ -2536,6 +2568,14 @@ public final class Ruby {
 
   }
 
+  /**
+   * 
+   * {@link Enumerator} provides numerous useful static methods to make the
+   * {@link RubyEnumerator} easy to use.
+   * 
+   * @author Wei-Ming Wu
+   *
+   */
   public static final class Enumerator {
 
     private Enumerator() {}
@@ -2556,6 +2596,14 @@ public final class Ruby {
 
   }
 
+  /**
+   * 
+   * {@link LazyEnumerator} provides numerous useful static methods to make the
+   * {@link RubyLazyEnumerator} easy to use.
+   * 
+   * @author Wei-Ming Wu
+   *
+   */
   public static final class LazyEnumerator {
 
     private LazyEnumerator() {}
@@ -2576,6 +2624,14 @@ public final class Ruby {
 
   }
 
+  /**
+   * 
+   * {@link String} provides numerous useful static methods to make the
+   * {@link RubyString} easy to use.
+   * 
+   * @author Wei-Ming Wu
+   *
+   */
   public static final class String {
 
     private String() {}
@@ -2585,7 +2641,7 @@ public final class Ruby {
      * 
      * @return {@link RubyString}
      */
-    public RubyString create() {
+    public static RubyString create() {
       return new RubyString();
     }
 
@@ -2596,12 +2652,20 @@ public final class Ruby {
      *          any object
      * @return {@link RubyString}
      */
-    public RubyString of(java.lang.Object o) {
+    public static RubyString of(java.lang.Object o) {
       return new RubyString(o);
     }
 
   }
 
+  /**
+   * 
+   * {@link Range} provides numerous useful static methods to make the
+   * {@link RubyRange} easy to use.
+   * 
+   * @author Wei-Ming Wu
+   *
+   */
   public static final class Range {
 
     private Range() {}
@@ -2697,6 +2761,14 @@ public final class Ruby {
 
   }
 
+  /**
+   * 
+   * {@link Date} provides numerous useful static methods to make the
+   * {@link RubyDate} easy to use.
+   * 
+   * @author Wei-Ming Wu
+   *
+   */
   public static final class Date extends RubyDate {
 
     private static final long serialVersionUID = 1L;
@@ -2895,18 +2967,58 @@ public final class Ruby {
 
   }
 
+  /**
+   * 
+   * {@link IO} provides numerous useful static methods to make the
+   * {@link RubyIO} easy to use.
+   * 
+   * @author Wei-Ming Wu
+   *
+   */
   public static final class IO extends RubyIO {
 
     private IO(java.io.File file, Mode mode) throws IOException {
       super(file, mode);
     }
 
+    /**
+     * Creates a {@link RubyIO} by given File with read-only mode.
+     * 
+     * @param file
+     *          any File
+     * @return {@link RubyIO}
+     * @throws IOException
+     *           while file cannot be accessed
+     */
+    public static RubyIO of(java.io.File file) throws IOException {
+      return new RubyIO(file, Mode.R);
+    }
+
+    /**
+     * Creates a {@link RubyIO} by given File and {@link Mode}.
+     * 
+     * @param file
+     *          any File
+     * @param mode
+     *          a {@link Mode}
+     * @return {@link RubyIO}
+     * @throws IOException
+     *           while file cannot be accessed
+     */
     public static RubyIO of(java.io.File file, Mode mode) throws IOException {
       return new RubyIO(file, mode);
     }
 
   }
 
+  /**
+   * 
+   * {@link File} provides numerous useful static methods to make the
+   * {@link RubyFile} easy to use.
+   * 
+   * @author Wei-Ming Wu
+   *
+   */
   public static final class File extends RubyFile {
 
     private File(java.io.File file, Mode mode)
@@ -2914,6 +3026,36 @@ public final class Ruby {
       super(file, mode);
     }
 
+    /**
+     * Creates a {@link RubyFile} by given File with read-only mode.
+     * 
+     * @param file
+     *          any File
+     * @return {@link RubyFile}
+     * @throws FileNotFoundException
+     *           while file cannot be found
+     * @throws IOException
+     *           while file cannot be accessed
+     */
+    public static RubyFile of(java.io.File file)
+        throws FileNotFoundException, IOException {
+      return new RubyFile(file, Mode.R);
+    }
+
+    /**
+     * Creates a {@link RubyFile} by given File with read-only mode.
+     * 
+     * @param file
+     *          any File
+     * @return {@link RubyFile}
+     * @param mode
+     *          a {@link Mode}
+     * @return {@link RubyFile}
+     * @throws FileNotFoundException
+     *           while file cannot be found
+     * @throws IOException
+     *           while file cannot be accessed
+     */
     public static RubyFile of(java.io.File file, Mode mode)
         throws FileNotFoundException, IOException {
       return new RubyFile(file, mode);
@@ -2921,6 +3063,14 @@ public final class Ruby {
 
   }
 
+  /**
+   * 
+   * {@link Dir} provides numerous useful static methods to make the
+   * {@link RubyDir} easy to use.
+   * 
+   * @author Wei-Ming Wu
+   *
+   */
   public static final class Dir extends RubyDir {
 
     private Dir(java.io.File directory) {
@@ -2940,18 +3090,42 @@ public final class Ruby {
 
   }
 
+  /**
+   * 
+   * {@link Literals} provides numerous useful static methods to make the
+   * {@link RubyLiterals} easy to use.
+   * 
+   * @author Wei-Ming Wu
+   *
+   */
   public static class Literals extends RubyLiterals {
 
     private Literals() {}
 
   }
 
+  /**
+   * 
+   * {@link Kernel} provides numerous useful static methods to make the
+   * {@link RubyKernel} easy to use.
+   * 
+   * @author Wei-Ming Wu
+   *
+   */
   public static final class Kernel extends RubyKernel {
 
     private Kernel() {}
 
   }
 
+  /**
+   * 
+   * {@link Object} provides numerous useful static methods to make the
+   * {@link RubyObject} easy to use.
+   * 
+   * @author Wei-Ming Wu
+   *
+   */
   public static final class Object extends RubyObject {
 
     private Object() {}

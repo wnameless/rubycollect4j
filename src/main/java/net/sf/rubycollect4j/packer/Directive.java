@@ -20,7 +20,6 @@ package net.sf.rubycollect4j.packer;
 import static java.nio.ByteOrder.BIG_ENDIAN;
 import static java.nio.ByteOrder.LITTLE_ENDIAN;
 import static java.nio.ByteOrder.nativeOrder;
-import static net.sf.rubycollect4j.RubyCollections.Hash;
 import static net.sf.rubycollect4j.RubyCollections.hp;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyLiterals.qr;
@@ -29,9 +28,9 @@ import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.function.Function;
 
+import net.sf.rubycollect4j.Ruby;
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.util.ByteUtil;
 
@@ -177,16 +176,9 @@ public enum Directive {
    */
   h(false);
 
-  public static final Map<String, Directive> lookup =
-      Hash(ra(Directive.values())
-          .map(new Function<Directive, Entry<String, Directive>>() {
-
-            @Override
-            public Entry<String, Directive> apply(Directive item) {
-              return hp(item.toString(), item);
-            }
-
-          })).freeze();
+  public static final Map<String, Directive> lookup = Ruby.Hash
+      .create(ra(Directive.values()).map(item -> hp(item.toString(), item)))
+      .freeze();
 
   private final boolean widthAdjustable;
 
