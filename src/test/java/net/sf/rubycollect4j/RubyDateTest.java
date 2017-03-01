@@ -17,7 +17,6 @@
  */
 package net.sf.rubycollect4j;
 
-import static net.sf.rubycollect4j.RubyCollections.date;
 import static net.sf.rubycollect4j.RubyCollections.rh;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -72,62 +71,62 @@ public class RubyDateTest {
 
   @Test
   public void testYear() {
-    assertEquals(2013, date(2013).year());
+    assertEquals(2013, Ruby.Date.of(2013).year());
   }
 
   @Test
   public void testMonth() {
-    assertEquals(7, date(2013, 7).month());
+    assertEquals(7, Ruby.Date.of(2013, 7).month());
   }
 
   @Test
   public void testDay() {
-    assertEquals(4, date(2013, 7, 4).day());
+    assertEquals(4, Ruby.Date.of(2013, 7, 4).day());
   }
 
   @Test
   public void testDayOfWeek() {
-    assertEquals(4, date(2013, 7, 4).dayOfWeek());
+    assertEquals(4, Ruby.Date.of(2013, 7, 4).dayOfWeek());
   }
 
   @Test
   public void testDayOfMonth() {
-    assertEquals(4, date(2013, 7, 4).dayOfMonth());
+    assertEquals(4, Ruby.Date.of(2013, 7, 4).dayOfMonth());
   }
 
   @Test
   public void testDayOfYear() {
-    assertEquals(185, date(2013, 7, 4).dayOfYear());
+    assertEquals(185, Ruby.Date.of(2013, 7, 4).dayOfYear());
   }
 
   @Test
   public void testWeek() {
-    assertEquals(27, date(2013, 7, 4).week());
+    assertEquals(27, Ruby.Date.of(2013, 7, 4).week());
   }
 
   @Test
   public void testWeekOfMonth() {
-    assertEquals(1, date(2013, 7, 4).weekOfMonth());
+    assertEquals(1, Ruby.Date.of(2013, 7, 4).weekOfMonth());
   }
 
   @Test
   public void testHour() {
-    assertEquals(8, date(2013, 7, 4, 8).hour());
+    assertEquals(8, Ruby.Date.of(2013, 7, 4, 8).hour());
   }
 
   @Test
   public void testMinute() {
-    assertEquals(6, date(2013, 7, 4, 8, 6).minute());
+    assertEquals(6, Ruby.Date.of(2013, 7, 4, 8, 6).minute());
   }
 
   @Test
   public void testSecond() {
-    assertEquals(5, date(2013, 7, 4, 8, 6, 5).second());
+    assertEquals(5, Ruby.Date.of(2013, 7, 4, 8, 6, 5).second());
   }
 
   @Test
   public void testMillisecond() {
-    assertEquals(999, date(2013, 7, 4, 8, 6, 5, 999).millisecond());
+    assertEquals(999, Ruby.Date.of(2013, 7, 4, 8, 6, 5, 999).millisecond());
   }
 
   @Test
@@ -196,7 +195,8 @@ public class RubyDateTest {
 
   @Test
   public void testCurrent() {
-    assertTrue(Math.abs(date().getTime() - RubyDate.current().getTime()) <= 1L);
+    assertTrue(Math.abs(
+        Ruby.Date.current().getTime() - RubyDate.current().getTime()) <= 1L);
   }
 
   @Test
@@ -287,29 +287,38 @@ public class RubyDateTest {
 
   @Test
   public void testBeginningOfQuarter() {
-    assertEquals(date(2014, 1, 1), date(2014, 2, 2).beginningOfQuarter());
-    assertEquals(date(2014, 4, 1), date(2014, 5, 2).beginningOfQuarter());
-    assertEquals(date(2014, 7, 1), date(2014, 8, 2).beginningOfQuarter());
-    assertEquals(date(2014, 10, 1), date(2014, 11, 2).beginningOfQuarter());
+    assertEquals(Ruby.Date.of(2014, 1, 1),
+        Ruby.Date.of(2014, 2, 2).beginningOfQuarter());
+    assertEquals(Ruby.Date.of(2014, 4, 1),
+        Ruby.Date.of(2014, 5, 2).beginningOfQuarter());
+    assertEquals(Ruby.Date.of(2014, 7, 1),
+        Ruby.Date.of(2014, 8, 2).beginningOfQuarter());
+    assertEquals(Ruby.Date.of(2014, 10, 1),
+        Ruby.Date.of(2014, 11, 2).beginningOfQuarter());
   }
 
   @Test
   public void testEndOfQuarter() {
-    assertEquals(date(2014, 3, 31).endOfDay(), date(2014, 2, 2).endOfQuarter());
-    assertEquals(date(2014, 6, 30).endOfDay(), date(2014, 5, 2).endOfQuarter());
-    assertEquals(date(2014, 9, 30).endOfDay(), date(2014, 8, 2).endOfQuarter());
-    assertEquals(date(2014, 12, 31).endOfDay(),
-        date(2014, 11, 2).endOfQuarter());
+    assertEquals(Ruby.Date.of(2014, 3, 31).endOfDay(),
+        Ruby.Date.of(2014, 2, 2).endOfQuarter());
+    assertEquals(Ruby.Date.of(2014, 6, 30).endOfDay(),
+        Ruby.Date.of(2014, 5, 2).endOfQuarter());
+    assertEquals(Ruby.Date.of(2014, 9, 30).endOfDay(),
+        Ruby.Date.of(2014, 8, 2).endOfQuarter());
+    assertEquals(Ruby.Date.of(2014, 12, 31).endOfDay(),
+        Ruby.Date.of(2014, 11, 2).endOfQuarter());
   }
 
   @Test
   public void testBeginningOfYear() {
-    assertEquals(date(2014, 1, 1), date(2014, 7, 7).beginningOfYear());
+    assertEquals(Ruby.Date.of(2014, 1, 1),
+        Ruby.Date.of(2014, 7, 7).beginningOfYear());
   }
 
   @Test
   public void testEndOfYear() {
-    assertEquals(date(2014, 12, 31).endOfDay(), date(2014, 7, 7).endOfYear());
+    assertEquals(Ruby.Date.of(2014, 12, 31).endOfDay(),
+        Ruby.Date.of(2014, 7, 7).endOfYear());
   }
 
   @Test

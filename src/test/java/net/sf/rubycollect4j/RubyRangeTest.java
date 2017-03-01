@@ -17,7 +17,6 @@
  */
 package net.sf.rubycollect4j;
 
-import static net.sf.rubycollect4j.RubyCollections.date;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.range;
 import static org.junit.Assert.assertEquals;
@@ -102,9 +101,12 @@ public class RubyRangeTest {
 
   @Test
   public void testRangeWithDate() {
-    assertEquals(ra(date(2013, 7, 2), date(2013, 7, 3), date(2013, 7, 4)),
-        range(date(2013, 7, 2), date(2013, 7, 4)).toA());
-    assertEquals(ra(), range(date(2013, 7, 4), date(2013, 7, 2)).toA());
+    assertEquals(
+        ra(Ruby.Date.of(2013, 7, 2), Ruby.Date.of(2013, 7, 3),
+            Ruby.Date.of(2013, 7, 4)),
+        range(Ruby.Date.of(2013, 7, 2), Ruby.Date.of(2013, 7, 4)).toA());
+    assertEquals(ra(),
+        range(Ruby.Date.of(2013, 7, 4), Ruby.Date.of(2013, 7, 2)).toA());
   }
 
   @Test

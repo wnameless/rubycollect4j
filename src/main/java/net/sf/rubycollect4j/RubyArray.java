@@ -257,22 +257,6 @@ public final class RubyArray<E> extends RubyEnumerable<E>
   }
 
   /**
-   * Transforms each element by given method name in self.
-   * 
-   * @param methodName
-   *          name of a Method
-   * @param args
-   *          arguments of a Method
-   * @return this {@link RubyArray}
-   * 
-   * @deprecated since 1.9.0, using Java 8 Lambda instead
-   */
-  @Deprecated
-  public RubyArray<E> collectǃ(final String methodName, final Object... args) {
-    return collectǃ(item -> RubyObject.send(item, methodName, args));
-  }
-
-  /**
    * Generates all combinations with length n of this {@link RubyArray}.
    * 
    * @param n
@@ -1643,24 +1627,6 @@ public final class RubyArray<E> extends RubyEnumerable<E>
   }
 
   /**
-   * Sorts elements of this {@link RubyArray} by the ordering of outputs invoked
-   * by given method name.
-   * 
-   * @param methodName
-   *          name of a Method
-   * @param args
-   *          arguments of a Method
-   * @return this {@link RubyArray}
-   * 
-   * @deprecated since 1.9.0, using Java 8 Lambda instead
-   */
-  @Deprecated
-  public <S> RubyArray<E> sortByǃ(final String methodName,
-      final Object... args) {
-    return sortByǃ(item -> RubyObject.send(item, methodName, args));
-  }
-
-  /**
    * Eliminates all elements from other Collection and puts the result into a
    * new {@link RubyArray}.
    * 
@@ -1766,23 +1732,6 @@ public final class RubyArray<E> extends RubyEnumerable<E>
   }
 
   /**
-   * Filters elements by the result invoked by given method name uniquely and
-   * puts the result into a new {@link RubyArray}.
-   * 
-   * @param methodName
-   *          name of a Method
-   * @param args
-   *          arguments of a Method
-   * @return new {@link RubyArray}
-   * 
-   * @deprecated since 1.9.0, using Java 8 Lambda instead
-   */
-  @Deprecated
-  public <S> RubyArray<E> uniq(final String methodName, final Object... args) {
-    return uniq(item -> RubyObject.send(item, methodName, args));
-  }
-
-  /**
    * Filters elements uniquely. Returns null if unchanged.
    * 
    * @return this {@link RubyArray} or null
@@ -1795,23 +1744,6 @@ public final class RubyArray<E> extends RubyEnumerable<E>
       if (!set.add(li.next())) li.remove();
     }
     return list.size() == beforeSize ? null : this;
-  }
-
-  /**
-   * Filters elements by the result invoked by given method name uniquely and
-   * puts the result into a new {@link RubyArray}.
-   * 
-   * @param methodName
-   *          name of a Method
-   * @param args
-   *          arguments of a Method
-   * @return this {@link RubyArray} or null
-   * 
-   * @deprecated since 1.9.0, using Java 8 Lambda instead
-   */
-  @Deprecated
-  public <S> RubyArray<E> uniqǃ(final String methodName, final Object... args) {
-    return uniqǃ(item -> RubyObject.send(item, methodName, args));
   }
 
   /**

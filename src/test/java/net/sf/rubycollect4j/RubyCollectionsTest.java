@@ -18,7 +18,6 @@
 package net.sf.rubycollect4j;
 
 import static net.sf.rubycollect4j.RubyCollections.Hash;
-import static net.sf.rubycollect4j.RubyCollections.date;
 import static net.sf.rubycollect4j.RubyCollections.hp;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
@@ -35,9 +34,7 @@ import static org.junit.Assert.assertTrue;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -268,115 +265,6 @@ public class RubyCollectionsTest {
   public void testDateRange() {
     assertTrue(
         range(RubyDate.yesterday(), RubyDate.tomorrow()) instanceof RubyRange);
-  }
-
-  @Test
-  public void testDate() {
-    assertTrue(date() instanceof RubyDate);
-    assertEquals(date(new Date()).year(), date().year());
-    assertEquals(date(new Date()).month(), date().month());
-    assertEquals(date(new Date()).day(), date().day());
-    assertEquals(date(new Date()).hour(), date().hour());
-    assertEquals(date(new Date()).minute(), date().minute());
-  }
-
-  @Test
-  public void testDateWithInit() {
-    Date date = new Date();
-    assertTrue(date(date) instanceof RubyDate);
-    assertTrue(date.equals(date(date)));
-    assertTrue(date(date).equals(date));
-  }
-
-  @Test
-  public void testDate1() {
-    Calendar c = Calendar.getInstance();
-    c.set(Calendar.YEAR, 2013);
-    c.set(Calendar.MONTH, 0);
-    c.set(Calendar.DAY_OF_MONTH, 1);
-    c.set(Calendar.HOUR_OF_DAY, 0);
-    c.set(Calendar.MINUTE, 0);
-    c.set(Calendar.SECOND, 0);
-    c.set(Calendar.MILLISECOND, 0);
-    assertEquals(c.getTime(), date(2013));
-  }
-
-  @Test
-  public void testDate2() {
-    Calendar c = Calendar.getInstance();
-    c.set(Calendar.YEAR, 2013);
-    c.set(Calendar.MONTH, 6);
-    c.set(Calendar.DAY_OF_MONTH, 1);
-    c.set(Calendar.HOUR_OF_DAY, 0);
-    c.set(Calendar.MINUTE, 0);
-    c.set(Calendar.SECOND, 0);
-    c.set(Calendar.MILLISECOND, 0);
-    assertEquals(c.getTime(), date(2013, 7));
-  }
-
-  @Test
-  public void testDate3() {
-    Calendar c = Calendar.getInstance();
-    c.set(Calendar.YEAR, 2013);
-    c.set(Calendar.MONTH, 6);
-    c.set(Calendar.DAY_OF_MONTH, 7);
-    c.set(Calendar.HOUR_OF_DAY, 0);
-    c.set(Calendar.MINUTE, 0);
-    c.set(Calendar.SECOND, 0);
-    c.set(Calendar.MILLISECOND, 0);
-    assertEquals(c.getTime(), date(2013, 7, 7));
-  }
-
-  @Test
-  public void testDate4() {
-    Calendar c = Calendar.getInstance();
-    c.set(Calendar.YEAR, 2013);
-    c.set(Calendar.MONTH, 6);
-    c.set(Calendar.DAY_OF_MONTH, 7);
-    c.set(Calendar.HOUR_OF_DAY, 13);
-    c.set(Calendar.MINUTE, 0);
-    c.set(Calendar.SECOND, 0);
-    c.set(Calendar.MILLISECOND, 0);
-    assertEquals(c.getTime(), date(2013, 7, 7, 13));
-  }
-
-  @Test
-  public void testDate5() {
-    Calendar c = Calendar.getInstance();
-    c.set(Calendar.YEAR, 2013);
-    c.set(Calendar.MONTH, 6);
-    c.set(Calendar.DAY_OF_MONTH, 7);
-    c.set(Calendar.HOUR_OF_DAY, 13);
-    c.set(Calendar.MINUTE, 22);
-    c.set(Calendar.SECOND, 0);
-    c.set(Calendar.MILLISECOND, 0);
-    assertEquals(c.getTime(), date(2013, 7, 7, 13, 22));
-  }
-
-  @Test
-  public void testDate6() {
-    Calendar c = Calendar.getInstance();
-    c.set(Calendar.YEAR, 2013);
-    c.set(Calendar.MONTH, 6);
-    c.set(Calendar.DAY_OF_MONTH, 7);
-    c.set(Calendar.HOUR_OF_DAY, 11);
-    c.set(Calendar.MINUTE, 22);
-    c.set(Calendar.SECOND, 33);
-    c.set(Calendar.MILLISECOND, 0);
-    assertEquals(c.getTime(), date(2013, 7, 7, 11, 22, 33));
-  }
-
-  @Test
-  public void testDate7() {
-    Calendar c = Calendar.getInstance();
-    c.set(Calendar.YEAR, 2013);
-    c.set(Calendar.MONTH, 6);
-    c.set(Calendar.DAY_OF_MONTH, 7);
-    c.set(Calendar.HOUR_OF_DAY, 11);
-    c.set(Calendar.MINUTE, 22);
-    c.set(Calendar.SECOND, 33);
-    c.set(Calendar.MILLISECOND, 999);
-    assertEquals(c.getTime(), date(2013, 7, 7, 11, 22, 33, 999));
   }
 
 }
