@@ -26,8 +26,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,14 +39,6 @@ public class RubyObjectTest {
   @Before
   public void setUp() throws Exception {
     tester = new SendTester();
-  }
-
-  @Test
-  public void testPrivateConstructor() throws Exception {
-    Constructor<RubyObject> c = RubyObject.class.getDeclaredConstructor();
-    assertTrue(Modifier.isPrivate(c.getModifiers()));
-    c.setAccessible(true);
-    c.newInstance();
   }
 
   @Test

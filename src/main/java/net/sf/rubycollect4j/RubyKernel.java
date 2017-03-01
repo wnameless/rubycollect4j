@@ -18,9 +18,10 @@
 package net.sf.rubycollect4j;
 
 import static java.lang.System.out;
-import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * 
@@ -35,348 +36,112 @@ public class RubyKernel {
   RubyKernel() {}
 
   /**
-   * Returns null.
+   * Prints a human-readable representation of given Object.
    * 
-   * @return null
-   */
-  public static <T> T p() {
-    return null;
-  }
-
-  /**
-   * Calls System.out.println() and returns the argument.
-   * 
-   * @param x
+   * @param o
    *          any Object
    * @return the Object
    */
-  public static <T> T p(T x) {
-    out.println(x);
-    return x;
+  public static <T> T p(T o) {
+    return p(o, true);
   }
 
   /**
-   * Calls System.out.println() and returns arguments.
+   * Prints a human-readable representation of given Objects.
    * 
-   * @param x
-   *          any Object
-   * @param xs
-   *          an array of Object
-   * @return {@link RubyArray} of Object
+   * @param first
+   *          first Object
+   * @param others
+   *          other Object
+   * @return a {@link RubyArray} of given Objects
    */
   @SafeVarargs
-  public static <T> RubyArray<T> p(T x, T... xs) {
-    out.println(x);
-    for (T e : xs) {
-      out.println(e);
+  public static <T> RubyArray<T> p(T first, T... others) {
+    RubyArray<T> ra = new RubyArray<>();
+    out.print("[");
+    ra.add(p(first, false));
+    Arrays.asList(others).forEach(item -> {
+      out.print(", ");
+      ra.add(p(item, false));
+    });
+    out.print("]");
+    out.println();
+    return ra;
+  }
+
+  private static <T> T p(T o, boolean newLine) {
+    if (o instanceof CharSequence) {
+      out.print("\"");
+      out.print(o);
+      out.print("\"");
+    } else if (o instanceof Character) {
+      out.print("'");
+      out.print(o);
+      out.print("'");
+    } else if (o instanceof Map) {
+      Map<?, ?> map = (Map<?, ?>) o;
+      out.print("{");
+      Ruby.Array.copyOf(map.entrySet()).eachWithIndex((entry, i) -> {
+        if (i != 0) out.print(", ");
+        p(entry.getKey(), false);
+        out.print("=");
+        p(entry.getValue(), false);
+      });
+      out.print("}");
+    } else if (o instanceof Iterable) {
+      Iterable<?> iter = (Iterable<?>) o;
+      out.print("[");
+      Ruby.Array.copyOf(iter).eachWithIndex((item, i) -> {
+        if (i != 0) out.print(", ");
+        p(item, false);
+      });
+      out.print("]");
+    } else if (o instanceof Iterator) {
+      Iterator<?> iter = (Iterator<?>) o;
+      out.print("[");
+      Ruby.Array.copyOf(iter).eachWithIndex((item, i) -> {
+        if (i != 0) out.print(", ");
+        p(item, false);
+      });
+      out.print("]");
+    } else if (o instanceof byte[]) {
+      out.print(Arrays.toString((byte[]) o));
+    } else if (o instanceof short[]) {
+      out.print(Arrays.toString((short[]) o));
+    } else if (o instanceof int[]) {
+      out.print(Arrays.toString((int[]) o));
+    } else if (o instanceof long[]) {
+      out.print(Arrays.toString((long[]) o));
+    } else if (o instanceof float[]) {
+      out.print(Arrays.toString((float[]) o));
+    } else if (o instanceof double[]) {
+      out.print(Arrays.toString((double[]) o));
+    } else if (o instanceof boolean[]) {
+      out.print(Arrays.toString((boolean[]) o));
+    } else if (o instanceof char[]) {
+      out.print("[");
+      int i = 0;
+      for (char c : ((char[]) o)) {
+        if (i != 0) out.print(", ");
+        out.print("'");
+        out.print(c);
+        out.print("'");
+        i++;
+      }
+      out.print("]");
+    } else if (o instanceof Object[]) {
+      Object[] array = (Object[]) o;
+      out.print("[");
+      Ruby.Array.copyOf(array).eachWithIndex((item, i) -> {
+        if (i != 0) out.print(", ");
+        p(item, false);
+      });
+      out.print("]");
+    } else {
+      out.print(o);
     }
-    return newRubyArray(xs).unshift(x);
-  }
-
-  /**
-   * Calls System.out.println() and returns the argument.
-   * 
-   * @param x
-   *          any String
-   * @return the String
-   */
-  public static String p(String x) {
-    out.println(x);
-    return x;
-  }
-
-  /**
-   * Calls System.out.println() and returns arguments.
-   * 
-   * @param xs
-   *          an array of String
-   * @return {@link RubyArray} of String
-   */
-  public static RubyArray<String> p(String... xs) {
-    for (String x : xs) {
-      out.println(x);
-    }
-    return newRubyArray(xs);
-  }
-
-  /**
-   * Calls System.out.println() and returns the argument.
-   * 
-   * @param x
-   *          any boolean
-   * @return the boolean
-   */
-  public static boolean p(boolean x) {
-    out.println(x);
-    return x;
-  }
-
-  /**
-   * Calls System.out.println() and returns arguments.
-   * 
-   * @param xs
-   *          an array of Boolean
-   * @return {@link RubyArray} of Boolean
-   */
-  public static RubyArray<Boolean> p(Boolean... xs) {
-    RubyArray<Boolean> rubyArray = newRubyArray();
-    for (boolean x : xs) {
-      out.println(x);
-      rubyArray.add(x);
-    }
-    return rubyArray;
-  }
-
-  /**
-   * Calls System.out.println() and returns the argument.
-   * 
-   * @param x
-   *          any char
-   * @return the char
-   */
-  public static char p(char x) {
-    out.println(x);
-    return x;
-  }
-
-  /**
-   * Calls System.out.println() and returns arguments.
-   * 
-   * @param xs
-   *          an array of Character
-   * @return {@link RubyArray} of Character
-   */
-  public static RubyArray<Character> p(Character... xs) {
-    RubyArray<Character> rubyArray = newRubyArray();
-    for (Character x : xs) {
-      out.println(x);
-      rubyArray.add(x);
-    }
-    return rubyArray;
-  }
-
-  /**
-   * Calls System.out.println() and returns the argument.
-   * 
-   * @param x
-   *          any char[]
-   * @return the char[]
-   */
-  public static char[] p(char[] x) {
-    out.println(x);
-    return x;
-  }
-
-  /**
-   * Calls System.out.println() and returns arguments.
-   * 
-   * @param xs
-   *          an array of char[]
-   * @return {@link RubyArray} of char[]
-   */
-  public static RubyArray<char[]> p(char[]... xs) {
-    RubyArray<char[]> rubyArray = newRubyArray();
-    for (char[] x : xs) {
-      out.println(x);
-      rubyArray.add(x);
-    }
-    return rubyArray;
-  }
-
-  /**
-   * Calls System.out.println() and returns the argument.
-   * 
-   * @param x
-   *          any double
-   * @return the double
-   */
-  public static double p(double x) {
-    out.println(x);
-    return x;
-  }
-
-  /**
-   * Calls System.out.println() and returns arguments.
-   * 
-   * @param xs
-   *          an array of Double
-   * @return {@link RubyArray} of Double
-   */
-  public static RubyArray<Double> p(Double... xs) {
-    RubyArray<Double> rubyArray = newRubyArray();
-    for (Double x : xs) {
-      out.println(x);
-      rubyArray.add(x);
-    }
-    return rubyArray;
-  }
-
-  /**
-   * Calls System.out.println() and returns the argument.
-   * 
-   * @param x
-   *          any float
-   * @return the float
-   */
-  public static float p(float x) {
-    out.println(x);
-    return x;
-  }
-
-  /**
-   * Calls System.out.println() and returns arguments.
-   * 
-   * @param xs
-   *          an array of Float
-   * @return {@link RubyArray} of Float
-   */
-  public static RubyArray<Float> p(Float... xs) {
-    RubyArray<Float> rubyArray = newRubyArray();
-    for (Float x : xs) {
-      out.println(x);
-      rubyArray.add(x);
-    }
-    return rubyArray;
-  }
-
-  /**
-   * Calls System.out.println() and returns the argument.
-   * 
-   * @param x
-   *          any int
-   * @return the int
-   */
-  public static int p(int x) {
-    out.println(x);
-    return x;
-  }
-
-  /**
-   * Calls System.out.println() and returns arguments.
-   * 
-   * @param xs
-   *          an array of Integer
-   * @return {@link RubyArray} of Integer
-   */
-  public static RubyArray<Integer> p(Integer... xs) {
-    RubyArray<Integer> rubyArray = newRubyArray();
-    for (Integer x : xs) {
-      out.println(x);
-      rubyArray.add(x);
-    }
-    return rubyArray;
-  }
-
-  /**
-   * Calls System.out.println() and returns the argument.
-   * 
-   * @param x
-   *          any long
-   * @return the long
-   */
-  public static long p(long x) {
-    out.println(x);
-    return x;
-  }
-
-  /**
-   * Calls System.out.println() and returns arguments.
-   * 
-   * @param xs
-   *          an array of Long
-   * @return {@link RubyArray} of Long
-   */
-  public static RubyArray<Long> p(Long... xs) {
-    RubyArray<Long> rubyArray = newRubyArray();
-    for (Long x : xs) {
-      out.println(x);
-      rubyArray.add(x);
-    }
-    return rubyArray;
-  }
-
-  /**
-   * Calls System.out.println() and returns arguments.
-   * 
-   * @param x
-   *          an array of byte
-   * @return array of byte
-   */
-  public static byte[] p(byte[] x) {
-    out.println(Arrays.toString(x));
-    return x;
-  }
-
-  /**
-   * Calls System.out.println() and returns arguments.
-   * 
-   * @param x
-   *          an array of short
-   * @return array of short
-   */
-  public static short[] p(short[] x) {
-    out.println(Arrays.toString(x));
-    return x;
-  }
-
-  /**
-   * Calls System.out.println() and returns arguments.
-   * 
-   * @param x
-   *          an array of int
-   * @return array of int
-   */
-  public static int[] p(int[] x) {
-    out.println(Arrays.toString(x));
-    return x;
-  }
-
-  /**
-   * Calls System.out.println() and returns arguments.
-   * 
-   * @param x
-   *          an array of long
-   * @return array of long
-   */
-  public static long[] p(long[] x) {
-    out.println(Arrays.toString(x));
-    return x;
-  }
-
-  /**
-   * Calls System.out.println() and returns arguments.
-   * 
-   * @param x
-   *          an array of float
-   * @return array of float
-   */
-  public static float[] p(float[] x) {
-    out.println(Arrays.toString(x));
-    return x;
-  }
-
-  /**
-   * Calls System.out.println() and returns arguments.
-   * 
-   * @param x
-   *          an array of double
-   * @return array of double
-   */
-  public static double[] p(double[] x) {
-    out.println(Arrays.toString(x));
-    return x;
-  }
-
-  /**
-   * Calls System.out.println() and returns arguments.
-   * 
-   * @param x
-   *          an array of boolean
-   * @return array of boolean
-   */
-  public static boolean[] p(boolean[] x) {
-    out.println(Arrays.toString(x));
-    return x;
+    if (newLine) out.println();
+    return o;
   }
 
 }

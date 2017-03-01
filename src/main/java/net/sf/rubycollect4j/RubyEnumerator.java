@@ -37,7 +37,7 @@ import net.sf.rubycollect4j.util.PeekingIterator;
  * @author Wei-Ming Wu
  * 
  */
-public class RubyEnumerator<E> extends RubyEnumerable<E>
+public final class RubyEnumerator<E> extends RubyEnumerable<E>
     implements RubyBase.Enumerator<E> {
 
   private final Iterable<E> iter;

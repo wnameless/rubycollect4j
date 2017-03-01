@@ -17,6 +17,7 @@
  */
 package net.sf.rubycollect4j;
 
+import static net.sf.rubycollect4j.RubyKernel.p;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -25,6 +26,7 @@ import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 
 import org.junit.Test;
 
@@ -166,7 +168,10 @@ public class RubyTest {
 
   @Test
   public void test() {
-    Ruby.Date.current();
+    RubyHash<Iterable<String>, Iterator<Character>> rh =
+        Ruby.Hash.create(Ruby.Array.of(Ruby.Entry.of(Ruby.Array.of("a", "b"),
+            Ruby.Array.of('a', 'b').iterator())));
+    p(rh);
   }
 
 }

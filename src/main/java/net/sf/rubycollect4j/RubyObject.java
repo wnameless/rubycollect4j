@@ -30,12 +30,12 @@ import java.util.logging.Logger;
  * @author Wei-Ming Wu
  * 
  */
-public final class RubyObject {
+public class RubyObject {
 
   private static final Logger logger =
       Logger.getLogger(RubyObject.class.getName());
 
-  private RubyObject() {}
+  RubyObject() {}
 
   /**
    * Executes a method of any Object by Java reflection.
@@ -386,14 +386,14 @@ public final class RubyObject {
   }
 
   /**
-   * Checks if an Object is null, empty Iterable, empty Iterator, empty Map,
-   * empty CharSequence or Boolean.false.
+   * Checks if an Object is null, blank Iterable, blank Iterator, blank Map,
+   * blank CharSequence or Boolean.FALSE.
    * 
    * @param o
    *          any Object
-   * @return true if given Object is empty, false otherwise
+   * @return true if given Object is blank, false otherwise
    */
-  public static boolean isBlank(java.lang.Object o) {
+  public static boolean isBlank(Object o) {
     if (o instanceof CharSequence) {
       CharSequence cs = (CharSequence) o;
       return cs == null || new StringBuilder(cs.length()).append(cs).toString()
@@ -420,14 +420,14 @@ public final class RubyObject {
   }
 
   /**
-   * Checks if an Object is NOT null, empty Iterable, empty Iterator, empty Map,
-   * empty CharSequence or Boolean.false.
+   * Checks if an Object is NOT null, blank Iterable, blank Iterator, blank Map,
+   * blank CharSequence or Boolean.FALSE.
    * 
    * @param o
    *          any Object
-   * @return true if given Object is not empty, false otherwise
+   * @return true if given Object is not blank, false otherwise
    */
-  public static boolean isPresent(java.lang.Object o) {
+  public static boolean isPresent(Object o) {
     return !isBlank(o);
   }
 

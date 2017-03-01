@@ -2596,7 +2596,7 @@ public final class Ruby {
      *          any object
      * @return {@link RubyString}
      */
-    public RubyString of(Object o) {
+    public RubyString of(java.lang.Object o) {
       return new RubyString(o);
     }
 
@@ -2949,6 +2949,12 @@ public final class Ruby {
   public static final class Kernel extends RubyKernel {
 
     private Kernel() {}
+
+  }
+
+  public static final class Object extends RubyObject {
+
+    private Object() {}
 
   }
 

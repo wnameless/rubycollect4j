@@ -21,13 +21,14 @@ import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyKernel.p;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import org.junit.After;
@@ -53,20 +54,6 @@ public class RubyKernelTest {
   }
 
   @Test
-  public void testPrivateConstructor() throws Exception {
-    Constructor<RubyKernel> c = RubyKernel.class.getDeclaredConstructor();
-    assertTrue(Modifier.isPrivate(c.getModifiers()));
-    c.setAccessible(true);
-    c.newInstance();
-  }
-
-  @Test
-  public void testPNothing() {
-    assertNull(p());
-    assertEquals("", outContent.toString());
-  }
-
-  @Test
   public void testPObject() {
     Object o = new Object();
     assertEquals(o, p(o));
@@ -78,20 +65,19 @@ public class RubyKernelTest {
   public void testPObjectWithVarargs() {
     Object o = Integer.valueOf(1);
     assertEquals(ra(o, o), p(o, o));
-    assertEquals(ra(o, o, null).join(lineSeparator), outContent.toString());
+    assertEquals(ra(o, o).toString() + lineSeparator, outContent.toString());
   }
 
   @Test
   public void testPString() {
     assertEquals("abc", p("abc"));
-    assertEquals("abc" + lineSeparator, outContent.toString());
+    assertEquals("\"abc\"" + lineSeparator, outContent.toString());
   }
 
   @Test
   public void testPStringWithVarargs() {
     assertEquals(ra("abc", "def"), p("abc", "def"));
-    assertEquals(ra("abc", "def", null).join(lineSeparator),
-        outContent.toString());
+    assertEquals("[\"abc\", \"def\"]" + lineSeparator, outContent.toString());
   }
 
   @Test
@@ -103,35 +89,34 @@ public class RubyKernelTest {
   @Test
   public void testPBooleanWithVarargs() {
     assertEquals(ra(true, false), p(true, false));
-    assertEquals(ra(true, false, null).join(lineSeparator),
+    assertEquals(ra(true, false).toString() + lineSeparator,
         outContent.toString());
   }
 
   @Test
   public void testPChar() {
-    assertEquals('x', p('x'));
-    assertEquals("x" + lineSeparator, outContent.toString());
+    assertEquals('x', (char) p('x'));
+    assertEquals("'x'" + lineSeparator, outContent.toString());
   }
 
   @Test
   public void testPCharWithVarargs() {
     assertEquals(ra('x', 'y', 'z'), p('x', 'y', 'z'));
-    assertEquals(ra('x', 'y', 'z', null).join(lineSeparator),
-        outContent.toString());
+    assertEquals("['x', 'y', 'z']" + lineSeparator, outContent.toString());
   }
 
   @Test
   public void testPCharArray() {
     assertArrayEquals(new char[] { 'x', 'y', 'z' },
         p(new char[] { 'x', 'y', 'z' }));
-    assertEquals("xyz" + lineSeparator, outContent.toString());
+    assertEquals("['x', 'y', 'z']" + lineSeparator, outContent.toString());
   }
 
   @Test
   public void testPCharArrayWithVarargs() {
     char[] xyz = new char[] { 'x', 'y', 'z' };
     assertEquals(ra(xyz, xyz), p(xyz, xyz));
-    assertEquals("xyz" + lineSeparator + "xyz" + lineSeparator,
+    assertEquals("[['x', 'y', 'z'], ['x', 'y', 'z']]" + lineSeparator,
         outContent.toString());
   }
 
@@ -144,7 +129,7 @@ public class RubyKernelTest {
   @Test
   public void testPDoubleWithVarargs() {
     assertEquals(ra(1.0, 2.0, 3.0), p(1.0, 2.0, 3.0));
-    assertEquals(ra(1.0, 2.0, 3.0, null).join(lineSeparator),
+    assertEquals(ra(1.0, 2.0, 3.0).toString() + lineSeparator,
         outContent.toString());
   }
 
@@ -157,32 +142,32 @@ public class RubyKernelTest {
   @Test
   public void testPFloatWithVarargs() {
     assertEquals(ra(1.0f, 2.0f, 3.0f), p(1.0f, 2.0f, 3.0f));
-    assertEquals(ra(1.0f, 2.0f, 3.0f, null).join(lineSeparator),
+    assertEquals(ra(1.0f, 2.0f, 3.0f).toString() + lineSeparator,
         outContent.toString());
   }
 
   @Test
   public void testPInt() {
-    assertEquals(1, p(1));
+    assertEquals(1, (int) p(1));
     assertEquals("1" + lineSeparator, outContent.toString());
   }
 
   @Test
   public void testPIntWithVarargs() {
     assertEquals(ra(1, 2, 3), p(1, 2, 3));
-    assertEquals(ra(1, 2, 3, null).join(lineSeparator), outContent.toString());
+    assertEquals(ra(1, 2, 3).toString() + lineSeparator, outContent.toString());
   }
 
   @Test
   public void testPLong() {
-    assertEquals(1L, p(1L));
+    assertEquals(1L, (long) p(1L));
     assertEquals("1" + lineSeparator, outContent.toString());
   }
 
   @Test
   public void testPLongWithVarargs() {
     assertEquals(ra(1L, 2L, 3L), p(1L, 2L, 3L));
-    assertEquals(ra(1L, 2L, 3L, null).join(lineSeparator),
+    assertEquals(ra(1L, 2L, 3L).toString() + lineSeparator,
         outContent.toString());
   }
 
@@ -233,6 +218,35 @@ public class RubyKernelTest {
     assertEquals(true, bools[0]);
     assertEquals(false, bools[1]);
     assertEquals(ra(true, false) + lineSeparator, outContent.toString());
+  }
+
+  @Test
+  public void testPMapWithIterableKeysAndIteratorValues() {
+    RubyHash<Iterable<String>, Iterator<Character>> rh =
+        Ruby.Hash.create(Ruby.Array.of(Ruby.Entry.of(Ruby.Array.of("a", "b"),
+            Ruby.Array.of('a', 'b').iterator())));
+    assertSame(rh, p(rh));
+    assertEquals("{[\"a\", \"b\"]=['a', 'b']}" + lineSeparator,
+        outContent.toString());
+  }
+
+  @SuppressWarnings({ "rawtypes", "unchecked" })
+  @Test
+  public void testPObjectArray() {
+    @SuppressWarnings("serial")
+    List[] listArray = new List[] { new ArrayList() {
+      {
+        add(1);
+        add(2);
+      }
+    }, new ArrayList() {
+      {
+        add('a');
+        add('b');
+      }
+    } };
+    assertSame(listArray, p(listArray));
+    assertEquals("[[1, 2], ['a', 'b']]" + lineSeparator, outContent.toString());
   }
 
 }
