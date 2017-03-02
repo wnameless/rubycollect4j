@@ -21,7 +21,7 @@ Installation with Maven:
 </dependency>
 ```
 
-Install v2.0.0-SNAPSHOT(Java 1.8 required)
+Install v2.0.0-SNAPSHOT(Java 1.8 required):
 ``` xml
 <repositories>
   <repository>
@@ -31,7 +31,7 @@ Install v2.0.0-SNAPSHOT(Java 1.8 required)
 </repositories>
 	
 <dependency>
-  <groupId>net.sf.rubycollect4j</groupId>
+  <groupId>com.github.wnameless</groupId>
   <artifactId>rubycollect4j</artifactId>
   <version>master-SNAPSHOT</version>
 </dependency>
@@ -66,9 +66,11 @@ p(words);
 ```
 
 Since v2.0.0, Java 8 is required.<br/>
-Static class Ruby has been introduced in v2.0.0.<br/>
+Class Ruby has been introduced in v2.0.0.<br/>
 It provides a super convenient way to access the numerous features of RubyCollect4J.<br/>
-All static classes and methods under Ruby class are well documented, feel free to try by yourself.
+All static classes and methods under Ruby class are well documented, feel free to try them by yourself.
+
+Demo Ruby:
 ```java
 Ruby.Array.copyOf(Arrays.asList(1,2,3,4));
 Ruby.Hash.of("abc",123);
