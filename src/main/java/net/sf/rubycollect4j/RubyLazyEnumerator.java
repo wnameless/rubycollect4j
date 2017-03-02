@@ -17,13 +17,11 @@
  */
 package net.sf.rubycollect4j;
 
-import static net.sf.rubycollect4j.RubyCollections.Hash;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
 import static net.sf.rubycollect4j.RubyCollections.newRubyLazyEnumerator;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -1095,10 +1093,15 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
     return newRubyArray(iter);
   }
 
-  @SuppressWarnings("unchecked")
   @Override
-  public <K, V> RubyHash<K, V> toH() {
-    return (RubyHash<K, V>) Hash((Collection<? extends Collection<E>>) toA());
+  public <K, V> RubyHash<K, V> toH(Function<E, Entry<K, V>> block) {
+    return Ruby.Hash.create(map(block));
+  }
+
+  @Override
+  public <K, V> RubyHash<K, V> toH(BiFunction<E, E, Entry<K, V>> block) {
+    return Ruby.Hash
+        .create(eachSlice(2).map(ra -> block.apply(ra.at(0), ra.at(1))));
   }
 
   /**
@@ -1106,9 +1109,10 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
    * 
    * @return {@link RubyLazyEnumerator}
    */
+  @SafeVarargs
   @Override
-  public RubyLazyEnumerator<RubyArray<E>> zip(
-      @SuppressWarnings("unchecked") Iterable<? extends E>... others) {
+  public final RubyLazyEnumerator<RubyArray<E>> zip(
+      Iterable<? extends E>... others) {
     return zip(Arrays.asList(others));
   }
 

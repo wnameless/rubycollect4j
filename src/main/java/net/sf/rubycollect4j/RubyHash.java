@@ -651,8 +651,8 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
    *          an array of entries
    * @return this {@link RubyHash}
    */
-  public RubyHash<K, V> put(
-      @SuppressWarnings("unchecked") Entry<? extends K, ? extends V>... entries) {
+  @SafeVarargs
+  public final RubyHash<K, V> put(Entry<? extends K, ? extends V>... entries) {
     for (Entry<? extends K, ? extends V> e : entries) {
       map.put(e.getKey(), e.getValue());
     }
@@ -739,17 +739,6 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
   public V store(K key, V value) {
     map.put(key, value);
     return value;
-  }
-
-  /**
-   * Returns this {@link RubyHash}.
-   * 
-   * @return this {@link RubyHash}
-   */
-  @Override
-  @SuppressWarnings("unchecked")
-  public RubyHash<K, V> toH() {
-    return this;
   }
 
   /**

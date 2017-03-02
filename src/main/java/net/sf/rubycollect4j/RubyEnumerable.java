@@ -17,7 +17,6 @@
  */
 package net.sf.rubycollect4j;
 
-import static net.sf.rubycollect4j.RubyCollections.Hash;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.newRubyLazyEnumerator;
@@ -885,10 +884,14 @@ public abstract class RubyEnumerable<E> implements RubyBase.Enumerable<E> {
     return newRubyArray(getIterable());
   }
 
-  @SuppressWarnings("unchecked")
   @Override
-  public <K, V> RubyHash<K, V> toH() {
-    return (RubyHash<K, V>) Hash((RubyArray<? extends List<E>>) toA());
+  public <K, V> RubyHash<K, V> toH(Function<E, Entry<K, V>> block) {
+    return newRubyLazyEnumerator(getIterable()).toH(block);
+  }
+
+  @Override
+  public <K, V> RubyHash<K, V> toH(BiFunction<E, E, Entry<K, V>> block) {
+    return newRubyLazyEnumerator(getIterable()).toH(block);
   }
 
   /**
@@ -896,9 +899,9 @@ public abstract class RubyEnumerable<E> implements RubyBase.Enumerable<E> {
    * 
    * @return {@link RubyArray}
    */
+  @SafeVarargs
   @Override
-  public RubyArray<RubyArray<E>> zip(
-      @SuppressWarnings("unchecked") Iterable<? extends E>... others) {
+  public final RubyArray<RubyArray<E>> zip(Iterable<? extends E>... others) {
     return newRubyLazyEnumerator(getIterable()).zip(others).toA();
   }
 

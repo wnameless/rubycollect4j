@@ -42,6 +42,7 @@ import java.util.function.Predicate;
 import org.junit.Before;
 import org.junit.Test;
 
+import net.sf.rubycollect4j.Ruby;
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.RubyEnumerable;
 import net.sf.rubycollect4j.RubyLazyEnumerator;
@@ -734,8 +735,11 @@ public class RubyIterablesTest {
   }
 
   @Test
-  public void testToAH() {
-    assertEquals(rh(1, 2, 3, 4), RubyIterables.toH(ra(ra(1, 2), ra(3, 4))));
+  public void testToH() {
+    assertEquals(rh(1, 2, 3, 4), RubyIterables.toH(ra(ra(1, 2), ra(3, 4)),
+        ary -> hp(ary.get(0), ary.get(1))));
+    assertEquals(Ruby.Hash.of(ra(1, 2), ra(3, 4)),
+        RubyIterables.toH(ra(ra(1, 2), ra(3, 4)), (e1, e2) -> hp(e1, e2)));
   }
 
   @Test

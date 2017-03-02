@@ -688,10 +688,19 @@ public final class RubyIterables {
   }
 
   /**
-   * @see net.sf.rubycollect4j.RubyEnumerable#toH()
+   * @see net.sf.rubycollect4j.RubyEnumerable#toH(Function)
    */
-  public static <E, K, V> RubyHash<K, V> toH(Iterable<E> in) {
-    return newRubyArray(in).toH();
+  public static <E, K, V> RubyHash<K, V> toH(Iterable<E> in,
+      Function<E, Entry<K, V>> block) {
+    return newRubyLazyEnumerator(in).toH(block);
+  }
+
+  /**
+   * @see net.sf.rubycollect4j.RubyEnumerable#toH(BiFunction)
+   */
+  public static <E, K, V> RubyHash<K, V> toH(Iterable<E> in,
+      BiFunction<E, E, Entry<K, V>> block) {
+    return newRubyLazyEnumerator(in).toH(block);
   }
 
   /**

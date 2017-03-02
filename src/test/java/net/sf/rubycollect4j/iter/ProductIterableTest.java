@@ -46,7 +46,6 @@ public class ProductIterableTest {
     assertTrue(iter instanceof ProductIterable);
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testConstructorWithVarargs() {
     iter = new ProductIterable<Integer>(list1, list2);
@@ -63,7 +62,6 @@ public class ProductIterableTest {
     new ProductIterable<Integer>(list1, (List<List<Integer>>) null);
   }
 
-  @SuppressWarnings("unchecked")
   @Test(expected = NullPointerException.class)
   public void testConstructorException3() {
     new ProductIterable<Integer>(null, list2);

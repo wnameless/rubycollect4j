@@ -921,10 +921,18 @@ public class RubyEnumerableTest {
         return Arrays.asList(l1, l2);
       }
 
-    }.toH());
+    }.toH(ary -> hp(ary.get(0), ary.get(1))));
+
+    assertEquals(rh(1, 2, 3, 4), new RubyEnumerable<Integer>() {
+
+      @Override
+      protected Iterable<Integer> getIterable() {
+        return Arrays.asList(1, 2, 3, 4);
+      }
+
+    }.toH((k, v) -> hp(k, v)));
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testZip() {
     re = newRubyEnumerator(Arrays.asList(1, 2, 3));

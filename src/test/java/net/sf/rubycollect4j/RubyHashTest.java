@@ -385,7 +385,6 @@ public class RubyHashTest {
     assertEquals(rh(1, 3, 3, 4, 5, 6, 0, 1), rh);
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void testPut() {
     rh = newRubyHash();
@@ -441,7 +440,9 @@ public class RubyHashTest {
 
   @Test
   public void testToH() {
-    assertSame(rh, rh.toH());
+    assertEquals(rh, rh.toH(e -> e));
+    assertEquals(rh(hp(1, 2), hp(3, 4), hp(5, 6), null),
+        rh.toH((e1, e2) -> hp(e1, e2)));
   }
 
   @Test

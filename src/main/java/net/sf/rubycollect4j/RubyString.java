@@ -19,7 +19,6 @@ package net.sf.rubycollect4j;
 
 import static java.lang.Character.MAX_RADIX;
 import static java.lang.Character.MIN_RADIX;
-import static net.sf.rubycollect4j.RubyCollections.Hash;
 import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.ra;
@@ -2272,8 +2271,8 @@ public final class RubyString extends RubyEnumerable<String>
       toStrAry.fill(toStrAry.last(), toStrAry.size(),
           fromStrAry.length() - toStrAry.length());
 
-    @SuppressWarnings("unchecked")
-    RubyHash<String, String> rh = Hash(fromStrAry.zip(toStrAry));
+    RubyHash<String, String> rh =
+        fromStrAry.zip(toStrAry).toH(ra -> Ruby.Entry.of(ra.at(0), ra.at(1)));
     if (fromStr.contains("\\^")) {
       fromStr = fromStr.replaceAll("\\\\^", "");
       fromStr += "^";

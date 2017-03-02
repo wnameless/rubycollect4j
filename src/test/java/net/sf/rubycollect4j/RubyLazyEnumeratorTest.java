@@ -402,7 +402,10 @@ public class RubyLazyEnumeratorTest {
         add(4);
       }
     });
-    assertEquals(rh(1, 2, 3, 4), newRubyLazyEnumerator(pairs).toH());
+    assertEquals(rh(1, 2, 3, 4),
+        newRubyLazyEnumerator(pairs).toH(ary -> hp(ary.get(0), ary.get(1))));
+    assertEquals(Ruby.Hash.of(ra(1, 2), ra(3, 4)),
+        newRubyLazyEnumerator(pairs).toH((e1, e2) -> hp(e1, e2)));
   }
 
   @Test

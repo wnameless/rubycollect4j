@@ -67,8 +67,8 @@ public final class ProductIterable<E> implements Iterable<RubyArray<E>> {
    * @throws NullPointerException
    *           if self is null
    */
-  public ProductIterable(List<? extends E> self,
-      @SuppressWarnings("unchecked") List<? extends E>... others) {
+  @SafeVarargs
+  public ProductIterable(List<? extends E> self, List<? extends E>... others) {
     if (self == null) throw new NullPointerException();
 
     lists.add(self);

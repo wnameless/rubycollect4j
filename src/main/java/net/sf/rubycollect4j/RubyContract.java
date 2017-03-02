@@ -20,6 +20,7 @@ package net.sf.rubycollect4j;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
@@ -1021,12 +1022,20 @@ final class RubyContract {
     public RubyArray<E> toA();
 
     /**
-     * Assumes all elements are Lists and each List contains only 2 items. Puts
-     * those items into entries of a {@link RubyHash}.
+     * Creates a {@link RubyHash} by transforming each element into an
+     * {@link Entry}.
      * 
      * @return {@link RubyHash}
      */
-    public <K, V> RubyHash<K, V> toH();
+    public <K, V> RubyHash<K, V> toH(Function<E, Entry<K, V>> block);
+
+    /**
+     * Creates a {@link RubyHash} by transforming each 2 elements into an
+     * {@link Entry}.
+     * 
+     * @return {@link RubyHash}
+     */
+    public <K, V> RubyHash<K, V> toH(BiFunction<E, E, Entry<K, V>> block);
 
     /**
      * Groups elements which get the same indices among all other Iterables into
