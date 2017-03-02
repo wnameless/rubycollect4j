@@ -352,7 +352,7 @@ public final class RubyIterables {
    * @see net.sf.rubycollect4j.RubyEnumerable#grepV(String)
    */
   public static <E> List<E> grepV(Iterable<E> in, String regex) {
-    return (List<E>) newRubyLazyEnumerator(in).grepV(regex).toA();
+    return newRubyLazyEnumerator(in).grepV(regex).toA();
   }
 
   /**

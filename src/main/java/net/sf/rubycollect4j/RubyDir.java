@@ -84,6 +84,19 @@ public class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
+   * Checks if the directory is an empty directory.
+   * 
+   * @param path
+   *          of a file
+   * @return true if file existed and is an empty directory, otherwise false
+   */
+  public static boolean emptyʔ(String path) {
+    if (!existʔ(path)) return false;
+
+    return new File(path).listFiles().length == 0;
+  }
+
+  /**
    * Puts entries of a folder into a {@link RubyArray}.
    * 
    * @param path
@@ -94,17 +107,6 @@ public class RubyDir extends RubyEnumerable<String> {
     File file = new File(path);
     return ra(file.listFiles()).map(item -> item.getName()).unshift("..")
         .unshift(".");
-  }
-
-  /**
-   * Checks if the file is a directory.
-   * 
-   * @param path
-   *          of a file
-   * @return true if the file is a directory, false otherwise
-   */
-  public static boolean existsʔ(String path) {
-    return new File(path).isDirectory();
   }
 
   /**

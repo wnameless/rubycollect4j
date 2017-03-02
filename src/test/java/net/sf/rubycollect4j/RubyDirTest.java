@@ -55,15 +55,16 @@ public class RubyDirTest {
   }
 
   @Test
-  public void testEntries() {
-    assertEquals(ra(".", "..", "a", "b"),
-        RubyDir.entries(BASE_DIR + "entries_test"));
+  public void testEmptyʔ() {
+    assertTrue(RubyDir.emptyʔ(BASE_DIR + "empty_dir"));
+    assertFalse(RubyDir.emptyʔ(BASE_DIR));
+    assertFalse(RubyDir.emptyʔ(BASE_DIR + "ruby_file_sizeQ_test.txt"));
   }
 
   @Test
-  public void testExistsʔ() {
-    assertTrue(RubyDir.existsʔ(BASE_DIR));
-    assertFalse(RubyDir.existsʔ(BASE_DIR + "nonexist"));
+  public void testEntries() {
+    assertEquals(ra(".", "..", "a", "b"),
+        RubyDir.entries(BASE_DIR + "entries_test"));
   }
 
   @Test

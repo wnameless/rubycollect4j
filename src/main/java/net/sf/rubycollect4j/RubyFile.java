@@ -202,6 +202,17 @@ public class RubyFile extends RubyIO {
   }
 
   /**
+   * Checks if the file gets 0 length.
+   * 
+   * @param path
+   *          of a file
+   * @return true if file existed and gets 0 in length, otherwise false
+   */
+  public static boolean emptyʔ(String path) {
+    return zeroʔ(path);
+  }
+
+  /**
    * Checks if a file is executable.
    * 
    * @param path
@@ -221,17 +232,6 @@ public class RubyFile extends RubyIO {
    */
   public static boolean existʔ(String path) {
     return new File(path).exists();
-  }
-
-  /**
-   * Equivalent to {@link #existʔ(String)}.
-   * 
-   * @param path
-   *          of a file
-   * @return true if file existed, false otherwise
-   */
-  public static boolean existsʔ(String path) {
-    return existʔ(path);
   }
 
   /**

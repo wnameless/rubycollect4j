@@ -103,6 +103,13 @@ public class RubyFileTest {
   }
 
   @Test
+  public void testEmptyʔ() {
+    assertTrue(RubyFile.emptyʔ(BASE_DIR + "ruby_file_exist_test.txt"));
+    assertFalse(RubyFile.emptyʔ(BASE_DIR + "nonexist"));
+    assertFalse(RubyFile.emptyʔ(BASE_DIR + "ruby_file_sizeQ_test.txt"));
+  }
+
+  @Test
   public void testExecutableʔ() {
     if (System.getProperty("os.name").startsWith("Windows")) return;
 
@@ -119,12 +126,6 @@ public class RubyFileTest {
   public void testExistʔ() {
     assertTrue(RubyFile.existʔ(BASE_DIR + "ruby_file_exist_test.txt"));
     assertFalse(RubyFile.existʔ(BASE_DIR + "ruby_file_nonexist_test.txt"));
-  }
-
-  @Test
-  public void testExistsʔ() {
-    assertTrue(RubyFile.existsʔ(BASE_DIR + "ruby_file_exist_test.txt"));
-    assertFalse(RubyFile.existsʔ(BASE_DIR + "ruby_file_nonexist_test.txt"));
   }
 
   @Test
