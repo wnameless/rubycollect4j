@@ -17,7 +17,23 @@ Installation with Maven:
 <dependency>
   <groupId>net.sf.rubycollect4j</groupId>
   <artifactId>rubycollect4j</artifactId>
-  <version>${latest.version}</version>
+  <version>1.9.0</version>
+</dependency>
+```
+
+Install v2.0.0-SNAPSHOT(Java 1.8 required)
+``` xml
+<repositories>
+  <repository>
+    <id>jitpack.io</id>
+    <url>https://jitpack.io</url>
+  </repository>
+</repositories>
+	
+<dependency>
+  <groupId>net.sf.rubycollect4j</groupId>
+  <artifactId>rubycollect4j</artifactId>
+  <version>master-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -47,6 +63,19 @@ RubyArray<String> words =
 
 p(words);
 // Output: [A, BLEPHAROCONJUNCTIVITIS]
+```
+
+Since v2.0.0, Java 8 is required.<br/>
+Static class Ruby has been introduced in v2.0.0.<br/>
+It provides a super convenient way to access the numerous features of RubyCollect4J.<br/>
+All static classes and methods under Ruby class are well documented, feel free to try by yourself.
+```java
+Ruby.Array.copyOf(Arrays.asList(1,2,3,4));
+Ruby.Hash.of("abc",123);
+Ruby.Set.create();
+Ruby.Range.of(1,1000);
+Ruby.Date.current();
+...
 ```
 
 Since v1.9.0,<br/>
