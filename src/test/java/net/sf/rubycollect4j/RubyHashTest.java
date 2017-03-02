@@ -268,6 +268,18 @@ public class RubyHashTest {
   }
 
   @Test
+  public void testFetchValues() {
+    assertEquals(Ruby.Array.of(2, 4, 6), rh.fetchValues(1, 3, 5));
+    assertEquals(Ruby.Array.of(2, 4, 6),
+        rh.fetchValues(Arrays.asList(1, 3, 5)));
+  }
+
+  @Test(expected = NoSuchElementException.class)
+  public void testFetchValuesException() {
+    rh.fetchValues(5, 7, 9);
+  }
+
+  @Test
   public void testFlatten() {
     assertEquals(ra(hp(1, 2), hp(3, 4), hp(5, 6)), rh.flatten());
   }

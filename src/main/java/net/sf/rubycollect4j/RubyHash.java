@@ -389,6 +389,40 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
   }
 
   /**
+   * Finds all the values by given keys.
+   * 
+   * @param keys
+   *          used to retrieve values
+   * @return {@link RubyArray}
+   * @throws IllegalArgumentException
+   *           if any key cannot be found
+   */
+  public RubyArray<V> fetchValues(Object... keys) {
+    return fetchValues(Arrays.asList(keys));
+  }
+
+  /**
+   * Finds all the values by given keys.
+   * 
+   * @param keys
+   *          used to retrieve values
+   * @return {@link RubyArray}
+   * @throws IllegalArgumentException
+   *           if any key cannot be found
+   */
+  public RubyArray<V> fetchValues(Iterable<?> keys) {
+    RubyArray<V> values = Ruby.Array.create();
+    keys.forEach(key -> {
+      if (map.containsKey(key)) {
+        values.add(map.get(key));
+      } else {
+        throw new NoSuchElementException("KeyError: key not found: " + key);
+      }
+    });
+    return values;
+  }
+
+  /**
    * Returns a {@link RubyEnumerator} of entries of this {@link RubyHash}.
    * 
    * @return {@link RubyEnumerator}
@@ -1137,7 +1171,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
    * Finds all the values by given keys.
    * 
    * @param keys
-   *          to retrieve values
+   *          used to retrieve values
    * @return {@link RubyArray}
    */
   public RubyArray<V> valuesAt(Object... keys) {
@@ -1148,7 +1182,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
    * Finds all the values by given keys.
    * 
    * @param keys
-   *          to retrieve values
+   *          used to retrieve values
    * @return {@link RubyArray}
    */
   public RubyArray<V> valuesAt(Iterable<?> keys) {
