@@ -25,6 +25,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.junit.Test;
 
@@ -55,9 +56,12 @@ public class RubyDirTest {
   }
 
   @Test
-  public void testEmptyʔ() {
+  public void testEmptyʔ() throws IOException {
+    assertFalse(RubyDir.emptyʔ(BASE_DIR + "empty_dir"));
+    new File(BASE_DIR + "empty_dir/.keep").delete();
     assertTrue(RubyDir.emptyʔ(BASE_DIR + "empty_dir"));
-    assertFalse(RubyDir.emptyʔ(BASE_DIR));
+    new File(BASE_DIR + "empty_dir/.keep").createNewFile();
+    assertFalse(RubyDir.emptyʔ(BASE_DIR + "empty_dir"));
     assertFalse(RubyDir.emptyʔ(BASE_DIR + "ruby_file_sizeQ_test.txt"));
   }
 
