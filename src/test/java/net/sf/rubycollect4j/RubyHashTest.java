@@ -125,6 +125,20 @@ public class RubyHashTest {
   }
 
   @Test
+  public void testCompact() {
+    rh.put(7, null);
+    assertEquals(Ruby.Hash.of(1, 2, 3, 4, 5, 6), rh.compact());
+    assertEquals(Ruby.Hash.of(1, 2, 3, 4, 5, 6, 7, null), rh);
+  }
+
+  @Test
+  public void testCompactǃ() {
+    rh.put(7, null);
+    assertEquals(Ruby.Hash.of(1, 2, 3, 4, 5, 6), rh.compactǃ());
+    assertSame(rh, rh.compactǃ());
+  }
+
+  @Test
   public void testCompareByIdentity() {
     RubyHash<String, Integer> rh = newRubyHash();
     rh.compareByIdentity();

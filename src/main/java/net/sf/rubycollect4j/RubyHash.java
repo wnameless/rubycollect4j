@@ -155,6 +155,28 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
   }
 
   /**
+   * Returns a new {@link RubyHash} with the null values/key pairs removed.
+   * 
+   * @return new {@link RubyHash}
+   */
+  public RubyHash<K, V> compact() {
+    RubyHash<K, V> rubyHash = Ruby.Hash.create();
+    map.entrySet().forEach(entry -> {
+      if (entry.getValue() != null) rubyHash.put(entry);
+    });
+    return rubyHash;
+  }
+
+  /**
+   * Removes all null values from the {@link RubyHash}.
+   * 
+   * @return this {@link RubyHash}
+   */
+  public RubyHash<K, V> compactǃ() {
+    return deleteIf((k, v) -> v == null);
+  }
+
+  /**
    * Turns this {@link RubyHash} to compare each elements by their identities
    * instead of their equalities.
    * 
