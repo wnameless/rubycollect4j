@@ -24,6 +24,7 @@ import static net.sf.rubycollect4j.RubyCollections.rh;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
@@ -452,6 +453,20 @@ public class RubyHashTest {
   public void testToS() {
     assertEquals("{1=2, 3=4, 5=6}", rh.toS());
     assertEquals(rh.toString(), rh.toS());
+  }
+
+  @Test
+  public void testTransformValues() {
+    assertEquals(ra(2, 4, 6), rh.transformValues().toA());
+    assertEquals(rh(1, 4, 3, 16, 5, 36), rh.transformValues(v -> v * v));
+    assertNotSame(rh(1, 4, 3, 16, 5, 36), rh.transformValues(v -> v * v));
+  }
+
+  @Test
+  public void testTransformValuesǃ() {
+    assertEquals(ra(2, 4, 6), rh.transformValuesǃ().toA());
+    assertEquals(rh(1, 4, 3, 16, 5, 36), rh.transformValuesǃ(v -> v * v));
+    assertSame(rh, rh.transformValuesǃ(v -> v * v));
   }
 
   @Test

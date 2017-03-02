@@ -102,9 +102,7 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E>
    */
   @Override
   public RubyEnumerator<E> each(Consumer<? super E> block) {
-    for (E item : iter) {
-      block.accept(item);
-    }
+    iter.forEach(block);
     return this;
   }
 

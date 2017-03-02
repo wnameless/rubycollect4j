@@ -23,6 +23,7 @@ import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
 import static net.sf.rubycollect4j.RubyCollections.newRubyLazyEnumerator;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -1097,7 +1098,7 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
   @SuppressWarnings("unchecked")
   @Override
   public <K, V> RubyHash<K, V> toH() {
-    return (RubyHash<K, V>) Hash((RubyArray<? extends List<E>>) toA());
+    return (RubyHash<K, V>) Hash((Collection<? extends Collection<E>>) toA());
   }
 
   /**

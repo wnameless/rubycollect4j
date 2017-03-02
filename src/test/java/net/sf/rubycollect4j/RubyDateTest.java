@@ -195,8 +195,8 @@ public class RubyDateTest {
 
   @Test
   public void testCurrent() {
-    assertTrue(Math.abs(
-        Ruby.Date.current().getTime() - RubyDate.current().getTime()) <= 1L);
+    assertTrue(
+        Math.abs(new Date().getTime() - RubyDate.current().getTime()) <= 10L);
   }
 
   @Test

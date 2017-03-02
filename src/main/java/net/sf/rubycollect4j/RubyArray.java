@@ -387,7 +387,7 @@ public final class RubyArray<E> extends RubyEnumerable<E>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<E> deleteIf() {
-    return newRubyEnumerator(this);
+    return newRubyEnumerator(getIterable());
   }
 
   /**

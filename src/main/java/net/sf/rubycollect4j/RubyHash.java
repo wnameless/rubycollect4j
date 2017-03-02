@@ -220,7 +220,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<Entry<K, V>> deleteIf() {
-    return newRubyEnumerator(new ComparableEntryIterable<K, V>(map.entrySet()));
+    return newRubyEnumerator(getIterable());
   }
 
   /**
@@ -300,7 +300,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<Entry<K, V>> eachPair() {
-    return newRubyEnumerator(new ComparableEntryIterable<K, V>(map.entrySet()));
+    return newRubyEnumerator(getIterable());
   }
 
   /**
@@ -428,7 +428,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
    * @return {@link RubyEnumerator}
    */
   public RubyArray<Entry<K, V>> flatten() {
-    return newRubyArray(new ComparableEntryIterable<K, V>(map.entrySet()));
+    return newRubyArray(getIterable());
   }
 
   /**
@@ -491,7 +491,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<Entry<K, V>> keepIf() {
-    return newRubyEnumerator(new ComparableEntryIterable<K, V>(map.entrySet()));
+    return newRubyEnumerator(getIterable());
   }
 
   /**
@@ -681,7 +681,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<Entry<K, V>> rejectǃ() {
-    return newRubyEnumerator(new ComparableEntryIterable<K, V>(map.entrySet()));
+    return newRubyEnumerator(getIterable());
   }
 
   /**
@@ -768,6 +768,53 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
    */
   public String toS() {
     return map.toString();
+  }
+
+  /**
+   * Returns a {@link RubyEnumerator} of values of this {@link RubyHash}.
+   * 
+   * @return {@link RubyEnumerator}
+   */
+  public RubyEnumerator<V> transformValues() {
+    return newRubyEnumerator(map.values());
+  }
+
+  /**
+   * Transforms every value with the results of running block.
+   * 
+   * @param block
+   *          to transform values
+   * @return new {@link RubyHash}
+   */
+  public RubyHash<K, V> transformValues(
+      Function<? super V, ? extends V> block) {
+    RubyHash<K, V> rubyHash = Ruby.Hash.create();
+    map.entrySet().forEach(entry -> {
+      rubyHash.put(entry.getKey(), block.apply(entry.getValue()));
+    });
+    return rubyHash;
+  }
+
+  /**
+   * Returns a {@link RubyEnumerator} of values of this {@link RubyHash}.
+   * 
+   * @return {@link RubyEnumerator}
+   */
+  public RubyEnumerator<V> transformValuesǃ() {
+    return newRubyEnumerator(map.values());
+  }
+
+  /**
+   * Transforms every value with the results of running block.
+   * 
+   * @param block
+   *          to transform values
+   * @return this {@link RubyHash}
+   */
+  public RubyHash<K, V> transformValuesǃ(
+      Function<? super V, ? extends V> block) {
+    map.keySet().forEach(key -> map.replace(key, block.apply(map.get(key))));
+    return this;
   }
 
   /**

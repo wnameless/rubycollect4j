@@ -96,9 +96,8 @@ public final class RubyString extends RubyEnumerable<String>
 
   @Override
   protected Iterable<String> getIterable() {
-    final String iterStr = str;
-    return range(0, iterStr.length() - 1).lazy()
-        .map(item -> iterStr.substring(item, item + 1));
+    return range(0, str.length() - 1).lazy()
+        .map(i -> Character.toString(str.charAt(i)));
   }
 
   private String stringify(Object o) {
