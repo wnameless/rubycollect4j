@@ -36,7 +36,7 @@ import net.sf.rubycollect4j.block.TransformBlock;
  * {@link RubySet} implements all methods refer to the Set class of Ruby
  * language.
  * <p>
- * {@link RubySet} is also a Java Set and a {@link Ruby.Enumerable}.
+ * {@link RubySet} is also a Java Set and a {@link RubyBase.Enumerable}.
  *
  * @param <E>
  *          the type of the elements
@@ -44,8 +44,8 @@ import net.sf.rubycollect4j.block.TransformBlock;
  * @author Wei-Ming Wu
  * 
  */
-public final class RubySet<E> extends RubyEnumerable<E> implements Set<E>,
-    Comparable<Set<E>>, Serializable {
+public final class RubySet<E> extends RubyEnumerable<E>
+    implements Set<E>, Comparable<Set<E>>, Serializable {
 
   private static final long serialVersionUID = 1L;
 

@@ -61,7 +61,7 @@ import net.sf.rubycollect4j.iter.TransformIterable;
  * @author Wei-Ming Wu
  * 
  */
-public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
+public abstract class RubyEnumerable<E> implements RubyBase.Enumerable<E> {
 
   /**
    * Returns an Iterable of elements.
@@ -112,8 +112,8 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
   @Override
   public <S> RubyEnumerator<Entry<S, RubyArray<E>>> chunk(
       final String methodName, final Object... args) {
-    return newRubyEnumerator(new ChunkIterable<E, S>(getIterable(),
-        new TransformBlock<E, S>() {
+    return newRubyEnumerator(
+        new ChunkIterable<E, S>(getIterable(), new TransformBlock<E, S>() {
 
           @Override
           public S yield(E item) {
@@ -150,7 +150,8 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    * @return {@link RubyArray}
    */
   @Override
-  public <S> RubyArray<S> collect(TransformBlock<? super E, ? extends S> block) {
+  public <S> RubyArray<S> collect(
+      TransformBlock<? super E, ? extends S> block) {
     return newRubyLazyEnumerator(getIterable()).collect(block).toA();
   }
 
@@ -163,7 +164,8 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    */
   @Deprecated
   @Override
-  public <S> RubyArray<S> collect(final String methodName, final Object... args) {
+  public <S> RubyArray<S> collect(final String methodName,
+      final Object... args) {
     return newRubyLazyEnumerator(
         new TransformIterable<E, S>(getIterable(), new TransformBlock<E, S>() {
 
@@ -388,12 +390,13 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    */
   @Override
   public <O> RubyEnumerator<Entry<E, O>> eachWithObject(O obj) {
-    return newRubyEnumerator(new EachWithObjectIterable<E, O>(getIterable(),
-        obj));
+    return newRubyEnumerator(
+        new EachWithObjectIterable<E, O>(getIterable(), obj));
   }
 
   @Override
-  public <O> O eachWithObject(O obj, WithObjectBlock<? super E, ? super O> block) {
+  public <O> O eachWithObject(O obj,
+      WithObjectBlock<? super E, ? super O> block) {
     return newRubyLazyEnumerator(getIterable()).eachWithObject(obj, block);
   }
 
@@ -745,7 +748,8 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
   }
 
   @Override
-  public <S> RubyArray<E> minmaxBy(TransformBlock<? super E, ? extends S> block) {
+  public <S> RubyArray<E> minmaxBy(
+      TransformBlock<? super E, ? extends S> block) {
     return newRubyLazyEnumerator(getIterable()).minmaxBy(block);
   }
 
@@ -881,7 +885,8 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public RubyEnumerator<RubyArray<E>> sliceAfter(BooleanBlock<? super E> block) {
+  public RubyEnumerator<RubyArray<E>> sliceAfter(
+      BooleanBlock<? super E> block) {
     return newRubyEnumerator(new SliceAfterIterable<E>(getIterable(), block));
   }
 
@@ -892,8 +897,8 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    */
   @Override
   public RubyEnumerator<RubyArray<E>> sliceAfter(String regex) {
-    return newRubyEnumerator(new SliceAfterIterable<E>(getIterable(),
-        Pattern.compile(regex)));
+    return newRubyEnumerator(
+        new SliceAfterIterable<E>(getIterable(), Pattern.compile(regex)));
   }
 
   /**
@@ -902,7 +907,8 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public RubyEnumerator<RubyArray<E>> sliceBefore(BooleanBlock<? super E> block) {
+  public RubyEnumerator<RubyArray<E>> sliceBefore(
+      BooleanBlock<? super E> block) {
     return newRubyEnumerator(new SliceBeforeIterable<E>(getIterable(), block));
   }
 
@@ -913,8 +919,8 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
    */
   @Override
   public RubyEnumerator<RubyArray<E>> sliceBefore(String regex) {
-    return newRubyEnumerator(new SliceBeforeIterable<E>(getIterable(),
-        Pattern.compile(regex)));
+    return newRubyEnumerator(
+        new SliceBeforeIterable<E>(getIterable(), Pattern.compile(regex)));
   }
 
   /**
@@ -956,7 +962,8 @@ public abstract class RubyEnumerable<E> implements Ruby.Enumerable<E> {
 
   @Override
   public <S> RubyArray<E> sortBy(Comparator<? super E> comp1,
-      Comparator<? super S> comp2, TransformBlock<? super E, ? extends S> block) {
+      Comparator<? super S> comp2,
+      TransformBlock<? super E, ? extends S> block) {
     return newRubyLazyEnumerator(getIterable()).sortBy(comp1, comp2, block);
   }
 

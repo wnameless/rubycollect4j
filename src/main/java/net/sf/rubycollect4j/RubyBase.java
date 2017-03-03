@@ -29,68 +29,68 @@ import net.sf.rubycollect4j.block.WithIndexBlock;
 
 /**
  * 
- * {@link Ruby} contains the general interfaces of RubyCollect4J
+ * {@link RubyBase} contains the general interfaces of RubyCollect4J
  * implementations.
  * <P>
  * For example, {@link RubyArray}, {@link RubyHash}, {@link RubySet},
  * {@link RubyEnumerator} and {@link RubyString} can all be treated as
- * {@link Ruby.Enumerable}.
+ * {@link RubyBase.Enumerable}.
  *
  * @author Wei-Ming Wu
  *
  */
-public final class Ruby {
+final class RubyBase {
 
-  private Ruby() {}
+  private RubyBase() {}
 
   /**
    * 
-   * {@link Ruby.Enumerable} includes all methods refer to the Enumerable module
-   * of Ruby.
+   * {@link RubyBase.Enumerable} includes all methods refer to the Enumerable
+   * module of Ruby.
    *
    * @param <E>
    *          the type of the elements
    */
-  public interface Enumerable<E> extends
-      RubyContract.Enumerable<E, Ruby.Enumerator<?>, RubyArray<?>> {
+  interface Enumerable<E>
+      extends RubyContract.Enumerable<E, RubyBase.Enumerator<?>, RubyArray<?>> {
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public <S> Ruby.Enumerator<Entry<S, RubyArray<E>>> chunk(
+    public <S> RubyBase.Enumerator<Entry<S, RubyArray<E>>> chunk(
         TransformBlock<? super E, ? extends S> block);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      * 
      * @deprecated since 1.9.0, using Java 8 Lambda instead
      */
     @Deprecated
     @Override
-    public <S> Ruby.Enumerator<Entry<S, RubyArray<E>>> chunk(
+    public <S> RubyBase.Enumerator<Entry<S, RubyArray<E>>> chunk(
         final String methodName, final Object... args);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<RubyArray<E>> chunkWhile(
+    public RubyBase.Enumerator<RubyArray<E>> chunkWhile(
         EntryBooleanBlock<? super E, ? super E> block);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<E> collect();
+    public RubyBase.Enumerator<E> collect();
 
     /**
      * {@inheritDoc}
@@ -98,7 +98,8 @@ public final class Ruby {
      * @return {@link RubyArray}
      */
     @Override
-    public <S> RubyArray<S> collect(TransformBlock<? super E, ? extends S> block);
+    public <S> RubyArray<S> collect(
+        TransformBlock<? super E, ? extends S> block);
 
     /**
      * {@inheritDoc}
@@ -115,10 +116,10 @@ public final class Ruby {
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<E> collectConcat();
+    public RubyBase.Enumerator<E> collectConcat();
 
     /**
      * {@inheritDoc}
@@ -132,26 +133,26 @@ public final class Ruby {
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<E> cycle();
+    public RubyBase.Enumerator<E> cycle();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<E> cycle(int n);
+    public RubyBase.Enumerator<E> cycle(int n);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<E> detect();
+    public RubyBase.Enumerator<E> detect();
 
     /**
      * {@inheritDoc}
@@ -164,10 +165,10 @@ public final class Ruby {
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<E> dropWhile();
+    public RubyBase.Enumerator<E> dropWhile();
 
     /**
      * {@inheritDoc}
@@ -180,26 +181,26 @@ public final class Ruby {
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<E> each();
+    public RubyBase.Enumerator<E> each();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerable}
+     * @return {@link RubyBase.Enumerable}
      */
     @Override
-    public Ruby.Enumerable<E> each(Block<? super E> block);
+    public RubyBase.Enumerable<E> each(Block<? super E> block);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<RubyArray<E>> eachCons(int n);
+    public RubyBase.Enumerator<RubyArray<E>> eachCons(int n);
 
     @Override
     public void eachCons(int n, Block<? super RubyArray<E>> block);
@@ -207,66 +208,67 @@ public final class Ruby {
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<E> eachEntry();
+    public RubyBase.Enumerator<E> eachEntry();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerable}
+     * @return {@link RubyBase.Enumerable}
      */
     @Override
-    public Ruby.Enumerable<E> eachEntry(Block<? super E> block);
+    public RubyBase.Enumerable<E> eachEntry(Block<? super E> block);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<RubyArray<E>> eachSlice(int n);
+    public RubyBase.Enumerator<RubyArray<E>> eachSlice(int n);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<Entry<E, Integer>> eachWithIndex();
+    public RubyBase.Enumerator<Entry<E, Integer>> eachWithIndex();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerable}
+     * @return {@link RubyBase.Enumerable}
      */
     @Override
-    public Ruby.Enumerable<E> eachWithIndex(WithIndexBlock<? super E> block);
+    public RubyBase.Enumerable<E> eachWithIndex(
+        WithIndexBlock<? super E> block);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public <O> Ruby.Enumerator<Entry<E, O>> eachWithObject(O obj);
+    public <O> RubyBase.Enumerator<Entry<E, O>> eachWithObject(O obj);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<E> find();
+    public RubyBase.Enumerator<E> find();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<E> findAll();
+    public RubyBase.Enumerator<E> findAll();
 
     /**
      * {@inheritDoc}
@@ -279,18 +281,18 @@ public final class Ruby {
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<E> findIndex();
+    public RubyBase.Enumerator<E> findIndex();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<E> flatMap();
+    public RubyBase.Enumerator<E> flatMap();
 
     /**
      * {@inheritDoc}
@@ -350,18 +352,18 @@ public final class Ruby {
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<E> groupBy();
+    public RubyBase.Enumerator<E> groupBy();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<E> map();
+    public RubyBase.Enumerator<E> map();
 
     /**
      * {@inheritDoc}
@@ -385,42 +387,42 @@ public final class Ruby {
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<E> maxBy();
+    public RubyBase.Enumerator<E> maxBy();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<E> minBy();
+    public RubyBase.Enumerator<E> minBy();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<E> minmaxBy();
+    public RubyBase.Enumerator<E> minmaxBy();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<E> partition();
+    public RubyBase.Enumerator<E> partition();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<E> reject();
+    public RubyBase.Enumerator<E> reject();
 
     /**
      * {@inheritDoc}
@@ -433,26 +435,26 @@ public final class Ruby {
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<E> reverseEach();
+    public RubyBase.Enumerator<E> reverseEach();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerable}
+     * @return {@link RubyBase.Enumerable}
      */
     @Override
-    public Ruby.Enumerable<E> reverseEach(Block<? super E> block);
+    public RubyBase.Enumerable<E> reverseEach(Block<? super E> block);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<E> select();
+    public RubyBase.Enumerator<E> select();
 
     /**
      * {@inheritDoc}
@@ -465,53 +467,53 @@ public final class Ruby {
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<RubyArray<E>> sliceAfter(
+    public RubyBase.Enumerator<RubyArray<E>> sliceAfter(
         BooleanBlock<? super E> block);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<RubyArray<E>> sliceAfter(String regex);
+    public RubyBase.Enumerator<RubyArray<E>> sliceAfter(String regex);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<RubyArray<E>> sliceBefore(
+    public RubyBase.Enumerator<RubyArray<E>> sliceBefore(
         BooleanBlock<? super E> block);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<RubyArray<E>> sliceBefore(String regex);
+    public RubyBase.Enumerator<RubyArray<E>> sliceBefore(String regex);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<RubyArray<E>> sliceWhen(
+    public RubyBase.Enumerator<RubyArray<E>> sliceWhen(
         EntryBooleanBlock<? super E, ? super E> block);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<E> sortBy();
+    public RubyBase.Enumerator<E> sortBy();
 
     /**
      * {@inheritDoc}
@@ -524,10 +526,10 @@ public final class Ruby {
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.Enumerator}
+     * @return {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<E> takeWhile();
+    public RubyBase.Enumerator<E> takeWhile();
 
     /**
      * {@inheritDoc}
@@ -558,492 +560,493 @@ public final class Ruby {
 
   /**
    * 
-   * {@link Ruby.Enumerator} includes all methods refer to the Enumerator class
-   * of Ruby.
+   * {@link RubyBase.Enumerator} includes all methods refer to the Enumerator
+   * class of Ruby.
    *
    * @param <E>
    *          the type of the elements
    */
-  public interface Enumerator<E> extends Enumerable<E>,
-      RubyContract.Enumerator<E, Ruby.Enumerator<?>, RubyArray<?>> {
+  interface Enumerator<E> extends Enumerable<E>,
+      RubyContract.Enumerator<E, RubyBase.Enumerator<?>, RubyArray<?>> {
 
     /**
      * {@inheritDoc}
      * 
-     * @return this {@link Ruby.Enumerator}
+     * @return this {@link RubyBase.Enumerator}
      */
     @Override
-    public Ruby.Enumerator<E> rewind();
+    public RubyBase.Enumerator<E> rewind();
 
   }
 
   /**
    * 
-   * {@link Ruby.LazyEnumerator} includes all methods refer to the
+   * {@link RubyBase.LazyEnumerator} includes all methods refer to the
    * LazyEnumerator class of Ruby.
    *
    * @param <E>
    *          the type of the elements
    */
-  public interface LazyEnumerator<E>
-      extends
-      RubyContract.Enumerator<E, Ruby.LazyEnumerator<?>, Ruby.LazyEnumerator<?>> {
+  interface LazyEnumerator<E> extends
+      RubyContract.Enumerator<E, RubyBase.LazyEnumerator<?>, RubyBase.LazyEnumerator<?>> {
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public <S> Ruby.LazyEnumerator<Entry<S, RubyArray<E>>> chunk(
+    public <S> RubyBase.LazyEnumerator<Entry<S, RubyArray<E>>> chunk(
         TransformBlock<? super E, ? extends S> block);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      * 
      * @deprecated since 1.9.0, using Java 8 Lambda instead
      */
     @Deprecated
     @Override
-    public <S> Ruby.LazyEnumerator<Entry<S, RubyArray<E>>> chunk(
+    public <S> RubyBase.LazyEnumerator<Entry<S, RubyArray<E>>> chunk(
         final String methodName, final Object... args);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> collect();
+    public RubyBase.LazyEnumerator<E> collect();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public <S> Ruby.LazyEnumerator<S> collect(
+    public <S> RubyBase.LazyEnumerator<S> collect(
         TransformBlock<? super E, ? extends S> block);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      * 
      * @deprecated since 1.9.0, using Java 8 Lambda instead
      */
     @Deprecated
     @Override
-    public <S> Ruby.LazyEnumerator<S> collect(final String methodName,
+    public <S> RubyBase.LazyEnumerator<S> collect(final String methodName,
         final Object... args);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> collectConcat();
+    public RubyBase.LazyEnumerator<E> collectConcat();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public <S> Ruby.LazyEnumerator<S> collectConcat(
+    public <S> RubyBase.LazyEnumerator<S> collectConcat(
         TransformBlock<? super E, ? extends List<? extends S>> block);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> cycle();
+    public RubyBase.LazyEnumerator<E> cycle();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> cycle(int n);
+    public RubyBase.LazyEnumerator<E> cycle(int n);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> detect();
+    public RubyBase.LazyEnumerator<E> detect();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> drop(int n);
+    public RubyBase.LazyEnumerator<E> drop(int n);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> dropWhile();
+    public RubyBase.LazyEnumerator<E> dropWhile();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> dropWhile(BooleanBlock<? super E> block);
+    public RubyBase.LazyEnumerator<E> dropWhile(BooleanBlock<? super E> block);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> each();
+    public RubyBase.LazyEnumerator<E> each();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> each(Block<? super E> block);
+    public RubyBase.LazyEnumerator<E> each(Block<? super E> block);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<RubyArray<E>> eachCons(int n);
+    public RubyBase.LazyEnumerator<RubyArray<E>> eachCons(int n);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> eachEntry();
+    public RubyBase.LazyEnumerator<E> eachEntry();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> eachEntry(Block<? super E> block);
+    public RubyBase.LazyEnumerator<E> eachEntry(Block<? super E> block);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<RubyArray<E>> eachSlice(int n);
+    public RubyBase.LazyEnumerator<RubyArray<E>> eachSlice(int n);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<Entry<E, Integer>> eachWithIndex();
+    public RubyBase.LazyEnumerator<Entry<E, Integer>> eachWithIndex();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> eachWithIndex(WithIndexBlock<? super E> block);
+    public RubyBase.LazyEnumerator<E> eachWithIndex(
+        WithIndexBlock<? super E> block);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public <O> Ruby.LazyEnumerator<Entry<E, O>> eachWithObject(O obj);
+    public <O> RubyBase.LazyEnumerator<Entry<E, O>> eachWithObject(O obj);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> find();
+    public RubyBase.LazyEnumerator<E> find();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> findAll();
+    public RubyBase.LazyEnumerator<E> findAll();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> findAll(BooleanBlock<? super E> block);
+    public RubyBase.LazyEnumerator<E> findAll(BooleanBlock<? super E> block);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> findIndex();
+    public RubyBase.LazyEnumerator<E> findIndex();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> flatMap();
+    public RubyBase.LazyEnumerator<E> flatMap();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public <S> Ruby.LazyEnumerator<S> flatMap(
+    public <S> RubyBase.LazyEnumerator<S> flatMap(
         TransformBlock<? super E, ? extends List<? extends S>> block);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> grep(String regex);
+    public RubyBase.LazyEnumerator<E> grep(String regex);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public <S> Ruby.LazyEnumerator<S> grep(String regex,
+    public <S> RubyBase.LazyEnumerator<S> grep(String regex,
         TransformBlock<? super E, ? extends S> block);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      * 
      * @deprecated since 1.9.0, using Java 8 Lambda instead
      */
     @Deprecated
     @Override
-    public <S> Ruby.LazyEnumerator<S> grep(String regex,
+    public <S> RubyBase.LazyEnumerator<S> grep(String regex,
         final String methodName, final Object... args);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> groupBy();
+    public RubyBase.LazyEnumerator<E> groupBy();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> map();
+    public RubyBase.LazyEnumerator<E> map();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public <S> Ruby.LazyEnumerator<S> map(
+    public <S> RubyBase.LazyEnumerator<S> map(
         TransformBlock<? super E, ? extends S> block);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      * 
      * @deprecated since 1.9.0, using Java 8 Lambda instead
      */
     @Deprecated
     @Override
-    public <S> Ruby.LazyEnumerator<S> map(String methodName, Object... args);
+    public <S> RubyBase.LazyEnumerator<S> map(String methodName,
+        Object... args);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> maxBy();
+    public RubyBase.LazyEnumerator<E> maxBy();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> minBy();
+    public RubyBase.LazyEnumerator<E> minBy();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> minmaxBy();
+    public RubyBase.LazyEnumerator<E> minmaxBy();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> partition();
+    public RubyBase.LazyEnumerator<E> partition();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> reject();
+    public RubyBase.LazyEnumerator<E> reject();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> reject(BooleanBlock<? super E> block);
+    public RubyBase.LazyEnumerator<E> reject(BooleanBlock<? super E> block);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> reverseEach();
+    public RubyBase.LazyEnumerator<E> reverseEach();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> reverseEach(Block<? super E> block);
+    public RubyBase.LazyEnumerator<E> reverseEach(Block<? super E> block);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> select();
+    public RubyBase.LazyEnumerator<E> select();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> select(BooleanBlock<? super E> block);
+    public RubyBase.LazyEnumerator<E> select(BooleanBlock<? super E> block);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<RubyArray<E>> sliceBefore(
+    public RubyBase.LazyEnumerator<RubyArray<E>> sliceBefore(
         BooleanBlock<? super E> block);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<RubyArray<E>> sliceBefore(String regex);
+    public RubyBase.LazyEnumerator<RubyArray<E>> sliceBefore(String regex);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> sortBy();
+    public RubyBase.LazyEnumerator<E> sortBy();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> take(int n);
+    public RubyBase.LazyEnumerator<E> take(int n);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> takeWhile();
+    public RubyBase.LazyEnumerator<E> takeWhile();
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> takeWhile(BooleanBlock<? super E> block);
+    public RubyBase.LazyEnumerator<E> takeWhile(BooleanBlock<? super E> block);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<RubyArray<E>> zip(
+    public RubyBase.LazyEnumerator<RubyArray<E>> zip(
         Iterable<? extends E>... others);
 
     /**
      * {@inheritDoc}
      * 
-     * @return {@link Ruby.LazyEnumerator}
+     * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<RubyArray<E>> zip(
+    public RubyBase.LazyEnumerator<RubyArray<E>> zip(
         List<? extends Iterable<? extends E>> others);
 
     /**
      * {@inheritDoc}
      * 
-     * @return this {@link Ruby.LazyEnumerator}
+     * @return this {@link RubyBase.LazyEnumerator}
      */
     @Override
-    public Ruby.LazyEnumerator<E> rewind();
+    public RubyBase.LazyEnumerator<E> rewind();
 
   }
 

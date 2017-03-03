@@ -36,6 +36,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
+import org.junit.Before;
+import org.junit.Test;
+
 import net.sf.rubycollect4j.block.Block;
 import net.sf.rubycollect4j.block.BooleanBlock;
 import net.sf.rubycollect4j.block.EntryBooleanBlock;
@@ -44,9 +47,6 @@ import net.sf.rubycollect4j.block.TransformBlock;
 import net.sf.rubycollect4j.block.WithIndexBlock;
 import net.sf.rubycollect4j.block.WithInitBlock;
 import net.sf.rubycollect4j.block.WithObjectBlock;
-
-import org.junit.Before;
-import org.junit.Test;
 
 @SuppressWarnings("deprecation")
 public class RubyEnumerableTest {
@@ -74,7 +74,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testInterface() {
-    assertTrue(re instanceof Ruby.Enumerable);
+    assertTrue(re instanceof RubyBase.Enumerable);
   }
 
   @Test
@@ -150,29 +150,30 @@ public class RubyEnumerableTest {
           }
 
         }).toA();
-    assertEquals(hp(false, newRubyArray(1)).toString(), chunk.get(0).toString());
-    assertEquals(hp(true, newRubyArray(2, 2)).toString(), chunk.get(1)
-        .toString());
-    assertEquals(hp(false, newRubyArray(3)).toString(), chunk.get(2).toString());
+    assertEquals(hp(false, newRubyArray(1)).toString(),
+        chunk.get(0).toString());
+    assertEquals(hp(true, newRubyArray(2, 2)).toString(),
+        chunk.get(1).toString());
+    assertEquals(hp(false, newRubyArray(3)).toString(),
+        chunk.get(2).toString());
     assertEquals(3, chunk.size());
   }
 
   @SuppressWarnings("unchecked")
   @Test
   public void testChunkWhile() {
-    RubyEnumerator<Integer> re =
-        newRubyEnumerator(Arrays.asList(1, 2, 4, 9, 10, 11, 12, 15, 16, 19, 20,
-            21));
+    RubyEnumerator<Integer> re = newRubyEnumerator(
+        Arrays.asList(1, 2, 4, 9, 10, 11, 12, 15, 16, 19, 20, 21));
     assertEquals(
-        ra(ra(1, 2), ra(4), ra(9, 10, 11, 12), ra(15, 16), ra(19, 20, 21)), re
-            .chunkWhile(new EntryBooleanBlock<Integer, Integer>() {
+        ra(ra(1, 2), ra(4), ra(9, 10, 11, 12), ra(15, 16), ra(19, 20, 21)),
+        re.chunkWhile(new EntryBooleanBlock<Integer, Integer>() {
 
-              @Override
-              public boolean yield(Integer key, Integer value) {
-                return key + 1 == value;
-              }
+          @Override
+          public boolean yield(Integer key, Integer value) {
+            return key + 1 == value;
+          }
 
-            }).toA());
+        }).toA());
   }
 
   @SuppressWarnings("unchecked")
@@ -1285,8 +1286,8 @@ public class RubyEnumerableTest {
     assertEquals(ra(1, 2, 3, 3, 4), re.sort());
     assertEquals(ra("abc", "b", "cd"),
         newRubyEnumerator(Arrays.asList("b", "cd", "abc")).sort());
-    assertEquals(ra(null, null, null), newRubyEnumerator(ra(null, null, null))
-        .sort());
+    assertEquals(ra(null, null, null),
+        newRubyEnumerator(ra(null, null, null)).sort());
     re = newRubyEnumerator(Arrays.asList(1));
     assertEquals(ra(1), re.sort());
   }

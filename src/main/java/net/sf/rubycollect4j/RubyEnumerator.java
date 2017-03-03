@@ -28,7 +28,7 @@ import net.sf.rubycollect4j.util.PeekingIterator;
  * class of Ruby language.
  * <p>
  * {@link RubyEnumerator} is both Iterable and Iterator and it's also a peeking
- * iterator and a {@link Ruby.Enumerable}.
+ * iterator and a {@link RubyBase.Enumerable}.
  * 
  * @param <E>
  *          the type of the elements
@@ -36,8 +36,8 @@ import net.sf.rubycollect4j.util.PeekingIterator;
  * @author Wei-Ming Wu
  * 
  */
-public class RubyEnumerator<E> extends RubyEnumerable<E> implements
-    Ruby.Enumerator<E> {
+public class RubyEnumerator<E> extends RubyEnumerable<E>
+    implements RubyBase.Enumerator<E> {
 
   private final Iterable<E> iter;
   private PeekingIterator<E> pIterator;

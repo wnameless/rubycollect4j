@@ -24,11 +24,11 @@ import java.lang.reflect.Modifier;
 
 import org.junit.Test;
 
-public class RubyTest {
+public class RubyBaseTest {
 
   @Test
   public void testPrivateConstructor() throws Exception {
-    Constructor<Ruby> c = Ruby.class.getDeclaredConstructor();
+    Constructor<RubyBase> c = RubyBase.class.getDeclaredConstructor();
     assertTrue(Modifier.isPrivate(c.getModifiers()));
     c.setAccessible(true);
     c.newInstance();
