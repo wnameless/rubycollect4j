@@ -81,7 +81,7 @@ public class RubyKernel {
     } else if (o instanceof Map) {
       Map<?, ?> map = (Map<?, ?>) o;
       out.print("{");
-      Ruby.Array.copyOf(map.entrySet()).eachWithIndex((entry, i) -> {
+      Ruby.Enumerator.of(map.entrySet()).eachWithIndex((entry, i) -> {
         if (i != 0) out.print(", ");
         p(entry.getKey(), false);
         out.print("=");
@@ -91,7 +91,7 @@ public class RubyKernel {
     } else if (o instanceof Iterable) {
       Iterable<?> iter = (Iterable<?>) o;
       out.print("[");
-      Ruby.Array.copyOf(iter).eachWithIndex((item, i) -> {
+      Ruby.Enumerator.of(iter).eachWithIndex((item, i) -> {
         if (i != 0) out.print(", ");
         p(item, false);
       });
@@ -99,10 +99,12 @@ public class RubyKernel {
     } else if (o instanceof Iterator) {
       Iterator<?> iter = (Iterator<?>) o;
       out.print("[");
-      Ruby.Array.copyOf(iter).eachWithIndex((item, i) -> {
+      int i = 0;
+      while (iter.hasNext()) {
         if (i != 0) out.print(", ");
-        p(item, false);
-      });
+        p(iter.next(), false);
+        i++;
+      }
       out.print("]");
     } else if (o instanceof byte[]) {
       out.print(Arrays.toString((byte[]) o));
@@ -132,7 +134,7 @@ public class RubyKernel {
     } else if (o instanceof Object[]) {
       Object[] array = (Object[]) o;
       out.print("[");
-      Ruby.Array.copyOf(array).eachWithIndex((item, i) -> {
+      Ruby.Enumerator.of(Arrays.asList(array)).eachWithIndex((item, i) -> {
         if (i != 0) out.print(", ");
         p(item, false);
       });
