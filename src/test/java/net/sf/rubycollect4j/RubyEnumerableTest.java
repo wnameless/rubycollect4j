@@ -28,6 +28,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -38,6 +39,8 @@ import java.util.Map.Entry;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+
+import javax.xml.bind.TypeConstraintException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -869,6 +872,17 @@ public class RubyEnumerableTest {
         newRubyEnumerator(Arrays.asList("aaaa", "bbb", "cc", "e", "d"));
     assertEquals(ra("e", "d", "cc", "bbb", "aaaa"),
         re.sortBy(item -> item.length()));
+  }
+
+  @Test
+  public void testSum() {
+    assertEquals(new BigDecimal(10),
+        newRubyEnumerator(Arrays.asList(1, 2, 3, 4)).sum());
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testSumException() {
+    newRubyEnumerator(Arrays.asList("a", "b", "c")).sum();
   }
 
   @Test

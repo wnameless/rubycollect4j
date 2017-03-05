@@ -853,7 +853,7 @@ public abstract class RubyEnumerable<E> implements RubyBase.Enumerable<E> {
     for (E item : getIterable()) {
       if (item instanceof Number) {
         Number num = (Number) item;
-        sum.add(new BigDecimal(num.toString()));
+        sum = sum.add(new BigDecimal(num.toString()));
       } else {
         String type = item == null ? "null" : item.getClass().getSimpleName();
         throw new TypeConstraintException(
