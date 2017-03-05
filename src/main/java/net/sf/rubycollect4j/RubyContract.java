@@ -17,6 +17,7 @@
  */
 package net.sf.rubycollect4j;
 
+import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -988,6 +989,13 @@ final class RubyContract {
      * @return {@link RubyArray}
      */
     public <S> RubyArray<E> sortBy(Function<? super E, ? extends S> block);
+
+    /**
+     * Adds up all elements.
+     * 
+     * @return {@link BigDecimal}
+     */
+    public BigDecimal sum();
 
     /**
      * Takes the first n elements.

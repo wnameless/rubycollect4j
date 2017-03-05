@@ -21,6 +21,7 @@ import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -1624,6 +1625,26 @@ public final class RubyArray<E> extends RubyEnumerable<E>
       list.addAll(rubyHash.get(key));
     }
     return this;
+  }
+
+  /**
+   * Adds up all elements.
+   * 
+   * @return {@link BigDecimal}
+   */
+  public BigDecimal sum() {
+    BigDecimal sum = new BigDecimal(0);
+    for (E item : getIterable()) {
+      if (item instanceof Number) {
+        Number num = (Number) item;
+        sum = sum.add(new BigDecimal(num.toString()));
+      } else {
+        String type = item == null ? "null" : item.getClass().getSimpleName();
+        throw new TypeConstraintException(
+            "TypeError: " + type + " can't be coerced into Number");
+      }
+    }
+    return sum;
   }
 
   /**

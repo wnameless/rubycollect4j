@@ -21,6 +21,7 @@ import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
 import static net.sf.rubycollect4j.RubyCollections.newRubyLazyEnumerator;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -35,6 +36,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
+
+import javax.xml.bind.TypeConstraintException;
 
 import net.sf.rubycollect4j.iter.ChunkIterable;
 import net.sf.rubycollect4j.iter.ChunkWhileIterable;
@@ -1001,16 +1004,6 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
     return rubyArray;
   }
 
-  // @Override
-  // public RubyArray<E> sort(Comparator<? super E> comp) {
-  // RubyArray<E> rubyArray = newRubyArray(iter);
-  // if (rubyArray.size() <= 1)
-  // return rubyArray;
-  //
-  // Collections.sort(rubyArray, new TryComparator<E>(comp));
-  // return rubyArray;
-  // }
-
   /**
    * {@inheritDoc}
    * 
@@ -1051,6 +1044,22 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
       rubyArray.addAll(rubyHash.get(key));
     }
     return rubyArray;
+  }
+
+  @Override
+  public BigDecimal sum() {
+    BigDecimal sum = new BigDecimal(0);
+    for (E item : iter) {
+      if (item instanceof Number) {
+        Number num = (Number) item;
+        sum = sum.add(new BigDecimal(num.toString()));
+      } else {
+        String type = item == null ? "null" : item.getClass().getSimpleName();
+        throw new TypeConstraintException(
+            "TypeError: " + type + " can't be coerced into Number");
+      }
+    }
+    return sum;
   }
 
   /**

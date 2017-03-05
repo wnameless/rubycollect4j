@@ -80,7 +80,6 @@ public class RubyStringTest {
 
   @Test
   public void testInterfaces() {
-    assertTrue(rs instanceof RubyEnumerable);
     assertTrue(rs instanceof CharSequence);
     assertTrue(rs instanceof Comparable);
     assertTrue(rs instanceof Serializable);
@@ -101,7 +100,7 @@ public class RubyStringTest {
 
   @Test
   public void testGetIterable() {
-    assertEquals(ra("a", "b", "c"), ra(rs.getIterable()));
+    assertEquals(ra("a", "b", "c"), ra(rs.eachChar().getIterable()));
   }
 
   @Test
@@ -712,7 +711,7 @@ public class RubyStringTest {
   public void testMatch() {
     Matcher matcher = rs.match("[a-z]");
     assertTrue(matcher instanceof Matcher);
-    RubyArray<String> chars = rs.toA();
+    RubyArray<String> chars = rs.eachChar().toA();
     while (matcher.find()) {
       assertEquals(chars.shift(), matcher.group());
     }
@@ -728,7 +727,7 @@ public class RubyStringTest {
   public void testMatchWithPosition() {
     Matcher matcher = rs.match("[a-z]", 1);
     assertTrue(matcher instanceof Matcher);
-    RubyArray<String> chars = rs.toA();
+    RubyArray<String> chars = rs.eachChar().toA();
     chars.shift(1);
     while (matcher.find()) {
       assertEquals(chars.shift(), matcher.group());

@@ -57,16 +57,13 @@ import net.sf.rubycollect4j.succ.StringSuccessor;
  * {@link RubyString} is also a Java CharSequence and a
  * {@link RubyBase.Enumerable}.
  * <P>
- * To avoid the conflict of Java 8 String#chars(), {@link RubyString} doesn't
- * implement the chars() method, but instead it directly extends the
- * {@link RubyEnumerable} which also implies it allows to be manipulated as
- * RubyEnumerable&lt;String&gt; and each String represents a character in this
- * {@link RubyString}.
+ * To avoid the conflict of Java 8 CharSequence#chars(), {@link RubyString}
+ * doesn't implement the chars() method.
  * 
  * @author Wei-Ming Wu
  * 
  */
-public final class RubyString extends RubyEnumerable<String>
+public final class RubyString
     implements CharSequence, Comparable<CharSequence>, Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -91,12 +88,6 @@ public final class RubyString extends RubyEnumerable<String>
    */
   public RubyString(Object o) {
     str = stringify(o);
-  }
-
-  @Override
-  protected Iterable<String> getIterable() {
-    return range(0, str.length() - 1).lazy()
-        .map(i -> Character.toString(str.charAt(i)));
   }
 
   private String stringify(Object o) {
@@ -262,7 +253,7 @@ public final class RubyString extends RubyEnumerable<String>
 
     RubyArray<String> centeredStr = newRubyArray();
     int start = (width - str.length()) / 2;
-    RubyLazyEnumerator<String> padStr = rs(padstr).lazy().cycle();
+    RubyLazyEnumerator<String> padStr = rs(padstr).eachChar().lazy().cycle();
     for (int i = 0; i < width; i++) {
       if (i < start) {
         centeredStr.add(padStr.next());
@@ -272,7 +263,7 @@ public final class RubyString extends RubyEnumerable<String>
           centeredStr.add(padStr.next());
           continue;
         }
-        centeredStr = centeredStr.plus(toA());
+        centeredStr = centeredStr.plus(eachChar().toA());
         i += str.length() - 1;
       } else {
         centeredStr.add(padStr.next());
@@ -440,7 +431,7 @@ public final class RubyString extends RubyEnumerable<String>
    * @return the total count
    */
   public int count(final String charSet, final String... charSets) {
-    return count(item -> {
+    return eachChar().count(item -> {
       if (!isCharSetMatched(item, stringify(charSet))) return false;
 
       if (charSets != null) {
@@ -507,7 +498,7 @@ public final class RubyString extends RubyEnumerable<String>
    */
   public RubyString delete(final String charSet) {
     stringify(charSet);
-    return rs(toA().deleteIf((item -> {
+    return rs(eachChar().toA().deleteIf((item -> {
       if (!isCharSetMatched(item, charSet)) return false;
 
       return true;
@@ -553,7 +544,7 @@ public final class RubyString extends RubyEnumerable<String>
    * @return new {@link RubyString}
    */
   public RubyString dump() {
-    String printable = toA().map(item -> {
+    String printable = eachChar().toA().map(item -> {
       Integer codepoint = item.codePointAt(0);
 
       if (item.matches("\b"))
@@ -603,7 +594,8 @@ public final class RubyString extends RubyEnumerable<String>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<String> eachChar() {
-    return each();
+    return Ruby.Enumerator.of(range(0, str.length() - 1).lazy()
+        .map(i -> Character.toString(str.charAt(i))));
   }
 
   /**
@@ -614,7 +606,7 @@ public final class RubyString extends RubyEnumerable<String>
    * @return this {@link RubyString}
    */
   public RubyString eachChar(Consumer<String> block) {
-    each(block);
+    eachChar().each(block);
     return this;
   }
 
@@ -625,7 +617,7 @@ public final class RubyString extends RubyEnumerable<String>
    */
   public RubyEnumerator<Integer> eachCodepoint() {
     return newRubyEnumerator(
-        (Iterable<Integer>) each().lazy().map(item -> item.codePointAt(0)));
+        eachChar().lazy().map(item -> item.codePointAt(0)));
   }
 
   /**
@@ -953,7 +945,6 @@ public final class RubyString extends RubyEnumerable<String>
    * 
    * @return true if str contains the given string, false otherwise
    */
-  @Override
   public boolean includeʔ(String otherStr) {
     return str.contains(stringify(otherStr));
   }
@@ -1041,7 +1032,7 @@ public final class RubyString extends RubyEnumerable<String>
       throw new IndexOutOfBoundsException(
           "IndexError: index " + index + " out of string");
 
-    str = toA().insert(index, stringify(otherStr)).join();
+    str = eachChar().toA().insert(index, stringify(otherStr)).join();
     return this;
   }
 
@@ -1052,7 +1043,7 @@ public final class RubyString extends RubyEnumerable<String>
    * @return new {@link RubyString}
    */
   public RubyString inspect() {
-    String printable = toA().map(item -> {
+    String printable = eachChar().toA().map(item -> {
       if (item.matches("\b"))
         return "\\b";
       else if (item.matches("\f"))
@@ -1120,7 +1111,8 @@ public final class RubyString extends RubyEnumerable<String>
    * @return new {@link RubyString}
    */
   public RubyString ljust(int width, String padstr) {
-    RubyLazyEnumerator<String> padStr = rs(stringify(padstr)).lazy().cycle();
+    RubyLazyEnumerator<String> padStr =
+        rs(stringify(padstr)).eachChar().lazy().cycle();
 
     int extra = width - str.length();
     if (extra > 0) {
@@ -1416,7 +1408,7 @@ public final class RubyString extends RubyEnumerable<String>
    * @return new {@link RubyString}
    */
   public RubyString rjust(int width, String padstr) {
-    RubyLazyEnumerator<String> padStr = rs(padstr).lazy().cycle();
+    RubyLazyEnumerator<String> padStr = rs(padstr).eachChar().lazy().cycle();
 
     int extra = width - str.length();
     if (extra > 0) {
@@ -1609,7 +1601,7 @@ public final class RubyString extends RubyEnumerable<String>
    * @return new {@link RubyString}
    */
   public RubyString scrub(final Function<RubyArray<Byte>, String> block) {
-    return rs(map(item -> {
+    return rs(eachChar().map(item -> {
       if (item.matches("\\p{C}"))
         return block.apply(rs(item).bytes());
       else
@@ -1683,7 +1675,7 @@ public final class RubyString extends RubyEnumerable<String>
    * @return new {@link RubyString} or null
    */
   public RubyString slice(int index) {
-    String slicedStr = toA().slice(index);
+    String slicedStr = eachChar().toA().slice(index);
     return slicedStr == null ? null : rs(slicedStr);
   }
 
@@ -1697,7 +1689,7 @@ public final class RubyString extends RubyEnumerable<String>
    * @return new {@link RubyString} or null
    */
   public RubyString slice(int index, int length) {
-    RubyArray<String> slicedStr = toA().slice(index, length);
+    RubyArray<String> slicedStr = eachChar().toA().slice(index, length);
     return slicedStr == null ? null : rs(slicedStr.join());
   }
 
@@ -1758,7 +1750,7 @@ public final class RubyString extends RubyEnumerable<String>
    * @return new {@link RubyString} or null
    */
   public RubyString sliceǃ(int index) {
-    RubyArray<String> chars = toA();
+    RubyArray<String> chars = eachChar().toA();
     String slicedStr = chars.sliceǃ(index);
     if (slicedStr == null) return null;
 
@@ -1776,7 +1768,7 @@ public final class RubyString extends RubyEnumerable<String>
    * @return new {@link RubyString} or null
    */
   public RubyString sliceǃ(int index, int length) {
-    RubyArray<String> chars = toA();
+    RubyArray<String> chars = eachChar().toA();
     RubyArray<String> slicedStr = chars.sliceǃ(index, length);
     if (slicedStr == null) return null;
 
@@ -2148,8 +2140,8 @@ public final class RubyString extends RubyEnumerable<String>
    */
   public RubyString swapcase() {
     final Pattern upperCase = qr("[A-Z]");
-    return rs(map(item -> upperCase.matcher(item).matches() ? item.toLowerCase()
-        : item.toUpperCase()).join());
+    return rs(eachChar().map(item -> upperCase.matcher(item).matches()
+        ? item.toLowerCase() : item.toUpperCase()).join());
   }
 
   /**
@@ -2260,11 +2252,11 @@ public final class RubyString extends RubyEnumerable<String>
     fromStr = charSet2Str(stringify(fromStr));
     toStr = charSet2Str(stringify(toStr));
     if (fromStr.startsWith("^")) return rs(str.replaceAll("[" + fromStr + "]",
-        toStr.isEmpty() ? "" : rs(toStr).toA().last()));
+        toStr.isEmpty() ? "" : rs(toStr).eachChar().toA().last()));
 
     RubyArray<String> fromStrAry =
-        rs(fromStr.replace("\\^", "^").replace("\\-", "-")).toA();
-    RubyArray<String> toStrAry = rs(toStr).toA();
+        rs(fromStr.replace("\\^", "^").replace("\\-", "-")).eachChar().toA();
+    RubyArray<String> toStrAry = rs(toStr).eachChar().toA();
     if (toStrAry.isEmpty())
       toStrAry.fill("", 0, fromStrAry.length());
     else if (toStrAry.length() < fromStrAry.length())
@@ -2316,7 +2308,7 @@ public final class RubyString extends RubyEnumerable<String>
     String trStr = tr(fromString, toStr).toS();
 
     RubyArray<Boolean> matchIndice =
-        map(item -> item.matches("[" + fromString + "]"));
+        eachChar().map(item -> item.matches("[" + fromString + "]"));
 
     final Boolean[] prev = { matchIndice.get(0) };
     RubyArray<Integer> matchCounts = matchIndice.sliceBefore(item -> {

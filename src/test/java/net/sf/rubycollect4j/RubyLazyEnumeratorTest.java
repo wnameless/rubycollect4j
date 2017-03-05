@@ -25,6 +25,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -32,6 +33,8 @@ import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
+
+import javax.xml.bind.TypeConstraintException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -352,6 +355,16 @@ public class RubyLazyEnumeratorTest {
   @Test
   public void testSortBy() {
     assertTrue(lre.sortBy() instanceof RubyLazyEnumerator);
+  }
+
+  @Test
+  public void testSum() {
+    assertEquals(new BigDecimal(10), lre.sum());
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testSumException() {
+    Ruby.LazyEnumerator.of(ra("a", "b", "c")).sum();
   }
 
   @Test

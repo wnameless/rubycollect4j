@@ -21,6 +21,7 @@ import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.newRubyLazyEnumerator;
 
+import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -32,6 +33,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
+
+import javax.xml.bind.TypeConstraintException;
 
 import net.sf.rubycollect4j.iter.ChunkIterable;
 import net.sf.rubycollect4j.iter.ChunkWhileIterable;
@@ -842,6 +845,22 @@ public abstract class RubyEnumerable<E> implements RubyBase.Enumerable<E> {
   @Override
   public <S> RubyArray<E> sortBy(Function<? super E, ? extends S> block) {
     return newRubyLazyEnumerator(getIterable()).sortBy(block);
+  }
+
+  @Override
+  public BigDecimal sum() {
+    BigDecimal sum = new BigDecimal(0);
+    for (E item : getIterable()) {
+      if (item instanceof Number) {
+        Number num = (Number) item;
+        sum.add(new BigDecimal(num.toString()));
+      } else {
+        String type = item == null ? "null" : item.getClass().getSimpleName();
+        throw new TypeConstraintException(
+            "TypeError: " + type + " can't be coerced into Number");
+      }
+    }
+    return sum;
   }
 
   /**

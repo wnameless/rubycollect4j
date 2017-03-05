@@ -140,7 +140,7 @@ public class RubyTest {
         Ruby.Array.of(1, 2, 3));
     assertEquals(
         new RubyArray<RubyArray<Integer>>()
-            .push(new RubyArray<Integer>(Arrays.asList(1, 2, 3))),
+            .push(new RubyArray<>(Arrays.asList(1, 2, 3))),
         Ruby.Array.of(Ruby.Array.of(1, 2, 3)));
     assertEquals(new RubyArray<>(Arrays.asList(1, 2, 3)),
         Ruby.Array.copyOf(new Integer[] { 1, 2, 3 }));

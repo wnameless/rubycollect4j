@@ -30,6 +30,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -1023,6 +1024,16 @@ public class RubyArrayTest {
   public void testSubtract() {
     ra = ra(1, 2, 3, 4, 4);
     assertEquals(ra(1, 2), ra.minus(ra(3, 4, 5)));
+  }
+
+  @Test
+  public void testSum() {
+    assertEquals(new BigDecimal(10), ra.sum());
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testSumException() {
+    ra("a", "b", "c").sum();
   }
 
   @Test

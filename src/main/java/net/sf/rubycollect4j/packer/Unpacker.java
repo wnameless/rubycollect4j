@@ -158,7 +158,7 @@ public final class Unpacker {
           RubyString unpackRS = null;
           RubyArray<String> unpackRA = newRubyArray();
           while (count > 0) {
-            if (unpackRS != null && unpackRS.anyʔ()) {
+            if (unpackRS != null && unpackRS.eachChar().anyʔ()) {
               unpackRA.add(unpackRS.sliceǃ(0).toS());
               count--;
             } else if (a8u.hasNextByte()) {

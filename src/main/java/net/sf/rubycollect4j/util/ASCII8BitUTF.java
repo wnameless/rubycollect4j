@@ -58,7 +58,7 @@ public final class ASCII8BitUTF implements CharSequence {
     Objects.requireNonNull(str);
 
     this.str = str;
-    chars.replace(rs(str).toA());
+    chars.replace(rs(str).eachChar().toA());
     totalByteNumber = remainingByteNumber = countByteNumber();
     rewind();
   }
@@ -115,7 +115,7 @@ public final class ASCII8BitUTF implements CharSequence {
    * Rewinds this {@link ASCII8BitUTF}.
    */
   public void rewind() {
-    chars.replace(rs(str).toA());
+    chars.replace(rs(str).eachChar().toA());
     advanceChar();
     remainingByteNumber = totalByteNumber;
   }

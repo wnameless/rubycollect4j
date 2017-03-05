@@ -356,6 +356,13 @@ public final class RubyStrings {
   }
 
   /**
+   * @see net.sf.rubycollect4j.RubyString#includeʔ(String)
+   */
+  public boolean includeʔ(CharSequence in, String otherStr) {
+    return rs(in).includeʔ(otherStr);
+  }
+
+  /**
    * @see net.sf.rubycollect4j.RubyString#index(Pattern)
    */
   public static Integer index(CharSequence in, Pattern regex) {

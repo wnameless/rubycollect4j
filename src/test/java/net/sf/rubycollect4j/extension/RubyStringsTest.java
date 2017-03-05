@@ -562,7 +562,7 @@ public class RubyStringsTest {
   public void testMatch() {
     Matcher matcher = RubyStrings.match(rs, "[a-z]");
     assertTrue(matcher instanceof Matcher);
-    RubyArray<String> chars = rs(rs).toA();
+    RubyArray<String> chars = rs(rs).eachChar().toA();
     while (matcher.find()) {
       assertEquals(chars.shift(), matcher.group());
     }
@@ -578,7 +578,7 @@ public class RubyStringsTest {
   public void testMatchWithPosition() {
     Matcher matcher = RubyStrings.match(rs, "[a-z]", 1);
     assertTrue(matcher instanceof Matcher);
-    RubyArray<String> chars = rs(rs).toA();
+    RubyArray<String> chars = rs(rs).eachChar().toA();
     chars.shift(1);
     while (matcher.find()) {
       assertEquals(chars.shift(), matcher.group());
