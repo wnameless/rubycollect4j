@@ -28,6 +28,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.math.BigInteger;
@@ -211,10 +212,10 @@ public class RubyStringsTest {
     String md5 = null;
     MessageDigest digest;
     try {
-      digest = MessageDigest.getInstance("MD5");
-      digest.update(encrypt.getBytes(), 0, encrypt.length());
+      digest = MessageDigest.getInstance("SHA-256");
+      digest.update(encrypt.getBytes("UTF-8"), 0, encrypt.length());
       md5 = new BigInteger(1, digest.digest()).toString(16);
-    } catch (NoSuchAlgorithmException e) {}
+    } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {}
     assertEquals(md5, RubyStrings.crypt(rs, "secret"));
   }
 

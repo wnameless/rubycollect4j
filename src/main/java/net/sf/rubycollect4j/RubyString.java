@@ -29,6 +29,7 @@ import static net.sf.rubycollect4j.RubyObject.isBlank;
 import static net.sf.rubycollect4j.RubyObject.isPresent;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
@@ -54,8 +55,7 @@ import net.sf.rubycollect4j.succ.StringSuccessor;
  * {@link RubyString} implements all methods refer to the String class of Ruby
  * language.
  * <p>
- * {@link RubyString} is also a Java CharSequence and a
- * {@link RubyBase.Enumerable}.
+ * {@link RubyString} is also a Java CharSequence.
  * <P>
  * To avoid the conflict of Java 8 CharSequence#chars(), {@link RubyString}
  * doesn't implement the chars() method.
@@ -470,21 +470,20 @@ public final class RubyString
 
   /**
    * Applies a one-way cryptographic hash to str by invoking the
-   * MessageDigest(MD5) with the given salt string.
+   * MessageDigest(SHA-256) with the given salt string.
    * 
    * @param salt
-   *          a secret string
-   * @return new {@link RubyString}
+   *          a secret string @return new {@link RubyString}
    */
   public RubyString crypt(String salt) {
     String encrypt = str + stringify(salt);
-    String md5 = null;
+    String sha = null;
     try {
-      MessageDigest digest = MessageDigest.getInstance("MD5");
-      digest.update(encrypt.getBytes(), 0, encrypt.length());
-      md5 = new BigInteger(1, digest.digest()).toString(16);
-    } catch (NoSuchAlgorithmException e) {}
-    return rs(md5);
+      MessageDigest digest = MessageDigest.getInstance("SHA-256");
+      digest.update(encrypt.getBytes("UTF-8"), 0, encrypt.length());
+      sha = new BigInteger(1, digest.digest()).toString(16);
+    } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {}
+    return rs(sha);
   }
 
   /**

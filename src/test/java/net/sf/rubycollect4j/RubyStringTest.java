@@ -30,6 +30,7 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
@@ -284,10 +285,10 @@ public class RubyStringTest {
     String md5 = null;
     MessageDigest digest;
     try {
-      digest = MessageDigest.getInstance("MD5");
-      digest.update(encrypt.getBytes(), 0, encrypt.length());
+      digest = MessageDigest.getInstance("SHA-256");
+      digest.update(encrypt.getBytes("UTF-8"), 0, encrypt.length());
       md5 = new BigInteger(1, digest.digest()).toString(16);
-    } catch (NoSuchAlgorithmException e) {}
+    } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {}
     assertEquals(md5, rs.crypt("secret").toS());
   }
 
