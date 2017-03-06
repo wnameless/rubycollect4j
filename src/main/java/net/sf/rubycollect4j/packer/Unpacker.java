@@ -40,8 +40,8 @@ import static net.sf.rubycollect4j.packer.Directive.ql;
 import static net.sf.rubycollect4j.packer.Directive.s;
 import static net.sf.rubycollect4j.packer.Directive.sb;
 import static net.sf.rubycollect4j.packer.Directive.sl;
-import static net.sf.rubycollect4j.util.ByteUtil.toBinaryString;
-import static net.sf.rubycollect4j.util.ByteUtil.toHexString;
+import static net.sf.rubycollect4j.util.ByteUtils.toBinaryString;
+import static net.sf.rubycollect4j.util.ByteUtils.toHexString;
 
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.RubyHash;

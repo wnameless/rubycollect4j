@@ -86,11 +86,11 @@ public final class ASCII8BitUTF implements CharSequence {
     if (ch == null) return ra();
 
     if (ch.codePointAt(0) < 256)
-      return ByteUtil.toList(
+      return ByteUtils.toList(
           ByteBuffer.allocate(2).putShort((short) ch.codePointAt(0)).array())
           .last(1);
     else
-      return ByteUtil.toList(ch.getBytes());
+      return ByteUtils.toList(ch.getBytes());
   }
 
   /**
@@ -210,7 +210,7 @@ public final class ASCII8BitUTF implements CharSequence {
       bytes.add(nextByte());
       n--;
     }
-    return ByteUtil.toArray(bytes);
+    return ByteUtils.toArray(bytes);
   }
 
   @Override

@@ -97,7 +97,7 @@ import net.sf.rubycollect4j.succ.IntegerSuccessorTest;
 import net.sf.rubycollect4j.succ.LongSuccessorTest;
 import net.sf.rubycollect4j.succ.StringSuccessorTest;
 import net.sf.rubycollect4j.util.ASCII8BitUTFTest;
-import net.sf.rubycollect4j.util.ByteUtilTest;
+import net.sf.rubycollect4j.util.ByteUtilsTest;
 import net.sf.rubycollect4j.util.ComparableEntryTest;
 import net.sf.rubycollect4j.util.LinkedIdentityMapTest;
 import net.sf.rubycollect4j.util.LinkedIdentityMap_EntrySetTest;
@@ -149,7 +149,7 @@ import net.sf.rubycollect4j.util.TryComparatorTest;
     CharacterSuccessorTest.class, DateSuccessorTest.class,
     DoubleSuccessorTest.class, IntegerSuccessorTest.class,
     LongSuccessorTest.class, StringSuccessorTest.class, ASCII8BitUTFTest.class,
-    ByteUtilTest.class, ComparableEntryTest.class,
+    ByteUtilsTest.class, ComparableEntryTest.class,
     LinkedIdentityMap_EntrySetTest.class,
     LinkedIdentityMap_IdentityEntryTest.class,
     LinkedIdentityMap_KeySetTest.class, LinkedIdentityMap_ValuesTest.class,

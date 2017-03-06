@@ -21,7 +21,7 @@ import static java.nio.ByteOrder.nativeOrder;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.rs;
 import static net.sf.rubycollect4j.RubyLiterals.qr;
-import static net.sf.rubycollect4j.util.ByteUtil.toByteArray;
+import static net.sf.rubycollect4j.util.ByteUtils.toByteArray;
 
 import java.nio.ByteOrder;
 import java.util.Arrays;
@@ -30,7 +30,7 @@ import java.util.function.Function;
 
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.RubyString;
-import net.sf.rubycollect4j.util.ByteUtil;
+import net.sf.rubycollect4j.util.ByteUtils;
 
 /**
  * 
@@ -94,7 +94,7 @@ public final class Packer {
           if (binaryStr == null)
             sb.append("");
           else
-            sb.append(d.pack(ByteUtil.fromBinaryString(binaryStr.toS())));
+            sb.append(d.pack(ByteUtils.fromBinaryString(binaryStr.toS())));
 
           break;
 
@@ -105,7 +105,7 @@ public final class Packer {
           if (hexStr == null)
             sb.append("");
           else
-            sb.append(d.pack(ByteUtil.fromHexString(hexStr.toS())));
+            sb.append(d.pack(ByteUtils.fromHexString(hexStr.toS())));
 
           break;
 

@@ -39,18 +39,18 @@ import net.sf.rubycollect4j.RubyArray;
 
 /**
  * 
- * {@link ByteUtil} provides functions to manipulate bytes or to convert variety
+ * {@link ByteUtils} provides functions to manipulate bytes or to convert variety
  * Objects into bytes.
  * 
  * @author Wei-Ming Wu
  * 
  */
-public final class ByteUtil {
+public final class ByteUtils {
 
   private static final Logger logger =
-      Logger.getLogger(ByteUtil.class.getName());
+      Logger.getLogger(ByteUtils.class.getName());
 
-  private ByteUtil() {};
+  private ByteUtils() {};
 
   /**
    * Converts a byte array to a {@link RubyArray} of Byte.

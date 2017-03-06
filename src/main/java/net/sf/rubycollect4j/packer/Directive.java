@@ -32,7 +32,7 @@ import java.util.function.Function;
 
 import net.sf.rubycollect4j.Ruby;
 import net.sf.rubycollect4j.RubyArray;
-import net.sf.rubycollect4j.util.ByteUtil;
+import net.sf.rubycollect4j.util.ByteUtils;
 
 /**
  * 
@@ -220,54 +220,54 @@ public enum Directive {
   public String pack(byte[] bytes) {
     switch (this) {
       default: // c
-        return ByteUtil.toExtendedASCIIs(bytes, 1, nativeOrder());
+        return ByteUtils.toExtendedASCIIs(bytes, 1, nativeOrder());
       case s:
-        return ByteUtil.toExtendedASCIIs(bytes, 2, nativeOrder());
+        return ByteUtils.toExtendedASCIIs(bytes, 2, nativeOrder());
       case sb:
-        if (nativeOrder() != BIG_ENDIAN) ByteUtil.reverse(bytes);
-        return ByteUtil.toExtendedASCIIs(bytes, 2, BIG_ENDIAN);
+        if (nativeOrder() != BIG_ENDIAN) ByteUtils.reverse(bytes);
+        return ByteUtils.toExtendedASCIIs(bytes, 2, BIG_ENDIAN);
       case sl:
-        if (nativeOrder() != LITTLE_ENDIAN) ByteUtil.reverse(bytes);
-        return ByteUtil.toExtendedASCIIs(bytes, 2, LITTLE_ENDIAN);
+        if (nativeOrder() != LITTLE_ENDIAN) ByteUtils.reverse(bytes);
+        return ByteUtils.toExtendedASCIIs(bytes, 2, LITTLE_ENDIAN);
       case l:
-        return ByteUtil.toExtendedASCIIs(bytes, 4, nativeOrder());
+        return ByteUtils.toExtendedASCIIs(bytes, 4, nativeOrder());
       case lb:
-        if (nativeOrder() != BIG_ENDIAN) ByteUtil.reverse(bytes);
-        return ByteUtil.toExtendedASCIIs(bytes, 4, BIG_ENDIAN);
+        if (nativeOrder() != BIG_ENDIAN) ByteUtils.reverse(bytes);
+        return ByteUtils.toExtendedASCIIs(bytes, 4, BIG_ENDIAN);
       case ll:
-        if (nativeOrder() != LITTLE_ENDIAN) ByteUtil.reverse(bytes);
-        return ByteUtil.toExtendedASCIIs(bytes, 4, LITTLE_ENDIAN);
+        if (nativeOrder() != LITTLE_ENDIAN) ByteUtils.reverse(bytes);
+        return ByteUtils.toExtendedASCIIs(bytes, 4, LITTLE_ENDIAN);
       case q:
-        return ByteUtil.toExtendedASCIIs(bytes, 8, nativeOrder());
+        return ByteUtils.toExtendedASCIIs(bytes, 8, nativeOrder());
       case qb:
-        if (nativeOrder() != BIG_ENDIAN) ByteUtil.reverse(bytes);
-        return ByteUtil.toExtendedASCIIs(bytes, 8, BIG_ENDIAN);
+        if (nativeOrder() != BIG_ENDIAN) ByteUtils.reverse(bytes);
+        return ByteUtils.toExtendedASCIIs(bytes, 8, BIG_ENDIAN);
       case ql:
-        if (nativeOrder() != LITTLE_ENDIAN) ByteUtil.reverse(bytes);
-        return ByteUtil.toExtendedASCIIs(bytes, 8, LITTLE_ENDIAN);
+        if (nativeOrder() != LITTLE_ENDIAN) ByteUtils.reverse(bytes);
+        return ByteUtils.toExtendedASCIIs(bytes, 8, LITTLE_ENDIAN);
       case D:
-        return ByteUtil.toExtendedASCIIs(bytes, 8, nativeOrder());
+        return ByteUtils.toExtendedASCIIs(bytes, 8, nativeOrder());
       case d:
-        return ByteUtil.toExtendedASCIIs(bytes, 8, nativeOrder());
+        return ByteUtils.toExtendedASCIIs(bytes, 8, nativeOrder());
       case E:
-        if (nativeOrder() != LITTLE_ENDIAN) ByteUtil.reverse(bytes);
-        return ByteUtil.toExtendedASCIIs(bytes, 8, LITTLE_ENDIAN);
+        if (nativeOrder() != LITTLE_ENDIAN) ByteUtils.reverse(bytes);
+        return ByteUtils.toExtendedASCIIs(bytes, 8, LITTLE_ENDIAN);
       case G:
-        if (nativeOrder() != BIG_ENDIAN) ByteUtil.reverse(bytes);
-        return ByteUtil.toExtendedASCIIs(bytes, 8, BIG_ENDIAN);
+        if (nativeOrder() != BIG_ENDIAN) ByteUtils.reverse(bytes);
+        return ByteUtils.toExtendedASCIIs(bytes, 8, BIG_ENDIAN);
       case F:
-        return ByteUtil.toExtendedASCIIs(bytes, 4, nativeOrder());
+        return ByteUtils.toExtendedASCIIs(bytes, 4, nativeOrder());
       case f:
-        return ByteUtil.toExtendedASCIIs(bytes, 4, nativeOrder());
+        return ByteUtils.toExtendedASCIIs(bytes, 4, nativeOrder());
       case e:
-        if (nativeOrder() != LITTLE_ENDIAN) ByteUtil.reverse(bytes);
-        return ByteUtil.toExtendedASCIIs(bytes, 4, LITTLE_ENDIAN);
+        if (nativeOrder() != LITTLE_ENDIAN) ByteUtils.reverse(bytes);
+        return ByteUtils.toExtendedASCIIs(bytes, 4, LITTLE_ENDIAN);
       case g:
-        if (nativeOrder() != BIG_ENDIAN) ByteUtil.reverse(bytes);
-        return ByteUtil.toExtendedASCIIs(bytes, 4, BIG_ENDIAN);
+        if (nativeOrder() != BIG_ENDIAN) ByteUtils.reverse(bytes);
+        return ByteUtils.toExtendedASCIIs(bytes, 4, BIG_ENDIAN);
       case U:
-        if (nativeOrder() != BIG_ENDIAN) ByteUtil.reverse(bytes);
-        return ByteUtil.toUTF(bytes);
+        if (nativeOrder() != BIG_ENDIAN) ByteUtils.reverse(bytes);
+        return ByteUtils.toUTF(bytes);
       case A:
         return new String(bytes);
       case a:
@@ -280,7 +280,7 @@ public enum Directive {
         byte[] msb = new byte[bytes.length];
         for (int i = 0; i < msb.length; i++) {
           msb[i] = (byte) Integer.parseInt(
-              ByteUtil.toBinaryString(new byte[] { bytes[i] }, false), 2);
+              ByteUtils.toBinaryString(new byte[] { bytes[i] }, false), 2);
         }
         return new String(msb, Charset.forName("ISO-8859-1"));
       case H:
@@ -289,7 +289,7 @@ public enum Directive {
         byte[] lnf = new byte[bytes.length];
         for (int i = 0; i < lnf.length; i++) {
           lnf[i] = (byte) Integer.parseInt(
-              ByteUtil.toHexString(new byte[] { bytes[i] }, false), 16);
+              ByteUtils.toHexString(new byte[] { bytes[i] }, false), 16);
         }
         return new String(lnf, Charset.forName("ISO-8859-1"));
     }
@@ -358,13 +358,13 @@ public enum Directive {
       case g:
         return ByteBuffer.wrap(bytes).order(BIG_ENDIAN).getFloat();
       case B:
-        return ByteUtil.toBinaryString(bytes, true);
+        return ByteUtils.toBinaryString(bytes, true);
       case b:
-        return ByteUtil.toBinaryString(bytes, false);
+        return ByteUtils.toBinaryString(bytes, false);
       case H:
-        return ByteUtil.toHexString(bytes, true);
+        return ByteUtils.toHexString(bytes, true);
       case h:
-        return ByteUtil.toHexString(bytes, false);
+        return ByteUtils.toHexString(bytes, false);
     }
   }
 

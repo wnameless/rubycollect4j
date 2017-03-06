@@ -26,7 +26,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import net.sf.rubycollect4j.util.ByteUtil;
+import net.sf.rubycollect4j.util.ByteUtils;
 
 public class DirectiveTest {
 
@@ -43,7 +43,7 @@ public class DirectiveTest {
   }
 
   private byte[] int4407873() {
-    return ByteUtil.toByteArray(4407873, nativeOrder());
+    return ByteUtils.toByteArray(4407873, nativeOrder());
   }
 
   @Test
@@ -61,7 +61,7 @@ public class DirectiveTest {
   @Test
   public void testPackWithList() {
     assertEquals(IS_BIG_ENDIAN ? "C" : "A",
-        Directive.c.pack(ByteUtil.toList(ABC)));
+        Directive.c.pack(ByteUtils.toList(ABC)));
   }
 
   @Test
@@ -94,7 +94,7 @@ public class DirectiveTest {
     assertEquals("\0CBA", Directive.g.pack(int4407873()));
 
     assertEquals("〹",
-        Directive.U.pack(ByteUtil.toByteArray(12345, nativeOrder())));
+        Directive.U.pack(ByteUtils.toByteArray(12345, nativeOrder())));
     assertEquals("ABC", Directive.A.pack(ABC));
     assertEquals("ABC", Directive.a.pack(ABC));
     assertEquals("ABC", Directive.Z.pack(ABC));
@@ -108,7 +108,7 @@ public class DirectiveTest {
 
   @Test
   public void testUnpackWithList() {
-    assertEquals((byte) 65, Directive.a.unpack(ByteUtil.toList(ABCDEFGH)));
+    assertEquals((byte) 65, Directive.a.unpack(ByteUtils.toList(ABCDEFGH)));
   }
 
   @Test
