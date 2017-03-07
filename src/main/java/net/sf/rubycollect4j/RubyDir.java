@@ -28,6 +28,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
+import net.sf.rubycollect4j.util.RegexUtils;
+
 /**
  * 
  * {@link RubyDir} implements parts of the methods refer to the Dir class of
@@ -132,13 +134,13 @@ public class RubyDir extends RubyEnumerable<String> {
   }
 
   /**
-   * Retrieves all paths of files of given url pattern. The glob pattern is NOT
-   * fully implemented yet. Be careful! <br>
-   * 
+   * Retrieves all paths of files of given url pattern.<br>
+   * <br>
    * {@literal *} Matches any file.<br>
    * {@literal **} Matches directories recursively.<br>
    * {@literal ?} Matches any one character. Equivalent to /.{1}/ in regexp.<br>
-   * {@literal [set]} Matches any one character in set.
+   * {@literal [set]} Matches any one character in set.<br>
+   * &#123;opt1,opt2&#125; Matches any word in options.
    * 
    * @param pattern
    *          of target files
@@ -151,8 +153,9 @@ public class RubyDir extends RubyEnumerable<String> {
     boolean recursive = pattern.contains("/**/") || pattern.startsWith("**/");
     boolean emptyRoot = false;
 
-    String rootPath =
-        ra(pattern.split("/")).takeWhile(item -> !item.contains("*")).join("/");
+    String rootPath = ra(pattern.split("/")).takeWhile(item -> {
+      return !(item.contains("*") || item.contains("[") || item.contains("{"));
+    }).join("/");
 
     if (rootPath.isEmpty()) {
       rootPath = "./";
@@ -161,19 +164,14 @@ public class RubyDir extends RubyEnumerable<String> {
       rootPath += "/";
       pattern = pattern.replace(rootPath, "");
     }
-
-    pattern = pattern.replaceAll("\\?", ".{1}");
-    pattern = pattern.replaceAll("\\*\\*/", "(.+/)?");
-    pattern = pattern.replaceAll("\\*", "[^/]*");
-
-    RubyArray<File> files = ra(traverseFolder(new File(rootPath), recursive));
+    pattern = RegexUtils.convertGlobToRegex(pattern);
 
     RubyArray<String> paths = newRubyArray();
+    RubyArray<File> files = ra(traverseFolder(new File(rootPath), recursive));
     for (File f : files) {
       String path = convertWindowsPathToLinuxPath(f.getPath());
       String fPath = f.isDirectory() ? f.getPath() + "/" : f.getPath();
       fPath = convertWindowsPathToLinuxPath(fPath);
-      if (path.matches("(\\.[^/]+.*|.*/\\.[^/]+.*)")) continue;
 
       if (emptyRoot) {
         path = path.replace("./", "");

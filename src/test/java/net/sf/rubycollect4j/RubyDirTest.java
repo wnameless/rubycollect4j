@@ -119,6 +119,11 @@ public class RubyDirTest {
         RubyDir.glob(GLOB_DIR + "folder1/*[2,3]").sort());
     assertEquals(ra(GLOB_DIR + "rbc4j"),
         RubyDir.glob("**/*c4j").select(item -> item.startsWith("src")));
+    assertEquals(ra(
+        "folder1" + File.separator + "folder1-1" + File.separator + "file1-1-1",
+        "folder1" + File.separator + "folder1-2" + File.separator + "file1-2-1")
+            .sort(),
+        RubyDir.glob(GLOB_DIR + "**/{file1-?-1,file1-2-1}").sort());
   }
 
   @Test
