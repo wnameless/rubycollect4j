@@ -105,6 +105,7 @@ import net.sf.rubycollect4j.util.LinkedIdentityMap_IdentityEntryTest;
 import net.sf.rubycollect4j.util.LinkedIdentityMap_KeySetTest;
 import net.sf.rubycollect4j.util.LinkedIdentityMap_ValuesTest;
 import net.sf.rubycollect4j.util.PeekingIteratorTest;
+import net.sf.rubycollect4j.util.RegexUtilsTest;
 import net.sf.rubycollect4j.util.TryComparatorTest;
 
 @RunWith(Suite.class)
@@ -154,6 +155,7 @@ import net.sf.rubycollect4j.util.TryComparatorTest;
     LinkedIdentityMap_IdentityEntryTest.class,
     LinkedIdentityMap_KeySetTest.class, LinkedIdentityMap_ValuesTest.class,
     LinkedIdentityMapTest.class, PeekingIteratorTest.class,
-    TryComparatorTest.class, RubyIterablesTest.class, RubyStringsTest.class })
+    RegexUtilsTest.class, TryComparatorTest.class, RubyIterablesTest.class,
+    RubyStringsTest.class })
 
 public class RubyCollect4JTests {}
