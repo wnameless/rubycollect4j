@@ -38,6 +38,9 @@ public final class RegexUtils {
    * @return a Regex string
    */
   public static String convertGlobToRegex(String pattern) {
+    pattern = pattern.replaceAll("[\\\\\\.\\(\\)\\+\\|\\^\\$]", "\\\\$0");
+    pattern = pattern.replaceAll("\\[\\\\\\^", "[^");
+
     pattern = Ruby.String.of(pattern).gsub("\\{[^\\}]+\\}", m -> {
       m = m.replaceAll(",", "|");
       m = "(" + m.substring(1, m.lastIndexOf('}')) + ")";

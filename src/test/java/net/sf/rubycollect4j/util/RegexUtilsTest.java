@@ -37,6 +37,9 @@ public class RegexUtilsTest {
 
   @Test
   public void testConvertGlobToRegex() {
+    assertEquals("/\\$123\\\\\\.\\+\\|\\(\\^\\)[^456]",
+        RegexUtils.convertGlobToRegex("/$123\\.+|(^)[^456]"));
+
     assertEquals("/ab.{1}", RegexUtils.convertGlobToRegex("/ab?"));
     assertEquals("(.+/)?abc", RegexUtils.convertGlobToRegex("**/abc"));
     assertEquals("abc/d[^/]*f", RegexUtils.convertGlobToRegex("abc/d*f"));

@@ -57,6 +57,10 @@ public class RubyFileTest {
         RubyFile.basename(BASE_DIR + "ruby_file_exist_test.txt", ".txt"));
     assertEquals("ruby_file_exist_test.txt",
         RubyFile.basename(BASE_DIR + "ruby_file_exist_test.txt", ".ppt"));
+    assertEquals("ruby_file_exist_test",
+        RubyFile.basename(BASE_DIR + "ruby_file_exist_test.txt", ".t?t"));
+    assertEquals("ruby_file_exist_test",
+        RubyFile.basename(BASE_DIR + "ruby_file_exist_test.txt", ".t?t*"));
   }
 
   @Test

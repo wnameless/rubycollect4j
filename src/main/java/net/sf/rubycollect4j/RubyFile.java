@@ -27,6 +27,10 @@ import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import net.sf.rubycollect4j.util.RegexUtils;
 
 /**
  * 
@@ -124,13 +128,18 @@ public class RubyFile extends RubyIO {
    * 
    * @param path
    *          of a file
-   * @param suffix
-   *          to be removed if it's at the end of the name
+   * @param suffixGlob
+   *          used to match the suffix to be removed if it's at the end of the
+   *          name
    * @return the name of the file
    */
-  public static String basename(String path, String suffix) {
+  public static String basename(String path, String suffixGlob) {
     String name = new File(path).getName();
-    if (name.lastIndexOf(suffix) + suffix.length() == name.length()) {
+    Pattern pattern =
+        Pattern.compile(RegexUtils.convertGlobToRegex(suffixGlob) + "$");
+    Matcher m = pattern.matcher(path);
+    if (m.find()) {
+      String suffix = m.group();
       return name.substring(0, name.length() - suffix.length());
     } else {
       return name;
