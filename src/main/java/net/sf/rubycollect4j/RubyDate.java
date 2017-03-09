@@ -35,7 +35,7 @@ import java.util.Objects;
  */
 public class RubyDate extends Date {
 
-  private static final long serialVersionUID = 6634492638579024503L;
+  private static final long serialVersionUID = 1L;
 
   /**
    * 
@@ -44,6 +44,42 @@ public class RubyDate extends Date {
    */
   public enum DateField {
     YEAR, MONTH, DAY;
+  }
+
+  /**
+   * Creates a {@link RubyDate} of current time.
+   * 
+   * @return {@link RubyDate}
+   */
+  public static RubyDate current() {
+    return new RubyDate();
+  }
+
+  /**
+   * Creates a {@link RubyDate} of beginning of today.
+   * 
+   * @return {@link RubyDate}
+   */
+  public static RubyDate today() {
+    return new RubyDate().beginningOfDay();
+  }
+
+  /**
+   * Creates a {@link RubyDate} of tomorrow.
+   * 
+   * @return {@link RubyDate}
+   */
+  public static RubyDate tomorrow() {
+    return today().add(1).days();
+  }
+
+  /**
+   * Creates a {@link RubyDate} of yesterday.
+   * 
+   * @return {@link RubyDate}
+   */
+  public static RubyDate yesterday() {
+    return today().minus(1).days();
   }
 
   /**
@@ -679,42 +715,6 @@ public class RubyDate extends Date {
    */
   public Date toDate() {
     return new Date(getTime());
-  }
-
-  /**
-   * Creates a {@link RubyDate} of current time.
-   * 
-   * @return {@link RubyDate}
-   */
-  public static RubyDate current() {
-    return new RubyDate();
-  }
-
-  /**
-   * Creates a {@link RubyDate} of beginning of today.
-   * 
-   * @return {@link RubyDate}
-   */
-  public static RubyDate today() {
-    return new RubyDate().beginningOfDay();
-  }
-
-  /**
-   * Creates a {@link RubyDate} of tomorrow.
-   * 
-   * @return {@link RubyDate}
-   */
-  public static RubyDate tomorrow() {
-    return today().add(1).days();
-  }
-
-  /**
-   * Creates a {@link RubyDate} of yesterday.
-   * 
-   * @return {@link RubyDate}
-   */
-  public static RubyDate yesterday() {
-    return today().minus(1).days();
   }
 
   /**
