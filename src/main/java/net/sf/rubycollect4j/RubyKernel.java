@@ -36,6 +36,16 @@ public class RubyKernel {
   RubyKernel() {}
 
   /**
+   * Prints an empty line and returns null.
+   * 
+   * @return null
+   */
+  public static Void p() {
+    out.println();
+    return null;
+  }
+
+  /**
    * Prints a human-readable representation of given Object.
    * 
    * @param o

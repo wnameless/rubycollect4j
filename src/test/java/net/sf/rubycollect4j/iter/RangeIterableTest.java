@@ -26,6 +26,7 @@ import org.junit.Test;
 import net.sf.rubycollect4j.Ruby;
 import net.sf.rubycollect4j.RubyRange.Interval;
 import net.sf.rubycollect4j.succ.IntegerSuccessor;
+import net.sf.rubycollect4j.succ.StringSuccessor;
 
 public class RangeIterableTest {
 
@@ -78,21 +79,27 @@ public class RangeIterableTest {
   public void testClosedOpen() {
     iter = new RangeIterable<Integer>(IntegerSuccessor.getInstance(), 1, 3,
         Interval.CLOSED_OPEN);
-    assertEquals(Ruby.Array.of(1, 2), Ruby.Array.copyOf(iter));
+    assertEquals(Ruby.Array.of(1, 2), Ruby.Enumerator.of(iter).toA());
+
+    assertEquals(Ruby.Array.of("abc", "abd"),
+        Ruby.Enumerator
+            .of(new RangeIterable<String>(StringSuccessor.getInstance(), "abc",
+                "abe", Interval.CLOSED_OPEN))
+            .toA());
   }
 
   @Test
   public void testOpen() {
     iter = new RangeIterable<Integer>(IntegerSuccessor.getInstance(), 1, 3,
         Interval.OPEN);
-    assertEquals(Ruby.Array.of(2), Ruby.Array.copyOf(iter));
+    assertEquals(Ruby.Array.of(2), Ruby.Enumerator.of(iter).toA());
   }
 
   @Test
   public void testOpenClosed() {
     iter = new RangeIterable<Integer>(IntegerSuccessor.getInstance(), 1, 3,
         Interval.OPEN_CLOSED);
-    assertEquals(Ruby.Array.of(2, 3), Ruby.Array.copyOf(iter));
+    assertEquals(Ruby.Array.of(2, 3), Ruby.Enumerator.of(iter).toA());
   }
 
 }

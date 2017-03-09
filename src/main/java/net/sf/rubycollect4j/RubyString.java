@@ -2415,10 +2415,9 @@ public final class RubyString
   public RubyEnumerator<String> upto(final String otherStr, boolean exclusive) {
     stringify(otherStr);
     if (exclusive)
-      return newRubyEnumerator((Iterable<String>) range(str, otherStr).lazy()
-          .takeWhile(item -> !item.equals(otherStr)));
-
-    return range(str, otherStr).each();
+      return range(str, otherStr).closedOpen().each();
+    else
+      return range(str, otherStr).each();
   }
 
   /**

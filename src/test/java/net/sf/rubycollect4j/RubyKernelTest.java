@@ -54,6 +54,12 @@ public class RubyKernelTest {
   }
 
   @Test
+  public void testP() {
+    assertEquals(null, p());
+    assertEquals(lineSeparator, outContent.toString());
+  }
+
+  @Test
   public void testPObject() {
     Object o = new Object();
     assertEquals(o, p(o));

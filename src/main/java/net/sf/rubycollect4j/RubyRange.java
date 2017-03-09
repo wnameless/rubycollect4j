@@ -88,8 +88,7 @@ public final class RubyRange<E> extends RubyEnumerable<E>
     if (startPoint == null || endPoint == null)
       throw new IllegalArgumentException("ArgumentError: bad value for range");
 
-    iter =
-        new RangeIterable<E>(successive, startPoint, endPoint, Interval.CLOSED);
+    iter = new RangeIterable<E>(successive, startPoint, endPoint, interval);
     this.successive = successive;
     this.startPoint = startPoint;
     this.endPoint = endPoint;
@@ -165,7 +164,7 @@ public final class RubyRange<E> extends RubyEnumerable<E>
       case OPEN:
         return successive.compare(startPoint, item) < 0
             && successive.compare(endPoint, item) > 0;
-      default:
+      default: // CLOSED
         return successive.compare(startPoint, item) <= 0
             && successive.compare(endPoint, item) >= 0;
     }
