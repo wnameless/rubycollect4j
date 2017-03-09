@@ -17,6 +17,7 @@
  */
 package net.sf.rubycollect4j;
 
+import static net.sf.rubycollect4j.RubyCollections.range;
 import static net.sf.rubycollect4j.RubyCollections.rh;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -82,6 +83,11 @@ public class RubyDateTest {
   @Test
   public void testDay() {
     assertEquals(4, Ruby.Date.of(2013, 7, 4).day());
+  }
+
+  @Test
+  public void testWday() {
+    assertEquals(4, Ruby.Date.of(2013, 7, 4).wday());
   }
 
   @Test
@@ -191,6 +197,120 @@ public class RubyDateTest {
     assertEquals(c.getTime(), rd.add(1).milliseconds());
     c.add(Calendar.MILLISECOND, -2);
     assertEquals(c.getTime(), rd.minus(1).milliseconds());
+  }
+
+  @Test
+  public void testAllWeek() {
+    assertEquals(range(rd.beginningOfWeek(), rd.endOfWeek()), rd.allWeek());
+  }
+
+  @Test
+  public void testAllMonth() {
+    assertEquals(range(rd.beginningOfMonth(), rd.endOfMonth()), rd.allMonth());
+  }
+
+  @Test
+  public void testAllQuarter() {
+    assertEquals(range(rd.beginningOfQuarter(), rd.endOfQuarter()),
+        rd.allQuarter());
+  }
+
+  @Test
+  public void testAllYear() {
+    assertEquals(range(rd.beginningOfYear(), rd.endOfYear()), rd.allYear());
+  }
+
+  @Test
+  public void testNextDay() {
+    assertEquals(rd.add(1).days(), rd.nextDay());
+  }
+
+  @Test
+  public void testNextWeek() {
+    assertEquals(rd.add(1).weeks(), rd.nextWeek());
+  }
+
+  @Test
+  public void testNextMonth() {
+    assertEquals(rd.add(1).months(), rd.nextMonth());
+  }
+
+  @Test
+  public void testNextQuarter() {
+    assertEquals(rd.add(3).months(), rd.nextQuarter());
+  }
+
+  @Test
+  public void testNextYear() {
+    assertEquals(rd.add(1).years(), rd.nextYear());
+  }
+
+  @Test
+  public void testPrevDay() {
+    assertEquals(rd.minus(1).days(), rd.prevDay());
+  }
+
+  @Test
+  public void testPrevWeek() {
+    assertEquals(rd.minus(1).weeks(), rd.prevWeek());
+  }
+
+  @Test
+  public void testPrevMonth() {
+    assertEquals(rd.minus(1).months(), rd.prevMonth());
+  }
+
+  @Test
+  public void testPrevQuarter() {
+    assertEquals(rd.minus(3).months(), rd.prevQuarter());
+  }
+
+  @Test
+  public void testPrevYear() {
+    assertEquals(rd.minus(1).years(), rd.prevYear());
+  }
+
+  @Test
+  public void testDayʔCheck() {
+    rd.allYear().each(date -> {
+      switch (Ruby.Date.of(date).wday()) {
+        case 0:
+          assertTrue(Ruby.Date.of(date).sundayʔ());
+          assertFalse(Ruby.Date.of(date).onWeekdayʔ());
+          assertTrue(Ruby.Date.of(date).onWeekendʔ());
+          break;
+        case 1:
+          assertTrue(Ruby.Date.of(date).mondayʔ());
+          assertTrue(Ruby.Date.of(date).onWeekdayʔ());
+          assertFalse(Ruby.Date.of(date).onWeekendʔ());
+          break;
+        case 2:
+          assertTrue(Ruby.Date.of(date).tuesdayʔ());
+          assertTrue(Ruby.Date.of(date).onWeekdayʔ());
+          assertFalse(Ruby.Date.of(date).onWeekendʔ());
+          break;
+        case 3:
+          assertTrue(Ruby.Date.of(date).wednesdayʔ());
+          assertTrue(Ruby.Date.of(date).onWeekdayʔ());
+          assertFalse(Ruby.Date.of(date).onWeekendʔ());
+          break;
+        case 4:
+          assertTrue(Ruby.Date.of(date).thursdayʔ());
+          assertTrue(Ruby.Date.of(date).onWeekdayʔ());
+          assertFalse(Ruby.Date.of(date).onWeekendʔ());
+          break;
+        case 5:
+          assertTrue(Ruby.Date.of(date).fridayʔ());
+          assertTrue(Ruby.Date.of(date).onWeekdayʔ());
+          assertFalse(Ruby.Date.of(date).onWeekendʔ());
+          break;
+        case 6:
+          assertTrue(Ruby.Date.of(date).saturdayʔ());
+          assertFalse(Ruby.Date.of(date).onWeekdayʔ());
+          assertTrue(Ruby.Date.of(date).onWeekendʔ());
+          break;
+      }
+    });
   }
 
   @Test
@@ -338,6 +458,11 @@ public class RubyDateTest {
     assertTrue(RubyDate.current().todayʔ());
     assertFalse(RubyDate.current().add(1).days().todayʔ());
     assertFalse(RubyDate.current().minus(1).days().todayʔ());
+  }
+
+  @Test
+  public void testToDate() {
+    assertEquals(new Date(rd.getTime()), rd.toDate());
   }
 
 }

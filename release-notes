@@ -315,3 +315,13 @@ Version 2.0.0
 + Update all methods to Ruby 2.4
 
 + Add RubyRange#closed, #closedOpen, #open, #openClosed
+
++ Add #allWeek, #allMonth, #allQuarter, #allYear to RubyDate
+
++ Add #nextWeek, #nextMonth, #nextQuarter, #nextYear to RubyDate
+
++ Add #prevWeek, #prevMonth, #prevQuarter, #prevYear to RubyDate
+
++ Add #mondayʔ, #tuesdayʔ, #wednesdayʔ, #thursdayʔ, #friday?, #saturdayʔ, #sundayʔ, #onWeekdayʔ, #onWeekendʔ to RubyDate
+
++ Add RubyDate#wday, RubyDate#toDate

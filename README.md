@@ -10,8 +10,6 @@ It also implements parts of Ruby Dir, File and Date methods.
 
 For further information, please visit http://ruby-doc.org website.
 
-For more documentation, please read JavaDoc on http://rubycollect4j.sf.net website.
-
 Installation with Maven:
 ``` xml
 <dependency>
@@ -37,20 +35,18 @@ Install v2.0.0-SNAPSHOT(Java 1.8 required):
 </dependency>
 ```
 
-Java 8 with rubycollect4j:
+Java 8 with rubycollect4j v2.0.0+:
 ```java
 // Sorts the characters by its frequency based on the word 'Mississippi' case-insensitively.
-RubyString word = rs("Mississippi"); // Equivalent to new RubyString("Mississippi")
+RubyString word = Ruby.String.of("Mississippi"); // Equivalent to new RubyString("Mississippi")
 
-String result = word.map(String::toLowerCase).sortBy((c) -> {
-      return word.count(c);
-    }).uniq().join();
+String result = word.map(String::toLowerCase).sortBy(c -> word.count(c)).uniq().join();
 
-p(result);
+Ruby.Kernel.p(result);
 // Output: "mpis"
 ```
 
-Java 6 with rubycollect4j:
+Java 6 with rubycollect4j v1.9.x:
 ```java
 // Finds 2 words which get the least and the most unique letters in upper case.
 RubyArray<String> words =
@@ -75,8 +71,12 @@ Demo Ruby:
 Ruby.Array.copyOf(Arrays.asList(1,2,3,4));
 Ruby.Hash.of("abc",123);
 Ruby.Set.create();
+Ruby.Enumerator.of(Arrays.asList(1,2,3,4));
+Ruby.LazyEnumerator.of(Arrays.asList(1,2,3,4)).cycle();
 Ruby.Range.of(1,1000);
-Ruby.Date.current();
+Ruby.Dir.glob("./**/*");
+Ruby.File.foreach("/usr/share/dict/web2");
+Ruby.Date.yesterday();
 ...
 ```
 

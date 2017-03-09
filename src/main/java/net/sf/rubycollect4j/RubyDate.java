@@ -17,6 +17,7 @@
  */
 package net.sf.rubycollect4j;
 
+import static net.sf.rubycollect4j.RubyCollections.range;
 import static net.sf.rubycollect4j.RubyCollections.rh;
 
 import java.util.Calendar;
@@ -122,6 +123,15 @@ public class RubyDate extends Date {
     Calendar c = Calendar.getInstance();
     c.setTime(this);
     return c.get(Calendar.DAY_OF_MONTH);
+  }
+
+  /**
+   * @see #dayOfWeek
+   * 
+   * @return the day of week
+   */
+  public int wday() {
+    return dayOfWeek();
   }
 
   /**
@@ -251,6 +261,132 @@ public class RubyDate extends Date {
    */
   public DateShifter minus(int interval) {
     return new DateShifter(this, -interval);
+  }
+
+  /**
+   * Returns a {@link RubyRange} from beginning of week to end of week.
+   * 
+   * @return {@link RubyRange}
+   */
+  public RubyRange<Date> allWeek() {
+    return range(beginningOfWeek(), endOfWeek());
+  }
+
+  /**
+   * Returns a {@link RubyRange} from beginning of month to end of month.
+   * 
+   * @return {@link RubyRange}
+   */
+  public RubyRange<Date> allMonth() {
+    return range(beginningOfMonth(), endOfMonth());
+  }
+
+  /**
+   * Returns a {@link RubyRange} from beginning of quarter to end of quarter.
+   * 
+   * @return {@link RubyRange}
+   */
+  public RubyRange<Date> allQuarter() {
+    return range(beginningOfQuarter(), endOfQuarter());
+  }
+
+  /**
+   * Returns a {@link RubyRange} from beginning of year to end of year.
+   * 
+   * @return {@link RubyRange}
+   */
+  public RubyRange<Date> allYear() {
+    return range(beginningOfYear(), endOfYear());
+  }
+
+  /**
+   * Returns a 1-day advanced {@link RubyDate}.
+   * 
+   * @return new {@link RubyDate}
+   */
+  public RubyDate nextDay() {
+    return add(1).days();
+  }
+
+  /**
+   * Returns a 1-week advanced {@link RubyDate}.
+   * 
+   * @return new {@link RubyDate}
+   */
+  public RubyDate nextWeek() {
+    return add(1).weeks();
+  }
+
+  /**
+   * Returns a 1-month advanced {@link RubyDate}.
+   * 
+   * @return new {@link RubyDate}
+   */
+  public RubyDate nextMonth() {
+    return add(1).months();
+  }
+
+  /**
+   * Returns a 1-quarter advanced {@link RubyDate}.
+   * 
+   * @return new {@link RubyDate}
+   */
+  public RubyDate nextQuarter() {
+    return add(3).months();
+  }
+
+  /**
+   * Returns a 1-year advanced {@link RubyDate}.
+   * 
+   * @return new {@link RubyDate}
+   */
+  public RubyDate nextYear() {
+    return add(1).years();
+  }
+
+  /**
+   * Returns a 1-day backward {@link RubyDate}.
+   * 
+   * @return new {@link RubyDate}
+   */
+  public RubyDate prevDay() {
+    return minus(1).days();
+  }
+
+  /**
+   * Returns a 1-week backward {@link RubyDate}.
+   * 
+   * @return new {@link RubyDate}
+   */
+  public RubyDate prevWeek() {
+    return this.minus(1).weeks();
+  }
+
+  /**
+   * Returns a 1-month backward {@link RubyDate}.
+   * 
+   * @return new {@link RubyDate}
+   */
+  public RubyDate prevMonth() {
+    return this.minus(1).months();
+  }
+
+  /**
+   * Returns a 1-quarter backward {@link RubyDate}.
+   * 
+   * @return new {@link RubyDate}
+   */
+  public RubyDate prevQuarter() {
+    return minus(3).months();
+  }
+
+  /**
+   * Returns a 1-year backward {@link RubyDate}.
+   * 
+   * @return new {@link RubyDate}
+   */
+  public RubyDate prevYear() {
+    return this.minus(1).years();
   }
 
   /**
@@ -413,6 +549,101 @@ public class RubyDate extends Date {
   }
 
   /**
+   * Checks if this {@RubyDate} is Monday.
+   * 
+   * @return true if the date is Monday, false otherwise
+   */
+  public boolean mondayʔ() {
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(this);
+    return cal.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY;
+  }
+
+  /**
+   * Checks if this {@RubyDate} is Tuesday.
+   * 
+   * @return true if the date is Tuesday, false otherwise
+   */
+  public boolean tuesdayʔ() {
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(this);
+    return cal.get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY;
+  }
+
+  /**
+   * Checks if this {@RubyDate} is Wednesday.
+   * 
+   * @return true if the date is Wednesday, false otherwise
+   */
+  public boolean wednesdayʔ() {
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(this);
+    return cal.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY;
+  }
+
+  /**
+   * Checks if this {@RubyDate} is Thursday.
+   * 
+   * @return true if the date is Thursday, false otherwise
+   */
+  public boolean thursdayʔ() {
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(this);
+    return cal.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY;
+  }
+
+  /**
+   * Checks if this {@RubyDate} is Friday.
+   * 
+   * @return true if the date is Friday, false otherwise
+   */
+  public boolean fridayʔ() {
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(this);
+    return cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY;
+  }
+
+  /**
+   * Checks if this {@RubyDate} is Saturday.
+   * 
+   * @return true if the date is Saturday, false otherwise
+   */
+  public boolean saturdayʔ() {
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(this);
+    return cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY;
+  }
+
+  /**
+   * Checks if this {@RubyDate} is Sunday.
+   * 
+   * @return true if the date is Sunday, false otherwise
+   */
+  public boolean sundayʔ() {
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(this);
+    return cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY;
+  }
+
+  /**
+   * Checks if this {@RubyDate} is on weekday.
+   * 
+   * @return true if the date is on weekday, false otherwise
+   */
+  public boolean onWeekdayʔ() {
+    return mondayʔ() || tuesdayʔ() || wednesdayʔ() || thursdayʔ() || fridayʔ();
+  }
+
+  /**
+   * Checks if this {@RubyDate} is on weekend.
+   * 
+   * @return true if the date is on weekend, false otherwise
+   */
+  public boolean onWeekendʔ() {
+    return saturdayʔ() || sundayʔ();
+  }
+
+  /**
    * Checks if this {@link RubyDate} represents a future time.
    * 
    * @return true if this {@link RubyDate} represents a future time, false
@@ -439,6 +670,15 @@ public class RubyDate extends Date {
    */
   public boolean todayʔ() {
     return RubyDate.today().equals(beginningOfDay());
+  }
+
+  /**
+   * Converts this {@link RubyDate} to {@link Date}.
+   * 
+   * @return {@link Date}
+   */
+  public Date toDate() {
+    return new Date(getTime());
   }
 
   /**
