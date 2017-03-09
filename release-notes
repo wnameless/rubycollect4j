@@ -313,3 +313,5 @@ Version 2.0.0
 + Add Ruby class
 
 + Update all methods to Ruby 2.4
+
++ Add RubyRange#closed, #closedOpen, #open, #openClosed

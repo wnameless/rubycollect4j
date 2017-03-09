@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.sf.rubycollect4j.RubyRange.Interval;
 import net.sf.rubycollect4j.succ.CharacterSuccessor;
 import net.sf.rubycollect4j.succ.DateSuccessor;
 import net.sf.rubycollect4j.succ.DoubleSuccessor;
@@ -2589,7 +2590,8 @@ public final class RubyCollections {
    * @return {@link RubyRange}
    */
   public static RubyRange<String> range(String start, String end) {
-    return new RubyRange<String>(StringSuccessor.getInstance(), start, end);
+    return new RubyRange<String>(StringSuccessor.getInstance(), start, end,
+        Interval.CLOSED);
   }
 
   /**
@@ -2603,7 +2605,7 @@ public final class RubyCollections {
    */
   public static RubyRange<Character> range(char start, char end) {
     return new RubyRange<Character>(CharacterSuccessor.getInstance(), start,
-        end);
+        end, Interval.CLOSED);
   }
 
   /**
@@ -2616,7 +2618,8 @@ public final class RubyCollections {
    * @return {@link RubyRange}
    */
   public static RubyRange<Integer> range(int start, int end) {
-    return new RubyRange<Integer>(IntegerSuccessor.getInstance(), start, end);
+    return new RubyRange<Integer>(IntegerSuccessor.getInstance(), start, end,
+        Interval.CLOSED);
   }
 
   /**
@@ -2629,7 +2632,8 @@ public final class RubyCollections {
    * @return {@link RubyRange}
    */
   public static RubyRange<Long> range(long start, long end) {
-    return new RubyRange<Long>(LongSuccessor.getInstance(), start, end);
+    return new RubyRange<Long>(LongSuccessor.getInstance(), start, end,
+        Interval.CLOSED);
   }
 
   /**
@@ -2647,8 +2651,8 @@ public final class RubyCollections {
     int startPrecision = startStr.length() - startStr.lastIndexOf('.') - 1;
     int endPrecision = endStr.length() - endStr.lastIndexOf('.') - 1;
     return new RubyRange<Double>(
-        new DoubleSuccessor(Math.max(startPrecision, endPrecision)), start,
-        end);
+        new DoubleSuccessor(Math.max(startPrecision, endPrecision)), start, end,
+        Interval.CLOSED);
   }
 
   /**
@@ -2661,7 +2665,8 @@ public final class RubyCollections {
    * @return {@link RubyRange}
    */
   public static RubyRange<Date> range(Date start, Date end) {
-    return new RubyRange<Date>(DateSuccessor.getInstance(), start, end);
+    return new RubyRange<Date>(DateSuccessor.getInstance(), start, end,
+        Interval.CLOSED);
   }
 
 }

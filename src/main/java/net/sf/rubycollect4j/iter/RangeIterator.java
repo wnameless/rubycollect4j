@@ -20,6 +20,7 @@ package net.sf.rubycollect4j.iter;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import net.sf.rubycollect4j.RubyRange.Interval;
 import net.sf.rubycollect4j.succ.Successive;
 
 /**
@@ -36,6 +37,7 @@ import net.sf.rubycollect4j.succ.Successive;
 public final class RangeIterator<E> implements Iterator<E> {
 
   private final Successive<E> successive;
+  private final Interval interval;
   private final E endPoint;
   private E curr;
 
@@ -48,21 +50,32 @@ public final class RangeIterator<E> implements Iterator<E> {
    *          an element
    * @param endPoint
    *          an element
+   * @param interval
+   *          an {@link Interval}
    * @throws NullPointerException
-   *           if successive or startPoint or endPoint is null
+   *           if successive or startPoint or endPoint or interval is null
    */
-  public RangeIterator(Successive<E> successive, E startPoint, E endPoint) {
-    if (successive == null || startPoint == null || endPoint == null)
+  public RangeIterator(Successive<E> successive, E startPoint, E endPoint,
+      Interval interval) {
+    if (successive == null || startPoint == null || endPoint == null
+        || interval == null)
       throw new NullPointerException();
 
     this.successive = successive;
     curr = startPoint;
     this.endPoint = endPoint;
+    this.interval = interval;
+    if (interval == Interval.OPEN || interval == Interval.OPEN_CLOSED) {
+      if (hasNext()) next();
+    }
   }
 
   @Override
   public boolean hasNext() {
-    return successive.compare(curr, endPoint) <= 0;
+    if (interval == Interval.CLOSED_OPEN || interval == Interval.OPEN)
+      return successive.compare(curr, endPoint) < 0;
+    else
+      return successive.compare(curr, endPoint) <= 0;
   }
 
   @Override

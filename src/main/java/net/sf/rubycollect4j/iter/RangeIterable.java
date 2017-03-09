@@ -19,6 +19,7 @@ package net.sf.rubycollect4j.iter;
 
 import java.util.Iterator;
 
+import net.sf.rubycollect4j.RubyRange.Interval;
 import net.sf.rubycollect4j.succ.Successive;
 
 /**
@@ -37,6 +38,7 @@ public final class RangeIterable<E> implements Iterable<E> {
   private final Successive<E> successive;
   private final E startPoint;
   private final E endPoint;
+  private final Interval interval;
 
   /**
    * Creates a {@link RangeIterable}.
@@ -47,21 +49,26 @@ public final class RangeIterable<E> implements Iterable<E> {
    *          an element
    * @param endPoint
    *          an element
+   * @param interval
+   *          an {@link Interval}
    * @throws NullPointerException
    *           if successive or startPoint or endPoint is null
    */
-  public RangeIterable(Successive<E> successive, E startPoint, E endPoint) {
-    if (successive == null || startPoint == null || endPoint == null)
+  public RangeIterable(Successive<E> successive, E startPoint, E endPoint,
+      Interval interval) {
+    if (successive == null || startPoint == null || endPoint == null
+        || interval == null)
       throw new NullPointerException();
 
     this.successive = successive;
     this.startPoint = startPoint;
     this.endPoint = endPoint;
+    this.interval = interval;
   }
 
   @Override
   public Iterator<E> iterator() {
-    return new RangeIterator<E>(successive, startPoint, endPoint);
+    return new RangeIterator<E>(successive, startPoint, endPoint, interval);
   }
 
   @Override

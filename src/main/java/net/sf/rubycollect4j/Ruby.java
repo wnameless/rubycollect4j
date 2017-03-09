@@ -27,6 +27,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.rubycollect4j.RubyRange.Interval;
 import net.sf.rubycollect4j.succ.CharacterSuccessor;
 import net.sf.rubycollect4j.succ.DateSuccessor;
 import net.sf.rubycollect4j.succ.DoubleSuccessor;
@@ -2682,7 +2683,7 @@ public final class Ruby {
     public static RubyRange<java.lang.String> of(java.lang.String start,
         java.lang.String end) {
       return new RubyRange<java.lang.String>(StringSuccessor.getInstance(),
-          start, end);
+          start, end, Interval.CLOSED);
     }
 
     /**
@@ -2696,7 +2697,7 @@ public final class Ruby {
      */
     public static RubyRange<Character> of(char start, char end) {
       return new RubyRange<Character>(CharacterSuccessor.getInstance(), start,
-          end);
+          end, Interval.CLOSED);
     }
 
     /**
@@ -2709,7 +2710,8 @@ public final class Ruby {
      * @return {@link RubyRange}
      */
     public static RubyRange<Integer> of(int start, int end) {
-      return new RubyRange<>(IntegerSuccessor.getInstance(), start, end);
+      return new RubyRange<>(IntegerSuccessor.getInstance(), start, end,
+          Interval.CLOSED);
     }
 
     /**
@@ -2722,7 +2724,8 @@ public final class Ruby {
      * @return {@link RubyRange}
      */
     public static RubyRange<Long> of(long start, long end) {
-      return new RubyRange<Long>(LongSuccessor.getInstance(), start, end);
+      return new RubyRange<Long>(LongSuccessor.getInstance(), start, end,
+          Interval.CLOSED);
     }
 
     /**
@@ -2741,7 +2744,7 @@ public final class Ruby {
       int endPrecision = endStr.length() - endStr.lastIndexOf('.') - 1;
       return new RubyRange<Double>(
           new DoubleSuccessor(Math.max(startPrecision, endPrecision)), start,
-          end);
+          end, Interval.CLOSED);
     }
 
     /**
@@ -2756,7 +2759,7 @@ public final class Ruby {
     public static RubyRange<java.util.Date> of(java.util.Date start,
         java.util.Date end) {
       return new RubyRange<java.util.Date>(DateSuccessor.getInstance(), start,
-          end);
+          end, Interval.CLOSED);
     }
 
   }

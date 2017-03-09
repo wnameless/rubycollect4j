@@ -26,6 +26,8 @@ import java.util.NoSuchElementException;
 import org.junit.Before;
 import org.junit.Test;
 
+import net.sf.rubycollect4j.Ruby;
+import net.sf.rubycollect4j.RubyRange.Interval;
 import net.sf.rubycollect4j.succ.IntegerSuccessor;
 
 public class RangeIteratorTest {
@@ -34,7 +36,8 @@ public class RangeIteratorTest {
 
   @Before
   public void setUp() throws Exception {
-    iter = new RangeIterator<Integer>(IntegerSuccessor.getInstance(), 1, 3);
+    iter = new RangeIterator<Integer>(IntegerSuccessor.getInstance(), 1, 3,
+        Interval.CLOSED);
   }
 
   @Test
@@ -44,17 +47,24 @@ public class RangeIteratorTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException1() {
-    new RangeIterator<Integer>(null, 1, 3);
+    new RangeIterator<Integer>(null, 1, 3, Interval.CLOSED);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    new RangeIterator<Integer>(IntegerSuccessor.getInstance(), null, 3);
+    new RangeIterator<Integer>(IntegerSuccessor.getInstance(), null, 3,
+        Interval.CLOSED);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException3() {
-    new RangeIterator<Integer>(IntegerSuccessor.getInstance(), 1, null);
+    new RangeIterator<Integer>(IntegerSuccessor.getInstance(), 1, null,
+        Interval.CLOSED);
+  }
+
+  @Test(expected = NullPointerException.class)
+  public void testConstructorException4() {
+    new RangeIterator<Integer>(IntegerSuccessor.getInstance(), 1, 3, null);
   }
 
   @Test
@@ -72,7 +82,8 @@ public class RangeIteratorTest {
     assertEquals(Integer.valueOf(2), iter.next());
     assertEquals(Integer.valueOf(3), iter.next());
     assertFalse(iter.hasNext());
-    iter = new RangeIterator<Integer>(IntegerSuccessor.getInstance(), 1, 0);
+    iter = new RangeIterator<Integer>(IntegerSuccessor.getInstance(), 1, 0,
+        Interval.CLOSED);
     assertFalse(iter.hasNext());
   }
 
@@ -87,6 +98,33 @@ public class RangeIteratorTest {
   @Test(expected = UnsupportedOperationException.class)
   public void testRemove() {
     iter.remove();
+  }
+
+  @Test
+  public void testClosedOpen() {
+    iter = new RangeIterator<Integer>(IntegerSuccessor.getInstance(), 1, 3,
+        Interval.CLOSED_OPEN);
+    assertEquals(Ruby.Array.of(1, 2), Ruby.Array.copyOf(iter));
+  }
+
+  @Test
+  public void testOpen() {
+    iter = new RangeIterator<Integer>(IntegerSuccessor.getInstance(), 1, 3,
+        Interval.OPEN);
+    assertEquals(Ruby.Array.of(2), Ruby.Array.copyOf(iter));
+    iter = new RangeIterator<Integer>(IntegerSuccessor.getInstance(), 3, 1,
+        Interval.OPEN);
+    assertEquals(Ruby.Array.create(), Ruby.Array.copyOf(iter));
+  }
+
+  @Test
+  public void testOpenClosed() {
+    iter = new RangeIterator<Integer>(IntegerSuccessor.getInstance(), 1, 3,
+        Interval.OPEN_CLOSED);
+    assertEquals(Ruby.Array.of(2, 3), Ruby.Array.copyOf(iter));
+    iter = new RangeIterator<Integer>(IntegerSuccessor.getInstance(), 3, 1,
+        Interval.OPEN_CLOSED);
+    assertEquals(Ruby.Array.create(), Ruby.Array.copyOf(iter));
   }
 
 }

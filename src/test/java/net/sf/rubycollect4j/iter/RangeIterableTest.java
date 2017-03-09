@@ -23,6 +23,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import net.sf.rubycollect4j.Ruby;
+import net.sf.rubycollect4j.RubyRange.Interval;
 import net.sf.rubycollect4j.succ.IntegerSuccessor;
 
 public class RangeIterableTest {
@@ -31,7 +33,8 @@ public class RangeIterableTest {
 
   @Before
   public void setUp() throws Exception {
-    iter = new RangeIterable<Integer>(IntegerSuccessor.getInstance(), 1, 3);
+    iter = new RangeIterable<Integer>(IntegerSuccessor.getInstance(), 1, 3,
+        Interval.CLOSED);
   }
 
   @Test
@@ -41,17 +44,24 @@ public class RangeIterableTest {
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException1() {
-    new RangeIterable<Integer>(null, 1, 3);
+    new RangeIterable<Integer>(null, 1, 3, Interval.CLOSED);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException2() {
-    new RangeIterable<Integer>(IntegerSuccessor.getInstance(), null, 3);
+    new RangeIterable<Integer>(IntegerSuccessor.getInstance(), null, 3,
+        Interval.CLOSED);
   }
 
   @Test(expected = NullPointerException.class)
   public void testConstructorException3() {
-    new RangeIterable<Integer>(IntegerSuccessor.getInstance(), 1, null);
+    new RangeIterable<Integer>(IntegerSuccessor.getInstance(), 1, null,
+        Interval.CLOSED);
+  }
+
+  @Test(expected = NullPointerException.class)
+  public void testConstructorException4() {
+    new RangeIterable<Integer>(IntegerSuccessor.getInstance(), 1, 3, null);
   }
 
   @Test
@@ -62,6 +72,27 @@ public class RangeIterableTest {
   @Test
   public void testToString() {
     assertEquals("[1, 2, 3]", iter.toString());
+  }
+
+  @Test
+  public void testClosedOpen() {
+    iter = new RangeIterable<Integer>(IntegerSuccessor.getInstance(), 1, 3,
+        Interval.CLOSED_OPEN);
+    assertEquals(Ruby.Array.of(1, 2), Ruby.Array.copyOf(iter));
+  }
+
+  @Test
+  public void testOpen() {
+    iter = new RangeIterable<Integer>(IntegerSuccessor.getInstance(), 1, 3,
+        Interval.OPEN);
+    assertEquals(Ruby.Array.of(2), Ruby.Array.copyOf(iter));
+  }
+
+  @Test
+  public void testOpenClosed() {
+    iter = new RangeIterable<Integer>(IntegerSuccessor.getInstance(), 1, 3,
+        Interval.OPEN_CLOSED);
+    assertEquals(Ruby.Array.of(2, 3), Ruby.Array.copyOf(iter));
   }
 
 }

@@ -46,12 +46,19 @@ import net.sf.rubycollect4j.succ.Successive;
 public final class RubyRange<E> extends RubyEnumerable<E>
     implements Serializable {
 
+  public enum Interval {
+
+    CLOSED, OPEN, CLOSED_OPEN, OPEN_CLOSED;
+
+  }
+
   private static final long serialVersionUID = 1L;
 
   private final RangeIterable<E> iter;
   private final Successive<E> successive;
   private final E startPoint;
   private final E endPoint;
+  private final Interval interval;
 
   @Override
   protected Iterable<E> getIterable() {
@@ -67,20 +74,68 @@ public final class RubyRange<E> extends RubyEnumerable<E>
    *          where the range begins
    * @param endPoint
    *          where the range ends
+   * @param interval
+   *          an {@link Interval}
    * @throws NullPointerException
-   *           if successive is null
+   *           if successive or interval is null
    * @throws IllegalArgumentException
    *           if startPoint or endPoint is null
    */
-  public RubyRange(Successive<E> successive, E startPoint, E endPoint) {
+  public RubyRange(Successive<E> successive, E startPoint, E endPoint,
+      Interval interval) {
     Objects.requireNonNull(successive);
+    Objects.requireNonNull(interval);
     if (startPoint == null || endPoint == null)
       throw new IllegalArgumentException("ArgumentError: bad value for range");
 
-    iter = new RangeIterable<E>(successive, startPoint, endPoint);
+    iter =
+        new RangeIterable<E>(successive, startPoint, endPoint, Interval.CLOSED);
     this.successive = successive;
     this.startPoint = startPoint;
     this.endPoint = endPoint;
+    this.interval = interval;
+  }
+
+  /**
+   * Creates a {@link RubyRange} with closed interval of the same start and end
+   * points.
+   * 
+   * @return new {@link RubyRange}
+   */
+  public RubyRange<E> closed() {
+    return new RubyRange<E>(successive, startPoint, endPoint, Interval.CLOSED);
+  }
+
+  /**
+   * Returns a {@link RubyRange} with closed-open interval of the same start and
+   * end points.
+   * 
+   * @return new {@link RubyRange}
+   */
+  public RubyRange<E> closedOpen() {
+    return new RubyRange<E>(successive, startPoint, endPoint,
+        Interval.CLOSED_OPEN);
+  }
+
+  /**
+   * Returns a {@link RubyRange} with open interval of the same start and end
+   * points.
+   * 
+   * @return new {@link RubyRange}
+   */
+  public RubyRange<E> open() {
+    return new RubyRange<E>(successive, startPoint, endPoint, Interval.OPEN);
+  }
+
+  /**
+   * Returns a {@link RubyRange} with open-closed interval of the same start and
+   * end points.
+   * 
+   * @return new {@link RubyRange}
+   */
+  public RubyRange<E> openClosed() {
+    return new RubyRange<E>(successive, startPoint, endPoint,
+        Interval.OPEN_CLOSED);
   }
 
   /**
@@ -100,8 +155,20 @@ public final class RubyRange<E> extends RubyEnumerable<E>
    * @return true if item is within this range, false otherwise
    */
   public boolean coverʔ(E item) {
-    return successive.compare(startPoint, item) <= 0
-        && successive.compare(endPoint, item) >= 0;
+    switch (interval) {
+      case CLOSED_OPEN:
+        return successive.compare(startPoint, item) <= 0
+            && successive.compare(endPoint, item) > 0;
+      case OPEN_CLOSED:
+        return successive.compare(startPoint, item) < 0
+            && successive.compare(endPoint, item) >= 0;
+      case OPEN:
+        return successive.compare(startPoint, item) < 0
+            && successive.compare(endPoint, item) > 0;
+      default:
+        return successive.compare(startPoint, item) <= 0
+            && successive.compare(endPoint, item) >= 0;
+    }
   }
 
   /**
@@ -235,7 +302,8 @@ public final class RubyRange<E> extends RubyEnumerable<E>
       @SuppressWarnings("rawtypes")
       RubyRange rr = (RubyRange) o;
       return successive.equals(rr.successive)
-          && startPoint.equals(rr.startPoint) && endPoint.equals(rr.endPoint);
+          && startPoint.equals(rr.startPoint) && endPoint.equals(rr.endPoint)
+          && interval.equals(rr.interval);
     }
     return false;
   }
@@ -246,12 +314,14 @@ public final class RubyRange<E> extends RubyEnumerable<E>
     hashCode = 31 * hashCode + successive.hashCode();
     hashCode = 31 * hashCode + startPoint.hashCode();
     hashCode = 31 * hashCode + endPoint.hashCode();
+    hashCode = 31 * hashCode + interval.hashCode();
     return hashCode;
   }
 
   @Override
   public String toString() {
-    return startPoint + ".." + endPoint;
+    return "RubyRange{startPoint=" + startPoint + ", endPoint=" + endPoint
+        + ", interval=" + interval + "}";
   }
 
 }
