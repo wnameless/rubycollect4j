@@ -91,18 +91,13 @@ public class RubyDateTest {
   }
 
   @Test
-  public void testDayOfWeek() {
-    assertEquals(4, Ruby.Date.of(2013, 7, 4).dayOfWeek());
+  public void testMday() {
+    assertEquals(4, Ruby.Date.of(2013, 7, 4).mday());
   }
 
   @Test
-  public void testDayOfMonth() {
-    assertEquals(4, Ruby.Date.of(2013, 7, 4).dayOfMonth());
-  }
-
-  @Test
-  public void testDayOfYear() {
-    assertEquals(185, Ruby.Date.of(2013, 7, 4).dayOfYear());
+  public void testYday() {
+    assertEquals(185, Ruby.Date.of(2013, 7, 4).yday());
   }
 
   @Test
@@ -430,7 +425,7 @@ public class RubyDateTest {
     c.clear(Calendar.SECOND);
     c.clear(Calendar.MILLISECOND);
     assertEquals(c.getTime(), rd.beginningOfWeek());
-    assertEquals(0, rd.beginningOfWeek().dayOfWeek());
+    assertEquals(0, rd.beginningOfWeek().wday());
   }
 
   @Test
@@ -442,7 +437,7 @@ public class RubyDateTest {
     c.set(Calendar.SECOND, 59);
     c.set(Calendar.MILLISECOND, 999);
     assertEquals(c.getTime(), rd.endOfWeek());
-    assertEquals(6, rd.endOfWeek().dayOfWeek());
+    assertEquals(6, rd.endOfWeek().wday());
   }
 
   @Test
@@ -453,7 +448,7 @@ public class RubyDateTest {
     c.clear(Calendar.SECOND);
     c.clear(Calendar.MILLISECOND);
     assertEquals(c.getTime(), rd.beginningOfMonth());
-    assertEquals(1, rd.beginningOfMonth().dayOfMonth());
+    assertEquals(1, rd.beginningOfMonth().mday());
   }
 
   @Test
@@ -466,7 +461,7 @@ public class RubyDateTest {
     c.set(Calendar.MILLISECOND, 999);
     assertEquals(c.getTime(), rd.endOfMonth());
     assertEquals(Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH),
-        rd.endOfMonth().dayOfMonth());
+        rd.endOfMonth().mday());
   }
 
   @Test

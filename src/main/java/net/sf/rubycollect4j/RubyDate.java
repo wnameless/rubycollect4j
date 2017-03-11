@@ -166,15 +166,6 @@ public class RubyDate extends Date {
   }
 
   /**
-   * @see #dayOfWeek
-   * 
-   * @return the day of week
-   */
-  public int wday() {
-    return dayOfWeek();
-  }
-
-  /**
    * Returns the day(0-6) of week of this {@link RubyDate}.<br>
    * 
    * Sun : 0<br>
@@ -187,7 +178,7 @@ public class RubyDate extends Date {
    * 
    * @return the day of week
    */
-  public int dayOfWeek() {
+  public int wday() {
     Calendar c = Calendar.getInstance();
     c.setTime(this);
     return c.get(Calendar.DAY_OF_WEEK) - 1;
@@ -198,7 +189,7 @@ public class RubyDate extends Date {
    * 
    * @return the day of month
    */
-  public int dayOfMonth() {
+  public int mday() {
     Calendar c = Calendar.getInstance();
     c.setTime(this);
     return c.get(Calendar.DAY_OF_MONTH);
@@ -209,7 +200,7 @@ public class RubyDate extends Date {
    * 
    * @return the day of year
    */
-  public int dayOfYear() {
+  public int yday() {
     Calendar c = Calendar.getInstance();
     c.setTime(this);
     return c.get(Calendar.DAY_OF_YEAR);
