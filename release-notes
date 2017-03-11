@@ -324,4 +324,6 @@ Version 2.0.0
 
 + Add #mondayʔ, #tuesdayʔ, #wednesdayʔ, #thursdayʔ, #friday?, #saturdayʔ, #sundayʔ, #onWeekdayʔ, #onWeekendʔ to RubyDate
 
-+ Add RubyDate#wday, RubyDate#toDate
++ Add RubyDate#step, #upto, #downto
+
+* Change #dayOfWeek to #wday,  #dayOfMonth to #mday,  #dayOfYear to #yday in RubyDate 
