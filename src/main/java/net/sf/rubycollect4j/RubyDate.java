@@ -24,6 +24,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Consumer;
+
+import net.sf.rubycollect4j.RubyRange.Interval;
+import net.sf.rubycollect4j.succ.DateReverseSuccessor;
 
 /**
  * 
@@ -333,6 +337,120 @@ public class RubyDate extends Date {
    */
   public RubyRange<Date> allYear() {
     return range(beginningOfYear(), endOfYear());
+  }
+
+  /**
+   * Creates a {@link RubyEnumerator} from this {@link RubyDate} to the given
+   * max {@link Date}.
+   * 
+   * @param max
+   *          a {@link Date}
+   * @return {@link RubyEnumerator}
+   */
+  public RubyEnumerator<Date> upto(Date max) {
+    return step(max, 1).each();
+  }
+
+  /**
+   * Iterates from this {@link RubyDate} to the given max {@link Date}.
+   * 
+   * @param max
+   *          a {@link Date}
+   * @param block
+   *          to yield each date
+   * @return this {@link RubyDate}
+   */
+  public RubyDate upto(Date max, Consumer<Date> block) {
+    step(max, 1).each(block);
+    return this;
+  }
+
+  /**
+   * Creates a {@link RubyEnumerator} from this {@link RubyDate} to the given
+   * min {@link Date}.
+   * 
+   * @param min
+   *          a {@link Date}
+   * @return {@link RubyEnumerator}
+   */
+  public RubyEnumerator<Date> downto(Date min) {
+    return step(min, -1).each();
+  }
+
+  /**
+   * Iterates from this {@link RubyDate} to the given min {@link Date}.
+   * 
+   * @param min
+   *          a {@link Date}
+   * @param block
+   *          to yield each date
+   * @return this {@link RubyDate}
+   */
+  public RubyDate downto(Date min, Consumer<Date> block) {
+    step(min, -1).each(block);
+    return this;
+  }
+
+  /**
+   * Creates a {@link RubyEnumerator} from this {@link RubyDate} to the given
+   * limit {@link Date}.
+   * 
+   * @param limit
+   *          a {@link Date}
+   * @return {@link RubyEnumerator}
+   */
+  public RubyEnumerator<Date> step(Date limit) {
+    return step(limit, 1).each();
+  }
+
+  /**
+   * Iterates from this {@link RubyDate} to the given limit {@link Date}.
+   * 
+   * @param limit
+   *          a {@link Date}
+   * @param block
+   *          to yield each date
+   * @return this {@link RubyDate}
+   */
+  public RubyDate step(Date limit, Consumer<Date> block) {
+    step(limit, 1).each(block);
+    return this;
+  }
+
+  /**
+   * Creates a {@link RubyEnumerator} from this {@link RubyDate} to the given
+   * limit {@link Date} by stepping certain number of dates.
+   * 
+   * @param limit
+   *          a {@link Date}
+   * @param step
+   *          number of dates to step
+   * @return {@link RubyEnumerator}
+   */
+  public RubyEnumerator<Date> step(Date limit, int step) {
+    if (step > 0) {
+      return range(this, limit).step(step).each();
+    } else {
+      return new RubyRange<>(DateReverseSuccessor.getInstance(), this, limit,
+          Interval.CLOSED).step(-step).each();
+    }
+  }
+
+  /**
+   * Iterates from this {@link RubyDate} to the given limit {@link Date} by
+   * stepping certain number of dates.
+   * 
+   * @param limit
+   *          a {@link Date}
+   * @param step
+   *          number of dates to step
+   * @param block
+   *          to yield each date
+   * @return this {@link RubyDate}
+   */
+  public RubyDate step(Date limit, int step, Consumer<Date> block) {
+    step(limit, step).each(block);
+    return this;
   }
 
   /**

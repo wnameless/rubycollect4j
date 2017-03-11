@@ -221,6 +221,70 @@ public class RubyDateTest {
   }
 
   @Test
+  public void testUpto() {
+    rd = Ruby.Date.today();
+    assertEquals(range(rd, rd.add(7).days()).toA(),
+        rd.upto(Ruby.Date.today().nextWeek()).toA());
+  }
+
+  @Test
+  public void testUptoWithBlock() {
+    rd = Ruby.Date.today();
+    RubyArray<Date> dates = Ruby.Array.create();
+    rd.upto(Ruby.Date.today().nextWeek(), d -> dates.add(d));
+    assertEquals(range(rd, rd.add(7).days()).toA(), dates);
+  }
+
+  @Test
+  public void testDownto() {
+    rd = Ruby.Date.today();
+    assertEquals(range(rd.minus(7).days(), rd).toA().reverse(),
+        rd.downto(Ruby.Date.today().prevWeek()).toA());
+  }
+
+  @Test
+  public void testDowntoWithBlock() {
+    rd = Ruby.Date.today();
+    RubyArray<Date> dates = Ruby.Array.create();
+    rd.downto(Ruby.Date.today().prevWeek(), d -> dates.add(d));
+    assertEquals(range(rd.prevWeek(), rd).toA().reverse(), dates);
+  }
+
+  @Test
+  public void testStep() {
+    rd = Ruby.Date.today();
+    assertEquals(range(rd, rd.add(7).days()).toA(),
+        rd.step(Ruby.Date.today().nextWeek()).toA());
+  }
+
+  @Test
+  public void testStepWithBlock() {
+    rd = Ruby.Date.today();
+    RubyArray<Date> dates = Ruby.Array.create();
+    rd.step(Ruby.Date.today().nextWeek(), d -> dates.add(d));
+    assertEquals(range(rd, rd.add(7).days()).toA(), dates);
+  }
+
+  @Test
+  public void testStepWithNum() {
+    rd = Ruby.Date.today();
+    assertEquals(range(rd, rd.add(7).days()).step(2).toA(),
+        rd.step(Ruby.Date.today().nextWeek(), 2).toA());
+    rd = Ruby.Date.today();
+    assertEquals(range(rd.minus(28).days(), rd).step(2).toA().reverse(), rd
+        .step(Ruby.Date.today().prevWeek().prevWeek().prevWeek().prevWeek(), -2)
+        .toA());
+  }
+
+  @Test
+  public void testStepWithNumAndBlock() {
+    rd = Ruby.Date.today();
+    RubyArray<Date> dates = Ruby.Array.create();
+    rd.step(Ruby.Date.today().nextWeek(), 2, d -> dates.add(d));
+    assertEquals(range(rd, rd.add(7).days()).step(2).toA(), dates);
+  }
+
+  @Test
   public void testNextDay() {
     assertEquals(rd.add(1).days(), rd.nextDay());
   }
