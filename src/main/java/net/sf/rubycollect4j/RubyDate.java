@@ -133,36 +133,25 @@ public class RubyDate extends Date {
   }
 
   /**
-   * Returns the year of this {@link RubyDate}.
+   * Increases an interval of time to a date by the {@link DateShifter}.
    * 
-   * @return the year
+   * @param interval
+   *          of time to be shifted
+   * @return {@link DateShifter}
    */
-  public int year() {
-    Calendar c = Calendar.getInstance();
-    c.setTime(this);
-    return c.get(Calendar.YEAR);
+  public DateShifter add(int interval) {
+    return new DateShifter(this, interval);
   }
 
   /**
-   * Returns the month(1-12) of this {@link RubyDate}.
+   * Decreases an interval of time to a date by the {@link DateShifter}.
    * 
-   * @return the month
+   * @param interval
+   *          of time to be shifted
+   * @return {@link DateShifter}
    */
-  public int month() {
-    Calendar c = Calendar.getInstance();
-    c.setTime(this);
-    return c.get(Calendar.MONTH) + 1;
-  }
-
-  /**
-   * Returns the day(1-31) of this {@link RubyDate}.
-   * 
-   * @return the day
-   */
-  public int day() {
-    Calendar c = Calendar.getInstance();
-    c.setTime(this);
-    return c.get(Calendar.DAY_OF_MONTH);
+  public DateShifter minus(int interval) {
+    return new DateShifter(this, -interval);
   }
 
   /**
@@ -207,6 +196,39 @@ public class RubyDate extends Date {
   }
 
   /**
+   * Returns the year of this {@link RubyDate}.
+   * 
+   * @return the year
+   */
+  public int year() {
+    Calendar c = Calendar.getInstance();
+    c.setTime(this);
+    return c.get(Calendar.YEAR);
+  }
+
+  /**
+   * Returns the month(1-12) of this {@link RubyDate}.
+   * 
+   * @return the month
+   */
+  public int month() {
+    Calendar c = Calendar.getInstance();
+    c.setTime(this);
+    return c.get(Calendar.MONTH) + 1;
+  }
+
+  /**
+   * Returns the day(1-31) of this {@link RubyDate}.
+   * 
+   * @return the day
+   */
+  public int day() {
+    Calendar c = Calendar.getInstance();
+    c.setTime(this);
+    return c.get(Calendar.DAY_OF_MONTH);
+  }
+
+  /**
    * Returns the week of year of this {@link RubyDate}.
    * 
    * @return the week of year
@@ -215,17 +237,6 @@ public class RubyDate extends Date {
     Calendar c = Calendar.getInstance();
     c.setTime(this);
     return c.get(Calendar.WEEK_OF_YEAR);
-  }
-
-  /**
-   * Returns the week of month of this {@link RubyDate}.
-   * 
-   * @return the week of month
-   */
-  public int weekOfMonth() {
-    Calendar c = Calendar.getInstance();
-    c.setTime(this);
-    return c.get(Calendar.WEEK_OF_MONTH);
   }
 
   /**
@@ -270,28 +281,6 @@ public class RubyDate extends Date {
     Calendar c = Calendar.getInstance();
     c.setTime(this);
     return c.get(Calendar.MILLISECOND);
-  }
-
-  /**
-   * Increases an interval of time to a date by the {@link DateShifter}.
-   * 
-   * @param interval
-   *          of time to be shifted
-   * @return {@link DateShifter}
-   */
-  public DateShifter add(int interval) {
-    return new DateShifter(this, interval);
-  }
-
-  /**
-   * Decreases an interval of time to a date by the {@link DateShifter}.
-   * 
-   * @param interval
-   *          of time to be shifted
-   * @return {@link DateShifter}
-   */
-  public DateShifter minus(int interval) {
-    return new DateShifter(this, -interval);
   }
 
   /**

@@ -106,11 +106,6 @@ public class RubyDateTest {
   }
 
   @Test
-  public void testWeekOfMonth() {
-    assertEquals(1, Ruby.Date.of(2013, 7, 4).weekOfMonth());
-  }
-
-  @Test
   public void testHour() {
     assertEquals(8, Ruby.Date.of(2013, 7, 4, 8).hour());
   }
