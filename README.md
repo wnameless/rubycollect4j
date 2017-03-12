@@ -38,9 +38,7 @@ Install v2.0.0-SNAPSHOT(Java 1.8 required):
 Java 8 with rubycollect4j v2.0.0+:
 ```java
 // Sorts the characters by its frequency based on the word 'Mississippi' case-insensitively.
-RubyString word = Ruby.String.of("Mississippi"); // Equivalent to new RubyString("Mississippi")
-
-String result = word.map(String::toLowerCase).sortBy(c -> word.count(c)).uniq().join();
+String result = Ruby.String.of("Mississippi").map(String::toLowerCase).sortBy(c -> word.count(c)).uniq().join();
 
 Ruby.Kernel.p(result);
 // Output: "mpis"
@@ -62,26 +60,46 @@ p(words);
 ```
 
 Since v2.0.0, Java 8 is required.<br/>
-Class Ruby has been introduced in v2.0.0.<br/>
+
+Class Ruby has been introduced.<br/>
 It provides a super convenient way to access the numerous features of RubyCollect4J.<br/>
 All static classes and methods under Ruby class are well documented, feel free to try them by yourself.
+
+## Examples for v2.0.x:
 
 Demo Ruby:
 ```java
 Ruby.Array.copyOf(Arrays.asList(1,2,3,4));
-Ruby.Hash.of("abc",123);
-Ruby.Set.create();
-Ruby.Enumerator.of(Arrays.asList(1,2,3,4));
-Ruby.LazyEnumerator.of(Arrays.asList(1,2,3,4)).cycle();
-Ruby.Range.of(1,1000);
-Ruby.Dir.glob("./**/*");
-Ruby.File.foreach("/usr/share/dict/web2");
-Ruby.Date.yesterday();
-...
-```
 
-Since v1.9.0,<br/>
-RubyIterables & RubyStrings are added, they are simply utility classes just like java.util.Arrays.<br/>
+Ruby.Hash.of("abc",123);
+
+Ruby.Set.create();
+
+Ruby.Enumerator.of(Arrays.asList(1,2,3,4));
+
+Ruby.LazyEnumerator.of(Arrays.asList(1,2,3,4)).cycle();
+
+Ruby.String.of("abc");
+
+Ruby.Range.of(1,1000);
+
+Ruby.Dir.glob("./**/*");
+
+Ruby.File.foreach("/usr/share/dict/web2");
+
+Ruby.Date.today().onWeekdayʔ();
+
+Ruby.Object.isBlank(Collections.emptyList());
+
+Ruby.Kernel.p(new char[] { 'a', 'b', 'c' });
+
+Ruby.Literals.qr("[xyz]");
+```
+Most of the functions of v1.9.x are also avaliable in v2.0.x.
+
+## Examples for v1.9.x:
+
+Since v1.9.0, RubyIterables & RubyStrings are added, they are simply utility classes just like java.util.Arrays.<br/>
 They provide the Ruby style ways to manipulate any Iterable and String (or CharSequence).<br/>
 Highly recommended to use with the @ExtensionMethod of [Project Lombok](https://projectlombok.org/).
 ```java
