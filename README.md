@@ -38,7 +38,8 @@ Install v2.0.0-SNAPSHOT(Java 1.8 required):
 Java 8 with rubycollect4j v2.0.0+:
 ```java
 // Sorts the characters by its frequency based on the word 'Mississippi' case-insensitively.
-String result = Ruby.String.of("Mississippi").map(String::toLowerCase).sortBy(c -> word.count(c)).uniq().join();
+RubyString word = Ruby.String.of("Mississippi"); // Equivalent to new RubyString("Mississippi")
+String result = word.map(String::toLowerCase).sortBy(c -> word.count(c)).uniq().join();
 
 Ruby.Kernel.p(result);
 // Output: "mpis"
