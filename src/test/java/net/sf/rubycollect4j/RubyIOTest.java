@@ -63,6 +63,18 @@ public class RubyIOTest {
   }
 
   @Test
+  public void testOpenWithMode() {
+    io = RubyIO.open(BASE_DIR + "ruby_io_read_only_mode.txt", Mode.R);
+    assertEquals(RubyIO.class, io.getClass());
+    io.close();
+  }
+
+  @Test(expected = RuntimeException.class)
+  public void testOpenWithModeException() {
+    io = RubyIO.open(BASE_DIR + "no_file.txt", Mode.R);
+  }
+
+  @Test
   public void testReadOnlyMode() {
     io = RubyIO.open(BASE_DIR + "ruby_io_read_only_mode.txt");
     assertEquals(ra("a", "bc", "def"), io.eachLine().toA());

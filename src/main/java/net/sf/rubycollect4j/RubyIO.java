@@ -170,6 +170,26 @@ public class RubyIO {
   }
 
   /**
+   * Creates a {@link RubyIO} by given path and mode.
+   * 
+   * @param path
+   *          of a File
+   * @param mode
+   *          a {@link Mode}
+   * @return {@link RubyIO}
+   */
+  public static RubyIO open(String path, Mode mode) {
+    RubyIO io = null;
+    try {
+      io = new RubyIO(new File(path), mode);
+    } catch (IOException e) {
+      logger.log(Level.SEVERE, null, e);
+      throw new RuntimeException(e);
+    }
+    return io;
+  }
+
+  /**
    * Creates a {@link RubyIO} by given file. Sets the mode to read-only.
    * 
    * @param path
