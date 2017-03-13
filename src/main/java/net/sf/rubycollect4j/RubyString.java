@@ -2262,8 +2262,8 @@ public final class RubyString
       toStrAry.fill(toStrAry.last(), toStrAry.size(),
           fromStrAry.length() - toStrAry.length());
 
-    RubyHash<String, String> rh =
-        fromStrAry.zip(toStrAry).toH(ra -> Ruby.Entry.of(ra.at(0), ra.at(1)));
+    RubyHash<String, String> rh = fromStrAry.zip(ra(toStrAry))
+        .toH(ra -> Ruby.Entry.of(ra.at(0), ra.at(1)));
     if (fromStr.contains("\\^")) {
       fromStr = fromStr.replaceAll("\\\\^", "");
       fromStr += "^";

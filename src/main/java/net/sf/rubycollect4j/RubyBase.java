@@ -497,15 +497,6 @@ final class RubyBase {
      */
     @Override
     public RubyArray<RubyArray<E>> zip(
-        @SuppressWarnings("unchecked") Iterable<? extends E>... others);
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @return {@link RubyArray}
-     */
-    @Override
-    public RubyArray<RubyArray<E>> zip(
         List<? extends Iterable<? extends E>> others);
 
   }
@@ -925,15 +916,6 @@ final class RubyBase {
      */
     @Override
     public RubyBase.LazyEnumerator<E> takeWhile(Predicate<? super E> block);
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @return {@link RubyBase.LazyEnumerator}
-     */
-    @Override
-    public RubyBase.LazyEnumerator<RubyArray<E>> zip(
-        @SuppressWarnings("unchecked") Iterable<? extends E>... others);
 
     /**
      * {@inheritDoc}

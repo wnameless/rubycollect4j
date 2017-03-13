@@ -943,9 +943,7 @@ public class RubyEnumerableTest {
   @Test
   public void testZip() {
     re = newRubyEnumerator(Arrays.asList(1, 2, 3));
-    assertEquals(ra(ra(1, 4), ra(2, 5), ra(3, null)), re.zip(ra(4, 5)));
-    assertEquals(ra(ra(1, 4, 7), ra(2, 5, 8), ra(3, 6, 9)),
-        re.zip(ra(4, 5, 6), ra(7, 8, 9)));
+    assertEquals(ra(ra(1, 4), ra(2, 5), ra(3, null)), re.zip(ra(ra(4, 5))));
     assertEquals(ra(ra(1, 4, 7), ra(2, 5, 8), ra(3, 6, 9)),
         re.zip(ra(ra(4, 5, 6), ra(7, 8, 9))));
   }

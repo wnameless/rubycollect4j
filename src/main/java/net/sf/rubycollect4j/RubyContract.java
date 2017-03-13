@@ -1046,17 +1046,6 @@ final class RubyContract {
     public <K, V> RubyHash<K, V> toH(BiFunction<E, E, Entry<K, V>> block);
 
     /**
-     * Groups elements which get the same indices among all other Iterables into
-     * {@link RubyArray}s.
-     * 
-     * @param others
-     *          an array of Iterable
-     * @return {@link Enumerable}
-     */
-    public Z zip(
-        @SuppressWarnings("unchecked") Iterable<? extends E>... others);
-
-    /**
      * Groups elements which get the same indices among all other Lists into
      * {@link RubyArray}s.
      * 

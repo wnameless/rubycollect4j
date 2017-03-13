@@ -22,7 +22,6 @@ import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
 import static net.sf.rubycollect4j.RubyCollections.newRubyLazyEnumerator;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -1111,18 +1110,6 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
   public <K, V> RubyHash<K, V> toH(BiFunction<E, E, Entry<K, V>> block) {
     return Ruby.Hash
         .create(eachSlice(2).map(ra -> block.apply(ra.at(0), ra.at(1))));
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @return {@link RubyLazyEnumerator}
-   */
-  @SafeVarargs
-  @Override
-  public final RubyLazyEnumerator<RubyArray<E>> zip(
-      Iterable<? extends E>... others) {
-    return zip(Arrays.asList(others));
   }
 
   /**

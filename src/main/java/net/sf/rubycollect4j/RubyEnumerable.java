@@ -915,17 +915,6 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    */
   @Override
   public default RubyArray<RubyArray<E>> zip(
-      @SuppressWarnings("unchecked") Iterable<? extends E>... others) {
-    return newRubyLazyEnumerator(this).zip(others).toA();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @return {@link RubyArray}
-   */
-  @Override
-  public default RubyArray<RubyArray<E>> zip(
       List<? extends Iterable<? extends E>> others) {
     return newRubyLazyEnumerator(this).zip(others).toA();
   }

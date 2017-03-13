@@ -704,15 +704,6 @@ public final class RubyIterables {
   }
 
   /**
-   * @see net.sf.rubycollect4j.RubyEnumerable#zip(Iterable...)
-   */
-  @SafeVarargs
-  public static <E> List<? extends List<E>> zip(Iterable<E> in,
-      Iterable<? extends E>... others) {
-    return newRubyLazyEnumerator(in).zip(others).toA();
-  }
-
-  /**
    * @see net.sf.rubycollect4j.RubyEnumerable#zip(List)
    */
   public static <E> List<? extends List<E>> zip(Iterable<E> in,
