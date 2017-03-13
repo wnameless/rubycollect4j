@@ -63,8 +63,8 @@ import net.sf.rubycollect4j.util.TryComparator;
  * @author Wei-Ming Wu
  * 
  */
-public final class RubyArray<E> extends RubyEnumerable<E>
-    implements List<E>, Comparable<List<E>>, Serializable {
+public final class RubyArray<E>
+    implements RubyEnumerable<E>, List<E>, Comparable<List<E>>, Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -99,11 +99,6 @@ public final class RubyArray<E> extends RubyEnumerable<E>
     Objects.requireNonNull(elements);
 
     return new RubyArray<E>(elements);
-  }
-
-  @Override
-  protected Iterable<E> getIterable() {
-    return list;
   }
 
   /**
@@ -388,7 +383,7 @@ public final class RubyArray<E> extends RubyEnumerable<E>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<E> deleteIf() {
-    return newRubyEnumerator(getIterable());
+    return newRubyEnumerator(this);
   }
 
   /**
@@ -1634,7 +1629,7 @@ public final class RubyArray<E> extends RubyEnumerable<E>
    */
   public BigDecimal sum() {
     BigDecimal sum = new BigDecimal(0);
-    for (E item : getIterable()) {
+    for (E item : this) {
       if (item instanceof Number) {
         Number num = (Number) item;
         sum = sum.add(new BigDecimal(num.toString()));

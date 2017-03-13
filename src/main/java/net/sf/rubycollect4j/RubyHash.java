@@ -41,7 +41,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 import net.sf.rubycollect4j.function.TriFunction;
-import net.sf.rubycollect4j.iter.ComparableEntryIterable;
+import net.sf.rubycollect4j.iter.ComparableEntryIterator;
 import net.sf.rubycollect4j.util.ComparableEntry;
 import net.sf.rubycollect4j.util.LinkedIdentityMap;
 
@@ -60,8 +60,8 @@ import net.sf.rubycollect4j.util.LinkedIdentityMap;
  * @author Wei-Ming Wu
  * 
  */
-public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
-    implements Map<K, V>, Serializable {
+public final class RubyHash<K, V>
+    implements RubyEnumerable<Entry<K, V>>, Map<K, V>, Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -97,11 +97,6 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
     Objects.requireNonNull(map);
 
     return new RubyHash<K, V>(map);
-  }
-
-  @Override
-  protected Iterable<Entry<K, V>> getIterable() {
-    return new ComparableEntryIterable<K, V>(map.entrySet());
   }
 
   /**
@@ -220,7 +215,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<Entry<K, V>> deleteIf() {
-    return newRubyEnumerator(getIterable());
+    return newRubyEnumerator(this);
   }
 
   /**
@@ -300,7 +295,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<Entry<K, V>> eachPair() {
-    return newRubyEnumerator(getIterable());
+    return newRubyEnumerator(this);
   }
 
   /**
@@ -428,7 +423,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
    * @return {@link RubyEnumerator}
    */
   public RubyArray<Entry<K, V>> flatten() {
-    return newRubyArray(getIterable());
+    return newRubyArray(this);
   }
 
   /**
@@ -491,7 +486,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<Entry<K, V>> keepIf() {
-    return newRubyEnumerator(getIterable());
+    return newRubyEnumerator(this);
   }
 
   /**
@@ -681,7 +676,7 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<Entry<K, V>> rejectǃ() {
-    return newRubyEnumerator(getIterable());
+    return newRubyEnumerator(this);
   }
 
   /**
@@ -1293,6 +1288,11 @@ public final class RubyHash<K, V> extends RubyEnumerable<Entry<K, V>>
   @Override
   public Set<Entry<K, V>> entrySet() {
     return map.entrySet();
+  }
+
+  @Override
+  public Iterator<Entry<K, V>> iterator() {
+    return new ComparableEntryIterator<>(map.entrySet().iterator());
   }
 
   @Override

@@ -44,8 +44,8 @@ import java.util.function.Predicate;
  * @author Wei-Ming Wu
  * 
  */
-public final class RubySet<E> extends RubyEnumerable<E>
-    implements Set<E>, Comparable<Set<E>>, Serializable {
+public final class RubySet<E>
+    implements RubyEnumerable<E>, Set<E>, Comparable<Set<E>>, Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -76,11 +76,6 @@ public final class RubySet<E> extends RubyEnumerable<E>
    */
   public static <E> RubySet<E> copyOf(Iterable<E> elements) {
     return new RubySet<E>(elements);
-  }
-
-  @Override
-  protected Iterable<E> getIterable() {
-    return set;
   }
 
   /**
@@ -613,6 +608,11 @@ public final class RubySet<E> extends RubyEnumerable<E>
   @Override
   public <T> T[] toArray(T[] a) {
     return set.toArray(a);
+  }
+
+  @Override
+  public Iterator<E> iterator() {
+    return set.iterator();
   }
 
   @Override

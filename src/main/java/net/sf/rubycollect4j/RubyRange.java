@@ -21,6 +21,7 @@ import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -43,8 +44,7 @@ import net.sf.rubycollect4j.succ.Successive;
  * @author Wei-Ming Wu
  * 
  */
-public final class RubyRange<E> extends RubyEnumerable<E>
-    implements Serializable {
+public final class RubyRange<E> implements RubyEnumerable<E>, Serializable {
 
   public enum Interval {
 
@@ -59,11 +59,6 @@ public final class RubyRange<E> extends RubyEnumerable<E>
   private final E startPoint;
   private final E endPoint;
   private final Interval interval;
-
-  @Override
-  protected Iterable<E> getIterable() {
-    return iter;
-  }
 
   /**
    * Creates a {@link RubyRange} of given elements.
@@ -293,6 +288,11 @@ public final class RubyRange<E> extends RubyEnumerable<E>
    */
   public String toS() {
     return toString();
+  }
+
+  @Override
+  public Iterator<E> iterator() {
+    return iter.iterator();
   }
 
   @Override

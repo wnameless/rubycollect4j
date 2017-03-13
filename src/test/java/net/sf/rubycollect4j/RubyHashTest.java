@@ -895,7 +895,7 @@ public class RubyHashTest {
     assertEquals(rh(1, 2, 3, 4, 5, 6).toA(), rh.sort());
     assertEquals(hp(1, 2), rh.min());
     assertEquals(hp(5, 6), rh.max());
-    assertTrue(rh.getIterable().iterator().next() instanceof ComparableEntry);
+    assertTrue(rh.iterator().next() instanceof ComparableEntry);
     assertTrue(rh.assoc(1) instanceof ComparableEntry);
     assertTrue(rh.rassoc(6) instanceof ComparableEntry);
     assertTrue(rh.deleteIf().iterator().next() instanceof ComparableEntry);

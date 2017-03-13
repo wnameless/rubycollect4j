@@ -24,6 +24,7 @@ import static net.sf.rubycollect4j.RubyCollections.ra;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -38,16 +39,11 @@ import net.sf.rubycollect4j.util.RegexUtils;
  * @author Wei-Ming Wu
  * 
  */
-public class RubyDir extends RubyEnumerable<String> {
+public class RubyDir implements RubyEnumerable<String> {
 
   private final File directory;
   private final RubyArray<String> entries;
   private int position = 0;
-
-  @Override
-  protected Iterable<String> getIterable() {
-    return entries;
-  }
 
   /**
    * Creates a {@link RubyDir} by given path.
@@ -348,6 +344,11 @@ public class RubyDir extends RubyEnumerable<String> {
    */
   public int tell() {
     return pos();
+  }
+
+  @Override
+  public Iterator<String> iterator() {
+    return entries.iterator();
   }
 
   @Override

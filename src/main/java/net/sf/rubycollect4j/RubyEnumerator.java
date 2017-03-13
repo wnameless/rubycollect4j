@@ -37,8 +37,8 @@ import net.sf.rubycollect4j.util.PeekingIterator;
  * @author Wei-Ming Wu
  * 
  */
-public final class RubyEnumerator<E> extends RubyEnumerable<E>
-    implements RubyBase.Enumerator<E> {
+public final class RubyEnumerator<E>
+    implements RubyEnumerable<E>, RubyBase.Enumerator<E> {
 
   private final Iterable<E> iter;
   private PeekingIterator<E> pIterator;
@@ -72,11 +72,6 @@ public final class RubyEnumerator<E> extends RubyEnumerable<E>
     Objects.requireNonNull(iter);
 
     return new RubyEnumerator<E>(RubyArray.copyOf(iter));
-  }
-
-  @Override
-  protected Iterable<E> getIterable() {
-    return iter;
   }
 
   /**

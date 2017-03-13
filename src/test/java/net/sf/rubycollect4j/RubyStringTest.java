@@ -100,11 +100,6 @@ public class RubyStringTest {
   }
 
   @Test
-  public void testGetIterable() {
-    assertEquals(ra("a", "b", "c"), ra(rs.eachChar().getIterable()));
-  }
-
-  @Test
   public void testAsciiOnlyʔ() {
     assertTrue(rs("abc").asciiOnlyʔ());
     assertFalse(rs("我abc").asciiOnlyʔ());

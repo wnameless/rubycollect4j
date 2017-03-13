@@ -25,13 +25,11 @@ import static net.sf.rubycollect4j.RubyCollections.rh;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -56,8 +54,8 @@ public class RubyEnumerableTest {
     re = new RubyEnumerable<Integer>() {
 
       @Override
-      protected Iterable<Integer> getIterable() {
-        return iter;
+      public Iterator<Integer> iterator() {
+        return iter.iterator();
       }
 
     };
@@ -71,11 +69,6 @@ public class RubyEnumerableTest {
   @Test
   public void testInterface() {
     assertTrue(re instanceof RubyBase.Enumerable);
-  }
-
-  @Test
-  public void testGetIterable() {
-    assertSame(iter, re.getIterable());
   }
 
   @Test
@@ -903,8 +896,8 @@ public class RubyEnumerableTest {
     re = new RubyEnumerable<Integer>() {
 
       @Override
-      protected Iterable<Integer> getIterable() {
-        return Collections.emptyList();
+      public Iterator<Integer> iterator() {
+        return new ArrayList<Integer>().iterator();
       }
 
     };
@@ -929,10 +922,10 @@ public class RubyEnumerableTest {
     assertEquals(rh(1, 2, 3, 4), new RubyEnumerable<List<Integer>>() {
 
       @Override
-      protected Iterable<List<Integer>> getIterable() {
+      public Iterator<List<Integer>> iterator() {
         List<Integer> l1 = ra(1, 2);
         List<Integer> l2 = ra(3, 4);
-        return Arrays.asList(l1, l2);
+        return Arrays.asList(l1, l2).iterator();
       }
 
     }.toH(ary -> hp(ary.get(0), ary.get(1))));
@@ -940,8 +933,8 @@ public class RubyEnumerableTest {
     assertEquals(rh(1, 2, 3, 4), new RubyEnumerable<Integer>() {
 
       @Override
-      protected Iterable<Integer> getIterable() {
-        return Arrays.asList(1, 2, 3, 4);
+      public Iterator<Integer> iterator() {
+        return Arrays.asList(1, 2, 3, 4).iterator();
       }
 
     }.toH((k, v) -> hp(k, v)));
@@ -970,11 +963,6 @@ public class RubyEnumerableTest {
   @Test
   public void testIterator() {
     assertTrue(re.iterator() instanceof Iterator);
-  }
-
-  @Test
-  public void testToString() {
-    assertEquals("RubyEnumerable{[1, 2, 3, 4]}", re.toString());
   }
 
 }
