@@ -17,10 +17,6 @@
  */
 package net.sf.rubycollect4j;
 
-import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
-import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
-import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
-
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
@@ -215,7 +211,7 @@ public final class RubyHash<K, V>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<Entry<K, V>> deleteIf() {
-    return newRubyEnumerator(this);
+    return Ruby.Enumerator.of(this);
   }
 
   /**
@@ -272,7 +268,7 @@ public final class RubyHash<K, V>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<K> eachKey() {
-    return newRubyEnumerator(map.keySet());
+    return Ruby.Enumerator.of(map.keySet());
   }
 
   /**
@@ -295,7 +291,7 @@ public final class RubyHash<K, V>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<Entry<K, V>> eachPair() {
-    return newRubyEnumerator(this);
+    return Ruby.Enumerator.of(this);
   }
 
   /**
@@ -315,7 +311,7 @@ public final class RubyHash<K, V>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<V> eachValue() {
-    return newRubyEnumerator(values());
+    return Ruby.Enumerator.of(values());
   }
 
   /**
@@ -423,7 +419,7 @@ public final class RubyHash<K, V>
    * @return {@link RubyEnumerator}
    */
   public RubyArray<Entry<K, V>> flatten() {
-    return newRubyArray(this);
+    return Ruby.Array.copyOf(this);
   }
 
   /**
@@ -473,7 +469,7 @@ public final class RubyHash<K, V>
    * @return new {@link RubyHash}
    */
   public RubyHash<V, K> invert() {
-    RubyHash<V, K> invertHash = newRubyHash();
+    RubyHash<V, K> invertHash = Ruby.Hash.create();
     for (Entry<K, V> item : map.entrySet()) {
       invertHash.put(item.getValue(), item.getKey());
     }
@@ -486,7 +482,7 @@ public final class RubyHash<K, V>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<Entry<K, V>> keepIf() {
-    return newRubyEnumerator(this);
+    return Ruby.Enumerator.of(this);
   }
 
   /**
@@ -527,7 +523,7 @@ public final class RubyHash<K, V>
    * @return {@link RubyArray}
    */
   public RubyArray<K> keys() {
-    return newRubyArray(map.keySet());
+    return Ruby.Array.copyOf(map.keySet());
   }
 
   /**
@@ -558,7 +554,7 @@ public final class RubyHash<K, V>
    * @return new {@link RubyHash}
    */
   public RubyHash<K, V> merge(Map<? extends K, ? extends V> otherHash) {
-    RubyHash<K, V> rubyHash = newRubyHash();
+    RubyHash<K, V> rubyHash = Ruby.Hash.create();
     for (Entry<K, V> item : map.entrySet()) {
       rubyHash.put(item);
     }
@@ -580,7 +576,7 @@ public final class RubyHash<K, V>
    */
   public RubyHash<K, V> merge(Map<K, V> otherHash,
       TriFunction<? super K, V, V, V> block) {
-    RubyHash<K, V> rubyHash = newRubyHash(map);
+    RubyHash<K, V> rubyHash = Ruby.Hash.copyOf(map);
     for (Entry<K, V> item : otherHash.entrySet()) {
       if (rubyHash.containsKey(item.getKey()))
         rubyHash.put(item.getKey(), block.apply(item.getKey(),
@@ -676,7 +672,7 @@ public final class RubyHash<K, V>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<Entry<K, V>> rejectǃ() {
-    return newRubyEnumerator(this);
+    return Ruby.Enumerator.of(this);
   }
 
   /**
@@ -760,7 +756,7 @@ public final class RubyHash<K, V>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<V> transformValues() {
-    return newRubyEnumerator(map.values());
+    return Ruby.Enumerator.of(map.values());
   }
 
   /**
@@ -785,7 +781,7 @@ public final class RubyHash<K, V>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<V> transformValuesǃ() {
-    return newRubyEnumerator(map.values());
+    return Ruby.Enumerator.of(map.values());
   }
 
   /**
@@ -877,8 +873,8 @@ public final class RubyHash<K, V>
   public <S> RubyArray<S> collectConcat(
       final BiFunction<? super K, ? super V, ? extends List<S>> block) {
     return collectConcat(
-        (Function<java.util.Map.Entry<K, V>, RubyArray<S>>) item -> newRubyArray(
-            block.apply(item.getKey(), item.getValue())));
+        (Function<java.util.Map.Entry<K, V>, RubyArray<S>>) item -> Ruby.Array
+            .of(block.apply(item.getKey(), item.getValue())));
   }
 
   /**
@@ -1195,7 +1191,7 @@ public final class RubyHash<K, V>
    */
   @Override
   public RubyArray<V> values() {
-    return newRubyArray(map.values());
+    return Ruby.Array.copyOf(map.values());
   }
 
   /**
@@ -1217,7 +1213,7 @@ public final class RubyHash<K, V>
    * @return {@link RubyArray}
    */
   public RubyArray<V> valuesAt(Iterable<?> keys) {
-    RubyArray<V> rubyArray = newRubyArray();
+    RubyArray<V> rubyArray = Ruby.Array.create();
     for (Object key : keys) {
       rubyArray.add(map.get(key));
     }

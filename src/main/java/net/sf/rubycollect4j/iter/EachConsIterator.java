@@ -17,12 +17,11 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
-
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
+import net.sf.rubycollect4j.Ruby;
 import net.sf.rubycollect4j.RubyArray;
 
 /**
@@ -41,7 +40,7 @@ public final class EachConsIterator<E> implements Iterator<RubyArray<E>> {
 
   private final Iterator<? extends E> iter;
   private final int size;
-  private final RubyArray<E> bucket = newRubyArray();
+  private final RubyArray<E> bucket = Ruby.Array.create();
 
   /**
    * Creates an {@link EachConsIterator}.

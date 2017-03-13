@@ -19,12 +19,6 @@ package net.sf.rubycollect4j;
 
 import static java.lang.Character.MAX_RADIX;
 import static java.lang.Character.MIN_RADIX;
-import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
-import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
-import static net.sf.rubycollect4j.RubyCollections.ra;
-import static net.sf.rubycollect4j.RubyCollections.range;
-import static net.sf.rubycollect4j.RubyCollections.rs;
-import static net.sf.rubycollect4j.RubyLiterals.qr;
 import static net.sf.rubycollect4j.RubyObject.isBlank;
 import static net.sf.rubycollect4j.RubyObject.isPresent;
 
@@ -127,7 +121,8 @@ public final class RubyString
    * @return new {@link RubyString}
    */
   public RubyString b() {
-    return rs(new String(str.getBytes(), Charset.forName("ISO-8859-1")));
+    return Ruby.String
+        .of(new String(str.getBytes(), Charset.forName("ISO-8859-1")));
   }
 
   /**
@@ -136,7 +131,7 @@ public final class RubyString
    * @return {@link RubyArray} of Byte
    */
   public RubyArray<Byte> bytes() {
-    RubyArray<Byte> bytes = newRubyArray();
+    RubyArray<Byte> bytes = Ruby.Array.create();
     for (Byte b : str.getBytes()) {
       bytes.add(b);
     }
@@ -163,7 +158,8 @@ public final class RubyString
     Byte ch = bytes().at(index);
     if (ch == null) return null;
 
-    return rs(new String(new byte[] { ch }, Charset.forName("ISO-8859-1")));
+    return Ruby.String
+        .of(new String(new byte[] { ch }, Charset.forName("ISO-8859-1")));
   }
 
   /**
@@ -184,7 +180,7 @@ public final class RubyString
     for (int i = 0; i < byteAry.length; i++) {
       byteAry[i] = bytes.get(i);
     }
-    return rs(new String(byteAry));
+    return Ruby.String.of(new String(byteAry));
   }
 
   /**
@@ -196,8 +192,8 @@ public final class RubyString
   public RubyString capitalize() {
     if (str.isEmpty()) return this;
 
-    return rs(
-        str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase());
+    return Ruby.String
+        .of(str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase());
   }
 
   /**
@@ -249,11 +245,12 @@ public final class RubyString
     if (stringify(padstr).isEmpty())
       throw new IllegalArgumentException("ArgumentError: zero width padding");
 
-    if (width <= str.length()) return rs(str);
+    if (width <= str.length()) return Ruby.String.of(str);
 
-    RubyArray<String> centeredStr = newRubyArray();
+    RubyArray<String> centeredStr = Ruby.Array.create();
     int start = (width - str.length()) / 2;
-    RubyLazyEnumerator<String> padStr = rs(padstr).eachChar().lazy().cycle();
+    RubyLazyEnumerator<String> padStr =
+        Ruby.String.of(padstr).eachChar().lazy().cycle();
     for (int i = 0; i < width; i++) {
       if (i < start) {
         centeredStr.add(padStr.next());
@@ -269,7 +266,7 @@ public final class RubyString
         centeredStr.add(padStr.next());
       }
     }
-    return rs(centeredStr.join());
+    return Ruby.String.of(centeredStr.join());
   }
 
   // /**
@@ -289,12 +286,12 @@ public final class RubyString
    */
   public RubyString chomp() {
     String result = str.replaceFirst("\r\n$", "");
-    if (result.length() < str.length()) return rs(result);
+    if (result.length() < str.length()) return Ruby.String.of(result);
 
     result = result.replaceFirst("\r$", "");
-    if (result.length() < str.length()) return rs(result);
+    if (result.length() < str.length()) return Ruby.String.of(result);
 
-    return rs(result.replaceFirst("\n$", ""));
+    return Ruby.String.of(result.replaceFirst("\n$", ""));
   }
 
   /**
@@ -318,9 +315,9 @@ public final class RubyString
   public RubyString chomp(String separator) {
     separator = separator == null ? "" : separator;
     if (str.endsWith(separator))
-      return rs(str.substring(0, str.lastIndexOf(separator)));
+      return Ruby.String.of(str.substring(0, str.lastIndexOf(separator)));
 
-    return rs(str);
+    return Ruby.String.of(str);
   }
 
   /**
@@ -340,12 +337,12 @@ public final class RubyString
    * @return new {@link RubyString}
    */
   public RubyString chop() {
-    if (str.isEmpty()) return rs(str);
+    if (str.isEmpty()) return Ruby.String.of(str);
 
     if (str.endsWith("\r\n"))
-      return rs(str.substring(0, str.length() - 2));
+      return Ruby.String.of(str.substring(0, str.length() - 2));
     else
-      return rs(str.substring(0, str.length() - 1));
+      return Ruby.String.of(str.substring(0, str.length() - 1));
   }
 
   /**
@@ -366,7 +363,7 @@ public final class RubyString
   public RubyString chr() {
     if (str.isEmpty()) return this;
 
-    return rs(str.substring(0, 1));
+    return Ruby.String.of(str.substring(0, 1));
   }
 
   /**
@@ -386,7 +383,7 @@ public final class RubyString
    * @return {@link RubyArray}
    */
   public RubyArray<Integer> codepoints() {
-    RubyArray<Integer> codepoints = newRubyArray();
+    RubyArray<Integer> codepoints = Ruby.Array.create();
     for (int i = 0; i < str.length(); i++) {
       codepoints.add(str.codePointAt(i));
     }
@@ -448,7 +445,8 @@ public final class RubyString
     if (charSet.startsWith("^") && !ch.matches("[" + charSet + "]"))
       return false;
 
-    if (!charSet.startsWith("^") && !rs(charSet2Str(charSet)).includeʔ(ch))
+    if (!charSet.startsWith("^")
+        && !Ruby.String.of(charSet2Str(charSet)).includeʔ(ch))
       return false;
 
     return true;
@@ -456,10 +454,11 @@ public final class RubyString
 
   private String charSet2Str(String charSet) {
     charSet = charSet.replaceAll("^\\\\([^-^])", "$1");
-    Matcher matcher = qr("[^\\\\]-.").matcher(charSet);
+    Matcher matcher = Pattern.compile("[^\\\\]-.").matcher(charSet);
     while (matcher.find()) {
       String charRg = matcher.group();
-      RubyRange<Character> rr = range(charRg.charAt(0), charRg.charAt(2));
+      RubyRange<Character> rr =
+          Ruby.Range.of(charRg.charAt(0), charRg.charAt(2));
       if (rr.noneʔ())
         throw new IllegalArgumentException("ArgumentError: invalid range \""
             + charSet + "\" in string transliteration");
@@ -483,7 +482,7 @@ public final class RubyString
       digest.update(encrypt.getBytes("UTF-8"), 0, encrypt.length());
       sha = new BigInteger(1, digest.digest()).toString(16);
     } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {}
-    return rs(sha);
+    return Ruby.String.of(sha);
   }
 
   /**
@@ -497,7 +496,7 @@ public final class RubyString
    */
   public RubyString delete(final String charSet) {
     stringify(charSet);
-    return rs(eachChar().toA().deleteIf((item -> {
+    return Ruby.String.of(eachChar().toA().deleteIf((item -> {
       if (!isCharSetMatched(item, charSet)) return false;
 
       return true;
@@ -523,7 +522,7 @@ public final class RubyString
    * @return new {@link RubyString}
    */
   public RubyString downcase() {
-    return rs(str.toLowerCase());
+    return Ruby.String.of(str.toLowerCase());
   }
 
   /**
@@ -563,7 +562,7 @@ public final class RubyString
       else
         return "\\u" + Integer.toHexString(codepoint);
     }).join();
-    return rs("\"" + printable + "\"");
+    return Ruby.String.of("\"" + printable + "\"");
   }
 
   /**
@@ -593,7 +592,7 @@ public final class RubyString
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<String> eachChar() {
-    return Ruby.Enumerator.of(range(0, str.length() - 1).lazy()
+    return Ruby.Enumerator.of(Ruby.Range.of(0, str.length() - 1).lazy()
         .map(i -> Character.toString(str.charAt(i))));
   }
 
@@ -615,8 +614,8 @@ public final class RubyString
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<Integer> eachCodepoint() {
-    return newRubyEnumerator(
-        eachChar().lazy().map(item -> item.codePointAt(0)));
+    return Ruby.Enumerator
+        .of(eachChar().lazy().map(item -> item.codePointAt(0)));
   }
 
   /**
@@ -637,7 +636,8 @@ public final class RubyString
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<String> eachLine() {
-    return ra(str.split(System.getProperty("line.separator"))).each();
+    return Ruby.Array.copyOf(str.split(System.getProperty("line.separator")))
+        .each();
   }
 
   /**
@@ -658,7 +658,7 @@ public final class RubyString
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<String> eachLine(String separator) {
-    return ra(str.split(stringify(separator))).each();
+    return Ruby.Array.copyOf(str.split(stringify(separator))).each();
   }
 
   /**
@@ -669,7 +669,7 @@ public final class RubyString
    * @return this {@link RubyString}
    */
   public RubyString eachLine(String separator, Consumer<String> block) {
-    ra(str.split(stringify(separator))).each(block);
+    Ruby.Array.copyOf(str.split(stringify(separator))).each(block);
     return this;
   }
 
@@ -691,7 +691,8 @@ public final class RubyString
    */
   public RubyString encode(String encoding) {
     stringify(encoding);
-    return rs(new String(str.getBytes(), Charset.forName(encoding)));
+    return Ruby.String
+        .of(new String(str.getBytes(), Charset.forName(encoding)));
   }
 
   /**
@@ -706,7 +707,7 @@ public final class RubyString
   public RubyString encode(String dstEncoding, String srcEncoding) {
     stringify(srcEncoding);
     stringify(dstEncoding);
-    return rs(new String(str.getBytes(Charset.forName(srcEncoding)),
+    return Ruby.String.of(new String(str.getBytes(Charset.forName(srcEncoding)),
         Charset.forName(dstEncoding)));
   }
 
@@ -809,7 +810,8 @@ public final class RubyString
    * @return new {@link RubyString}
    */
   public RubyString gsub(String regex, String replacement) {
-    return rs(str.replaceAll(stringify(regex), stringify(replacement)));
+    return Ruby.String
+        .of(str.replaceAll(stringify(regex), stringify(replacement)));
   }
 
   /**
@@ -824,16 +826,16 @@ public final class RubyString
    * @return new {@link RubyString}
    */
   public RubyString gsub(String regex, Map<String, ?> map) {
-    if (isBlank(map)) return rs(str);
+    if (isBlank(map)) return Ruby.String.of(str);
 
     String result = str;
-    Matcher matcher = qr(stringify(regex)).matcher(str);
+    Matcher matcher = Pattern.compile(stringify(regex)).matcher(str);
     while (matcher.find()) {
       String target = matcher.group();
       if (map.containsKey(target))
         result = result.replace(target, map.get(target).toString());
     }
-    return rs(result);
+    return Ruby.String.of(result);
   }
 
   /**
@@ -849,12 +851,12 @@ public final class RubyString
    */
   public RubyString gsub(String regex, Function<String, String> block) {
     String result = str;
-    Matcher matcher = qr(stringify(regex)).matcher(str);
+    Matcher matcher = Pattern.compile(stringify(regex)).matcher(str);
     while (matcher.find()) {
       String target = matcher.group();
       result = result.replace(target, block.apply(target));
     }
-    return rs(result);
+    return Ruby.String.of(result);
   }
 
   /**
@@ -865,8 +867,8 @@ public final class RubyString
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<String> gsub(String regex) {
-    RubyArray<String> matches = newRubyArray();
-    Matcher matcher = qr(stringify(regex)).matcher(str);
+    RubyArray<String> matches = Ruby.Array.create();
+    Matcher matcher = Pattern.compile(stringify(regex)).matcher(str);
     while (matcher.find()) {
       matches.add(matcher.group());
     }
@@ -931,7 +933,7 @@ public final class RubyString
    * @return long
    */
   public long hex() {
-    RubyString hex = slice(qr("^\\s*[+|-]?\\s*(0x)?[0-9a-f]+"));
+    RubyString hex = slice(Pattern.compile("^\\s*[+|-]?\\s*(0x)?[0-9a-f]+"));
     if (hex == null)
       return 0;
     else
@@ -1062,7 +1064,7 @@ public final class RubyString
       }
       return item;
     }).join();
-    return rs("\"" + printable + "\"");
+    return Ruby.String.of("\"" + printable + "\"");
   }
 
   /**
@@ -1111,7 +1113,7 @@ public final class RubyString
    */
   public RubyString ljust(int width, String padstr) {
     RubyLazyEnumerator<String> padStr =
-        rs(stringify(padstr)).eachChar().lazy().cycle();
+        Ruby.String.of(stringify(padstr)).eachChar().lazy().cycle();
 
     int extra = width - str.length();
     if (extra > 0) {
@@ -1120,10 +1122,10 @@ public final class RubyString
         sb.append(padStr.next());
         extra--;
       }
-      return rs(str + sb.toString());
+      return Ruby.String.of(str + sb.toString());
     }
 
-    return rs(str);
+    return Ruby.String.of(str);
   }
 
   /**
@@ -1132,7 +1134,7 @@ public final class RubyString
    * @return new {@link RubyString}
    */
   public RubyString lstrip() {
-    return rs(str.replaceFirst("^\\s+", ""));
+    return Ruby.String.of(str.replaceFirst("^\\s+", ""));
   }
 
   /**
@@ -1153,7 +1155,7 @@ public final class RubyString
    * @return Matcher or null
    */
   public Matcher match(String regex) {
-    Matcher matcher = qr(stringify(regex)).matcher(str);
+    Matcher matcher = Pattern.compile(stringify(regex)).matcher(str);
     return matcher.find() ? matcher.reset() : null;
   }
 
@@ -1172,7 +1174,7 @@ public final class RubyString
     if (pos < 0) pos = pos + str.length();
     if (pos >= str.length() || pos < 0) return null;
 
-    Matcher matcher = qr(stringify(regex)).matcher(str);
+    Matcher matcher = Pattern.compile(stringify(regex)).matcher(str);
     matcher.region(pos, str.length());
     return matcher.find() ? matcher.reset().region(pos, str.length()) : null;
   }
@@ -1183,7 +1185,7 @@ public final class RubyString
    * @return new {@link RubyString}
    */
   public RubyString next() {
-    return rs(StringSuccessor.getInstance().succ(str));
+    return Ruby.String.of(StringSuccessor.getInstance().succ(str));
   }
 
   /**
@@ -1231,9 +1233,9 @@ public final class RubyString
       throw new TypeConstraintException("TypeError: type mismatch: null given");
 
     int sepIndex = str.indexOf(sep);
-    if (sepIndex == -1) return newRubyArray(str, "", "");
+    if (sepIndex == -1) return Ruby.Array.of(str, "", "");
 
-    return newRubyArray(str.substring(0, sepIndex), sep,
+    return Ruby.Array.of(str.substring(0, sepIndex), sep,
         str.substring(sepIndex + sep.length()));
   }
 
@@ -1254,10 +1256,10 @@ public final class RubyString
     if (matcher.find()) {
       String sep = matcher.group();
       int sepIndex = str.indexOf(sep);
-      return newRubyArray(str.substring(0, sepIndex), sep,
+      return Ruby.Array.of(str.substring(0, sepIndex), sep,
           str.substring(sepIndex + sep.length()));
     } else {
-      return newRubyArray(str, "", "");
+      return Ruby.Array.of(str, "", "");
     }
   }
 
@@ -1291,7 +1293,7 @@ public final class RubyString
    * @return new {@link RubyString}
    */
   public RubyString reverse() {
-    return rs(new StringBuilder(str).reverse().toString());
+    return Ruby.String.of(new StringBuilder(str).reverse().toString());
   }
 
   /**
@@ -1407,7 +1409,8 @@ public final class RubyString
    * @return new {@link RubyString}
    */
   public RubyString rjust(int width, String padstr) {
-    RubyLazyEnumerator<String> padStr = rs(padstr).eachChar().lazy().cycle();
+    RubyLazyEnumerator<String> padStr =
+        Ruby.String.of(padstr).eachChar().lazy().cycle();
 
     int extra = width - str.length();
     if (extra > 0) {
@@ -1416,7 +1419,7 @@ public final class RubyString
         sb.append(padStr.next());
         extra--;
       }
-      return rs(sb.toString() + str);
+      return Ruby.String.of(sb.toString() + str);
     }
 
     return this;
@@ -1436,9 +1439,9 @@ public final class RubyString
       throw new TypeConstraintException("TypeError: type mismatch: null given");
 
     int sepIndex = str.lastIndexOf(sep);
-    if (sepIndex == -1) return newRubyArray("", "", str);
+    if (sepIndex == -1) return Ruby.Array.of("", "", str);
 
-    return newRubyArray(str.substring(0, sepIndex), sep,
+    return Ruby.Array.of(str.substring(0, sepIndex), sep,
         str.substring(sepIndex + sep.length()));
   }
 
@@ -1464,11 +1467,11 @@ public final class RubyString
         matcher.region(matcher.start() + 1, str.length());
       }
       int sepIndex = str.lastIndexOf(sep);
-      return newRubyArray(str.substring(0, sepIndex), sep,
+      return Ruby.Array.of(str.substring(0, sepIndex), sep,
           str.substring(sepIndex + sep.length()));
     }
 
-    return newRubyArray("", "", str);
+    return Ruby.Array.of("", "", str);
   }
 
   /**
@@ -1479,7 +1482,7 @@ public final class RubyString
    * @see #strip()
    */
   public RubyString rstrip() {
-    return rs(str.replaceFirst("\\s+$", ""));
+    return Ruby.String.of(str.replaceFirst("\\s+$", ""));
   }
 
   /**
@@ -1502,8 +1505,8 @@ public final class RubyString
    * @return {@link RubyArray}
    */
   public RubyArray<String> scan(String regex) {
-    Matcher matcher = qr(stringify(regex)).matcher(str);
-    RubyArray<String> matches = newRubyArray();
+    Matcher matcher = Pattern.compile(stringify(regex)).matcher(str);
+    RubyArray<String> matches = Ruby.Array.create();
     while (matcher.find()) {
       matches.add(matcher.group());
     }
@@ -1537,10 +1540,10 @@ public final class RubyString
    * @return {@link RubyArray}
    */
   public RubyArray<RubyArray<String>> scanGroups(String regex) {
-    Matcher matcher = qr(stringify(regex)).matcher(str);
-    RubyArray<RubyArray<String>> groups = newRubyArray();
+    Matcher matcher = Pattern.compile(stringify(regex)).matcher(str);
+    RubyArray<RubyArray<String>> groups = Ruby.Array.create();
     while (matcher.find()) {
-      RubyArray<String> group = newRubyArray();
+      RubyArray<String> group = Ruby.Array.create();
       if (matcher.groupCount() == 0) {
         group.add(matcher.group());
       } else {
@@ -1578,7 +1581,7 @@ public final class RubyString
    * @return new {@link RubyString}
    */
   public RubyString scrub() {
-    return rs(str.replaceAll("\\p{C}", "\uFFFD"));
+    return Ruby.String.of(str.replaceAll("\\p{C}", "\uFFFD"));
   }
 
   /**
@@ -1590,7 +1593,7 @@ public final class RubyString
   public RubyString scrub(String repl) {
     if (repl == null) return scrub();
 
-    return rs(str.replaceAll("\\p{C}", repl));
+    return Ruby.String.of(str.replaceAll("\\p{C}", repl));
   }
 
   /**
@@ -1600,9 +1603,9 @@ public final class RubyString
    * @return new {@link RubyString}
    */
   public RubyString scrub(final Function<RubyArray<Byte>, String> block) {
-    return rs(eachChar().map(item -> {
+    return Ruby.String.of(eachChar().map(item -> {
       if (item.matches("\\p{C}"))
-        return block.apply(rs(item).bytes());
+        return block.apply(Ruby.String.of(item).bytes());
       else
         return item;
     }).join());
@@ -1675,7 +1678,7 @@ public final class RubyString
    */
   public RubyString slice(int index) {
     String slicedStr = eachChar().toA().slice(index);
-    return slicedStr == null ? null : rs(slicedStr);
+    return slicedStr == null ? null : Ruby.String.of(slicedStr);
   }
 
   /**
@@ -1689,7 +1692,7 @@ public final class RubyString
    */
   public RubyString slice(int index, int length) {
     RubyArray<String> slicedStr = eachChar().toA().slice(index, length);
-    return slicedStr == null ? null : rs(slicedStr.join());
+    return slicedStr == null ? null : Ruby.String.of(slicedStr.join());
   }
 
   /**
@@ -1705,7 +1708,7 @@ public final class RubyString
 
     Matcher matcher = pattern.matcher(str);
     if (matcher.find())
-      return rs(matcher.group());
+      return Ruby.String.of(matcher.group());
     else
       return null;
   }
@@ -1725,7 +1728,7 @@ public final class RubyString
       if (group < 1 || group > matcher.groupCount())
         return null;
       else
-        return rs(matcher.group(group));
+        return Ruby.String.of(matcher.group(group));
     else
       return null;
   }
@@ -1738,7 +1741,7 @@ public final class RubyString
    * @return new {@link RubyString} or null
    */
   public RubyString slice(String matchStr) {
-    return str.contains(matchStr) ? rs(matchStr) : null;
+    return str.contains(matchStr) ? Ruby.String.of(matchStr) : null;
   }
 
   /**
@@ -1754,7 +1757,7 @@ public final class RubyString
     if (slicedStr == null) return null;
 
     str = chars.join();
-    return rs(slicedStr);
+    return Ruby.String.of(slicedStr);
   }
 
   /**
@@ -1772,7 +1775,7 @@ public final class RubyString
     if (slicedStr == null) return null;
 
     str = chars.join();
-    return rs(slicedStr.join());
+    return Ruby.String.of(slicedStr.join());
   }
 
   /**
@@ -1829,7 +1832,7 @@ public final class RubyString
    * @return {@link RubyArray}
    */
   public RubyArray<String> split() {
-    return ra(str.trim().split(" +"));
+    return Ruby.Array.copyOf(str.trim().split(" +"));
   }
 
   /**
@@ -1843,7 +1846,7 @@ public final class RubyString
   public RubyArray<String> split(final String delimiter) {
     if (delimiter == null || delimiter.equals(" ")) return split();
 
-    return newRubyArray(str.split(Pattern.quote(delimiter)));
+    return Ruby.Array.copyOf(str.split(Pattern.quote(delimiter)));
   }
 
   /**
@@ -1860,17 +1863,18 @@ public final class RubyString
   public RubyArray<String> split(String delimiter, int limit) {
     if (delimiter == null || delimiter.equals(" ")) {
       if (limit <= 0)
-        return newRubyArray(str.trim().split(" +"));
+        return Ruby.Array.copyOf(str.trim().split(" +"));
       else if (limit == 1)
-        return newRubyArray(str);
+        return Ruby.Array.of(str);
       else
-        return newRubyArray(rs(str).lstrip().toS().split(" +", limit));
+        return Ruby.Array
+            .copyOf(Ruby.String.of(str).lstrip().toS().split(" +", limit));
     }
 
     if (limit <= 0)
-      return newRubyArray(str.split(Pattern.quote(delimiter)));
+      return Ruby.Array.copyOf(str.split(Pattern.quote(delimiter)));
     else
-      return newRubyArray(str.split(Pattern.quote(delimiter), limit));
+      return Ruby.Array.copyOf(str.split(Pattern.quote(delimiter), limit));
   }
 
   /**
@@ -1884,7 +1888,7 @@ public final class RubyString
   public RubyArray<String> split(Pattern pattern) {
     if (pattern == null) return split();
 
-    return newRubyArray(str.split(pattern.pattern()));
+    return Ruby.Array.copyOf(str.split(pattern.pattern()));
   }
 
   /**
@@ -1902,9 +1906,9 @@ public final class RubyString
     if (pattern == null) return split((String) null, limit);
 
     if (limit <= 0)
-      return newRubyArray(str.split(pattern.pattern()));
+      return Ruby.Array.copyOf(str.split(pattern.pattern()));
     else
-      return newRubyArray(str.split(pattern.pattern(), limit));
+      return Ruby.Array.copyOf(str.split(pattern.pattern(), limit));
   }
 
   /**
@@ -1914,7 +1918,7 @@ public final class RubyString
    * @return new {@link RubyString}
    */
   public RubyString squeeze() {
-    return rs(str.replaceAll("(.)\\1+", "$1"));
+    return Ruby.String.of(str.replaceAll("(.)\\1+", "$1"));
   }
 
   /**
@@ -1927,7 +1931,8 @@ public final class RubyString
    */
   public RubyString squeeze(String charSet) {
     stringify(charSet);
-    return rs(str.replaceAll("([" + charSet2Str(charSet) + "])\\1+", "$1"));
+    return Ruby.String
+        .of(str.replaceAll("([" + charSet2Str(charSet) + "])\\1+", "$1"));
   }
 
   /**
@@ -1979,7 +1984,7 @@ public final class RubyString
    * @return new {@link RubyString}
    */
   public RubyString strip() {
-    return rs(str.trim());
+    return Ruby.String.of(str.trim());
   }
 
   /**
@@ -2003,7 +2008,8 @@ public final class RubyString
    * @return new {@link RubyString}
    */
   public RubyString sub(String regex, String replacement) {
-    return rs(str.replaceFirst(stringify(regex), stringify(replacement)));
+    return Ruby.String
+        .of(str.replaceFirst(stringify(regex), stringify(replacement)));
   }
 
   /**
@@ -2019,13 +2025,13 @@ public final class RubyString
    */
   public RubyString sub(String regex, Map<String, ?> map) {
     String result = str;
-    Matcher matcher = qr(stringify(regex)).matcher(str);
+    Matcher matcher = Pattern.compile(stringify(regex)).matcher(str);
     if (matcher.find()) {
       String target = matcher.group();
       if (isPresent(map) && map.containsKey(target))
         result = result.replace(target, map.get(target).toString());
     }
-    return rs(result);
+    return Ruby.String.of(result);
   }
 
   /**
@@ -2039,10 +2045,10 @@ public final class RubyString
    * @return new {@link RubyString}
    */
   public RubyString sub(String regex, Function<String, String> block) {
-    Matcher matcher = qr(stringify(regex)).matcher(str);
+    Matcher matcher = Pattern.compile(stringify(regex)).matcher(str);
     if (matcher.find()) {
       String match = matcher.group();
-      return rs(str.replace(match, block.apply(match)));
+      return Ruby.String.of(str.replace(match, block.apply(match)));
     }
     return this;
   }
@@ -2088,7 +2094,7 @@ public final class RubyString
    * @return new {@link RubyString}
    */
   public RubyString succ() {
-    return rs(StringSuccessor.getInstance().succ(str));
+    return Ruby.String.of(StringSuccessor.getInstance().succ(str));
   }
 
   /**
@@ -2138,9 +2144,10 @@ public final class RubyString
    * @return new {@link RubyString}
    */
   public RubyString swapcase() {
-    final Pattern upperCase = qr("[A-Z]");
-    return rs(eachChar().map(item -> upperCase.matcher(item).matches()
-        ? item.toLowerCase() : item.toUpperCase()).join());
+    final Pattern upperCase = Pattern.compile("[A-Z]");
+    return Ruby.String
+        .of(eachChar().map(item -> upperCase.matcher(item).matches()
+            ? item.toLowerCase() : item.toUpperCase()).join());
   }
 
   /**
@@ -2164,7 +2171,8 @@ public final class RubyString
    */
   public double toF() {
     Matcher intMatcher =
-        qr("^\\s*[-+]?\\s*[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?").matcher(str);
+        Pattern.compile("^\\s*[-+]?\\s*[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?")
+            .matcher(str);
     if (intMatcher.find())
       return Double.valueOf(intMatcher.group().trim().replaceAll("\\s+", ""));
     else
@@ -2180,7 +2188,7 @@ public final class RubyString
    * @return int
    */
   public int toI() {
-    Matcher intMatcher = qr("^\\s*[-+]?\\s*\\d+").matcher(str);
+    Matcher intMatcher = Pattern.compile("^\\s*[-+]?\\s*\\d+").matcher(str);
     if (intMatcher.find())
       return Integer
           .valueOf(intMatcher.group().trim().replaceAll("[\\s\\+]+", ""));
@@ -2204,9 +2212,9 @@ public final class RubyString
           "ArgumentError: invalid radix " + radix);
 
     String digits = "0123456789abcdefghijklmnopqrstuvwxyz";
-    Matcher intMatcher =
-        qr("(?i)^\\s*[-+]?\\s*[" + digits.substring(0, radix) + "]+")
-            .matcher(str);
+    Matcher intMatcher = Pattern
+        .compile("(?i)^\\s*[-+]?\\s*[" + digits.substring(0, radix) + "]+")
+        .matcher(str);
     if (intMatcher.find()) {
       try {
         return Integer.parseInt(
@@ -2250,19 +2258,20 @@ public final class RubyString
   public RubyString tr(String fromStr, String toStr) {
     fromStr = charSet2Str(stringify(fromStr));
     toStr = charSet2Str(stringify(toStr));
-    if (fromStr.startsWith("^")) return rs(str.replaceAll("[" + fromStr + "]",
-        toStr.isEmpty() ? "" : rs(toStr).eachChar().toA().last()));
+    if (fromStr.startsWith("^")) return Ruby.String.of(str.replaceAll(
+        "[" + fromStr + "]",
+        toStr.isEmpty() ? "" : Ruby.String.of(toStr).eachChar().toA().last()));
 
-    RubyArray<String> fromStrAry =
-        rs(fromStr.replace("\\^", "^").replace("\\-", "-")).eachChar().toA();
-    RubyArray<String> toStrAry = rs(toStr).eachChar().toA();
+    RubyArray<String> fromStrAry = Ruby.String
+        .of(fromStr.replace("\\^", "^").replace("\\-", "-")).eachChar().toA();
+    RubyArray<String> toStrAry = Ruby.String.of(toStr).eachChar().toA();
     if (toStrAry.isEmpty())
       toStrAry.fill("", 0, fromStrAry.length());
     else if (toStrAry.length() < fromStrAry.length())
       toStrAry.fill(toStrAry.last(), toStrAry.size(),
           fromStrAry.length() - toStrAry.length());
 
-    RubyHash<String, String> rh = fromStrAry.zip(ra(toStrAry))
+    RubyHash<String, String> rh = fromStrAry.zip(Ruby.Array.of(toStrAry))
         .toH(ra -> Ruby.Entry.of(ra.at(0), ra.at(1)));
     if (fromStr.contains("\\^")) {
       fromStr = fromStr.replaceAll("\\\\^", "");
@@ -2319,20 +2328,20 @@ public final class RubyString
       }
     }).map(item -> item.count());
 
-    if (toStr.isEmpty()) return rs(trStr);
+    if (toStr.isEmpty()) return Ruby.String.of(trStr);
 
     String trSqueezed = "";
     int i = 0;
     for (Integer mc : matchCounts) {
       if (matchIndice.get(i)) {
-        trSqueezed += rs(trStr.substring(i, i + mc)).squeeze();
+        trSqueezed += Ruby.String.of(trStr.substring(i, i + mc)).squeeze();
         i += mc;
       } else {
         trSqueezed += trStr.substring(i, i + mc);
         i += mc;
       }
     }
-    return rs(trSqueezed);
+    return Ruby.String.of(trSqueezed);
   }
 
   /**
@@ -2374,7 +2383,7 @@ public final class RubyString
    * @return new {@link RubyString}
    */
   public RubyString upcase() {
-    return rs(str.toUpperCase());
+    return Ruby.String.of(str.toUpperCase());
   }
 
   /**
@@ -2415,9 +2424,9 @@ public final class RubyString
   public RubyEnumerator<String> upto(final String otherStr, boolean exclusive) {
     stringify(otherStr);
     if (exclusive)
-      return range(str, otherStr).closedOpen().each();
+      return Ruby.Range.of(str, otherStr).closedOpen().each();
     else
-      return range(str, otherStr).each();
+      return Ruby.Range.of(str, otherStr).each();
   }
 
   /**

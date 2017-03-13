@@ -17,11 +17,10 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
-
 import java.util.Iterator;
 import java.util.function.BiPredicate;
 
+import net.sf.rubycollect4j.Ruby;
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.util.PeekingIterator;
 
@@ -61,7 +60,7 @@ public final class SliceWhenIterator<E> implements Iterator<RubyArray<E>> {
   }
 
   private RubyArray<E> nextElement() {
-    RubyArray<E> element = newRubyArray();
+    RubyArray<E> element = Ruby.Array.create();
     do {
       element.add(pIter.next());
     } while (pIter.hasNext() && !block.test(element.last(), pIter.peek()));

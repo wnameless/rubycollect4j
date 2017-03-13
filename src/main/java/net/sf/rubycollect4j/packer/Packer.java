@@ -18,16 +18,15 @@
 package net.sf.rubycollect4j.packer;
 
 import static java.nio.ByteOrder.nativeOrder;
-import static net.sf.rubycollect4j.RubyCollections.ra;
-import static net.sf.rubycollect4j.RubyCollections.rs;
-import static net.sf.rubycollect4j.RubyLiterals.qr;
 import static net.sf.rubycollect4j.util.ByteUtils.toByteArray;
 
 import java.nio.ByteOrder;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 
+import net.sf.rubycollect4j.Ruby;
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.RubyString;
 import net.sf.rubycollect4j.util.ByteUtils;
@@ -82,15 +81,15 @@ public final class Packer {
     for (String template : templateList) {
       Directive d = parseDirective(template);
       template = template.replace(d.toString(), "");
-      int count = template.isEmpty() ? 1
-          : template.equals("*") ? Integer.MAX_VALUE : rs(template).toI();
+      int count = template.isEmpty() ? 1 : template.equals("*")
+          ? Integer.MAX_VALUE : Ruby.String.of(template).toI();
 
       switch (d) {
 
         case B:
         case b:
-          RubyString binaryStr =
-              rs(items.shift().toString()).slice(qr("^[01]+"));
+          RubyString binaryStr = Ruby.String.of(items.shift().toString())
+              .slice(Pattern.compile("^[01]+"));
           if (binaryStr == null)
             sb.append("");
           else
@@ -100,8 +99,8 @@ public final class Packer {
 
         case H:
         case h:
-          RubyString hexStr =
-              rs(items.shift().toString()).slice(qr("^[0-9A-Fa-f]+"));
+          RubyString hexStr = Ruby.String.of(items.shift().toString())
+              .slice(Pattern.compile("^[0-9A-Fa-f]+"));
           if (hexStr == null)
             sb.append("");
           else
@@ -160,8 +159,8 @@ public final class Packer {
   }
 
   static List<String> parseTemplate(String template) {
-    return ra(template.split("(?!^)")).sliceBefore(
-        ra(Directive.values()).map(new Function<Directive, String>() {
+    return Ruby.Array.copyOf(template.split("(?!^)")).sliceBefore(Ruby.Array
+        .copyOf(Directive.values()).map(new Function<Directive, String>() {
 
           @Override
           public String apply(Directive item) {

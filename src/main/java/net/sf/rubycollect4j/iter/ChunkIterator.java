@@ -17,12 +17,11 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
-
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.function.Function;
 
+import net.sf.rubycollect4j.Ruby;
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.util.ComparableEntry;
 import net.sf.rubycollect4j.util.PeekingIterator;
@@ -68,7 +67,7 @@ public final class ChunkIterator<E, K>
 
   private Entry<K, RubyArray<E>> nextElement() {
     K key = block.apply(pIter.peek());
-    RubyArray<E> bucket = newRubyArray();
+    RubyArray<E> bucket = Ruby.Array.create();
     while (pIter.hasNext() && key.equals(block.apply(pIter.peek()))) {
       bucket.add(pIter.next());
     }

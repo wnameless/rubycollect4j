@@ -17,12 +17,11 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
-
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
+import net.sf.rubycollect4j.Ruby;
 import net.sf.rubycollect4j.RubyArray;
 
 /**
@@ -65,7 +64,7 @@ public final class EachSliceIterator<E> implements Iterator<RubyArray<E>> {
   }
 
   private RubyArray<E> nextElement() {
-    RubyArray<E> bucket = newRubyArray();
+    RubyArray<E> bucket = Ruby.Array.create();
     while (iter.hasNext() && bucket.size() < size) {
       bucket.add(iter.next());
     }

@@ -17,9 +17,6 @@
  */
 package net.sf.rubycollect4j;
 
-import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
-import static net.sf.rubycollect4j.RubyCollections.newRubySet;
-
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
@@ -137,7 +134,7 @@ public final class RubySet<E>
    */
   public <S> RubyHash<S, RubySet<E>> classify(
       Function<? super E, ? extends S> block) {
-    RubyHash<S, RubySet<E>> hash = newRubyHash();
+    RubyHash<S, RubySet<E>> hash = Ruby.Hash.create();
     set.forEach(e -> {
       S s = block.apply(e);
       if (!hash.containsKey(s)) hash.put(s, new RubySet<E>());
@@ -295,7 +292,7 @@ public final class RubySet<E>
 
   @SuppressWarnings("unchecked")
   private <S> RubySet<S> flatten(Set<?> set, int n) {
-    RubySet<S> rubySet = newRubySet();
+    RubySet<S> rubySet = Ruby.Set.create();
     for (Object item : set) {
       if (item instanceof Set)
         for (Object o : (RubySet<?>) item) {

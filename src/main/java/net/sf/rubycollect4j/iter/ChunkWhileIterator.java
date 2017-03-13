@@ -17,11 +17,10 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
-
 import java.util.Iterator;
 import java.util.function.BiPredicate;
 
+import net.sf.rubycollect4j.Ruby;
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.util.PeekingIterator;
 
@@ -62,7 +61,7 @@ public final class ChunkWhileIterator<E> implements Iterator<RubyArray<E>> {
   }
 
   private RubyArray<E> nextElement() {
-    RubyArray<E> bucket = newRubyArray();
+    RubyArray<E> bucket = Ruby.Array.create();
     E left = pIter.next();
     bucket.add(left);
     if (pIter.hasNext()) {

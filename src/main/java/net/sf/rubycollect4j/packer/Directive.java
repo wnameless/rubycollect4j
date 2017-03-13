@@ -20,15 +20,13 @@ package net.sf.rubycollect4j.packer;
 import static java.nio.ByteOrder.BIG_ENDIAN;
 import static java.nio.ByteOrder.LITTLE_ENDIAN;
 import static java.nio.ByteOrder.nativeOrder;
-import static net.sf.rubycollect4j.RubyCollections.hp;
-import static net.sf.rubycollect4j.RubyCollections.ra;
-import static net.sf.rubycollect4j.RubyLiterals.qr;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 
 import net.sf.rubycollect4j.Ruby;
 import net.sf.rubycollect4j.RubyArray;
@@ -176,9 +174,9 @@ public enum Directive {
    */
   h(false);
 
-  public static final Map<String, Directive> lookup = Ruby.Hash
-      .create(ra(Directive.values()).map(item -> hp(item.toString(), item)))
-      .freeze();
+  public static final Map<String, Directive> lookup =
+      Ruby.Hash.create(Ruby.Array.copyOf(Directive.values())
+          .map(item -> Ruby.Entry.of(item.toString(), item))).freeze();
 
   private final boolean widthAdjustable;
 
@@ -433,8 +431,8 @@ public enum Directive {
    * @return true if template is valid, otherwise false
    */
   public static boolean verify(String template) {
-    return qr(
-        "((" + ra(Directive.values()).map(new Function<Directive, String>() {
+    return Pattern.compile("((" + Ruby.Array.copyOf(Directive.values())
+        .map(new Function<Directive, String>() {
 
           @Override
           public String apply(Directive item) {

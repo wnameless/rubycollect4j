@@ -17,10 +17,6 @@
  */
 package net.sf.rubycollect4j;
 
-import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
-import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
-import static net.sf.rubycollect4j.RubyCollections.ra;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -103,8 +99,8 @@ public class RubyDir implements RubyEnumerable<String> {
    */
   public static RubyArray<String> entries(String path) {
     File file = new File(path);
-    return ra(file.listFiles()).map(item -> item.getName()).unshift("..")
-        .unshift(".");
+    return Ruby.Array.copyOf(file.listFiles()).map(item -> item.getName())
+        .unshift("..").unshift(".");
   }
 
   /**
@@ -126,7 +122,7 @@ public class RubyDir implements RubyEnumerable<String> {
    * @return {@link RubyEnumerator}
    */
   public static RubyEnumerator<String> foreach(String path) {
-    return newRubyEnumerator(entries(path));
+    return Ruby.Enumerator.of(entries(path));
   }
 
   /**
@@ -143,13 +139,13 @@ public class RubyDir implements RubyEnumerable<String> {
    * @return {@link RubyArray}
    */
   public static RubyArray<String> glob(String pattern) {
-    if (pattern.isEmpty()) return newRubyArray();
+    if (pattern.isEmpty()) return Ruby.Array.create();
 
     pattern = convertWindowsPathToLinuxPath(pattern);
     boolean recursive = pattern.contains("/**/") || pattern.startsWith("**/");
     boolean emptyRoot = false;
 
-    String rootPath = ra(pattern.split("/")).takeWhile(item -> {
+    String rootPath = Ruby.Array.copyOf(pattern.split("/")).takeWhile(item -> {
       return !(item.contains("*") || item.contains("[") || item.contains("{"));
     }).join("/");
 
@@ -162,8 +158,9 @@ public class RubyDir implements RubyEnumerable<String> {
     }
     pattern = RegexUtils.convertGlobToRegex(pattern);
 
-    RubyArray<String> paths = newRubyArray();
-    RubyArray<File> files = ra(traverseFolder(new File(rootPath), recursive));
+    RubyArray<String> paths = Ruby.Array.create();
+    RubyArray<File> files =
+        Ruby.Array.of(traverseFolder(new File(rootPath), recursive));
     for (File f : files) {
       String path = convertWindowsPathToLinuxPath(f.getPath());
       String fPath = f.isDirectory() ? f.getPath() + "/" : f.getPath();

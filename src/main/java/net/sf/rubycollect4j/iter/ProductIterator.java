@@ -17,13 +17,12 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import net.sf.rubycollect4j.Ruby;
 import net.sf.rubycollect4j.RubyArray;
 
 /**
@@ -60,7 +59,7 @@ public final class ProductIterator<E> implements Iterator<RubyArray<E>> {
   }
 
   private RubyArray<E> nextElement() {
-    RubyArray<E> product = newRubyArray();
+    RubyArray<E> product = Ruby.Array.create();
     for (int i = 0; i < counter.length; i++) {
       product.add(lists.get(i).get(counter[i]));
     }

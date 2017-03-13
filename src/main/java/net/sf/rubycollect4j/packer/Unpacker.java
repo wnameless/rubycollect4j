@@ -17,9 +17,6 @@
  */
 package net.sf.rubycollect4j.packer;
 
-import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
-import static net.sf.rubycollect4j.RubyCollections.rh;
-import static net.sf.rubycollect4j.RubyCollections.rs;
 import static net.sf.rubycollect4j.packer.Directive.B;
 import static net.sf.rubycollect4j.packer.Directive.D;
 import static net.sf.rubycollect4j.packer.Directive.E;
@@ -43,6 +40,7 @@ import static net.sf.rubycollect4j.packer.Directive.sl;
 import static net.sf.rubycollect4j.util.ByteUtils.toBinaryString;
 import static net.sf.rubycollect4j.util.ByteUtils.toHexString;
 
+import net.sf.rubycollect4j.Ruby;
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.RubyHash;
 import net.sf.rubycollect4j.RubyString;
@@ -61,8 +59,8 @@ public final class Unpacker {
   private static final int ж = Integer.MAX_VALUE;
   private static final Byte NUL = Byte.valueOf((byte) '\0');
   private static final RubyHash<Directive, Integer> NUMBER_LENGTH_IN_BYTE =
-      rh(s, 2, sb, 2, sl, 2, l, 4, lb, 4, ll, 4, F, 4, f, 4, e, 4, g, 4, q, 8,
-          qb, 8, ql, 8, D, 8, d, 8, E, 8, G, 8).freeze();
+      Ruby.Hash.of(s, 2, sb, 2, sl, 2, l, 4, lb, 4, ll, 4, F, 4, f, 4, e, 4, g,
+          4, q, 8, qb, 8, ql, 8, D, 8, d, 8, E, 8, G, 8).freeze();
 
   private Unpacker() {}
 
@@ -80,13 +78,13 @@ public final class Unpacker {
       throw new IllegalArgumentException("Invalid template string");
 
     ASCII8BitUTF a8u = new ASCII8BitUTF(str);
-    RubyArray<Object> objs = newRubyArray();
+    RubyArray<Object> objs = Ruby.Array.create();
 
     for (String template : Packer.parseTemplate(format)) {
       Directive d = Packer.parseDirective(template);
       String countStr = template.replaceFirst("^" + d, "");
       int count = countStr.isEmpty() ? 1 : //
-          countStr.equals("*") ? ж : rs(countStr).toI();
+          countStr.equals("*") ? ж : Ruby.String.of(countStr).toI();
 
       String unpack;
       switch (d) {
@@ -103,7 +101,7 @@ public final class Unpacker {
 
         case Z:
           if (count == ж) {
-            RubyArray<Byte> bytes = newRubyArray();
+            RubyArray<Byte> bytes = Ruby.Array.create();
             while (a8u.hasNextByte() && !NUL.equals(bytes.last())) {
               bytes.add(a8u.nextByte());
             }
@@ -156,18 +154,18 @@ public final class Unpacker {
           }
 
           RubyString unpackRS = null;
-          RubyArray<String> unpackRA = newRubyArray();
+          RubyArray<String> unpackRA = Ruby.Array.create();
           while (count > 0) {
             if (unpackRS != null && unpackRS.eachChar().anyʔ()) {
               unpackRA.add(unpackRS.sliceǃ(0).toS());
               count--;
             } else if (a8u.hasNextByte()) {
               if (d == B || d == b)
-                unpackRS =
-                    rs(toBinaryString(new byte[] { a8u.nextByte() }, d == B));
+                unpackRS = Ruby.String
+                    .of(toBinaryString(new byte[] { a8u.nextByte() }, d == B));
               else
-                unpackRS =
-                    rs(toHexString(new byte[] { a8u.nextByte() }, d == H));
+                unpackRS = Ruby.String
+                    .of(toHexString(new byte[] { a8u.nextByte() }, d == H));
 
               unpackRA.add(unpackRS.sliceǃ(0).toS());
               count--;

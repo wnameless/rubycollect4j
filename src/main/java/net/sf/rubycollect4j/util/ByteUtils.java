@@ -19,8 +19,6 @@ package net.sf.rubycollect4j.util;
 
 import static java.nio.ByteOrder.BIG_ENDIAN;
 import static java.nio.ByteOrder.LITTLE_ENDIAN;
-import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
-import static net.sf.rubycollect4j.RubyCollections.ra;
 
 import java.lang.reflect.Method;
 import java.math.BigInteger;
@@ -35,12 +33,13 @@ import java.util.logging.Logger;
 
 import javax.xml.bind.TypeConstraintException;
 
+import net.sf.rubycollect4j.Ruby;
 import net.sf.rubycollect4j.RubyArray;
 
 /**
  * 
- * {@link ByteUtils} provides functions to manipulate bytes or to convert variety
- * Objects into bytes.
+ * {@link ByteUtils} provides functions to manipulate bytes or to convert
+ * variety Objects into bytes.
  * 
  * @author Wei-Ming Wu
  * 
@@ -60,7 +59,7 @@ public final class ByteUtils {
    * @return {@link RubyArray} of Byte
    */
   public static RubyArray<Byte> toList(byte[] bytes) {
-    RubyArray<Byte> list = newRubyArray();
+    RubyArray<Byte> list = Ruby.Array.create();
     for (byte b : bytes) {
       list.add(b);
     }
@@ -397,7 +396,7 @@ public final class ByteUtils {
    * @return ASCII String
    */
   public static String toExtendedASCIIs(byte[] bytes, int n, ByteOrder bo) {
-    RubyArray<String> ra = newRubyArray();
+    RubyArray<String> ra = Ruby.Array.create();
     if (bo == LITTLE_ENDIAN) {
       for (int i = 0; i < n; i++) {
         if (i >= bytes.length) {
@@ -523,7 +522,7 @@ public final class ByteUtils {
 
     int complementary = binaryStr.length() % 8;
     if (complementary != 0)
-      binaryStr += ra("0").multiply(8 - complementary).join();
+      binaryStr += Ruby.Array.of("0").multiply(8 - complementary).join();
     return rjust(new BigInteger(binaryStr, 2).toByteArray(),
         binaryStr.length() / 8);
   }

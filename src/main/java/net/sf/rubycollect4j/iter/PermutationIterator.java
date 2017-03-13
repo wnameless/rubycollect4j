@@ -17,8 +17,6 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -27,6 +25,7 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
+import net.sf.rubycollect4j.Ruby;
 import net.sf.rubycollect4j.RubyArray;
 
 /**
@@ -86,7 +85,7 @@ public final class PermutationIterator<E> implements Iterator<RubyArray<E>> {
   }
 
   private RubyArray<E> nextElement() {
-    RubyArray<E> c = newRubyArray();
+    RubyArray<E> c = Ruby.Array.create();
     for (int i = 0; i < counter.length; i++) {
       c.add(list.get(counter[i]));
     }

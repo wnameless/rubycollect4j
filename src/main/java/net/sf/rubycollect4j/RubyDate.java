@@ -17,9 +17,6 @@
  */
 package net.sf.rubycollect4j;
 
-import static net.sf.rubycollect4j.RubyCollections.range;
-import static net.sf.rubycollect4j.RubyCollections.rh;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
@@ -289,7 +286,7 @@ public class RubyDate extends Date {
    * @return {@link RubyRange}
    */
   public RubyRange<Date> allWeek() {
-    return range(beginningOfWeek(), endOfWeek());
+    return Ruby.Range.of(beginningOfWeek(), endOfWeek());
   }
 
   /**
@@ -298,7 +295,7 @@ public class RubyDate extends Date {
    * @return {@link RubyRange}
    */
   public RubyRange<Date> allMonth() {
-    return range(beginningOfMonth(), endOfMonth());
+    return Ruby.Range.of(beginningOfMonth(), endOfMonth());
   }
 
   /**
@@ -307,7 +304,7 @@ public class RubyDate extends Date {
    * @return {@link RubyRange}
    */
   public RubyRange<Date> allQuarter() {
-    return range(beginningOfQuarter(), endOfQuarter());
+    return Ruby.Range.of(beginningOfQuarter(), endOfQuarter());
   }
 
   /**
@@ -316,7 +313,7 @@ public class RubyDate extends Date {
    * @return {@link RubyRange}
    */
   public RubyRange<Date> allYear() {
-    return range(beginningOfYear(), endOfYear());
+    return Ruby.Range.of(beginningOfYear(), endOfYear());
   }
 
   /**
@@ -409,7 +406,7 @@ public class RubyDate extends Date {
    */
   public RubyEnumerator<Date> step(Date limit, int step) {
     if (step > 0) {
-      return range(this, limit).step(step).each();
+      return Ruby.Range.of(this, limit).step(step).each();
     } else {
       return new RubyRange<>(DateReverseSuccessor.getInstance(), this, limit,
           Interval.CLOSED).step(-step).each();
@@ -589,7 +586,7 @@ public class RubyDate extends Date {
    * @return new {@link RubyDate}
    */
   public RubyDate beginningOfMonth() {
-    return change(rh(DateField.DAY, 1)).beginningOfDay();
+    return change(Ruby.Hash.of(DateField.DAY, 1)).beginningOfDay();
   }
 
   /**
@@ -621,20 +618,20 @@ public class RubyDate extends Date {
       case 1:
       case 2:
       case 3:
-        return change(rh(DateField.MONTH, 1, DateField.DAY, 1))
+        return change(Ruby.Hash.of(DateField.MONTH, 1, DateField.DAY, 1))
             .beginningOfDay();
       case 4:
       case 5:
       case 6:
-        return change(rh(DateField.MONTH, 4, DateField.DAY, 1))
+        return change(Ruby.Hash.of(DateField.MONTH, 4, DateField.DAY, 1))
             .beginningOfDay();
       case 7:
       case 8:
       case 9:
-        return change(rh(DateField.MONTH, 7, DateField.DAY, 1))
+        return change(Ruby.Hash.of(DateField.MONTH, 7, DateField.DAY, 1))
             .beginningOfDay();
       default:
-        return change(rh(DateField.MONTH, 10, DateField.DAY, 1))
+        return change(Ruby.Hash.of(DateField.MONTH, 10, DateField.DAY, 1))
             .beginningOfDay();
     }
   }
@@ -650,17 +647,21 @@ public class RubyDate extends Date {
       case 1:
       case 2:
       case 3:
-        return change(rh(DateField.MONTH, 3, DateField.DAY, 31)).endOfDay();
+        return change(Ruby.Hash.of(DateField.MONTH, 3, DateField.DAY, 31))
+            .endOfDay();
       case 4:
       case 5:
       case 6:
-        return change(rh(DateField.MONTH, 6, DateField.DAY, 30)).endOfDay();
+        return change(Ruby.Hash.of(DateField.MONTH, 6, DateField.DAY, 30))
+            .endOfDay();
       case 7:
       case 8:
       case 9:
-        return change(rh(DateField.MONTH, 9, DateField.DAY, 30)).endOfDay();
+        return change(Ruby.Hash.of(DateField.MONTH, 9, DateField.DAY, 30))
+            .endOfDay();
       default:
-        return change(rh(DateField.MONTH, 12, DateField.DAY, 31)).endOfDay();
+        return change(Ruby.Hash.of(DateField.MONTH, 12, DateField.DAY, 31))
+            .endOfDay();
     }
   }
 
@@ -670,7 +671,8 @@ public class RubyDate extends Date {
    * @return new {@link RubyDate}
    */
   public RubyDate beginningOfYear() {
-    return change(rh(DateField.MONTH, 1, DateField.DAY, 1)).beginningOfDay();
+    return change(Ruby.Hash.of(DateField.MONTH, 1, DateField.DAY, 1))
+        .beginningOfDay();
   }
 
   /**
@@ -679,7 +681,8 @@ public class RubyDate extends Date {
    * @return new {@link RubyDate}
    */
   public RubyDate endOfYear() {
-    return change(rh(DateField.MONTH, 12, DateField.DAY, 31)).endOfDay();
+    return change(Ruby.Hash.of(DateField.MONTH, 12, DateField.DAY, 31))
+        .endOfDay();
   }
 
   /**

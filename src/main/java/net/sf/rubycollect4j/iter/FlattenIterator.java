@@ -17,13 +17,12 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
-
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.function.Function;
 
+import net.sf.rubycollect4j.Ruby;
 import net.sf.rubycollect4j.RubyArray;
 
 /**
@@ -42,7 +41,7 @@ public final class FlattenIterator<E, S> implements Iterator<S> {
 
   private final Iterator<? extends E> iter;
   private final Function<? super E, ? extends List<? extends S>> block;
-  private final RubyArray<S> buffer = newRubyArray();
+  private final RubyArray<S> buffer = Ruby.Array.create();
 
   /**
    * Creates a {@link FlattenIterator}.

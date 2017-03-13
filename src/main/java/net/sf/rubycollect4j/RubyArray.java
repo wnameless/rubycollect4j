@@ -17,9 +17,6 @@
  */
 package net.sf.rubycollect4j;
 
-import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
-import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -260,7 +257,7 @@ public final class RubyArray<E>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<RubyArray<E>> combination(int n) {
-    return newRubyEnumerator(new CombinationIterable<E>(list, n));
+    return Ruby.Enumerator.of(new CombinationIterable<E>(list, n));
   }
 
   /**
@@ -286,7 +283,7 @@ public final class RubyArray<E>
    * @return new {@link RubyArray}
    */
   public RubyArray<E> compact() {
-    RubyArray<E> rubyArray = newRubyArray();
+    RubyArray<E> rubyArray = Ruby.Array.create();
     for (E item : list) {
       if (item != null) rubyArray.add(item);
     }
@@ -383,7 +380,7 @@ public final class RubyArray<E>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<E> deleteIf() {
-    return newRubyEnumerator(this);
+    return Ruby.Enumerator.of(this);
   }
 
   /**
@@ -421,7 +418,7 @@ public final class RubyArray<E>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<Integer> eachIndex() {
-    return newRubyEnumerator(new EachIndexIterable<E>(list));
+    return Ruby.Enumerator.of(new EachIndexIterable<E>(list));
   }
 
   /**
@@ -645,7 +642,7 @@ public final class RubyArray<E>
 
   @SuppressWarnings("unchecked")
   private <S> RubyArray<S> flatten(List<?> list, int n) {
-    RubyArray<S> rubyArray = newRubyArray();
+    RubyArray<S> rubyArray = Ruby.Array.create();
     for (Object item : list) {
       if (item instanceof List)
         for (Object o : (List<?>) item) {
@@ -764,7 +761,7 @@ public final class RubyArray<E>
   public RubyArray<E> intersection(Collection<? extends E> other) {
     Set<E> thatSet = new HashSet<E>(other);
     Set<E> thisSet = new HashSet<E>();
-    RubyArray<E> rubyArray = newRubyArray();
+    RubyArray<E> rubyArray = Ruby.Array.create();
     for (E item : list) {
       if (thisSet.add(item) && thatSet.contains(item)) rubyArray.add(item);
     }
@@ -804,7 +801,7 @@ public final class RubyArray<E>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<E> keepIf() {
-    return newRubyEnumerator(list);
+    return Ruby.Enumerator.of(list);
   }
 
   /**
@@ -852,7 +849,7 @@ public final class RubyArray<E>
     int start = list.size() - n;
     if (start < 0) start = 0;
 
-    RubyArray<E> rubyArray = newRubyArray();
+    RubyArray<E> rubyArray = Ruby.Array.create();
     rubyArray.addAll(list.subList(start, list.size()));
     return rubyArray;
   }
@@ -890,7 +887,7 @@ public final class RubyArray<E>
     if (n < 0)
       throw new IllegalArgumentException("ArgumentError: negative argument");
 
-    RubyArray<E> rubyArray = newRubyArray();
+    RubyArray<E> rubyArray = Ruby.Array.create();
     for (int i = 0; i < n; i++) {
       rubyArray.addAll(list);
     }
@@ -928,7 +925,7 @@ public final class RubyArray<E>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<RubyArray<E>> permutation() {
-    return newRubyEnumerator(new PermutationIterable<E>(list, size()));
+    return Ruby.Enumerator.of(new PermutationIterable<E>(list, size()));
   }
 
   /**
@@ -940,7 +937,7 @@ public final class RubyArray<E>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<RubyArray<E>> permutation(int n) {
-    return newRubyEnumerator(new PermutationIterable<E>(list, n));
+    return Ruby.Enumerator.of(new PermutationIterable<E>(list, n));
   }
 
   /**
@@ -1013,7 +1010,7 @@ public final class RubyArray<E>
     if (n < 0)
       throw new IllegalArgumentException("ArgumentError: negative array size");
 
-    RubyArray<E> rubyArray = newRubyArray();
+    RubyArray<E> rubyArray = Ruby.Array.create();
     while (n > 0 && !list.isEmpty()) {
       rubyArray.unshift(pop());
       n--;
@@ -1030,7 +1027,7 @@ public final class RubyArray<E>
    */
   public RubyArray<RubyArray<E>> product(
       @SuppressWarnings("unchecked") List<? extends E>... others) {
-    return newRubyEnumerator(new ProductIterable<E>(this, others)).toA();
+    return Ruby.Enumerator.of(new ProductIterable<E>(this, others)).toA();
   }
 
   /**
@@ -1042,7 +1039,7 @@ public final class RubyArray<E>
    */
   public RubyArray<RubyArray<E>> product(
       List<? extends List<? extends E>> others) {
-    return newRubyEnumerator(new ProductIterable<E>(this, others)).toA();
+    return Ruby.Enumerator.of(new ProductIterable<E>(this, others)).toA();
   }
 
   /**
@@ -1117,7 +1114,7 @@ public final class RubyArray<E>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<E> rejectǃ() {
-    return newRubyEnumerator(list);
+    return Ruby.Enumerator.of(list);
   }
 
   /**
@@ -1141,7 +1138,7 @@ public final class RubyArray<E>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<RubyArray<E>> repeatedCombination(int n) {
-    return newRubyEnumerator(new RepeatedCombinationIterable<E>(list, n));
+    return Ruby.Enumerator.of(new RepeatedCombinationIterable<E>(list, n));
   }
 
   /**
@@ -1171,7 +1168,7 @@ public final class RubyArray<E>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<RubyArray<E>> repeatedPermutation(int n) {
-    return newRubyEnumerator(new RepeatedPermutationIterable<E>(list, n));
+    return Ruby.Enumerator.of(new RepeatedPermutationIterable<E>(list, n));
   }
 
   /**
@@ -1212,7 +1209,7 @@ public final class RubyArray<E>
    * @return new {@link RubyArray}
    */
   public RubyArray<E> reverse() {
-    RubyArray<E> rubyArray = newRubyArray();
+    RubyArray<E> rubyArray = Ruby.Array.create();
     for (E item : list) {
       rubyArray.unshift(item);
     }
@@ -1235,7 +1232,7 @@ public final class RubyArray<E>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<E> rindex() {
-    return newRubyEnumerator(reverse());
+    return Ruby.Enumerator.of(reverse());
   }
 
   /**
@@ -1359,7 +1356,7 @@ public final class RubyArray<E>
 
     List<Integer> indices = eachIndex().toA();
 
-    RubyArray<E> rubyArray = newRubyArray();
+    RubyArray<E> rubyArray = Ruby.Array.create();
     while (rubyArray.size() < list.size() && rubyArray.size() < n) {
       rubyArray.add(
           list.get(indices.remove((int) (Math.random() * indices.size()))));
@@ -1373,7 +1370,7 @@ public final class RubyArray<E>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<E> selectǃ() {
-    return newRubyEnumerator(list);
+    return Ruby.Enumerator.of(list);
   }
 
   /**
@@ -1415,7 +1412,7 @@ public final class RubyArray<E>
     if (n < 0)
       throw new IllegalArgumentException("ArgumentError: negative array size");
 
-    RubyArray<E> rubyArray = newRubyArray();
+    RubyArray<E> rubyArray = Ruby.Array.create();
     while (!list.isEmpty() && rubyArray.size() < n) {
       rubyArray.add(list.remove(0));
     }
@@ -1465,7 +1462,7 @@ public final class RubyArray<E>
    * @return new {@link RubyArray}
    */
   public RubyArray<E> slice(int index, int length) {
-    RubyArray<E> rubyArray = newRubyArray();
+    RubyArray<E> rubyArray = Ruby.Array.create();
     if (index < -list.size() || index >= list.size()) {
       return null;
     } else {
@@ -1507,7 +1504,7 @@ public final class RubyArray<E>
    * @return new {@link RubyArray}
    */
   public RubyArray<E> sliceǃ(int index, int length) {
-    RubyArray<E> rubyArray = newRubyArray();
+    RubyArray<E> rubyArray = Ruby.Array.create();
     if (index < -list.size() || index >= list.size()) {
       return null;
     } else {
@@ -1553,7 +1550,7 @@ public final class RubyArray<E>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<E> sortByǃ() {
-    return newRubyEnumerator(list);
+    return Ruby.Enumerator.of(list);
   }
 
   /**
@@ -1678,7 +1675,7 @@ public final class RubyArray<E>
    *           if all lists are not the same size
    */
   public <S> RubyArray<RubyArray<S>> transpose() {
-    if (list.isEmpty()) return newRubyArray();
+    if (list.isEmpty()) return Ruby.Array.create();
 
     Integer size = null;
     for (E item : list) {
@@ -1692,9 +1689,9 @@ public final class RubyArray<E>
         throw new IndexOutOfBoundsException("IndexError: element size differs ("
             + ((List<?>) item).size() + " should be " + size + ")");
     }
-    RubyArray<RubyArray<S>> rubyArray = newRubyArray();
+    RubyArray<RubyArray<S>> rubyArray = Ruby.Array.create();
     for (int i = 0; i < size; i++) {
-      RubyArray<S> ra = newRubyArray();
+      RubyArray<S> ra = Ruby.Array.create();
       for (E item : list) {
         @SuppressWarnings("unchecked")
         List<S> lst = (List<S>) item;
@@ -1725,7 +1722,7 @@ public final class RubyArray<E>
    */
   public RubyArray<E> uniq() {
     Set<E> set = new LinkedHashSet<E>(list);
-    return newRubyArray(set);
+    return Ruby.Array.copyOf(set);
   }
 
   /**
@@ -1739,7 +1736,7 @@ public final class RubyArray<E>
    * @return new {@link RubyArray}
    */
   public <S> RubyArray<E> uniq(Function<? super E, ? extends S> block) {
-    RubyArray<E> rubyArray = newRubyArray();
+    RubyArray<E> rubyArray = Ruby.Array.create();
     Set<S> set = new HashSet<S>();
     for (E item : list) {
       if (set.add(block.apply(item))) rubyArray.add(item);
@@ -1801,7 +1798,7 @@ public final class RubyArray<E>
    * @return new {@link RubyArray}
    */
   public RubyArray<E> valuesAt(int... indices) {
-    RubyArray<E> rubyArray = newRubyArray();
+    RubyArray<E> rubyArray = Ruby.Array.create();
     for (int index : indices) {
       rubyArray.add(at(index));
     }
@@ -1816,7 +1813,7 @@ public final class RubyArray<E>
    * @return new {@link RubyArray}
    */
   public RubyArray<E> valuesAt(Iterable<Integer> indices) {
-    RubyArray<E> rubyArray = newRubyArray();
+    RubyArray<E> rubyArray = Ruby.Array.create();
     for (int index : indices) {
       rubyArray.add(at(index));
     }

@@ -17,8 +17,6 @@
  */
 package net.sf.rubycollect4j;
 
-import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -60,7 +58,7 @@ public class RubyLiterals {
    * @return {@link RubyArray}
    */
   public static RubyArray<String> qw(String str) {
-    return newRubyArray(str.trim().split("\\s+"));
+    return Ruby.Array.copyOf(str.trim().split("\\s+"));
   }
 
   /**

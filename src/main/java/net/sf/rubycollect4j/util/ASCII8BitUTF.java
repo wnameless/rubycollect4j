@@ -17,14 +17,11 @@
  */
 package net.sf.rubycollect4j.util;
 
-import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
-import static net.sf.rubycollect4j.RubyCollections.ra;
-import static net.sf.rubycollect4j.RubyCollections.rs;
-
 import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.Objects;
 
+import net.sf.rubycollect4j.Ruby;
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.RubyString;
 
@@ -42,8 +39,8 @@ import net.sf.rubycollect4j.RubyString;
 public final class ASCII8BitUTF implements CharSequence {
 
   private final String str;
-  private final RubyArray<String> chars = newRubyArray();
-  private final RubyArray<Byte> currentBytes = newRubyArray();
+  private final RubyArray<String> chars = Ruby.Array.create();
+  private final RubyArray<Byte> currentBytes = Ruby.Array.create();
   private final int totalByteNumber;
   private int remainingByteNumber;
   private String currentChar;
@@ -58,7 +55,7 @@ public final class ASCII8BitUTF implements CharSequence {
     Objects.requireNonNull(str);
 
     this.str = str;
-    chars.replace(rs(str).eachChar().toA());
+    chars.replace(Ruby.String.of(str).eachChar().toA());
     totalByteNumber = remainingByteNumber = countByteNumber();
     rewind();
   }
@@ -83,7 +80,7 @@ public final class ASCII8BitUTF implements CharSequence {
   }
 
   private RubyArray<Byte> ch2Bytes(String ch) {
-    if (ch == null) return ra();
+    if (ch == null) return Ruby.Array.create();
 
     if (ch.codePointAt(0) < 256)
       return ByteUtils.toList(
@@ -115,7 +112,7 @@ public final class ASCII8BitUTF implements CharSequence {
    * Rewinds this {@link ASCII8BitUTF}.
    */
   public void rewind() {
-    chars.replace(rs(str).eachChar().toA());
+    chars.replace(Ruby.String.of(str).eachChar().toA());
     advanceChar();
     remainingByteNumber = totalByteNumber;
   }
@@ -205,7 +202,7 @@ public final class ASCII8BitUTF implements CharSequence {
    * @return byte array
    */
   public byte[] nextByte(int n) {
-    List<Byte> bytes = newRubyArray();
+    List<Byte> bytes = Ruby.Array.create();
     while (n > 0 && hasNextByte()) {
       bytes.add(nextByte());
       n--;

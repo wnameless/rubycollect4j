@@ -17,7 +17,6 @@
  */
 package net.sf.rubycollect4j;
 
-import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyIO.Mode.R;
 
 import java.io.BufferedReader;
@@ -260,7 +259,7 @@ public class RubyIO {
    * @return {@link RubyEnumerator}
    */
   public static RubyEnumerator<String> foreach(String path) {
-    return newRubyEnumerator(new EachLineIterable(new File(path)));
+    return Ruby.Enumerator.of(new EachLineIterable(new File(path)));
   }
 
   /**
@@ -271,7 +270,7 @@ public class RubyIO {
    * @return {@link RubyEnumerator}
    */
   public static RubyEnumerator<String> foreach(File file) {
-    return newRubyEnumerator(new EachLineIterable(file));
+    return Ruby.Enumerator.of(new EachLineIterable(file));
   }
 
   /**
@@ -282,7 +281,7 @@ public class RubyIO {
    * @return {@link RubyEnumerator}
    */
   public static RubyEnumerator<String> foreach(InputStream inputStream) {
-    return newRubyEnumerator(new EachLineIterable(inputStream));
+    return Ruby.Enumerator.of(new EachLineIterable(inputStream));
   }
 
   /**
@@ -294,7 +293,7 @@ public class RubyIO {
    *          to process each line
    */
   public static void foreach(String path, Consumer<String> block) {
-    newRubyEnumerator(new EachLineIterable(new File(path))).each(block);
+    Ruby.Enumerator.of(new EachLineIterable(new File(path))).each(block);
   }
 
   /**
@@ -320,7 +319,7 @@ public class RubyIO {
     if (mode.isReadable() == false)
       throw new IllegalStateException("IOError: not opened for reading");
 
-    return newRubyEnumerator(new EachLineIterable(file));
+    return Ruby.Enumerator.of(new EachLineIterable(file));
   }
 
   /**

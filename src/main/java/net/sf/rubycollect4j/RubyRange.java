@@ -17,9 +17,6 @@
  */
 package net.sf.rubycollect4j;
 
-import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
-import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
-
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Objects;
@@ -236,7 +233,7 @@ public final class RubyRange<E> implements RubyEnumerable<E>, Serializable {
    * @return a {@link RubyArray}
    */
   public RubyArray<E> last(int n) {
-    RubyArray<E> lasts = newRubyArray();
+    RubyArray<E> lasts = Ruby.Array.create();
     for (E item : iter) {
       if (lasts.size() < n) {
         lasts.add(item);
@@ -261,7 +258,7 @@ public final class RubyRange<E> implements RubyEnumerable<E>, Serializable {
    * @return a {@link RubyEnumerator}
    */
   public RubyEnumerator<E> step(int n) {
-    return newRubyEnumerator(new StepIterable<E>(iter, n));
+    return Ruby.Enumerator.of(new StepIterable<E>(iter, n));
   }
 
   /**

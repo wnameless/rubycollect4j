@@ -17,7 +17,6 @@
  */
 package net.sf.rubycollect4j;
 
-import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyIO.Mode.R;
 
 import java.io.File;
@@ -305,7 +304,7 @@ public class RubyFile extends RubyIO {
     else
       pathSeprator = "/";
 
-    RubyArray<String> ra = newRubyArray(files);
+    RubyArray<String> ra = Ruby.Array.copyOf(files);
     for (int i = 1; i < ra.size(); i++) {
       int predecessor = i - 1;
       while (ra.get(predecessor).endsWith(pathSeprator)) {

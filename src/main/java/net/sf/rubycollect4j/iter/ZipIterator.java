@@ -17,10 +17,9 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
-
 import java.util.Iterator;
 
+import net.sf.rubycollect4j.Ruby;
 import net.sf.rubycollect4j.RubyArray;
 
 /**
@@ -51,7 +50,7 @@ public final class ZipIterator<E> implements Iterator<RubyArray<E>> {
     if (iter == null || others == null) throw new NullPointerException();
 
     this.iter = iter;
-    this.others = newRubyArray(others);
+    this.others = Ruby.Array.copyOf(others);
   }
 
   @Override
@@ -61,7 +60,7 @@ public final class ZipIterator<E> implements Iterator<RubyArray<E>> {
 
   @Override
   public RubyArray<E> next() {
-    RubyArray<E> element = newRubyArray();
+    RubyArray<E> element = Ruby.Array.create();
     element.add(iter.next());
     for (Iterator<? extends E> i : others) {
       if (i.hasNext())
