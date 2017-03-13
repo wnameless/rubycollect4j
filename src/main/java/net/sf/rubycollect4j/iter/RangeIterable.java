@@ -68,7 +68,7 @@ public final class RangeIterable<E> implements Iterable<E> {
 
   @Override
   public Iterator<E> iterator() {
-    return new RangeIterator<E>(successive, startPoint, endPoint, interval);
+    return new RangeIterator<>(successive, startPoint, endPoint, interval);
   }
 
   @Override

@@ -55,7 +55,7 @@ public final class RubyEnumerator<E>
   public static <E> RubyEnumerator<E> of(Iterable<E> iter) {
     Objects.requireNonNull(iter);
 
-    return new RubyEnumerator<E>(iter);
+    return new RubyEnumerator<>(iter);
   }
 
   /**
@@ -71,7 +71,7 @@ public final class RubyEnumerator<E>
   public static <E> RubyEnumerator<E> copyOf(Iterable<E> iter) {
     Objects.requireNonNull(iter);
 
-    return new RubyEnumerator<E>(RubyArray.copyOf(iter));
+    return new RubyEnumerator<>(RubyArray.copyOf(iter));
   }
 
   /**
@@ -87,7 +87,7 @@ public final class RubyEnumerator<E>
     Objects.requireNonNull(iterable);
 
     iter = iterable;
-    pIterator = new PeekingIterator<E>(iter.iterator());
+    pIterator = new PeekingIterator<>(iter.iterator());
   }
 
   /**
@@ -108,7 +108,7 @@ public final class RubyEnumerator<E>
    */
   @Override
   public RubyEnumerator<E> rewind() {
-    pIterator = new PeekingIterator<E>(iter.iterator());
+    pIterator = new PeekingIterator<>(iter.iterator());
     return this;
   }
 

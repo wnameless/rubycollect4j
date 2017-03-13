@@ -59,7 +59,7 @@ public final class RubySet<E>
    *           if set is null
    */
   public static <E> RubySet<E> of(LinkedHashSet<E> set) {
-    return new RubySet<E>(set);
+    return new RubySet<>(set);
   }
 
   /**
@@ -72,14 +72,14 @@ public final class RubySet<E>
    *           if elements is null
    */
   public static <E> RubySet<E> copyOf(Iterable<E> elements) {
-    return new RubySet<E>(elements);
+    return new RubySet<>(elements);
   }
 
   /**
    * Creates a {@link RubySet}.
    */
   public RubySet() {
-    set = new LinkedHashSet<E>();
+    set = new LinkedHashSet<>();
   }
 
   /**
@@ -108,7 +108,7 @@ public final class RubySet<E>
   public RubySet(Iterable<E> iter) {
     Objects.requireNonNull(iter);
 
-    set = new LinkedHashSet<E>();
+    set = new LinkedHashSet<>();
     iter.forEach(e -> set.add(e));
   }
 
@@ -152,7 +152,7 @@ public final class RubySet<E>
    * @return this {@link RubySet}
    */
   public RubySet<E> collectǃ(Function<? super E, ? extends E> block) {
-    LinkedHashSet<E> lhs = new LinkedHashSet<E>();
+    LinkedHashSet<E> lhs = new LinkedHashSet<>();
     set.forEach(e -> lhs.add(block.apply(e)));
     set.clear();
     set.addAll(lhs);
@@ -358,7 +358,7 @@ public final class RubySet<E>
    * @return new {@link RubySet}
    */
   public RubySet<E> intersection(Iterable<E> iter) {
-    RubySet<E> newSet = new RubySet<E>();
+    RubySet<E> newSet = new RubySet<>();
     iter.forEach(e -> {
       if (set.contains(e)) newSet.add(e);
     });

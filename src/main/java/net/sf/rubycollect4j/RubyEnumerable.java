@@ -96,7 +96,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
   @Override
   public default RubyEnumerator<RubyArray<E>> chunkWhile(
       BiPredicate<? super E, ? super E> block) {
-    return Ruby.Enumerator.of(new ChunkWhileIterable<E>(this, block));
+    return Ruby.Enumerator.of(new ChunkWhileIterable<>(this, block));
   }
 
   /**
@@ -161,7 +161,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    */
   @Override
   public default RubyEnumerator<E> cycle() {
-    return Ruby.Enumerator.of(new CycleIterable<E>(this));
+    return Ruby.Enumerator.of(new CycleIterable<>(this));
   }
 
   /**
@@ -171,7 +171,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    */
   @Override
   public default RubyEnumerator<E> cycle(int n) {
-    return Ruby.Enumerator.of(new CycleIterable<E>(this, n));
+    return Ruby.Enumerator.of(new CycleIterable<>(this, n));
   }
 
   @Override
@@ -262,7 +262,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    */
   @Override
   public default RubyEnumerator<RubyArray<E>> eachCons(int n) {
-    return Ruby.Enumerator.of(new EachConsIterable<E>(this, n));
+    return Ruby.Enumerator.of(new EachConsIterable<>(this, n));
   }
 
   @Override
@@ -298,7 +298,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    */
   @Override
   public default RubyEnumerator<RubyArray<E>> eachSlice(int n) {
-    return Ruby.Enumerator.of(new EachSliceIterable<E>(this, n));
+    return Ruby.Enumerator.of(new EachSliceIterable<>(this, n));
   }
 
   @Override
@@ -313,7 +313,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    */
   @Override
   public default RubyEnumerator<Entry<E, Integer>> eachWithIndex() {
-    return Ruby.Enumerator.of(new EachWithIndexIterable<E>(this));
+    return Ruby.Enumerator.of(new EachWithIndexIterable<>(this));
   }
 
   /**
@@ -335,7 +335,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    */
   @Override
   public default <O> RubyEnumerator<Entry<E, O>> eachWithObject(O obj) {
-    return Ruby.Enumerator.of(new EachWithObjectIterable<E, O>(this, obj));
+    return Ruby.Enumerator.of(new EachWithObjectIterable<>(this, obj));
   }
 
   @Override
@@ -514,7 +514,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
 
   @Override
   public default RubyLazyEnumerator<E> lazy() {
-    return new RubyLazyEnumerator<E>(this);
+    return new RubyLazyEnumerator<>(this);
   }
 
   /**
@@ -709,7 +709,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    */
   @Override
   public default RubyEnumerator<E> reverseEach() {
-    return Ruby.Enumerator.of(new ReverseEachIterable<E>(this));
+    return Ruby.Enumerator.of(new ReverseEachIterable<>(this));
   }
 
   /**
@@ -753,7 +753,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
   @Override
   public default RubyEnumerator<RubyArray<E>> sliceAfter(
       Predicate<? super E> block) {
-    return Ruby.Enumerator.of(new SliceAfterIterable<E>(this, block));
+    return Ruby.Enumerator.of(new SliceAfterIterable<>(this, block));
   }
 
   /**
@@ -764,7 +764,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
   @Override
   public default RubyEnumerator<RubyArray<E>> sliceAfter(String regex) {
     return Ruby.Enumerator
-        .of(new SliceAfterIterable<E>(this, Pattern.compile(regex)));
+        .of(new SliceAfterIterable<>(this, Pattern.compile(regex)));
   }
 
   /**
@@ -775,7 +775,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
   @Override
   public default RubyEnumerator<RubyArray<E>> sliceBefore(
       Predicate<? super E> block) {
-    return Ruby.Enumerator.of(new SliceBeforeIterable<E>(this, block));
+    return Ruby.Enumerator.of(new SliceBeforeIterable<>(this, block));
   }
 
   /**
@@ -786,7 +786,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
   @Override
   public default RubyEnumerator<RubyArray<E>> sliceBefore(String regex) {
     return Ruby.Enumerator
-        .of(new SliceBeforeIterable<E>(this, Pattern.compile(regex)));
+        .of(new SliceBeforeIterable<>(this, Pattern.compile(regex)));
   }
 
   /**
@@ -797,7 +797,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
   @Override
   public default RubyEnumerator<RubyArray<E>> sliceWhen(
       BiPredicate<? super E, ? super E> block) {
-    return Ruby.Enumerator.of(new SliceWhenIterable<E>(this, block));
+    return Ruby.Enumerator.of(new SliceWhenIterable<>(this, block));
   }
 
   @Override

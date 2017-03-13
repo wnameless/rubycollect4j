@@ -64,7 +64,7 @@ public final class EachWithObjectIterator<E, O>
 
   @Override
   public Entry<E, O> next() {
-    return new ComparableEntry<E, O>(iter.next(), obj);
+    return new ComparableEntry<>(iter.next(), obj);
   }
 
   @Override

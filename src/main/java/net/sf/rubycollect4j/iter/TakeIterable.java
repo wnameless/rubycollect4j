@@ -58,7 +58,7 @@ public final class TakeIterable<E> implements Iterable<E> {
 
   @Override
   public Iterator<E> iterator() {
-    return new TakeIterator<E>(iter.iterator(), n);
+    return new TakeIterator<>(iter.iterator(), n);
   }
 
   @Override

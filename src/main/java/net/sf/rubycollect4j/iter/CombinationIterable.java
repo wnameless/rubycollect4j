@@ -58,7 +58,7 @@ public class CombinationIterable<E> implements Iterable<RubyArray<E>> {
 
   @Override
   public Iterator<RubyArray<E>> iterator() {
-    return new CombinationIterator<E>(list, n);
+    return new CombinationIterator<>(list, n);
   }
 
   @Override

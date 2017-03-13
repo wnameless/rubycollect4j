@@ -56,7 +56,7 @@ public final class ChunkWhileIterator<E> implements Iterator<RubyArray<E>> {
       BiPredicate<? super E, ? super E> block) {
     if (iter == null || block == null) throw new NullPointerException();
 
-    pIter = new PeekingIterator<E>(iter);
+    pIter = new PeekingIterator<>(iter);
     this.block = block;
   }
 

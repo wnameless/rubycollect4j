@@ -63,7 +63,7 @@ public final class EachSliceIterable<E> implements Iterable<RubyArray<E>> {
 
   @Override
   public Iterator<RubyArray<E>> iterator() {
-    return new EachSliceIterator<E>(iter.iterator(), size);
+    return new EachSliceIterator<>(iter.iterator(), size);
   }
 
   @Override

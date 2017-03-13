@@ -52,7 +52,7 @@ public final class ReverseEachIterator<E> implements Iterator<E> {
   }
 
   private void initReversedIter() {
-    List<E> list = new ArrayList<E>();
+    List<E> list = new ArrayList<>();
     while (iter.hasNext()) {
       list.add(0, iter.next());
     }

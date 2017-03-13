@@ -62,7 +62,7 @@ public final class EachConsIterable<E> implements Iterable<RubyArray<E>> {
 
   @Override
   public Iterator<RubyArray<E>> iterator() {
-    return new EachConsIterator<E>(iter.iterator(), size);
+    return new EachConsIterator<>(iter.iterator(), size);
   }
 
   @Override

@@ -56,7 +56,7 @@ public final class FindAllIterable<E> implements Iterable<E> {
 
   @Override
   public Iterator<E> iterator() {
-    return new FindAllIterator<E>(iter.iterator(), block);
+    return new FindAllIterator<>(iter.iterator(), block);
   }
 
   @Override

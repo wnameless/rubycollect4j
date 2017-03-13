@@ -47,7 +47,7 @@ public final class ComparableEntry<K, V>
    *          of the entry
    */
   public ComparableEntry(K key, V value) {
-    entry = new SimpleEntry<K, V>(key, value);
+    entry = new SimpleEntry<>(key, value);
   }
 
   /**
@@ -57,7 +57,7 @@ public final class ComparableEntry<K, V>
    *          any Entry
    */
   public ComparableEntry(Entry<? extends K, ? extends V> entry) {
-    this.entry = new SimpleEntry<K, V>(entry.getKey(), entry.getValue());
+    this.entry = new SimpleEntry<>(entry.getKey(), entry.getValue());
   }
 
   @Override
@@ -96,8 +96,8 @@ public final class ComparableEntry<K, V>
       throw new IllegalArgumentException("ArgumentError: comparison of "
           + entry.getClass().getName() + " with null failed");
 
-    Comparator<K> keyComp = new TryComparator<K>();
-    Comparator<V> valueComp = new TryComparator<V>();
+    Comparator<K> keyComp = new TryComparator<>();
+    Comparator<V> valueComp = new TryComparator<>();
 
     int diff;
     if ((diff = keyComp.compare(entry.getKey(), o.getKey())) != 0) return diff;

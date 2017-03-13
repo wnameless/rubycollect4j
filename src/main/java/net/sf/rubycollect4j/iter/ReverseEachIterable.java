@@ -50,7 +50,7 @@ public final class ReverseEachIterable<E> implements Iterable<E> {
 
   @Override
   public Iterator<E> iterator() {
-    return new ReverseEachIterator<E>(iter.iterator());
+    return new ReverseEachIterator<>(iter.iterator());
   }
 
   @Override

@@ -60,7 +60,7 @@ public final class ChunkWhileIterable<E> implements Iterable<RubyArray<E>> {
 
   @Override
   public Iterator<RubyArray<E>> iterator() {
-    return new ChunkWhileIterator<E>(iter.iterator(), block);
+    return new ChunkWhileIterator<>(iter.iterator(), block);
   }
 
   @Override

@@ -64,7 +64,7 @@ public final class ChunkIterable<E, K>
 
   @Override
   public Iterator<Entry<K, RubyArray<E>>> iterator() {
-    return new ChunkIterator<E, K>(iter.iterator(), block);
+    return new ChunkIterator<>(iter.iterator(), block);
   }
 
   @Override

@@ -140,7 +140,7 @@ public final class PermutationIterator<E> implements Iterator<RubyArray<E>> {
   }
 
   private List<Integer> getAllIndice() {
-    List<Integer> indice = new ArrayList<Integer>();
+    List<Integer> indice = new ArrayList<>();
     for (int i = 0; i < list.size(); i++) {
       indice.add(i);
     }

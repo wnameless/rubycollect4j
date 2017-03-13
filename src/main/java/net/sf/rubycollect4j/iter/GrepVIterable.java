@@ -54,7 +54,7 @@ public final class GrepVIterable<E> implements Iterable<E> {
 
   @Override
   public Iterator<E> iterator() {
-    return new GrepVIterator<E>(iter.iterator(), regex);
+    return new GrepVIterator<>(iter.iterator(), regex);
   }
 
   @Override

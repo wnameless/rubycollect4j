@@ -97,7 +97,7 @@ public final class RubyIterables {
    */
   public static <E> Iterable<RubyArray<E>> chunkWhile(Iterable<E> in,
       BiPredicate<? super E, ? super E> block) {
-    return Ruby.Enumerator.of(new ChunkWhileIterable<E>(in, block));
+    return Ruby.Enumerator.of(new ChunkWhileIterable<>(in, block));
   }
 
   /**
@@ -136,7 +136,7 @@ public final class RubyIterables {
    * @see net.sf.rubycollect4j.RubyEnumerable#cycle()
    */
   public static <E> Iterable<E> cycle(Iterable<E> in) {
-    return new CycleIterable<E>(in);
+    return new CycleIterable<>(in);
   }
 
   /**
@@ -150,7 +150,7 @@ public final class RubyIterables {
    * @see net.sf.rubycollect4j.RubyEnumerable#cycle(int)
    */
   public static <E> Iterable<E> cycle(Iterable<E> in, int n) {
-    return new CycleIterable<E>(in, n);
+    return new CycleIterable<>(in, n);
   }
 
   /**
@@ -197,7 +197,7 @@ public final class RubyIterables {
    */
   public static <E> Iterable<? extends List<E>> eachCons(Iterable<E> in,
       int n) {
-    return new EachConsIterable<E>(in, n);
+    return new EachConsIterable<>(in, n);
   }
 
   /**
@@ -224,7 +224,7 @@ public final class RubyIterables {
    */
   public static <E> Iterable<? extends List<E>> eachSlice(Iterable<E> in,
       int n) {
-    return Ruby.Enumerator.of(new EachSliceIterable<E>(in, n));
+    return Ruby.Enumerator.of(new EachSliceIterable<>(in, n));
   }
 
   /**
@@ -240,7 +240,7 @@ public final class RubyIterables {
    */
   public static <E> Iterable<? extends Entry<E, Integer>> eachWithIndex(
       Iterable<E> in) {
-    return new EachWithIndexIterable<E>(in);
+    return new EachWithIndexIterable<>(in);
   }
 
   /**
@@ -257,7 +257,7 @@ public final class RubyIterables {
    */
   public static <E, O> Iterable<Entry<E, O>> eachWithObject(Iterable<E> in,
       O obj) {
-    return new EachWithObjectIterable<E, O>(in, obj);
+    return new EachWithObjectIterable<>(in, obj);
   }
 
   /**
@@ -566,7 +566,7 @@ public final class RubyIterables {
    * @see net.sf.rubycollect4j.RubyEnumerable#reverseEach()
    */
   public static <E> Iterable<E> reverseEach(Iterable<E> in) {
-    return Ruby.Enumerator.of(new ReverseEachIterable<E>(in));
+    return Ruby.Enumerator.of(new ReverseEachIterable<>(in));
   }
 
   /**
@@ -592,7 +592,7 @@ public final class RubyIterables {
    */
   public static <E> Iterable<? extends List<E>> sliceAfter(Iterable<E> in,
       Predicate<? super E> block) {
-    return Ruby.Enumerator.of(new SliceAfterIterable<E>(in, block));
+    return Ruby.Enumerator.of(new SliceAfterIterable<>(in, block));
   }
 
   /**
@@ -601,7 +601,7 @@ public final class RubyIterables {
   public static <E> Iterable<? extends List<E>> sliceAfter(Iterable<E> in,
       String regex) {
     return Ruby.Enumerator
-        .of(new SliceAfterIterable<E>(in, Pattern.compile(regex)));
+        .of(new SliceAfterIterable<>(in, Pattern.compile(regex)));
   }
 
   /**
@@ -609,7 +609,7 @@ public final class RubyIterables {
    */
   public static <E> Iterable<? extends List<E>> sliceBefore(Iterable<E> in,
       Predicate<? super E> block) {
-    return Ruby.Enumerator.of(new SliceBeforeIterable<E>(in, block));
+    return Ruby.Enumerator.of(new SliceBeforeIterable<>(in, block));
   }
 
   /**
@@ -618,7 +618,7 @@ public final class RubyIterables {
   public static <E> Iterable<? extends List<E>> sliceBefore(Iterable<E> in,
       String regex) {
     return Ruby.Enumerator
-        .of(new SliceBeforeIterable<E>(in, Pattern.compile(regex)));
+        .of(new SliceBeforeIterable<>(in, Pattern.compile(regex)));
   }
 
   /**
@@ -626,7 +626,7 @@ public final class RubyIterables {
    */
   public static <E> Iterable<? extends List<E>> sliceWhen(Iterable<E> in,
       BiPredicate<? super E, ? super E> block) {
-    return Ruby.Enumerator.of(new SliceWhenIterable<E>(in, block));
+    return Ruby.Enumerator.of(new SliceWhenIterable<>(in, block));
   }
 
   /**

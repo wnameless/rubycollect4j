@@ -59,7 +59,7 @@ public final class SliceWhenIterable<E> implements Iterable<RubyArray<E>> {
 
   @Override
   public Iterator<RubyArray<E>> iterator() {
-    return new SliceWhenIterator<E>(iter.iterator(), block);
+    return new SliceWhenIterator<>(iter.iterator(), block);
   }
 
   @Override

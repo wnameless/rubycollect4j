@@ -77,7 +77,7 @@ public final class RubyHash<K, V>
   public static <K, V> RubyHash<K, V> of(LinkedHashMap<K, V> map) {
     Objects.requireNonNull(map);
 
-    return new RubyHash<K, V>(map);
+    return new RubyHash<>(map);
   }
 
   /**
@@ -92,14 +92,14 @@ public final class RubyHash<K, V>
   public static <K, V> RubyHash<K, V> copyOf(Map<K, V> map) {
     Objects.requireNonNull(map);
 
-    return new RubyHash<K, V>(map);
+    return new RubyHash<>(map);
   }
 
   /**
    * Creates a {@link RubyHash}.
    */
   public RubyHash() {
-    map = new LinkedHashMap<K, V>();
+    map = new LinkedHashMap<>();
   }
 
   /**
@@ -128,7 +128,7 @@ public final class RubyHash<K, V>
   public RubyHash(Map<K, V> map) {
     Objects.requireNonNull(map);
 
-    this.map = new LinkedHashMap<K, V>(map);
+    this.map = new LinkedHashMap<>(map);
   }
 
   /**
@@ -140,7 +140,7 @@ public final class RubyHash<K, V>
    */
   public Entry<K, V> assoc(K key) {
     if (map.containsKey(key))
-      return new ComparableEntry<K, V>(key, map.get(key));
+      return new ComparableEntry<>(key, map.get(key));
     else
       return null;
   }
@@ -174,7 +174,7 @@ public final class RubyHash<K, V>
    * @return this {@link RubyHash}
    */
   public RubyHash<K, V> compareByIdentity() {
-    map = new LinkedIdentityMap<K, V>(map);
+    map = new LinkedIdentityMap<>(map);
     return this;
   }
 
@@ -661,7 +661,7 @@ public final class RubyHash<K, V>
     for (Entry<K, V> item : map.entrySet()) {
       if (value == null ? item.getValue() == null
           : value.equals(item.getValue()))
-        return new ComparableEntry<K, V>(item);
+        return new ComparableEntry<>(item);
     }
     return null;
   }
@@ -714,7 +714,7 @@ public final class RubyHash<K, V>
       Iterator<Entry<K, V>> iter = map.entrySet().iterator();
       Entry<K, V> first = iter.next();
       iter.remove();
-      return new ComparableEntry<K, V>(first);
+      return new ComparableEntry<>(first);
     }
   }
 

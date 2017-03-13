@@ -81,9 +81,9 @@ public final class SliceBeforeIterable<E> implements Iterable<RubyArray<E>> {
   @Override
   public Iterator<RubyArray<E>> iterator() {
     if (block != null)
-      return new SliceBeforeIterator<E>(iter.iterator(), block);
+      return new SliceBeforeIterator<>(iter.iterator(), block);
     else
-      return new SliceBeforeIterator<E>(iter.iterator(), pattern);
+      return new SliceBeforeIterator<>(iter.iterator(), pattern);
   }
 
   @Override

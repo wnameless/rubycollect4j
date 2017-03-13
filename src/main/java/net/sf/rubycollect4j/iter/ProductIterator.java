@@ -51,7 +51,7 @@ public final class ProductIterator<E> implements Iterator<RubyArray<E>> {
   public ProductIterator(List<? extends List<? extends E>> lists) {
     if (lists == null) throw new NullPointerException();
 
-    this.lists = new ArrayList<List<? extends E>>();
+    this.lists = new ArrayList<>();
     for (List<? extends E> list : lists) {
       this.lists.add(new ArrayList<E>(list));
     }

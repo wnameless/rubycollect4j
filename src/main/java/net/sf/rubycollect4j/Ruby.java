@@ -2478,7 +2478,7 @@ public final class Ruby {
      * @return Entry
      */
     public static <K, V> java.util.Map.Entry<K, V> of(K key, V value) {
-      return new ComparableEntry<K, V>(key, value);
+      return new ComparableEntry<>(key, value);
     }
 
   }
@@ -2682,7 +2682,7 @@ public final class Ruby {
      */
     public static RubyRange<java.lang.String> of(java.lang.String start,
         java.lang.String end) {
-      return new RubyRange<java.lang.String>(StringSuccessor.getInstance(),
+      return new RubyRange<>(StringSuccessor.getInstance(),
           start, end, Interval.CLOSED);
     }
 
@@ -2696,7 +2696,7 @@ public final class Ruby {
      * @return {@link RubyRange}
      */
     public static RubyRange<Character> of(char start, char end) {
-      return new RubyRange<Character>(CharacterSuccessor.getInstance(), start,
+      return new RubyRange<>(CharacterSuccessor.getInstance(), start,
           end, Interval.CLOSED);
     }
 
@@ -2724,7 +2724,7 @@ public final class Ruby {
      * @return {@link RubyRange}
      */
     public static RubyRange<Long> of(long start, long end) {
-      return new RubyRange<Long>(LongSuccessor.getInstance(), start, end,
+      return new RubyRange<>(LongSuccessor.getInstance(), start, end,
           Interval.CLOSED);
     }
 
@@ -2742,7 +2742,7 @@ public final class Ruby {
       java.lang.String endStr = java.lang.String.valueOf(end);
       int startPrecision = startStr.length() - startStr.lastIndexOf('.') - 1;
       int endPrecision = endStr.length() - endStr.lastIndexOf('.') - 1;
-      return new RubyRange<Double>(
+      return new RubyRange<>(
           new DoubleSuccessor(Math.max(startPrecision, endPrecision)), start,
           end, Interval.CLOSED);
     }
@@ -2758,7 +2758,7 @@ public final class Ruby {
      */
     public static RubyRange<java.util.Date> of(java.util.Date start,
         java.util.Date end) {
-      return new RubyRange<java.util.Date>(DateSuccessor.getInstance(), start,
+      return new RubyRange<>(DateSuccessor.getInstance(), start,
           end, Interval.CLOSED);
     }
 

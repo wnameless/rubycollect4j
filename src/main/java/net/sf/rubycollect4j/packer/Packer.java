@@ -23,7 +23,6 @@ import static net.sf.rubycollect4j.util.ByteUtils.toByteArray;
 import java.nio.ByteOrder;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
 import java.util.regex.Pattern;
 
 import net.sf.rubycollect4j.Ruby;
@@ -160,21 +159,7 @@ public final class Packer {
 
   static List<String> parseTemplate(String template) {
     return Ruby.Array.copyOf(template.split("(?!^)")).sliceBefore(Ruby.Array
-        .copyOf(Directive.values()).map(new Function<Directive, String>() {
-
-          @Override
-          public String apply(Directive item) {
-            return item.toString();
-          }
-
-        }).join("|")).map(new Function<RubyArray<String>, String>() {
-
-          @Override
-          public String apply(RubyArray<String> item) {
-            return item.join();
-          }
-
-        });
+        .copyOf(Directive.values()).map(item -> item.toString()).join("|")).map(item -> item.join());
   }
 
 }

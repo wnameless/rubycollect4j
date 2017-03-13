@@ -89,7 +89,7 @@ public final class StringSuccessor implements Successive<String> {
     for (int i = alphanums.size() - 1; i >= 0; i--) {
       char c = increaseASCII(alphanums.get(i));
       alphanums.set(i, c);
-      if ((int) c == 48 || (int) c == 65 || (int) c == 97) {
+      if (c == 48 || c == 65 || c == 97) {
         carry = true;
       } else {
         carry = false;
@@ -100,14 +100,14 @@ public final class StringSuccessor implements Successive<String> {
   }
 
   private char increaseASCII(char c) {
-    if ((int) c == 57) {
+    if (c == 57) {
       return (char) 48;
-    } else if ((int) c == 90) {
+    } else if (c == 90) {
       return (char) 65;
-    } else if ((int) c == 122) {
+    } else if (c == 122) {
       return (char) 97;
     } else {
-      return (char) ((int) c + 1);
+      return (char) (c + 1);
     }
   }
 
@@ -116,7 +116,7 @@ public final class StringSuccessor implements Successive<String> {
     for (int i = utf8.size() - 1; i >= 0; i--) {
       char c = increaseUTF8(utf8.get(i));
       utf8.set(i, c);
-      if ((int) c != 1) {
+      if (c != 1) {
         carry = false;
         break;
       } else {
@@ -127,22 +127,22 @@ public final class StringSuccessor implements Successive<String> {
   }
 
   private char increaseUTF8(char c) {
-    if ((int) c < 65535)
-      return (char) ((int) c + 1);
+    if (c < 65535)
+      return (char) (c + 1);
     else
       return (char) 1;
   }
 
   private List<List<Character>> partition(String curr) {
-    List<List<Character>> parts = new ArrayList<List<Character>>();
-    List<Character> chars = new ArrayList<Character>();
+    List<List<Character>> parts = new ArrayList<>();
+    List<Character> chars = new ArrayList<>();
     for (char c : curr.toCharArray()) {
       if (chars.isEmpty()
           || isAlphanumeric(chars.get(chars.size() - 1)) == isAlphanumeric(c)) {
         chars.add(c);
       } else {
         parts.add(chars);
-        chars = new ArrayList<Character>();
+        chars = new ArrayList<>();
         chars.add(c);
       }
     }
@@ -155,15 +155,15 @@ public final class StringSuccessor implements Successive<String> {
   }
 
   private boolean isDigit(char c) {
-    return 48 <= (int) c && (int) c <= 57;
+    return 48 <= c && c <= 57;
   }
 
   private boolean isUpperCase(char c) {
-    return 65 <= (int) c && (int) c <= 90;
+    return 65 <= c && c <= 90;
   }
 
   private boolean isLowerCase(char c) {
-    return 97 <= (int) c && (int) c <= 122;
+    return 97 <= c && c <= 122;
   }
 
   @Override

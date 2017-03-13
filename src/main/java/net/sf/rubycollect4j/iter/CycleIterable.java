@@ -71,9 +71,9 @@ public final class CycleIterable<E> implements Iterable<E> {
   @Override
   public Iterator<E> iterator() {
     if (n == null)
-      return new CycleIterator<E>(iter);
+      return new CycleIterator<>(iter);
     else
-      return new CycleIterator<E>(iter, n);
+      return new CycleIterator<>(iter, n);
   }
 
   @Override

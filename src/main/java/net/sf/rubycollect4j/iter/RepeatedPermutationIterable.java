@@ -59,7 +59,7 @@ public final class RepeatedPermutationIterable<E>
 
   @Override
   public Iterator<RubyArray<E>> iterator() {
-    return new RepeatedPermutationIterator<E>(list, n);
+    return new RepeatedPermutationIterator<>(list, n);
   }
 
   @Override

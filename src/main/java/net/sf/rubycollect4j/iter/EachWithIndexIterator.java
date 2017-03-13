@@ -60,7 +60,7 @@ public final class EachWithIndexIterator<E>
 
   @Override
   public Entry<E, Integer> next() {
-    return new ComparableEntry<E, Integer>(iter.next(), index++);
+    return new ComparableEntry<>(iter.next(), index++);
   }
 
   @Override

@@ -57,7 +57,7 @@ public final class EachWithObjectIterable<E, O>
 
   @Override
   public Iterator<Entry<E, O>> iterator() {
-    return new EachWithObjectIterator<E, O>(iter.iterator(), obj);
+    return new EachWithObjectIterator<>(iter.iterator(), obj);
   }
 
   @Override

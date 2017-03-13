@@ -90,7 +90,7 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
   public static <E> RubyLazyEnumerator<E> of(Iterable<E> iter) {
     Objects.requireNonNull(iter);
 
-    return new RubyLazyEnumerator<E>(iter);
+    return new RubyLazyEnumerator<>(iter);
   }
 
   /**
@@ -106,7 +106,7 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
   public static <E> RubyLazyEnumerator<E> copyOf(Iterable<E> iter) {
     Objects.requireNonNull(iter);
 
-    return new RubyLazyEnumerator<E>(RubyArray.copyOf(iter));
+    return new RubyLazyEnumerator<>(RubyArray.copyOf(iter));
   }
 
   /**
@@ -122,7 +122,7 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
     Objects.requireNonNull(iterable);
 
     iter = iterable;
-    pIterator = new PeekingIterator<E>(iter.iterator());
+    pIterator = new PeekingIterator<>(iter.iterator());
   }
 
   @Override
@@ -176,7 +176,7 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
   @Override
   public RubyLazyEnumerator<RubyArray<E>> chunkWhile(
       BiPredicate<? super E, ? super E> block) {
-    return Ruby.LazyEnumerator.of(new ChunkWhileIterable<E>(iter, block));
+    return Ruby.LazyEnumerator.of(new ChunkWhileIterable<>(iter, block));
   }
 
   /**
@@ -247,7 +247,7 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
    */
   @Override
   public RubyLazyEnumerator<E> cycle() {
-    return Ruby.LazyEnumerator.of(new CycleIterable<E>(iter));
+    return Ruby.LazyEnumerator.of(new CycleIterable<>(iter));
   }
 
   /**
@@ -257,7 +257,7 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
    */
   @Override
   public RubyLazyEnumerator<E> cycle(int n) {
-    return Ruby.LazyEnumerator.of(new CycleIterable<E>(iter, n));
+    return Ruby.LazyEnumerator.of(new CycleIterable<>(iter, n));
   }
 
   @Override
@@ -303,7 +303,7 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
    */
   @Override
   public RubyLazyEnumerator<E> drop(int n) {
-    return Ruby.LazyEnumerator.of(new DropIterable<E>(iter, n));
+    return Ruby.LazyEnumerator.of(new DropIterable<>(iter, n));
   }
 
   /**
@@ -328,7 +328,7 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
    */
   @Override
   public RubyLazyEnumerator<E> dropWhile(Predicate<? super E> block) {
-    return Ruby.LazyEnumerator.of(new DropWhileIterable<E>(iter, block));
+    return Ruby.LazyEnumerator.of(new DropWhileIterable<>(iter, block));
   }
 
   /**
@@ -361,7 +361,7 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
    */
   @Override
   public RubyLazyEnumerator<RubyArray<E>> eachCons(int n) {
-    return Ruby.LazyEnumerator.of(new EachConsIterable<E>(iter, n));
+    return Ruby.LazyEnumerator.of(new EachConsIterable<>(iter, n));
   }
 
   @Override
@@ -401,12 +401,12 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
    */
   @Override
   public RubyLazyEnumerator<RubyArray<E>> eachSlice(int n) {
-    return Ruby.LazyEnumerator.of(new EachSliceIterable<E>(iter, n));
+    return Ruby.LazyEnumerator.of(new EachSliceIterable<>(iter, n));
   }
 
   @Override
   public void eachSlice(int n, Consumer<? super RubyArray<E>> block) {
-    for (RubyArray<E> ra : new EachSliceIterable<E>(iter, n)) {
+    for (RubyArray<E> ra : new EachSliceIterable<>(iter, n)) {
       block.accept(ra);
     }
   }
@@ -418,7 +418,7 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
    */
   @Override
   public RubyLazyEnumerator<Entry<E, Integer>> eachWithIndex() {
-    return Ruby.LazyEnumerator.of(new EachWithIndexIterable<E>(iter));
+    return Ruby.LazyEnumerator.of(new EachWithIndexIterable<>(iter));
   }
 
   /**
@@ -444,7 +444,7 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
    */
   @Override
   public <O> RubyLazyEnumerator<Entry<E, O>> eachWithObject(O obj) {
-    return Ruby.LazyEnumerator.of(new EachWithObjectIterable<E, O>(iter, obj));
+    return Ruby.LazyEnumerator.of(new EachWithObjectIterable<>(iter, obj));
   }
 
   @Override
@@ -492,7 +492,7 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
    */
   @Override
   public RubyLazyEnumerator<E> findAll(Predicate<? super E> block) {
-    return Ruby.LazyEnumerator.of(new FindAllIterable<E>(iter, block));
+    return Ruby.LazyEnumerator.of(new FindAllIterable<>(iter, block));
   }
 
   /**
@@ -577,7 +577,7 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
    */
   @Override
   public RubyLazyEnumerator<E> grep(String regex) {
-    return Ruby.LazyEnumerator.of(new GrepIterable<E>(iter, regex));
+    return Ruby.LazyEnumerator.of(new GrepIterable<>(iter, regex));
   }
 
   /**
@@ -589,7 +589,7 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
   public <S> RubyLazyEnumerator<S> grep(String regex,
       Function<? super E, ? extends S> block) {
     return Ruby.LazyEnumerator.of(
-        new TransformIterable<E, S>(new GrepIterable<E>(iter, regex), block));
+        new TransformIterable<E, S>(new GrepIterable<>(iter, regex), block));
   }
 
   /**
@@ -599,7 +599,7 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
    */
   @Override
   public RubyLazyEnumerator<E> grepV(String regex) {
-    return Ruby.LazyEnumerator.of(new GrepVIterable<E>(iter, regex));
+    return Ruby.LazyEnumerator.of(new GrepVIterable<>(iter, regex));
   }
 
   /**
@@ -611,7 +611,7 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
   public <S> RubyLazyEnumerator<S> grepV(String regex,
       Function<? super E, ? extends S> block) {
     return Ruby.LazyEnumerator.of(
-        new TransformIterable<E, S>(new GrepVIterable<E>(iter, regex), block));
+        new TransformIterable<E, S>(new GrepVIterable<>(iter, regex), block));
   }
 
   /**
@@ -783,7 +783,7 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
     Iterator<E> elements = iter.iterator();
     if (!elements.hasNext()) return Ruby.Array.of((E) null, (E) null);
 
-    Comparator<S> tryComp = new TryComparator<S>(comp);
+    Comparator<S> tryComp = new TryComparator<>(comp);
     E max = elements.next();
     E min = max;
     while (elements.hasNext()) {
@@ -889,7 +889,7 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
    */
   @Override
   public RubyLazyEnumerator<E> reject(Predicate<? super E> block) {
-    return Ruby.LazyEnumerator.of(new RejectIterable<E>(iter, block));
+    return Ruby.LazyEnumerator.of(new RejectIterable<>(iter, block));
   }
 
   /**
@@ -899,7 +899,7 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
    */
   @Override
   public RubyLazyEnumerator<E> reverseEach() {
-    return Ruby.LazyEnumerator.of(new ReverseEachIterable<E>(iter));
+    return Ruby.LazyEnumerator.of(new ReverseEachIterable<>(iter));
   }
 
   /**
@@ -943,7 +943,7 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
   @Override
   public RubyLazyEnumerator<RubyArray<E>> sliceAfter(
       Predicate<? super E> block) {
-    return Ruby.LazyEnumerator.of(new SliceAfterIterable<E>(iter, block));
+    return Ruby.LazyEnumerator.of(new SliceAfterIterable<>(iter, block));
   }
 
   /**
@@ -954,7 +954,7 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
   @Override
   public RubyLazyEnumerator<RubyArray<E>> sliceAfter(String regex) {
     return Ruby.LazyEnumerator
-        .of(new SliceAfterIterable<E>(iter, Pattern.compile(regex)));
+        .of(new SliceAfterIterable<>(iter, Pattern.compile(regex)));
   }
 
   /**
@@ -965,7 +965,7 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
   @Override
   public RubyLazyEnumerator<RubyArray<E>> sliceBefore(
       Predicate<? super E> block) {
-    return Ruby.LazyEnumerator.of(new SliceBeforeIterable<E>(iter, block));
+    return Ruby.LazyEnumerator.of(new SliceBeforeIterable<>(iter, block));
   }
 
   /**
@@ -976,7 +976,7 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
   @Override
   public RubyLazyEnumerator<RubyArray<E>> sliceBefore(String regex) {
     return Ruby.LazyEnumerator
-        .of(new SliceBeforeIterable<E>(iter, Pattern.compile(regex)));
+        .of(new SliceBeforeIterable<>(iter, Pattern.compile(regex)));
   }
 
   /**
@@ -987,7 +987,7 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
   @Override
   public RubyLazyEnumerator<RubyArray<E>> sliceWhen(
       BiPredicate<? super E, ? super E> block) {
-    return Ruby.LazyEnumerator.of(new SliceWhenIterable<E>(iter, block));
+    return Ruby.LazyEnumerator.of(new SliceWhenIterable<>(iter, block));
   }
 
   @Override
@@ -1064,7 +1064,7 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
    */
   @Override
   public RubyLazyEnumerator<E> take(int n) {
-    return Ruby.LazyEnumerator.of(new TakeIterable<E>(iter, n));
+    return Ruby.LazyEnumerator.of(new TakeIterable<>(iter, n));
   }
 
   /**
@@ -1089,7 +1089,7 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
    */
   @Override
   public RubyLazyEnumerator<E> takeWhile(Predicate<? super E> block) {
-    return Ruby.LazyEnumerator.of(new TakeWhileIterable<E>(iter, block));
+    return Ruby.LazyEnumerator.of(new TakeWhileIterable<>(iter, block));
   }
 
   @Override
@@ -1116,7 +1116,7 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
   @Override
   public RubyLazyEnumerator<RubyArray<E>> zip(
       List<? extends Iterable<? extends E>> others) {
-    return Ruby.LazyEnumerator.of(new ZipIterable<E>(iter, others));
+    return Ruby.LazyEnumerator.of(new ZipIterable<>(iter, others));
   }
 
   @Override
@@ -1135,7 +1135,7 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
    */
   @Override
   public RubyLazyEnumerator<E> rewind() {
-    pIterator = new PeekingIterator<E>(iter.iterator());
+    pIterator = new PeekingIterator<>(iter.iterator());
     return this;
   }
 

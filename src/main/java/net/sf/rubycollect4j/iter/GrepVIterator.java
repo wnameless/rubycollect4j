@@ -51,7 +51,7 @@ public final class GrepVIterator<E> implements Iterator<E> {
   public GrepVIterator(Iterator<? extends E> iter, String regex) {
     if (iter == null || regex == null) throw new NullPointerException();
 
-    pIter = new PeekingIterator<E>(iter);
+    pIter = new PeekingIterator<>(iter);
     pattern = Pattern.compile(regex);
   }
 

@@ -56,7 +56,7 @@ public final class DropWhileIterable<E> implements Iterable<E> {
 
   @Override
   public Iterator<E> iterator() {
-    return new DropWhileIterator<E>(iter.iterator(), block);
+    return new DropWhileIterator<>(iter.iterator(), block);
   }
 
   @Override

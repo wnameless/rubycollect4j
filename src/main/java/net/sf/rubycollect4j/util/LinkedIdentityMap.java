@@ -46,8 +46,8 @@ import java.util.Set;
  */
 public final class LinkedIdentityMap<K, V> implements Map<K, V> {
 
-  private final IdentityHashMap<K, V> map = new IdentityHashMap<K, V>();
-  private final List<K> list = new LinkedList<K>();
+  private final IdentityHashMap<K, V> map = new IdentityHashMap<>();
+  private final List<K> list = new LinkedList<>();
 
   /**
    * Creates a {@link LinkedIdentityMap}.
@@ -85,7 +85,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
 
   @Override
   public Set<Entry<K, V>> entrySet() {
-    return new EntrySet<K, V>(list, map);
+    return new EntrySet<>(list, map);
   }
 
   @Override
@@ -100,7 +100,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
 
   @Override
   public Set<K> keySet() {
-    return new KeySet<K, V>(list, map);
+    return new KeySet<>(list, map);
   }
 
   @Override
@@ -129,7 +129,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
 
   @Override
   public Collection<V> values() {
-    return new Values<K, V>(list, map);
+    return new Values<>(list, map);
   }
 
   @Override
@@ -180,7 +180,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
      *          of the entry
      */
     public IdentityEntry(S key, U value) {
-      entry = new SimpleEntry<S, U>(key, value);
+      entry = new SimpleEntry<>(key, value);
     }
 
     /**
@@ -190,7 +190,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
      *          any Entry
      */
     public IdentityEntry(Entry<S, U> entry) {
-      this.entry = new SimpleEntry<S, U>(entry.getKey(), entry.getValue());
+      this.entry = new SimpleEntry<>(entry.getKey(), entry.getValue());
     }
 
     @Override
@@ -293,18 +293,18 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
 
     @Override
     public Object[] toArray() {
-      List<Entry<S, U>> entries = new ArrayList<Entry<S, U>>();
+      List<Entry<S, U>> entries = new ArrayList<>();
       for (S key : list) {
-        entries.add(new SimpleEntry<S, U>(key, map.get(key)));
+        entries.add(new SimpleEntry<>(key, map.get(key)));
       }
       return entries.toArray();
     }
 
     @Override
     public <T> T[] toArray(T[] a) {
-      List<Entry<S, U>> entries = new ArrayList<Entry<S, U>>();
+      List<Entry<S, U>> entries = new ArrayList<>();
       for (S key : list) {
-        entries.add(new SimpleEntry<S, U>(key, map.get(key)));
+        entries.add(new SimpleEntry<>(key, map.get(key)));
       }
       return entries.toArray(a);
     }
@@ -348,7 +348,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
     @Override
     public boolean retainAll(Collection<?> c) {
       Map<IdentityEntry<?, ?>, Object> hashMap =
-          new HashMap<IdentityEntry<?, ?>, Object>();
+          new HashMap<>();
       for (Object o : c) {
         if (o instanceof Entry) {
           Entry<?, ?> entry = (Entry<?, ?>) o;
@@ -361,7 +361,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
       Iterator<Entry<S, U>> iter = map.entrySet().iterator();
       while (iter.hasNext()) {
         Entry<S, U> entry = iter.next();
-        if (!hashMap.containsKey(new IdentityEntry<S, U>(entry))) {
+        if (!hashMap.containsKey(new IdentityEntry<>(entry))) {
           removeByIdentity(list, entry.getKey());
           iter.remove();
           isChanged = true;
@@ -428,7 +428,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
       @Override
       public Entry<S, U> next() {
         key = iter.next();
-        return new IdentityEntry<S, U>(key, map.get(key));
+        return new IdentityEntry<>(key, map.get(key));
       }
 
       @Override
@@ -522,7 +522,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean retainAll(Collection<?> c) {
-      Map<Object, Object> idMap = new IdentityHashMap<Object, Object>();
+      Map<Object, Object> idMap = new IdentityHashMap<>();
       for (Object o : c) {
         idMap.put(o, null);
       }
@@ -542,7 +542,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean removeAll(Collection<?> c) {
-      Map<Object, Object> idMap = new IdentityHashMap<Object, Object>();
+      Map<Object, Object> idMap = new IdentityHashMap<>();
       for (Object o : c) {
         idMap.put(o, null);
       }
@@ -675,7 +675,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
 
     @Override
     public <T> T[] toArray(T[] a) {
-      List<U> values = new ArrayList<U>();
+      List<U> values = new ArrayList<>();
       for (S key : list) {
         values.add(map.get(key));
       }
@@ -703,7 +703,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean containsAll(Collection<?> c) {
-      Collection<Object> coll = new ArrayList<Object>(c);
+      Collection<Object> coll = new ArrayList<>(c);
       for (U val : map.values()) {
         coll.remove(val);
       }

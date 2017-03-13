@@ -52,7 +52,7 @@ public final class RejectIterator<E> implements Iterator<E> {
       Predicate<? super E> block) {
     if (iter == null || block == null) throw new NullPointerException();
 
-    pIter = new PeekingIterator<E>(iter);
+    pIter = new PeekingIterator<>(iter);
     this.block = block;
   }
 

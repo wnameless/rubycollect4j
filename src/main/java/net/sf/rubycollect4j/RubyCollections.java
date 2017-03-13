@@ -56,7 +56,7 @@ public final class RubyCollections {
    * @return new {@link RubyArray}
    */
   public static <E> RubyArray<E> newRubyArray() {
-    return new RubyArray<E>();
+    return new RubyArray<>();
   }
 
   /**
@@ -69,7 +69,7 @@ public final class RubyCollections {
    * @return new {@link RubyArray}
    */
   public static <E> RubyArray<E> newRubyArray(Iterable<E> iter) {
-    return new RubyArray<E>(iter);
+    return new RubyArray<>(iter);
   }
 
   /**
@@ -82,7 +82,7 @@ public final class RubyCollections {
    * @return new {@link RubyArray}
    */
   public static <E> RubyArray<E> newRubyArray(Iterator<E> iter) {
-    RubyArray<E> rubyArray = new RubyArray<E>();
+    RubyArray<E> rubyArray = new RubyArray<>();
     iter.forEachRemaining(e -> rubyArray.add(e));
     return rubyArray;
   }
@@ -97,7 +97,7 @@ public final class RubyCollections {
    * @return new {@link RubyArray}
    */
   public static <E> RubyArray<E> newRubyArray(List<E> list) {
-    return new RubyArray<E>(list);
+    return new RubyArray<>(list);
   }
 
   /**
@@ -111,7 +111,7 @@ public final class RubyCollections {
    */
   @SafeVarargs
   public static <E> RubyArray<E> newRubyArray(E... elements) {
-    return new RubyArray<E>(new ArrayList<E>(Arrays.asList(elements)));
+    return new RubyArray<>(new ArrayList<>(Arrays.asList(elements)));
   }
 
   /**
@@ -124,7 +124,7 @@ public final class RubyCollections {
    * @return new {@link RubyHash}
    */
   public static <K, V> RubyHash<K, V> newRubyHash() {
-    return new RubyHash<K, V>();
+    return new RubyHash<>();
   }
 
   /**
@@ -139,7 +139,7 @@ public final class RubyCollections {
    * @return new {@link RubyHash}
    */
   public static <K, V> RubyHash<K, V> newRubyHash(Map<K, V> map) {
-    return new RubyHash<K, V>(new LinkedHashMap<K, V>(map));
+    return new RubyHash<>(new LinkedHashMap<>(map));
   }
 
   /**
@@ -150,7 +150,7 @@ public final class RubyCollections {
    * @return new {@link RubySet}
    */
   public static <E> RubySet<E> newRubySet() {
-    return new RubySet<E>();
+    return new RubySet<>();
   }
 
   /**
@@ -163,7 +163,7 @@ public final class RubyCollections {
    * @return new {@link RubySet}
    */
   public static <E> RubySet<E> newRubySet(Iterable<E> iter) {
-    return new RubySet<E>(iter);
+    return new RubySet<>(iter);
   }
 
   /**
@@ -175,7 +175,7 @@ public final class RubyCollections {
    */
   @SafeVarargs
   public static <E> RubySet<E> newRubySet(E... elements) {
-    return new RubySet<E>(Arrays.asList(elements));
+    return new RubySet<>(Arrays.asList(elements));
   }
 
   /**
@@ -189,7 +189,7 @@ public final class RubyCollections {
    */
   public static <E> RubyLazyEnumerator<E> newRubyLazyEnumerator(
       Iterable<E> iter) {
-    return new RubyLazyEnumerator<E>(iter);
+    return new RubyLazyEnumerator<>(iter);
   }
 
   /**
@@ -202,7 +202,7 @@ public final class RubyCollections {
    * @return new {@link RubyEnumerator}
    */
   public static <E> RubyEnumerator<E> newRubyEnumerator(Iterable<E> iter) {
-    return new RubyEnumerator<E>(iter);
+    return new RubyEnumerator<>(iter);
   }
 
   /**
@@ -2555,7 +2555,7 @@ public final class RubyCollections {
    * @return Entry
    */
   public static <K, V> Entry<K, V> hp(K key, V value) {
-    return new ComparableEntry<K, V>(key, value);
+    return new ComparableEntry<>(key, value);
   }
 
   /**
@@ -2590,7 +2590,7 @@ public final class RubyCollections {
    * @return {@link RubyRange}
    */
   public static RubyRange<String> range(String start, String end) {
-    return new RubyRange<String>(StringSuccessor.getInstance(), start, end,
+    return new RubyRange<>(StringSuccessor.getInstance(), start, end,
         Interval.CLOSED);
   }
 
@@ -2604,8 +2604,8 @@ public final class RubyCollections {
    * @return {@link RubyRange}
    */
   public static RubyRange<Character> range(char start, char end) {
-    return new RubyRange<Character>(CharacterSuccessor.getInstance(), start,
-        end, Interval.CLOSED);
+    return new RubyRange<>(CharacterSuccessor.getInstance(), start, end,
+        Interval.CLOSED);
   }
 
   /**
@@ -2618,7 +2618,7 @@ public final class RubyCollections {
    * @return {@link RubyRange}
    */
   public static RubyRange<Integer> range(int start, int end) {
-    return new RubyRange<Integer>(IntegerSuccessor.getInstance(), start, end,
+    return new RubyRange<>(IntegerSuccessor.getInstance(), start, end,
         Interval.CLOSED);
   }
 
@@ -2632,7 +2632,7 @@ public final class RubyCollections {
    * @return {@link RubyRange}
    */
   public static RubyRange<Long> range(long start, long end) {
-    return new RubyRange<Long>(LongSuccessor.getInstance(), start, end,
+    return new RubyRange<>(LongSuccessor.getInstance(), start, end,
         Interval.CLOSED);
   }
 
@@ -2650,7 +2650,7 @@ public final class RubyCollections {
     String endStr = String.valueOf(end);
     int startPrecision = startStr.length() - startStr.lastIndexOf('.') - 1;
     int endPrecision = endStr.length() - endStr.lastIndexOf('.') - 1;
-    return new RubyRange<Double>(
+    return new RubyRange<>(
         new DoubleSuccessor(Math.max(startPrecision, endPrecision)), start, end,
         Interval.CLOSED);
   }
@@ -2665,7 +2665,7 @@ public final class RubyCollections {
    * @return {@link RubyRange}
    */
   public static RubyRange<Date> range(Date start, Date end) {
-    return new RubyRange<Date>(DateSuccessor.getInstance(), start, end,
+    return new RubyRange<>(DateSuccessor.getInstance(), start, end,
         Interval.CLOSED);
   }
 

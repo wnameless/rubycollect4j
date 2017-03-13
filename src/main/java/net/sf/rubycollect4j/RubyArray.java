@@ -80,7 +80,7 @@ public final class RubyArray<E>
   public static <E> RubyArray<E> of(List<E> list) {
     Objects.requireNonNull(list);
 
-    return new RubyArray<E>(list);
+    return new RubyArray<>(list);
   }
 
   /**
@@ -95,14 +95,14 @@ public final class RubyArray<E>
   public static <E> RubyArray<E> copyOf(Iterable<E> elements) {
     Objects.requireNonNull(elements);
 
-    return new RubyArray<E>(elements);
+    return new RubyArray<>(elements);
   }
 
   /**
    * Creates a {@link RubyArray}.
    */
   public RubyArray() {
-    list = new ArrayList<E>();
+    list = new ArrayList<>();
   }
 
   /**
@@ -131,7 +131,7 @@ public final class RubyArray<E>
   public RubyArray(Iterable<? extends E> iter) {
     Objects.requireNonNull(iter);
 
-    list = new ArrayList<E>();
+    list = new ArrayList<>();
     iter.forEach(item -> list.add(item));
   }
 
@@ -257,7 +257,7 @@ public final class RubyArray<E>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<RubyArray<E>> combination(int n) {
-    return Ruby.Enumerator.of(new CombinationIterable<E>(list, n));
+    return Ruby.Enumerator.of(new CombinationIterable<>(list, n));
   }
 
   /**
@@ -418,7 +418,7 @@ public final class RubyArray<E>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<Integer> eachIndex() {
-    return Ruby.Enumerator.of(new EachIndexIterable<E>(list));
+    return Ruby.Enumerator.of(new EachIndexIterable<>(list));
   }
 
   /**
@@ -759,8 +759,8 @@ public final class RubyArray<E>
    * @return new {@link RubyArray}
    */
   public RubyArray<E> intersection(Collection<? extends E> other) {
-    Set<E> thatSet = new HashSet<E>(other);
-    Set<E> thisSet = new HashSet<E>();
+    Set<E> thatSet = new HashSet<>(other);
+    Set<E> thisSet = new HashSet<>();
     RubyArray<E> rubyArray = Ruby.Array.create();
     for (E item : list) {
       if (thisSet.add(item) && thatSet.contains(item)) rubyArray.add(item);
@@ -925,7 +925,7 @@ public final class RubyArray<E>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<RubyArray<E>> permutation() {
-    return Ruby.Enumerator.of(new PermutationIterable<E>(list, size()));
+    return Ruby.Enumerator.of(new PermutationIterable<>(list, size()));
   }
 
   /**
@@ -937,7 +937,7 @@ public final class RubyArray<E>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<RubyArray<E>> permutation(int n) {
-    return Ruby.Enumerator.of(new PermutationIterable<E>(list, n));
+    return Ruby.Enumerator.of(new PermutationIterable<>(list, n));
   }
 
   /**
@@ -1027,7 +1027,7 @@ public final class RubyArray<E>
    */
   public RubyArray<RubyArray<E>> product(
       @SuppressWarnings("unchecked") List<? extends E>... others) {
-    return Ruby.Enumerator.of(new ProductIterable<E>(this, others)).toA();
+    return Ruby.Enumerator.of(new ProductIterable<>(this, others)).toA();
   }
 
   /**
@@ -1039,7 +1039,7 @@ public final class RubyArray<E>
    */
   public RubyArray<RubyArray<E>> product(
       List<? extends List<? extends E>> others) {
-    return Ruby.Enumerator.of(new ProductIterable<E>(this, others)).toA();
+    return Ruby.Enumerator.of(new ProductIterable<>(this, others)).toA();
   }
 
   /**
@@ -1138,7 +1138,7 @@ public final class RubyArray<E>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<RubyArray<E>> repeatedCombination(int n) {
-    return Ruby.Enumerator.of(new RepeatedCombinationIterable<E>(list, n));
+    return Ruby.Enumerator.of(new RepeatedCombinationIterable<>(list, n));
   }
 
   /**
@@ -1168,7 +1168,7 @@ public final class RubyArray<E>
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<RubyArray<E>> repeatedPermutation(int n) {
-    return Ruby.Enumerator.of(new RepeatedPermutationIterable<E>(list, n));
+    return Ruby.Enumerator.of(new RepeatedPermutationIterable<>(list, n));
   }
 
   /**
@@ -1624,6 +1624,7 @@ public final class RubyArray<E>
    * 
    * @return {@link BigDecimal}
    */
+  @Override
   public BigDecimal sum() {
     BigDecimal sum = new BigDecimal(0);
     for (E item : this) {
@@ -1721,7 +1722,7 @@ public final class RubyArray<E>
    * @return new {@link RubyArray}
    */
   public RubyArray<E> uniq() {
-    Set<E> set = new LinkedHashSet<E>(list);
+    Set<E> set = new LinkedHashSet<>(list);
     return Ruby.Array.copyOf(set);
   }
 
@@ -1737,7 +1738,7 @@ public final class RubyArray<E>
    */
   public <S> RubyArray<E> uniq(Function<? super E, ? extends S> block) {
     RubyArray<E> rubyArray = Ruby.Array.create();
-    Set<S> set = new HashSet<S>();
+    Set<S> set = new HashSet<>();
     for (E item : list) {
       if (set.add(block.apply(item))) rubyArray.add(item);
     }
@@ -1751,7 +1752,7 @@ public final class RubyArray<E>
    */
   public RubyArray<E> uniqǃ() {
     int beforeSize = list.size();
-    Set<E> set = new HashSet<E>();
+    Set<E> set = new HashSet<>();
     ListIterator<E> li = list.listIterator();
     while (li.hasNext()) {
       if (!set.add(li.next())) li.remove();
@@ -1770,7 +1771,7 @@ public final class RubyArray<E>
    */
   public <S> RubyArray<E> uniqǃ(Function<? super E, ? extends S> block) {
     int beforeSize = list.size();
-    Set<S> set = new HashSet<S>();
+    Set<S> set = new HashSet<>();
     ListIterator<E> li = list.listIterator();
     while (li.hasNext()) {
       if (!set.add(block.apply(li.next()))) li.remove();
@@ -1956,7 +1957,7 @@ public final class RubyArray<E>
       throw new IllegalArgumentException("ArgumentError: comparison of "
           + list.getClass().getName() + " with null failed");
 
-    Comparator<E> comp = new TryComparator<E>();
+    Comparator<E> comp = new TryComparator<>();
     int diff;
     for (int i = 0; i < list.size() && i < arg0.size(); i++) {
       if ((diff = comp.compare(list.get(i), arg0.get(i))) != 0) return diff;

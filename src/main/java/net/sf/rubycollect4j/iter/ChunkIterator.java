@@ -61,7 +61,7 @@ public final class ChunkIterator<E, K>
       Function<? super E, ? extends K> block) {
     if (iter == null || block == null) throw new NullPointerException();
 
-    pIter = new PeekingIterator<E>(iter);
+    pIter = new PeekingIterator<>(iter);
     this.block = block;
   }
 
@@ -71,7 +71,7 @@ public final class ChunkIterator<E, K>
     while (pIter.hasNext() && key.equals(block.apply(pIter.peek()))) {
       bucket.add(pIter.next());
     }
-    return new ComparableEntry<K, RubyArray<E>>(key, bucket);
+    return new ComparableEntry<>(key, bucket);
   }
 
   @Override

@@ -56,7 +56,7 @@ public final class TakeWhileIterable<E> implements Iterable<E> {
 
   @Override
   public Iterator<E> iterator() {
-    return new TakeWhileIterator<E>(iter.iterator(), block);
+    return new TakeWhileIterator<>(iter.iterator(), block);
   }
 
   @Override

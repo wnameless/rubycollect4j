@@ -25,7 +25,6 @@ import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.regex.Pattern;
 
 import net.sf.rubycollect4j.Ruby;
@@ -432,14 +431,7 @@ public enum Directive {
    */
   public static boolean verify(String template) {
     return Pattern.compile("((" + Ruby.Array.copyOf(Directive.values())
-        .map(new Function<Directive, String>() {
-
-          @Override
-          public String apply(Directive item) {
-            return item.toString();
-          }
-
-        }).join("|") + ")(([1-9]\\d*)?\\*?)?)+").matcher(template).matches();
+        .map(item -> item.toString()).join("|") + ")(([1-9]\\d*)?\\*?)?)+").matcher(template).matches();
   }
 
   @Override

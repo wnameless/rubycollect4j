@@ -56,7 +56,7 @@ public final class RejectIterable<E> implements Iterable<E> {
 
   @Override
   public Iterator<E> iterator() {
-    return new RejectIterator<E>(iter.iterator(), block);
+    return new RejectIterator<>(iter.iterator(), block);
   }
 
   @Override

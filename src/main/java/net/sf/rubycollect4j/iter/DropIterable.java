@@ -58,7 +58,7 @@ public final class DropIterable<E> implements Iterable<E> {
 
   @Override
   public Iterator<E> iterator() {
-    return new DropIterator<E>(iter.iterator(), drop);
+    return new DropIterator<>(iter.iterator(), drop);
   }
 
   @Override

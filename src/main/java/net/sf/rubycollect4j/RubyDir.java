@@ -200,8 +200,8 @@ public class RubyDir implements RubyEnumerable<String> {
   }
 
   private static List<File> traverseFolder(File file, boolean recursive) {
-    List<File> files = new ArrayList<File>();
-    List<File> tempFiles = new ArrayList<File>(Arrays.asList(file.listFiles()));
+    List<File> files = new ArrayList<>();
+    List<File> tempFiles = new ArrayList<>(Arrays.asList(file.listFiles()));
 
     while (!(tempFiles.isEmpty())) {
       File item = tempFiles.remove(0);

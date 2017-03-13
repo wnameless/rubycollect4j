@@ -58,7 +58,7 @@ public final class ComparableEntryIterator<K, V>
 
   @Override
   public Entry<K, V> next() {
-    return new ComparableEntry<K, V>(iter.next());
+    return new ComparableEntry<>(iter.next());
   }
 
   @Override

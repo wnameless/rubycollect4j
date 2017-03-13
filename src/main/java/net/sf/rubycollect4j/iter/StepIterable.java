@@ -60,7 +60,7 @@ public final class StepIterable<E> implements Iterable<E> {
 
   @Override
   public Iterator<E> iterator() {
-    return new StepIterator<E>(iter.iterator(), step);
+    return new StepIterator<>(iter.iterator(), step);
   }
 
   @Override

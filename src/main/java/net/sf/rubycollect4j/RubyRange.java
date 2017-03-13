@@ -80,7 +80,7 @@ public final class RubyRange<E> implements RubyEnumerable<E>, Serializable {
     if (startPoint == null || endPoint == null)
       throw new IllegalArgumentException("ArgumentError: bad value for range");
 
-    iter = new RangeIterable<E>(successive, startPoint, endPoint, interval);
+    iter = new RangeIterable<>(successive, startPoint, endPoint, interval);
     this.successive = successive;
     this.startPoint = startPoint;
     this.endPoint = endPoint;
@@ -94,7 +94,7 @@ public final class RubyRange<E> implements RubyEnumerable<E>, Serializable {
    * @return new {@link RubyRange}
    */
   public RubyRange<E> closed() {
-    return new RubyRange<E>(successive, startPoint, endPoint, Interval.CLOSED);
+    return new RubyRange<>(successive, startPoint, endPoint, Interval.CLOSED);
   }
 
   /**
@@ -104,7 +104,7 @@ public final class RubyRange<E> implements RubyEnumerable<E>, Serializable {
    * @return new {@link RubyRange}
    */
   public RubyRange<E> closedOpen() {
-    return new RubyRange<E>(successive, startPoint, endPoint,
+    return new RubyRange<>(successive, startPoint, endPoint,
         Interval.CLOSED_OPEN);
   }
 
@@ -115,7 +115,7 @@ public final class RubyRange<E> implements RubyEnumerable<E>, Serializable {
    * @return new {@link RubyRange}
    */
   public RubyRange<E> open() {
-    return new RubyRange<E>(successive, startPoint, endPoint, Interval.OPEN);
+    return new RubyRange<>(successive, startPoint, endPoint, Interval.OPEN);
   }
 
   /**
@@ -125,7 +125,7 @@ public final class RubyRange<E> implements RubyEnumerable<E>, Serializable {
    * @return new {@link RubyRange}
    */
   public RubyRange<E> openClosed() {
-    return new RubyRange<E>(successive, startPoint, endPoint,
+    return new RubyRange<>(successive, startPoint, endPoint,
         Interval.OPEN_CLOSED);
   }
 
@@ -258,7 +258,7 @@ public final class RubyRange<E> implements RubyEnumerable<E>, Serializable {
    * @return a {@link RubyEnumerator}
    */
   public RubyEnumerator<E> step(int n) {
-    return Ruby.Enumerator.of(new StepIterable<E>(iter, n));
+    return Ruby.Enumerator.of(new StepIterable<>(iter, n));
   }
 
   /**

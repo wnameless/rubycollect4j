@@ -52,7 +52,7 @@ public final class EachWithIndexIterable<E>
 
   @Override
   public Iterator<Entry<E, Integer>> iterator() {
-    return new EachWithIndexIterator<E>(iter.iterator());
+    return new EachWithIndexIterator<>(iter.iterator());
   }
 
   @Override

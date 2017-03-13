@@ -57,7 +57,7 @@ public final class SliceBeforeIterator<E> implements Iterator<RubyArray<E>> {
       Predicate<? super E> block) {
     if (iter == null || block == null) throw new NullPointerException();
 
-    pIter = new PeekingIterator<E>(iter);
+    pIter = new PeekingIterator<>(iter);
     this.block = block;
     pattern = null;
   }
@@ -75,7 +75,7 @@ public final class SliceBeforeIterator<E> implements Iterator<RubyArray<E>> {
   public SliceBeforeIterator(Iterator<? extends E> iter, Pattern pattern) {
     if (iter == null || pattern == null) throw new NullPointerException();
 
-    pIter = new PeekingIterator<E>(iter);
+    pIter = new PeekingIterator<>(iter);
     block = null;
     this.pattern = pattern;
   }
