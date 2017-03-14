@@ -49,7 +49,7 @@ public interface TriFunction<T, U, V, R> {
    *          the third function argument
    * @return the function result
    */
-  public R apply(T t, U u, V v);
+  R apply(T t, U u, V v);
 
   /**
    * Returns a composed function that first applies this function to its input,

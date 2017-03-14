@@ -58,22 +58,22 @@ import net.sf.rubycollect4j.iter.SliceWhenIterable;
 public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
 
   @Override
-  public default boolean allʔ() {
+  default boolean allʔ() {
     return Ruby.LazyEnumerator.of(this).allʔ();
   }
 
   @Override
-  public default boolean allʔ(Predicate<? super E> block) {
+  default boolean allʔ(Predicate<? super E> block) {
     return Ruby.LazyEnumerator.of(this).allʔ(block);
   }
 
   @Override
-  public default boolean anyʔ() {
+  default boolean anyʔ() {
     return Ruby.LazyEnumerator.of(this).anyʔ();
   }
 
   @Override
-  public default boolean anyʔ(Predicate<? super E> block) {
+  default boolean anyʔ(Predicate<? super E> block) {
     return Ruby.LazyEnumerator.of(this).anyʔ(block);
   }
 
@@ -83,7 +83,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default <S> RubyEnumerator<Entry<S, RubyArray<E>>> chunk(
+  default <S> RubyEnumerator<Entry<S, RubyArray<E>>> chunk(
       Function<? super E, ? extends S> block) {
     return Ruby.Enumerator.of(new ChunkIterable<E, S>(this, block));
   }
@@ -94,7 +94,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default RubyEnumerator<RubyArray<E>> chunkWhile(
+  default RubyEnumerator<RubyArray<E>> chunkWhile(
       BiPredicate<? super E, ? super E> block) {
     return Ruby.Enumerator.of(new ChunkWhileIterable<>(this, block));
   }
@@ -105,7 +105,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default RubyEnumerator<E> collect() {
+  default RubyEnumerator<E> collect() {
     return Ruby.Enumerator.of(this);
   }
 
@@ -116,8 +116,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    */
   @SuppressWarnings("unchecked")
   @Override
-  public default <S> RubyArray<S> collect(
-      Function<? super E, ? extends S> block) {
+  default <S> RubyArray<S> collect(Function<? super E, ? extends S> block) {
     return (RubyArray<S>) Ruby.LazyEnumerator.of(this).collect(block).toA();
   }
 
@@ -127,7 +126,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default RubyEnumerator<E> collectConcat() {
+  default RubyEnumerator<E> collectConcat() {
     return Ruby.Enumerator.of(this);
   }
 
@@ -138,19 +137,19 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    */
   @SuppressWarnings("unchecked")
   @Override
-  public default <S> RubyArray<S> collectConcat(
+  default <S> RubyArray<S> collectConcat(
       Function<? super E, ? extends List<? extends S>> block) {
     return (RubyArray<S>) Ruby.LazyEnumerator.of(this).collectConcat(block)
         .toA();
   }
 
   @Override
-  public default int count() {
+  default int count() {
     return Ruby.LazyEnumerator.of(this).count();
   }
 
   @Override
-  public default int count(Predicate<? super E> block) {
+  default int count(Predicate<? super E> block) {
     return Ruby.LazyEnumerator.of(this).count(block);
   }
 
@@ -160,7 +159,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default RubyEnumerator<E> cycle() {
+  default RubyEnumerator<E> cycle() {
     return Ruby.Enumerator.of(new CycleIterable<>(this));
   }
 
@@ -170,17 +169,17 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default RubyEnumerator<E> cycle(int n) {
+  default RubyEnumerator<E> cycle(int n) {
     return Ruby.Enumerator.of(new CycleIterable<>(this, n));
   }
 
   @Override
-  public default void cycle(int n, Consumer<? super E> block) {
+  default void cycle(int n, Consumer<? super E> block) {
     Ruby.LazyEnumerator.of(this).cycle(n, block);
   }
 
   @Override
-  public default void cycle(Consumer<? super E> block) {
+  default void cycle(Consumer<? super E> block) {
     Ruby.LazyEnumerator.of(this).cycle(block);
   }
 
@@ -190,12 +189,12 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default RubyEnumerator<E> detect() {
+  default RubyEnumerator<E> detect() {
     return Ruby.Enumerator.of(this);
   }
 
   @Override
-  public default E detect(Predicate<? super E> block) {
+  default E detect(Predicate<? super E> block) {
     return Ruby.LazyEnumerator.of(this).detect(block);
   }
 
@@ -205,7 +204,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyArray}
    */
   @Override
-  public default RubyArray<E> drop(int n) {
+  default RubyArray<E> drop(int n) {
     return Ruby.LazyEnumerator.of(this).drop(n).toA();
   }
 
@@ -215,7 +214,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default RubyEnumerator<E> dropWhile() {
+  default RubyEnumerator<E> dropWhile() {
     RubyArray<E> rubyArray = Ruby.Array.create();
     for (E item : this) {
       rubyArray.add(item);
@@ -230,7 +229,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyArray}
    */
   @Override
-  public default RubyArray<E> dropWhile(Predicate<? super E> block) {
+  default RubyArray<E> dropWhile(Predicate<? super E> block) {
     return Ruby.LazyEnumerator.of(this).dropWhile(block).toA();
   }
 
@@ -240,7 +239,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default RubyEnumerator<E> each() {
+  default RubyEnumerator<E> each() {
     return Ruby.Enumerator.of(this);
   }
 
@@ -250,7 +249,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerable}
    */
   @Override
-  public default RubyEnumerable<E> each(Consumer<? super E> block) {
+  default RubyEnumerable<E> each(Consumer<? super E> block) {
     Ruby.Enumerator.of(this).each(block);
     return this;
   }
@@ -261,12 +260,12 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default RubyEnumerator<RubyArray<E>> eachCons(int n) {
+  default RubyEnumerator<RubyArray<E>> eachCons(int n) {
     return Ruby.Enumerator.of(new EachConsIterable<>(this, n));
   }
 
   @Override
-  public default void eachCons(int n, Consumer<? super RubyArray<E>> block) {
+  default void eachCons(int n, Consumer<? super RubyArray<E>> block) {
     Ruby.LazyEnumerator.of(this).eachCons(n, block);
   }
 
@@ -276,7 +275,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default RubyEnumerator<E> eachEntry() {
+  default RubyEnumerator<E> eachEntry() {
     return Ruby.Enumerator.of(this);
   }
 
@@ -286,7 +285,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerable}
    */
   @Override
-  public default RubyEnumerable<E> eachEntry(Consumer<? super E> block) {
+  default RubyEnumerable<E> eachEntry(Consumer<? super E> block) {
     this.forEach(item -> block.accept(item));
     return this;
   }
@@ -297,12 +296,12 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default RubyEnumerator<RubyArray<E>> eachSlice(int n) {
+  default RubyEnumerator<RubyArray<E>> eachSlice(int n) {
     return Ruby.Enumerator.of(new EachSliceIterable<>(this, n));
   }
 
   @Override
-  public default void eachSlice(int n, Consumer<? super RubyArray<E>> block) {
+  default void eachSlice(int n, Consumer<? super RubyArray<E>> block) {
     Ruby.LazyEnumerator.of(this).eachSlice(n, block);
   }
 
@@ -312,7 +311,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default RubyEnumerator<Entry<E, Integer>> eachWithIndex() {
+  default RubyEnumerator<Entry<E, Integer>> eachWithIndex() {
     return Ruby.Enumerator.of(new EachWithIndexIterable<>(this));
   }
 
@@ -322,7 +321,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerable}
    */
   @Override
-  public default RubyEnumerable<E> eachWithIndex(
+  default RubyEnumerable<E> eachWithIndex(
       BiConsumer<? super E, Integer> block) {
     Ruby.LazyEnumerator.of(this).eachWithIndex(block);
     return this;
@@ -334,18 +333,17 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default <O> RubyEnumerator<Entry<E, O>> eachWithObject(O obj) {
+  default <O> RubyEnumerator<Entry<E, O>> eachWithObject(O obj) {
     return Ruby.Enumerator.of(new EachWithObjectIterable<>(this, obj));
   }
 
   @Override
-  public default <O> O eachWithObject(O obj,
-      BiConsumer<? super E, ? super O> block) {
+  default <O> O eachWithObject(O obj, BiConsumer<? super E, ? super O> block) {
     return Ruby.LazyEnumerator.of(this).eachWithObject(obj, block);
   }
 
   @Override
-  public default RubyArray<E> entries() {
+  default RubyArray<E> entries() {
     return Ruby.Array.copyOf(this);
   }
 
@@ -355,12 +353,12 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default RubyEnumerator<E> find() {
+  default RubyEnumerator<E> find() {
     return detect();
   }
 
   @Override
-  public default E find(Predicate<? super E> block) {
+  default E find(Predicate<? super E> block) {
     return Ruby.LazyEnumerator.of(this).find(block);
   }
 
@@ -370,7 +368,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default RubyEnumerator<E> findAll() {
+  default RubyEnumerator<E> findAll() {
     return Ruby.Enumerator.of(this);
   }
 
@@ -380,7 +378,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyArray}
    */
   @Override
-  public default RubyArray<E> findAll(Predicate<? super E> block) {
+  default RubyArray<E> findAll(Predicate<? super E> block) {
     return Ruby.LazyEnumerator.of(this).findAll(block).toA();
   }
 
@@ -390,27 +388,27 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default RubyEnumerator<E> findIndex() {
+  default RubyEnumerator<E> findIndex() {
     return Ruby.Enumerator.of(this);
   }
 
   @Override
-  public default Integer findIndex(Predicate<? super E> block) {
+  default Integer findIndex(Predicate<? super E> block) {
     return Ruby.LazyEnumerator.of(this).findIndex(block);
   }
 
   @Override
-  public default Integer findIndex(E target) {
+  default Integer findIndex(E target) {
     return Ruby.LazyEnumerator.of(this).findIndex(target);
   }
 
   @Override
-  public default E first() {
+  default E first() {
     return Ruby.LazyEnumerator.of(this).first();
   }
 
   @Override
-  public default RubyArray<E> first(int n) {
+  default RubyArray<E> first(int n) {
     return Ruby.LazyEnumerator.of(this).first(n);
   }
 
@@ -420,7 +418,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default RubyEnumerator<E> flatMap() {
+  default RubyEnumerator<E> flatMap() {
     return collectConcat();
   }
 
@@ -431,7 +429,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    */
   @SuppressWarnings("unchecked")
   @Override
-  public default <S> RubyArray<S> flatMap(
+  default <S> RubyArray<S> flatMap(
       Function<? super E, ? extends List<? extends S>> block) {
     return (RubyArray<S>) Ruby.LazyEnumerator.of(this).flatMap(block).toA();
   }
@@ -442,7 +440,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyArray}
    */
   @Override
-  public default RubyArray<E> grep(String regex) {
+  default RubyArray<E> grep(String regex) {
     return Ruby.LazyEnumerator.of(this).grep(regex).toA();
   }
 
@@ -453,7 +451,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    */
   @SuppressWarnings("unchecked")
   @Override
-  public default <S> RubyArray<S> grep(String regex,
+  default <S> RubyArray<S> grep(String regex,
       Function<? super E, ? extends S> block) {
     return (RubyArray<S>) Ruby.LazyEnumerator.of(this).grep(regex, block).toA();
   }
@@ -464,7 +462,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyArray}
    */
   @Override
-  public default RubyArray<E> grepV(String regex) {
+  default RubyArray<E> grepV(String regex) {
     return Ruby.LazyEnumerator.of(this).grepV(regex).toA();
   }
 
@@ -475,7 +473,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    */
   @SuppressWarnings("unchecked")
   @Override
-  public default <S> RubyArray<S> grepV(String regex,
+  default <S> RubyArray<S> grepV(String regex,
       Function<? super E, ? extends S> block) {
     return (RubyArray<S>) Ruby.LazyEnumerator.of(this).grepV(regex, block)
         .toA();
@@ -487,33 +485,33 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default RubyEnumerator<E> groupBy() {
+  default RubyEnumerator<E> groupBy() {
     return Ruby.Enumerator.of(this);
   }
 
   @Override
-  public default <S> RubyHash<S, RubyArray<E>> groupBy(
+  default <S> RubyHash<S, RubyArray<E>> groupBy(
       Function<? super E, ? extends S> block) {
     return Ruby.LazyEnumerator.of(this).groupBy(block);
   }
 
   @Override
-  public default boolean includeʔ(E target) {
+  default boolean includeʔ(E target) {
     return Ruby.LazyEnumerator.of(this).includeʔ(target);
   }
 
   @Override
-  public default E inject(BiFunction<E, E, E> block) {
+  default E inject(BiFunction<E, E, E> block) {
     return Ruby.LazyEnumerator.of(this).inject(block);
   }
 
   @Override
-  public default <I> I inject(I init, BiFunction<I, ? super E, I> block) {
+  default <I> I inject(I init, BiFunction<I, ? super E, I> block) {
     return Ruby.LazyEnumerator.of(this).inject(init, block);
   }
 
   @Override
-  public default RubyLazyEnumerator<E> lazy() {
+  default RubyLazyEnumerator<E> lazy() {
     return new RubyLazyEnumerator<>(this);
   }
 
@@ -523,7 +521,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default RubyEnumerator<E> map() {
+  default RubyEnumerator<E> map() {
     return collect();
   }
 
@@ -534,17 +532,17 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    */
   @SuppressWarnings("unchecked")
   @Override
-  public default <S> RubyArray<S> map(Function<? super E, ? extends S> block) {
+  default <S> RubyArray<S> map(Function<? super E, ? extends S> block) {
     return (RubyArray<S>) Ruby.LazyEnumerator.of(this).map(block).toA();
   }
 
   @Override
-  public default E max() {
+  default E max() {
     return Ruby.LazyEnumerator.of(this).max();
   }
 
   @Override
-  public default E max(Comparator<? super E> comp) {
+  default E max(Comparator<? super E> comp) {
     return Ruby.LazyEnumerator.of(this).max(comp);
   }
 
@@ -554,33 +552,33 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default RubyEnumerator<E> maxBy() {
+  default RubyEnumerator<E> maxBy() {
     return Ruby.Enumerator.of(this);
   }
 
   @Override
-  public default <S> E maxBy(Comparator<? super S> comp,
+  default <S> E maxBy(Comparator<? super S> comp,
       Function<? super E, ? extends S> block) {
     return Ruby.LazyEnumerator.of(this).maxBy(comp, block);
   }
 
   @Override
-  public default <S> E maxBy(Function<? super E, ? extends S> block) {
+  default <S> E maxBy(Function<? super E, ? extends S> block) {
     return Ruby.LazyEnumerator.of(this).maxBy(block);
   }
 
   @Override
-  public default boolean memberʔ(E target) {
+  default boolean memberʔ(E target) {
     return Ruby.LazyEnumerator.of(this).memberʔ(target);
   }
 
   @Override
-  public default E min() {
+  default E min() {
     return Ruby.LazyEnumerator.of(this).min();
   }
 
   @Override
-  public default E min(Comparator<? super E> comp) {
+  default E min(Comparator<? super E> comp) {
     return Ruby.LazyEnumerator.of(this).min(comp);
   }
 
@@ -590,28 +588,28 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default RubyEnumerator<E> minBy() {
+  default RubyEnumerator<E> minBy() {
     return Ruby.Enumerator.of(this);
   }
 
   @Override
-  public default <S> E minBy(Comparator<? super S> comp,
+  default <S> E minBy(Comparator<? super S> comp,
       Function<? super E, ? extends S> block) {
     return Ruby.LazyEnumerator.of(this).minBy(comp, block);
   }
 
   @Override
-  public default <S> E minBy(Function<? super E, ? extends S> block) {
+  default <S> E minBy(Function<? super E, ? extends S> block) {
     return Ruby.LazyEnumerator.of(this).minBy(block);
   }
 
   @Override
-  public default RubyArray<E> minmax() {
+  default RubyArray<E> minmax() {
     return Ruby.LazyEnumerator.of(this).minmax();
   }
 
   @Override
-  public default RubyArray<E> minmax(Comparator<? super E> comp) {
+  default RubyArray<E> minmax(Comparator<? super E> comp) {
     return Ruby.LazyEnumerator.of(this).minmax(comp);
   }
 
@@ -621,39 +619,38 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default RubyEnumerator<E> minmaxBy() {
+  default RubyEnumerator<E> minmaxBy() {
     return Ruby.Enumerator.of(this);
   }
 
   @Override
-  public default <S> RubyArray<E> minmaxBy(Comparator<? super S> comp,
+  default <S> RubyArray<E> minmaxBy(Comparator<? super S> comp,
       Function<? super E, ? extends S> block) {
     return Ruby.LazyEnumerator.of(this).minmaxBy(comp, block);
   }
 
   @Override
-  public default <S> RubyArray<E> minmaxBy(
-      Function<? super E, ? extends S> block) {
+  default <S> RubyArray<E> minmaxBy(Function<? super E, ? extends S> block) {
     return Ruby.LazyEnumerator.of(this).minmaxBy(block);
   }
 
   @Override
-  public default boolean noneʔ() {
+  default boolean noneʔ() {
     return Ruby.LazyEnumerator.of(this).noneʔ();
   }
 
   @Override
-  public default boolean noneʔ(Predicate<? super E> block) {
+  default boolean noneʔ(Predicate<? super E> block) {
     return Ruby.LazyEnumerator.of(this).noneʔ(block);
   }
 
   @Override
-  public default boolean oneʔ() {
+  default boolean oneʔ() {
     return Ruby.LazyEnumerator.of(this).oneʔ();
   }
 
   @Override
-  public default boolean oneʔ(Predicate<? super E> block) {
+  default boolean oneʔ(Predicate<? super E> block) {
     return Ruby.LazyEnumerator.of(this).oneʔ(block);
   }
 
@@ -663,22 +660,22 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default RubyEnumerator<E> partition() {
+  default RubyEnumerator<E> partition() {
     return Ruby.Enumerator.of(this);
   }
 
   @Override
-  public default RubyArray<RubyArray<E>> partition(Predicate<? super E> block) {
+  default RubyArray<RubyArray<E>> partition(Predicate<? super E> block) {
     return Ruby.LazyEnumerator.of(this).partition(block);
   }
 
   @Override
-  public default E reduce(BiFunction<E, E, E> block) {
+  default E reduce(BiFunction<E, E, E> block) {
     return Ruby.LazyEnumerator.of(this).reduce(block);
   }
 
   @Override
-  public default <I> I reduce(I init, BiFunction<I, ? super E, I> block) {
+  default <I> I reduce(I init, BiFunction<I, ? super E, I> block) {
     return Ruby.LazyEnumerator.of(this).reduce(init, block);
   }
 
@@ -688,7 +685,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default RubyEnumerator<E> reject() {
+  default RubyEnumerator<E> reject() {
     return Ruby.Enumerator.of(this);
   }
 
@@ -698,7 +695,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyArray}
    */
   @Override
-  public default RubyArray<E> reject(Predicate<? super E> block) {
+  default RubyArray<E> reject(Predicate<? super E> block) {
     return Ruby.LazyEnumerator.of(this).reject(block).toA();
   }
 
@@ -708,7 +705,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default RubyEnumerator<E> reverseEach() {
+  default RubyEnumerator<E> reverseEach() {
     return Ruby.Enumerator.of(new ReverseEachIterable<>(this));
   }
 
@@ -718,7 +715,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerable}
    */
   @Override
-  public default RubyEnumerable<E> reverseEach(Consumer<? super E> block) {
+  default RubyEnumerable<E> reverseEach(Consumer<? super E> block) {
     for (E item : reverseEach()) {
       block.accept(item);
     }
@@ -731,7 +728,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default RubyEnumerator<E> select() {
+  default RubyEnumerator<E> select() {
     return findAll();
   }
 
@@ -741,7 +738,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyArray}
    */
   @Override
-  public default RubyArray<E> select(Predicate<? super E> block) {
+  default RubyArray<E> select(Predicate<? super E> block) {
     return findAll(block);
   }
 
@@ -751,8 +748,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default RubyEnumerator<RubyArray<E>> sliceAfter(
-      Predicate<? super E> block) {
+  default RubyEnumerator<RubyArray<E>> sliceAfter(Predicate<? super E> block) {
     return Ruby.Enumerator.of(new SliceAfterIterable<>(this, block));
   }
 
@@ -762,7 +758,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default RubyEnumerator<RubyArray<E>> sliceAfter(String regex) {
+  default RubyEnumerator<RubyArray<E>> sliceAfter(String regex) {
     return Ruby.Enumerator
         .of(new SliceAfterIterable<>(this, Pattern.compile(regex)));
   }
@@ -773,8 +769,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default RubyEnumerator<RubyArray<E>> sliceBefore(
-      Predicate<? super E> block) {
+  default RubyEnumerator<RubyArray<E>> sliceBefore(Predicate<? super E> block) {
     return Ruby.Enumerator.of(new SliceBeforeIterable<>(this, block));
   }
 
@@ -784,7 +779,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default RubyEnumerator<RubyArray<E>> sliceBefore(String regex) {
+  default RubyEnumerator<RubyArray<E>> sliceBefore(String regex) {
     return Ruby.Enumerator
         .of(new SliceBeforeIterable<>(this, Pattern.compile(regex)));
   }
@@ -795,13 +790,13 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default RubyEnumerator<RubyArray<E>> sliceWhen(
+  default RubyEnumerator<RubyArray<E>> sliceWhen(
       BiPredicate<? super E, ? super E> block) {
     return Ruby.Enumerator.of(new SliceWhenIterable<>(this, block));
   }
 
   @Override
-  public default RubyArray<E> sort() {
+  default RubyArray<E> sort() {
     return Ruby.LazyEnumerator.of(this).sort();
   }
 
@@ -811,30 +806,29 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default RubyEnumerator<E> sortBy() {
+  default RubyEnumerator<E> sortBy() {
     return Ruby.Enumerator.of(this);
   }
 
   @Override
-  public default <S> RubyArray<E> sortBy(Comparator<? super S> comp,
+  default <S> RubyArray<E> sortBy(Comparator<? super S> comp,
       Function<? super E, ? extends S> block) {
     return Ruby.LazyEnumerator.of(this).sortBy(comp, block);
   }
 
   @Override
-  public default <S> RubyArray<E> sortBy(Comparator<? super E> comp1,
+  default <S> RubyArray<E> sortBy(Comparator<? super E> comp1,
       Comparator<? super S> comp2, Function<? super E, ? extends S> block) {
     return Ruby.LazyEnumerator.of(this).sortBy(comp1, comp2, block);
   }
 
   @Override
-  public default <S> RubyArray<E> sortBy(
-      Function<? super E, ? extends S> block) {
+  default <S> RubyArray<E> sortBy(Function<? super E, ? extends S> block) {
     return Ruby.LazyEnumerator.of(this).sortBy(block);
   }
 
   @Override
-  public default BigDecimal sum() {
+  default BigDecimal sum() {
     BigDecimal sum = new BigDecimal(0);
     for (E item : this) {
       if (item instanceof Number) {
@@ -855,7 +849,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyArray}
    */
   @Override
-  public default RubyArray<E> take(int n) {
+  default RubyArray<E> take(int n) {
     return Ruby.LazyEnumerator.of(this).take(n).toA();
   }
 
@@ -865,7 +859,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  public default RubyEnumerator<E> takeWhile() {
+  default RubyEnumerator<E> takeWhile() {
     RubyArray<E> rubyArray = Ruby.Array.create();
     for (E item : this) {
       rubyArray.add(item);
@@ -880,23 +874,22 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyArray}
    */
   @Override
-  public default RubyArray<E> takeWhile(Predicate<? super E> block) {
+  default RubyArray<E> takeWhile(Predicate<? super E> block) {
     return Ruby.LazyEnumerator.of(this).takeWhile(block).toA();
   }
 
   @Override
-  public default RubyArray<E> toA() {
+  default RubyArray<E> toA() {
     return Ruby.Array.copyOf(this);
   }
 
   @Override
-  public default <K, V> RubyHash<K, V> toH(Function<E, Entry<K, V>> block) {
+  default <K, V> RubyHash<K, V> toH(Function<E, Entry<K, V>> block) {
     return Ruby.LazyEnumerator.of(this).toH(block);
   }
 
   @Override
-  public default <K, V> RubyHash<K, V> toH(
-      BiFunction<E, E, Entry<K, V>> block) {
+  default <K, V> RubyHash<K, V> toH(BiFunction<E, E, Entry<K, V>> block) {
     return Ruby.LazyEnumerator.of(this).toH(block);
   }
 
@@ -906,13 +899,13 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyArray}
    */
   @Override
-  public default RubyArray<RubyArray<E>> zip(
+  default RubyArray<RubyArray<E>> zip(
       List<? extends Iterable<? extends E>> others) {
     return Ruby.LazyEnumerator.of(this).zip(others).toA();
   }
 
   @Override
-  public default void zip(List<? extends Iterable<? extends E>> others,
+  default void zip(List<? extends Iterable<? extends E>> others,
       Consumer<? super RubyArray<E>> block) {
     Ruby.LazyEnumerator.of(this).zip(others, block);
   }
