@@ -43,6 +43,7 @@ import javax.xml.bind.TypeConstraintException;
 
 import net.sf.rubycollect4j.packer.Unpacker;
 import net.sf.rubycollect4j.succ.StringSuccessor;
+import net.sf.rubycollect4j.util.ByteUtils;
 
 /**
  * 
@@ -131,11 +132,7 @@ public final class RubyString
    * @return {@link RubyArray} of Byte
    */
   public RubyArray<Byte> bytes() {
-    RubyArray<Byte> bytes = Ruby.Array.create();
-    for (Byte b : str.getBytes()) {
-      bytes.add(b);
-    }
-    return bytes;
+    return ByteUtils.toList(str.getBytes());
   }
 
   /**
@@ -269,15 +266,6 @@ public final class RubyString
     return Ruby.String.of(centeredStr.join());
   }
 
-  // /**
-  // * Returns a {@link RubyArray} of characters in str.
-  // *
-  // * @return {@link RubyArray}
-  // */
-  // public RubyArray<String> chars() {
-  // return toA();
-  // }
-
   /**
    * Returns a new {@link RubyString} with the line separator removed from the
    * end of str.
@@ -383,11 +371,8 @@ public final class RubyString
    * @return {@link RubyArray}
    */
   public RubyArray<Integer> codepoints() {
-    RubyArray<Integer> codepoints = Ruby.Array.create();
-    for (int i = 0; i < str.length(); i++) {
-      codepoints.add(str.codePointAt(i));
-    }
-    return codepoints;
+    return Ruby.Range.of(0, str.length()).closedOpen()
+        .map(i -> str.codePointAt(i));
   }
 
   /**
@@ -542,7 +527,7 @@ public final class RubyString
    * @return new {@link RubyString}
    */
   public RubyString dump() {
-    String printable = eachChar().toA().map(item -> {
+    String printable = eachChar().map(item -> {
       Integer codepoint = item.codePointAt(0);
 
       if (item.matches("\b"))
@@ -592,7 +577,7 @@ public final class RubyString
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<String> eachChar() {
-    return Ruby.Enumerator.of(Ruby.Range.of(0, str.length() - 1).lazy()
+    return Ruby.Enumerator.of(Ruby.Range.of(0, str.length()).closedOpen().lazy()
         .map(i -> Character.toString(str.charAt(i))));
   }
 
@@ -1044,7 +1029,7 @@ public final class RubyString
    * @return new {@link RubyString}
    */
   public RubyString inspect() {
-    String printable = eachChar().toA().map(item -> {
+    String printable = eachChar().map(item -> {
       if (item.matches("\b"))
         return "\\b";
       else if (item.matches("\f"))
