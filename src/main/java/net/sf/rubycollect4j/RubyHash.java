@@ -828,9 +828,9 @@ public final class RubyHash<K, V>
    * 
    * @see RubyEnumerable#allʔ(Predicate)
    */
-  public boolean allʔ(final BiPredicate<? super K, ? super V> block) {
-    return allʔ((Predicate<java.util.Map.Entry<K, V>>) item -> block
-        .test(item.getKey(), item.getValue()));
+  public boolean allʔ(BiPredicate<? super K, ? super V> block) {
+    return allʔ((Predicate<Entry<K, V>>) item -> block.test(item.getKey(),
+        item.getValue()));
   }
 
   /**
@@ -838,9 +838,9 @@ public final class RubyHash<K, V>
    * 
    * @see RubyEnumerable#anyʔ(Predicate)
    */
-  public boolean anyʔ(final BiPredicate<? super K, ? super V> block) {
-    return anyʔ((Predicate<java.util.Map.Entry<K, V>>) item -> block
-        .test(item.getKey(), item.getValue()));
+  public boolean anyʔ(BiPredicate<? super K, ? super V> block) {
+    return anyʔ((Predicate<Entry<K, V>>) item -> block.test(item.getKey(),
+        item.getValue()));
   }
 
   /**
@@ -849,9 +849,9 @@ public final class RubyHash<K, V>
    * @see RubyEnumerable#chunk(Function)
    */
   public <S> RubyEnumerator<Entry<S, RubyArray<Entry<K, V>>>> chunk(
-      final BiFunction<? super K, ? super V, ? extends S> block) {
-    return chunk((Function<java.util.Map.Entry<K, V>, S>) item -> block
-        .apply(item.getKey(), item.getValue()));
+      BiFunction<? super K, ? super V, ? extends S> block) {
+    return chunk((Function<Entry<K, V>, S>) item -> block.apply(item.getKey(),
+        item.getValue()));
   }
 
   /**
@@ -860,9 +860,9 @@ public final class RubyHash<K, V>
    * @see RubyEnumerable#collect(Function)
    */
   public <S> RubyArray<S> collect(
-      final BiFunction<? super K, ? super V, ? extends S> block) {
-    return collect((Function<java.util.Map.Entry<K, V>, S>) item -> block
-        .apply(item.getKey(), item.getValue()));
+      BiFunction<? super K, ? super V, ? extends S> block) {
+    return collect((Function<Entry<K, V>, S>) item -> block.apply(item.getKey(),
+        item.getValue()));
   }
 
   /**
@@ -871,9 +871,9 @@ public final class RubyHash<K, V>
    * @see RubyEnumerable#collectConcat(Function)
    */
   public <S> RubyArray<S> collectConcat(
-      final BiFunction<? super K, ? super V, ? extends List<S>> block) {
+      BiFunction<? super K, ? super V, ? extends List<S>> block) {
     return collectConcat(
-        (Function<java.util.Map.Entry<K, V>, RubyArray<S>>) item -> Ruby.Array
+        (Function<Entry<K, V>, RubyArray<S>>) item -> Ruby.Array
             .of(block.apply(item.getKey(), item.getValue())));
   }
 
@@ -882,9 +882,9 @@ public final class RubyHash<K, V>
    * 
    * @see RubyEnumerable#count(Predicate)
    */
-  public int count(final BiPredicate<? super K, ? super V> block) {
-    return count((Predicate<java.util.Map.Entry<K, V>>) item -> block
-        .test(item.getKey(), item.getValue()));
+  public int count(BiPredicate<? super K, ? super V> block) {
+    return count((Predicate<Entry<K, V>>) item -> block.test(item.getKey(),
+        item.getValue()));
   }
 
   /**
@@ -892,7 +892,7 @@ public final class RubyHash<K, V>
    * 
    * @see RubyEnumerable#cycle(Consumer)
    */
-  public void cycle(final BiConsumer<? super K, ? super V> block) {
+  public void cycle(BiConsumer<? super K, ? super V> block) {
     cycle(item -> block.accept(item.getKey(), item.getValue()));
   }
 
@@ -901,7 +901,7 @@ public final class RubyHash<K, V>
    * 
    * @see RubyEnumerable#cycle(int, Consumer)
    */
-  public void cycle(int n, final BiConsumer<? super K, ? super V> block) {
+  public void cycle(int n, BiConsumer<? super K, ? super V> block) {
     cycle(n, item -> block.accept(item.getKey(), item.getValue()));
   }
 
@@ -910,9 +910,9 @@ public final class RubyHash<K, V>
    * 
    * @see RubyEnumerable#detect(Predicate)
    */
-  public Entry<K, V> detect(final BiPredicate<? super K, ? super V> block) {
-    return detect((Predicate<java.util.Map.Entry<K, V>>) item -> block
-        .test(item.getKey(), item.getValue()));
+  public Entry<K, V> detect(BiPredicate<? super K, ? super V> block) {
+    return detect((Predicate<Entry<K, V>>) item -> block.test(item.getKey(),
+        item.getValue()));
   }
 
   /**
@@ -921,9 +921,9 @@ public final class RubyHash<K, V>
    * @see RubyEnumerable#dropWhile(Predicate)
    */
   public RubyArray<Entry<K, V>> dropWhile(
-      final BiPredicate<? super K, ? super V> block) {
-    return dropWhile((Predicate<java.util.Map.Entry<K, V>>) item -> block
-        .test(item.getKey(), item.getValue()));
+      BiPredicate<? super K, ? super V> block) {
+    return dropWhile((Predicate<Entry<K, V>>) item -> block.test(item.getKey(),
+        item.getValue()));
   }
 
   /**
@@ -932,9 +932,9 @@ public final class RubyHash<K, V>
    * @see RubyEnumerable#eachEntry(Consumer)
    */
   public RubyEnumerable<Entry<K, V>> eachEntry(
-      final BiConsumer<? super K, ? super V> block) {
-    return eachEntry((Consumer<java.util.Map.Entry<K, V>>) item -> block
-        .accept(item.getKey(), item.getValue()));
+      BiConsumer<? super K, ? super V> block) {
+    return eachEntry((Consumer<Entry<K, V>>) item -> block.accept(item.getKey(),
+        item.getValue()));
 
   }
 
@@ -943,7 +943,7 @@ public final class RubyHash<K, V>
    * 
    * @see RubyEnumerable#find(Predicate)
    */
-  public Entry<K, V> find(final BiPredicate<? super K, ? super V> block) {
+  public Entry<K, V> find(BiPredicate<? super K, ? super V> block) {
     return detect(block);
   }
 
@@ -953,9 +953,9 @@ public final class RubyHash<K, V>
    * @see RubyEnumerable#findAll(Predicate)
    */
   public RubyArray<Entry<K, V>> findAll(
-      final BiPredicate<? super K, ? super V> block) {
-    return findAll((Predicate<java.util.Map.Entry<K, V>>) item -> block
-        .test(item.getKey(), item.getValue()));
+      BiPredicate<? super K, ? super V> block) {
+    return findAll((Predicate<Entry<K, V>>) item -> block.test(item.getKey(),
+        item.getValue()));
   }
 
   /**
@@ -963,9 +963,9 @@ public final class RubyHash<K, V>
    * 
    * @see RubyEnumerable#findIndex(Predicate)
    */
-  public Integer findIndex(final BiPredicate<? super K, ? super V> block) {
-    return findIndex((Predicate<java.util.Map.Entry<K, V>>) item -> block
-        .test(item.getKey(), item.getValue()));
+  public Integer findIndex(BiPredicate<? super K, ? super V> block) {
+    return findIndex((Predicate<Entry<K, V>>) item -> block.test(item.getKey(),
+        item.getValue()));
   }
 
   /**
@@ -974,7 +974,7 @@ public final class RubyHash<K, V>
    * @see RubyEnumerable#flatMap(Function)
    */
   public <S> RubyArray<S> flatMap(
-      final BiFunction<? super K, ? super V, ? extends List<S>> block) {
+      BiFunction<? super K, ? super V, ? extends List<S>> block) {
     return collectConcat(block);
   }
 
@@ -984,8 +984,8 @@ public final class RubyHash<K, V>
    * @see RubyEnumerable#grep(String, Function)
    */
   public <S> RubyArray<S> grep(String regex,
-      final BiFunction<? super K, ? super V, ? extends S> block) {
-    return grep(regex, (Function<java.util.Map.Entry<K, V>, S>) item -> block
+      BiFunction<? super K, ? super V, ? extends S> block) {
+    return grep(regex, (Function<Entry<K, V>, S>) item -> block
         .apply(item.getKey(), item.getValue()));
   }
 
@@ -995,9 +995,9 @@ public final class RubyHash<K, V>
    * @see RubyEnumerable#groupBy(Function)
    */
   public <S> RubyHash<S, RubyArray<Entry<K, V>>> groupBy(
-      final BiFunction<? super K, ? super V, ? extends S> block) {
-    return groupBy((Function<java.util.Map.Entry<K, V>, S>) item -> block
-        .apply(item.getKey(), item.getValue()));
+      BiFunction<? super K, ? super V, ? extends S> block) {
+    return groupBy((Function<Entry<K, V>, S>) item -> block.apply(item.getKey(),
+        item.getValue()));
   }
 
   /**
@@ -1006,9 +1006,9 @@ public final class RubyHash<K, V>
    * @see RubyEnumerable#map(Function)
    */
   public <S> RubyArray<S> map(
-      final BiFunction<? super K, ? super V, ? extends S> block) {
-    return map((Function<java.util.Map.Entry<K, V>, S>) item -> block
-        .apply(item.getKey(), item.getValue()));
+      BiFunction<? super K, ? super V, ? extends S> block) {
+    return map((Function<Entry<K, V>, S>) item -> block.apply(item.getKey(),
+        item.getValue()));
   }
 
   /**
@@ -1017,19 +1017,8 @@ public final class RubyHash<K, V>
    * @see RubyEnumerable#maxBy(Comparator, Function)
    */
   public <S> Entry<K, V> maxBy(Comparator<? super S> comp,
-      final BiFunction<? super K, ? super V, ? extends S> block) {
-    return maxBy(comp, (Function<java.util.Map.Entry<K, V>, S>) item -> block
-        .apply(item.getKey(), item.getValue()));
-  }
-
-  /**
-   * An adapter method.
-   * 
-   * @see RubyEnumerable#maxBy(Function)
-   */
-  public <S> Entry<K, V> maxBy(
-      final BiFunction<? super K, ? super V, ? extends S> block) {
-    return maxBy((Function<java.util.Map.Entry<K, V>, S>) item -> block
+      BiFunction<? super K, ? super V, ? extends S> block) {
+    return maxBy(comp, (Function<Entry<K, V>, S>) item -> block
         .apply(item.getKey(), item.getValue()));
   }
 
@@ -1039,8 +1028,8 @@ public final class RubyHash<K, V>
    * @see RubyEnumerable#minBy(Comparator, Function)
    */
   public <S> Entry<K, V> minBy(Comparator<? super S> comp,
-      final BiFunction<? super K, ? super V, ? extends S> block) {
-    return minBy(comp, (Function<java.util.Map.Entry<K, V>, S>) item -> block
+      BiFunction<? super K, ? super V, ? extends S> block) {
+    return minBy(comp, (Function<Entry<K, V>, S>) item -> block
         .apply(item.getKey(), item.getValue()));
   }
 
@@ -1050,9 +1039,9 @@ public final class RubyHash<K, V>
    * @see RubyEnumerable#minBy(Function)
    */
   public <S> Entry<K, V> minBy(
-      final BiFunction<? super K, ? super V, ? extends S> block) {
-    return minBy((Function<java.util.Map.Entry<K, V>, S>) item -> block
-        .apply(item.getKey(), item.getValue()));
+      BiFunction<? super K, ? super V, ? extends S> block) {
+    return minBy((Function<Entry<K, V>, S>) item -> block.apply(item.getKey(),
+        item.getValue()));
   }
 
   /**
@@ -1061,8 +1050,8 @@ public final class RubyHash<K, V>
    * @see RubyEnumerable#minmaxBy(Comparator, Function)
    */
   public <S> RubyArray<Entry<K, V>> minmaxBy(Comparator<? super S> comp,
-      final BiFunction<? super K, ? super V, ? extends S> block) {
-    return minmaxBy(comp, (Function<java.util.Map.Entry<K, V>, S>) item -> block
+      BiFunction<? super K, ? super V, ? extends S> block) {
+    return minmaxBy(comp, (Function<Entry<K, V>, S>) item -> block
         .apply(item.getKey(), item.getValue()));
   }
 
@@ -1072,9 +1061,20 @@ public final class RubyHash<K, V>
    * @see RubyEnumerable#minmaxBy(Function)
    */
   public <S> RubyArray<Entry<K, V>> minmaxBy(
-      final BiFunction<? super K, ? super V, ? extends S> block) {
-    return minmaxBy((Function<java.util.Map.Entry<K, V>, S>) item -> block
+      BiFunction<? super K, ? super V, ? extends S> block) {
+    return minmaxBy((Function<Entry<K, V>, S>) item -> block
         .apply(item.getKey(), item.getValue()));
+  }
+
+  /**
+   * An adapter method.
+   * 
+   * @see RubyEnumerable#maxBy(Function)
+   */
+  public <S> Entry<K, V> maxBy(
+      BiFunction<? super K, ? super V, ? extends S> block) {
+    return maxBy((Function<Entry<K, V>, S>) item -> block.apply(item.getKey(),
+        item.getValue()));
   }
 
   /**
@@ -1082,9 +1082,9 @@ public final class RubyHash<K, V>
    * 
    * @see RubyEnumerable#noneʔ(Predicate)
    */
-  public boolean noneʔ(final BiPredicate<? super K, ? super V> block) {
-    return noneʔ((Predicate<java.util.Map.Entry<K, V>>) item -> block
-        .test(item.getKey(), item.getValue()));
+  public boolean noneʔ(BiPredicate<? super K, ? super V> block) {
+    return noneʔ((Predicate<Entry<K, V>>) item -> block.test(item.getKey(),
+        item.getValue()));
   }
 
   /**
@@ -1092,9 +1092,9 @@ public final class RubyHash<K, V>
    * 
    * @see RubyEnumerable#oneʔ(Predicate)
    */
-  public boolean oneʔ(final BiPredicate<? super K, ? super V> block) {
-    return oneʔ((Predicate<java.util.Map.Entry<K, V>>) item -> block
-        .test(item.getKey(), item.getValue()));
+  public boolean oneʔ(BiPredicate<? super K, ? super V> block) {
+    return oneʔ((Predicate<Entry<K, V>>) item -> block.test(item.getKey(),
+        item.getValue()));
   }
 
   /**
@@ -1103,9 +1103,9 @@ public final class RubyHash<K, V>
    * @see RubyEnumerable#partition(Predicate)
    */
   public RubyArray<RubyArray<Entry<K, V>>> partition(
-      final BiPredicate<? super K, ? super V> block) {
-    return partition((Predicate<java.util.Map.Entry<K, V>>) item -> block
-        .test(item.getKey(), item.getValue()));
+      BiPredicate<? super K, ? super V> block) {
+    return partition((Predicate<Entry<K, V>>) item -> block.test(item.getKey(),
+        item.getValue()));
   }
 
   /**
@@ -1114,9 +1114,9 @@ public final class RubyHash<K, V>
    * @see RubyEnumerable#reject(Predicate)
    */
   public RubyArray<Entry<K, V>> reject(
-      final BiPredicate<? super K, ? super V> block) {
-    return reject((Predicate<java.util.Map.Entry<K, V>>) item -> block
-        .test(item.getKey(), item.getValue()));
+      BiPredicate<? super K, ? super V> block) {
+    return reject((Predicate<Entry<K, V>>) item -> block.test(item.getKey(),
+        item.getValue()));
   }
 
   /**
@@ -1125,8 +1125,8 @@ public final class RubyHash<K, V>
    * @see RubyEnumerable#reverseEach(Consumer)
    */
   public RubyEnumerable<Entry<K, V>> reverseEach(
-      final BiConsumer<? super K, ? super V> block) {
-    return reverseEach((Consumer<java.util.Map.Entry<K, V>>) item -> block
+      BiConsumer<? super K, ? super V> block) {
+    return reverseEach((Consumer<Entry<K, V>>) item -> block
         .accept(item.getKey(), item.getValue()));
   }
 
@@ -1136,7 +1136,7 @@ public final class RubyHash<K, V>
    * @see RubyEnumerable#select(Predicate)
    */
   public RubyArray<Entry<K, V>> select(
-      final BiPredicate<? super K, ? super V> block) {
+      BiPredicate<? super K, ? super V> block) {
     return findAll(block);
   }
 
@@ -1146,8 +1146,8 @@ public final class RubyHash<K, V>
    * @see RubyEnumerable#sliceBefore(Predicate)
    */
   public RubyEnumerator<RubyArray<Entry<K, V>>> sliceBefore(
-      final BiPredicate<? super K, ? super V> block) {
-    return sliceBefore((Predicate<java.util.Map.Entry<K, V>>) item -> block
+      BiPredicate<? super K, ? super V> block) {
+    return sliceBefore((Predicate<Entry<K, V>>) item -> block
         .test(item.getKey(), item.getValue()));
   }
 
@@ -1157,8 +1157,8 @@ public final class RubyHash<K, V>
    * @see RubyEnumerable#sortBy(Comparator, Function)
    */
   public <S> RubyArray<Entry<K, V>> sortBy(Comparator<? super S> comp,
-      final BiFunction<? super K, ? super V, ? extends S> block) {
-    return sortBy(comp, (Function<java.util.Map.Entry<K, V>, S>) item -> block
+      BiFunction<? super K, ? super V, ? extends S> block) {
+    return sortBy(comp, (Function<Entry<K, V>, S>) item -> block
         .apply(item.getKey(), item.getValue()));
   }
 
@@ -1168,9 +1168,9 @@ public final class RubyHash<K, V>
    * @see RubyEnumerable#sortBy(Function)
    */
   public <S> RubyArray<Entry<K, V>> sortBy(
-      final BiFunction<? super K, ? super V, ? extends S> block) {
-    return sortBy((Function<java.util.Map.Entry<K, V>, S>) item -> block
-        .apply(item.getKey(), item.getValue()));
+      BiFunction<? super K, ? super V, ? extends S> block) {
+    return sortBy((Function<Entry<K, V>, S>) item -> block.apply(item.getKey(),
+        item.getValue()));
   }
 
   /**
@@ -1179,9 +1179,9 @@ public final class RubyHash<K, V>
    * @see RubyEnumerable#takeWhile(Predicate)
    */
   public RubyArray<Entry<K, V>> takeWhile(
-      final BiPredicate<? super K, ? super V> block) {
-    return takeWhile((Predicate<java.util.Map.Entry<K, V>>) item -> block
-        .test(item.getKey(), item.getValue()));
+      BiPredicate<? super K, ? super V> block) {
+    return takeWhile((Predicate<Entry<K, V>>) item -> block.test(item.getKey(),
+        item.getValue()));
   }
 
   /**
