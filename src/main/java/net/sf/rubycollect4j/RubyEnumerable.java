@@ -29,8 +29,6 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
-import javax.xml.bind.TypeConstraintException;
-
 import net.sf.rubycollect4j.iter.ChunkIterable;
 import net.sf.rubycollect4j.iter.ChunkWhileIterable;
 import net.sf.rubycollect4j.iter.CycleIterable;
@@ -829,18 +827,23 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
 
   @Override
   default BigDecimal sum() {
-    BigDecimal sum = new BigDecimal(0);
-    for (E item : this) {
-      if (item instanceof Number) {
-        Number num = (Number) item;
-        sum = sum.add(new BigDecimal(num.toString()));
-      } else {
-        String type = item == null ? "null" : item.getClass().getSimpleName();
-        throw new TypeConstraintException(
-            "TypeError: " + type + " can't be coerced into Number");
-      }
-    }
-    return sum;
+    return Ruby.LazyEnumerator.of(this).sum();
+  }
+
+  @Override
+  default BigDecimal sum(Function<? super Number, ? extends Number> block) {
+    return Ruby.LazyEnumerator.of(this).sum(block);
+  }
+
+  @Override
+  default BigDecimal sum(Number init) {
+    return Ruby.LazyEnumerator.of(this).sum(init);
+  }
+
+  @Override
+  default BigDecimal sum(Number init,
+      Function<? super Number, ? extends Number> block) {
+    return Ruby.LazyEnumerator.of(this).sum(init, block);
   }
 
   /**

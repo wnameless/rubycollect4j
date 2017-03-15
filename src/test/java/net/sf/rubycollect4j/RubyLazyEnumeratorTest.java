@@ -368,6 +368,27 @@ public class RubyLazyEnumeratorTest {
   }
 
   @Test
+  public void testSumWithBlock() {
+    RubyLazyEnumerator<Double> lre =
+        Ruby.LazyEnumerator.of(Arrays.asList(1.1, 2.1, 3.1, 4.1));
+    assertEquals(new BigDecimal("20.8"), lre.sum(n -> n.doubleValue() * 2));
+  }
+
+  @Test
+  public void testSumWithInit() {
+    RubyLazyEnumerator<Double> lre =
+        Ruby.LazyEnumerator.of(Arrays.asList(1.1, 2.1, 3.1, 4.1));
+    assertEquals(new BigDecimal("11.4"), lre.sum(1L));
+  }
+
+  @Test
+  public void testSumWithInitAndBlock() {
+    RubyLazyEnumerator<Double> lre =
+        Ruby.LazyEnumerator.of(Arrays.asList(1.1, 2.1, 3.1, 4.1));
+    assertEquals(new BigDecimal("21.8"), lre.sum(1L, n -> n.doubleValue() * 2));
+  }
+
+  @Test
   public void testRewind() {
     lre.rewind();
     lre = new RubyLazyEnumerator<Integer>(list);

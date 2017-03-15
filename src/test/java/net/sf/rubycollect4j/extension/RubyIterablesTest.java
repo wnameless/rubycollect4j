@@ -29,6 +29,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -38,6 +39,8 @@ import java.util.Map.Entry;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+
+import javax.xml.bind.TypeConstraintException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -707,6 +710,38 @@ public class RubyIterablesTest {
     Iterable<String> re = Arrays.asList("aaaa", "bbb", "cc", "e", "d");
     assertEquals(ra("e", "d", "cc", "bbb", "aaaa"),
         RubyIterables.sortBy(re, item -> item.length()));
+  }
+
+  @Test
+  public void testSum() {
+    Iterable<Integer> in = Arrays.asList(1, 2, 3, 4);
+    assertEquals(new BigDecimal(10), RubyIterables.sum(in));
+  }
+
+  @Test(expected = TypeConstraintException.class)
+  public void testSumException() {
+    Iterable<String> in = Arrays.asList("a", "b", "c");
+    RubyIterables.sum(in);
+  }
+
+  @Test
+  public void testSumWithBlock() {
+    Iterable<Double> in = Arrays.asList(1.1, 2.1, 3.1, 4.1);
+    assertEquals(new BigDecimal("20.8"),
+        RubyIterables.sum(in, n -> n.doubleValue() * 2));
+  }
+
+  @Test
+  public void testSumWithInit() {
+    Iterable<Double> in = Arrays.asList(1.1, 2.1, 3.1, 4.1);
+    assertEquals(new BigDecimal("11.4"), RubyIterables.sum(in, 1L));
+  }
+
+  @Test
+  public void testSumWithInitAndBlock() {
+    Iterable<Double> in = Arrays.asList(1.1, 2.1, 3.1, 4.1);
+    assertEquals(new BigDecimal("21.8"),
+        RubyIterables.sum(in, 1L, n -> n.doubleValue() * 2));
   }
 
   @Test

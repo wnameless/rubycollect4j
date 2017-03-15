@@ -879,6 +879,26 @@ public class RubyEnumerableTest {
   }
 
   @Test
+  public void testSumWithBlock() {
+    assertEquals(new BigDecimal("20.8"),
+        newRubyEnumerator(Arrays.asList(1.1, 2.1, 3.1, 4.1))
+            .sum(n -> n.doubleValue() * 2));
+  }
+
+  @Test
+  public void testSumWithInit() {
+    assertEquals(new BigDecimal("11.4"),
+        newRubyEnumerator(Arrays.asList(1.1, 2.1, 3.1, 4.1)).sum(1L));
+  }
+
+  @Test
+  public void testSumWithInitAndBlock() {
+    assertEquals(new BigDecimal("21.8"),
+        newRubyEnumerator(Arrays.asList(1.1, 2.1, 3.1, 4.1)).sum(1L,
+            n -> n.doubleValue() * 2));
+  }
+
+  @Test
   public void testTake() {
     assertEquals(ra(), re.take(0));
     assertEquals(ra(1, 2), re.take(2));

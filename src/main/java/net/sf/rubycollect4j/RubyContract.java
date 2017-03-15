@@ -995,6 +995,36 @@ final class RubyContract {
     BigDecimal sum();
 
     /**
+     * Adds up all elements processed by the block.
+     * 
+     * @param block
+     *          to process each element before adding
+     * @return {@link BigDecimal}
+     */
+    BigDecimal sum(Function<? super Number, ? extends Number> block);
+
+    /**
+     * Adds up all elements with an initial number.
+     * 
+     * @param init
+     *          any {@link Number}
+     * @return {@link BigDecimal}
+     */
+    BigDecimal sum(Number init);
+
+    /**
+     * Adds up all elements processed by the block with an initial number.
+     * 
+     * @param init
+     *          any {@link Number}
+     * @param block
+     *          to process each element before adding
+     * @return {@link BigDecimal}
+     */
+    BigDecimal sum(Number init,
+        Function<? super Number, ? extends Number> block);
+
+    /**
      * Takes the first n elements.
      * 
      * @param n

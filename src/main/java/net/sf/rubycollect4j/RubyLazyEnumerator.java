@@ -1043,11 +1043,27 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
 
   @Override
   public BigDecimal sum() {
-    BigDecimal sum = new BigDecimal(0);
-    for (E item : iter) {
+    return sum(0, n -> n);
+  }
+
+  @Override
+  public BigDecimal sum(Function<? super Number, ? extends Number> block) {
+    return sum(0, block);
+  }
+
+  @Override
+  public BigDecimal sum(Number init) {
+    return sum(init, n -> n);
+  }
+
+  @Override
+  public BigDecimal sum(Number init,
+      Function<? super Number, ? extends Number> block) {
+    BigDecimal sum = new BigDecimal(init.toString());
+    for (E item : this) {
       if (item instanceof Number) {
         Number num = (Number) item;
-        sum = sum.add(new BigDecimal(num.toString()));
+        sum = sum.add(new BigDecimal(block.apply(num).toString()));
       } else {
         String type = item == null ? "null" : item.getClass().getSimpleName();
         throw new TypeConstraintException(

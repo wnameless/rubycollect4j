@@ -17,6 +17,7 @@
  */
 package net.sf.rubycollect4j.extension;
 
+import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -660,6 +661,36 @@ public final class RubyIterables {
       Comparator<? super E> comp1, Comparator<? super S> comp2,
       Function<? super E, ? extends S> block) {
     return Ruby.LazyEnumerator.of(in).sortBy(comp1, comp2, block);
+  }
+
+  /**
+   * @see net.sf.rubycollect4j.RubyEnumerable#sum()
+   */
+  public static <E> BigDecimal sum(Iterable<E> in) {
+    return Ruby.LazyEnumerator.of(in).sum();
+  }
+
+  /**
+   * @see net.sf.rubycollect4j.RubyEnumerable#sum(Function)
+   */
+  public static <E> BigDecimal sum(Iterable<E> in,
+      Function<? super Number, ? extends Number> block) {
+    return Ruby.LazyEnumerator.of(in).sum(block);
+  }
+
+  /**
+   * @see net.sf.rubycollect4j.RubyEnumerable#sum(Number)
+   */
+  public static <E> BigDecimal sum(Iterable<E> in, Number init) {
+    return Ruby.LazyEnumerator.of(in).sum(init);
+  }
+
+  /**
+   * @see net.sf.rubycollect4j.RubyEnumerable#sum(Number, Function)
+   */
+  public static <E> BigDecimal sum(Iterable<E> in, Number init,
+      Function<? super Number, ? extends Number> block) {
+    return Ruby.LazyEnumerator.of(in).sum(init, block);
   }
 
   /**
