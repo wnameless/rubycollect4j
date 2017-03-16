@@ -337,7 +337,7 @@ public class RubyDate extends Date {
    *          to yield each date
    * @return this {@link RubyDate}
    */
-  public RubyDate upto(Date max, Consumer<Date> block) {
+  public RubyDate upto(Date max, Consumer<? super Date> block) {
     step(max, 1).each(block);
     return this;
   }
@@ -363,7 +363,7 @@ public class RubyDate extends Date {
    *          to yield each date
    * @return this {@link RubyDate}
    */
-  public RubyDate downto(Date min, Consumer<Date> block) {
+  public RubyDate downto(Date min, Consumer<? super Date> block) {
     step(min, -1).each(block);
     return this;
   }
@@ -389,7 +389,7 @@ public class RubyDate extends Date {
    *          to yield each date
    * @return this {@link RubyDate}
    */
-  public RubyDate step(Date limit, Consumer<Date> block) {
+  public RubyDate step(Date limit, Consumer<? super Date> block) {
     step(limit, 1).each(block);
     return this;
   }
@@ -425,7 +425,7 @@ public class RubyDate extends Date {
    *          to yield each date
    * @return this {@link RubyDate}
    */
-  public RubyDate step(Date limit, int step, Consumer<Date> block) {
+  public RubyDate step(Date limit, int step, Consumer<? super Date> block) {
     step(limit, step).each(block);
     return this;
   }
