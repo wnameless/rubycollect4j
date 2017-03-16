@@ -69,6 +69,9 @@ Ruby.Array.copyOf(Arrays.asList(1, 2, 3, 4)).minmax().join();
 Ruby.Hash.of("a", 1, "b", 2, "c", 3).transformValues(v -> v * 2);
 // {"a"=2, "b"=4, "c"=6}
 
+Ruby.Entry.of("xyz", 321);
+// xyz=321
+
 Ruby.Set.of(1, 2, 3, 4).divide(i -> i % 2 == 0);
 // [[1, 3], [2, 4]]
 
