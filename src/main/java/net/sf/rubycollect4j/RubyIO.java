@@ -292,7 +292,7 @@ public class RubyIO {
    * @param block
    *          to process each line
    */
-  public static void foreach(String path, Consumer<String> block) {
+  public static void foreach(String path, Consumer<? super String> block) {
     Ruby.Enumerator.of(new EachLineIterable(new File(path))).each(block);
   }
 

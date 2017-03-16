@@ -271,7 +271,7 @@ public final class RubyRange<E> implements RubyEnumerable<E>, Serializable {
    *          to yield each element
    * @return this {@link RubyRange}
    */
-  public RubyRange<E> step(int n, Consumer<E> block) {
+  public RubyRange<E> step(int n, Consumer<? super E> block) {
     for (E item : step(n)) {
       block.accept(item);
     }
