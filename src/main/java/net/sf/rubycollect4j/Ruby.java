@@ -19,6 +19,7 @@ package net.sf.rubycollect4j;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -32,6 +33,7 @@ import net.sf.rubycollect4j.succ.CharacterSuccessor;
 import net.sf.rubycollect4j.succ.DateSuccessor;
 import net.sf.rubycollect4j.succ.DoubleSuccessor;
 import net.sf.rubycollect4j.succ.IntegerSuccessor;
+import net.sf.rubycollect4j.succ.LocalDateTimeSuccessor;
 import net.sf.rubycollect4j.succ.LongSuccessor;
 import net.sf.rubycollect4j.succ.StringSuccessor;
 import net.sf.rubycollect4j.util.ComparableEntry;
@@ -2682,8 +2684,8 @@ public final class Ruby {
      */
     public static RubyRange<java.lang.String> of(java.lang.String start,
         java.lang.String end) {
-      return new RubyRange<>(StringSuccessor.getInstance(),
-          start, end, Interval.CLOSED);
+      return new RubyRange<>(StringSuccessor.getInstance(), start, end,
+          Interval.CLOSED);
     }
 
     /**
@@ -2696,8 +2698,8 @@ public final class Ruby {
      * @return {@link RubyRange}
      */
     public static RubyRange<Character> of(char start, char end) {
-      return new RubyRange<>(CharacterSuccessor.getInstance(), start,
-          end, Interval.CLOSED);
+      return new RubyRange<>(CharacterSuccessor.getInstance(), start, end,
+          Interval.CLOSED);
     }
 
     /**
@@ -2758,8 +2760,23 @@ public final class Ruby {
      */
     public static RubyRange<java.util.Date> of(java.util.Date start,
         java.util.Date end) {
-      return new RubyRange<>(DateSuccessor.getInstance(), start,
-          end, Interval.CLOSED);
+      return new RubyRange<>(DateSuccessor.getInstance(), start, end,
+          Interval.CLOSED);
+    }
+
+    /**
+     * Creates a {@link RubyRange} by given {@link LocalDateTime}s.
+     * 
+     * @param start
+     *          of the range
+     * @param end
+     *          of the range
+     * @return {@link RubyRange}
+     */
+    public static RubyRange<LocalDateTime> of(LocalDateTime start,
+        LocalDateTime end) {
+      return new RubyRange<>(LocalDateTimeSuccessor.getInstance(), start, end,
+          Interval.CLOSED);
     }
 
   }
