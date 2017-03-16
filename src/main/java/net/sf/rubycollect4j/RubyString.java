@@ -566,7 +566,7 @@ public final class RubyString
    *          to yield byte
    * @return this {@link RubyString}
    */
-  public RubyString eachByte(Consumer<Byte> block) {
+  public RubyString eachByte(Consumer<? super Byte> block) {
     bytes().each(block);
     return this;
   }
@@ -588,7 +588,7 @@ public final class RubyString
    *          to yield character
    * @return this {@link RubyString}
    */
-  public RubyString eachChar(Consumer<String> block) {
+  public RubyString eachChar(Consumer<? super String> block) {
     eachChar().each(block);
     return this;
   }
@@ -610,7 +610,7 @@ public final class RubyString
    *          to yield character
    * @return this {@link RubyString}
    */
-  public RubyString eachCodepoint(Consumer<Integer> block) {
+  public RubyString eachCodepoint(Consumer<? super Integer> block) {
     eachCodepoint().each(block);
     return this;
   }
@@ -632,7 +632,7 @@ public final class RubyString
    *          to yield line
    * @return this {@link RubyString}
    */
-  public RubyString eachLine(Consumer<String> block) {
+  public RubyString eachLine(Consumer<? super String> block) {
     eachLine().each(block);
     return this;
   }
@@ -653,7 +653,7 @@ public final class RubyString
    *          to yield line
    * @return this {@link RubyString}
    */
-  public RubyString eachLine(String separator, Consumer<String> block) {
+  public RubyString eachLine(String separator, Consumer<? super String> block) {
     Ruby.Array.copyOf(str.split(stringify(separator))).each(block);
     return this;
   }
@@ -834,7 +834,8 @@ public final class RubyString
    *          to do the replacement
    * @return new {@link RubyString}
    */
-  public RubyString gsub(String regex, Function<String, String> block) {
+  public RubyString gsub(String regex,
+      Function<? super String, ? extends CharSequence> block) {
     String result = str;
     Matcher matcher = Pattern.compile(stringify(regex)).matcher(str);
     while (matcher.find()) {
@@ -886,7 +887,8 @@ public final class RubyString
    *          to do the replacement
    * @return this {@link RubyString} or null
    */
-  public RubyString gsubǃ(String regex, Function<String, String> block) {
+  public RubyString gsubǃ(String regex,
+      Function<? super String, ? extends CharSequence> block) {
     return inPlace(gsub(regex, block));
   }
 
@@ -1508,7 +1510,7 @@ public final class RubyString
    *          to do the replacement
    * @return this {@link RubyString}
    */
-  public RubyString scan(String regex, Consumer<String> block) {
+  public RubyString scan(String regex, Consumer<? super String> block) {
     scan(regex).each(block);
     return this;
   }
@@ -1555,7 +1557,7 @@ public final class RubyString
    * @return this {@link RubyString}
    */
   public RubyString scanGroups(String regex,
-      Consumer<RubyArray<String>> block) {
+      Consumer<? super RubyArray<String>> block) {
     scanGroups(stringify(regex)).each(block);
     return this;
   }
@@ -1587,7 +1589,8 @@ public final class RubyString
    * 
    * @return new {@link RubyString}
    */
-  public RubyString scrub(final Function<RubyArray<Byte>, String> block) {
+  public RubyString scrub(
+      Function<? super RubyArray<Byte>, ? extends CharSequence> block) {
     return Ruby.String.of(eachChar().map(item -> {
       if (item.matches("\\p{C}"))
         return block.apply(Ruby.String.of(item).bytes());
@@ -1621,7 +1624,8 @@ public final class RubyString
    * 
    * @return this {@link RubyString}
    */
-  public RubyString scrubǃ(final Function<RubyArray<Byte>, String> block) {
+  public RubyString scrubǃ(
+      Function<? super RubyArray<Byte>, ? extends CharSequence> block) {
     return inPlace(scrub(block));
   }
 
@@ -2029,7 +2033,8 @@ public final class RubyString
    *          to do the replacement
    * @return new {@link RubyString}
    */
-  public RubyString sub(String regex, Function<String, String> block) {
+  public RubyString sub(String regex,
+      Function<? super String, ? extends CharSequence> block) {
     Matcher matcher = Pattern.compile(stringify(regex)).matcher(str);
     if (matcher.find()) {
       String match = matcher.group();
@@ -2064,7 +2069,8 @@ public final class RubyString
    *          to do the replacement
    * @return this {@link RubyString} or null
    */
-  public RubyString subǃ(String regex, Function<String, String> block) {
+  public RubyString subǃ(String regex,
+      Function<? super String, ? extends CharSequence> block) {
     return inPlace(sub(regex, block));
   }
 
@@ -2424,7 +2430,7 @@ public final class RubyString
    *          to yield successive value
    * @return this {@link RubyString}
    */
-  public RubyString upto(String otherStr, Consumer<String> block) {
+  public RubyString upto(String otherStr, Consumer<? super String> block) {
     upto(stringify(otherStr), false).each(block);
     return this;
   }
@@ -2437,13 +2443,13 @@ public final class RubyString
    * @param otherStr
    *          any String
    * @param exclusive
-   *          true if the last value is ommitted, false otherwise
+   *          true if the last value is omitted, false otherwise
    * @param block
    *          to yield successive value
    * @return this {@link RubyString}
    */
   public RubyString upto(String otherStr, boolean exclusive,
-      Consumer<String> block) {
+      Consumer<? super String> block) {
     upto(stringify(otherStr), exclusive).each(block);
     return this;
   }

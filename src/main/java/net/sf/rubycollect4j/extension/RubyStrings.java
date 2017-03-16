@@ -213,7 +213,7 @@ public final class RubyStrings {
   /**
    * @see net.sf.rubycollect4j.RubyString#eachByte(Consumer)
    */
-  public static String eachByte(CharSequence in, Consumer<Byte> block) {
+  public static String eachByte(CharSequence in, Consumer<? super Byte> block) {
     return Ruby.String.of(in).eachByte(block).toS();
   }
 
@@ -227,7 +227,8 @@ public final class RubyStrings {
   /**
    * @see net.sf.rubycollect4j.RubyString#eachChar(Consumer)
    */
-  public static String eachChar(CharSequence in, Consumer<String> block) {
+  public static String eachChar(CharSequence in,
+      Consumer<? super String> block) {
     return Ruby.String.of(in).eachChar(block).toS();
   }
 
@@ -241,7 +242,8 @@ public final class RubyStrings {
   /**
    * @see net.sf.rubycollect4j.RubyString#eachCodepoint(Consumer)
    */
-  public static String eachCodepoint(CharSequence in, Consumer<Integer> block) {
+  public static String eachCodepoint(CharSequence in,
+      Consumer<? super Integer> block) {
     return Ruby.String.of(in).eachCodepoint(block).toS();
   }
 
@@ -255,7 +257,8 @@ public final class RubyStrings {
   /**
    * @see net.sf.rubycollect4j.RubyString#eachLine(Consumer)
    */
-  public static String eachLine(CharSequence in, Consumer<String> block) {
+  public static String eachLine(CharSequence in,
+      Consumer<? super String> block) {
     return Ruby.String.of(in).eachLine(block).toS();
   }
 
@@ -270,7 +273,7 @@ public final class RubyStrings {
    * @see net.sf.rubycollect4j.RubyString#eachLine(String, Consumer)
    */
   public static String eachLine(CharSequence in, String separator,
-      Consumer<String> block) {
+      Consumer<? super String> block) {
     return Ruby.String.of(in).eachLine(separator, block).toS();
   }
 
@@ -343,7 +346,7 @@ public final class RubyStrings {
    * @see net.sf.rubycollect4j.RubyString#gsub(String, Function)
    */
   public static String gsub(CharSequence in, String regex,
-      Function<String, String> block) {
+      Function<? super String, ? extends CharSequence> block) {
     return Ruby.String.of(in).gsub(regex, block).toS();
   }
 
@@ -575,7 +578,7 @@ public final class RubyStrings {
    * @see net.sf.rubycollect4j.RubyString#scan(String, Consumer)
    */
   public static String scan(CharSequence in, String regex,
-      Consumer<String> block) {
+      Consumer<? super String> block) {
     return Ruby.String.of(in).scan(regex, block).toS();
   }
 
@@ -591,7 +594,7 @@ public final class RubyStrings {
    * @see net.sf.rubycollect4j.RubyString#scanGroups(String, Consumer)
    */
   public static String scanGroups(CharSequence in, String regex,
-      Consumer<RubyArray<String>> block) {
+      Consumer<? super RubyArray<String>> block) {
     return Ruby.String.of(in).scanGroups(regex, block).toS();
   }
 
@@ -613,7 +616,7 @@ public final class RubyStrings {
    * @see net.sf.rubycollect4j.RubyString#scrub(Function)
    */
   public static String scrub(CharSequence in,
-      Function<RubyArray<Byte>, String> block) {
+      Function<? super RubyArray<? super Byte>, ? extends String> block) {
     return Ruby.String.of(in).scrub(block).toS();
   }
 
@@ -750,7 +753,7 @@ public final class RubyStrings {
    * @see net.sf.rubycollect4j.RubyString#sub(String, Function)
    */
   public static String sub(CharSequence in, String regex,
-      Function<String, String> block) {
+      Function<? super String, ? extends CharSequence> block) {
     return Ruby.String.of(in).sub(regex, block).toS();
   }
 
@@ -856,7 +859,7 @@ public final class RubyStrings {
    * @see net.sf.rubycollect4j.RubyString#upto(String, Consumer)
    */
   public static String upto(CharSequence in, String otherStr,
-      Consumer<String> block) {
+      Consumer<? super String> block) {
     return Ruby.String.of(in).upto(otherStr, block).toS();
   }
 
@@ -872,7 +875,7 @@ public final class RubyStrings {
    * @see net.sf.rubycollect4j.RubyString#upto(String, boolean, Consumer)
    */
   public static String upto(CharSequence in, String otherStr, boolean exclusive,
-      Consumer<String> block) {
+      Consumer<? super String> block) {
     return Ruby.String.of(in).upto(otherStr, exclusive, block).toS();
   }
 
