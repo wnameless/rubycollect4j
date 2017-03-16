@@ -17,6 +17,7 @@
  */
 package net.sf.rubycollect4j;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -32,6 +33,7 @@ import net.sf.rubycollect4j.succ.CharacterSuccessor;
 import net.sf.rubycollect4j.succ.DateSuccessor;
 import net.sf.rubycollect4j.succ.DoubleSuccessor;
 import net.sf.rubycollect4j.succ.IntegerSuccessor;
+import net.sf.rubycollect4j.succ.LocalDateTimeSuccessor;
 import net.sf.rubycollect4j.succ.LongSuccessor;
 import net.sf.rubycollect4j.succ.StringSuccessor;
 import net.sf.rubycollect4j.util.ComparableEntry;
@@ -2666,6 +2668,21 @@ public final class RubyCollections {
    */
   public static RubyRange<Date> range(Date start, Date end) {
     return new RubyRange<>(DateSuccessor.getInstance(), start, end,
+        Interval.CLOSED);
+  }
+
+  /**
+   * Creates a {@link RubyRange} by given {@link LocalDateTime}s.
+   * 
+   * @param start
+   *          of the range
+   * @param end
+   *          of the range
+   * @return {@link RubyRange}
+   */
+  public static RubyRange<LocalDateTime> range(LocalDateTime start,
+      LocalDateTime end) {
+    return new RubyRange<>(LocalDateTimeSuccessor.getInstance(), start, end,
         Interval.CLOSED);
   }
 

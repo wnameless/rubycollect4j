@@ -33,6 +33,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -264,6 +265,12 @@ public class RubyCollectionsTest {
   public void testDateRange() {
     assertTrue(
         range(RubyDate.yesterday(), RubyDate.tomorrow()) instanceof RubyRange);
+  }
+
+  @Test
+  public void testLocalDateTimeRange() {
+    assertTrue(range(LocalDateTime.now(),
+        LocalDateTime.now().plusDays(1)) instanceof RubyRange);
   }
 
 }
