@@ -100,45 +100,50 @@ Ruby.Kernel.p(new char[] { 'a', 'b', 'c' });
 // ['a', 'b', 'c']
 ```
 
-## v2.0.x Changelog
+## v2.0.0 Changelog
 Most of the functions of v1.9.x are also avaliable in v2.0.x.<br/>
 Here is the comparision list of static method names:
 
-|v2.0.x                     |v1.9.x(net.sf.rubycollect4j.RubyCollections.*)|
-|---------------------------|----------------------------------------------|
-|Ruby.Array.create          |                                              |
-|Ruby.Array.of              |ra                                            |
-|Ruby.Array.copyOf          |newRubyArray                                  |
-|                           |                                              |
-|Ruby.Hash.create           |Hash                                          |
-|Ruby.Hash.of               |rh                                            |
-|Ruby.Hash.copyOf           |newRubyHash                                   |
-|                           |                                              |
-|Ruby.Set.create            |                                              |
-|Ruby.Set.of                |                                              |
-|Ruby.Set.copyOf            |newRubySet                                    |
-|                           |                                              |
-|Ruby.Enumerator.of         |                                              |
-|Ruby.Enumerator.copyOf     |newRubyEnumerator                             |
-|                           |                                              |
-|Ruby.LazyEnumerator.of     |                                              |
-|Ruby.LazyEnumerator.copyOf |newRubyLazyEnumerator                         |
-|                           |                                              |
-|Ruby.String.create         |                                              |
-|Ruby.String.of             |rs                                            |
-|                           |                                              |
-|Ruby.Range.of              |range                                         |
-|                           |                                              |
-|Ruby.Date.of               |date                                          |
-|                           |                                              |
-|Ruby.Object.isBlank        |isBlank                                       |
-|Ruby.Object.isPresent      |isNotBlank                                    |
-|                           |                                              |
-|Ruby.File.of               |                                              |
-|                           |                                              |
-|Ruby.Dir.of                |                                              |
-|                           |                                              |
-|Ruby.Kernel.p              |                                              |
+|v2.0.x                     |v1.9.x                                   |
+|---------------------------|-----------------------------------------|
+|                           |(net.sf.rubycollect4j.RubyCollections.*) |
+|Ruby.Array.create          |                                         |
+|Ruby.Array.of              |ra                                       |
+|Ruby.Array.copyOf          |newRubyArray                             |
+|                           |                                         |
+|Ruby.Hash.create           |Hash                                     |
+|Ruby.Hash.of               |rh                                       |
+|Ruby.Hash.copyOf           |newRubyHash                              |
+|                           |                                         |
+|Ruby.Entry.of              |hp                                       |
+|                           |                                         |
+|Ruby.Set.create            |                                         |
+|Ruby.Set.of                |                                         |
+|Ruby.Set.copyOf            |newRubySet                               |
+|                           |                                         |
+|Ruby.Enumerator.of         |                                         |
+|Ruby.Enumerator.copyOf     |newRubyEnumerator                        |
+|                           |                                         |
+|Ruby.LazyEnumerator.of     |                                         |
+|Ruby.LazyEnumerator.copyOf |newRubyLazyEnumerator                    |
+|                           |                                         |
+|Ruby.String.create         |                                         |
+|Ruby.String.of             |rs                                       |
+|                           |                                         |
+|Ruby.Range.of              |range                                    |
+|                           |                                         |
+|Ruby.Date.of               |date                                     |
+|                           |                                         |
+|Ruby.Object.isBlank        |isBlank                                  |
+|Ruby.Object.isPresent      |isNotBlank                               |
+|                           |(end of RubyCollections.*)               |
+|Ruby.File.open             |RubyFile.open                            |
+|                           |                                         |
+|Ruby.Dir.open              |RubyDir.open                             |
+|                           |                                         |
+|Ruby.Kernel.p              |RubyKernel.p                             |
+
+RubyEnumerable has been changed from an abstract class into an interface due to the default methods feature of Java 8.
 
 ## Examples for v1.9.x:
 
