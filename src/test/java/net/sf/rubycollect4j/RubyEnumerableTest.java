@@ -212,7 +212,7 @@ public class RubyEnumerableTest {
 
   @Test
   public void testDetect() {
-    assertEquals(RubyEnumerator.class, re.detect().getClass());
+    assertTrue(re.detect() instanceof RubyEnumerator);
     assertEquals(ra(1, 2, 3, 4), re.detect().toA());
   }
 
@@ -318,7 +318,6 @@ public class RubyEnumerableTest {
     final RubyArray<Integer> ints = ra();
     re.eachSlice(3, item -> ints.add(item.get(0)));
     assertEquals(ra(1, 4), ints);
-
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -767,7 +766,7 @@ public class RubyEnumerableTest {
   }
 
   @Test
-  public void testSelectBlock() {
+  public void testSelectWithBlock() {
     assertEquals(ra(3, 4), re.select(item -> item >= 3));
   }
 
@@ -815,26 +814,6 @@ public class RubyEnumerableTest {
     re = newRubyEnumerator(Arrays.asList(1));
     assertEquals(ra(1), re.sort());
   }
-
-  // @Test
-  // public void testSortWithComparator() {
-  // re = newRubyEnumerator(Arrays.asList(4, 1, 2, 3, 3));
-  // assertEquals(ra(4, 3, 3, 2, 1), re.sort(new Comparator<Integer>() {
-  //
-  // @Override
-  // public int compare(Integer o1, Integer o2) {
-  // return o2 - o1;
-  // }
-  //
-  // }));
-  // assertEquals(ra(1), newRubyEnumerator(Arrays.asList(1)).sort(null));
-  // List<Integer> nulls = new ArrayList<Integer>();
-  // nulls.add(null);
-  // nulls.add(null);
-  // nulls.add(null);
-  // re = newRubyEnumerator(nulls);
-  // assertEquals(ra(null, null, null), re.sort(null));
-  // }
 
   @Test
   public void testSortBy() {
