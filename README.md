@@ -53,48 +53,98 @@ p(words);
 // Output: [A, BLEPHAROCONJUNCTIVITIS]
 ```
 
-Since v2.0.0, Java 8 is required.<br/>
+## Examples for v2.0.x:
+
+Since v2.0.0, Java 8 is required.
 
 Class Ruby has been introduced.<br/>
 It provides a super convenient way to access the numerous features of RubyCollect4J.<br/>
 All static classes and methods under Ruby class are well documented, feel free to try them by yourself.
 
-## Examples for v2.0.x:
-
 Demo Ruby:
 ```java
-Ruby.Array.copyOf(Arrays.asList(1,2,3,4));
+Ruby.Array.copyOf(Arrays.asList(1, 2, 3, 4)).minmax().join();
+// "14"
 
-Ruby.Hash.of("abc",123);
+Ruby.Hash.of("a", 1, "b", 2, "c", 3).transformValues(v -> v * 2);
+// {"a"=2, "b"=4, "c"=6}
 
-Ruby.Set.create();
+Ruby.Set.of(1, 2, 3, 4).divide(i -> i % 2 == 0);
+// [[1, 3], [2, 4]]
 
-Ruby.Enumerator.of(Arrays.asList(1,2,3,4));
+Ruby.Enumerator.of(Arrays.asList(1, 2, 3, 4)).inject((x, y) -> x * y);
+// 24
 
-Ruby.LazyEnumerator.of(Arrays.asList(1,2,3,4)).cycle();
+Ruby.LazyEnumerator.of(Arrays.asList(1,2,3,4)).cycle().first(10);
+// [1, 2, 3, 4, 1, 2, 3, 4, 1, 2]
 
-Ruby.String.of("abc");
+Ruby.String.of("abcde").tr("a-c", "z");
+// "zzzde"
 
-Ruby.Range.of(1,1000);
+Ruby.Range.of(1, 100).sum();
+// 5050
 
 Ruby.Dir.glob("./**/*");
+// [file_1, dir_1, ...]
 
-Ruby.File.foreach("/usr/share/dict/web2");
+Ruby.File.foreach("/usr/share/dict/web2").drop(99).first();
+// "Abbadide"
 
 Ruby.Date.today().onWeekdayʔ();
+// true or false
 
 Ruby.Object.isBlank(Collections.emptyList());
+// true
 
 Ruby.Kernel.p(new char[] { 'a', 'b', 'c' });
-
-Ruby.Literals.qr("[xyz]");
+// ['a', 'b', 'c']
 ```
-Most of the functions of v1.9.x are also avaliable in v2.0.x.
+
+## v2.0.x Changelog
+Most of the functions of v1.9.x are also avaliable in v2.0.x.<br/>
+Here is the comparision list of static method names:
+
+|v2.0.x                     |v1.9.x(net.sf.rubycollect4j.RubyCollections.*)|
+|---------------------------|----------------------------------------------|
+|Ruby.Array.create          |                                              |
+|Ruby.Array.of              |ra                                            |
+|Ruby.Array.copyOf          |newRubyArray                                  |
+|                           |                                              |
+|Ruby.Hash.create           |Hash                                          |
+|Ruby.Hash.of               |rh                                            |
+|Ruby.Hash.copyOf           |newRubyHash                                   |
+|                           |                                              |
+|Ruby.Set.create            |                                              |
+|Ruby.Set.of                |                                              |
+|Ruby.Set.copyOf            |newRubySet                                    |
+|                           |                                              |
+|Ruby.Enumerator.of         |                                              |
+|Ruby.Enumerator.copyOf     |newRubyEnumerator                             |
+|                           |                                              |
+|Ruby.LazyEnumerator.of     |                                              |
+|Ruby.LazyEnumerator.copyOf |newRubyLazyEnumerator                         |
+|                           |                                              |
+|Ruby.String.create         |                                              |
+|Ruby.String.of             |rs                                            |
+|                           |                                              |
+|Ruby.Range.of              |range                                         |
+|                           |                                              |
+|Ruby.Date.of               |date                                          |
+|                           |                                              |
+|Ruby.Object.isBlank        |isBlank                                       |
+|Ruby.Object.isPresent      |isNotBlank                                    |
+|                           |                                              |
+|Ruby.File.of               |                                              |
+|                           |                                              |
+|Ruby.Dir.of                |                                              |
+|                           |                                              |
+|Ruby.Kernel.p              |                                              |
 
 ## Examples for v1.9.x:
 
 Since v1.9.0, RubyIterables & RubyStrings are added, they are simply utility classes just like java.util.Arrays.<br/>
-They provide the Ruby style ways to manipulate any Iterable and String (or CharSequence).<br/>
+They provide the Ruby style ways to manipulate any Iterable and String (or CharSequence).
+
 Highly recommended to use with the @ExtensionMethod of [Project Lombok](https://projectlombok.org/).
 ```java
 Iterable<Integer> ints = Arrays.asList(3, 6, 7, 2);
