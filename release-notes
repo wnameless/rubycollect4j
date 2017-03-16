@@ -327,3 +327,7 @@ Version 2.0.0
 + Add RubyDate#step, #upto, #downto
 
 * Change #dayOfWeek to #wday,  #dayOfMonth to #mday,  #dayOfYear to #yday in RubyDate 
+
++ Add LocalDateTime Successor
+
++ Improve Generic declarations of functional interfaces in methods

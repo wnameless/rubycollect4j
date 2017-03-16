@@ -10,28 +10,21 @@ It also implements parts of Ruby Dir, File and Date methods.
 
 For further information, please visit http://ruby-doc.org website.
 
-Installation with Maven:
+Install v2.0.0(Java 1.8 required):
+``` xml
+<dependency>
+  <groupId>net.sf.rubycollect4j</groupId>
+  <artifactId>rubycollect4j</artifactId>
+  <version>2.0.0</version>
+</dependency>
+```
+
+Install v1.9.0(Java 1.6+):
 ``` xml
 <dependency>
   <groupId>net.sf.rubycollect4j</groupId>
   <artifactId>rubycollect4j</artifactId>
   <version>1.9.0</version>
-</dependency>
-```
-
-Install v2.0.0-SNAPSHOT(Java 1.8 required):
-``` xml
-<repositories>
-  <repository>
-    <id>jitpack.io</id>
-    <url>https://jitpack.io</url>
-  </repository>
-</repositories>
-	
-<dependency>
-  <groupId>com.github.wnameless</groupId>
-  <artifactId>rubycollect4j</artifactId>
-  <version>master-SNAPSHOT</version>
 </dependency>
 ```
 
