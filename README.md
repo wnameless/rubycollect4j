@@ -1,4 +1,5 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.sf.rubycollect4j/rubycollect4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.sf.rubycollect4j/rubycollect4j)
+[![codecov](https://codecov.io/gh/wnameless/rubycollect4j/branch/master/graph/badge.svg)](https://codecov.io/gh/wnameless/rubycollect4j)
 
 
 rubycollect4j
