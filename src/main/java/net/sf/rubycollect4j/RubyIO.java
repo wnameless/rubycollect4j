@@ -25,7 +25,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.logging.Level;
@@ -86,7 +88,7 @@ public class RubyIO {
     AR("a+", true, true);
 
     private static final Map<String, Mode> modeMap =
-        Ruby.Hash.create(Ruby.Array.copyOf(values())
+        Ruby.Hash.create((List<Entry<String, Mode>>) Ruby.Array.copyOf(values())
             .map(item -> Ruby.Entry.of(item.toString(), item))).freeze();
 
     private final String mode;

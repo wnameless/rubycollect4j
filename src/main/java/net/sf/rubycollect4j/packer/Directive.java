@@ -25,6 +25,7 @@ import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import net.sf.rubycollect4j.Ruby;
@@ -173,9 +174,10 @@ public enum Directive {
    */
   h(false);
 
-  public static final Map<String, Directive> lookup =
-      Ruby.Hash.create(Ruby.Array.copyOf(Directive.values())
-          .map(item -> Ruby.Entry.of(item.toString(), item))).freeze();
+  public static final Map<String, Directive> lookup = Ruby.Hash.create(
+      (List<Entry<String, Directive>>) Ruby.Array.copyOf(Directive.values())
+          .map(item -> Ruby.Entry.of(item.toString(), item)))
+      .freeze();
 
   private final boolean widthAdjustable;
 
@@ -430,8 +432,10 @@ public enum Directive {
    * @return true if template is valid, otherwise false
    */
   public static boolean verify(String template) {
-    return Pattern.compile("((" + Ruby.Array.copyOf(Directive.values())
-        .map(item -> item.toString()).join("|") + ")(([1-9]\\d*)?\\*?)?)+").matcher(template).matches();
+    return Pattern
+        .compile("((" + Ruby.Array.copyOf(Directive.values())
+            .map(item -> item.toString()).join("|") + ")(([1-9]\\d*)?\\*?)?)+")
+        .matcher(template).matches();
   }
 
   @Override
