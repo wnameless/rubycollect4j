@@ -132,6 +132,9 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<executable>gpg</executable>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
