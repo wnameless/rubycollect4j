@@ -742,6 +742,15 @@ public final class RubyHash<K, V>
   }
 
   /**
+   * Puts all entries into a {@link Map}.
+   * 
+   * @return a {@link Map}
+   */
+  public Map<K, V> toMap() {
+    return new LinkedHashMap<>(this);
+  }
+
+  /**
    * Equivalent to {@link #toString()}.
    * 
    * @return String

@@ -18,6 +18,7 @@
 package net.sf.rubycollect4j;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -1111,6 +1112,13 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
   @Override
   public RubyArray<E> toA() {
     return Ruby.Array.copyOf(iter);
+  }
+
+  @Override
+  public List<E> toList() {
+    List<E> list = new ArrayList<>();
+    iter.forEach(e -> list.add(e));
+    return list;
   }
 
   @Override

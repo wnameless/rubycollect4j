@@ -99,8 +99,8 @@ public class RubyDir implements RubyEnumerable<String> {
    */
   public static RubyArray<String> entries(String path) {
     File file = new File(path);
-    return Ruby.Array.copyOf(file.listFiles()).map(item -> item.getName())
-        .unshift("..").unshift(".");
+    return Ruby.Array.copyOf(file.listFiles()).sort()
+        .map(item -> item.getName()).unshift("..").unshift(".");
   }
 
   /**

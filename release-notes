@@ -331,3 +331,10 @@ Version 2.0.0
 + Add LocalDateTime Successor
 
 + Improve Generic declarations of functional interfaces in methods
+
+
+Version 2.0.1
+
++ Add toList() API to Ruby.Enumerable
+
++ Add toMap() API to RubyHash

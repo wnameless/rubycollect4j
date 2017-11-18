@@ -18,6 +18,7 @@
 package net.sf.rubycollect4j;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map.Entry;
@@ -884,6 +885,13 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
   @Override
   default RubyArray<E> toA() {
     return Ruby.Array.copyOf(this);
+  }
+
+  @Override
+  default List<E> toList() {
+    List<E> list = new ArrayList<>();
+    this.forEach(e -> list.add(e));
+    return list;
   }
 
   @Override

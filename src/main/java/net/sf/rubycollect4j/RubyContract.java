@@ -1057,6 +1057,13 @@ final class RubyContract {
     RubyArray<E> toA();
 
     /**
+     * Puts all elements into a {@link List}.
+     * 
+     * @return {@link List}
+     */
+    List<E> toList();
+
+    /**
      * Creates a {@link RubyHash} by transforming each element into an
      * {@link Entry}.
      * 
