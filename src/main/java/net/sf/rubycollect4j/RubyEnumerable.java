@@ -285,7 +285,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    */
   @Override
   default RubyEnumerable<E> eachEntry(Consumer<? super E> block) {
-    this.forEach(item -> block.accept(item));
+    this.forEach(block::accept);
     return this;
   }
 
@@ -890,7 +890,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
   @Override
   default List<E> toList() {
     List<E> list = new ArrayList<>();
-    this.forEach(e -> list.add(e));
+    this.forEach(list::add);
     return list;
   }
 

@@ -132,7 +132,7 @@ public final class RubyArray<E>
     Objects.requireNonNull(iter);
 
     list = new ArrayList<>();
-    iter.forEach(item -> list.add(item));
+    iter.forEach(list::add);
   }
 
   /**

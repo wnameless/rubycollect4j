@@ -109,7 +109,7 @@ public final class RubySet<E>
     Objects.requireNonNull(iter);
 
     set = new LinkedHashSet<>();
-    iter.forEach(e -> set.add(e));
+    iter.forEach(set::add);
   }
 
   /**
@@ -209,7 +209,7 @@ public final class RubySet<E>
    */
   public RubySet<E> difference(Iterable<E> iter) {
     RubySet<E> newSet = RubySet.copyOf(set);
-    iter.forEach(e -> newSet.remove(e));
+    iter.forEach(newSet::remove);
     return newSet;
   }
 
@@ -249,7 +249,7 @@ public final class RubySet<E>
    */
   @Override
   public RubySet<E> each(Consumer<? super E> block) {
-    set.forEach(e -> block.accept(e));
+    set.forEach(block::accept);
     return this;
   }
 
@@ -409,7 +409,7 @@ public final class RubySet<E>
    * @return this {@link RubySet}
    */
   public RubySet<E> merge(Iterable<E> iter) {
-    iter.forEach(e -> set.add(e));
+    iter.forEach(set::add);
     return this;
   }
 
@@ -471,7 +471,7 @@ public final class RubySet<E>
    */
   public RubySet<E> replace(Iterable<E> iter) {
     set.clear();
-    iter.forEach(e -> set.add(e));
+    iter.forEach(set::add);
     return this;
   }
 
@@ -513,7 +513,7 @@ public final class RubySet<E>
    * @return this {@link RubySet}
    */
   public RubySet<E> subtract(Iterable<E> iter) {
-    iter.forEach(e -> set.remove(e));
+    iter.forEach(set::remove);
     return this;
   }
 
@@ -543,7 +543,7 @@ public final class RubySet<E>
    */
   public RubySet<E> union(Iterable<E> iter) {
     RubySet<E> newSet = RubySet.copyOf(set);
-    iter.forEach(e -> newSet.add(e));
+    iter.forEach(newSet::add);
     return newSet;
   }
 

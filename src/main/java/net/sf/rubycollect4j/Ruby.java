@@ -100,7 +100,7 @@ public final class Ruby {
     public static <E> RubyArray<E> of(E first, E... others) {
       RubyArray<E> rubyArray = new RubyArray<>();
       rubyArray.add(first);
-      Arrays.asList(others).forEach(e -> rubyArray.add(e));
+      Arrays.asList(others).forEach(rubyArray::add);
       return rubyArray;
     }
 
@@ -125,7 +125,7 @@ public final class Ruby {
      */
     public static <E> RubyArray<E> copyOf(E[] elements) {
       RubyArray<E> rubyArray = new RubyArray<>();
-      Arrays.asList(elements).forEach(e -> rubyArray.add(e));
+      Arrays.asList(elements).forEach(rubyArray::add);
       return rubyArray;
     }
 
@@ -164,7 +164,7 @@ public final class Ruby {
      */
     public static <E> RubyArray<E> copyOf(Iterator<E> iter) {
       RubyArray<E> rubyArray = new RubyArray<>();
-      iter.forEachRemaining(e -> rubyArray.add(e));
+      iter.forEachRemaining(rubyArray::add);
       return rubyArray;
     }
 
@@ -235,7 +235,7 @@ public final class Ruby {
     public static <K, V> RubyHash<K, V> create(
         Iterable<? extends java.util.Map.Entry<? extends K, ? extends V>> entries) {
       RubyHash<K, V> rubyHash = new RubyHash<>();
-      entries.forEach(entry -> rubyHash.put(entry));
+      entries.forEach(rubyHash::put);
       return rubyHash;
     }
 
@@ -2554,7 +2554,7 @@ public final class Ruby {
      */
     public static <E> RubySet<E> copyOf(Iterator<E> iter) {
       RubySet<E> rs = new RubySet<>();
-      iter.forEachRemaining(e -> rs.add(e));
+      iter.forEachRemaining(rs::add);
       return rs;
     }
 

@@ -1117,7 +1117,7 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
   @Override
   public List<E> toList() {
     List<E> list = new ArrayList<>();
-    iter.forEach(e -> list.add(e));
+    iter.forEach(list::add);
     return list;
   }
 

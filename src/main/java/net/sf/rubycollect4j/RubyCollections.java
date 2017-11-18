@@ -85,7 +85,7 @@ public final class RubyCollections {
    */
   public static <E> RubyArray<E> newRubyArray(Iterator<E> iter) {
     RubyArray<E> rubyArray = new RubyArray<>();
-    iter.forEachRemaining(e -> rubyArray.add(e));
+    iter.forEachRemaining(rubyArray::add);
     return rubyArray;
   }
 
