@@ -534,6 +534,15 @@ public final class RubySet<E>
   }
 
   /**
+   * Puts all elements into a {@link Set}.
+   * 
+   * @return a {@link Set}
+   */
+  public Set<E> toSet() {
+    return new LinkedHashSet<>(set);
+  }
+
+  /**
    * Returns a new set built by merging the set and the elements of the given
    * Iterable.
    * 

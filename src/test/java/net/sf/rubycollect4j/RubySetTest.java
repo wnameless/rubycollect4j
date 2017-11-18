@@ -367,6 +367,17 @@ public class RubySetTest {
   }
 
   @Test
+  public void testToSet() {
+    Set<Integer> set = new LinkedHashSet<>();
+    set.add(1);
+    set.add(2);
+    set.add(3);
+    set.add(3);
+    assertEquals(set, rs.toSet());
+    assertTrue(rs.toSet() instanceof LinkedHashSet);
+  }
+
+  @Test
   public void testEquals() {
     assertTrue(rs.equals(new HashSet<Integer>(Arrays.asList(1, 2, 3))));
     assertFalse(rs.equals(new HashSet<Integer>(Arrays.asList(2, 3, 4))));

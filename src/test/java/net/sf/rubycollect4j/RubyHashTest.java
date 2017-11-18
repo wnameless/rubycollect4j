@@ -451,6 +451,16 @@ public class RubyHashTest {
   }
 
   @Test
+  public void testToMap() {
+    Map<Integer, Integer> map = new LinkedHashMap<Integer, Integer>();
+    map.put(1, 2);
+    map.put(3, 4);
+    map.put(5, 6);
+    assertEquals(map, rh.toMap());
+    assertTrue(rh.toMap() instanceof LinkedHashMap);
+  }
+
+  @Test
   public void testToS() {
     assertEquals("{1=2, 3=4, 5=6}", rh.toS());
     assertEquals(rh.toString(), rh.toS());
@@ -879,16 +889,6 @@ public class RubyHashTest {
     map.put(3, 4);
     rh = rh(1, 2, 3, 4);
     assertEquals(map.hashCode(), rh.hashCode());
-  }
-
-  @Test
-  public void testToMap() {
-    Map<Integer, Integer> map = new LinkedHashMap<Integer, Integer>();
-    map.put(1, 2);
-    map.put(3, 4);
-    map.put(5, 6);
-    assertEquals(map, rh.toMap());
-    assertTrue(rh.toMap() instanceof LinkedHashMap);
   }
 
   @Test

@@ -747,7 +747,7 @@ public final class RubyHash<K, V>
    * @return a {@link Map}
    */
   public Map<K, V> toMap() {
-    return new LinkedHashMap<>(this);
+    return new LinkedHashMap<>(map);
   }
 
   /**
