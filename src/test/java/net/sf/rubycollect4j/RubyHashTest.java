@@ -882,6 +882,16 @@ public class RubyHashTest {
   }
 
   @Test
+  public void testToMap() {
+    Map<Integer, Integer> map = new LinkedHashMap<Integer, Integer>();
+    map.put(1, 2);
+    map.put(3, 4);
+    map.put(5, 6);
+    assertEquals(map, rh.toMap());
+    assertTrue(rh.toMap() instanceof LinkedHashMap);
+  }
+
+  @Test
   public void testToString() {
     Map<Integer, Integer> map = new LinkedHashMap<Integer, Integer>();
     map.put(1, 2);

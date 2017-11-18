@@ -917,6 +917,12 @@ public class RubyEnumerableTest {
   }
 
   @Test
+  public void testToList() {
+    assertEquals(Arrays.asList(1, 2, 3, 4), re.toList());
+    assertTrue(re.toList() instanceof ArrayList);
+  }
+
+  @Test
   public void testToH() {
     assertEquals(rh(1, 2, 3, 4), new RubyEnumerable<List<Integer>>() {
 
