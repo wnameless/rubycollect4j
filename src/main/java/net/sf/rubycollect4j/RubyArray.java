@@ -1780,13 +1780,19 @@ public final class RubyArray<E>
   }
 
   /**
-   * Puts an element at beginning of this {@link RubyArray}
+   * Puts an element or elements at beginning of this {@link RubyArray}
    * 
    * @param item
    *          an element
+   * @param others
+   *          other elements
    * @return this {@link RubyArray}
    */
-  public RubyArray<E> unshift(E item) {
+  @SafeVarargs
+  public final RubyArray<E> unshift(E item, E... others) {
+    for (int i = others.length - 1; i >= 0; i--) {
+      list.add(0, others[i]);
+    }
     list.add(0, item);
     return this;
   }

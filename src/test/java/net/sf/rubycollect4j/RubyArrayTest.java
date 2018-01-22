@@ -1098,6 +1098,7 @@ public class RubyArrayTest {
   @Test
   public void testUnshift() {
     assertEquals(ra(0, 1, 2, 3, 4), ra.unshift(0));
+    assertEquals(ra(-2, -1, 0, 1, 2, 3, 4), ra.unshift(-2, -1));
   }
 
   @Test

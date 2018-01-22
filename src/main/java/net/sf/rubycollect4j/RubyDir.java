@@ -104,6 +104,15 @@ public class RubyDir implements RubyEnumerable<String> {
   }
 
   /**
+   * Puts entries of this {@link Ruby.File} into a {@link RubyArray}.
+   * 
+   * @return {@link RubyArray}
+   */
+  public RubyArray<String> entries() {
+    return eachEntry().toA();
+  }
+
+  /**
    * Checks if the file is a directory.
    * 
    * @param path

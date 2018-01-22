@@ -340,3 +340,7 @@ Version 2.0.1
 + Add toMap() API to RubyHash
 
 + Add toSet() API to RubySet
+
+* RubyArray#unshift now takes more than 1 element
+
++ Add RubyFile#entries

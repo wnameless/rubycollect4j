@@ -69,6 +69,8 @@ public class RubyDirTest {
   public void testEntries() {
     assertEquals(ra(".", "..", "a", "b"),
         RubyDir.entries(BASE_DIR + "entries_test"));
+    assertEquals(ra(".", "..", "a", "b"),
+        RubyDir.open(BASE_DIR + "entries_test").entries());
   }
 
   @Test
