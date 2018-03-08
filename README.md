@@ -149,7 +149,7 @@ Here is the comparision list of static method names:
 
 RubyEnumerable has been changed from an abstract class into an interface due to the default methods feature of Java 8.
 
-## Examples for v1.9.x:
+## Examples:
 
 Since v1.9.0, RubyIterables & RubyStrings are added, they are simply utility classes just like java.util.Arrays.<br/>
 They provide the Ruby style ways to manipulate any Iterable and String (or CharSequence).
@@ -273,7 +273,7 @@ public class YourIterableClass<E> extends RubyEnumerable<E> {
 p( new YourIterableClass(iter) instanceof Ruby.Enumerable ); // Output: true
 ```
 
-Demo Ruby.Enumerator.of() & Ruby.Enumerator.copyOf():
+Demo RubyEnumerator:
 ```java
 Map<String, Long> map = new LinkedHashMap<String, Long>() {{ put("a", 1L); put("b", 2L); put("c", 3L); }};
 // Any Iterable object can be wrapped into RubyEnumerator.
@@ -299,7 +299,7 @@ Map<String, Long> map = new LinkedHashMap<String, Long>() {{ put("a", 1L); put("
 RubyEnumerator<Entry<String, Long>> re = Ruby.Enumerator.copyOf(map.entrySet());
 ```
 
-Demo Ruby.LazyEnumerator.of() & Ruby.LazyEnumerator.copyOf():
+Demo RubyLazyEnumerator:
 ```java
 RubyLazyEnumerator rle = Ruby.LazyEnumerator.of(Arrays.asList(1, 2, 3, 4));
 // RubyLazyEnumerator is not a Ruby.Enumerable, but it is a Ruby.LazyEnumerator.
@@ -315,7 +315,7 @@ p( ra(1, 2, 3, 4).lazy().cycle().drop(6).first() ); // Output: 3
 // By default, RubyLazyEnumerator.of() is just a wrapper to an existed Iterable.
 // You can make a defensive copy by following codes.
 Map<String, Long> map = new LinkedHashMap<String, Long>() {{ put("a", 1L); put("b", 2L); put("c", 3L); }};
-RubyLazyEnumerator<Entry<String, Long>> re = RubyLazyEnumerator.copyOf(map.entrySet());
+RubyLazyEnumerator<Entry<String, Long>> re = Ruby.LazyEnumerator.copyOf(map.entrySet());
 ```
 
 Demo RubyRange:
@@ -327,7 +327,7 @@ p( Ruby.Range.of(1.08, 1.1).toA() );                              // Output: [1.
 p( Ruby.Range.of("1.08", "1.1").toA() );                          // Output: [1.08, 1.09, 1.10]
 p( Ruby.Range.of(Ruby.Date.of(2013, 06, 30), Ruby.Date.of(2013, 07, 01)).toA() ); // Output: [Sun Jun 30 00:00:00 CST 2013, Mon Jul 01 00:00:00 CST 2013]
 
-// RubyRange accepts any Temporal objects and TemporalUnit of Java 8
+// RubyRange accepts any Temporal objects and TemporalUnit(ChronoUnit) of Java 8
 p( Ruby.Range.of(LocalDateTime.now(), LocalDateTime.now().plusDays(7), ChronoUnit.DAYS).toA().size() )    // Output: 8
 p( Ruby.Range.of(LocalDateTime.now(), LocalDateTime.now().plusDays(7), ChronoUnit.SECONDS).toA().size() ) // Output: 604801
 ```
