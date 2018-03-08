@@ -19,6 +19,7 @@ package net.sf.rubycollect4j;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -26,7 +27,9 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -322,6 +325,21 @@ public class RubyTest {
   public void testLocalDateTimeRange() {
     assertTrue(Ruby.Range.of(LocalDateTime.now(),
         LocalDateTime.now().plusDays(1)) instanceof RubyRange);
+  }
+
+  @Test
+  public void testTemporalRange() {
+    RubyRange<LocalDate> range1 = Ruby.Range.of(LocalDate.now(),
+        LocalDate.now().plusDays(10), ChronoUnit.DAYS);
+    assertEquals(11, range1.count());
+    assertTrue(range1.includeʔ(LocalDate.now().plusDays(5)));
+    assertFalse(range1.includeʔ(LocalDate.now().plusDays(11)));
+
+    RubyRange<LocalDateTime> range2 = Ruby.Range.of(LocalDateTime.now(),
+        LocalDateTime.now().plusSeconds(10), ChronoUnit.SECONDS);
+    assertEquals(11, range2.count());
+    assertTrue(range2.includeʔ(LocalDateTime.now().plusSeconds(5)));
+    assertFalse(range2.includeʔ(LocalDateTime.now().plusSeconds(11)));
   }
 
   @Test

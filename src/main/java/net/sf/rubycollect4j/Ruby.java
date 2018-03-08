@@ -20,6 +20,8 @@ package net.sf.rubycollect4j;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.Temporal;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -36,6 +38,7 @@ import net.sf.rubycollect4j.succ.IntegerSuccessor;
 import net.sf.rubycollect4j.succ.LocalDateTimeSuccessor;
 import net.sf.rubycollect4j.succ.LongSuccessor;
 import net.sf.rubycollect4j.succ.StringSuccessor;
+import net.sf.rubycollect4j.succ.TemporalSuccessor;
 import net.sf.rubycollect4j.util.ComparableEntry;
 
 /**
@@ -2776,6 +2779,23 @@ public final class Ruby {
     public static RubyRange<LocalDateTime> of(LocalDateTime start,
         LocalDateTime end) {
       return new RubyRange<>(LocalDateTimeSuccessor.getInstance(), start, end,
+          Interval.CLOSED);
+    }
+
+    /**
+     * Creates a {@link RubyRange} by given {@link Temporal}s.
+     * 
+     * @param start
+     *          of the range
+     * @param end
+     *          of the range
+     * @param chronoUnit
+     *          used to generate successive item of a {@link Temporal}
+     * @return {@link RubyRange}
+     */
+    public static <T extends Temporal> RubyRange<T> of(T start, T end,
+        ChronoUnit chronoUnit) {
+      return new RubyRange<>(new TemporalSuccessor<T>(chronoUnit), start, end,
           Interval.CLOSED);
     }
 
