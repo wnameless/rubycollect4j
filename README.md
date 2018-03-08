@@ -169,7 +169,7 @@ Please add following lines before running examples:
 import static net.sf.rubycollect4j.RubyKernel.p;
 ```
 
-Demo ra() & newRubyArray():
+Demo RubyArray:
 ```java
 p( Ruby.Array.of(1, 2, 3, 4) );                         // Output: [1, 2, 3, 4]
 p( Ruby.Array.of(Ruby.Array.of(1, 2)) );                           // Output: [[1, 2]]
@@ -189,14 +189,14 @@ p( Ruby.Array.of(1, 2, 3) instanceof Ruby.Enumerable ); // Output: true
 ```
 
 ```java
-// By default, ra() is just a wrapper to an existed List.
+// By default, Ruby.Array.of() is just a wrapper to an existed List.
 // You can make a defensive copy by following codes.
 List<Integer> list = new ArrayList<Integer>();
 list.add(1);
 RubyArray<Integer> ra = Ruby.Array.copyOf(list);
 ```
 
-Demo rh(), hp(), Hash() & newRubyHash():
+Demo RubyHash:
 ```java
 p(  Ruby.Hash.of("a", 1, "b" ,2) );                        // Output: {a=1, b=2}
 Map<String, Long> map = new HashMap<String, Long>();
