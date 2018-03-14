@@ -113,7 +113,6 @@ public final class RubyIterables {
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#collectConcat(Function)
    */
-  @SuppressWarnings("unchecked")
   public static <E, S> List<S> collectConcat(Iterable<E> in,
       Function<? super E, ? extends List<? extends S>> block) {
     return (List<S>) Ruby.LazyEnumerator.of(in).collectConcat(block).toA();
@@ -324,7 +323,6 @@ public final class RubyIterables {
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#flatMap(Function)
    */
-  @SuppressWarnings("unchecked")
   public static <S, E> List<S> flatMap(Iterable<E> in,
       Function<? super E, ? extends List<? extends S>> block) {
     return (List<S>) Ruby.LazyEnumerator.of(in).flatMap(block).toA();

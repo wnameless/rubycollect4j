@@ -134,7 +134,6 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * 
    * @return {@link RubyArray}
    */
-  @SuppressWarnings("unchecked")
   @Override
   default <S> RubyArray<S> collectConcat(
       Function<? super E, ? extends List<? extends S>> block) {
@@ -426,7 +425,6 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * 
    * @return {@link RubyArray}
    */
-  @SuppressWarnings("unchecked")
   @Override
   default <S> RubyArray<S> flatMap(
       Function<? super E, ? extends List<? extends S>> block) {
