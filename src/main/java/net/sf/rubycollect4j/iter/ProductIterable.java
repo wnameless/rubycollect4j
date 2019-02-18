@@ -36,8 +36,7 @@ import net.sf.rubycollect4j.RubyArray;
  */
 public final class ProductIterable<E> implements Iterable<RubyArray<E>> {
 
-  private final List<List<? extends E>> lists =
-      new ArrayList<>();
+  private final List<List<? extends E>> lists = new ArrayList<>();
 
   /**
    * Creates a {@link ProductIterable}.

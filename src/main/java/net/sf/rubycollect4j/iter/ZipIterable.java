@@ -56,8 +56,7 @@ public final class ZipIterable<E> implements Iterable<RubyArray<E>> {
 
   @Override
   public Iterator<RubyArray<E>> iterator() {
-    List<Iterator<? extends E>> otherIter =
-        new ArrayList<>();
+    List<Iterator<? extends E>> otherIter = new ArrayList<>();
     for (Iterable<? extends E> i : others) {
       otherIter.add(i.iterator());
     }

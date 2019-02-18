@@ -377,6 +377,7 @@ public class RubySetTest {
     assertTrue(rs.toSet() instanceof LinkedHashSet);
   }
 
+  @SuppressWarnings("unlikely-arg-type")
   @Test
   public void testEquals() {
     assertTrue(rs.equals(new HashSet<Integer>(Arrays.asList(1, 2, 3))));

@@ -67,6 +67,7 @@ public class ComparableEntryTest {
     assertEquals(Integer.valueOf(2), entry.getValue());
   }
 
+  @SuppressWarnings("unlikely-arg-type")
   @Test
   public void testEquals() {
     assertTrue(entry.equals(new SimpleEntry<Integer, Integer>(0, 1)));

@@ -347,8 +347,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean retainAll(Collection<?> c) {
-      Map<IdentityEntry<?, ?>, Object> hashMap =
-          new HashMap<>();
+      Map<IdentityEntry<?, ?>, Object> hashMap = new HashMap<>();
       for (Object o : c) {
         if (o instanceof Entry) {
           Entry<?, ?> entry = (Entry<?, ?>) o;

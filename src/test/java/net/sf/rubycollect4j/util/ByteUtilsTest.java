@@ -162,7 +162,8 @@ public class ByteUtilsTest {
   public void testToByteArrayWithBoolean() {
     assertArrayEquals(new byte[] { '\0' }, ByteUtils.toByteArray(false));
     assertArrayEquals(new byte[] { '\1' }, ByteUtils.toByteArray(true));
-    assertArrayEquals(new byte[] { '\0' }, ByteUtils.toByteArray(Boolean.FALSE));
+    assertArrayEquals(new byte[] { '\0' },
+        ByteUtils.toByteArray(Boolean.FALSE));
     assertArrayEquals(new byte[] { '\1' }, ByteUtils.toByteArray(Boolean.TRUE));
   }
 

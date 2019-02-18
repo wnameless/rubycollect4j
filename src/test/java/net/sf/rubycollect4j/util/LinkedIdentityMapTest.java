@@ -204,6 +204,7 @@ public class LinkedIdentityMapTest {
     assertEquals(ra(3, 2, 1), ra(map.values()));
   }
 
+  @SuppressWarnings("unlikely-arg-type")
   @Test
   public void testEquals() {
     map.clear();

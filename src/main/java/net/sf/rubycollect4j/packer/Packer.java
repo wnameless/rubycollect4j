@@ -158,8 +158,10 @@ public final class Packer {
   }
 
   static List<String> parseTemplate(String template) {
-    return Ruby.Array.copyOf(template.split("(?!^)")).sliceBefore(Ruby.Array
-        .copyOf(Directive.values()).map(item -> item.toString()).join("|")).map(item -> item.join());
+    return Ruby.Array
+        .copyOf(template.split("(?!^)")).sliceBefore(Ruby.Array
+            .copyOf(Directive.values()).map(item -> item.toString()).join("|"))
+        .map(item -> item.join());
   }
 
 }
