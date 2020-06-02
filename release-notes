@@ -350,3 +350,7 @@ Version 2.1.0
 
 + Java 9 Module supported
 
+* Replace TypeConstraintException with ClassCastException
+
+* Improve RubyFile#chmod with Files.setPosixFilePermissions
+
