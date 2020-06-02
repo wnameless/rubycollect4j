@@ -33,8 +33,6 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
-import javax.xml.bind.TypeConstraintException;
-
 import net.sf.rubycollect4j.iter.ChunkIterable;
 import net.sf.rubycollect4j.iter.ChunkWhileIterable;
 import net.sf.rubycollect4j.iter.CycleIterable;
@@ -1067,7 +1065,7 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
         sum = sum.add(new BigDecimal(block.apply(num).toString()));
       } else {
         String type = item == null ? "null" : item.getClass().getSimpleName();
-        throw new TypeConstraintException(
+        throw new ClassCastException(
             "TypeError: " + type + " can't be coerced into Number");
       }
     }

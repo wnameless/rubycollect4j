@@ -31,8 +31,6 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.xml.bind.TypeConstraintException;
-
 import net.sf.rubycollect4j.Ruby;
 import net.sf.rubycollect4j.RubyArray;
 
@@ -368,7 +366,7 @@ public final class ByteUtils {
       return (byte[]) mothod.invoke(o);
     } catch (Exception e) {
       logger.log(Level.SEVERE, null, e);
-      throw new TypeConstraintException("TypeError: no implicit conversion of "
+      throw new ClassCastException("TypeError: no implicit conversion of "
           + (o == null ? null : o.getClass().getName()) + " into byte[]");
     }
   }

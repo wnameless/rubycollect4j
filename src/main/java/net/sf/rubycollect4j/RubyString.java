@@ -39,8 +39,6 @@ import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.xml.bind.TypeConstraintException;
-
 import net.sf.rubycollect4j.packer.Unpacker;
 import net.sf.rubycollect4j.succ.StringSuccessor;
 import net.sf.rubycollect4j.util.ByteUtils;
@@ -86,7 +84,7 @@ public final class RubyString
   }
 
   private String stringify(Object o) {
-    if (o == null) throw new TypeConstraintException(
+    if (o == null) throw new ClassCastException(
         "TypeError: no implicit conversion of null into String");
 
     if (o instanceof String) return (String) o;
@@ -975,7 +973,7 @@ public final class RubyString
    */
   public Integer index(Pattern regex) {
     if (regex == null)
-      throw new TypeConstraintException("TypeError: type mismatch: null given");
+      throw new ClassCastException("TypeError: type mismatch: null given");
 
     return index(regex, 0);
   }
@@ -992,7 +990,7 @@ public final class RubyString
    */
   public Integer index(Pattern regex, int offset) {
     if (regex == null)
-      throw new TypeConstraintException("TypeError: type mismatch: null given");
+      throw new ClassCastException("TypeError: type mismatch: null given");
 
     if (offset < 0 || offset > str.length()) return null;
 
@@ -1217,7 +1215,7 @@ public final class RubyString
    */
   public RubyArray<String> partition(String sep) {
     if (sep == null)
-      throw new TypeConstraintException("TypeError: type mismatch: null given");
+      throw new ClassCastException("TypeError: type mismatch: null given");
 
     int sepIndex = str.indexOf(sep);
     if (sepIndex == -1) return Ruby.Array.of(str, "", "");
@@ -1237,7 +1235,7 @@ public final class RubyString
    */
   public RubyArray<String> partition(Pattern pattern) {
     if (pattern == null)
-      throw new TypeConstraintException("TypeError: type mismatch: null given");
+      throw new ClassCastException("TypeError: type mismatch: null given");
 
     Matcher matcher = pattern.matcher(str);
     if (matcher.find()) {
@@ -1338,7 +1336,7 @@ public final class RubyString
    */
   public Integer rindex(Pattern pattern) {
     if (pattern == null)
-      throw new TypeConstraintException("TypeError: type mismatch: null given");
+      throw new ClassCastException("TypeError: type mismatch: null given");
 
     return rindex(pattern, str.length() - 1);
   }
@@ -1357,7 +1355,7 @@ public final class RubyString
    */
   public Integer rindex(Pattern pattern, int stopAt) {
     if (pattern == null)
-      throw new TypeConstraintException("TypeError: type mismatch: null given");
+      throw new ClassCastException("TypeError: type mismatch: null given");
 
     if (stopAt < 0) stopAt += str.length();
     if (stopAt < 0) return null;
@@ -1423,7 +1421,7 @@ public final class RubyString
    */
   public RubyArray<String> rpartition(String sep) {
     if (sep == null)
-      throw new TypeConstraintException("TypeError: type mismatch: null given");
+      throw new ClassCastException("TypeError: type mismatch: null given");
 
     int sepIndex = str.lastIndexOf(sep);
     if (sepIndex == -1) return Ruby.Array.of("", "", str);
@@ -1443,7 +1441,7 @@ public final class RubyString
    */
   public RubyArray<String> rpartition(Pattern pattern) {
     if (pattern == null)
-      throw new TypeConstraintException("TypeError: type mismatch: null given");
+      throw new ClassCastException("TypeError: type mismatch: null given");
 
     Matcher matcher = pattern.matcher(str);
     if (matcher.find()) {
@@ -1693,7 +1691,7 @@ public final class RubyString
    */
   public RubyString slice(Pattern pattern) {
     if (pattern == null)
-      throw new TypeConstraintException("TypeError: type mismatch: null given");
+      throw new ClassCastException("TypeError: type mismatch: null given");
 
     Matcher matcher = pattern.matcher(str);
     if (matcher.find())

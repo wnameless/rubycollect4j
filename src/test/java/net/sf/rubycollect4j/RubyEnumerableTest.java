@@ -38,8 +38,6 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-import javax.xml.bind.TypeConstraintException;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -852,7 +850,7 @@ public class RubyEnumerableTest {
         newRubyEnumerator(Arrays.asList(1, 2, 3, 4)).sum());
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testSumException() {
     newRubyEnumerator(Arrays.asList("a", "b", "c")).sum();
   }

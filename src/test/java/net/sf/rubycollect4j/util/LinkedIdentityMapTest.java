@@ -80,7 +80,7 @@ public class LinkedIdentityMapTest {
   @Test
   public void testContainsValue() {
     map.put(new String("a"), null);
-    assertTrue(map.containsValue(new Integer(1)));
+    assertTrue(map.containsValue(Integer.valueOf(1)));
     assertFalse(map.containsValue(2));
     assertTrue(map.containsValue(null));
   }

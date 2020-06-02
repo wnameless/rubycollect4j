@@ -21,7 +21,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.awt.Point;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
 
@@ -93,8 +92,11 @@ public class ComparableEntryTest {
     assertEquals(1, entry.compareTo(new SimpleEntry<Integer, Integer>(0, 0)));
     assertEquals(0,
         entry.compareTo(new SimpleEntry<Integer, Integer>(0, null)));
-    assertEquals(0, new ComparableEntry<Integer, Point>(0, new Point(1, 1))
-        .compareTo(new ComparableEntry<Integer, Point>(0, new Point(1, 1))));
+    assertEquals(0,
+        new ComparableEntry<Integer, Entry<Integer, Integer>>(0,
+            new SimpleEntry<Integer, Integer>(1, 1)).compareTo(
+                new ComparableEntry<Integer, Entry<Integer, Integer>>(0,
+                    new SimpleEntry<Integer, Integer>(1, 1))));
   }
 
   @Test(expected = IllegalArgumentException.class)

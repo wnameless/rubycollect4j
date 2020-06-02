@@ -30,8 +30,7 @@ public class ComparableEntryIterableTest {
 
   @Before
   public void setUp() throws Exception {
-    iter = new ComparableEntryIterable<Integer, Integer>(
-        rh(1, 2, 3, 4).entrySet());
+    iter = new ComparableEntryIterable<>(rh(1, 2, 3, 4).entrySet());
   }
 
   @Test

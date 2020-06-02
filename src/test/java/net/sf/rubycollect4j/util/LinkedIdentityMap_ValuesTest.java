@@ -131,8 +131,8 @@ public class LinkedIdentityMap_ValuesTest {
 
   @Test
   public void testContainsAll() {
-    assertTrue(values.containsAll(Arrays.asList(new Integer(1), 2, 3)));
-    assertFalse(values.containsAll(Arrays.asList(new Integer(2), 3, 4)));
+    assertTrue(values.containsAll(Arrays.asList(Integer.valueOf(1), 2, 3)));
+    assertFalse(values.containsAll(Arrays.asList(Integer.valueOf(2), 3, 4)));
   }
 
   @Test(expected = UnsupportedOperationException.class)

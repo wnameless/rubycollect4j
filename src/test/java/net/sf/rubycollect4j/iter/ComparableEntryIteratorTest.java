@@ -36,8 +36,7 @@ public class ComparableEntryIteratorTest {
   @Before
   public void setUp() throws Exception {
     rubyHash = rh(1, 2, 3, 4);
-    iter = new ComparableEntryIterator<Integer, Integer>(
-        rubyHash.entrySet().iterator());
+    iter = new ComparableEntryIterator<>(rubyHash.entrySet().iterator());
   }
 
   @Test

@@ -344,3 +344,9 @@ Version 2.0.1
 * RubyArray#unshift now takes more than 1 element
 
 + Add Ruby.Range.of(Temporal start, Temporal end, ChronoUnit chronoUnit)
+
+
+Version 2.1.0
+
++ Java 9 Module supported
+

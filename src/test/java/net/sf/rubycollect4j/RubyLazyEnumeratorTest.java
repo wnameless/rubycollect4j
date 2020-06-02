@@ -42,8 +42,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import javax.xml.bind.TypeConstraintException;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -882,7 +880,7 @@ public class RubyLazyEnumeratorTest {
     assertEquals(new BigDecimal(10), lre.sum());
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testSumException() {
     Ruby.LazyEnumerator.of(ra("a", "b", "c")).sum();
   }

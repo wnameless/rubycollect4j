@@ -41,8 +41,6 @@ import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.xml.bind.TypeConstraintException;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -196,7 +194,7 @@ public class RubyStringsTest {
     assertEquals(3, RubyStrings.count(rs, "X-\\w"));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testCountException1() {
     RubyStrings.count(rs, (String) null);
   }
@@ -219,7 +217,7 @@ public class RubyStringsTest {
     assertEquals(md5, RubyStrings.crypt(rs, "secret"));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testCryptException() {
     RubyStrings.crypt(rs, null);
   }
@@ -232,7 +230,7 @@ public class RubyStringsTest {
     assertEquals("d", RubyStrings.delete("abcd", "a-c"));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testDeleteException() {
     RubyStrings.delete(rs, null);
   }
@@ -309,7 +307,7 @@ public class RubyStringsTest {
         RubyIterables.toA(RubyStrings.eachLine("a\n\r\nbc\n", "\r")));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testEachLineWithSeparatorException() {
     RubyStrings.eachLine(rs, (String) null);
   }
@@ -322,7 +320,7 @@ public class RubyStringsTest {
     assertEquals(ra("a\n", "\nbc\n"), lines);
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testEachLineWithSeparatorAndBlockException() {
     RubyStrings.eachLine(rs, (String) null, item -> {});
   }
@@ -339,7 +337,7 @@ public class RubyStringsTest {
     assertEquals("æ", RubyStrings.encode("我", "ISO-8859-1"));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testEncodeException() {
     RubyStrings.encode(rs, null);
   }
@@ -349,12 +347,12 @@ public class RubyStringsTest {
     assertEquals("æ", RubyStrings.encode("我", "ISO-8859-1", "UTF-8"));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testEncodeExceptionWithNullDestinationEncoding() {
     RubyStrings.encode(rs, null, "UTF-8");
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testEncodeExceptionWithNullSourceEncoding() {
     RubyStrings.encode(rs, "ISO-8859-1", null);
   }
@@ -367,7 +365,7 @@ public class RubyStringsTest {
     assertTrue(RubyStrings.endWithʔ(rs, "c", (String[]) null));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testEndWithʔException() {
     RubyStrings.endWithʔ(rs, null);
   }
@@ -392,12 +390,12 @@ public class RubyStringsTest {
     assertEquals("ab77c77", RubyStrings.gsub("ab4c56", "\\d+", "77"));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testGsubException1() {
     RubyStrings.gsub("ab4c56", null, "77");
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testGsubException2() {
     RubyStrings.gsub("ab4c56", "\\d+", (String) null);
   }
@@ -410,7 +408,7 @@ public class RubyStringsTest {
     // assertNotSame(rs, RubyStrings.gsub(rs, "\\d+", (Map<String, ?>) null));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testGsubWithMapException() {
     RubyStrings.gsub("0ab4c56", null, rh("4", "88", "56", "99"));
   }
@@ -421,7 +419,7 @@ public class RubyStringsTest {
         RubyStrings.gsub("ab4c56", "\\d+", item -> item + "0"));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testGsubWithBlockException() {
     RubyStrings.gsub("ab4c56", null, item -> item + "0");
   }
@@ -432,7 +430,7 @@ public class RubyStringsTest {
         RubyIterables.toA(RubyStrings.gsub("ab4c56", "\\d+")));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testGsubWithoutReplacementException() {
     RubyStrings.gsub("ab4c56", null);
   }
@@ -451,7 +449,7 @@ public class RubyStringsTest {
     assertNull(RubyStrings.index(rs, "def"));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testIndexException() {
     RubyStrings.index(rs, (String) null);
   }
@@ -462,7 +460,7 @@ public class RubyStringsTest {
     assertNull(RubyStrings.index(rs, "ab", 100));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testIndexWithOffsetException() {
     RubyStrings.index(rs, (String) null, 100);
   }
@@ -473,7 +471,7 @@ public class RubyStringsTest {
     assertNull(RubyStrings.index(rs, qr("[d-z]+")));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testIndexWithPatternException() {
     RubyStrings.index(rs, (Pattern) null);
   }
@@ -486,7 +484,7 @@ public class RubyStringsTest {
     assertNull(RubyStrings.index(rs, qr("[c-z]+"), 100));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testIndexWithPatternAndOffsetException() {
     RubyStrings.index(rs, (Pattern) null, 1);
   }
@@ -511,7 +509,7 @@ public class RubyStringsTest {
     RubyStrings.insert("1234", 5, "X");
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testInsertException() {
     RubyStrings.insert(rs, 0, null);
   }
@@ -532,7 +530,7 @@ public class RubyStringsTest {
     assertEquals(ra("a\n", "\nc"), RubyStrings.lines("a\nb\n\nc", "b\n"));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testLinesWithSeparatorException() {
     RubyStrings.lines("a\nb\n\nc", null);
   }
@@ -549,7 +547,7 @@ public class RubyStringsTest {
         RubyStrings.ljust("hello", 20, "1234"));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testLjustWithPadstrException() {
     RubyStrings.ljust("hello", 20, null);
   }
@@ -570,7 +568,7 @@ public class RubyStringsTest {
     assertNull(RubyStrings.match(rs, "\\d"));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testMatchException() {
     RubyStrings.match(rs, null);
   }
@@ -589,7 +587,7 @@ public class RubyStringsTest {
     assertNull(RubyStrings.match(rs, "[a-z]", rs.length()));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testMatchWithPositionException() {
     RubyStrings.match(rs, null, 1);
   }
@@ -623,7 +621,7 @@ public class RubyStringsTest {
     assertEquals(ra("hello", "", ""), RubyStrings.partition("hello", "x"));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testPartitionException() {
     RubyStrings.partition(rs, (String) null);
   }
@@ -634,7 +632,7 @@ public class RubyStringsTest {
     assertEquals(ra("hello", "", ""), RubyStrings.partition("hello", qr(".x")));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testPartitionWithPatternException() {
     RubyStrings.partition(rs, (Pattern) null);
   }
@@ -644,7 +642,7 @@ public class RubyStringsTest {
     assertEquals("defabc", RubyStrings.prepend(rs, "def"));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testPrependException() {
     RubyStrings.prepend(rs, null);
   }
@@ -661,7 +659,7 @@ public class RubyStringsTest {
     assertEquals(null, RubyStrings.rindex("hello", "a"));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testLindexException() {
     RubyStrings.rindex(rs, (String) null);
   }
@@ -676,7 +674,7 @@ public class RubyStringsTest {
     assertEquals((Integer) 0, RubyStrings.rindex("hello", "h", -5));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testLindexWithEndException() {
     RubyStrings.rindex(rs, (String) null, -1);
   }
@@ -688,7 +686,7 @@ public class RubyStringsTest {
     assertEquals(null, RubyStrings.rindex("hello", qr("a")));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testLindexWithPatternException() {
     RubyStrings.rindex(rs, (Pattern) null);
   }
@@ -703,7 +701,7 @@ public class RubyStringsTest {
     assertEquals((Integer) 0, RubyStrings.rindex("hello", qr("h"), -5));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testLindexWithPatternAndStopAtException() {
     RubyStrings.rindex(rs, (Pattern) null, -1);
   }
@@ -727,7 +725,7 @@ public class RubyStringsTest {
     assertEquals(ra("", "", "hello"), RubyStrings.rpartition("hello", "x"));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testRpartitionException() {
     RubyStrings.rpartition(rs, (String) null);
   }
@@ -740,7 +738,7 @@ public class RubyStringsTest {
         RubyStrings.rpartition("hello", qr(".x")));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testRpartitionWithPatternException() {
     RubyStrings.rpartition(rs, (Pattern) null);
   }
@@ -758,7 +756,7 @@ public class RubyStringsTest {
         RubyStrings.scan("cruel world", "..."));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testScanException() {
     RubyStrings.scan(rs, null);
   }
@@ -771,7 +769,7 @@ public class RubyStringsTest {
     assertEquals(ra("cruel", "world"), strs);
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testScanWithBlockException() {
     RubyStrings.scan(rs, null, null);
   }
@@ -786,7 +784,7 @@ public class RubyStringsTest {
         RubyStrings.scanGroups("cruel world", "..."));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testScanGroupsException() {
     RubyStrings.scanGroups(rs, null);
   }
@@ -800,7 +798,7 @@ public class RubyStringsTest {
     assertEquals(ra("cru", "el ", "wor"), strs);
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testScanGroupsWithBlockException() {
     RubyStrings.scanGroups(rs, null, null);
   }
@@ -822,7 +820,7 @@ public class RubyStringsTest {
   public void testScrubWithBlock() {
     assertEquals("abcあ?", RubyStrings.scrub("abc\u3042\0", item -> {
       assertEquals(1, item.size());
-      assertEquals(new Byte((byte) 0), item.get(0));
+      assertEquals(Byte.valueOf((byte) 0), item.get(0));
       return "?";
     }));
   }
@@ -855,7 +853,7 @@ public class RubyStringsTest {
     assertEquals("ab", RubyStrings.slice(rs, qr("[a-b]+")));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testSliceWithPatternException() {
     RubyStrings.slice(rs, (Pattern) null);
   }
@@ -947,7 +945,7 @@ public class RubyStringsTest {
         RubyStrings.squeeze("putters shoot balls", "m-z"));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testSqueezeWithCharSetException() {
     RubyStrings.squeeze("  now   is  the", null);
   }
@@ -960,7 +958,7 @@ public class RubyStringsTest {
     assertTrue(RubyStrings.startWithʔ("hello", "hell", (String[]) null));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testStartWithʔException() {
     RubyStrings.startWithʔ("hello", null);
   }
@@ -976,12 +974,12 @@ public class RubyStringsTest {
     assertEquals("h<e>llo", RubyStrings.sub("hello", "([aeiou])", "<$1>"));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testSubException1() {
     RubyStrings.sub("hello", null, "*");
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testSubException2() {
     RubyStrings.sub("hello", "[aeiou]", (String) null);
   }
@@ -995,7 +993,7 @@ public class RubyStringsTest {
         RubyStrings.sub("hello", "e", new HashMap<String, Object>()));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testSubWithMapException() {
     RubyStrings.sub(rs, null, rh("a", 1));
   }
@@ -1007,7 +1005,7 @@ public class RubyStringsTest {
     assertEquals("hello", RubyStrings.sub("hello", "x", block));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testSubWithBlockException() {
     RubyStrings.sub(rs, null, (Function<String, String>) null);
   }
@@ -1110,12 +1108,12 @@ public class RubyStringsTest {
     assertEquals("ell", RubyStrings.tr("hello", "^el", ""));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testTrException1() {
     RubyStrings.tr(rs, null, "");
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testTrException2() {
     RubyStrings.tr(rs, "", null);
   }
@@ -1129,12 +1127,12 @@ public class RubyStringsTest {
     assertEquals("ell", RubyStrings.trS("hello", "^el", ""));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testTrSException1() {
     RubyStrings.trS(rs, null, "");
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testTrSException2() {
     RubyStrings.trS(rs, "", null);
   }
@@ -1151,7 +1149,7 @@ public class RubyStringsTest {
     assertEquals(ra("16", "61", (byte) 97), RubyStrings.unpack("aaa", "h2H2c"));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testUnpackException() {
     RubyStrings.unpack(rs, null);
   }
@@ -1170,7 +1168,7 @@ public class RubyStringsTest {
         RubyIterables.toA(RubyStrings.upto("07", "11")));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testUptoException() {
     RubyStrings.upto(rs, null);
   }
@@ -1183,7 +1181,7 @@ public class RubyStringsTest {
         RubyIterables.toA(RubyStrings.upto("9", "11", true)));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testUptoWithExclusiveException() {
     RubyStrings.upto(rs, null, false);
   }
@@ -1195,7 +1193,7 @@ public class RubyStringsTest {
     assertEquals(ra("abc", "abd", "abe"), strs);
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testUptoWithBlockException() {
     RubyStrings.upto(rs, null, (Consumer<String>) null);
   }
@@ -1207,7 +1205,7 @@ public class RubyStringsTest {
     assertEquals(ra("abc", "abd"), strs);
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testUptoWithExclusiveAndBlockException() {
     RubyStrings.upto(rs, null, true, (Consumer<String>) null);
   }
@@ -1220,7 +1218,7 @@ public class RubyStringsTest {
     assertFalse(RubyStrings.validEncodingʔ(test2, "Windows-1252"));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testValidEncodingʔException() {
     RubyStrings.validEncodingʔ(rs, null);
   }

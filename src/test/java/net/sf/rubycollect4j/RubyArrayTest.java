@@ -41,8 +41,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import javax.xml.bind.TypeConstraintException;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -1031,7 +1029,7 @@ public class RubyArrayTest {
     assertEquals(new BigDecimal(10), ra.sum());
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testSumException() {
     ra("a", "b", "c").sum();
   }
@@ -1049,7 +1047,7 @@ public class RubyArrayTest {
     assertEquals(ra(ra(1, 4), ra(2, 5), ra(3, 6)), ra.transpose());
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testTransposeException1() {
     ra.transpose();
   }

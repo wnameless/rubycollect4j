@@ -11,12 +11,13 @@ It also implements parts of Ruby Dir, File and Date methods.
 
 For further information, please visit http://ruby-doc.org website.
 
-Install v2.0.0(Java 1.8 required):
+Install v2.0.0+(Java 1.8 required):<br/>
+After v2.1.0, Java 9 Module supported but the minimal Java version is still Java 8.
 ``` xml
 <dependency>
   <groupId>net.sf.rubycollect4j</groupId>
   <artifactId>rubycollect4j</artifactId>
-  <version>2.0.1</version>
+  <version>2.1.0</version>
 </dependency>
 ```
 

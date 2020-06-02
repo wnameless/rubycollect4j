@@ -40,8 +40,6 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-import javax.xml.bind.TypeConstraintException;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -718,7 +716,7 @@ public class RubyIterablesTest {
     assertEquals(new BigDecimal(10), RubyIterables.sum(in));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testSumException() {
     Iterable<String> in = Arrays.asList("a", "b", "c");
     RubyIterables.sum(in);

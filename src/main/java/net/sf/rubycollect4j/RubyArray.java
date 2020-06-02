@@ -35,8 +35,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import javax.xml.bind.TypeConstraintException;
-
 import net.sf.rubycollect4j.iter.CombinationIterable;
 import net.sf.rubycollect4j.iter.EachIndexIterable;
 import net.sf.rubycollect4j.iter.PermutationIterable;
@@ -1633,7 +1631,7 @@ public final class RubyArray<E>
         sum = sum.add(new BigDecimal(num.toString()));
       } else {
         String type = item == null ? "null" : item.getClass().getSimpleName();
-        throw new TypeConstraintException(
+        throw new ClassCastException(
             "TypeError: " + type + " can't be coerced into Number");
       }
     }
@@ -1680,9 +1678,9 @@ public final class RubyArray<E>
 
     Integer size = null;
     for (E item : list) {
-      if (!(item instanceof List)) throw new TypeConstraintException(
-          "TypeError: no implicit conversion of " + item.getClass().toString()
-              + " into List");
+      if (!(item instanceof List))
+        throw new ClassCastException("TypeError: no implicit conversion of "
+            + item.getClass().toString() + " into List");
 
       if (size == null)
         size = ((List<?>) item).size();

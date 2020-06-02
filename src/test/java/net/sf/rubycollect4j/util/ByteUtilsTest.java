@@ -32,8 +32,6 @@ import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.TypeConstraintException;
-
 import org.junit.Test;
 
 import net.sf.rubycollect4j.RubyArray;
@@ -214,12 +212,12 @@ public class ByteUtilsTest {
         ByteUtils.toByteArray(Character.valueOf((char) 0), le));
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testToByteArrayWithObjectAndException1() {
     ByteUtils.toByteArray(new ArrayList<Object>(), le);
   }
 
-  @Test(expected = TypeConstraintException.class)
+  @Test(expected = ClassCastException.class)
   public void testToByteArrayWithObjectAndException2() {
     ByteUtils.toByteArray((Object) null, le);
   }

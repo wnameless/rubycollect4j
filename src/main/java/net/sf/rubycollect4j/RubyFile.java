@@ -22,8 +22,12 @@ import static net.sf.rubycollect4j.RubyIO.Mode.R;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.Method;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.attribute.PosixFilePermission;
+import java.nio.file.attribute.PosixFilePermissions;
 import java.util.Date;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -156,20 +160,50 @@ public class RubyFile extends RubyIO {
    */
   public static int chmod(int modeInt, String... files) {
     for (String f : files) {
-      File file = new File(f);
       try {
-        Class<?> fspClass =
-            Class.forName("java.util.prefs.FileSystemPreferences");
-        Method chmodMethod =
-            fspClass.getDeclaredMethod("chmod", String.class, Integer.TYPE);
-        chmodMethod.setAccessible(true);
-        chmodMethod.invoke(null, file.getPath(), modeInt);
-      } catch (Exception e) {
-        logger.log(Level.SEVERE, null, e);
+        Files.setPosixFilePermissions(Paths.get(f), permsFromInt(modeInt));
+      } catch (IOException e) {
         throw new RuntimeException(e);
       }
     }
     return files.length;
+  }
+
+  private static Set<PosixFilePermission> permsFromInt(int modeInt) {
+    String mode = String.format("%03d", modeInt);
+    String permStr = "";
+    for (int i = 0; i < 3; i++) {
+      switch (mode.charAt(i)) {
+        case '0':
+          permStr += "---";
+          break;
+        case '1':
+          permStr += "--x";
+          break;
+        case '2':
+          permStr += "-w-";
+          break;
+        case '3':
+          permStr += "-wx";
+          break;
+        case '4':
+          permStr += "r--";
+          break;
+        case '5':
+          permStr += "r-x";
+          break;
+        case '6':
+          permStr += "rw-";
+          break;
+        case '7':
+          permStr += "rwx";
+          break;
+        default:
+          permStr += "---";
+      }
+    }
+
+    return PosixFilePermissions.fromString(permStr);
   }
 
   /**

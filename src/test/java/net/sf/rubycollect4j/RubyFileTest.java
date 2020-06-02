@@ -67,23 +67,23 @@ public class RubyFileTest {
   public void testChmod() {
     if (System.getProperty("os.name").startsWith("Windows")) return;
 
-    RubyFile.chmod(0000, BASE_DIR + "ruby_file_chmod_test.txt");
+    RubyFile.chmod(000, BASE_DIR + "ruby_file_chmod_test.txt");
     assertFalse(RubyFile.readableʔ(BASE_DIR + "ruby_file_chmod_test.txt"));
     assertFalse(RubyFile.writableʔ(BASE_DIR + "ruby_file_chmod_test.txt"));
     assertFalse(RubyFile.executableʔ(BASE_DIR + "ruby_file_chmod_test.txt"));
-    RubyFile.chmod(0111, BASE_DIR + "ruby_file_chmod_test.txt");
+    RubyFile.chmod(111, BASE_DIR + "ruby_file_chmod_test.txt");
     assertFalse(RubyFile.readableʔ(BASE_DIR + "ruby_file_chmod_test.txt"));
     assertFalse(RubyFile.writableʔ(BASE_DIR + "ruby_file_chmod_test.txt"));
     assertTrue(RubyFile.executableʔ(BASE_DIR + "ruby_file_chmod_test.txt"));
-    RubyFile.chmod(0222, BASE_DIR + "ruby_file_chmod_test.txt");
+    RubyFile.chmod(222, BASE_DIR + "ruby_file_chmod_test.txt");
     assertFalse(RubyFile.readableʔ(BASE_DIR + "ruby_file_chmod_test.txt"));
     assertTrue(RubyFile.writableʔ(BASE_DIR + "ruby_file_chmod_test.txt"));
     assertFalse(RubyFile.executableʔ(BASE_DIR + "ruby_file_chmod_test.txt"));
-    RubyFile.chmod(0444, BASE_DIR + "ruby_file_chmod_test.txt");
+    RubyFile.chmod(444, BASE_DIR + "ruby_file_chmod_test.txt");
     assertTrue(RubyFile.readableʔ(BASE_DIR + "ruby_file_chmod_test.txt"));
     assertFalse(RubyFile.writableʔ(BASE_DIR + "ruby_file_chmod_test.txt"));
     assertFalse(RubyFile.executableʔ(BASE_DIR + "ruby_file_chmod_test.txt"));
-    RubyFile.chmod(0644, BASE_DIR + "ruby_file_chmod_test.txt");
+    RubyFile.chmod(644, BASE_DIR + "ruby_file_chmod_test.txt");
   }
 
   @Test
@@ -117,13 +117,13 @@ public class RubyFileTest {
   public void testExecutableʔ() {
     if (System.getProperty("os.name").startsWith("Windows")) return;
 
-    RubyFile.chmod(0444, BASE_DIR + "ruby_file_executableQ_test.txt");
+    RubyFile.chmod(444, BASE_DIR + "ruby_file_executableQ_test.txt");
     assertFalse(
         RubyFile.executableʔ(BASE_DIR + "ruby_file_executableQ_test.txt"));
-    RubyFile.chmod(0111, BASE_DIR + "ruby_file_executableQ_test.txt");
+    RubyFile.chmod(111, BASE_DIR + "ruby_file_executableQ_test.txt");
     assertTrue(
         RubyFile.executableʔ(BASE_DIR + "ruby_file_executableQ_test.txt"));
-    RubyFile.chmod(0644, BASE_DIR + "ruby_file_executableQ_test.txt");
+    RubyFile.chmod(644, BASE_DIR + "ruby_file_executableQ_test.txt");
   }
 
   @Test
@@ -186,11 +186,11 @@ public class RubyFileTest {
   public void testReadableʔ() {
     if (System.getProperty("os.name").startsWith("Windows")) return;
 
-    RubyFile.chmod(0222, BASE_DIR + "ruby_file_readableQ_test.txt");
+    RubyFile.chmod(222, BASE_DIR + "ruby_file_readableQ_test.txt");
     assertFalse(RubyFile.readableʔ(BASE_DIR + "ruby_file_readableQ_test.txt"));
-    RubyFile.chmod(0444, BASE_DIR + "ruby_file_readableQ_test.txt");
+    RubyFile.chmod(444, BASE_DIR + "ruby_file_readableQ_test.txt");
     assertTrue(RubyFile.readableʔ(BASE_DIR + "ruby_file_readableQ_test.txt"));
-    RubyFile.chmod(0644, BASE_DIR + "ruby_file_readableQ_test.txt");
+    RubyFile.chmod(644, BASE_DIR + "ruby_file_readableQ_test.txt");
   }
 
   @Test
@@ -216,11 +216,11 @@ public class RubyFileTest {
   public void testWritableʔ() {
     if (System.getProperty("os.name").startsWith("Windows")) return;
 
-    RubyFile.chmod(0444, BASE_DIR + "ruby_file_writableQ_test.txt");
+    RubyFile.chmod(444, BASE_DIR + "ruby_file_writableQ_test.txt");
     assertFalse(RubyFile.writableʔ(BASE_DIR + "ruby_file_writableQ_test.txt"));
-    RubyFile.chmod(0222, BASE_DIR + "ruby_file_writableQ_test.txt");
+    RubyFile.chmod(222, BASE_DIR + "ruby_file_writableQ_test.txt");
     assertTrue(RubyFile.writableʔ(BASE_DIR + "ruby_file_writableQ_test.txt"));
-    RubyFile.chmod(0644, BASE_DIR + "ruby_file_writableQ_test.txt");
+    RubyFile.chmod(644, BASE_DIR + "ruby_file_writableQ_test.txt");
   }
 
   @Test
