@@ -18,20 +18,21 @@
 package net.sf.rubycollect4j.iter;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class EachConsIterableTest {
 
   EachConsIterable<Integer> iter;
   List<Integer> list;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     list = ra(1, 2, 3, 4, 5);
     iter = new EachConsIterable<Integer>(list, 2);
@@ -42,19 +43,25 @@ public class EachConsIterableTest {
     assertTrue(iter instanceof EachConsIterable);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException1() {
-    new EachConsIterable<Integer>(null, 2);
+    assertThrows(NullPointerException.class, () -> {
+      new EachConsIterable<Integer>(null, 2);
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testConstructorException2() {
-    new EachConsIterable<Integer>(list, 0);
+    assertThrows(IllegalArgumentException.class, () -> {
+      new EachConsIterable<Integer>(list, 0);
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testConstructorException3() {
-    new EachConsIterable<Integer>(list, -1);
+    assertThrows(IllegalArgumentException.class, () -> {
+      new EachConsIterable<Integer>(list, -1);
+    });
   }
 
   @Test

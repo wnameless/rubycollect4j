@@ -17,22 +17,23 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class EachLineIterableTest {
 
   static final String BASE_DIR = "src/test/resources/";
   EachLineIterable iter;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     iter =
         new EachLineIterable(new File(BASE_DIR + "ruby_io_read_only_mode.txt"));
@@ -45,14 +46,18 @@ public class EachLineIterableTest {
     assertTrue(iter instanceof EachLineIterable);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException1() {
-    new EachLineIterable((File) null);
+    assertThrows(NullPointerException.class, () -> {
+      new EachLineIterable((File) null);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException2() {
-    new EachLineIterable((InputStream) null);
+    assertThrows(NullPointerException.class, () -> {
+      new EachLineIterable((InputStream) null);
+    });
   }
 
   @Test

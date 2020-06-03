@@ -17,15 +17,16 @@
  */
 package net.sf.rubycollect4j.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class TryComparatorTest {
 
@@ -35,7 +36,7 @@ public class TryComparatorTest {
   Set<Integer> emptySet;
   Set<Integer> singleSet;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     intComp = new TryComparator<Integer>();
     revIntComp = new TryComparator<Integer>((o1, o2) -> o2 - o1);
@@ -58,19 +59,25 @@ public class TryComparatorTest {
     assertEquals(0, setComp.compare(emptySet, new HashSet<Integer>()));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testCompareException1() {
-    setComp.compare(null, emptySet);
+    assertThrows(IllegalArgumentException.class, () -> {
+      setComp.compare(null, emptySet);
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testCompareException2() {
-    setComp.compare(emptySet, null);
+    assertThrows(IllegalArgumentException.class, () -> {
+      setComp.compare(emptySet, null);
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testCompareException3() {
-    setComp.compare(emptySet, singleSet);
+    assertThrows(IllegalArgumentException.class, () -> {
+      setComp.compare(emptySet, singleSet);
+    });
   }
 
 }

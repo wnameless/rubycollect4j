@@ -18,14 +18,15 @@
 package net.sf.rubycollect4j.iter;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import java.util.function.Function;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import net.sf.rubycollect4j.RubyArray;
 
@@ -35,7 +36,7 @@ public class FlattenIterableTest {
   List<Integer> list;
   Function<Integer, RubyArray<Double>> block;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     list = ra(1, 2, 3);
     block = item -> ra(item.doubleValue(), item.doubleValue());
@@ -47,14 +48,18 @@ public class FlattenIterableTest {
     assertTrue(iter instanceof FlattenIterable);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException1() {
-    new FlattenIterable<Integer, Double>(null, block);
+    assertThrows(NullPointerException.class, () -> {
+      new FlattenIterable<Integer, Double>(null, block);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException2() {
-    new FlattenIterable<Integer, Double>(list, null);
+    assertThrows(NullPointerException.class, () -> {
+      new FlattenIterable<Integer, Double>(list, null);
+    });
   }
 
   @Test

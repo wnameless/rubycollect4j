@@ -22,10 +22,11 @@ import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.rh;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
@@ -40,8 +41,8 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import net.sf.rubycollect4j.Ruby;
 import net.sf.rubycollect4j.RubyArray;
@@ -52,7 +53,7 @@ public class RubyIterablesTest {
 
   Iterable<Integer> iter;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     iter = newRubyArray(1, 2, 3, 4);
   }
@@ -192,12 +193,14 @@ public class RubyIterablesTest {
     assertEquals(ra(2, 4, 6, 8, 2, 4, 6, 8), ints);
   }
 
-  @Test(expected = IllegalStateException.class)
+  @Test
   public void testCycleWithBlock() {
     final RubyArray<Integer> ints = newRubyArray();
-    RubyIterables.cycle(iter, item -> {
-      ints.push(item);
-      if (ints.size() > 1000) throw new IllegalStateException();
+    assertThrows(IllegalStateException.class, () -> {
+      RubyIterables.cycle(iter, item -> {
+        ints.push(item);
+        if (ints.size() > 1000) throw new IllegalStateException();
+      });
     });
   }
 
@@ -215,9 +218,11 @@ public class RubyIterablesTest {
     assertEquals(ra(3, 4), RubyIterables.drop(iter, 2));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testDropException() {
-    RubyIterables.drop(iter, -1);
+    assertThrows(IllegalArgumentException.class, () -> {
+      RubyIterables.drop(iter, -1);
+    });
   }
 
   @Test
@@ -233,9 +238,11 @@ public class RubyIterablesTest {
     assertEquals(ra(2, 4, 6, 8), ints);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testEachConsException() {
-    RubyIterables.eachCons(iter, 0);
+    assertThrows(IllegalArgumentException.class, () -> {
+      RubyIterables.eachCons(iter, 0);
+    });
   }
 
   @Test
@@ -245,9 +252,11 @@ public class RubyIterablesTest {
     assertEquals(ra, RubyIterables.toA(RubyIterables.eachCons(iter, 2)));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testEachConsWithBlockException() {
-    RubyIterables.eachCons(iter, 0, null);
+    assertThrows(IllegalArgumentException.class, () -> {
+      RubyIterables.eachCons(iter, 0, null);
+    });
   }
 
   @Test
@@ -265,9 +274,11 @@ public class RubyIterablesTest {
     assertEquals(ra, RubyIterables.toA(RubyIterables.eachSlice(iter, 3)));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testEachSliceException() {
-    RubyIterables.eachSlice(iter, 0);
+    assertThrows(IllegalArgumentException.class, () -> {
+      RubyIterables.eachSlice(iter, 0);
+    });
   }
 
   @Test
@@ -278,9 +289,11 @@ public class RubyIterablesTest {
 
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testEachSliceWithBlockException() {
-    RubyIterables.eachSlice(iter, 0, null);
+    assertThrows(IllegalArgumentException.class, () -> {
+      RubyIterables.eachSlice(iter, 0, null);
+    });
   }
 
   @Test
@@ -363,9 +376,11 @@ public class RubyIterablesTest {
     assertEquals(ra(1, 2, 3, 4), RubyIterables.first(iter, 6));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testFirstWithNException() {
-    RubyIterables.first(iter, -1);
+    assertThrows(IllegalArgumentException.class, () -> {
+      RubyIterables.first(iter, -1);
+    });
   }
 
   @Test
@@ -716,10 +731,12 @@ public class RubyIterablesTest {
     assertEquals(new BigDecimal(10), RubyIterables.sum(in));
   }
 
-  @Test(expected = ClassCastException.class)
+  @Test
   public void testSumException() {
-    Iterable<String> in = Arrays.asList("a", "b", "c");
-    RubyIterables.sum(in);
+    assertThrows(ClassCastException.class, () -> {
+      Iterable<String> in = Arrays.asList("a", "b", "c");
+      RubyIterables.sum(in);
+    });
   }
 
   @Test
@@ -749,9 +766,11 @@ public class RubyIterablesTest {
     assertEquals(ra(1, 2, 3, 4), RubyIterables.take(iter, 5));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testTakeException() {
-    RubyIterables.take(iter, -1);
+    assertThrows(IllegalArgumentException.class, () -> {
+      RubyIterables.take(iter, -1);
+    });
   }
 
   @Test

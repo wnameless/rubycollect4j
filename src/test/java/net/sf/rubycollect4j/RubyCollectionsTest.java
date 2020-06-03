@@ -28,8 +28,9 @@ import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.range;
 import static net.sf.rubycollect4j.RubyCollections.rh;
 import static net.sf.rubycollect4j.RubyCollections.rs;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
@@ -43,7 +44,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import net.sf.rubycollect4j.util.ComparableEntry;
 
@@ -224,14 +225,19 @@ public class RubyCollectionsTest {
     assertEquals(rh(1, 2, 3, 4, 5, 6), Hash(ra(ra(1, 2), ra(3, 4), ra(5, 6))));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testHashException1() {
-    Hash(ra(ra(1, 2), ra(3, 4), ra(5, 6, 7)));
+    assertThrows(IllegalArgumentException.class, () -> {
+      Hash(ra(ra(1, 2), ra(3, 4), ra(5, 6, 7)));
+    });
+
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testHashException2() {
-    Hash(ra(ra(1, 2), ra(3, 4), new RubyArray<Integer>()));
+    assertThrows(IllegalArgumentException.class, () -> {
+      Hash(ra(ra(1, 2), ra(3, 4), new RubyArray<Integer>()));
+    });
   }
 
   @Test

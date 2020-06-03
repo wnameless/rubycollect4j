@@ -21,12 +21,13 @@ import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyLiterals.qr;
 import static net.sf.rubycollect4j.RubyLiterals.qw;
 import static net.sf.rubycollect4j.RubyLiterals.qx;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.regex.Pattern;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class RubyLiteralsTest {
 
@@ -55,9 +56,11 @@ public class RubyLiteralsTest {
     }
   }
 
-  @Test(expected = RuntimeException.class)
+  @Test
   public void testQxException() {
-    qx("lls");
+    assertThrows(RuntimeException.class, () -> {
+      qx("lls");
+    });
   }
 
 }

@@ -18,13 +18,14 @@
 package net.sf.rubycollect4j.iter;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class ProductIterableTest {
 
@@ -33,7 +34,7 @@ public class ProductIterableTest {
   List<Integer> list2;
   List<? extends List<Integer>> lists;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     list1 = ra(1, 2, 3);
     list2 = ra(4, 5, 6);
@@ -52,19 +53,25 @@ public class ProductIterableTest {
     assertTrue(iter instanceof ProductIterable);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException1() {
-    new ProductIterable<Integer>(null, lists);
+    assertThrows(NullPointerException.class, () -> {
+      new ProductIterable<Integer>(null, lists);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException2() {
-    new ProductIterable<Integer>(list1, (List<List<Integer>>) null);
+    assertThrows(NullPointerException.class, () -> {
+      new ProductIterable<Integer>(list1, (List<List<Integer>>) null);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException3() {
-    new ProductIterable<Integer>(null, list2);
+    assertThrows(NullPointerException.class, () -> {
+      new ProductIterable<Integer>(null, list2);
+    });
   }
 
   @Test

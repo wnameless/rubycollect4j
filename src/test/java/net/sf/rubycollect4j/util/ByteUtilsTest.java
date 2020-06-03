@@ -21,9 +21,10 @@ import static java.nio.ByteOrder.BIG_ENDIAN;
 import static java.nio.ByteOrder.LITTLE_ENDIAN;
 import static java.nio.ByteOrder.nativeOrder;
 import static net.sf.rubycollect4j.RubyCollections.ra;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
@@ -32,7 +33,7 @@ import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import net.sf.rubycollect4j.RubyArray;
 
@@ -212,14 +213,18 @@ public class ByteUtilsTest {
         ByteUtils.toByteArray(Character.valueOf((char) 0), le));
   }
 
-  @Test(expected = ClassCastException.class)
+  @Test
   public void testToByteArrayWithObjectAndException1() {
-    ByteUtils.toByteArray(new ArrayList<Object>(), le);
+    assertThrows(ClassCastException.class, () -> {
+      ByteUtils.toByteArray(new ArrayList<Object>(), le);
+    });
   }
 
-  @Test(expected = ClassCastException.class)
+  @Test
   public void testToByteArrayWithObjectAndException2() {
-    ByteUtils.toByteArray((Object) null, le);
+    assertThrows(ClassCastException.class, () -> {
+      ByteUtils.toByteArray((Object) null, le);
+    });
   }
 
   @Test
@@ -273,14 +278,18 @@ public class ByteUtilsTest {
         ByteUtils.toUTF(ByteBuffer.allocate(4).putInt(55555).array()));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testToUTFException1() {
-    ByteUtils.toUTF(ByteBuffer.allocate(4).putInt(-1).array());
+    assertThrows(IllegalArgumentException.class, () -> {
+      ByteUtils.toUTF(ByteBuffer.allocate(4).putInt(-1).array());
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testToUTFException2() {
-    ByteUtils.toUTF(ByteBuffer.allocate(4).putInt(0X10FFFF + 1).array());
+    assertThrows(IllegalArgumentException.class, () -> {
+      ByteUtils.toUTF(ByteBuffer.allocate(4).putInt(0X10FFFF + 1).array());
+    });
   }
 
   @Test
@@ -313,9 +322,11 @@ public class ByteUtilsTest {
     assertArrayEquals(new byte[0], ByteUtils.fromBinaryString(""));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testFromBinaryStringException() {
-    ByteUtils.fromBinaryString("000000001X1111111");
+    assertThrows(IllegalArgumentException.class, () -> {
+      ByteUtils.fromBinaryString("000000001X1111111");
+    });
   }
 
   @Test
@@ -327,9 +338,11 @@ public class ByteUtilsTest {
     assertArrayEquals(new byte[0], ByteUtils.fromHexString(""));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testFromHexStringException() {
-    ByteUtils.fromHexString("00XF");
+    assertThrows(IllegalArgumentException.class, () -> {
+      ByteUtils.fromHexString("00XF");
+    });
   }
 
 }

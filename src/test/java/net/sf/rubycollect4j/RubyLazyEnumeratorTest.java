@@ -23,11 +23,12 @@ import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.newRubyLazyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.rh;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -42,8 +43,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class RubyLazyEnumeratorTest {
 
@@ -51,7 +52,7 @@ public class RubyLazyEnumeratorTest {
   List<Integer> list;
   Function<Integer, Boolean> block;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     list = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
     lre = new RubyLazyEnumerator<Integer>(list);
@@ -65,9 +66,11 @@ public class RubyLazyEnumeratorTest {
     assertEquals(ra(2, 3, 4), lre.toA());
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testOfException() {
-    RubyLazyEnumerator.of(null);
+    assertThrows(NullPointerException.class, () -> {
+      RubyLazyEnumerator.of(null);
+    });
   }
 
   @Test
@@ -77,9 +80,11 @@ public class RubyLazyEnumeratorTest {
     assertEquals(ra(1, 2, 3, 4), lre.toA());
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testCopyOfException() {
-    RubyLazyEnumerator.copyOf(null);
+    assertThrows(NullPointerException.class, () -> {
+      RubyLazyEnumerator.copyOf(null);
+    });
   }
 
   @Test
@@ -87,9 +92,11 @@ public class RubyLazyEnumeratorTest {
     assertTrue(lre instanceof RubyLazyEnumerator);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException() {
-    newRubyLazyEnumerator(null);
+    assertThrows(NullPointerException.class, () -> {
+      newRubyLazyEnumerator(null);
+    });
   }
 
   @Test
@@ -215,12 +222,14 @@ public class RubyLazyEnumeratorTest {
     assertEquals(ra(2, 4, 6, 8, 2, 4, 6, 8), ints);
   }
 
-  @Test(expected = IllegalStateException.class)
+  @Test
   public void testCycleWithBlock() {
     final RubyArray<Integer> ints = newRubyArray();
-    lre.cycle(item -> {
-      ints.push(item);
-      if (ints.size() > 1000) throw new IllegalStateException();
+    assertThrows(IllegalStateException.class, () -> {
+      lre.cycle(item -> {
+        ints.push(item);
+        if (ints.size() > 1000) throw new IllegalStateException();
+      });
     });
   }
 
@@ -244,9 +253,11 @@ public class RubyLazyEnumeratorTest {
     assertEquals(ra(3, 4), lre.drop(2).toA());
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testDropException() {
-    lre.drop(-1);
+    assertThrows(IllegalArgumentException.class, () -> {
+      lre.drop(-1);
+    });
   }
 
   @Test
@@ -309,9 +320,11 @@ public class RubyLazyEnumeratorTest {
     assertEquals(ra, lre.eachSlice(3).toA());
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testEachSliceException() {
-    lre.eachSlice(0);
+    assertThrows(IllegalArgumentException.class, () -> {
+      lre.eachSlice(0);
+    });
   }
 
   @Test
@@ -321,9 +334,11 @@ public class RubyLazyEnumeratorTest {
     assertEquals(ra(1, 4), ints);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testEachSliceWithBlockException() {
-    lre.eachSlice(0, null);
+    assertThrows(IllegalArgumentException.class, () -> {
+      lre.eachSlice(0, null);
+    });
   }
 
   @Test
@@ -423,9 +438,11 @@ public class RubyLazyEnumeratorTest {
     assertEquals(ra(1, 2, 3, 4), lre.first(6));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testFirstWithNException() {
-    lre.first(-1);
+    assertThrows(IllegalArgumentException.class, () -> {
+      lre.first(-1);
+    });
   }
 
   @Test
@@ -880,9 +897,11 @@ public class RubyLazyEnumeratorTest {
     assertEquals(new BigDecimal(10), lre.sum());
   }
 
-  @Test(expected = ClassCastException.class)
+  @Test
   public void testSumException() {
-    Ruby.LazyEnumerator.of(ra("a", "b", "c")).sum();
+    assertThrows(ClassCastException.class, () -> {
+      Ruby.LazyEnumerator.of(ra("a", "b", "c")).sum();
+    });
   }
 
   @Test
@@ -914,9 +933,11 @@ public class RubyLazyEnumeratorTest {
     assertEquals(ra(1, 2, 3, 4), lre.take(5).toA());
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testTakeException() {
-    lre.take(-1);
+    assertThrows(IllegalArgumentException.class, () -> {
+      lre.take(-1);
+    });
   }
 
   @Test

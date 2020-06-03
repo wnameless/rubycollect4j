@@ -18,16 +18,17 @@
 package net.sf.rubycollect4j.iter;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.function.Function;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import net.sf.rubycollect4j.RubyArray;
 
@@ -37,7 +38,7 @@ public class FlattenIteratorTest {
   List<Integer> list;
   Function<Integer, RubyArray<Double>> block;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     list = ra(1, 2, 3);
     block = item -> ra(item.doubleValue(), item.doubleValue());
@@ -49,14 +50,18 @@ public class FlattenIteratorTest {
     assertTrue(iter instanceof FlattenIterator);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException1() {
-    new FlattenIterator<Integer, Double>(null, block);
+    assertThrows(NullPointerException.class, () -> {
+      new FlattenIterator<Integer, Double>(null, block);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException2() {
-    new FlattenIterator<Integer, Double>(list.iterator(), null);
+    assertThrows(NullPointerException.class, () -> {
+      new FlattenIterator<Integer, Double>(list.iterator(), null);
+    });
   }
 
   @Test
@@ -86,17 +91,21 @@ public class FlattenIteratorTest {
     assertEquals(ra(1.0, 1.0, null, 3.0, 3.0), ra(iter));
   }
 
-  @Test(expected = NoSuchElementException.class)
+  @Test
   public void testNextException() {
-    while (iter.hasNext()) {
+    assertThrows(NoSuchElementException.class, () -> {
+      while (iter.hasNext()) {
+        iter.next();
+      }
       iter.next();
-    }
-    iter.next();
+    });
   }
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test
   public void testRemoveException() {
-    iter.remove();
+    assertThrows(UnsupportedOperationException.class, () -> {
+      iter.remove();
+    });
   }
 
 }

@@ -18,13 +18,14 @@
 package net.sf.rubycollect4j.iter;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.function.BiPredicate;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import net.sf.rubycollect4j.RubyArray;
 
@@ -34,7 +35,7 @@ public class ChunkWhileIterableTest {
   RubyArray<Integer> nums;
   BiPredicate<Integer, Integer> block;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     block = (item1, item2) -> item1 + 1 == item2;
     nums = ra(1, 2, 4, 9, 10, 11, 12, 15, 16, 19, 20, 21);
@@ -46,14 +47,18 @@ public class ChunkWhileIterableTest {
     assertTrue(iter instanceof ChunkWhileIterable);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException1() {
-    new ChunkWhileIterable<Integer>(null, block);
+    assertThrows(NullPointerException.class, () -> {
+      new ChunkWhileIterable<Integer>(null, block);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException2() {
-    new ChunkWhileIterable<Number>(nums, null);
+    assertThrows(NullPointerException.class, () -> {
+      new ChunkWhileIterable<Number>(nums, null);
+    });
   }
 
   @Test

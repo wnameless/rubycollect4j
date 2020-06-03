@@ -18,21 +18,22 @@
 package net.sf.rubycollect4j.iter;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class EachIndexIteratorTest {
 
   EachIndexIterator<Integer> iter;
   List<Integer> list;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     list = ra(1, 2, 3);
     iter = new EachIndexIterator<Integer>(list.iterator());
@@ -43,9 +44,11 @@ public class EachIndexIteratorTest {
     assertTrue(iter instanceof EachIndexIterator);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException() {
-    new EachIndexIterator<Integer>(null);
+    assertThrows(NullPointerException.class, () -> {
+      new EachIndexIterator<Integer>(null);
+    });
   }
 
   @Test

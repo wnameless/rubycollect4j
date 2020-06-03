@@ -19,15 +19,16 @@ package net.sf.rubycollect4j.iter;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyLiterals.qr;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class SliceAfterIterableTest {
 
@@ -36,7 +37,7 @@ public class SliceAfterIterableTest {
   Predicate<Integer> block;
   Pattern pattern;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     list = ra(1, 2, 3, 4, 5);
     block = item -> item % 2 == 0;
@@ -51,24 +52,32 @@ public class SliceAfterIterableTest {
     assertTrue(iter instanceof SliceAfterIterable);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException1() {
-    new SliceAfterIterable<Integer>(null, block);
+    assertThrows(NullPointerException.class, () -> {
+      new SliceAfterIterable<Integer>(null, block);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException2() {
-    new SliceAfterIterable<Integer>(list, (Predicate<Integer>) null);
+    assertThrows(NullPointerException.class, () -> {
+      new SliceAfterIterable<Integer>(list, (Predicate<Integer>) null);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException3() {
-    new SliceAfterIterable<Integer>(null, pattern);
+    assertThrows(NullPointerException.class, () -> {
+      new SliceAfterIterable<Integer>(null, pattern);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException4() {
-    new SliceAfterIterable<Integer>(list, (Pattern) null);
+    assertThrows(NullPointerException.class, () -> {
+      new SliceAfterIterable<Integer>(list, (Pattern) null);
+    });
   }
 
   @Test

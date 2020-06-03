@@ -22,10 +22,11 @@ import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
 import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.rh;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -38,15 +39,15 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class RubyEnumerableTest {
 
   RubyEnumerable<Integer> re;
   Iterable<Integer> iter;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     iter = newRubyArray(1, 2, 3, 4);
     re = new RubyEnumerable<Integer>() {
@@ -199,12 +200,14 @@ public class RubyEnumerableTest {
     assertEquals(ra(2, 4, 6, 8, 2, 4, 6, 8), ints);
   }
 
-  @Test(expected = IllegalStateException.class)
+  @Test
   public void testCycleWithBlock() {
     final RubyArray<Integer> ints = newRubyArray();
-    re.cycle(item -> {
-      ints.push(item);
-      if (ints.size() > 1000) throw new IllegalStateException();
+    assertThrows(IllegalStateException.class, () -> {
+      re.cycle(item -> {
+        ints.push(item);
+        if (ints.size() > 1000) throw new IllegalStateException();
+      });
     });
   }
 
@@ -228,9 +231,11 @@ public class RubyEnumerableTest {
     assertEquals(ra(3, 4), re.drop(2));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testDropException() {
-    re.drop(-1);
+    assertThrows(IllegalArgumentException.class, () -> {
+      re.drop(-1);
+    });
   }
 
   @Test
@@ -268,9 +273,11 @@ public class RubyEnumerableTest {
     assertEquals(ra, re.eachCons(2).toA());
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testEachConsException() {
-    re.eachCons(0);
+    assertThrows(IllegalArgumentException.class, () -> {
+      re.eachCons(0);
+    });
   }
 
   @Test
@@ -280,9 +287,11 @@ public class RubyEnumerableTest {
     assertEquals(ra, re.eachCons(2).toA());
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testEachConsWithBlockException() {
-    re.eachCons(0, null);
+    assertThrows(IllegalArgumentException.class, () -> {
+      re.eachCons(0, null);
+    });
   }
 
   @Test
@@ -306,9 +315,11 @@ public class RubyEnumerableTest {
     assertEquals(ra, re.eachSlice(3).toA());
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testEachSliceException() {
-    re.eachSlice(0);
+    assertThrows(IllegalArgumentException.class, () -> {
+      re.eachSlice(0);
+    });
   }
 
   @Test
@@ -318,9 +329,11 @@ public class RubyEnumerableTest {
     assertEquals(ra(1, 4), ints);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testEachSliceWithBlockException() {
-    re.eachSlice(0, null);
+    assertThrows(IllegalArgumentException.class, () -> {
+      re.eachSlice(0, null);
+    });
   }
 
   @Test
@@ -421,9 +434,11 @@ public class RubyEnumerableTest {
     assertEquals(ra(1, 2, 3, 4), re.first(6));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testFirstWithNException() {
-    re.first(-1);
+    assertThrows(IllegalArgumentException.class, () -> {
+      re.first(-1);
+    });
   }
 
   @Test
@@ -850,9 +865,11 @@ public class RubyEnumerableTest {
         newRubyEnumerator(Arrays.asList(1, 2, 3, 4)).sum());
   }
 
-  @Test(expected = ClassCastException.class)
+  @Test
   public void testSumException() {
-    newRubyEnumerator(Arrays.asList("a", "b", "c")).sum();
+    assertThrows(ClassCastException.class, () -> {
+      newRubyEnumerator(Arrays.asList("a", "b", "c")).sum();
+    });
   }
 
   @Test
@@ -882,9 +899,11 @@ public class RubyEnumerableTest {
     assertEquals(ra(1, 2, 3, 4), re.take(5));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testTakeException() {
-    re.take(-1);
+    assertThrows(IllegalArgumentException.class, () -> {
+      re.take(-1);
+    });
   }
 
   @Test

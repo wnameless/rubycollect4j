@@ -17,14 +17,15 @@
  */
 package net.sf.rubycollect4j.util;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class ASCII8BitUTFTest {
 
@@ -32,7 +33,7 @@ public class ASCII8BitUTFTest {
   String str;
   ASCII8BitUTF emptyA8u;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     str = "我\377abc";
     a8u = new ASCII8BitUTF(str);
@@ -44,9 +45,11 @@ public class ASCII8BitUTFTest {
     assertTrue(a8u instanceof ASCII8BitUTF);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException() {
-    new ASCII8BitUTF(null);
+    assertThrows(NullPointerException.class, () -> {
+      new ASCII8BitUTF(null);
+    });
   }
 
   @Test
@@ -97,9 +100,11 @@ public class ASCII8BitUTFTest {
     assertEquals("a", a8u.nextChar());
   }
 
-  @Test(expected = IllegalStateException.class)
+  @Test
   public void testNextCharException() {
-    emptyA8u.nextChar();
+    assertThrows(IllegalStateException.class, () -> {
+      emptyA8u.nextChar();
+    });
   }
 
   @Test
@@ -120,9 +125,11 @@ public class ASCII8BitUTFTest {
     assertEquals((byte) 99, a8u.nextByte());
   }
 
-  @Test(expected = IllegalStateException.class)
+  @Test
   public void testNextByteException() {
-    emptyA8u.nextByte();
+    assertThrows(IllegalStateException.class, () -> {
+      emptyA8u.nextByte();
+    });
   }
 
   @Test

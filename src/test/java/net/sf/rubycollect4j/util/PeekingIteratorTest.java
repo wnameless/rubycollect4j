@@ -18,24 +18,25 @@
 package net.sf.rubycollect4j.util;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class PeekingIteratorTest {
 
   PeekingIterator<Integer> pIterater;
   PeekingIterator<Integer> emptyIterater;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     pIterater = new PeekingIterator<Integer>(ra(1, 2, 3, 4).iterator());
     emptyIterater =
@@ -70,9 +71,11 @@ public class PeekingIteratorTest {
     assertEquals(Integer.valueOf(4), pIterater.next());
   }
 
-  @Test(expected = NoSuchElementException.class)
+  @Test
   public void testNextException() {
-    emptyIterater.next();
+    assertThrows(NoSuchElementException.class, () -> {
+      emptyIterater.next();
+    });
   }
 
   @Test
@@ -82,15 +85,19 @@ public class PeekingIteratorTest {
     assertEquals(Integer.valueOf(2), pIterater.peek());
   }
 
-  @Test(expected = NoSuchElementException.class)
+  @Test
   public void testPeekException() {
-    emptyIterater.peek();
+    assertThrows(NoSuchElementException.class, () -> {
+      emptyIterater.peek();
+    });
   }
 
-  @Test(expected = IllegalStateException.class)
+  @Test
   public void testRemoveException() {
-    pIterater.peek();
-    pIterater.remove();
+    assertThrows(IllegalStateException.class, () -> {
+      pIterater.peek();
+      pIterater.remove();
+    });
   }
 
 }

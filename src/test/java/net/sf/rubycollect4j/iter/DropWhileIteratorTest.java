@@ -18,16 +18,17 @@
 package net.sf.rubycollect4j.iter;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class DropWhileIteratorTest {
 
@@ -35,7 +36,7 @@ public class DropWhileIteratorTest {
   List<Integer> list;
   Predicate<Integer> block;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     list = ra(1, 2, 3, 4, 5);
     block = item -> item < 3;
@@ -47,14 +48,18 @@ public class DropWhileIteratorTest {
     assertTrue(iter instanceof DropWhileIterator);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException1() {
-    new DropWhileIterator<Integer>(list.iterator(), null);
+    assertThrows(NullPointerException.class, () -> {
+      new DropWhileIterator<Integer>(list.iterator(), null);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException2() {
-    new DropWhileIterator<Integer>(null, block);
+    assertThrows(NullPointerException.class, () -> {
+      new DropWhileIterator<Integer>(null, block);
+    });
   }
 
   @Test
@@ -84,9 +89,11 @@ public class DropWhileIteratorTest {
     assertEquals(ra(1, 2, 4, 5), list);
   }
 
-  @Test(expected = IllegalStateException.class)
+  @Test
   public void testRemoveException() {
-    iter.remove();
+    assertThrows(IllegalStateException.class, () -> {
+      iter.remove();
+    });
   }
 
 }

@@ -18,17 +18,18 @@
 package net.sf.rubycollect4j.iter;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class RepeatedPermutationIterableTest {
 
   RepeatedPermutationIterable<Integer> iter;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     iter = new RepeatedPermutationIterable<Integer>(ra(1, 2, 3), 2);
   }
@@ -38,9 +39,11 @@ public class RepeatedPermutationIterableTest {
     assertTrue(iter instanceof RepeatedPermutationIterable);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException() {
-    new RepeatedPermutationIterable<Integer>(null, 2);
+    assertThrows(NullPointerException.class, () -> {
+      new RepeatedPermutationIterable<Integer>(null, 2);
+    });
   }
 
   @Test

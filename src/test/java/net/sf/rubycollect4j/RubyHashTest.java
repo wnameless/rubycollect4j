@@ -21,13 +21,14 @@ import static net.sf.rubycollect4j.RubyCollections.hp;
 import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.rh;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -40,8 +41,8 @@ import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import net.sf.rubycollect4j.util.ComparableEntry;
 
@@ -50,7 +51,7 @@ public class RubyHashTest {
   RubyHash<Integer, Integer> rh;
   RubyHash<Integer, Integer> frozenRh;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     rh = new RubyHash<Integer, Integer>();
     rh.put(1, 2);
@@ -77,9 +78,11 @@ public class RubyHashTest {
     assertEquals(map, intStr);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testStaticFactoryMethodOfException() {
-    RubyHash.of((LinkedHashMap<?, ?>) null);
+    assertThrows(NullPointerException.class, () -> {
+      RubyHash.of((LinkedHashMap<?, ?>) null);
+    });
   }
 
   @Test
@@ -93,9 +96,11 @@ public class RubyHashTest {
     assertNotEquals(map, intStr);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testStaticFactoryMethodCopyOfException() {
-    RubyHash.copyOf((Map<?, ?>) null);
+    assertThrows(NullPointerException.class, () -> {
+      RubyHash.copyOf((Map<?, ?>) null);
+    });
   }
 
   @Test
@@ -107,14 +112,18 @@ public class RubyHashTest {
     assertTrue(rh instanceof RubyHash);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException1() {
-    new RubyHash<Integer, Integer>((LinkedHashMap<Integer, Integer>) null);
+    assertThrows(NullPointerException.class, () -> {
+      new RubyHash<Integer, Integer>((LinkedHashMap<Integer, Integer>) null);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException2() {
-    new RubyHash<Integer, Integer>((Map<Integer, Integer>) null);
+    assertThrows(NullPointerException.class, () -> {
+      new RubyHash<Integer, Integer>((Map<Integer, Integer>) null);
+    });
   }
 
   @Test
@@ -257,9 +266,11 @@ public class RubyHashTest {
     assertEquals(Integer.valueOf(6), rh.fetch(5));
   }
 
-  @Test(expected = NoSuchElementException.class)
+  @Test
   public void testFetchException() {
-    rh.fetch(7);
+    assertThrows(NoSuchElementException.class, () -> {
+      rh.fetch(7);
+    });
   }
 
   @Test
@@ -275,9 +286,11 @@ public class RubyHashTest {
         rh.fetchValues(Arrays.asList(1, 3, 5)));
   }
 
-  @Test(expected = NoSuchElementException.class)
+  @Test
   public void testFetchValuesException() {
-    rh.fetchValues(5, 7, 9);
+    assertThrows(NoSuchElementException.class, () -> {
+      rh.fetchValues(5, 7, 9);
+    });
   }
 
   @Test
@@ -301,9 +314,11 @@ public class RubyHashTest {
     assertTrue(frozenRh.frozenʔ());
   }
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test
   public void testFrozenException() {
-    frozenRh.shift();
+    assertThrows(UnsupportedOperationException.class, () -> {
+      frozenRh.shift();
+    });
   }
 
   @Test
@@ -557,15 +572,17 @@ public class RubyHashTest {
         rh.count((BiPredicate<Integer, Integer>) (key, value) -> key == 1));
   }
 
-  @Test(expected = IllegalStateException.class)
+  @Test
   public void testCycle() {
     final RubyArray<Integer> ints = ra();
-    rh.cycle((BiConsumer<Integer, Integer>) (key, value) -> {
-      ints.add(key);
-      ints.add(value);
-      if (ints.size() > 1000) {
-        throw new IllegalStateException();
-      }
+    assertThrows(IllegalStateException.class, () -> {
+      rh.cycle((BiConsumer<Integer, Integer>) (key, value) -> {
+        ints.add(key);
+        ints.add(value);
+        if (ints.size() > 1000) {
+          throw new IllegalStateException();
+        }
+      });
     });
   }
 

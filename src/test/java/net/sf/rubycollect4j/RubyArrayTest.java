@@ -20,14 +20,15 @@ package net.sf.rubycollect4j;
 import static net.sf.rubycollect4j.RubyCollections.newRubySet;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.range;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -41,8 +42,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class RubyArrayTest {
 
@@ -51,7 +52,7 @@ public class RubyArrayTest {
   Function<Integer, Integer> block;
   Comparator<Integer> comp;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     ra = ra(1, 2, 3, 4);
     frozenRa = ra(1, 2, 3, 4).freeze();
@@ -75,9 +76,11 @@ public class RubyArrayTest {
     assertEquals(list, ints);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testStaticFactoryMethodOfException() {
-    RubyArray.of(null);
+    assertThrows(NullPointerException.class, () -> {
+      RubyArray.of(null);
+    });
   }
 
   @Test
@@ -88,9 +91,11 @@ public class RubyArrayTest {
     assertNotEquals(list, ints);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testStaticFactoryMethodCopyOfException() {
-    RubyArray.copyOf(null);
+    assertThrows(NullPointerException.class, () -> {
+      RubyArray.copyOf(null);
+    });
   }
 
   @Test
@@ -103,14 +108,18 @@ public class RubyArrayTest {
     assertEquals(ra(1, 2, 3, 4), ra);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException1() {
-    new RubyArray<Integer>((List<Integer>) null);
+    assertThrows(NullPointerException.class, () -> {
+      new RubyArray<Integer>((List<Integer>) null);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException2() {
-    new RubyArray<Integer>((Iterable<Integer>) null);
+    assertThrows(NullPointerException.class, () -> {
+      new RubyArray<Integer>((Iterable<Integer>) null);
+    });
   }
 
   @Test
@@ -311,13 +320,15 @@ public class RubyArrayTest {
     assertEquals(Integer.valueOf(3), ra.fetch(2));
   }
 
-  @Test(expected = IndexOutOfBoundsException.class)
+  @Test
   public void testFetchException() {
-    try {
-      ra.fetch(4);
-      fail();
-    } catch (IndexOutOfBoundsException e) {}
-    ra.fetch(-5);
+    assertThrows(IndexOutOfBoundsException.class, () -> {
+      try {
+        ra.fetch(4);
+        fail();
+      } catch (IndexOutOfBoundsException e) {}
+      ra.fetch(-5);
+    });
   }
 
   @Test
@@ -455,9 +466,11 @@ public class RubyArrayTest {
     assertTrue(frozenRa.frozenʔ());
   }
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test
   public void testFrozenException() {
-    frozenRa.shift();
+    assertThrows(UnsupportedOperationException.class, () -> {
+      frozenRa.shift();
+    });
   }
 
   @Test
@@ -491,9 +504,11 @@ public class RubyArrayTest {
     assertEquals(ra(-1, 0, 1, 2, 3, 4), ra.insert(-5, -1, 0));
   }
 
-  @Test(expected = IndexOutOfBoundsException.class)
+  @Test
   public void testInsertException() {
-    ra.insert(-6, 0);
+    assertThrows(IndexOutOfBoundsException.class, () -> {
+      ra.insert(-6, 0);
+    });
   }
 
   @Test
@@ -551,9 +566,11 @@ public class RubyArrayTest {
     assertEquals(ra(), ra.last(2));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testLastWithNException() {
-    ra.last(-1);
+    assertThrows(IllegalArgumentException.class, () -> {
+      ra.last(-1);
+    });
   }
 
   @Test
@@ -579,9 +596,11 @@ public class RubyArrayTest {
     assertEquals(ra(1, 2, 3, 4, 1, 2, 3, 4), ra.multiply(2));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testMultiplyException() {
-    ra.multiply(-1);
+    assertThrows(IllegalArgumentException.class, () -> {
+      ra.multiply(-1);
+    });
   }
 
   @Test
@@ -657,9 +676,11 @@ public class RubyArrayTest {
     assertEquals(ra(), ra.pop(3));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testPopException() {
-    ra.pop(-1);
+    assertThrows(IllegalArgumentException.class, () -> {
+      ra.pop(-1);
+    });
   }
 
   @SuppressWarnings("unchecked")
@@ -877,9 +898,11 @@ public class RubyArrayTest {
     assertEquals(ra.size(), set.size());
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testSampleException() {
-    ra.sample(-1);
+    assertThrows(IllegalArgumentException.class, () -> {
+      ra.sample(-1);
+    });
   }
 
   @Test
@@ -912,9 +935,11 @@ public class RubyArrayTest {
     assertEquals(ra(), ra);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testShiftException() {
-    ra.shift(-1);
+    assertThrows(IllegalArgumentException.class, () -> {
+      ra.shift(-1);
+    });
   }
 
   @Test
@@ -1029,9 +1054,11 @@ public class RubyArrayTest {
     assertEquals(new BigDecimal(10), ra.sum());
   }
 
-  @Test(expected = ClassCastException.class)
+  @Test
   public void testSumException() {
-    ra("a", "b", "c").sum();
+    assertThrows(ClassCastException.class, () -> {
+      ra("a", "b", "c").sum();
+    });
   }
 
   @Test
@@ -1047,14 +1074,18 @@ public class RubyArrayTest {
     assertEquals(ra(ra(1, 4), ra(2, 5), ra(3, 6)), ra.transpose());
   }
 
-  @Test(expected = ClassCastException.class)
+  @Test
   public void testTransposeException1() {
-    ra.transpose();
+    assertThrows(ClassCastException.class, () -> {
+      ra.transpose();
+    });
   }
 
-  @Test(expected = IndexOutOfBoundsException.class)
+  @Test
   public void testTransposeException2() {
-    ra(ra(1, 2, 3), ra(4, 5)).transpose();
+    assertThrows(IndexOutOfBoundsException.class, () -> {
+      ra(ra(1, 2, 3), ra(4, 5)).transpose();
+    });
   }
 
   @Test
@@ -1328,9 +1359,11 @@ public class RubyArrayTest {
             .sort());
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testCompareToException() {
-    ra(4, 5).compareTo(null);
+    assertThrows(IllegalArgumentException.class, () -> {
+      ra(4, 5).compareTo(null);
+    });
   }
 
 }

@@ -18,23 +18,24 @@
 package net.sf.rubycollect4j.iter;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class PermutationIteratorTest {
 
   PermutationIterator<Integer> iter;
   List<Integer> list;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     list = ra(1, 2, 3);
     iter = new PermutationIterator<Integer>(list, 2);
@@ -45,9 +46,11 @@ public class PermutationIteratorTest {
     assertTrue(iter instanceof PermutationIterator);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException() {
-    new PermutationIterator<Integer>(null, 2);
+    assertThrows(NullPointerException.class, () -> {
+      new PermutationIterator<Integer>(null, 2);
+    });
   }
 
   @Test
@@ -89,17 +92,21 @@ public class PermutationIteratorTest {
     assertFalse(iter.hasNext());
   }
 
-  @Test(expected = NoSuchElementException.class)
+  @Test
   public void testNextException() {
-    while (iter.hasNext()) {
+    assertThrows(NoSuchElementException.class, () -> {
+      while (iter.hasNext()) {
+        iter.next();
+      }
       iter.next();
-    }
-    iter.next();
+    });
   }
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test
   public void testRemove() {
-    iter.remove();
+    assertThrows(UnsupportedOperationException.class, () -> {
+      iter.remove();
+    });
   }
 
 }

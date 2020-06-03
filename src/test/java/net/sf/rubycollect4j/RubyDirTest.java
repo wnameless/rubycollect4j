@@ -19,15 +19,16 @@ package net.sf.rubycollect4j;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyLiterals.qx;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class RubyDirTest {
 
@@ -39,14 +40,18 @@ public class RubyDirTest {
     assertTrue(RubyDir.open(BASE_DIR) instanceof RubyDir);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testOpenException1() {
-    RubyDir.open(BASE_DIR + "entries_test/b");
+    assertThrows(IllegalArgumentException.class, () -> {
+      RubyDir.open(BASE_DIR + "entries_test/b");
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testOpenException2() {
-    RubyDir.open(BASE_DIR + "nonexist");
+    assertThrows(IllegalArgumentException.class, () -> {
+      RubyDir.open(BASE_DIR + "nonexist");
+    });
   }
 
   @Test

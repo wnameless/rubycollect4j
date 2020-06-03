@@ -18,13 +18,14 @@
 package net.sf.rubycollect4j.iter;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class GrepVIterableTest {
 
@@ -32,7 +33,7 @@ public class GrepVIterableTest {
   List<Integer> list;
   String regex;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     list = ra(1, 2, 3);
     regex = "2|3";
@@ -44,14 +45,18 @@ public class GrepVIterableTest {
     assertTrue(iter instanceof GrepVIterable);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException1() {
-    new GrepVIterable<Integer>(list, null);
+    assertThrows(NullPointerException.class, () -> {
+      new GrepVIterable<Integer>(list, null);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException2() {
-    new GrepVIterable<Integer>(null, regex);
+    assertThrows(NullPointerException.class, () -> {
+      new GrepVIterable<Integer>(null, regex);
+    });
   }
 
   @Test

@@ -18,10 +18,11 @@
 package net.sf.rubycollect4j.util;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.IdentityHashMap;
@@ -30,9 +31,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class LinkedIdentityMap_KeySetTest {
 
@@ -45,7 +46,7 @@ public class LinkedIdentityMap_KeySetTest {
   String key2 = new String("a");
   String key3 = new String("a");
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     list.add(key1);
     map.put(key1, 1);
@@ -55,7 +56,7 @@ public class LinkedIdentityMap_KeySetTest {
     map.put(key3, 3);
   }
 
-  @After
+  @AfterEach
   public void tearDown() throws Exception {
     list.clear();
     map.clear();
@@ -118,9 +119,11 @@ public class LinkedIdentityMap_KeySetTest {
     assertSame(key3, keySet.toArray(new String[3])[2]);
   }
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test
   public void testAdd() {
-    keySet.add(null);
+    assertThrows(UnsupportedOperationException.class, () -> {
+      keySet.add(null);
+    });
   }
 
   @Test
@@ -137,9 +140,11 @@ public class LinkedIdentityMap_KeySetTest {
     assertFalse(keySet.containsAll(Arrays.asList(new String("a"), key2, key3)));
   }
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test
   public void testAddAll() {
-    keySet.addAll(null);
+    assertThrows(UnsupportedOperationException.class, () -> {
+      keySet.addAll(null);
+    });
   }
 
   @Test

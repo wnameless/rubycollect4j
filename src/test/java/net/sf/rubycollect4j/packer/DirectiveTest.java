@@ -19,12 +19,12 @@ package net.sf.rubycollect4j.packer;
 
 import static java.nio.ByteOrder.BIG_ENDIAN;
 import static java.nio.ByteOrder.nativeOrder;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import net.sf.rubycollect4j.util.ByteUtils;
 
@@ -35,7 +35,7 @@ public class DirectiveTest {
   byte[] ABC;
   byte[] ABCDEFGH;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     ABC = new byte[] { (byte) 65, (byte) 66, (byte) 67 };
     ABCDEFGH = new byte[] { (byte) 65, (byte) 66, (byte) 67, (byte) 68,

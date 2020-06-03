@@ -18,15 +18,16 @@
 package net.sf.rubycollect4j.iter;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import java.util.function.Function;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class TransformIteratorTest {
 
@@ -34,7 +35,7 @@ public class TransformIteratorTest {
   Function<Integer, Double> block;
   List<Integer> list;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     list = ra(1, 2, 3, 4);
     block = item -> item.doubleValue();
@@ -46,14 +47,18 @@ public class TransformIteratorTest {
     assertTrue(iter instanceof TransformIterator);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException1() {
-    new TransformIterator<Integer, Double>(null, block);
+    assertThrows(NullPointerException.class, () -> {
+      new TransformIterator<Integer, Double>(null, block);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException2() {
-    new TransformIterator<Integer, Double>(list.iterator(), null);
+    assertThrows(NullPointerException.class, () -> {
+      new TransformIterator<Integer, Double>(list.iterator(), null);
+    });
   }
 
   @Test

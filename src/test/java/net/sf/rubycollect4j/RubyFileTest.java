@@ -18,24 +18,27 @@
 package net.sf.rubycollect4j;
 
 import static net.sf.rubycollect4j.RubyLiterals.qx;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.util.Date;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class RubyFileTest {
 
   static final String BASE_DIR = "src/test/resources/";
   RubyFile rf;
 
-  @Test(expected = RuntimeException.class)
+  @Test
   public void testOpenException() {
-    RubyFile.open("no such file!");
+    assertThrows(RuntimeException.class, () -> {
+      RubyFile.open("no such file!");
+    });
   }
 
   @Test
@@ -199,9 +202,11 @@ public class RubyFileTest {
     assertEquals(0L, RubyFile.size(BASE_DIR + "ruby_file_exist_test.txt"));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testSizeException() {
-    RubyFile.size(BASE_DIR + "no such file!");
+    assertThrows(IllegalArgumentException.class, () -> {
+      RubyFile.size(BASE_DIR + "no such file!");
+    });
   }
 
   @Test

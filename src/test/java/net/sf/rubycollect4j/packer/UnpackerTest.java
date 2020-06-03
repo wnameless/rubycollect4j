@@ -19,13 +19,14 @@ package net.sf.rubycollect4j.packer;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.rs;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class UnpackerTest {
 
@@ -37,9 +38,11 @@ public class UnpackerTest {
     c.newInstance();
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testUnpackWithInvalidDirective() {
-    Unpacker.unpack("Y1", "");
+    assertThrows(IllegalArgumentException.class, () -> {
+      Unpacker.unpack("Y1", "");
+    });
   }
 
   @Test

@@ -18,10 +18,11 @@
 package net.sf.rubycollect4j.util;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.IdentityHashMap;
@@ -29,9 +30,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class LinkedIdentityMap_ValuesTest {
 
@@ -40,7 +41,7 @@ public class LinkedIdentityMap_ValuesTest {
   LinkedIdentityMap.Values<String, Integer> values =
       new LinkedIdentityMap.Values<String, Integer>(list, map);
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     list.add("a");
     map.put(list.get(0), 1);
@@ -50,7 +51,7 @@ public class LinkedIdentityMap_ValuesTest {
     map.put(list.get(2), 3);
   }
 
-  @After
+  @AfterEach
   public void tearDown() throws Exception {
     list.clear();
     map.clear();
@@ -108,9 +109,11 @@ public class LinkedIdentityMap_ValuesTest {
         values.toArray(new Integer[3]));
   }
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test
   public void testAdd() {
-    values.add(null);
+    assertThrows(UnsupportedOperationException.class, () -> {
+      values.add(null);
+    });
   }
 
   @Test
@@ -135,9 +138,11 @@ public class LinkedIdentityMap_ValuesTest {
     assertFalse(values.containsAll(Arrays.asList(Integer.valueOf(2), 3, 4)));
   }
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test
   public void testAddAll() {
-    values.addAll(null);
+    assertThrows(UnsupportedOperationException.class, () -> {
+      values.addAll(null);
+    });
   }
 
   @Test

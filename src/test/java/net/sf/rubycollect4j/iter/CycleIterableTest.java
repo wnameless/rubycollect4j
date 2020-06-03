@@ -18,17 +18,18 @@
 package net.sf.rubycollect4j.iter;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class CycleIterableTest {
 
   CycleIterable<Integer> iter;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     iter = new CycleIterable<Integer>(ra(1, 2, 3));
   }
@@ -40,14 +41,18 @@ public class CycleIterableTest {
     assertTrue(iter instanceof CycleIterable);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException1() {
-    new CycleIterable<Integer>(null);
+    assertThrows(NullPointerException.class, () -> {
+      new CycleIterable<Integer>(null);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException2() {
-    new CycleIterable<Integer>(null, 2);
+    assertThrows(NullPointerException.class, () -> {
+      new CycleIterable<Integer>(null, 2);
+    });
   }
 
   @Test

@@ -19,16 +19,17 @@ package net.sf.rubycollect4j.iter;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyLiterals.qr;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class SliceAfterIteratorTest {
 
@@ -37,7 +38,7 @@ public class SliceAfterIteratorTest {
   Predicate<Integer> block;
   Pattern pattern;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     list = ra(1, 2, 3, 4, 5);
     block = item -> item % 3 == 0;
@@ -52,24 +53,33 @@ public class SliceAfterIteratorTest {
     assertTrue(iter instanceof SliceAfterIterator);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException1() {
-    new SliceAfterIterator<Integer>(null, block);
+    assertThrows(NullPointerException.class, () -> {
+      new SliceAfterIterator<Integer>(null, block);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException2() {
-    new SliceAfterIterator<Integer>(list.iterator(), (Predicate<Integer>) null);
+    assertThrows(NullPointerException.class, () -> {
+      new SliceAfterIterator<Integer>(list.iterator(),
+          (Predicate<Integer>) null);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException3() {
-    new SliceAfterIterator<Integer>(null, pattern);
+    assertThrows(NullPointerException.class, () -> {
+      new SliceAfterIterator<Integer>(null, pattern);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException4() {
-    new SliceAfterIterator<Integer>(list.iterator(), (Pattern) null);
+    assertThrows(NullPointerException.class, () -> {
+      new SliceAfterIterator<Integer>(list.iterator(), (Pattern) null);
+    });
   }
 
   @Test
@@ -92,9 +102,11 @@ public class SliceAfterIteratorTest {
     assertFalse(iter.hasNext());
   }
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test
   public void testRemove() {
-    iter.remove();
+    assertThrows(UnsupportedOperationException.class, () -> {
+      iter.remove();
+    });
   }
 
 }

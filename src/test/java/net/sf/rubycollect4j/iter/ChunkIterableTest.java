@@ -18,13 +18,14 @@
 package net.sf.rubycollect4j.iter;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.function.Function;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import net.sf.rubycollect4j.RubyArray;
 
@@ -34,7 +35,7 @@ public class ChunkIterableTest {
   RubyArray<Number> nums;
   Function<Number, String> block;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     block = item -> item.toString();
     nums = ra((Number) 1, (Number) 1.0, (Number) 1.0f, (Number) 2, (Number) 2L);
@@ -46,14 +47,18 @@ public class ChunkIterableTest {
     assertTrue(iter instanceof ChunkIterable);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException1() {
-    new ChunkIterable<Number, String>(null, block);
+    assertThrows(NullPointerException.class, () -> {
+      new ChunkIterable<Number, String>(null, block);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException2() {
-    new ChunkIterable<Number, String>(nums, null);
+    assertThrows(NullPointerException.class, () -> {
+      new ChunkIterable<Number, String>(nums, null);
+    });
   }
 
   @Test

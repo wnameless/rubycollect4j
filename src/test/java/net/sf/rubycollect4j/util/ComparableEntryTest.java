@@ -17,21 +17,22 @@
  */
 package net.sf.rubycollect4j.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class ComparableEntryTest {
 
   ComparableEntry<Integer, Integer> entry;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     entry = new ComparableEntry<Integer, Integer>(0, 1);
   }
@@ -99,9 +100,11 @@ public class ComparableEntryTest {
                     new SimpleEntry<Integer, Integer>(1, 1))));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testCompareToException1() {
-    entry.compareTo(null);
+    assertThrows(IllegalArgumentException.class, () -> {
+      entry.compareTo(null);
+    });
   }
 
 }

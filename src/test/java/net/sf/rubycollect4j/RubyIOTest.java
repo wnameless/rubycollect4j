@@ -18,14 +18,15 @@
 package net.sf.rubycollect4j;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import net.sf.rubycollect4j.RubyIO.Mode;
 
@@ -40,9 +41,11 @@ public class RubyIOTest {
     assertTrue(io instanceof RubyIO);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException() throws Exception {
-    new RubyIO(null, Mode.R);
+    assertThrows(NullPointerException.class, () -> {
+      new RubyIO(null, Mode.R);
+    });
   }
 
   @Test
@@ -52,14 +55,18 @@ public class RubyIOTest {
     io.close();
   }
 
-  @Test(expected = RuntimeException.class)
+  @Test
   public void testOpenException() {
-    RubyIO.open(BASE_DIR + "no_file.txt");
+    assertThrows(RuntimeException.class, () -> {
+      RubyIO.open(BASE_DIR + "no_file.txt");
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testOpenModeWithInvalidString() {
-    RubyIO.open(BASE_DIR + "ruby_io_read_only_mode.txt", "haha");
+    assertThrows(IllegalArgumentException.class, () -> {
+      RubyIO.open(BASE_DIR + "ruby_io_read_only_mode.txt", "haha");
+    });
   }
 
   @Test
@@ -69,9 +76,11 @@ public class RubyIOTest {
     io.close();
   }
 
-  @Test(expected = RuntimeException.class)
+  @Test
   public void testOpenWithModeException() {
-    io = RubyIO.open(BASE_DIR + "no_file.txt", Mode.R);
+    assertThrows(RuntimeException.class, () -> {
+      io = RubyIO.open(BASE_DIR + "no_file.txt", Mode.R);
+    });
   }
 
   @Test
@@ -82,14 +91,18 @@ public class RubyIOTest {
     assertEquals(ra("a", "bc", "def"), io.eachLine().toA());
   }
 
-  @Test(expected = IllegalStateException.class)
+  @Test
   public void testReadOnlyModeException1() {
-    RubyIO.open(BASE_DIR + "ruby_io_read_only_mode.txt").puts("test");
+    assertThrows(IllegalStateException.class, () -> {
+      RubyIO.open(BASE_DIR + "ruby_io_read_only_mode.txt").puts("test");
+    });
   }
 
-  @Test(expected = IllegalStateException.class)
+  @Test
   public void testReadOnlyModeException2() {
-    RubyIO.open(BASE_DIR + "ruby_io_read_only_mode.txt").write("test");
+    assertThrows(IllegalStateException.class, () -> {
+      RubyIO.open(BASE_DIR + "ruby_io_read_only_mode.txt").write("test");
+    });
   }
 
   @Test
@@ -136,9 +149,11 @@ public class RubyIOTest {
     io.close();
   }
 
-  @Test(expected = IllegalStateException.class)
+  @Test
   public void testWriteOnlyModeException() {
-    RubyIO.open(BASE_DIR + "ruby_io_write_only_mode.txt", "w").read();
+    assertThrows(IllegalStateException.class, () -> {
+      RubyIO.open(BASE_DIR + "ruby_io_write_only_mode.txt", "w").read();
+    });
   }
 
   @Test
@@ -169,9 +184,11 @@ public class RubyIOTest {
     io.close();
   }
 
-  @Test(expected = IllegalStateException.class)
+  @Test
   public void testAppendOnlyModeException() {
-    RubyIO.open(BASE_DIR + "ruby_io_append_only_mode.txt", "a").read();
+    assertThrows(IllegalStateException.class, () -> {
+      RubyIO.open(BASE_DIR + "ruby_io_append_only_mode.txt", "a").read();
+    });
   }
 
   @Test
@@ -219,9 +236,11 @@ public class RubyIOTest {
     assertEquals("a" + "bc" + "def", ra.join());
   }
 
-  @Test(expected = RuntimeException.class)
+  @Test
   public void testForeachException() {
-    RubyIO.foreach("no such file!", null);
+    assertThrows(RuntimeException.class, () -> {
+      RubyIO.foreach("no such file!", null);
+    });
   }
 
   @Test
@@ -233,9 +252,11 @@ public class RubyIOTest {
     assertEquals(ra("a", "bc", "def"), io.eachLine().toA());
   }
 
-  @Test(expected = IllegalStateException.class)
+  @Test
   public void testEachLineException() {
-    RubyIO.open(BASE_DIR + "ruby_io_write_only_mode.txt", "w").eachLine();
+    assertThrows(IllegalStateException.class, () -> {
+      RubyIO.open(BASE_DIR + "ruby_io_write_only_mode.txt", "w").eachLine();
+    });
   }
 
   @Test

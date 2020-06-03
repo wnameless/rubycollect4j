@@ -19,14 +19,15 @@ package net.sf.rubycollect4j;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.range;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.Serializable;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import net.sf.rubycollect4j.RubyRange.Interval;
 import net.sf.rubycollect4j.succ.DoubleSuccessor;
@@ -48,26 +49,34 @@ public class RubyRangeTest {
     assertTrue(range instanceof RubyRange);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorWithNullSuccessive() {
-    new RubyRange<String>(null, "a", "z", Interval.CLOSED);
+    assertThrows(NullPointerException.class, () -> {
+      new RubyRange<String>(null, "a", "z", Interval.CLOSED);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorWithNullInterval() {
-    new RubyRange<String>(StringSuccessor.getInstance(), "a", "z", null);
+    assertThrows(NullPointerException.class, () -> {
+      new RubyRange<String>(StringSuccessor.getInstance(), "a", "z", null);
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testConstructorWithNullStartPoint() {
-    new RubyRange<String>(StringSuccessor.getInstance(), null, "z",
-        Interval.CLOSED);
+    assertThrows(IllegalArgumentException.class, () -> {
+      new RubyRange<String>(StringSuccessor.getInstance(), null, "z",
+          Interval.CLOSED);
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testConstructorWithNullEndPoint() {
-    new RubyRange<String>(StringSuccessor.getInstance(), "a", null,
-        Interval.CLOSED);
+    assertThrows(IllegalArgumentException.class, () -> {
+      new RubyRange<String>(StringSuccessor.getInstance(), "a", null,
+          Interval.CLOSED);
+    });
   }
 
   @Test
@@ -219,14 +228,18 @@ public class RubyRangeTest {
     assertEquals(ra(1, 4, 7, 10), ints);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testStepException1() {
-    range(1, 10).step(0);
+    assertThrows(IllegalArgumentException.class, () -> {
+      range(1, 10).step(0);
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testStepException2() {
-    range(1, 10).step(-1);
+    assertThrows(IllegalArgumentException.class, () -> {
+      range(1, 10).step(-1);
+    });
   }
 
   @Test

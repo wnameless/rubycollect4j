@@ -18,20 +18,21 @@
 package net.sf.rubycollect4j.iter;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class DropIterableTest {
 
   DropIterable<Integer> iter;
   List<Integer> list;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     list = ra(1, 2, 3, 4, 5);
     iter = new DropIterable<Integer>(ra(1, 2, 3, 4, 5), 2);
@@ -42,14 +43,18 @@ public class DropIterableTest {
     assertTrue(iter instanceof DropIterable);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException1() {
-    new DropIterable<Integer>(null, 2);
+    assertThrows(NullPointerException.class, () -> {
+      new DropIterable<Integer>(null, 2);
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testConstructorException2() {
-    new DropIterable<Integer>(list, -1);
+    assertThrows(IllegalArgumentException.class, () -> {
+      new DropIterable<Integer>(list, -1);
+    });
   }
 
   @Test

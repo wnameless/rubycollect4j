@@ -18,25 +18,26 @@
 package net.sf.rubycollect4j;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class RubyEnumeratorTest {
 
   RubyEnumerator<Integer> re;
   List<Integer> list;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     list = new ArrayList<Integer>(Arrays.asList(1, 2, 3));
     re = new RubyEnumerator<Integer>(list);
@@ -49,9 +50,11 @@ public class RubyEnumeratorTest {
     assertEquals(ra(2, 3), re.toA());
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testOfException() {
-    RubyEnumerator.of(null);
+    assertThrows(NullPointerException.class, () -> {
+      RubyEnumerator.of(null);
+    });
   }
 
   @Test
@@ -61,9 +64,11 @@ public class RubyEnumeratorTest {
     assertEquals(ra(1, 2, 3), re.toA());
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testCopyOfException() {
-    RubyEnumerator.copyOf(null);
+    assertThrows(NullPointerException.class, () -> {
+      RubyEnumerator.copyOf(null);
+    });
   }
 
   @Test
@@ -71,9 +76,11 @@ public class RubyEnumeratorTest {
     assertTrue(re instanceof RubyEnumerator);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException() {
-    new RubyEnumerator<Integer>((Iterable<Integer>) null);
+    assertThrows(NullPointerException.class, () -> {
+      new RubyEnumerator<Integer>((Iterable<Integer>) null);
+    });
   }
 
   @Test

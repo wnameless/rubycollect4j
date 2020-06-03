@@ -18,22 +18,23 @@
 package net.sf.rubycollect4j.iter;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class CycleIteratorTest {
 
   CycleIterator<Integer> iter;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     iter = new CycleIterator<Integer>(ra(1, 2, 3), 2);
   }
@@ -45,14 +46,18 @@ public class CycleIteratorTest {
     assertTrue(iter instanceof CycleIterator);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException1() {
-    new CycleIterator<Integer>(null);
+    assertThrows(NullPointerException.class, () -> {
+      new CycleIterator<Integer>(null);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException2() {
-    new CycleIterator<Integer>(null, 2);
+    assertThrows(NullPointerException.class, () -> {
+      new CycleIterator<Integer>(null, 2);
+    });
   }
 
   @Test
@@ -86,12 +91,14 @@ public class CycleIteratorTest {
     assertTrue(iter.hasNext());
   }
 
-  @Test(expected = NoSuchElementException.class)
+  @Test
   public void testNextException() {
-    while (iter.hasNext()) {
+    assertThrows(NoSuchElementException.class, () -> {
+      while (iter.hasNext()) {
+        iter.next();
+      }
       iter.next();
-    }
-    iter.next();
+    });
   }
 
   @Test

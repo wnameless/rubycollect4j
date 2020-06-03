@@ -19,15 +19,16 @@ package net.sf.rubycollect4j.iter;
 
 import static net.sf.rubycollect4j.RubyCollections.hp;
 import static net.sf.rubycollect4j.RubyCollections.ra;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import net.sf.rubycollect4j.util.ComparableEntry;
 
@@ -37,7 +38,7 @@ public class EachWithObjectIteratorTest {
   List<Integer> list;
   List<Integer> emptyList;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     emptyList = Collections.emptyList();
     list = ra(1, 2, 3);
@@ -50,14 +51,18 @@ public class EachWithObjectIteratorTest {
     assertTrue(iter instanceof EachWithObjectIterator);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException1() {
-    new EachWithObjectIterator<Integer, List<Integer>>(null, emptyList);
+    assertThrows(NullPointerException.class, () -> {
+      new EachWithObjectIterator<Integer, List<Integer>>(null, emptyList);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException2() {
-    new EachWithObjectIterator<Integer, List<Integer>>(list.iterator(), null);
+    assertThrows(NullPointerException.class, () -> {
+      new EachWithObjectIterator<Integer, List<Integer>>(list.iterator(), null);
+    });
   }
 
   @Test

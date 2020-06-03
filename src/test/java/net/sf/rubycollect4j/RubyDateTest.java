@@ -19,15 +19,16 @@ package net.sf.rubycollect4j;
 
 import static net.sf.rubycollect4j.RubyCollections.range;
 import static net.sf.rubycollect4j.RubyCollections.rh;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Calendar;
 import java.util.Date;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import net.sf.rubycollect4j.RubyDate.DateField;
 
@@ -36,7 +37,7 @@ public class RubyDateTest {
   RubyDate rd;
   Calendar c;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     rd = new RubyDate();
     c = Calendar.getInstance();
@@ -49,9 +50,11 @@ public class RubyDateTest {
     assertTrue(rd instanceof Date);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException() {
-    new RubyDate(null);
+    assertThrows(NullPointerException.class, () -> {
+      new RubyDate(null);
+    });
   }
 
   @Test

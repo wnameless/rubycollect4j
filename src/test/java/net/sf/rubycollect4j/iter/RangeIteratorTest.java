@@ -17,14 +17,15 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.NoSuchElementException;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import net.sf.rubycollect4j.Ruby;
 import net.sf.rubycollect4j.RubyRange.Interval;
@@ -34,7 +35,7 @@ public class RangeIteratorTest {
 
   RangeIterator<Integer> iter;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     iter = new RangeIterator<Integer>(IntegerSuccessor.getInstance(), 1, 3,
         Interval.CLOSED);
@@ -45,26 +46,34 @@ public class RangeIteratorTest {
     assertTrue(iter instanceof RangeIterator);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException1() {
-    new RangeIterator<Integer>(null, 1, 3, Interval.CLOSED);
+    assertThrows(NullPointerException.class, () -> {
+      new RangeIterator<Integer>(null, 1, 3, Interval.CLOSED);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException2() {
-    new RangeIterator<Integer>(IntegerSuccessor.getInstance(), null, 3,
-        Interval.CLOSED);
+    assertThrows(NullPointerException.class, () -> {
+      new RangeIterator<Integer>(IntegerSuccessor.getInstance(), null, 3,
+          Interval.CLOSED);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException3() {
-    new RangeIterator<Integer>(IntegerSuccessor.getInstance(), 1, null,
-        Interval.CLOSED);
+    assertThrows(NullPointerException.class, () -> {
+      new RangeIterator<Integer>(IntegerSuccessor.getInstance(), 1, null,
+          Interval.CLOSED);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException4() {
-    new RangeIterator<Integer>(IntegerSuccessor.getInstance(), 1, 3, null);
+    assertThrows(NullPointerException.class, () -> {
+      new RangeIterator<Integer>(IntegerSuccessor.getInstance(), 1, 3, null);
+    });
   }
 
   @Test
@@ -87,17 +96,21 @@ public class RangeIteratorTest {
     assertFalse(iter.hasNext());
   }
 
-  @Test(expected = NoSuchElementException.class)
+  @Test
   public void testNextException() {
-    while (iter.hasNext()) {
+    assertThrows(NoSuchElementException.class, () -> {
+      while (iter.hasNext()) {
+        iter.next();
+      }
       iter.next();
-    }
-    iter.next();
+    });
   }
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test
   public void testRemove() {
-    iter.remove();
+    assertThrows(UnsupportedOperationException.class, () -> {
+      iter.remove();
+    });
   }
 
   @Test

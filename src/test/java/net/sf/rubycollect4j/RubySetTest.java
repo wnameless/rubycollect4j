@@ -20,13 +20,14 @@ package net.sf.rubycollect4j;
 import static net.sf.rubycollect4j.RubyCollections.newRubySet;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.rh;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -35,14 +36,14 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.function.Predicate;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class RubySetTest {
 
   RubySet<Integer> rs;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     rs = new RubySet<Integer>(Arrays.asList(1, 2, 3, 3));
   }
@@ -64,9 +65,11 @@ public class RubySetTest {
     assertEquals(ints, rs);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testOfException() {
-    RubySet.of(null);
+    assertThrows(NullPointerException.class, () -> {
+      RubySet.of(null);
+    });
   }
 
   @Test
@@ -78,9 +81,11 @@ public class RubySetTest {
     assertEquals(new LinkedHashSet<Integer>(Arrays.asList(1, 2, 3)), rs);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testCopyOfException() {
-    RubySet.copyOf(null);
+    assertThrows(NullPointerException.class, () -> {
+      RubySet.copyOf(null);
+    });
   }
 
   @Test
@@ -91,14 +96,18 @@ public class RubySetTest {
         new RubySet<Integer>(new LinkedHashSet<Integer>()) instanceof RubySet);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructor1() {
-    new RubySet<Integer>((LinkedHashSet<Integer>) null);
+    assertThrows(NullPointerException.class, () -> {
+      new RubySet<Integer>((LinkedHashSet<Integer>) null);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructor2() {
-    new RubySet<Integer>((Iterable<Integer>) null);
+    assertThrows(NullPointerException.class, () -> {
+      new RubySet<Integer>((Iterable<Integer>) null);
+    });
   }
 
   @Test
@@ -183,10 +192,11 @@ public class RubySetTest {
             newRubySet(newRubySet(5))).flatten());
   }
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test
   public void testFreeze() {
-    rs.freeze().freeze().add(null);
-
+    assertThrows(UnsupportedOperationException.class, () -> {
+      rs.freeze().freeze().add(null);
+    });
   }
 
   @Test

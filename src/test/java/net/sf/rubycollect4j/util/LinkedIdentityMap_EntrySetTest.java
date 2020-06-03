@@ -18,10 +18,11 @@
 package net.sf.rubycollect4j.util;
 
 import static net.sf.rubycollect4j.RubyCollections.hp;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.IdentityHashMap;
@@ -31,9 +32,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class LinkedIdentityMap_EntrySetTest {
 
@@ -46,7 +47,7 @@ public class LinkedIdentityMap_EntrySetTest {
   String key2 = new String("a");
   String key3 = new String("a");
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     list.add(key1);
     map.put(key1, 1);
@@ -56,7 +57,7 @@ public class LinkedIdentityMap_EntrySetTest {
     map.put(key3, 3);
   }
 
-  @After
+  @AfterEach
   public void tearDown() throws Exception {
     list.clear();
     map.clear();
@@ -127,9 +128,11 @@ public class LinkedIdentityMap_EntrySetTest {
         ((Entry<?, ?>) entrySet.toArray(new Entry[3])[2]).getKey());
   }
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test
   public void testAdd() {
-    entrySet.add(null);
+    assertThrows(UnsupportedOperationException.class, () -> {
+      entrySet.add(null);
+    });
   }
 
   @Test
@@ -156,9 +159,11 @@ public class LinkedIdentityMap_EntrySetTest {
         .containsAll(Arrays.asList(hp(key1, 1), hp(new String("a"), 2))));
   }
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test
   public void testAddAll() {
-    entrySet.addAll(null);
+    assertThrows(UnsupportedOperationException.class, () -> {
+      entrySet.addAll(null);
+    });
   }
 
   @Test

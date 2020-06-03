@@ -18,22 +18,23 @@
 package net.sf.rubycollect4j.iter;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class EachConsIteratorTest {
 
   EachConsIterator<Integer> iter;
   List<Integer> list;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     list = ra(1, 2, 3, 4, 5);
     iter = new EachConsIterator<Integer>(list.iterator(), 2);
@@ -44,19 +45,25 @@ public class EachConsIteratorTest {
     assertTrue(iter instanceof EachConsIterator);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException1() {
-    new EachConsIterator<Integer>(null, 2);
+    assertThrows(NullPointerException.class, () -> {
+      new EachConsIterator<Integer>(null, 2);
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testConstructorException2() {
-    new EachConsIterator<Integer>(list.iterator(), 0);
+    assertThrows(IllegalArgumentException.class, () -> {
+      new EachConsIterator<Integer>(list.iterator(), 0);
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testConstructorException3() {
-    new EachConsIterator<Integer>(list.iterator(), -1);
+    assertThrows(IllegalArgumentException.class, () -> {
+      new EachConsIterator<Integer>(list.iterator(), -1);
+    });
   }
 
   @Test
@@ -82,17 +89,21 @@ public class EachConsIteratorTest {
     assertFalse(iter.hasNext());
   }
 
-  @Test(expected = NoSuchElementException.class)
+  @Test
   public void testNextException() {
-    while (iter.hasNext()) {
+    assertThrows(NoSuchElementException.class, () -> {
+      while (iter.hasNext()) {
+        iter.next();
+      }
       iter.next();
-    }
-    iter.next();
+    });
   }
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test
   public void testRemove() {
-    iter.remove();
+    assertThrows(UnsupportedOperationException.class, () -> {
+      iter.remove();
+    });
   }
 
 }

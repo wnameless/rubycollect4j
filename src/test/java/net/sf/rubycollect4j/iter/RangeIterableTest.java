@@ -17,11 +17,12 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import net.sf.rubycollect4j.Ruby;
 import net.sf.rubycollect4j.RubyRange.Interval;
@@ -31,7 +32,7 @@ public class RangeIterableTest {
 
   RangeIterable<Integer> iter;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     iter = new RangeIterable<Integer>(IntegerSuccessor.getInstance(), 1, 3,
         Interval.CLOSED);
@@ -42,26 +43,34 @@ public class RangeIterableTest {
     assertTrue(iter instanceof RangeIterable);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException1() {
-    new RangeIterable<Integer>(null, 1, 3, Interval.CLOSED);
+    assertThrows(NullPointerException.class, () -> {
+      new RangeIterable<Integer>(null, 1, 3, Interval.CLOSED);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException2() {
-    new RangeIterable<Integer>(IntegerSuccessor.getInstance(), null, 3,
-        Interval.CLOSED);
+    assertThrows(NullPointerException.class, () -> {
+      new RangeIterable<Integer>(IntegerSuccessor.getInstance(), null, 3,
+          Interval.CLOSED);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException3() {
-    new RangeIterable<Integer>(IntegerSuccessor.getInstance(), 1, null,
-        Interval.CLOSED);
+    assertThrows(NullPointerException.class, () -> {
+      new RangeIterable<Integer>(IntegerSuccessor.getInstance(), 1, null,
+          Interval.CLOSED);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException4() {
-    new RangeIterable<Integer>(IntegerSuccessor.getInstance(), 1, 3, null);
+    assertThrows(NullPointerException.class, () -> {
+      new RangeIterable<Integer>(IntegerSuccessor.getInstance(), 1, 3, null);
+    });
   }
 
   @Test

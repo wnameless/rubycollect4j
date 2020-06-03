@@ -18,15 +18,16 @@
 package net.sf.rubycollect4j.iter;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import java.util.function.Predicate;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class FindAllIteratorTest {
 
@@ -34,7 +35,7 @@ public class FindAllIteratorTest {
   List<Integer> list;
   Predicate<Integer> block;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     list = ra(1, 2, 3);
     block = item -> item % 2 == 1;
@@ -46,14 +47,18 @@ public class FindAllIteratorTest {
     assertTrue(iter instanceof FindAllIterator);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException1() {
-    new FindAllIterator<Integer>(null, block);
+    assertThrows(NullPointerException.class, () -> {
+      new FindAllIterator<Integer>(null, block);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException2() {
-    new FindAllIterator<Integer>(list.iterator(), null);
+    assertThrows(NullPointerException.class, () -> {
+      new FindAllIterator<Integer>(list.iterator(), null);
+    });
   }
 
   @Test

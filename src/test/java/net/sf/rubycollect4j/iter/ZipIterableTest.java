@@ -18,13 +18,14 @@
 package net.sf.rubycollect4j.iter;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class ZipIterableTest {
 
@@ -32,7 +33,7 @@ public class ZipIterableTest {
   List<Integer> list;
   List<? extends Iterable<Integer>> others;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     list = ra(1, 2, 3);
     others = ra(ra(4, 5), ra(6));
@@ -44,14 +45,18 @@ public class ZipIterableTest {
     assertTrue(iter instanceof ZipIterable);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException1() {
-    new ZipIterable<Integer>(null, others);
+    assertThrows(NullPointerException.class, () -> {
+      new ZipIterable<Integer>(null, others);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException2() {
-    new ZipIterable<Integer>(list, null);
+    assertThrows(NullPointerException.class, () -> {
+      new ZipIterable<Integer>(list, null);
+    });
   }
 
   @Test

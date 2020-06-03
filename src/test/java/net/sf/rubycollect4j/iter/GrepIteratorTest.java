@@ -18,14 +18,15 @@
 package net.sf.rubycollect4j.iter;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class GrepIteratorTest {
 
@@ -33,7 +34,7 @@ public class GrepIteratorTest {
   List<Integer> list;
   String regex;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     list = ra(1, 2, 3);
     regex = "2|3";
@@ -45,14 +46,18 @@ public class GrepIteratorTest {
     assertTrue(iter instanceof GrepIterator);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException1() {
-    new GrepIterator<Integer>(list.iterator(), null);
+    assertThrows(NullPointerException.class, () -> {
+      new GrepIterator<Integer>(list.iterator(), null);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException2() {
-    new GrepIterator<Integer>(null, regex);
+    assertThrows(NullPointerException.class, () -> {
+      new GrepIterator<Integer>(null, regex);
+    });
   }
 
   @Test

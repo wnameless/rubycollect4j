@@ -21,22 +21,23 @@ import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.rh;
 import static net.sf.rubycollect4j.RubyObject.isBlank;
 import static net.sf.rubycollect4j.RubyObject.isPresent;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class RubyObjectTest {
 
   SendTester tester;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     tester = new SendTester();
   }
@@ -54,19 +55,25 @@ public class RubyObjectTest {
         (char) 0x00);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testSendException1() {
-    RubyObject.send(Integer.valueOf(1), "toString", 1, 2, 3);
+    assertThrows(IllegalArgumentException.class, () -> {
+      RubyObject.send(Integer.valueOf(1), "toString", 1, 2, 3);
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testSendException2() {
-    RubyObject.send(Integer.valueOf(1), "compareTo");
+    assertThrows(IllegalArgumentException.class, () -> {
+      RubyObject.send(Integer.valueOf(1), "compareTo");
+    });
   }
 
-  @Test(expected = RuntimeException.class)
+  @Test
   public void testSendException3() {
-    RubyObject.send(tester, "setBytes", null, Byte.MAX_VALUE);
+    assertThrows(RuntimeException.class, () -> {
+      RubyObject.send(tester, "setBytes", null, Byte.MAX_VALUE);
+    });
   }
 
   @Test

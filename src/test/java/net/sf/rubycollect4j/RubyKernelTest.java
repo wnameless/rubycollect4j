@@ -19,10 +19,10 @@ package net.sf.rubycollect4j;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyKernel.p;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -31,9 +31,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class RubyKernelTest {
 
@@ -41,13 +41,13 @@ public class RubyKernelTest {
   final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
   final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
 
-  @Before
+  @BeforeEach
   public void setUpStreams() {
     System.setOut(new PrintStream(outContent));
     System.setErr(new PrintStream(errContent));
   }
 
-  @After
+  @AfterEach
   public void cleanUpStreams() {
     System.setOut(null);
     System.setErr(null);

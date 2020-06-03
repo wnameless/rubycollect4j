@@ -20,17 +20,17 @@ package net.sf.rubycollect4j.util;
 import static net.sf.rubycollect4j.RubyCollections.hp;
 import static net.sf.rubycollect4j.RubyCollections.ra;
 import static net.sf.rubycollect4j.RubyCollections.rh;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.IdentityHashMap;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import net.sf.rubycollect4j.RubyArray;
 
@@ -39,13 +39,13 @@ public class LinkedIdentityMapTest {
   LinkedIdentityMap<String, Integer> map =
       new LinkedIdentityMap<String, Integer>();
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     map.put("a", 1);
     map.put(new String("a"), 1);
   }
 
-  @After
+  @AfterEach
   public void tearDown() throws Exception {
     map.clear();
   }

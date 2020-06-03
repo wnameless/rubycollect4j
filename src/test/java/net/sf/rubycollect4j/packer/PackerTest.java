@@ -17,15 +17,16 @@
  */
 package net.sf.rubycollect4j.packer;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class PackerTest {
 
@@ -37,19 +38,25 @@ public class PackerTest {
     c.newInstance();
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testPackWithInvalidDirective() {
-    Packer.pack("X1", new ArrayList<Object>());
+    assertThrows(IllegalArgumentException.class, () -> {
+      Packer.pack("X1", new ArrayList<Object>());
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testPackWithShortArguments1() {
-    Packer.pack("ccc", Arrays.asList(1, 2));
+    assertThrows(IllegalArgumentException.class, () -> {
+      Packer.pack("ccc", Arrays.asList(1, 2));
+    });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testPackWithShortArguments2() {
-    Packer.pack("X6", Arrays.asList(1, 2));
+    assertThrows(IllegalArgumentException.class, () -> {
+      Packer.pack("X6", Arrays.asList(1, 2));
+    });
   }
 
   @Test

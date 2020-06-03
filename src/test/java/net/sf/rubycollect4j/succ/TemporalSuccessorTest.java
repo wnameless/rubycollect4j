@@ -17,21 +17,24 @@
  */
 package net.sf.rubycollect4j.succ;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class TemporalSuccessorTest {
 
   TemporalSuccessor<LocalDateTime> successor =
       new TemporalSuccessor<>(ChronoUnit.SECONDS);
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException() {
-    new TemporalSuccessor<LocalDateTime>(null);
+    assertThrows(NullPointerException.class, () -> {
+      new TemporalSuccessor<LocalDateTime>(null);
+    });
   }
 
   @Test

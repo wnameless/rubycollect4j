@@ -18,15 +18,16 @@
 package net.sf.rubycollect4j.iter;
 
 import static net.sf.rubycollect4j.RubyCollections.ra;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import java.util.function.BiPredicate;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class SliceWhenIteratorTest {
 
@@ -34,7 +35,7 @@ public class SliceWhenIteratorTest {
   List<Integer> list;
   BiPredicate<Integer, Integer> block;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     list = ra(1, 2, 4, 9, 10, 11, 12, 15, 16, 19, 20, 21);
     block = (item1, item2) -> item1 + 1 != item2;
@@ -46,15 +47,19 @@ public class SliceWhenIteratorTest {
     assertTrue(iter instanceof SliceWhenIterator);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException1() {
-    new SliceWhenIterator<Integer>(null, block);
+    assertThrows(NullPointerException.class, () -> {
+      new SliceWhenIterator<Integer>(null, block);
+    });
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void testConstructorException2() {
-    new SliceWhenIterator<Integer>(list.iterator(),
-        (BiPredicate<Integer, Integer>) null);
+    assertThrows(NullPointerException.class, () -> {
+      new SliceWhenIterator<Integer>(list.iterator(),
+          (BiPredicate<Integer, Integer>) null);
+    });
   }
 
   @Test
@@ -76,9 +81,11 @@ public class SliceWhenIteratorTest {
     assertFalse(iter.hasNext());
   }
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test
   public void testRemove() {
-    iter.remove();
+    assertThrows(UnsupportedOperationException.class, () -> {
+      iter.remove();
+    });
   }
 
 }
