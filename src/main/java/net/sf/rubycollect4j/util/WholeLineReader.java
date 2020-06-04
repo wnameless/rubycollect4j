@@ -39,8 +39,8 @@ public final class WholeLineReader implements Closeable {
 
   private final Readable readable;
   private final Reader reader;
-  private final CharBuffer cbuf = CharBuffer.allocate(0x800);
-  private final char[] buf = cbuf.array();
+  private final CharBuffer charBuff = CharBuffer.allocate(0x800);
+  private final char[] buff = charBuff.array();
   private final Queue<String> lines = new LinkedList<>();
 
   private StringBuilder line = new StringBuilder();
@@ -70,14 +70,14 @@ public final class WholeLineReader implements Closeable {
    */
   public String readLine() throws IOException {
     while (lines.peek() == null) {
-      cbuf.clear();
-      int read = (reader != null) ? reader.read(buf, 0, buf.length)
-          : readable.read(cbuf);
+      charBuff.clear();
+      int read = (reader != null) ? reader.read(buff, 0, buff.length)
+          : readable.read(charBuff);
       if (read == -1) {
         finish();
         break;
       }
-      add(buf, read);
+      add(buff, read);
     }
     return lines.poll();
   }

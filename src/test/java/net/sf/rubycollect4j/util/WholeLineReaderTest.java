@@ -24,6 +24,8 @@ import java.io.StringReader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import net.sf.rubycollect4j.Ruby;
+
 public class WholeLineReaderTest {
 
   WholeLineReader wlr;
@@ -31,18 +33,56 @@ public class WholeLineReaderTest {
 
   @BeforeEach
   public void setUp() throws Exception {
-    sr = new StringReader("a\nb\rc\r\nd\n\r");
+    sr = new StringReader("a\nb\rc\r\nd\n\r\r\n\n1234567890\n");
     wlr = new WholeLineReader(sr);
   }
 
   @Test
-  public void testReadLine() throws IOException {
+  public void testReadLine1() throws IOException {
     assertEquals("a\n", wlr.readLine());
     assertEquals("b\r", wlr.readLine());
     assertEquals("c\r\n", wlr.readLine());
     assertEquals("d\n", wlr.readLine());
     assertEquals("\r", wlr.readLine());
+    assertEquals("\r\n", wlr.readLine());
+    assertEquals("\n", wlr.readLine());
+    assertEquals("1234567890\n", wlr.readLine());
     assertNull(wlr.readLine());
+  }
+
+  @Test
+  public void testReadLine2() throws IOException {
+    String str = Ruby.String.of("a").ljust(2047, "a").toS();
+    sr = new StringReader(str + "\r\n");
+    wlr = new WholeLineReader(sr);
+
+    assertEquals(str + "\r\n", wlr.readLine());
+    assertNull(wlr.readLine());
+  }
+
+  @Test
+  public void testReadLine3() throws IOException {
+    String str = Ruby.String.of("a").ljust(2047, "a").toS();
+    sr = new StringReader(str + "\r");
+    wlr = new WholeLineReader(sr);
+
+    assertEquals(str + "\r", wlr.readLine());
+    assertNull(wlr.readLine());
+  }
+
+  @Test
+  public void testReadLine4() throws IOException {
+    String str = Ruby.String.of("a").ljust(2048, "a").toS();
+    sr = new StringReader(str);
+    wlr = new WholeLineReader(sr);
+
+    assertEquals(str, wlr.readLine());
+    assertNull(wlr.readLine());
+  }
+
+  @Test
+  public void testClose() throws IOException {
+    wlr.close();
   }
 
 }
