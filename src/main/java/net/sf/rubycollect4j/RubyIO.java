@@ -261,7 +261,22 @@ public class RubyIO {
    * @return {@link RubyEnumerator}
    */
   public static RubyEnumerator<String> foreach(String path) {
-    return Ruby.Enumerator.of(new EachLineIterable(new File(path)));
+    return Ruby.Enumerator.of(new EachLineIterable(new File(path), false));
+  }
+
+  /**
+   * Returns a {@link RubyEnumerator} of lines in given file.
+   * 
+   * @param path
+   *          of a File
+   * @param keepNewLine
+   *          determines whether the new line character(s) to be kept or not
+   * @return {@link RubyEnumerator}
+   */
+  public static RubyEnumerator<String> foreach(String path,
+      boolean keepNewLine) {
+    return Ruby.Enumerator
+        .of(new EachLineIterable(new File(path), keepNewLine));
   }
 
   /**
@@ -272,7 +287,20 @@ public class RubyIO {
    * @return {@link RubyEnumerator}
    */
   public static RubyEnumerator<String> foreach(File file) {
-    return Ruby.Enumerator.of(new EachLineIterable(file));
+    return Ruby.Enumerator.of(new EachLineIterable(file, false));
+  }
+
+  /**
+   * Returns a {@link RubyEnumerator} of lines in given file.
+   * 
+   * @param file
+   *          a File
+   * @param keepNewLine
+   *          determines whether the new line character(s) to be kept or not
+   * @return {@link RubyEnumerator}
+   */
+  public static RubyEnumerator<String> foreach(File file, boolean keepNewLine) {
+    return Ruby.Enumerator.of(new EachLineIterable(file, keepNewLine));
   }
 
   /**
@@ -283,7 +311,21 @@ public class RubyIO {
    * @return {@link RubyEnumerator}
    */
   public static RubyEnumerator<String> foreach(InputStream inputStream) {
-    return Ruby.Enumerator.of(new EachLineIterable(inputStream));
+    return Ruby.Enumerator.of(new EachLineIterable(inputStream, false));
+  }
+
+  /**
+   * Returns a {@link RubyEnumerator} of lines in given {@link InputStream}.
+   * 
+   * @param inputStream
+   *          an {@link InputStream}
+   * @param keepNewLine
+   *          determines whether the new line character(s) to be kept or not
+   * @return {@link RubyEnumerator}
+   */
+  public static RubyEnumerator<String> foreach(InputStream inputStream,
+      boolean keepNewLine) {
+    return Ruby.Enumerator.of(new EachLineIterable(inputStream, keepNewLine));
   }
 
   /**
@@ -295,7 +337,23 @@ public class RubyIO {
    *          to process each line
    */
   public static void foreach(String path, Consumer<? super String> block) {
-    Ruby.Enumerator.of(new EachLineIterable(new File(path))).each(block);
+    Ruby.Enumerator.of(new EachLineIterable(new File(path), false)).each(block);
+  }
+
+  /**
+   * Iterates a file line by line.
+   * 
+   * @param path
+   *          of a File
+   * @param keepNewLine
+   *          determines whether the new line character(s) to be kept or not
+   * @param block
+   *          to process each line
+   */
+  public static void foreach(String path, Consumer<? super String> block,
+      boolean keepNewLine) {
+    Ruby.Enumerator.of(new EachLineIterable(new File(path), keepNewLine))
+        .each(block);
   }
 
   /**
@@ -321,7 +379,23 @@ public class RubyIO {
     if (mode.isReadable() == false)
       throw new IllegalStateException("IOError: not opened for reading");
 
-    return Ruby.Enumerator.of(new EachLineIterable(file));
+    return Ruby.Enumerator.of(new EachLineIterable(file, false));
+  }
+
+  /**
+   * Returns a {@link RubyEnumerator} of lines in the file.
+   * 
+   * @param keepNewLine
+   *          determines whether the new line character(s) to be kept or not
+   * @return {@link RubyEnumerator}
+   * @throws IllegalStateException
+   *           if file is not readable
+   */
+  public RubyEnumerator<String> eachLine(boolean keepNewLine) {
+    if (mode.isReadable() == false)
+      throw new IllegalStateException("IOError: not opened for reading");
+
+    return Ruby.Enumerator.of(new EachLineIterable(file, keepNewLine));
   }
 
   /**

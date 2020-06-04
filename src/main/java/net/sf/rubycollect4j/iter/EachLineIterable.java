@@ -31,6 +31,8 @@ import java.util.Objects;
  */
 public final class EachLineIterable implements Iterable<String> {
 
+  private final boolean keepNewLine;
+
   private File file;
   private InputStream inputStream;
 
@@ -42,9 +44,10 @@ public final class EachLineIterable implements Iterable<String> {
    * @throws NullPointerException
    *           if file is null
    */
-  public EachLineIterable(File file) {
+  public EachLineIterable(File file, boolean keepNewLine) {
     Objects.requireNonNull(file);
 
+    this.keepNewLine = keepNewLine;
     this.file = file;
   }
 
@@ -56,18 +59,19 @@ public final class EachLineIterable implements Iterable<String> {
    * @throws NullPointerException
    *           if file is null
    */
-  public EachLineIterable(InputStream inputStream) {
+  public EachLineIterable(InputStream inputStream, boolean keepNewLine) {
     Objects.requireNonNull(inputStream);
 
+    this.keepNewLine = keepNewLine;
     this.inputStream = inputStream;
   }
 
   @Override
   public Iterator<String> iterator() {
     if (file != null)
-      return new EachLineIterator(file);
+      return new EachLineIterator(file, keepNewLine);
     else
-      return new EachLineIterator(inputStream);
+      return new EachLineIterator(inputStream, keepNewLine);
   }
 
   @Override

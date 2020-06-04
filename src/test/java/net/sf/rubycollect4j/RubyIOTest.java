@@ -213,10 +213,25 @@ public class RubyIOTest {
   }
 
   @Test
+  public void testForeachKeepNewLine() {
+    String file = BASE_DIR + "ruby_io_read_only_mode.txt";
+    assertTrue(RubyIO.foreach(file, true) instanceof RubyEnumerator);
+    assertEquals(ra("a\n", "bc\n", "def\n"), RubyIO.foreach(file, true).toA());
+  }
+
+  @Test
   public void testForeachWithFile() {
     String file = BASE_DIR + "ruby_io_read_only_mode.txt";
     assertTrue(RubyIO.foreach(new File(file)) instanceof RubyEnumerator);
     assertEquals(ra("a", "bc", "def"), RubyIO.foreach(new File(file)).toA());
+  }
+
+  @Test
+  public void testForeachWithFileKeepNewLine() {
+    String file = BASE_DIR + "ruby_io_read_only_mode.txt";
+    assertTrue(RubyIO.foreach(new File(file), true) instanceof RubyEnumerator);
+    assertEquals(ra("a\n", "bc\n", "def\n"),
+        RubyIO.foreach(new File(file), true).toA());
   }
 
   @Test
@@ -229,11 +244,28 @@ public class RubyIOTest {
   }
 
   @Test
+  public void testForeachWithInputStreamKeepNewLine() throws Exception {
+    String file = BASE_DIR + "ruby_io_read_only_mode.txt";
+    assertTrue(RubyIO.foreach(new FileInputStream(new File(file)),
+        true) instanceof RubyEnumerator);
+    assertEquals(ra("a\n", "bc\n", "def\n"),
+        RubyIO.foreach(new FileInputStream(new File(file)), true).toA());
+  }
+
+  @Test
   public void testForeachWithBlock() {
     final RubyArray<String> ra = ra();
     RubyIO.foreach(BASE_DIR + "ruby_io_read_only_mode.txt",
         item -> ra.add(item));
     assertEquals("a" + "bc" + "def", ra.join());
+  }
+
+  @Test
+  public void testForeachWithBlockKeepNewLine() {
+    final RubyArray<String> ra = ra();
+    RubyIO.foreach(BASE_DIR + "ruby_io_read_only_mode.txt",
+        item -> ra.add(item), true);
+    assertEquals("a\n" + "bc\n" + "def\n", ra.join());
   }
 
   @Test
@@ -253,9 +285,25 @@ public class RubyIOTest {
   }
 
   @Test
+  public void testEachLineKeepNewLine() {
+    io = RubyIO.open(BASE_DIR + "ruby_io_read_only_mode.txt");
+    assertTrue(io.eachLine(true) instanceof RubyEnumerator);
+    assertEquals("a\n", io.eachLine(true).first());
+    assertEquals("a\n", io.eachLine(true).first());
+    assertEquals(ra("a\n", "bc\n", "def\n"), io.eachLine(true).toA());
+  }
+
+  @Test
   public void testEachLineException() {
     assertThrows(IllegalStateException.class, () -> {
       RubyIO.open(BASE_DIR + "ruby_io_write_only_mode.txt", "w").eachLine();
+    });
+  }
+
+  @Test
+  public void testEachLineKeepNewLineException() {
+    assertThrows(IllegalStateException.class, () -> {
+      RubyIO.open(BASE_DIR + "ruby_io_write_only_mode.txt", "w").eachLine(true);
     });
   }
 

@@ -30,6 +30,8 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import net.sf.rubycollect4j.util.WholeLineReader;
+
 /**
  * 
  * {@link EachLineIterator} iterates a File line by line.
@@ -42,8 +44,11 @@ public final class EachLineIterator implements Iterator<String> {
   private static final Logger logger =
       Logger.getLogger(EachLineIterator.class.getName());
 
+  private final boolean keepNewLine;
+
   private File file;
   private InputStream inputStream;
+  private WholeLineReader wlReader;
   private BufferedReader reader;
   private String line;
 
@@ -55,9 +60,10 @@ public final class EachLineIterator implements Iterator<String> {
    * @throws NullPointerException
    *           if file is null
    */
-  public EachLineIterator(File file) {
+  public EachLineIterator(File file, boolean keepNewLine) {
     Objects.requireNonNull(file);
 
+    this.keepNewLine = keepNewLine;
     this.file = file;
   }
 
@@ -69,18 +75,28 @@ public final class EachLineIterator implements Iterator<String> {
    * @throws NullPointerException
    *           if file is null
    */
-  public EachLineIterator(InputStream inputStream) {
+  public EachLineIterator(InputStream inputStream, boolean keepNewLine) {
     Objects.requireNonNull(inputStream);
 
+    this.keepNewLine = keepNewLine;
     this.inputStream = inputStream;
   }
 
   private void init() {
     try {
-      if (file != null)
-        reader = new BufferedReader(new FileReader(file));
-      else
-        reader = new BufferedReader(new InputStreamReader(inputStream));
+      if (file != null) {
+        if (keepNewLine) {
+          wlReader = new WholeLineReader(new FileReader(file));
+        } else {
+          reader = new BufferedReader(new FileReader(file));
+        }
+      } else {
+        if (keepNewLine) {
+          wlReader = new WholeLineReader(new InputStreamReader(inputStream));
+        } else {
+          reader = new BufferedReader(new InputStreamReader(inputStream));
+        }
+      }
     } catch (FileNotFoundException e) {
       logger.log(Level.SEVERE, null, e);
       throw new RuntimeException(
@@ -92,8 +108,18 @@ public final class EachLineIterator implements Iterator<String> {
   private String nextLine() {
     String next = line;
     try {
-      line = reader.readLine();
-      if (line == null) reader.close();
+      if (keepNewLine) {
+        line = wlReader.readLine();
+      } else {
+        line = reader.readLine();
+      }
+      if (line == null) {
+        if (keepNewLine) {
+          wlReader.close();
+        } else {
+          reader.close();
+        }
+      }
     } catch (IOException e) {
       logger.log(Level.SEVERE, null, e);
       throw new RuntimeException(e);
@@ -103,7 +129,7 @@ public final class EachLineIterator implements Iterator<String> {
 
   @Override
   public boolean hasNext() {
-    if (reader == null) init();
+    if (reader == null && wlReader == null) init();
 
     return line != null;
   }

@@ -35,10 +35,11 @@ public class EachLineIterableTest {
 
   @BeforeEach
   public void setUp() throws Exception {
-    iter =
-        new EachLineIterable(new File(BASE_DIR + "ruby_io_read_only_mode.txt"));
     iter = new EachLineIterable(
-        new FileInputStream(new File(BASE_DIR + "ruby_io_read_only_mode.txt")));
+        new File(BASE_DIR + "ruby_io_read_only_mode.txt"), false);
+    iter = new EachLineIterable(
+        new FileInputStream(new File(BASE_DIR + "ruby_io_read_only_mode.txt")),
+        false);
   }
 
   @Test
@@ -49,14 +50,14 @@ public class EachLineIterableTest {
   @Test
   public void testConstructorException1() {
     assertThrows(NullPointerException.class, () -> {
-      new EachLineIterable((File) null);
+      new EachLineIterable((File) null, false);
     });
   }
 
   @Test
   public void testConstructorException2() {
     assertThrows(NullPointerException.class, () -> {
-      new EachLineIterable((InputStream) null);
+      new EachLineIterable((InputStream) null, false);
     });
   }
 

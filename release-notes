@@ -354,3 +354,7 @@ Version 2.1.0
 
 * Improve RubyFile#chmod with Files.setPosixFilePermissions
 
+Version 2.1.1
+
++ Add WholeLineReader class and enable keepNewLine feature on every readLine() related method
+
