@@ -155,7 +155,7 @@ public class RubyIO {
    * @param path
    *          of a File
    * @param mode
-   *          r, rw, w, w+, a, a+
+   *          r, r+, w, w+, a, a+
    * @see Mode
    * @return {@link RubyIO}
    */
