@@ -22,6 +22,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
@@ -1062,6 +1063,13 @@ final class RubyContract {
      * @return {@link List}
      */
     List<E> toList();
+
+    /**
+     * Puts all elements into a {@link Set}.
+     * 
+     * @return {@link Set}
+     */
+    Set<E> toSet();
 
     /**
      * Creates a {@link RubyHash} by transforming each element into an

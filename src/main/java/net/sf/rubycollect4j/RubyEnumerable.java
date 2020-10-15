@@ -20,6 +20,7 @@ package net.sf.rubycollect4j;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.function.BiConsumer;
@@ -890,6 +891,13 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
     List<E> list = new ArrayList<>();
     forEach(list::add);
     return list;
+  }
+
+  @Override
+  default LinkedHashSet<E> toSet() {
+    LinkedHashSet<E> set = new LinkedHashSet<>();
+    forEach(set::add);
+    return set;
   }
 
   @Override

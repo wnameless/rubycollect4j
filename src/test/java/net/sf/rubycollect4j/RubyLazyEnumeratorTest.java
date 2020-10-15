@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.function.BiFunction;
@@ -960,6 +961,21 @@ public class RubyLazyEnumeratorTest {
   @Test
   public void testToA() {
     assertEquals(ra(1, 2, 3, 4), lre.toA());
+  }
+
+  @Test
+  public void testToList() {
+    assertEquals(Arrays.asList(1, 2, 3, 4), lre.toList());
+    assertTrue(lre.toList() instanceof ArrayList);
+  }
+
+  @Test
+  public void testToSet() {
+    assertEquals(new LinkedHashSet<>(Arrays.asList(1, 2, 3, 4)), lre.toSet());
+    list = new ArrayList<Integer>(Arrays.asList(1, 2, 2, 3, 3, 3));
+    lre = new RubyLazyEnumerator<Integer>(list);
+    assertEquals(new LinkedHashSet<>(Arrays.asList(1, 2, 3)), lre.toSet());
+    assertTrue(lre.toSet() instanceof LinkedHashSet);
   }
 
   @Test

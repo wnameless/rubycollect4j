@@ -19,7 +19,9 @@ package net.sf.rubycollect4j;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
 import java.util.Arrays;
@@ -2780,6 +2782,34 @@ public final class Ruby {
         LocalDateTime end) {
       return new RubyRange<>(LocalDateTimeSuccessor.getInstance(), start, end,
           Interval.CLOSED);
+    }
+
+    /**
+     * Creates a {@link RubyRange} by given {@link LocalDate}s.
+     * 
+     * @param start
+     *          of the range
+     * @param end
+     *          of the range
+     * @return {@link RubyRange}
+     */
+    public static RubyRange<LocalDate> of(LocalDate start, LocalDate end) {
+      return new RubyRange<>(new TemporalSuccessor<>(ChronoUnit.DAYS), start,
+          end, Interval.CLOSED);
+    }
+
+    /**
+     * Creates a {@link RubyRange} by given {@link YearMonth}s.
+     * 
+     * @param start
+     *          of the range
+     * @param end
+     *          of the range
+     * @return {@link RubyRange}
+     */
+    public static RubyRange<YearMonth> of(YearMonth start, YearMonth end) {
+      return new RubyRange<>(new TemporalSuccessor<>(ChronoUnit.MONTHS), start,
+          end, Interval.CLOSED);
     }
 
     /**

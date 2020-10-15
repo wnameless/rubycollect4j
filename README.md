@@ -17,7 +17,7 @@ After v2.1.0, Java 9 Module supported but the minimal Java version is still Java
 <dependency>
   <groupId>net.sf.rubycollect4j</groupId>
   <artifactId>rubycollect4j</artifactId>
-  <version>2.1.1</version>
+  <version>2.1.2</version>
 </dependency>
 ```
 

@@ -29,6 +29,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -325,6 +326,18 @@ public class RubyTest {
   public void testLocalDateTimeRange() {
     assertTrue(Ruby.Range.of(LocalDateTime.now(),
         LocalDateTime.now().plusDays(1)) instanceof RubyRange);
+  }
+
+  @Test
+  public void testLocalDateRange() {
+    assertTrue(Ruby.Range.of(LocalDate.now(),
+        LocalDate.now().plusDays(1)) instanceof RubyRange);
+  }
+
+  @Test
+  public void testYearMonthRange() {
+    assertTrue(Ruby.Range.of(YearMonth.now(),
+        YearMonth.now().plusMonths(1)) instanceof RubyRange);
   }
 
   @Test

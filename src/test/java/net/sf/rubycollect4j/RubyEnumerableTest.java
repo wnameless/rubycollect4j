@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.function.BiFunction;
@@ -937,6 +938,14 @@ public class RubyEnumerableTest {
   public void testToList() {
     assertEquals(Arrays.asList(1, 2, 3, 4), re.toList());
     assertTrue(re.toList() instanceof ArrayList);
+  }
+
+  @Test
+  public void testToSet() {
+    assertEquals(new LinkedHashSet<>(Arrays.asList(1, 2, 3, 4)), re.toSet());
+    iter = newRubyArray(1, 2, 2, 3, 3, 3);
+    assertEquals(new LinkedHashSet<>(Arrays.asList(1, 2, 3)), re.toSet());
+    assertTrue(re.toSet() instanceof LinkedHashSet);
   }
 
   @Test

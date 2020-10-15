@@ -354,7 +354,16 @@ Version 2.1.0
 
 * Improve RubyFile#chmod with Files.setPosixFilePermissions
 
+
 Version 2.1.1
 
 + Add WholeLineReader class and enable keepNewLine feature on every readLine() related method
 
+
+Version 2.1.2
+
++ Add Ruby.Range.of(LocalDate, LocalDate)
+
++ Add Ruby.Range.of(YearMonth, YearMonth)
+
++ Add toSet() API to Ruby.Enumerable

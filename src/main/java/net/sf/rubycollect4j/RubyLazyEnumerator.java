@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Objects;
@@ -1117,6 +1118,13 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
     List<E> list = new ArrayList<>();
     iter.forEach(list::add);
     return list;
+  }
+
+  @Override
+  public LinkedHashSet<E> toSet() {
+    LinkedHashSet<E> set = new LinkedHashSet<>();
+    forEach(set::add);
+    return set;
   }
 
   @Override

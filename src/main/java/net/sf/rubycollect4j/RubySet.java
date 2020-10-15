@@ -538,7 +538,7 @@ public final class RubySet<E>
    * 
    * @return a {@link Set}
    */
-  public Set<E> toSet() {
+  public LinkedHashSet<E> toSet() {
     return new LinkedHashSet<>(set);
   }
 
