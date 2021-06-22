@@ -538,6 +538,7 @@ public final class RubySet<E>
    * 
    * @return a {@link Set}
    */
+  @Override
   public LinkedHashSet<E> toSet() {
     return new LinkedHashSet<>(set);
   }
