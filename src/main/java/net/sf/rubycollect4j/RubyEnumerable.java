@@ -2,16 +2,14 @@
  *
  * Copyright 2013 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -44,13 +42,12 @@ import net.sf.rubycollect4j.iter.SliceBeforeIterable;
 import net.sf.rubycollect4j.iter.SliceWhenIterable;
 
 /**
- * {@link RubyEnumerable} is an extension for any Iterable class. It includes
- * all methods refer to the Enumerable module of Ruby.
+ * {@link RubyEnumerable} is an extension for any Iterable class. It includes all methods refer to
+ * the Enumerable module of Ruby.
  * <p>
  * {@link RubyEnumerable} is also a {@link RubyBase.Enumerable}.
  * 
- * @param <E>
- *          the type of the elements
+ * @param <E> the type of the elements
  * 
  * @author Wei-Ming Wu
  * 
@@ -83,8 +80,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  default <S> RubyEnumerator<Entry<S, RubyArray<E>>> chunk(
-      Function<? super E, ? extends S> block) {
+  default <S> RubyEnumerator<Entry<S, RubyArray<E>>> chunk(Function<? super E, ? extends S> block) {
     return Ruby.Enumerator.of(new ChunkIterable<E, S>(this, block));
   }
 
@@ -94,8 +90,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  default RubyEnumerator<RubyArray<E>> chunkWhile(
-      BiPredicate<? super E, ? super E> block) {
+  default RubyEnumerator<RubyArray<E>> chunkWhile(BiPredicate<? super E, ? super E> block) {
     return Ruby.Enumerator.of(new ChunkWhileIterable<>(this, block));
   }
 
@@ -136,10 +131,8 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyArray}
    */
   @Override
-  default <S> RubyArray<S> collectConcat(
-      Function<? super E, ? extends List<? extends S>> block) {
-    return (RubyArray<S>) Ruby.LazyEnumerator.of(this).collectConcat(block)
-        .toA();
+  default <S> RubyArray<S> collectConcat(Function<? super E, ? extends List<? extends S>> block) {
+    return (RubyArray<S>) Ruby.LazyEnumerator.of(this).collectConcat(block).toA();
   }
 
   @Override
@@ -320,8 +313,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerable}
    */
   @Override
-  default RubyEnumerable<E> eachWithIndex(
-      BiConsumer<? super E, Integer> block) {
+  default RubyEnumerable<E> eachWithIndex(BiConsumer<? super E, Integer> block) {
     Ruby.LazyEnumerator.of(this).eachWithIndex(block);
     return this;
   }
@@ -427,8 +419,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyArray}
    */
   @Override
-  default <S> RubyArray<S> flatMap(
-      Function<? super E, ? extends List<? extends S>> block) {
+  default <S> RubyArray<S> flatMap(Function<? super E, ? extends List<? extends S>> block) {
     return (RubyArray<S>) Ruby.LazyEnumerator.of(this).flatMap(block).toA();
   }
 
@@ -449,8 +440,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    */
   @SuppressWarnings("unchecked")
   @Override
-  default <S> RubyArray<S> grep(String regex,
-      Function<? super E, ? extends S> block) {
+  default <S> RubyArray<S> grep(String regex, Function<? super E, ? extends S> block) {
     return (RubyArray<S>) Ruby.LazyEnumerator.of(this).grep(regex, block).toA();
   }
 
@@ -471,10 +461,8 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    */
   @SuppressWarnings("unchecked")
   @Override
-  default <S> RubyArray<S> grepV(String regex,
-      Function<? super E, ? extends S> block) {
-    return (RubyArray<S>) Ruby.LazyEnumerator.of(this).grepV(regex, block)
-        .toA();
+  default <S> RubyArray<S> grepV(String regex, Function<? super E, ? extends S> block) {
+    return (RubyArray<S>) Ruby.LazyEnumerator.of(this).grepV(regex, block).toA();
   }
 
   /**
@@ -488,8 +476,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
   }
 
   @Override
-  default <S> RubyHash<S, RubyArray<E>> groupBy(
-      Function<? super E, ? extends S> block) {
+  default <S> RubyHash<S, RubyArray<E>> groupBy(Function<? super E, ? extends S> block) {
     return Ruby.LazyEnumerator.of(this).groupBy(block);
   }
 
@@ -555,8 +542,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
   }
 
   @Override
-  default <S> E maxBy(Comparator<? super S> comp,
-      Function<? super E, ? extends S> block) {
+  default <S> E maxBy(Comparator<? super S> comp, Function<? super E, ? extends S> block) {
     return Ruby.LazyEnumerator.of(this).maxBy(comp, block);
   }
 
@@ -591,8 +577,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
   }
 
   @Override
-  default <S> E minBy(Comparator<? super S> comp,
-      Function<? super E, ? extends S> block) {
+  default <S> E minBy(Comparator<? super S> comp, Function<? super E, ? extends S> block) {
     return Ruby.LazyEnumerator.of(this).minBy(comp, block);
   }
 
@@ -757,8 +742,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    */
   @Override
   default RubyEnumerator<RubyArray<E>> sliceAfter(String regex) {
-    return Ruby.Enumerator
-        .of(new SliceAfterIterable<>(this, Pattern.compile(regex)));
+    return Ruby.Enumerator.of(new SliceAfterIterable<>(this, Pattern.compile(regex)));
   }
 
   /**
@@ -778,8 +762,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    */
   @Override
   default RubyEnumerator<RubyArray<E>> sliceBefore(String regex) {
-    return Ruby.Enumerator
-        .of(new SliceBeforeIterable<>(this, Pattern.compile(regex)));
+    return Ruby.Enumerator.of(new SliceBeforeIterable<>(this, Pattern.compile(regex)));
   }
 
   /**
@@ -788,8 +771,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
-  default RubyEnumerator<RubyArray<E>> sliceWhen(
-      BiPredicate<? super E, ? super E> block) {
+  default RubyEnumerator<RubyArray<E>> sliceWhen(BiPredicate<? super E, ? super E> block) {
     return Ruby.Enumerator.of(new SliceWhenIterable<>(this, block));
   }
 
@@ -815,8 +797,8 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
   }
 
   @Override
-  default <S> RubyArray<E> sortBy(Comparator<? super E> comp1,
-      Comparator<? super S> comp2, Function<? super E, ? extends S> block) {
+  default <S> RubyArray<E> sortBy(Comparator<? super E> comp1, Comparator<? super S> comp2,
+      Function<? super E, ? extends S> block) {
     return Ruby.LazyEnumerator.of(this).sortBy(comp1, comp2, block);
   }
 
@@ -841,8 +823,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
   }
 
   @Override
-  default BigDecimal sum(Number init,
-      Function<? super Number, ? extends Number> block) {
+  default BigDecimal sum(Number init, Function<? super Number, ? extends Number> block) {
     return Ruby.LazyEnumerator.of(this).sum(init, block);
   }
 
@@ -916,8 +897,7 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyArray}
    */
   @Override
-  default RubyArray<RubyArray<E>> zip(
-      List<? extends Iterable<? extends E>> others) {
+  default RubyArray<RubyArray<E>> zip(List<? extends Iterable<? extends E>> others) {
     return Ruby.LazyEnumerator.of(this).zip(others).toA();
   }
 

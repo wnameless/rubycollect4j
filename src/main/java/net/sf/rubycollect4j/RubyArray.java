@@ -2,16 +2,14 @@
  *
  * Copyright 2013 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -47,13 +45,11 @@ import net.sf.rubycollect4j.util.TryComparator;
 
 /**
  * 
- * {@link RubyArray} implements all methods refer to the Array class of Ruby
- * language.
+ * {@link RubyArray} implements all methods refer to the Array class of Ruby language.
  * <p>
  * {@link RubyArray} is also a Java List and a {@link RubyBase.Enumerable}.
  * 
- * @param <E>
- *          the type of the elements
+ * @param <E> the type of the elements
  * 
  * @author Wei-Ming Wu
  * 
@@ -69,11 +65,9 @@ public final class RubyArray<E>
   /**
    * Returns a {@link RubyArray} which wraps the given List.
    * 
-   * @param list
-   *          any List
+   * @param list any List
    * @return {@link RubyArray}
-   * @throws NullPointerException
-   *           if list is null
+   * @throws NullPointerException if list is null
    */
   public static <E> RubyArray<E> of(List<E> list) {
     Objects.requireNonNull(list);
@@ -84,11 +78,9 @@ public final class RubyArray<E>
   /**
    * Returns a {@link RubyArray} which copies the elements of given Iterable.
    * 
-   * @param elements
-   *          any Iterable
+   * @param elements any Iterable
    * @return {@link RubyArray}
-   * @throws NullPointerException
-   *           if elements is null
+   * @throws NullPointerException if elements is null
    */
   public static <E> RubyArray<E> copyOf(Iterable<E> elements) {
     Objects.requireNonNull(elements);
@@ -104,13 +96,11 @@ public final class RubyArray<E>
   }
 
   /**
-   * Creates a {@link RubyArray} by given List. It's a wrapper implementation.
-   * No defensive copy has been made.
+   * Creates a {@link RubyArray} by given List. It's a wrapper implementation. No defensive copy has
+   * been made.
    * 
-   * @param list
-   *          a List
-   * @throws NullPointerException
-   *           if list is null
+   * @param list a List
+   * @throws NullPointerException if list is null
    */
   public RubyArray(List<E> list) {
     Objects.requireNonNull(list);
@@ -121,10 +111,8 @@ public final class RubyArray<E>
   /**
    * Creates a {@link RubyArray} by given Iterable.
    * 
-   * @param iter
-   *          an Iterable
-   * @throws NullPointerException
-   *           if iter is null
+   * @param iter an Iterable
+   * @throws NullPointerException if iter is null
    */
   public RubyArray(Iterable<? extends E> iter) {
     Objects.requireNonNull(iter);
@@ -136,10 +124,8 @@ public final class RubyArray<E>
   /**
    * Finds a List element which contains the target as the first element.
    * 
-   * @param <S>
-   *          the type of a List
-   * @param target
-   *          the first element of returned List
+   * @param <S> the type of a List
+   * @param target the first element of returned List
    * @return List or null
    */
   public <S> RubyArray<S> assoc(S target) {
@@ -159,8 +145,7 @@ public final class RubyArray<E>
   /**
    * Returns the element at any index. -1 represents the last index and so on.
    * 
-   * @param index
-   *          of an element
+   * @param index of an element
    * @return element or null
    */
   public E at(int index) {
@@ -175,11 +160,9 @@ public final class RubyArray<E>
   }
 
   /**
-   * Uses binary search to find an element. Assumes this {@link RubyArray} is
-   * already sorted.
+   * Uses binary search to find an element. Assumes this {@link RubyArray} is already sorted.
    * 
-   * @param target
-   *          to be searched
+   * @param target to be searched
    * @return element or null
    */
   public E bsearch(E target) {
@@ -190,13 +173,11 @@ public final class RubyArray<E>
   }
 
   /**
-   * Uses binary search with a Comparator to Finds an element. Assumes this
-   * {@link RubyArray} is already sorted.
+   * Uses binary search with a Comparator to Finds an element. Assumes this {@link RubyArray} is
+   * already sorted.
    * 
-   * @param target
-   *          to be searched
-   * @param comp
-   *          a Comparator is used to sort this {@link RubyArray}
+   * @param target to be searched
+   * @param comp a Comparator is used to sort this {@link RubyArray}
    * @return element or null
    */
   public E bsearch(E target, Comparator<? super E> comp) {
@@ -205,22 +186,19 @@ public final class RubyArray<E>
   }
 
   /**
-   * Uses binary search and a block to find an element. The block needs to
-   * compare elements by its own definition and returns an Integer to show the
-   * result of comparison (which is much like the result of a Comparator).
-   * BinarySearch will be performed based on the comparison result. Assumes this
-   * {@link RubyArray} is already sorted.
+   * Uses binary search and a block to find an element. The block needs to compare elements by its
+   * own definition and returns an Integer to show the result of comparison (which is much like the
+   * result of a Comparator). BinarySearch will be performed based on the comparison result. Assumes
+   * this {@link RubyArray} is already sorted.
    * 
-   * @param block
-   *          to filter elements
+   * @param block to filter elements
    * @return element if target found, null otherwise
    */
   public E bsearch(Function<? super E, Integer> block) {
     return binarySearch(0, list.size() - 1, block);
   }
 
-  private E binarySearch(int left, int right,
-      Function<? super E, Integer> block) {
+  private E binarySearch(int left, int right, Function<? super E, Integer> block) {
     if (right < left) return null;
 
     int mid = (left + right) >>> 1;
@@ -235,8 +213,7 @@ public final class RubyArray<E>
   /**
    * Transforms each element in self.
    * 
-   * @param block
-   *          to transform elements
+   * @param block to transform elements
    * @return this {@link RubyArray}
    */
   public RubyArray<E> collectǃ(Function<? super E, ? extends E> block) {
@@ -250,8 +227,7 @@ public final class RubyArray<E>
   /**
    * Generates all combinations with length n of this {@link RubyArray}.
    * 
-   * @param n
-   *          length of all combinations
+   * @param n length of all combinations
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<RubyArray<E>> combination(int n) {
@@ -259,13 +235,11 @@ public final class RubyArray<E>
   }
 
   /**
-   * Generates all combinations of length n with elements of this
-   * {@link RubyArray} and yields them with a block.
+   * Generates all combinations of length n with elements of this {@link RubyArray} and yields them
+   * with a block.
    * 
-   * @param n
-   *          length of all combinations
-   * @param block
-   *          to yield each combination
+   * @param n length of all combinations
+   * @param block to yield each combination
    * @return this {@link RubyArray}
    */
   public RubyArray<E> combination(int n, Consumer<? super RubyArray<E>> block) {
@@ -289,8 +263,7 @@ public final class RubyArray<E>
   }
 
   /**
-   * Removes all null elements in this {@link RubyArray}. Returns null if
-   * nothing is removed.
+   * Removes all null elements in this {@link RubyArray}. Returns null if nothing is removed.
    * 
    * @return this {@link RubyArray} or null
    */
@@ -303,8 +276,7 @@ public final class RubyArray<E>
   /**
    * Appends all elements of other Collection in this {@link RubyArray}.
    * 
-   * @param other
-   *          a Collection
+   * @param other a Collection
    * @return this {@link RubyArray}
    */
   public RubyArray<E> concat(Collection<? extends E> other) {
@@ -315,8 +287,7 @@ public final class RubyArray<E>
   /**
    * Returns a total number of the target element in this {@link RubyArray}.
    * 
-   * @param target
-   *          to be counted
+   * @param target to be counted
    * @return the total number
    */
   public int count(E target) {
@@ -324,11 +295,9 @@ public final class RubyArray<E>
   }
 
   /**
-   * Deletes all elements which equal to the target. Return null if nothing is
-   * deleted.
+   * Deletes all elements which equal to the target. Return null if nothing is deleted.
    * 
-   * @param target
-   *          to be deleted
+   * @param target to be deleted
    * @return the target or null
    */
   public E delete(E target) {
@@ -338,13 +307,11 @@ public final class RubyArray<E>
   }
 
   /**
-   * Deletes all elements which equals to target. Return the result of the block
-   * if nothing is deleted.
+   * Deletes all elements which equals to target. Return the result of the block if nothing is
+   * deleted.
    * 
-   * @param target
-   *          to be deleted
-   * @param block
-   *          to yield if nothing is deleted
+   * @param target to be deleted
+   * @param block to yield if nothing is deleted
    * @return element
    */
   public E delete(E target, Function<? super E, ? extends E> block) {
@@ -354,11 +321,10 @@ public final class RubyArray<E>
   }
 
   /**
-   * Deletes the element of any index. -1 represents the last index. Return null
-   * if index is not found.
+   * Deletes the element of any index. -1 represents the last index. Return null if index is not
+   * found.
    * 
-   * @param index
-   *          of an element
+   * @param index of an element
    * @return element or null
    */
   public E deleteAt(int index) {
@@ -384,8 +350,7 @@ public final class RubyArray<E>
   /**
    * Deletes elements which are true returned by the block.
    * 
-   * @param block
-   *          to filter elements
+   * @param block to filter elements
    * @return this {@link RubyArray}
    */
   public RubyArray<E> deleteIf(Predicate<? super E> block) {
@@ -422,8 +387,7 @@ public final class RubyArray<E>
   /**
    * Yields each index of elements to the block.
    * 
-   * @param block
-   *          to yield elements
+   * @param block to yield elements
    * @return this {@link RubyArray}
    */
   public RubyArray<E> eachIndex(Consumer<Integer> block) {
@@ -445,8 +409,7 @@ public final class RubyArray<E>
   /**
    * Equivalent to {@link #equals(Object)}.
    * 
-   * @param o
-   *          an Object
+   * @param o an Object
    * @return true if 2 objects are equal, false otherwise
    */
   public boolean eqlʔ(Object o) {
@@ -456,11 +419,9 @@ public final class RubyArray<E>
   /**
    * Returns the element at an index. -1 represents the last index and so on.
    * 
-   * @param index
-   *          of an element
+   * @param index of an element
    * @return element
-   * @throws IndexOutOfBoundsException
-   *           if index is not found
+   * @throws IndexOutOfBoundsException if index is not found
    */
   public E fetch(int index) {
     if (index >= list.size() || index < -list.size())
@@ -473,10 +434,8 @@ public final class RubyArray<E>
   /**
    * Returns the element at an index. -1 represents the last index and so on.
    * 
-   * @param index
-   *          of an element
-   * @param defaultValue
-   *          the default value while index is not found
+   * @param index of an element
+   * @param defaultValue the default value while index is not found
    * @return element
    */
   public E fetch(int index, E defaultValue) {
@@ -488,10 +447,8 @@ public final class RubyArray<E>
   /**
    * Returns the element at an index. -1 represents the last index and so on.
    * 
-   * @param index
-   *          of an element
-   * @param block
-   *          to yield if index is not found
+   * @param index of an element
+   * @param block to yield if index is not found
    * @return element or null
    */
   public E fetch(int index, Consumer<Integer> block) {
@@ -505,8 +462,7 @@ public final class RubyArray<E>
   /**
    * Fills the whole {@link RubyArray} with the element.
    * 
-   * @param item
-   *          to be filled
+   * @param item to be filled
    * @return this {@link RubyArray}
    */
   public RubyArray<E> fill(E item) {
@@ -516,10 +472,8 @@ public final class RubyArray<E>
   /**
    * Starts to fill this {@link RubyArray} from an index with the element.
    * 
-   * @param item
-   *          to be filled
-   * @param start
-   *          where to begin
+   * @param item to be filled
+   * @param start where to begin
    * @return this {@link RubyArray}
    */
   public RubyArray<E> fill(final E item, int start) {
@@ -527,15 +481,11 @@ public final class RubyArray<E>
   }
 
   /**
-   * Starts to fill part of this {@link RubyArray} from an index with the
-   * element.
+   * Starts to fill part of this {@link RubyArray} from an index with the element.
    * 
-   * @param item
-   *          to be filled
-   * @param start
-   *          where to begin
-   * @param length
-   *          of the interval to be filled
+   * @param item to be filled
+   * @param start where to begin
+   * @param length of the interval to be filled
    * @return this {@link RubyArray}
    */
   public RubyArray<E> fill(final E item, int start, int length) {
@@ -545,8 +495,7 @@ public final class RubyArray<E>
   /**
    * Fills the whole {@link RubyArray} with elements returned by the block.
    * 
-   * @param block
-   *          to transform elements to be filled
+   * @param block to transform elements to be filled
    * @return this {@link RubyArray}
    */
   public RubyArray<E> fill(Function<Integer, ? extends E> block) {
@@ -554,13 +503,10 @@ public final class RubyArray<E>
   }
 
   /**
-   * Starts to fill this {@link RubyArray} from an index with elements returned
-   * by the block.
+   * Starts to fill this {@link RubyArray} from an index with elements returned by the block.
    * 
-   * @param start
-   *          where to begin
-   * @param block
-   *          to transform elements to be filled
+   * @param start where to begin
+   * @param block to transform elements to be filled
    * @return this {@link RubyArray}
    */
   public RubyArray<E> fill(int start, Function<Integer, ? extends E> block) {
@@ -572,19 +518,15 @@ public final class RubyArray<E>
   }
 
   /**
-   * Starts to fill part of this {@link RubyArray} from an index with elements
-   * returned by the block.
+   * Starts to fill part of this {@link RubyArray} from an index with elements returned by the
+   * block.
    * 
-   * @param start
-   *          where to begin
-   * @param length
-   *          of the interval to be filled
-   * @param block
-   *          to transform elements to be filled
+   * @param start where to begin
+   * @param length of the interval to be filled
+   * @param block to transform elements to be filled
    * @return this {@link RubyArray}
    */
-  public RubyArray<E> fill(int start, int length,
-      Function<Integer, ? extends E> block) {
+  public RubyArray<E> fill(int start, int length, Function<Integer, ? extends E> block) {
     if (start < 0) {
       start += list.size();
       if (start < 0) start = 0;
@@ -604,11 +546,9 @@ public final class RubyArray<E>
   }
 
   /**
-   * Flattens this {@link RubyArray} of Lists to 1 dimensional {@link RubyArray}
-   * .
+   * Flattens this {@link RubyArray} of Lists to 1 dimensional {@link RubyArray} .
    * 
-   * @param <S>
-   *          the type of elements of the flatten {@link RubyArray}
+   * @param <S> the type of elements of the flatten {@link RubyArray}
    * @return new {@link RubyArray}
    */
   @SuppressWarnings("unchecked")
@@ -621,11 +561,9 @@ public final class RubyArray<E>
   }
 
   /**
-   * Flattens this {@link RubyArray} of Lists to (current - n) dimensional
-   * {@link RubyArray}.
+   * Flattens this {@link RubyArray} of Lists to (current - n) dimensional {@link RubyArray}.
    * 
-   * @param n
-   *          times to flatten
+   * @param n times to flatten
    * @return new {@link RubyArray}
    */
   @SuppressWarnings("unchecked")
@@ -686,8 +624,7 @@ public final class RubyArray<E>
   /**
    * Finds the first index of an element which gets true returned by the block.
    * 
-   * @param block
-   *          to filter elements
+   * @param block to filter elements
    * @return element or null
    */
   public Integer index(Predicate<? super E> block) {
@@ -700,8 +637,7 @@ public final class RubyArray<E>
   /**
    * Finds the index of an element.
    * 
-   * @param target
-   *          to be found
+   * @param target to be found
    * @return element or null
    */
   public Integer index(E target) {
@@ -712,19 +648,15 @@ public final class RubyArray<E>
   /**
    * Starts to insert elements to this {@link RubyArray} from given index.
    * 
-   * @param index
-   *          where to begin
-   * @param args
-   *          elements to be inserted
+   * @param index where to begin
+   * @param args elements to be inserted
    * @return this {@link RubyArray}
-   * @throws IndexOutOfBoundsException
-   *           if index is less than -size
+   * @throws IndexOutOfBoundsException if index is less than -size
    */
   @SafeVarargs
   public final RubyArray<E> insert(int index, E... args) {
-    if (index < -list.size() - 1)
-      throw new IndexOutOfBoundsException("IndexError: index " + index
-          + " too small for array; minimum: " + -list.size());
+    if (index < -list.size() - 1) throw new IndexOutOfBoundsException(
+        "IndexError: index " + index + " too small for array; minimum: " + -list.size());
 
     if (index < 0) {
       int relIndex = list.size() + index + 1;
@@ -752,8 +684,7 @@ public final class RubyArray<E>
   /**
    * Puts all common elements into a new {@link RubyArray}.
    * 
-   * @param other
-   *          a Collection
+   * @param other a Collection
    * @return new {@link RubyArray}
    */
   public RubyArray<E> intersection(Collection<? extends E> other) {
@@ -778,8 +709,7 @@ public final class RubyArray<E>
   /**
    * Transforms each element to a String, then joins them by given separator.
    * 
-   * @param separator
-   *          used to join elements
+   * @param separator used to join elements
    * @return String
    */
   public String join(String separator) {
@@ -805,8 +735,7 @@ public final class RubyArray<E>
   /**
    * Keeps elements which are true returned by the block.
    * 
-   * @param block
-   *          to filter elements
+   * @param block to filter elements
    * @return this {@link RubyArray}
    */
   public RubyArray<E> keepIf(Predicate<? super E> block) {
@@ -819,8 +748,8 @@ public final class RubyArray<E>
   }
 
   /**
-   * Returns the last element of this {@link RubyArray}. Returns null if this
-   * {@link RubyArray} is empty.
+   * Returns the last element of this {@link RubyArray}. Returns null if this {@link RubyArray} is
+   * empty.
    * 
    * @return element or null
    */
@@ -834,15 +763,12 @@ public final class RubyArray<E>
   /**
    * Returns last n elements of this {@link RubyArray}.
    * 
-   * @param n
-   *          number of elements
+   * @param n number of elements
    * @return new {@link RubyArray}
-   * @throws IllegalArgumentException
-   *           if n is less than 0
+   * @throws IllegalArgumentException if n is less than 0
    */
   public RubyArray<E> last(int n) {
-    if (n < 0)
-      throw new IllegalArgumentException("ArgumentError: negative array size");
+    if (n < 0) throw new IllegalArgumentException("ArgumentError: negative array size");
 
     int start = list.size() - n;
     if (start < 0) start = 0;
@@ -864,8 +790,7 @@ public final class RubyArray<E>
   /**
    * Equivalent to {@link #collectǃ(Function)}.
    * 
-   * @param block
-   *          to transform elements
+   * @param block to transform elements
    * @return this {@link RubyArray}
    */
   public RubyArray<E> mapǃ(Function<? super E, ? extends E> block) {
@@ -875,15 +800,12 @@ public final class RubyArray<E>
   /**
    * Multiplies this {@link RubyArray} by n times.
    * 
-   * @param n
-   *          multiply n times
+   * @param n multiply n times
    * @return new {@link RubyArray}
-   * @throws IllegalArgumentException
-   *           if n is less than 0
+   * @throws IllegalArgumentException if n is less than 0
    */
   public RubyArray<E> multiply(int n) {
-    if (n < 0)
-      throw new IllegalArgumentException("ArgumentError: negative argument");
+    if (n < 0) throw new IllegalArgumentException("ArgumentError: negative argument");
 
     RubyArray<E> rubyArray = Ruby.Array.create();
     for (int i = 0; i < n; i++) {
@@ -895,8 +817,7 @@ public final class RubyArray<E>
   /**
    * Equivalent to {@link #join(String)}.
    * 
-   * @param separator
-   *          used to join elements
+   * @param separator used to join elements
    * @return String
    */
   public String multiply(String separator) {
@@ -904,11 +825,10 @@ public final class RubyArray<E>
   }
 
   /**
-   * Packs the contents of this {@link RubyArray} into a binary string according
-   * to the directives in aTemplateString.
+   * Packs the contents of this {@link RubyArray} into a binary string according to the directives
+   * in aTemplateString.
    * 
-   * @param aTemplateString
-   *          a template string
+   * @param aTemplateString a template string
    * @return binary string
    * @see Directive
    */
@@ -917,8 +837,7 @@ public final class RubyArray<E>
   }
 
   /**
-   * Generates a {@link RubyEnumerator} which contains all permutations of this
-   * {@link RubyArray}.
+   * Generates a {@link RubyEnumerator} which contains all permutations of this {@link RubyArray}.
    * 
    * @return {@link RubyEnumerator}
    */
@@ -927,11 +846,10 @@ public final class RubyArray<E>
   }
 
   /**
-   * Generates a {@link RubyEnumerator} which contains all permutations with
-   * length n of this {@link RubyArray}.
+   * Generates a {@link RubyEnumerator} which contains all permutations with length n of this
+   * {@link RubyArray}.
    * 
-   * @param n
-   *          length of each permutation
+   * @param n length of each permutation
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<RubyArray<E>> permutation(int n) {
@@ -939,13 +857,10 @@ public final class RubyArray<E>
   }
 
   /**
-   * Yields all permutations with length n of this {@link RubyArray} to the
-   * block.
+   * Yields all permutations with length n of this {@link RubyArray} to the block.
    * 
-   * @param n
-   *          length of each permutation
-   * @param block
-   *          to yield each permutation
+   * @param n length of each permutation
+   * @param block to yield each permutation
    * @return this {@link RubyArray}
    */
   public RubyArray<E> permutation(int n, Consumer<? super RubyArray<E>> block) {
@@ -958,8 +873,7 @@ public final class RubyArray<E>
   /**
    * Yields all permutations of this {@link RubyArray} to the block.
    * 
-   * @param block
-   *          to yield each permutation
+   * @param block to yield each permutation
    * @return this {@link RubyArray}
    */
   public RubyArray<E> permutation(Consumer<? super RubyArray<E>> block) {
@@ -970,11 +884,9 @@ public final class RubyArray<E>
   }
 
   /**
-   * Appends other Collection to self and puts the result into a new
-   * {@link RubyArray}.
+   * Appends other Collection to self and puts the result into a new {@link RubyArray}.
    * 
-   * @param other
-   *          a Collection
+   * @param other a Collection
    * @return new {@link RubyArray}
    */
   public RubyArray<E> plus(Collection<? extends E> other) {
@@ -998,15 +910,12 @@ public final class RubyArray<E>
   /**
    * Removes and returns the last n element of this {@link RubyArray}.
    * 
-   * @param n
-   *          number of elements
+   * @param n number of elements
    * @return new {@link RubyArray}
-   * @throws IllegalArgumentException
-   *           if n is less than 0
+   * @throws IllegalArgumentException if n is less than 0
    */
   public RubyArray<E> pop(int n) {
-    if (n < 0)
-      throw new IllegalArgumentException("ArgumentError: negative array size");
+    if (n < 0) throw new IllegalArgumentException("ArgumentError: negative array size");
 
     RubyArray<E> rubyArray = Ruby.Array.create();
     while (n > 0 && !list.isEmpty()) {
@@ -1019,8 +928,7 @@ public final class RubyArray<E>
   /**
    * Generates the production of self with other Lists.
    * 
-   * @param others
-   *          Lists
+   * @param others Lists
    * @return new {@link RubyArray} of {@link RubyArray}s
    */
   public RubyArray<RubyArray<E>> product(
@@ -1031,23 +939,18 @@ public final class RubyArray<E>
   /**
    * Generates the production of self with a List of Lists.
    * 
-   * @param others
-   *          a List of Lists
+   * @param others a List of Lists
    * @return new {@link RubyArray} of {@link RubyArray}s
    */
-  public RubyArray<RubyArray<E>> product(
-      List<? extends List<? extends E>> others) {
+  public RubyArray<RubyArray<E>> product(List<? extends List<? extends E>> others) {
     return Ruby.Enumerator.of(new ProductIterable<>(this, others)).toA();
   }
 
   /**
-   * Generates the productions of self with a List of Lists and yield them to
-   * the block.
+   * Generates the productions of self with a List of Lists and yield them to the block.
    * 
-   * @param others
-   *          a List of Lists
-   * @param block
-   *          to yield each production
+   * @param others a List of Lists
+   * @param block to yield each production
    * @return this {@link RubyArray}
    */
   public RubyArray<E> product(List<? extends List<? extends E>> others,
@@ -1061,8 +964,7 @@ public final class RubyArray<E>
   /**
    * Adds the item to the end of this {@link RubyArray}.
    * 
-   * @param item
-   *          an element
+   * @param item an element
    * @return this {@link RubyArray}
    */
   public RubyArray<E> push(E item) {
@@ -1073,8 +975,7 @@ public final class RubyArray<E>
   /**
    * Adds items to the end of this {@link RubyArray}.
    * 
-   * @param items
-   *          an array of element
+   * @param items an array of element
    * @return this {@link RubyArray}
    */
   public RubyArray<E> push(@SuppressWarnings("unchecked") E... items) {
@@ -1085,10 +986,8 @@ public final class RubyArray<E>
   /**
    * Finds a List element which contains target as the last element.
    * 
-   * @param <S>
-   *          the type of a List
-   * @param target
-   *          the last element of returned List
+   * @param <S> the type of a List
+   * @param target the last element of returned List
    * @return List or null
    */
   public <S> RubyArray<S> rassoc(S target) {
@@ -1118,8 +1017,7 @@ public final class RubyArray<E>
   /**
    * Deletes all elements which are false returned by the block.
    * 
-   * @param block
-   *          to filter elements
+   * @param block to filter elements
    * @return this {@link RubyArray}
    */
   public RubyArray<E> rejectǃ(Predicate<? super E> block) {
@@ -1131,8 +1029,7 @@ public final class RubyArray<E>
   /**
    * Generates all repeated combinations of this {@link RubyArray}.
    * 
-   * @param n
-   *          length of each repeated combination
+   * @param n length of each repeated combination
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<RubyArray<E>> repeatedCombination(int n) {
@@ -1140,17 +1037,14 @@ public final class RubyArray<E>
   }
 
   /**
-   * Generates all repeated combinations with length n of this {@link RubyArray}
-   * and yield to the block.
+   * Generates all repeated combinations with length n of this {@link RubyArray} and yield to the
+   * block.
    * 
-   * @param n
-   *          length of each repeated combination
-   * @param block
-   *          to yield each repeated combination
+   * @param n length of each repeated combination
+   * @param block to yield each repeated combination
    * @return this {@link RubyArray}
    */
-  public RubyArray<E> repeatedCombination(int n,
-      Consumer<? super RubyArray<E>> block) {
+  public RubyArray<E> repeatedCombination(int n, Consumer<? super RubyArray<E>> block) {
     for (RubyArray<E> c : repeatedCombination(n)) {
       block.accept(c);
     }
@@ -1158,11 +1052,9 @@ public final class RubyArray<E>
   }
 
   /**
-   * Generates all repeated permutations with length n of this {@link RubyArray}
-   * .
+   * Generates all repeated permutations with length n of this {@link RubyArray} .
    * 
-   * @param n
-   *          length of each repeated permutation
+   * @param n length of each repeated permutation
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<RubyArray<E>> repeatedPermutation(int n) {
@@ -1170,17 +1062,14 @@ public final class RubyArray<E>
   }
 
   /**
-   * Generates all repeated permutations with length n of this {@link RubyArray}
-   * and yield to the block.
+   * Generates all repeated permutations with length n of this {@link RubyArray} and yield to the
+   * block.
    * 
-   * @param n
-   *          length of each repeated permutation
-   * @param block
-   *          to yield each repeated permutation
+   * @param n length of each repeated permutation
+   * @param block to yield each repeated permutation
    * @return this {@link RubyArray}
    */
-  public RubyArray<E> repeatedPermutation(int n,
-      Consumer<? super RubyArray<E>> block) {
+  public RubyArray<E> repeatedPermutation(int n, Consumer<? super RubyArray<E>> block) {
     for (RubyArray<E> perm : repeatedPermutation(n)) {
       block.accept(perm);
     }
@@ -1190,8 +1079,7 @@ public final class RubyArray<E>
   /**
    * Replaces all elements of self with other List.
    * 
-   * @param other
-   *          a Collection
+   * @param other a Collection
    * @return this {@link RubyArray}
    */
   public RubyArray<E> replace(Collection<? extends E> other) {
@@ -1201,8 +1089,7 @@ public final class RubyArray<E>
   }
 
   /**
-   * Reverses this {@link RubyArray} and puts the result into a new
-   * {@link RubyArray}.
+   * Reverses this {@link RubyArray} and puts the result into a new {@link RubyArray}.
    * 
    * @return new {@link RubyArray}
    */
@@ -1236,8 +1123,7 @@ public final class RubyArray<E>
   /**
    * Finds the last index of the element which gets true returned by the block.
    * 
-   * @param block
-   *          to filter the element
+   * @param block to filter the element
    * @return element or null
    */
   public Integer rindex(Predicate<? super E> block) {
@@ -1250,8 +1136,7 @@ public final class RubyArray<E>
   /**
    * Finds the last index of the target element.
    * 
-   * @param target
-   *          to be found
+   * @param target to be found
    * @return element or null
    */
   public Integer rindex(E target) {
@@ -1260,8 +1145,7 @@ public final class RubyArray<E>
   }
 
   /**
-   * Moves the first element to the last and puts them into a new
-   * {@link RubyArray}.
+   * Moves the first element to the last and puts them into a new {@link RubyArray}.
    * 
    * @return new {@link RubyArray}
    */
@@ -1282,11 +1166,9 @@ public final class RubyArray<E>
   }
 
   /**
-   * Moves the first element to the last n times and puts them into a new
-   * RubyArray.
+   * Moves the first element to the last n times and puts them into a new RubyArray.
    * 
-   * @param n
-   *          moves
+   * @param n moves
    * @return new {@link RubyArray}
    */
   public RubyArray<E> rotate(int n) {
@@ -1308,8 +1190,7 @@ public final class RubyArray<E>
   /**
    * Moves the first element to the last n times.
    * 
-   * @param n
-   *          times to perform the rotations
+   * @param n times to perform the rotations
    * @return this {@link RubyArray}
    */
   public RubyArray<E> rotateǃ(int n) {
@@ -1342,22 +1223,18 @@ public final class RubyArray<E>
   /**
    * Picks n element randomly.
    * 
-   * @param n
-   *          number of elements
+   * @param n number of elements
    * @return new {@link RubyArray}
-   * @throws IllegalArgumentException
-   *           if n is less than 0
+   * @throws IllegalArgumentException if n is less than 0
    */
   public RubyArray<E> sample(int n) {
-    if (n < 0) throw new IllegalArgumentException(
-        "ArgumentError: negative sample number");
+    if (n < 0) throw new IllegalArgumentException("ArgumentError: negative sample number");
 
     List<Integer> indices = eachIndex().toA();
 
     RubyArray<E> rubyArray = Ruby.Array.create();
     while (rubyArray.size() < list.size() && rubyArray.size() < n) {
-      rubyArray.add(
-          list.get(indices.remove((int) (Math.random() * indices.size()))));
+      rubyArray.add(list.get(indices.remove((int) (Math.random() * indices.size()))));
     }
     return rubyArray;
   }
@@ -1372,11 +1249,10 @@ public final class RubyArray<E>
   }
 
   /**
-   * Selects elements which the result returned by the block are false. Returns
-   * null if nothing is changed.
+   * Selects elements which the result returned by the block are false. Returns null if nothing is
+   * changed.
    * 
-   * @param block
-   *          to filter elements
+   * @param block to filter elements
    * @return this {@link RubyArray} or null
    */
   public RubyArray<E> selectǃ(Predicate<? super E> block) {
@@ -1400,15 +1276,12 @@ public final class RubyArray<E>
   /**
    * Removes and returns the first n element.
    * 
-   * @param n
-   *          number of elements
+   * @param n number of elements
    * @return new {@link RubyArray}
-   * @throws IllegalArgumentException
-   *           if n is less than 0
+   * @throws IllegalArgumentException if n is less than 0
    */
   public RubyArray<E> shift(int n) {
-    if (n < 0)
-      throw new IllegalArgumentException("ArgumentError: negative array size");
+    if (n < 0) throw new IllegalArgumentException("ArgumentError: negative array size");
 
     RubyArray<E> rubyArray = Ruby.Array.create();
     while (!list.isEmpty() && rubyArray.size() < n) {
@@ -1418,8 +1291,7 @@ public final class RubyArray<E>
   }
 
   /**
-   * Shuffles this {@link RubyArray} and puts the result into a new
-   * {@link RubyArray}.
+   * Shuffles this {@link RubyArray} and puts the result into a new {@link RubyArray}.
    * 
    * @return new {@link RubyArray}
    */
@@ -1442,8 +1314,7 @@ public final class RubyArray<E>
   /**
    * Equivalent to {@link #at(int)}.
    * 
-   * @param index
-   *          of an element
+   * @param index of an element
    * @return element or null
    */
   public E slice(int index) {
@@ -1453,10 +1324,8 @@ public final class RubyArray<E>
   /**
    * Slices an interval of this {@link RubyArray} into a new {@link RubyArray}.
    * 
-   * @param index
-   *          where to begin
-   * @param length
-   *          size of returned {@link RubyArray}
+   * @param index where to begin
+   * @param length size of returned {@link RubyArray}
    * @return new {@link RubyArray}
    */
   public RubyArray<E> slice(int index, int length) {
@@ -1474,11 +1343,9 @@ public final class RubyArray<E>
   }
 
   /**
-   * Removes and returns an element of given index out of this {@link RubyArray}
-   * .
+   * Removes and returns an element of given index out of this {@link RubyArray} .
    * 
-   * @param index
-   *          of the element
+   * @param index of the element
    * @return element
    */
   public E sliceǃ(int index) {
@@ -1495,10 +1362,8 @@ public final class RubyArray<E>
   /**
    * Slices an interval of this {@link RubyArray} out of self.
    * 
-   * @param index
-   *          where to begin
-   * @param length
-   *          size of returned {@link RubyArray}
+   * @param index where to begin
+   * @param length size of returned {@link RubyArray}
    * @return new {@link RubyArray}
    */
   public RubyArray<E> sliceǃ(int index, int length) {
@@ -1531,8 +1396,7 @@ public final class RubyArray<E>
   /**
    * Sorts this {@link RubyArray} by given Comparator.
    * 
-   * @param comp
-   *          a Comparator
+   * @param comp a Comparator
    * @return this {@link RubyArray}
    */
   public RubyArray<E> sortǃ(Comparator<? super E> comp) {
@@ -1552,15 +1416,12 @@ public final class RubyArray<E>
   }
 
   /**
-   * Sorts elements of this {@link RubyArray} by the ordering of outputs
-   * transformed by the block induced by the Comparator.
+   * Sorts elements of this {@link RubyArray} by the ordering of outputs transformed by the block
+   * induced by the Comparator.
    * 
-   * @param <S>
-   *          the type of transformed elements
-   * @param comp
-   *          a Comparator
-   * @param block
-   *          to transform elements
+   * @param <S> the type of transformed elements
+   * @param comp a Comparator
+   * @param block to transform elements
    * @return this {@link RubyArray}
    */
   public <S> RubyArray<E> sortByǃ(Comparator<? super S> comp,
@@ -1574,22 +1435,17 @@ public final class RubyArray<E>
   }
 
   /**
-   * Sorts elements of this {@link RubyArray} by the ordering of outputs
-   * transformed by the block induced by the Comparator for S and applies the
-   * Comparator for E again.
+   * Sorts elements of this {@link RubyArray} by the ordering of outputs transformed by the block
+   * induced by the Comparator for S and applies the Comparator for E again.
    * 
-   * @param <S>
-   *          the type of transformed elements
-   * @param comp1
-   *          a Comparator for E
-   * @param comp2
-   *          a Comparator for S
-   * @param block
-   *          to transform elements
+   * @param <S> the type of transformed elements
+   * @param comp1 a Comparator for E
+   * @param comp2 a Comparator for S
+   * @param block to transform elements
    * @return this {@link RubyArray}
    */
-  public <S> RubyArray<E> sortByǃ(Comparator<? super E> comp1,
-      Comparator<? super S> comp2, Function<? super E, ? extends S> block) {
+  public <S> RubyArray<E> sortByǃ(Comparator<? super E> comp1, Comparator<? super S> comp2,
+      Function<? super E, ? extends S> block) {
     RubyHash<S, RubyArray<E>> rubyHash = groupBy(block);
     list.clear();
     for (S key : rubyHash.keys().sortǃ(comp2)) {
@@ -1599,13 +1455,10 @@ public final class RubyArray<E>
   }
 
   /**
-   * Sorts elements of this {@link RubyArray} by the ordering of putputs
-   * transformed by the block.
+   * Sorts elements of this {@link RubyArray} by the ordering of putputs transformed by the block.
    * 
-   * @param <S>
-   *          the type of transformed elements
-   * @param block
-   *          to transform elements
+   * @param <S> the type of transformed elements
+   * @param block to transform elements
    * @return this {@link RubyArray}
    */
   public <S> RubyArray<E> sortByǃ(Function<? super E, ? extends S> block) {
@@ -1631,19 +1484,16 @@ public final class RubyArray<E>
         sum = sum.add(new BigDecimal(num.toString()));
       } else {
         String type = item == null ? "null" : item.getClass().getSimpleName();
-        throw new ClassCastException(
-            "TypeError: " + type + " can't be coerced into Number");
+        throw new ClassCastException("TypeError: " + type + " can't be coerced into Number");
       }
     }
     return sum;
   }
 
   /**
-   * Eliminates all elements from other Collection and puts the result into a
-   * new {@link RubyArray}.
+   * Eliminates all elements from other Collection and puts the result into a new {@link RubyArray}.
    * 
-   * @param other
-   *          a Collection
+   * @param other a Collection
    * @return new {@link RubyArray}
    */
   public RubyArray<E> minus(Collection<? extends E> other) {
@@ -1662,25 +1512,21 @@ public final class RubyArray<E>
   }
 
   /**
-   * Assumes this {@link RubyArray} is a matrix and transpose this matrix into a
-   * new {@link RubyArray}.
+   * Assumes this {@link RubyArray} is a matrix and transpose this matrix into a new
+   * {@link RubyArray}.
    * 
-   * @param <S>
-   *          the type of transformed elements
+   * @param <S> the type of transformed elements
    * @return {@link RubyArray} of {@link RubyArray}s
-   * @throws TypeConstraintException
-   *           if S is not a List
-   * @throws IndexOutOfBoundsException
-   *           if all lists are not the same size
+   * @throws TypeConstraintException if S is not a List
+   * @throws IndexOutOfBoundsException if all lists are not the same size
    */
   public <S> RubyArray<RubyArray<S>> transpose() {
     if (list.isEmpty()) return Ruby.Array.create();
 
     Integer size = null;
     for (E item : list) {
-      if (!(item instanceof List))
-        throw new ClassCastException("TypeError: no implicit conversion of "
-            + item.getClass().toString() + " into List");
+      if (!(item instanceof List)) throw new ClassCastException(
+          "TypeError: no implicit conversion of " + item.getClass().toString() + " into List");
 
       if (size == null)
         size = ((List<?>) item).size();
@@ -1704,8 +1550,7 @@ public final class RubyArray<E>
   /**
    * Puts all distinct elements into a new {@link RubyArray}.
    * 
-   * @param other
-   *          a Collection
+   * @param other a Collection
    * @return new {@link RubyArray}
    */
   public RubyArray<E> union(Collection<? extends E> other) {
@@ -1725,13 +1570,11 @@ public final class RubyArray<E>
   }
 
   /**
-   * Filters elements by the result returned by the block uniquely and puts the
-   * result into a new {@link RubyArray}.
+   * Filters elements by the result returned by the block uniquely and puts the result into a new
+   * {@link RubyArray}.
    * 
-   * @param <S>
-   *          the type of transformed elements
-   * @param block
-   *          to transform elements
+   * @param <S> the type of transformed elements
+   * @param block to transform elements
    * @return new {@link RubyArray}
    */
   public <S> RubyArray<E> uniq(Function<? super E, ? extends S> block) {
@@ -1761,10 +1604,8 @@ public final class RubyArray<E>
   /**
    * Filters elements by the result returned by the block uniquely.
    * 
-   * @param <S>
-   *          the type of transformed elements
-   * @param block
-   *          to transform elements
+   * @param <S> the type of transformed elements
+   * @param block to transform elements
    * @return this {@link RubyArray}
    */
   public <S> RubyArray<E> uniqǃ(Function<? super E, ? extends S> block) {
@@ -1780,10 +1621,8 @@ public final class RubyArray<E>
   /**
    * Puts an element or elements at beginning of this {@link RubyArray}
    * 
-   * @param item
-   *          an element
-   * @param others
-   *          other elements
+   * @param item an element
+   * @param others other elements
    * @return this {@link RubyArray}
    */
   @SafeVarargs
@@ -1798,8 +1637,7 @@ public final class RubyArray<E>
   /**
    * Puts all elements from given indices into a new {@link RubyArray}.
    * 
-   * @param indices
-   *          where elements to be found
+   * @param indices where elements to be found
    * @return new {@link RubyArray}
    */
   public RubyArray<E> valuesAt(int... indices) {
@@ -1813,8 +1651,7 @@ public final class RubyArray<E>
   /**
    * Puts all elements from given indices into a new {@link RubyArray}.
    * 
-   * @param indices
-   *          where elements to be found
+   * @param indices where elements to be found
    * @return new {@link RubyArray}
    */
   public RubyArray<E> valuesAt(Iterable<Integer> indices) {
@@ -1957,9 +1794,8 @@ public final class RubyArray<E>
 
   @Override
   public int compareTo(List<E> arg0) {
-    if (arg0 == null)
-      throw new IllegalArgumentException("ArgumentError: comparison of "
-          + list.getClass().getName() + " with null failed");
+    if (arg0 == null) throw new IllegalArgumentException(
+        "ArgumentError: comparison of " + list.getClass().getName() + " with null failed");
 
     Comparator<E> comp = new TryComparator<>();
     int diff;

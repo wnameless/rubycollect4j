@@ -2,16 +2,14 @@
  *
  * Copyright 2013 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -290,7 +288,8 @@ public class RubyStringTest {
       digest = MessageDigest.getInstance("SHA-256");
       digest.update(encrypt.getBytes("UTF-8"), 0, encrypt.length());
       md5 = new BigInteger(1, digest.digest()).toString(16);
-    } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {}
+    } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+    }
     assertEquals(md5, rs.crypt("secret").toS());
   }
 
@@ -344,10 +343,8 @@ public class RubyStringTest {
 
   @Test
   public void testEachBytes() {
-    assertEquals(
-        ra((byte) 'a', (byte) 'b', (byte) 'c', (byte) '\n', "我".getBytes()[0],
-            "我".getBytes()[1], "我".getBytes()[2]),
-        rs("abc\n我").eachByte().toA());
+    assertEquals(ra((byte) 'a', (byte) 'b', (byte) 'c', (byte) '\n', "我".getBytes()[0],
+        "我".getBytes()[1], "我".getBytes()[2]), rs("abc\n我").eachByte().toA());
   }
 
   @Test
@@ -533,8 +530,7 @@ public class RubyStringTest {
 
   @Test
   public void testGsubWithMap() {
-    assertEquals(rs("0ab88c99"),
-        rs("0ab4c56").gsub("\\d+", rh("4", "88", "56", "99")));
+    assertEquals(rs("0ab88c99"), rs("0ab4c56").gsub("\\d+", rh("4", "88", "56", "99")));
     assertEquals(rs, rs.gsub("\\d+", (Map<String, ?>) null));
     assertNotSame(rs, rs.gsub("\\d+", (Map<String, ?>) null));
   }
@@ -1035,12 +1031,9 @@ public class RubyStringTest {
 
   @Test
   public void testScanGroups() {
-    assertEquals(ra(ra("cru"), ra("el "), ra("wor")),
-        rs("cruel world").scanGroups("(...)"));
-    assertEquals(ra(ra("cr", "ue"), ra("l ", "wo")),
-        rs("cruel world").scanGroups("(..)(..)"));
-    assertEquals(ra(ra("cru"), ra("el "), ra("wor")),
-        rs("cruel world").scanGroups("..."));
+    assertEquals(ra(ra("cru"), ra("el "), ra("wor")), rs("cruel world").scanGroups("(...)"));
+    assertEquals(ra(ra("cr", "ue"), ra("l ", "wo")), rs("cruel world").scanGroups("(..)(..)"));
+    assertEquals(ra(ra("cru"), ra("el "), ra("wor")), rs("cruel world").scanGroups("..."));
   }
 
   @Test
@@ -1074,8 +1067,7 @@ public class RubyStringTest {
   @Test
   public void testScrubWithReplacement() {
     assertEquals(rs("abcあ!"), rs("abc\u3042\0").scrub("!"));
-    assertEquals(rs("abc\u3042\0").scrub(),
-        rs("abc\u3042\0").scrub((String) null));
+    assertEquals(rs("abc\u3042\0").scrub(), rs("abc\u3042\0").scrub((String) null));
   }
 
   @Test
@@ -1240,51 +1232,37 @@ public class RubyStringTest {
   @Test
   public void testSplitWithDelimiter() {
     assertEquals(ra("a", "bc", "def"), rs("  a   bc   def ").split(" "));
-    assertEquals(ra("a", "bc", "def"),
-        rs("  a   bc   def ").split((String) null));
-    assertEquals(ra("", "a", " bc", " def "),
-        rs("  a   bc   def ").split("  "));
+    assertEquals(ra("a", "bc", "def"), rs("  a   bc   def ").split((String) null));
+    assertEquals(ra("", "a", " bc", " def "), rs("  a   bc   def ").split("  "));
   }
 
   @Test
   public void testSplitWithDelimiterAndLimit() {
     assertEquals(ra("a", "bc", "def"), rs("  a   bc   def ").split(" ", 0));
-    assertEquals(ra("a", "bc", "def"),
-        rs("  a   bc   def ").split((String) null, 0));
+    assertEquals(ra("a", "bc", "def"), rs("  a   bc   def ").split((String) null, 0));
     assertEquals(ra("a", "bc", "def"), rs("  a   bc   def ").split(" ", -1));
     assertEquals(ra("  a   bc   def "), rs("  a   bc   def ").split(" ", 1));
     assertEquals(ra("a", "bc   def "), rs("  a   bc   def ").split(" ", 2));
     assertEquals(ra("", "a   bc   def "), rs("  a   bc   def ").split("  ", 2));
-    assertEquals(ra("", "a", " bc", " def "),
-        rs("  a   bc   def ").split("  ", 0));
+    assertEquals(ra("", "a", " bc", " def "), rs("  a   bc   def ").split("  ", 0));
   }
 
   @Test
   public void testSplitWithPatternAndDelimiter() {
-    assertEquals(ra("", "a", "bc", "def"),
-        rs("  a   bc   def ").split(qr(" +")));
-    assertEquals(ra("a", "bc", "def"),
-        rs("  a   bc   def ").split((Pattern) null));
-    assertEquals(ra("", "a", "bc", "def"),
-        rs("  a   bc   def ").split(qr(" +")));
+    assertEquals(ra("", "a", "bc", "def"), rs("  a   bc   def ").split(qr(" +")));
+    assertEquals(ra("a", "bc", "def"), rs("  a   bc   def ").split((Pattern) null));
+    assertEquals(ra("", "a", "bc", "def"), rs("  a   bc   def ").split(qr(" +")));
   }
 
   @Test
   public void testSplitWithPatternAndDelimiterAndLimit() {
-    assertEquals(ra("", "a", "bc", "def"),
-        rs("  a   bc   def ").split(qr(" +"), 0));
-    assertEquals(ra("a", "bc", "def"),
-        rs("  a   bc   def ").split((Pattern) null, 0));
-    assertEquals(ra("", "a", "bc", "def"),
-        rs("  a   bc   def ").split(qr(" +"), -1));
-    assertEquals(ra("  a   bc   def "),
-        rs("  a   bc   def ").split(qr(" +"), 1));
-    assertEquals(ra("", "a   bc   def "),
-        rs("  a   bc   def ").split(qr(" +"), 2));
-    assertEquals(ra("", "a   bc   def "),
-        rs("  a   bc   def ").split(qr(" {2,2}"), 2));
-    assertEquals(ra("", "a", " bc", " def "),
-        rs("  a   bc   def ").split(qr(" {2,2}"), 0));
+    assertEquals(ra("", "a", "bc", "def"), rs("  a   bc   def ").split(qr(" +"), 0));
+    assertEquals(ra("a", "bc", "def"), rs("  a   bc   def ").split((Pattern) null, 0));
+    assertEquals(ra("", "a", "bc", "def"), rs("  a   bc   def ").split(qr(" +"), -1));
+    assertEquals(ra("  a   bc   def "), rs("  a   bc   def ").split(qr(" +"), 1));
+    assertEquals(ra("", "a   bc   def "), rs("  a   bc   def ").split(qr(" +"), 2));
+    assertEquals(ra("", "a   bc   def "), rs("  a   bc   def ").split(qr(" {2,2}"), 2));
+    assertEquals(ra("", "a", " bc", " def "), rs("  a   bc   def ").split(qr(" {2,2}"), 0));
   }
 
   @Test
@@ -1295,8 +1273,7 @@ public class RubyStringTest {
   @Test
   public void testSqueezeWithCharSet() {
     assertEquals(rs(" now is the"), rs("  now   is  the").squeeze(" "));
-    assertEquals(rs("puters shot balls"),
-        rs("putters shoot balls").squeeze("m-z"));
+    assertEquals(rs("puters shot balls"), rs("putters shoot balls").squeeze("m-z"));
   }
 
   @Test
@@ -1375,8 +1352,7 @@ public class RubyStringTest {
     assertEquals(rs("h0llo"), rs("hello").sub("[aeiou]", rh("e", 0)));
     assertEquals(rs("hello"), rs("hello").sub("[aeiou]", rh("a", 1)));
     assertEquals(rs("hello"), rs("hello").sub("x", rh("a", 1)));
-    assertEquals(rs("hello"),
-        rs("hello").sub("e", new HashMap<String, Object>()));
+    assertEquals(rs("hello"), rs("hello").sub("e", new HashMap<String, Object>()));
   }
 
   @Test
@@ -1497,13 +1473,11 @@ public class RubyStringTest {
     assertEquals((Integer) 0, (Integer) rs("hello").toI());
     assertEquals((Integer) 101, (Integer) rs(" + 1100101").toI(2));
     assertEquals((Integer) 294977, (Integer) rs("1100101").toI(8));
-    assertEquals((Integer) rs("1100101").toI(8),
-        (Integer) rs("11001019").toI(8));
+    assertEquals((Integer) rs("1100101").toI(8), (Integer) rs("11001019").toI(8));
     assertEquals((Integer) rs("11001").toI(8), (Integer) rs("110019").toI(8));
     assertEquals((Integer) 1100101, (Integer) rs("1100101").toI(10));
     assertEquals((Integer) 17826049, (Integer) rs("1100101").toI(16));
-    assertEquals((Integer) rs("1100101F").toI(16),
-        (Integer) rs("1100101fg").toI(16));
+    assertEquals((Integer) rs("1100101F").toI(16), (Integer) rs("1100101fg").toI(16));
   }
 
   @Test
@@ -1522,8 +1496,7 @@ public class RubyStringTest {
 
   @Test
   public void testToIWithRadixException3() {
-    assertEquals((Integer) 0,
-        (Integer) rs("fffffffffffffffffffffffffffffffffffff").toI(16));
+    assertEquals((Integer) 0, (Integer) rs("fffffffffffffffffffffffffffffffffffff").toI(16));
   }
 
   @Test
@@ -1546,8 +1519,7 @@ public class RubyStringTest {
     assertEquals(rs("h*ll**w*rld"), rs("hello^world").tr("\\^aeiou", "*"));
     assertEquals(rs("h*ll**w*rld"), rs("hello-world").tr("a\\-eo", "*"));
     assertEquals(rs("hello\nworld"), rs("hello\r\nworld").tr("\r", ""));
-    assertEquals(rs("hello\r\nwold").inspect(),
-        rs("hello\r\nworld").tr("\\r", "").inspect());
+    assertEquals(rs("hello\r\nwold").inspect(), rs("hello\r\nworld").tr("\\r", "").inspect());
     assertEquals(rs("hello\nworld"), rs("hello\r\nworld").tr("\\\r", ""));
     assertEquals(rs("['b']"), rs("X['\\b']").tr("X\\", ""));
     assertEquals(rs("'b'"), rs("X['\\b']").tr("X-\\]", ""));
@@ -1715,8 +1687,7 @@ public class RubyStringTest {
   @Test
   public void testComparable() {
     assertEquals(rs.toS().compareTo("def"), rs.compareTo("def"));
-    assertEquals(ra(rs("a"), rs("b"), rs("c")),
-        ra(rs("c"), rs("b"), rs("a")).sort());
+    assertEquals(ra(rs("a"), rs("b"), rs("c")), ra(rs("c"), rs("b"), rs("a")).sort());
   }
 
 }

@@ -2,16 +2,14 @@
  *
  * Copyright 2013 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -32,20 +30,16 @@ import java.util.logging.Logger;
  */
 public class RubyObject {
 
-  private static final Logger logger =
-      Logger.getLogger(RubyObject.class.getName());
+  private static final Logger logger = Logger.getLogger(RubyObject.class.getName());
 
   RubyObject() {}
 
   /**
    * Executes a method of any Object by Java reflection.
    * 
-   * @param o
-   *          an Object
-   * @param methodName
-   *          name of the method
-   * @param args
-   *          arguments of the method
+   * @param o an Object
+   * @param methodName name of the method
+   * @param args arguments of the method
    * @return the result of the method called
    */
   @SuppressWarnings("unchecked")
@@ -57,8 +51,7 @@ public class RubyObject {
           for (int i = 0; i < method.getParameterTypes().length; i++) {
             if (i >= args.length || args[i] == null) continue;
 
-            if (!isConvertable(method.getParameterTypes()[i],
-                args[i].getClass()))
+            if (!isConvertable(method.getParameterTypes()[i], args[i].getClass()))
               isArgsMatched = false;
           }
           if (isArgsMatched && method.getParameterTypes().length == args.length)
@@ -68,8 +61,8 @@ public class RubyObject {
       throw new NoSuchMethodException();
     } catch (NoSuchMethodException e) {
       logger.log(Level.SEVERE, null, e);
-      throw new IllegalArgumentException("NoMethodError: undefined method `"
-          + methodName + "' for " + o + ":" + o.getClass().getName());
+      throw new IllegalArgumentException("NoMethodError: undefined method `" + methodName + "' for "
+          + o + ":" + o.getClass().getName());
     } catch (Exception e) {
       logger.log(Level.SEVERE, null, e);
       throw new RuntimeException(e);
@@ -100,12 +93,9 @@ public class RubyObject {
   /**
    * Executes a method of any Object by Java reflection.
    * 
-   * @param o
-   *          an Object
-   * @param methodName
-   *          name of the method
-   * @param arg
-   *          a Byte
+   * @param o an Object
+   * @param methodName name of the method
+   * @param arg a Byte
    * @return the result of the method called
    */
   public static <E> E send(Object o, String methodName, Byte arg) {
@@ -115,12 +105,9 @@ public class RubyObject {
   /**
    * Executes a method of any Object by Java reflection.
    * 
-   * @param o
-   *          an Object
-   * @param methodName
-   *          name of the method
-   * @param arg
-   *          a byte
+   * @param o an Object
+   * @param methodName name of the method
+   * @param arg a byte
    * @return the result of the method called
    */
   @SuppressWarnings("unchecked")
@@ -136,12 +123,9 @@ public class RubyObject {
   /**
    * Executes a method of any Object by Java reflection.
    * 
-   * @param o
-   *          an Object
-   * @param methodName
-   *          name of the method
-   * @param arg
-   *          a Short
+   * @param o an Object
+   * @param methodName name of the method
+   * @param arg a Short
    * @return the result of the method called
    */
   public static <E> E send(Object o, String methodName, Short arg) {
@@ -151,12 +135,9 @@ public class RubyObject {
   /**
    * Executes a method of any Object by Java reflection.
    * 
-   * @param o
-   *          an Object
-   * @param methodName
-   *          name of the method
-   * @param arg
-   *          a short
+   * @param o an Object
+   * @param methodName name of the method
+   * @param arg a short
    * @return the result of the method called
    */
   @SuppressWarnings("unchecked")
@@ -172,12 +153,9 @@ public class RubyObject {
   /**
    * Executes a method of any Object by Java reflection.
    * 
-   * @param o
-   *          an Object
-   * @param methodName
-   *          name of the method
-   * @param arg
-   *          an Integer
+   * @param o an Object
+   * @param methodName name of the method
+   * @param arg an Integer
    * @return the result of the method called
    */
   public static <E> E send(Object o, String methodName, Integer arg) {
@@ -187,12 +165,9 @@ public class RubyObject {
   /**
    * Executes a method of any Object by Java reflection.
    * 
-   * @param o
-   *          an Object
-   * @param methodName
-   *          name of the method
-   * @param arg
-   *          an int
+   * @param o an Object
+   * @param methodName name of the method
+   * @param arg an int
    * @return the result of the method called
    */
   @SuppressWarnings("unchecked")
@@ -208,12 +183,9 @@ public class RubyObject {
   /**
    * Executes a method of any Object by Java reflection.
    * 
-   * @param o
-   *          an Object
-   * @param methodName
-   *          name of the method
-   * @param arg
-   *          a Long
+   * @param o an Object
+   * @param methodName name of the method
+   * @param arg a Long
    * @return the result of the method called
    */
   public static <E> E send(Object o, String methodName, Long arg) {
@@ -223,12 +195,9 @@ public class RubyObject {
   /**
    * Executes a method of any Object by Java reflection.
    * 
-   * @param o
-   *          an Object
-   * @param methodName
-   *          name of the method
-   * @param arg
-   *          a long
+   * @param o an Object
+   * @param methodName name of the method
+   * @param arg a long
    * @return the result of the method called
    */
   @SuppressWarnings("unchecked")
@@ -244,12 +213,9 @@ public class RubyObject {
   /**
    * Executes a method of any Object by Java reflection.
    * 
-   * @param o
-   *          an Object
-   * @param methodName
-   *          name of the method
-   * @param arg
-   *          a Float
+   * @param o an Object
+   * @param methodName name of the method
+   * @param arg a Float
    * @return the result of the method called
    */
   public static <E> E send(Object o, String methodName, Float arg) {
@@ -259,12 +225,9 @@ public class RubyObject {
   /**
    * Executes a method of any Object by Java reflection.
    * 
-   * @param o
-   *          an Object
-   * @param methodName
-   *          name of the method
-   * @param arg
-   *          a float
+   * @param o an Object
+   * @param methodName name of the method
+   * @param arg a float
    * @return the result of the method called
    */
   @SuppressWarnings("unchecked")
@@ -280,12 +243,9 @@ public class RubyObject {
   /**
    * Executes a method of any Object by Java reflection.
    * 
-   * @param o
-   *          an Object
-   * @param methodName
-   *          name of the method
-   * @param arg
-   *          a Double
+   * @param o an Object
+   * @param methodName name of the method
+   * @param arg a Double
    * @return the result of the method called
    */
   public static <E> E send(Object o, String methodName, Double arg) {
@@ -295,12 +255,9 @@ public class RubyObject {
   /**
    * Executes a method of any Object by Java reflection.
    * 
-   * @param o
-   *          an Object
-   * @param methodName
-   *          name of the method
-   * @param arg
-   *          a double
+   * @param o an Object
+   * @param methodName name of the method
+   * @param arg a double
    * @return the result of the method called
    */
   @SuppressWarnings("unchecked")
@@ -316,12 +273,9 @@ public class RubyObject {
   /**
    * Executes a method of any Object by Java reflection.
    * 
-   * @param o
-   *          an Object
-   * @param methodName
-   *          name of the method
-   * @param arg
-   *          a Boolean
+   * @param o an Object
+   * @param methodName name of the method
+   * @param arg a Boolean
    * @return the result of the method called
    */
   public static <E> E send(Object o, String methodName, Boolean arg) {
@@ -331,12 +285,9 @@ public class RubyObject {
   /**
    * Executes a method of any Object by Java reflection.
    * 
-   * @param o
-   *          an Object
-   * @param methodName
-   *          name of the method
-   * @param arg
-   *          a boolean
+   * @param o an Object
+   * @param methodName name of the method
+   * @param arg a boolean
    * @return the result of the method called
    */
   @SuppressWarnings("unchecked")
@@ -352,12 +303,9 @@ public class RubyObject {
   /**
    * Executes a method of any Object by Java reflection.
    * 
-   * @param o
-   *          an Object
-   * @param methodName
-   *          name of the method
-   * @param arg
-   *          a Character
+   * @param o an Object
+   * @param methodName name of the method
+   * @param arg a Character
    * @return the result of the method called
    */
   public static <E> E send(Object o, String methodName, Character arg) {
@@ -367,12 +315,9 @@ public class RubyObject {
   /**
    * Executes a method of any Object by Java reflection.
    * 
-   * @param o
-   *          an Object
-   * @param methodName
-   *          name of the method
-   * @param arg
-   *          a char
+   * @param o an Object
+   * @param methodName name of the method
+   * @param arg a char
    * @return the result of the method called
    */
   @SuppressWarnings("unchecked")
@@ -386,18 +331,16 @@ public class RubyObject {
   }
 
   /**
-   * Checks if an Object is null, blank Iterable, blank Iterator, blank Map,
-   * blank CharSequence or Boolean.FALSE.
+   * Checks if an Object is null, blank Iterable, blank Iterator, blank Map, blank CharSequence or
+   * Boolean.FALSE.
    * 
-   * @param o
-   *          any Object
+   * @param o any Object
    * @return true if given Object is blank, false otherwise
    */
   public static boolean isBlank(Object o) {
     if (o instanceof CharSequence) {
       CharSequence cs = (CharSequence) o;
-      return cs == null || new StringBuilder(cs.length()).append(cs).toString()
-          .trim().isEmpty();
+      return cs == null || new StringBuilder(cs.length()).append(cs).toString().trim().isEmpty();
     }
     if (o instanceof Iterable) {
       Iterable<?> iter = (Iterable<?>) o;
@@ -420,11 +363,10 @@ public class RubyObject {
   }
 
   /**
-   * Checks if an Object is NOT null, blank Iterable, blank Iterator, blank Map,
-   * blank CharSequence or Boolean.FALSE.
+   * Checks if an Object is NOT null, blank Iterable, blank Iterator, blank Map, blank CharSequence
+   * or Boolean.FALSE.
    * 
-   * @param o
-   *          any Object
+   * @param o any Object
    * @return true if given Object is not blank, false otherwise
    */
   public static boolean isPresent(Object o) {

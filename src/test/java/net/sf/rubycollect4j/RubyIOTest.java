@@ -2,16 +2,14 @@
  *
  * Copyright 2013 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -230,24 +228,20 @@ public class RubyIOTest {
   public void testForeachWithFileKeepNewLine() {
     String file = BASE_DIR + "ruby_io_read_only_mode.txt";
     assertTrue(RubyIO.foreach(new File(file), true) instanceof RubyEnumerator);
-    assertEquals(ra("a\n", "bc\n", "def\n"),
-        RubyIO.foreach(new File(file), true).toA());
+    assertEquals(ra("a\n", "bc\n", "def\n"), RubyIO.foreach(new File(file), true).toA());
   }
 
   @Test
   public void testForeachWithInputStream() throws Exception {
     String file = BASE_DIR + "ruby_io_read_only_mode.txt";
-    assertTrue(RubyIO.foreach(
-        new FileInputStream(new File(file))) instanceof RubyEnumerator);
-    assertEquals(ra("a", "bc", "def"),
-        RubyIO.foreach(new FileInputStream(new File(file))).toA());
+    assertTrue(RubyIO.foreach(new FileInputStream(new File(file))) instanceof RubyEnumerator);
+    assertEquals(ra("a", "bc", "def"), RubyIO.foreach(new FileInputStream(new File(file))).toA());
   }
 
   @Test
   public void testForeachWithInputStreamKeepNewLine() throws Exception {
     String file = BASE_DIR + "ruby_io_read_only_mode.txt";
-    assertTrue(RubyIO.foreach(new FileInputStream(new File(file)),
-        true) instanceof RubyEnumerator);
+    assertTrue(RubyIO.foreach(new FileInputStream(new File(file)), true) instanceof RubyEnumerator);
     assertEquals(ra("a\n", "bc\n", "def\n"),
         RubyIO.foreach(new FileInputStream(new File(file)), true).toA());
   }
@@ -255,16 +249,14 @@ public class RubyIOTest {
   @Test
   public void testForeachWithBlock() {
     final RubyArray<String> ra = ra();
-    RubyIO.foreach(BASE_DIR + "ruby_io_read_only_mode.txt",
-        item -> ra.add(item));
+    RubyIO.foreach(BASE_DIR + "ruby_io_read_only_mode.txt", item -> ra.add(item));
     assertEquals("a" + "bc" + "def", ra.join());
   }
 
   @Test
   public void testForeachWithBlockKeepNewLine() {
     final RubyArray<String> ra = ra();
-    RubyIO.foreach(BASE_DIR + "ruby_io_read_only_mode.txt",
-        item -> ra.add(item), true);
+    RubyIO.foreach(BASE_DIR + "ruby_io_read_only_mode.txt", item -> ra.add(item), true);
     assertEquals("a\n" + "bc\n" + "def\n", ra.join());
   }
 
@@ -309,16 +301,13 @@ public class RubyIOTest {
 
   @Test
   public void testToString() throws IOException {
-    RubyIO rIO = new RubyIO(new File(BASE_DIR + "ruby_io_read_only_mode.txt"),
-        RubyIO.Mode.R);
+    RubyIO rIO = new RubyIO(new File(BASE_DIR + "ruby_io_read_only_mode.txt"), RubyIO.Mode.R);
     if (System.getProperty("os.name").startsWith("Windows")) {
-      assertEquals(
-          ("RubyIO{path=" + BASE_DIR + "ruby_io_read_only_mode.txt, mode=" + "r"
-              + "}").replaceAll("/", "\\\\"),
-          rIO.toString());
+      assertEquals(("RubyIO{path=" + BASE_DIR + "ruby_io_read_only_mode.txt, mode=" + "r" + "}")
+          .replaceAll("/", "\\\\"), rIO.toString());
     } else {
-      assertEquals("RubyIO{path=" + BASE_DIR
-          + "ruby_io_read_only_mode.txt, mode=" + "r" + "}", rIO.toString());
+      assertEquals("RubyIO{path=" + BASE_DIR + "ruby_io_read_only_mode.txt, mode=" + "r" + "}",
+          rIO.toString());
     }
     rIO.close();
   }

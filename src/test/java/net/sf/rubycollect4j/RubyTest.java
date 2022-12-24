@@ -2,16 +2,14 @@
  *
  * Copyright 2017 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -74,14 +72,12 @@ public class RubyTest {
     c4.setAccessible(true);
     c4.newInstance();
 
-    Constructor<Ruby.Enumerator> c5 =
-        Ruby.Enumerator.class.getDeclaredConstructor();
+    Constructor<Ruby.Enumerator> c5 = Ruby.Enumerator.class.getDeclaredConstructor();
     assertTrue(Modifier.isPrivate(c5.getModifiers()));
     c5.setAccessible(true);
     c5.newInstance();
 
-    Constructor<Ruby.LazyEnumerator> c6 =
-        Ruby.LazyEnumerator.class.getDeclaredConstructor();
+    Constructor<Ruby.LazyEnumerator> c6 = Ruby.LazyEnumerator.class.getDeclaredConstructor();
     assertTrue(Modifier.isPrivate(c6.getModifiers()));
     c6.setAccessible(true);
     c6.newInstance();
@@ -101,8 +97,7 @@ public class RubyTest {
     c9.setAccessible(true);
     c9.newInstance();
 
-    Constructor<Ruby.IO> c10 =
-        Ruby.IO.class.getDeclaredConstructor(java.io.File.class, Mode.class);
+    Constructor<Ruby.IO> c10 = Ruby.IO.class.getDeclaredConstructor(java.io.File.class, Mode.class);
     assertTrue(Modifier.isPrivate(c10.getModifiers()));
     c10.setAccessible(true);
     c10.newInstance(new File(BASE_DIR + "ruby_io_read_only_mode.txt"), Mode.R);
@@ -113,14 +108,12 @@ public class RubyTest {
     c11.setAccessible(true);
     c11.newInstance(new File(BASE_DIR + "ruby_io_read_only_mode.txt"), Mode.R);
 
-    Constructor<Ruby.Dir> c12 =
-        Ruby.Dir.class.getDeclaredConstructor(java.io.File.class);
+    Constructor<Ruby.Dir> c12 = Ruby.Dir.class.getDeclaredConstructor(java.io.File.class);
     assertTrue(Modifier.isPrivate(c12.getModifiers()));
     c12.setAccessible(true);
     c12.newInstance(new File(BASE_DIR));
 
-    Constructor<Ruby.Literals> c13 =
-        Ruby.Literals.class.getDeclaredConstructor();
+    Constructor<Ruby.Literals> c13 = Ruby.Literals.class.getDeclaredConstructor();
     assertTrue(Modifier.isPrivate(c13.getModifiers()));
     c13.setAccessible(true);
     c13.newInstance();
@@ -139,16 +132,12 @@ public class RubyTest {
   @Test
   public void testArray() {
     assertEquals(new RubyArray<>(), Ruby.Array.create());
-    assertEquals(new RubyArray<>(Arrays.asList(1, 2, 3)),
-        Ruby.Array.of(Arrays.asList(1, 2, 3)));
-    assertEquals(new RubyArray<>(Arrays.asList(1, 2, 3)),
-        Ruby.Array.of(1, 2, 3));
-    assertEquals(
-        new RubyArray<RubyArray<Integer>>()
-            .push(new RubyArray<>(Arrays.asList(1, 2, 3))),
+    assertEquals(new RubyArray<>(Arrays.asList(1, 2, 3)), Ruby.Array.of(Arrays.asList(1, 2, 3)));
+    assertEquals(new RubyArray<>(Arrays.asList(1, 2, 3)), Ruby.Array.of(1, 2, 3));
+    assertEquals(new RubyArray<RubyArray<Integer>>().push(new RubyArray<>(Arrays.asList(1, 2, 3))),
         Ruby.Array.of(Ruby.Array.of(1, 2, 3)));
     assertEquals(new RubyArray<>(Arrays.asList(1, 2, 3)),
-        Ruby.Array.copyOf(new Integer[] { 1, 2, 3 }));
+        Ruby.Array.copyOf(new Integer[] {1, 2, 3}));
     assertEquals(new RubyArray<>(Arrays.asList(1, 2, 3)),
         Ruby.Array.copyOf(Arrays.asList(1, 2, 3)));
     assertEquals(new RubyArray<>(Arrays.asList(1, 2, 3)),
@@ -167,8 +156,7 @@ public class RubyTest {
     rh = Ruby.Hash.copyOf(lhm);
     lhm.clear();
     assertNotEquals(lhm, rh);
-    assertEquals(Ruby.Hash.of(1, 2),
-        Ruby.Hash.create(Ruby.Array.of(Ruby.Entry.of(1, 2))));
+    assertEquals(Ruby.Hash.of(1, 2), Ruby.Hash.create(Ruby.Array.of(Ruby.Entry.of(1, 2))));
   }
 
   @Test
@@ -177,71 +165,54 @@ public class RubyTest {
     assertEquals(Ruby.Hash.of(1, 1), Ruby.Hash.of(1, 1, 1, 1));
     assertEquals(Ruby.Hash.of(1, 1), Ruby.Hash.of(1, 1, 1, 1, 1, 1));
     assertEquals(Ruby.Hash.of(1, 1), Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1));
-    assertEquals(Ruby.Hash.of(1, 1),
-        Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-    assertEquals(Ruby.Hash.of(1, 1),
-        Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-    assertEquals(Ruby.Hash.of(1, 1),
-        Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-    assertEquals(Ruby.Hash.of(1, 1),
-        Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+    assertEquals(Ruby.Hash.of(1, 1), Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+    assertEquals(Ruby.Hash.of(1, 1), Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+    assertEquals(Ruby.Hash.of(1, 1), Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+    assertEquals(Ruby.Hash.of(1, 1), Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
     assertEquals(Ruby.Hash.of(1, 1),
         Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-    assertEquals(Ruby.Hash.of(1, 1), Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-    assertEquals(Ruby.Hash.of(1, 1), Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-    assertEquals(Ruby.Hash.of(1, 1), Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-    assertEquals(Ruby.Hash.of(1, 1), Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-    assertEquals(Ruby.Hash.of(1, 1), Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-    assertEquals(Ruby.Hash.of(1, 1), Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-    assertEquals(Ruby.Hash.of(1, 1), Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
     assertEquals(Ruby.Hash.of(1, 1),
-        Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+        Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
     assertEquals(Ruby.Hash.of(1, 1),
-        Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+        Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
     assertEquals(Ruby.Hash.of(1, 1),
-        Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+        Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
     assertEquals(Ruby.Hash.of(1, 1),
-        Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+        Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+    assertEquals(Ruby.Hash.of(1, 1), Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+    assertEquals(Ruby.Hash.of(1, 1), Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+    assertEquals(Ruby.Hash.of(1, 1), Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+    assertEquals(Ruby.Hash.of(1, 1), Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+    assertEquals(Ruby.Hash.of(1, 1), Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+    assertEquals(Ruby.Hash.of(1, 1), Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+    assertEquals(Ruby.Hash.of(1, 1), Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+    assertEquals(Ruby.Hash.of(1, 1), Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+    assertEquals(Ruby.Hash.of(1, 1), Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+    assertEquals(Ruby.Hash.of(1, 1), Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
     assertEquals(Ruby.Hash.of(1, 1),
-        Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
             1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
     assertEquals(Ruby.Hash.of(1, 1),
-        Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-            1));
+        Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
     assertEquals(Ruby.Hash.of(1, 1),
-        Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-            1, 1, 1));
-    assertEquals(Ruby.Hash.of(1, 1),
-        Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1));
-    assertEquals(Ruby.Hash.of(1, 1),
-        Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1, 1));
-    assertEquals(Ruby.Hash.of(1, 1),
-        Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1, 1, 1, 1, 1));
+        Ruby.Hash.of(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
   }
 
   @Test
   public void testEntry() {
-    assertEquals(new ComparableEntry<Integer, Integer>(1, 2),
-        Ruby.Entry.of(1, 2));
+    assertEquals(new ComparableEntry<Integer, Integer>(1, 2), Ruby.Entry.of(1, 2));
   }
 
   @Test
@@ -256,7 +227,7 @@ public class RubyTest {
     assertEquals(lhs, Ruby.Set.of(1, 2, 3));
     assertEquals(lhs, Ruby.Set.copyOf(Arrays.asList(1, 2, 3)));
     assertEquals(lhs, Ruby.Set.copyOf(Arrays.asList(1, 2, 3).iterator()));
-    assertEquals(lhs, Ruby.Set.copyOf(new Integer[] { 1, 2, 3 }));
+    assertEquals(lhs, Ruby.Set.copyOf(new Integer[] {1, 2, 3}));
   }
 
   @Test
@@ -318,38 +289,35 @@ public class RubyTest {
 
   @Test
   public void testDateRange() {
-    assertTrue(Ruby.Range.of(RubyDate.yesterday(),
-        RubyDate.tomorrow()) instanceof RubyRange);
+    assertTrue(Ruby.Range.of(RubyDate.yesterday(), RubyDate.tomorrow()) instanceof RubyRange);
   }
 
   @Test
   public void testLocalDateTimeRange() {
-    assertTrue(Ruby.Range.of(LocalDateTime.now(),
-        LocalDateTime.now().plusDays(1)) instanceof RubyRange);
+    assertTrue(
+        Ruby.Range.of(LocalDateTime.now(), LocalDateTime.now().plusDays(1)) instanceof RubyRange);
   }
 
   @Test
   public void testLocalDateRange() {
-    assertTrue(Ruby.Range.of(LocalDate.now(),
-        LocalDate.now().plusDays(1)) instanceof RubyRange);
+    assertTrue(Ruby.Range.of(LocalDate.now(), LocalDate.now().plusDays(1)) instanceof RubyRange);
   }
 
   @Test
   public void testYearMonthRange() {
-    assertTrue(Ruby.Range.of(YearMonth.now(),
-        YearMonth.now().plusMonths(1)) instanceof RubyRange);
+    assertTrue(Ruby.Range.of(YearMonth.now(), YearMonth.now().plusMonths(1)) instanceof RubyRange);
   }
 
   @Test
   public void testTemporalRange() {
-    RubyRange<LocalDate> range1 = Ruby.Range.of(LocalDate.now(),
-        LocalDate.now().plusDays(10), ChronoUnit.DAYS);
+    RubyRange<LocalDate> range1 =
+        Ruby.Range.of(LocalDate.now(), LocalDate.now().plusDays(10), ChronoUnit.DAYS);
     assertEquals(11, range1.count());
     assertTrue(range1.includeʔ(LocalDate.now().plusDays(5)));
     assertFalse(range1.includeʔ(LocalDate.now().plusDays(11)));
 
-    RubyRange<LocalDateTime> range2 = Ruby.Range.of(LocalDateTime.now(),
-        LocalDateTime.now().plusSeconds(10), ChronoUnit.SECONDS);
+    RubyRange<LocalDateTime> range2 =
+        Ruby.Range.of(LocalDateTime.now(), LocalDateTime.now().plusSeconds(10), ChronoUnit.SECONDS);
     assertEquals(11, range2.count());
     assertTrue(range2.includeʔ(LocalDateTime.now().plusSeconds(5)));
     assertFalse(range2.includeʔ(LocalDateTime.now().plusSeconds(11)));
@@ -362,8 +330,7 @@ public class RubyTest {
     assertEquals(Ruby.Date.of(new Date()).month(), Ruby.Date.current().month());
     assertEquals(Ruby.Date.of(new Date()).day(), Ruby.Date.current().day());
     assertEquals(Ruby.Date.of(new Date()).hour(), Ruby.Date.current().hour());
-    assertEquals(Ruby.Date.of(new Date()).minute(),
-        Ruby.Date.current().minute());
+    assertEquals(Ruby.Date.of(new Date()).minute(), Ruby.Date.current().minute());
   }
 
   @Test
@@ -467,30 +434,18 @@ public class RubyTest {
 
   @Test
   public void testIO() throws IOException {
-    assertEquals(
-        new RubyIO(new File(BASE_DIR + "ruby_io_read_only_mode.txt"), Mode.R)
-            .toString(),
-        Ruby.IO.of(new File(BASE_DIR + "ruby_io_read_only_mode.txt"))
-            .toString());
-    assertEquals(
-        new RubyIO(new File(BASE_DIR + "ruby_io_read_only_mode.txt"), Mode.R)
-            .toString(),
-        Ruby.IO.of(new File(BASE_DIR + "ruby_io_read_only_mode.txt"), Mode.R)
-            .toString());
+    assertEquals(new RubyIO(new File(BASE_DIR + "ruby_io_read_only_mode.txt"), Mode.R).toString(),
+        Ruby.IO.of(new File(BASE_DIR + "ruby_io_read_only_mode.txt")).toString());
+    assertEquals(new RubyIO(new File(BASE_DIR + "ruby_io_read_only_mode.txt"), Mode.R).toString(),
+        Ruby.IO.of(new File(BASE_DIR + "ruby_io_read_only_mode.txt"), Mode.R).toString());
   }
 
   @Test
   public void testFile() throws IOException {
-    assertEquals(
-        new RubyFile(new File(BASE_DIR + "ruby_io_read_only_mode.txt"), Mode.R)
-            .toString(),
-        Ruby.File.of(new File(BASE_DIR + "ruby_io_read_only_mode.txt"))
-            .toString());
-    assertEquals(
-        new RubyFile(new File(BASE_DIR + "ruby_io_read_only_mode.txt"), Mode.R)
-            .toString(),
-        Ruby.File.of(new File(BASE_DIR + "ruby_io_read_only_mode.txt"), Mode.R)
-            .toString());
+    assertEquals(new RubyFile(new File(BASE_DIR + "ruby_io_read_only_mode.txt"), Mode.R).toString(),
+        Ruby.File.of(new File(BASE_DIR + "ruby_io_read_only_mode.txt")).toString());
+    assertEquals(new RubyFile(new File(BASE_DIR + "ruby_io_read_only_mode.txt"), Mode.R).toString(),
+        Ruby.File.of(new File(BASE_DIR + "ruby_io_read_only_mode.txt"), Mode.R).toString());
   }
 
   @Test

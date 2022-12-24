@@ -2,16 +2,14 @@
  *
  * Copyright 2013 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -166,8 +164,7 @@ public class RubyLazyEnumeratorTest {
   @Test
   public void testCollectWithBlock() {
     assertTrue(lre.collect(block) instanceof RubyLazyEnumerator);
-    assertEquals(ra(1.0, 2.0, 3.0, 4.0),
-        lre.collect(item -> Double.valueOf(item)).toA());
+    assertEquals(ra(1.0, 2.0, 3.0, 4.0), lre.collect(item -> Double.valueOf(item)).toA());
   }
 
   @Test
@@ -309,8 +306,7 @@ public class RubyLazyEnumeratorTest {
   @Test
   public void testEachEntryWithBlock() {
     final RubyArray<Integer> ints = ra();
-    assertTrue(
-        lre.eachEntry(item -> ints.add(item)) instanceof RubyLazyEnumerator);
+    assertTrue(lre.eachEntry(item -> ints.add(item)) instanceof RubyLazyEnumerator);
     assertEquals(ra(1, 2, 3, 4), ints);
   }
 
@@ -345,8 +341,7 @@ public class RubyLazyEnumeratorTest {
   @Test
   public void testEachWithIndex() {
     assertTrue(lre.eachWithIndex() instanceof RubyLazyEnumerator);
-    RubyArray<? extends Entry<Integer, Integer>> ra =
-        ra(hp(1, 0), hp(2, 1), hp(3, 2), hp(4, 3));
+    RubyArray<? extends Entry<Integer, Integer>> ra = ra(hp(1, 0), hp(2, 1), hp(3, 2), hp(4, 3));
     assertEquals(ra, lre.eachWithIndex().toA());
   }
 
@@ -368,9 +363,8 @@ public class RubyLazyEnumeratorTest {
 
   @Test
   public void testEachWithObjectWithBlock() {
-    Long[] obj = new Long[] { 0L };
-    assertEquals(new Long[] { 10L }[0],
-        lre.eachWithObject(obj, (item, obj1) -> obj1[0] += item)[0]);
+    Long[] obj = new Long[] {0L};
+    assertEquals(new Long[] {10L}[0], lre.eachWithObject(obj, (item, obj1) -> obj1[0] += item)[0]);
   }
 
   @Test
@@ -454,10 +448,8 @@ public class RubyLazyEnumeratorTest {
 
   @Test
   public void testFlatMapWithBlock() {
-    assertTrue(lre
-        .flatMap(item -> ra(Long.valueOf(item))) instanceof RubyLazyEnumerator);
-    assertEquals(ra(1L, 2L, 3L, 4L),
-        lre.flatMap(item -> ra(Long.valueOf(item))).toA());
+    assertTrue(lre.flatMap(item -> ra(Long.valueOf(item))) instanceof RubyLazyEnumerator);
+    assertEquals(ra(1L, 2L, 3L, 4L), lre.flatMap(item -> ra(Long.valueOf(item))).toA());
   }
 
   @Test
@@ -468,8 +460,7 @@ public class RubyLazyEnumeratorTest {
 
   @Test
   public void testGrepWithBlock() {
-    assertTrue(lre.grep("[24]",
-        item -> item.toString()) instanceof RubyLazyEnumerator);
+    assertTrue(lre.grep("[24]", item -> item.toString()) instanceof RubyLazyEnumerator);
     assertEquals(ra("2", "4"), lre.grep("[24]", item -> item.toString()).toA());
   }
 
@@ -481,10 +472,8 @@ public class RubyLazyEnumeratorTest {
 
   @Test
   public void testGrepVWithBlock() {
-    assertTrue(lre.grepV("[24]",
-        item -> item.toString()) instanceof RubyLazyEnumerator);
-    assertEquals(ra("1", "3"),
-        lre.grepV("[24]", item -> item.toString()).toA());
+    assertTrue(lre.grepV("[24]", item -> item.toString()) instanceof RubyLazyEnumerator);
+    assertEquals(ra("1", "3"), lre.grepV("[24]", item -> item.toString()).toA());
   }
 
   @Test
@@ -495,8 +484,7 @@ public class RubyLazyEnumeratorTest {
 
   @Test
   public void testGroupByWithBlock() {
-    assertEquals(rh(1, ra(1, 4), 2, ra(2), 0, ra(3)),
-        lre.groupBy(item -> item % 3));
+    assertEquals(rh(1, ra(1, 4), 2, ra(2), 0, ra(3)), lre.groupBy(item -> item % 3));
   }
 
   @Test
@@ -521,8 +509,7 @@ public class RubyLazyEnumeratorTest {
 
   @Test
   public void testInjectWithInitAndBlock() {
-    assertEquals(Long.valueOf(20),
-        lre.inject(Long.valueOf(10), (init, item) -> init + item));
+    assertEquals(Long.valueOf(20), lre.inject(Long.valueOf(10), (init, item) -> init + item));
   }
 
   @Test
@@ -566,8 +553,7 @@ public class RubyLazyEnumeratorTest {
 
   @Test
   public void testMaxByWithComparatorAndBlock() {
-    RubyLazyEnumerator<String> lre =
-        newRubyLazyEnumerator(Arrays.asList("aaaa", "cc", "bbb", "d"));
+    RubyLazyEnumerator<String> lre = newRubyLazyEnumerator(Arrays.asList("aaaa", "cc", "bbb", "d"));
     assertEquals("d", lre.maxBy((o1, o2) -> o2 - o1, item -> item.length()));
     lre = newRubyLazyEnumerator(new ArrayList<String>());
     Comparator<Integer> comp = null;
@@ -576,8 +562,7 @@ public class RubyLazyEnumeratorTest {
 
   @Test
   public void testMaxByWithBlock() {
-    RubyLazyEnumerator<String> lre =
-        newRubyLazyEnumerator(Arrays.asList("bbb", "aaaa", "cc", "d"));
+    RubyLazyEnumerator<String> lre = newRubyLazyEnumerator(Arrays.asList("bbb", "aaaa", "cc", "d"));
     assertEquals("aaaa", lre.maxBy(item -> item.length()));
     lre = newRubyLazyEnumerator(new ArrayList<String>());
     assertNull(lre.maxBy(null));
@@ -613,8 +598,7 @@ public class RubyLazyEnumeratorTest {
 
   @Test
   public void testMinByWithComparatorAndBlock() {
-    RubyLazyEnumerator<String> lre =
-        newRubyLazyEnumerator(Arrays.asList("cc", "aaaa", "bbb", "d"));
+    RubyLazyEnumerator<String> lre = newRubyLazyEnumerator(Arrays.asList("cc", "aaaa", "bbb", "d"));
     assertEquals("aaaa", lre.minBy((o1, o2) -> o2 - o1, item -> item.length()));
     lre = newRubyLazyEnumerator(new ArrayList<String>());
     Comparator<Integer> comp = null;
@@ -623,8 +607,7 @@ public class RubyLazyEnumeratorTest {
 
   @Test
   public void testMinByWithBlock() {
-    RubyLazyEnumerator<String> lre =
-        newRubyLazyEnumerator(Arrays.asList("bbb", "aaaa", "cc", "d"));
+    RubyLazyEnumerator<String> lre = newRubyLazyEnumerator(Arrays.asList("bbb", "aaaa", "cc", "d"));
     assertEquals("d", lre.minBy(item -> item.length()));
     lre = newRubyLazyEnumerator(new ArrayList<String>());
     assertNull(lre.minBy(null));
@@ -659,10 +642,8 @@ public class RubyLazyEnumeratorTest {
 
   @Test
   public void testMinmaxByWithComparatorAndBlock() {
-    RubyLazyEnumerator<String> lre =
-        newRubyLazyEnumerator(Arrays.asList("bbb", "aaaa", "d", "cc"));
-    assertEquals(ra("aaaa", "d"),
-        lre.minmaxBy((o1, o2) -> o2 - o1, item -> item.length()));
+    RubyLazyEnumerator<String> lre = newRubyLazyEnumerator(Arrays.asList("bbb", "aaaa", "d", "cc"));
+    assertEquals(ra("aaaa", "d"), lre.minmaxBy((o1, o2) -> o2 - o1, item -> item.length()));
     lre = newRubyLazyEnumerator(new ArrayList<String>());
     Comparator<Integer> comp = null;
     assertEquals(ra(null, null), lre.minmaxBy(comp, null));
@@ -672,8 +653,7 @@ public class RubyLazyEnumeratorTest {
 
   @Test
   public void testMinmaxByWithBlock() {
-    RubyLazyEnumerator<String> lre =
-        newRubyLazyEnumerator(Arrays.asList("bbb", "aaaa", "d", "cc"));
+    RubyLazyEnumerator<String> lre = newRubyLazyEnumerator(Arrays.asList("bbb", "aaaa", "d", "cc"));
     assertEquals(ra("d", "aaaa"), lre.minmaxBy(item -> item.length()));
     lre = newRubyLazyEnumerator(new ArrayList<String>());
     assertEquals(ra(null, null), lre.minmaxBy(null));
@@ -749,14 +729,12 @@ public class RubyLazyEnumeratorTest {
 
   @Test
   public void testReduceWithInitAndBlock() {
-    assertEquals(Long.valueOf(20),
-        lre.reduce(Long.valueOf(10), (init, item) -> init + item));
+    assertEquals(Long.valueOf(20), lre.reduce(Long.valueOf(10), (init, item) -> init + item));
   }
 
   @Test
   public void testReduce() {
-    RubyLazyEnumerator<Boolean> bools =
-        newRubyLazyEnumerator(Arrays.asList(true, true, true));
+    RubyLazyEnumerator<Boolean> bools = newRubyLazyEnumerator(Arrays.asList(true, true, true));
     assertEquals(Boolean.TRUE, bools.reduce(Boolean::equals));
   }
 
@@ -782,8 +760,7 @@ public class RubyLazyEnumeratorTest {
   @Test
   public void testReverseEachWithBlock() {
     final RubyArray<Integer> ints = ra();
-    assertTrue(
-        lre.reverseEach(item -> ints.add(item)) instanceof RubyLazyEnumerator);
+    assertTrue(lre.reverseEach(item -> ints.add(item)) instanceof RubyLazyEnumerator);
     assertEquals(ra(4, 3, 2, 1), ints);
   }
 
@@ -810,8 +787,7 @@ public class RubyLazyEnumeratorTest {
   @Test
   public void testSliceAfterWithBlock() {
     lre = newRubyLazyEnumerator(Arrays.asList(1, 3, 4, 7));
-    assertEquals(ra(ra(1), ra(3), ra(4, 7)),
-        lre.sliceAfter(item -> item % 2 == 1).toA());
+    assertEquals(ra(ra(1), ra(3), ra(4, 7)), lre.sliceAfter(item -> item % 2 == 1).toA());
   }
 
   @Test
@@ -831,8 +807,7 @@ public class RubyLazyEnumeratorTest {
   @Test
   public void testSliceBeforeWithBlock() {
     lre = newRubyLazyEnumerator(Arrays.asList(1, 3, 3, 4));
-    assertEquals(ra(ra(1), ra(3), ra(3, 4)),
-        lre.sliceBefore(item -> item % 2 == 1).toA());
+    assertEquals(ra(ra(1), ra(3), ra(3, 4)), lre.sliceBefore(item -> item % 2 == 1).toA());
   }
 
   @Test
@@ -854,10 +829,8 @@ public class RubyLazyEnumeratorTest {
   public void testSort() {
     lre = newRubyLazyEnumerator(Arrays.asList(4, 1, 2, 3, 3));
     assertEquals(ra(1, 2, 3, 3, 4), lre.sort());
-    assertEquals(ra("abc", "b", "cd"),
-        newRubyEnumerator(Arrays.asList("b", "cd", "abc")).sort());
-    assertEquals(ra(null, null, null),
-        newRubyEnumerator(ra(null, null, null)).sort());
+    assertEquals(ra("abc", "b", "cd"), newRubyEnumerator(Arrays.asList("b", "cd", "abc")).sort());
+    assertEquals(ra(null, null, null), newRubyEnumerator(ra(null, null, null)).sort());
     lre = newRubyLazyEnumerator(Arrays.asList(1));
     assertEquals(ra(1), lre.sort());
   }
@@ -881,16 +854,14 @@ public class RubyLazyEnumeratorTest {
     RubyLazyEnumerator<String> lre =
         newRubyLazyEnumerator(Arrays.asList("aaaa", "bbb", "cc", "d", "e"));
     assertEquals(ra("aaaa", "bbb", "cc", "e", "d"),
-        lre.sortBy((o1, o2) -> o2.compareTo(o1), (o1, o2) -> o2 - o1,
-            item -> item.length()));
+        lre.sortBy((o1, o2) -> o2.compareTo(o1), (o1, o2) -> o2 - o1, item -> item.length()));
   }
 
   @Test
   public void testSortByWithBlock() {
     RubyLazyEnumerator<String> lre =
         newRubyLazyEnumerator(Arrays.asList("aaaa", "bbb", "cc", "e", "d"));
-    assertEquals(ra("e", "d", "cc", "bbb", "aaaa"),
-        lre.sortBy(item -> item.length()));
+    assertEquals(ra("e", "d", "cc", "bbb", "aaaa"), lre.sortBy(item -> item.length()));
   }
 
   @Test
@@ -907,22 +878,19 @@ public class RubyLazyEnumeratorTest {
 
   @Test
   public void testSumWithBlock() {
-    RubyLazyEnumerator<Double> lre =
-        Ruby.LazyEnumerator.of(Arrays.asList(1.1, 2.1, 3.1, 4.1));
+    RubyLazyEnumerator<Double> lre = Ruby.LazyEnumerator.of(Arrays.asList(1.1, 2.1, 3.1, 4.1));
     assertEquals(new BigDecimal("20.8"), lre.sum(n -> n.doubleValue() * 2));
   }
 
   @Test
   public void testSumWithInit() {
-    RubyLazyEnumerator<Double> lre =
-        Ruby.LazyEnumerator.of(Arrays.asList(1.1, 2.1, 3.1, 4.1));
+    RubyLazyEnumerator<Double> lre = Ruby.LazyEnumerator.of(Arrays.asList(1.1, 2.1, 3.1, 4.1));
     assertEquals(new BigDecimal("11.4"), lre.sum(1L));
   }
 
   @Test
   public void testSumWithInitAndBlock() {
-    RubyLazyEnumerator<Double> lre =
-        Ruby.LazyEnumerator.of(Arrays.asList(1.1, 2.1, 3.1, 4.1));
+    RubyLazyEnumerator<Double> lre = Ruby.LazyEnumerator.of(Arrays.asList(1.1, 2.1, 3.1, 4.1));
     assertEquals(new BigDecimal("21.8"), lre.sum(1L, n -> n.doubleValue() * 2));
   }
 
@@ -1009,8 +977,7 @@ public class RubyLazyEnumeratorTest {
   public void testZip() {
     lre = newRubyLazyEnumerator(Arrays.asList(1, 2, 3));
     assertTrue(lre.zip(ra(ra(4, 5))) instanceof RubyLazyEnumerator);
-    assertEquals(ra(ra(1, 4), ra(2, 5), ra(3, null)),
-        lre.zip(ra(ra(4, 5))).toA());
+    assertEquals(ra(ra(1, 4), ra(2, 5), ra(3, null)), lre.zip(ra(ra(4, 5))).toA());
     assertEquals(ra(ra(1, 4, 7), ra(2, 5, 8), ra(3, 6, 9)),
         lre.zip(ra(ra(4, 5, 6), ra(7, 8, 9))).toA());
   }
@@ -1019,9 +986,8 @@ public class RubyLazyEnumeratorTest {
   public void testZipWithBlock() {
     lre = newRubyLazyEnumerator(Arrays.asList(1, 2, 3));
     final RubyArray<Integer> ints = ra();
-    lre.zip(ra(ra(4, 5, 6, null), ra(7, 8, 9, null)),
-        (Consumer<RubyArray<Integer>>) item -> ints
-            .push(item.reduce((memo, item1) -> memo + item1)));
+    lre.zip(ra(ra(4, 5, 6, null), ra(7, 8, 9, null)), (Consumer<RubyArray<Integer>>) item -> ints
+        .push(item.reduce((memo, item1) -> memo + item1)));
     assertEquals(ra(12, 15, 18), ints);
   }
 

@@ -2,16 +2,14 @@
  *
  * Copyright 2013 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -44,8 +42,8 @@ public class RubyRangeTest {
 
   @Test
   public void testConstructor() {
-    RubyRange<String> range = new RubyRange<String>(
-        StringSuccessor.getInstance(), "a", "z", Interval.CLOSED);
+    RubyRange<String> range =
+        new RubyRange<String>(StringSuccessor.getInstance(), "a", "z", Interval.CLOSED);
     assertTrue(range instanceof RubyRange);
   }
 
@@ -66,16 +64,14 @@ public class RubyRangeTest {
   @Test
   public void testConstructorWithNullStartPoint() {
     assertThrows(IllegalArgumentException.class, () -> {
-      new RubyRange<String>(StringSuccessor.getInstance(), null, "z",
-          Interval.CLOSED);
+      new RubyRange<String>(StringSuccessor.getInstance(), null, "z", Interval.CLOSED);
     });
   }
 
   @Test
   public void testConstructorWithNullEndPoint() {
     assertThrows(IllegalArgumentException.class, () -> {
-      new RubyRange<String>(StringSuccessor.getInstance(), "a", null,
-          Interval.CLOSED);
+      new RubyRange<String>(StringSuccessor.getInstance(), "a", null, Interval.CLOSED);
     });
   }
 
@@ -83,16 +79,14 @@ public class RubyRangeTest {
   public void testRangeWithString() {
     assertEquals(ra("abcd", "abce"), range("abcd", "abce").toA());
     assertEquals(ra("THX1138", "THX1139"), range("THX1138", "THX1139").toA());
-    assertEquals(ra("<<koala>>", "<<koalb>>"),
-        range("<<koala>>", "<<koalb>>").toA());
+    assertEquals(ra("<<koala>>", "<<koalb>>"), range("<<koala>>", "<<koalb>>").toA());
     assertEquals(ra("1999zzz", "2000aaa"), range("1999zzz", "2000aaa").toA());
     assertEquals(ra("zzz9999", "aaaa0000"), range("zzz9999", "aaaa0000").toA());
     assertEquals(ra("***", "**+"), range("***", "**+").toA());
     assertEquals(ra("a", "b", "c", "d", "e"), range("a", "e").toA());
     assertEquals(ra("ay", "az", "ba"), range("ay", "ba").toA());
     assertEquals(ra("aY", "aZ", "bA"), range("aY", "bA").toA());
-    assertEquals(ra("999--", "1000--", "1001--"),
-        range("999--", "1001--").toA());
+    assertEquals(ra("999--", "1000--", "1001--"), range("999--", "1001--").toA());
     assertEquals(ra("999", "1000", "1001"), range("999", "1001").toA());
     assertEquals(ra("1.2", "1.3", "1.4", "1.5"), range("1.2", "1.5").toA());
     assertEquals(ra("1.49", "1.50", "1.51"), range("1.49", "1.51").toA());
@@ -119,12 +113,9 @@ public class RubyRangeTest {
 
   @Test
   public void testRangeWithDate() {
-    assertEquals(
-        ra(Ruby.Date.of(2013, 7, 2), Ruby.Date.of(2013, 7, 3),
-            Ruby.Date.of(2013, 7, 4)),
+    assertEquals(ra(Ruby.Date.of(2013, 7, 2), Ruby.Date.of(2013, 7, 3), Ruby.Date.of(2013, 7, 4)),
         range(Ruby.Date.of(2013, 7, 2), Ruby.Date.of(2013, 7, 4)).toA());
-    assertEquals(ra(),
-        range(Ruby.Date.of(2013, 7, 4), Ruby.Date.of(2013, 7, 2)).toA());
+    assertEquals(ra(), range(Ruby.Date.of(2013, 7, 4), Ruby.Date.of(2013, 7, 2)).toA());
   }
 
   @Test
@@ -150,8 +141,7 @@ public class RubyRangeTest {
   @Test
   public void testEachWithBlock() {
     final RubyArray<Integer> ints = ra();
-    assertEquals(RubyRange.class,
-        range(1, 10).each(item -> ints.push(item)).getClass());
+    assertEquals(RubyRange.class, range(1, 10).each(item -> ints.push(item)).getClass());
     assertEquals(ra(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), ints);
   }
 
@@ -166,10 +156,8 @@ public class RubyRangeTest {
     assertFalse(range(1, 1000).eqlʔ(range(1, 1001)));
     assertFalse(range(1, 1000).eqlʔ(range(2, 1000)));
     assertFalse(range(1, 1000).eqlʔ(null));
-    assertFalse(
-        new RubyRange<Double>(new DoubleSuccessor(1), 1.0, 2.0, Interval.CLOSED)
-            .eqlʔ(new RubyRange<Double>(new DoubleSuccessor(2), 1.0, 2.0,
-                Interval.CLOSED)));
+    assertFalse(new RubyRange<Double>(new DoubleSuccessor(1), 1.0, 2.0, Interval.CLOSED)
+        .eqlʔ(new RubyRange<Double>(new DoubleSuccessor(2), 1.0, 2.0, Interval.CLOSED)));
   }
 
   @Test
@@ -190,8 +178,7 @@ public class RubyRangeTest {
   @Test
   public void testInspect() {
     assertEquals(range(1, 100).toString(), range(1, 100).inspect());
-    assertEquals("RubyRange{startPoint=1, endPoint=100, interval=CLOSED}",
-        range(1, 100).inspect());
+    assertEquals("RubyRange{startPoint=1, endPoint=100, interval=CLOSED}", range(1, 100).inspect());
   }
 
   @Test
@@ -223,8 +210,7 @@ public class RubyRangeTest {
   public void testStepWithBlock() {
     final RubyArray<Integer> ints = ra();
     assertTrue(range(1, 10).step(3) instanceof RubyEnumerator);
-    assertEquals(RubyRange.class,
-        range(1, 10).step(3, item -> ints.push(item)).getClass());
+    assertEquals(RubyRange.class, range(1, 10).step(3, item -> ints.push(item)).getClass());
     assertEquals(ra(1, 4, 7, 10), ints);
   }
 
@@ -248,27 +234,23 @@ public class RubyRangeTest {
     assertFalse(range(1, 1000).equals(range(1, 1001)));
     assertFalse(range(1, 1000).equals(range(2, 1000)));
     assertFalse(range(1, 1000).equals(null));
+    assertFalse(new RubyRange<Double>(new DoubleSuccessor(1), 1.0, 2.0, Interval.CLOSED)
+        .equals(new RubyRange<Double>(new DoubleSuccessor(2), 1.0, 2.0, Interval.CLOSED)));
     assertFalse(
-        new RubyRange<Double>(new DoubleSuccessor(1), 1.0, 2.0, Interval.CLOSED)
-            .equals(new RubyRange<Double>(new DoubleSuccessor(2), 1.0, 2.0,
-                Interval.CLOSED)));
-    assertFalse(new RubyRange<Integer>(IntegerSuccessor.getInstance(), 1, 2,
-        Interval.CLOSED)
-            .equals(new RubyRange<Integer>(IntegerSuccessor.getInstance(), 1, 2,
-                Interval.CLOSED_OPEN)));
+        new RubyRange<Integer>(IntegerSuccessor.getInstance(), 1, 2, Interval.CLOSED).equals(
+            new RubyRange<Integer>(IntegerSuccessor.getInstance(), 1, 2, Interval.CLOSED_OPEN)));
   }
 
   @Test
   public void testToS() {
     assertEquals(range(1, 100).toString(), range(1, 100).toS());
-    assertEquals("RubyRange{startPoint=1, endPoint=100, interval=CLOSED}",
-        range(1, 100).toS());
+    assertEquals("RubyRange{startPoint=1, endPoint=100, interval=CLOSED}", range(1, 100).toS());
   }
 
   @Test
   public void testClosedOpen() {
-    RubyRange<Integer> range = new RubyRange<Integer>(
-        IntegerSuccessor.getInstance(), 1, 3, Interval.CLOSED_OPEN);
+    RubyRange<Integer> range =
+        new RubyRange<Integer>(IntegerSuccessor.getInstance(), 1, 3, Interval.CLOSED_OPEN);
     assertTrue(range.coverʔ(1));
     assertTrue(range.coverʔ(2));
     assertFalse(range.coverʔ(3));
@@ -276,8 +258,8 @@ public class RubyRangeTest {
 
   @Test
   public void testOpen() {
-    RubyRange<Integer> range = new RubyRange<Integer>(
-        IntegerSuccessor.getInstance(), 1, 3, Interval.OPEN);
+    RubyRange<Integer> range =
+        new RubyRange<Integer>(IntegerSuccessor.getInstance(), 1, 3, Interval.OPEN);
     assertFalse(range.coverʔ(1));
     assertTrue(range.coverʔ(2));
     assertFalse(range.coverʔ(3));
@@ -285,8 +267,8 @@ public class RubyRangeTest {
 
   @Test
   public void testOpenClosed() {
-    RubyRange<Integer> range = new RubyRange<Integer>(
-        IntegerSuccessor.getInstance(), 1, 3, Interval.OPEN_CLOSED);
+    RubyRange<Integer> range =
+        new RubyRange<Integer>(IntegerSuccessor.getInstance(), 1, 3, Interval.OPEN_CLOSED);
     assertFalse(range.coverʔ(1));
     assertTrue(range.coverʔ(2));
     assertTrue(range.coverʔ(3));
@@ -294,26 +276,14 @@ public class RubyRangeTest {
 
   @Test
   public void testClosedClosedOpenOpenOpenclosed() {
-    assertEquals(
-        new RubyRange<Integer>(IntegerSuccessor.getInstance(), 1, 3,
-            Interval.CLOSED),
-        new RubyRange<Integer>(IntegerSuccessor.getInstance(), 1, 3,
-            Interval.CLOSED).closed());
-    assertEquals(
-        new RubyRange<Integer>(IntegerSuccessor.getInstance(), 1, 3,
-            Interval.CLOSED_OPEN),
-        new RubyRange<Integer>(IntegerSuccessor.getInstance(), 1, 3,
-            Interval.CLOSED).closedOpen());
-    assertEquals(
-        new RubyRange<Integer>(IntegerSuccessor.getInstance(), 1, 3,
-            Interval.OPEN),
-        new RubyRange<Integer>(IntegerSuccessor.getInstance(), 1, 3,
-            Interval.CLOSED).open());
-    assertEquals(
-        new RubyRange<Integer>(IntegerSuccessor.getInstance(), 1, 3,
-            Interval.OPEN_CLOSED),
-        new RubyRange<Integer>(IntegerSuccessor.getInstance(), 1, 3,
-            Interval.CLOSED).openClosed());
+    assertEquals(new RubyRange<Integer>(IntegerSuccessor.getInstance(), 1, 3, Interval.CLOSED),
+        new RubyRange<Integer>(IntegerSuccessor.getInstance(), 1, 3, Interval.CLOSED).closed());
+    assertEquals(new RubyRange<Integer>(IntegerSuccessor.getInstance(), 1, 3, Interval.CLOSED_OPEN),
+        new RubyRange<Integer>(IntegerSuccessor.getInstance(), 1, 3, Interval.CLOSED).closedOpen());
+    assertEquals(new RubyRange<Integer>(IntegerSuccessor.getInstance(), 1, 3, Interval.OPEN),
+        new RubyRange<Integer>(IntegerSuccessor.getInstance(), 1, 3, Interval.CLOSED).open());
+    assertEquals(new RubyRange<Integer>(IntegerSuccessor.getInstance(), 1, 3, Interval.OPEN_CLOSED),
+        new RubyRange<Integer>(IntegerSuccessor.getInstance(), 1, 3, Interval.CLOSED).openClosed());
   }
 
 }

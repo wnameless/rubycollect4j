@@ -2,16 +2,14 @@
  *
  * Copyright 2013 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -31,15 +29,12 @@ import java.util.Set;
 
 /**
  * 
- * {@link LinkedIdentityMap} is implemented by IdentityHashMap and takes
- * advantage of LinkedList to keep the key elements ordered by their insertion
- * sequence. Unlike IdentityHashMap, {@link LinkedIdentityMap} only compares its
- * keys by identities NOT the values.
+ * {@link LinkedIdentityMap} is implemented by IdentityHashMap and takes advantage of LinkedList to
+ * keep the key elements ordered by their insertion sequence. Unlike IdentityHashMap,
+ * {@link LinkedIdentityMap} only compares its keys by identities NOT the values.
  * 
- * @param <K>
- *          the type of the key elements
- * @param <V>
- *          the type of the value elements
+ * @param <K> the type of the key elements
+ * @param <V> the type of the value elements
  * 
  * @author Wei-Ming Wu
  * 
@@ -57,8 +52,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
   /**
    * Creates a {@link LinkedIdentityMap} by given Map.
    * 
-   * @param map
-   *          any Map
+   * @param map any Map
    */
   public LinkedIdentityMap(Map<? extends K, ? extends V> map) {
     putAll(map);
@@ -158,14 +152,11 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
 
   /**
    * 
-   * LinkedIdentityMap::IdentityEntry overrides the equals(). It checks if 2
-   * keys have the same identities before applying the regular equality logic of
-   * Entry.
+   * LinkedIdentityMap::IdentityEntry overrides the equals(). It checks if 2 keys have the same
+   * identities before applying the regular equality logic of Entry.
    * 
-   * @param <S>
-   *          the type of the key elements
-   * @param <U>
-   *          the type of the value elements
+   * @param <S> the type of the key elements
+   * @param <U> the type of the value elements
    */
   static final class IdentityEntry<S, U> implements Entry<S, U> {
 
@@ -174,10 +165,8 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
     /**
      * Creates a LinkedIdentityMap::IdentityEntry.
      * 
-     * @param key
-     *          of the entry
-     * @param value
-     *          of the entry
+     * @param key of the entry
+     * @param value of the entry
      */
     public IdentityEntry(S key, U value) {
       entry = new SimpleEntry<>(key, value);
@@ -186,8 +175,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
     /**
      * Creates a LinkedIdentityMap::IdentityEntry.
      * 
-     * @param entry
-     *          any Entry
+     * @param entry any Entry
      */
     public IdentityEntry(Entry<S, U> entry) {
       this.entry = new SimpleEntry<>(entry.getKey(), entry.getValue());
@@ -236,13 +224,10 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
 
   /**
    * 
-   * LinkedIdentityMap::EntrySet is designed to build a Set view of the
-   * LinkedIdentityMap#entrySet.
+   * LinkedIdentityMap::EntrySet is designed to build a Set view of the LinkedIdentityMap#entrySet.
    * 
-   * @param <S>
-   *          the type of the key elements
-   * @param <U>
-   *          the type of the value elements
+   * @param <S> the type of the key elements
+   * @param <U> the type of the value elements
    */
   static final class EntrySet<S, U> implements Set<Entry<S, U>> {
 
@@ -252,10 +237,8 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
     /**
      * Creates a LinkedIdentityMap::EntrySet.
      * 
-     * @param list
-     *          a List
-     * @param map
-     *          an IdentityHashMap
+     * @param list a List
+     * @param map an IdentityHashMap
      */
     public EntrySet(List<S> list, IdentityHashMap<S, U> map) {
       this.list = list;
@@ -278,9 +261,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
         Entry<?, ?> entry = (Entry<?, ?>) o;
         if (map.containsKey(entry.getKey())) {
           U val = map.get(entry.getKey());
-          if (val == null ? entry.getValue() == null
-              : val.equals(entry.getValue()))
-            return true;
+          if (val == null ? entry.getValue() == null : val.equals(entry.getValue())) return true;
         }
       }
       return false;
@@ -320,8 +301,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
         Entry<?, ?> entry = (Entry<?, ?>) o;
         if (map.containsKey(entry.getKey())) {
           U val = map.get(entry.getKey());
-          if ((val == null ? entry.getValue() == null
-              : val.equals(entry.getValue()))) {
+          if ((val == null ? entry.getValue() == null : val.equals(entry.getValue()))) {
             removeByIdentity(list, entry.getKey());
             map.remove(entry.getKey());
             return true;
@@ -351,8 +331,7 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
       for (Object o : c) {
         if (o instanceof Entry) {
           Entry<?, ?> entry = (Entry<?, ?>) o;
-          hashMap.put(new IdentityEntry<Object, Object>(entry.getKey(),
-              entry.getValue()), null);
+          hashMap.put(new IdentityEntry<Object, Object>(entry.getKey(), entry.getValue()), null);
         }
       }
 
@@ -442,13 +421,10 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
 
   /**
    * 
-   * LinkedIdentityMap::KeySet is designed to build a Set view of the
-   * LinkedIdentityMap#keySet.
+   * LinkedIdentityMap::KeySet is designed to build a Set view of the LinkedIdentityMap#keySet.
    * 
-   * @param <S>
-   *          the type of the key elements
-   * @param <U>
-   *          the type of the value elements
+   * @param <S> the type of the key elements
+   * @param <U> the type of the value elements
    */
   static final class KeySet<S, U> implements Set<S> {
 
@@ -458,10 +434,8 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
     /**
      * Creates a LinkedIdentityMap::KeySet.
      * 
-     * @param list
-     *          a List
-     * @param map
-     *          an IdentityHashMap
+     * @param list a List
+     * @param map an IdentityHashMap
      */
     public KeySet(List<S> list, IdentityHashMap<S, U> map) {
       this.list = list;
@@ -617,10 +591,8 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
    * LinkedIdentityMap::Values is designed to build a Collection view of the
    * LinkedIdentityMap#values.
    * 
-   * @param <S>
-   *          the type of the key elements
-   * @param <U>
-   *          the type of the value elements
+   * @param <S> the type of the key elements
+   * @param <U> the type of the value elements
    */
   static final class Values<S, U> implements Collection<U> {
 
@@ -630,10 +602,8 @@ public final class LinkedIdentityMap<K, V> implements Map<K, V> {
     /**
      * Creates a LinkedIdentityMap::Values.
      * 
-     * @param list
-     *          a List
-     * @param map
-     *          an IdentityHashMap
+     * @param list a List
+     * @param map an IdentityHashMap
      */
     public Values(List<S> list, IdentityHashMap<S, U> map) {
       this.list = list;

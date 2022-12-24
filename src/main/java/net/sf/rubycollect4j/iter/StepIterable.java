@@ -2,16 +2,14 @@
  *
  * Copyright 2013 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -24,8 +22,7 @@ import java.util.Objects;
  * 
  * {@link StepIterable} iterates elements by skipping n elements each time.
  * 
- * @param <E>
- *          the type of the elements
+ * @param <E> the type of the elements
  * 
  * @author Wei-Ming Wu
  * 
@@ -38,21 +35,15 @@ public final class StepIterable<E> implements Iterable<E> {
   /**
    * Creates a {@link StepIterable}.
    * 
-   * @param iter
-   *          an Iterable
-   * @param step
-   *          number of elements to skip
-   * @throws NullPointerException
-   *           if iter is null
-   * @throws IllegalArgumentException
-   *           if step is less than or equal to 0
+   * @param iter an Iterable
+   * @param step number of elements to skip
+   * @throws NullPointerException if iter is null
+   * @throws IllegalArgumentException if step is less than or equal to 0
    */
   public StepIterable(Iterable<? extends E> iter, int step) {
     Objects.requireNonNull(iter);
-    if (step == 0)
-      throw new IllegalArgumentException("ArgumentError: step can't be 0");
-    if (step < 0) throw new IllegalArgumentException(
-        "ArgumentError: step can't be negative");
+    if (step == 0) throw new IllegalArgumentException("ArgumentError: step can't be 0");
+    if (step < 0) throw new IllegalArgumentException("ArgumentError: step can't be negative");
 
     this.iter = iter;
     this.step = step;

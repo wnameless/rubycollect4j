@@ -2,16 +2,14 @@
  *
  * Copyright 2017 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -45,8 +43,8 @@ import net.sf.rubycollect4j.util.ComparableEntry;
 
 /**
  * 
- * {@link Ruby} provides numerous useful static classes and methods to make the
- * RubyCollect4J easy to use.
+ * {@link Ruby} provides numerous useful static classes and methods to make the RubyCollect4J easy
+ * to use.
  * 
  * @author Wei-Ming Wu
  *
@@ -57,8 +55,8 @@ public final class Ruby {
 
   /**
    * 
-   * {@link Array} provides numerous useful static methods to make the
-   * {@link RubyArray} easy to use.
+   * {@link Array} provides numerous useful static methods to make the {@link RubyArray} easy to
+   * use.
    * 
    * @author Wei-Ming Wu
    *
@@ -70,8 +68,7 @@ public final class Ruby {
     /**
      * Creates an empty {@link RubyArray}.
      * 
-     * @param <E>
-     *          the type of the elements
+     * @param <E> the type of the elements
      * @return new {@link RubyArray}
      */
     public static <E> RubyArray<E> create() {
@@ -79,13 +76,11 @@ public final class Ruby {
     }
 
     /**
-     * Creates a {@link RubyArray} by given List. It's a wrapper implementation.
-     * No defensive copy has been made.
+     * Creates a {@link RubyArray} by given List. It's a wrapper implementation. No defensive copy
+     * has been made.
      * 
-     * @param <E>
-     *          the type of the elements
-     * @param list
-     *          a List
+     * @param <E> the type of the elements
+     * @param list a List
      * @return new {@link RubyArray}
      */
     public static <E> RubyArray<E> of(List<E> list) {
@@ -95,10 +90,8 @@ public final class Ruby {
     /**
      * Creates a {@link RubyArray} by given elements.
      * 
-     * @param first
-     *          the first element
-     * @param others
-     *          the other elements
+     * @param first the first element
+     * @param others the other elements
      * @return new {@link RubyArray}
      */
     @SafeVarargs
@@ -112,8 +105,7 @@ public final class Ruby {
     /**
      * Creates a {@link RubyArray} which contains the given {@link RubyArray}.
      * 
-     * @param rubyArray
-     *          a {@link RubyArray}
+     * @param rubyArray a {@link RubyArray}
      * @return {@link RubyArray} of {@link RubyArray}
      */
     public static <E> RubyArray<RubyArray<E>> of(RubyArray<E> rubyArray) {
@@ -124,8 +116,7 @@ public final class Ruby {
     /**
      * Creates a {@link RubyArray} by given elements.
      * 
-     * @param elements
-     *          an array of elements
+     * @param elements an array of elements
      * @return new {@link RubyArray}
      */
     public static <E> RubyArray<E> copyOf(E[] elements) {
@@ -137,8 +128,7 @@ public final class Ruby {
     /**
      * Creates a {@link RubyArray} by given List.
      * 
-     * @param list
-     *          any List
+     * @param list any List
      * @return new {@link RubyArray}
      */
     public static <E> RubyArray<E> copyOf(List<E> list) {
@@ -148,10 +138,8 @@ public final class Ruby {
     /**
      * Creates a {@link RubyArray} by given Iterable.
      * 
-     * @param <E>
-     *          the type of the elements
-     * @param iter
-     *          an Iterable
+     * @param <E> the type of the elements
+     * @param iter an Iterable
      * @return new {@link RubyArray}
      */
     public static <E> RubyArray<E> copyOf(Iterable<E> iter) {
@@ -161,10 +149,8 @@ public final class Ruby {
     /**
      * Creates a {@link RubyArray} by given Iterator.
      * 
-     * @param <E>
-     *          the type of the elements
-     * @param iter
-     *          an Iterator
+     * @param <E> the type of the elements
+     * @param iter an Iterator
      * @return new {@link RubyArray}
      */
     public static <E> RubyArray<E> copyOf(Iterator<E> iter) {
@@ -177,8 +163,7 @@ public final class Ruby {
 
   /**
    * 
-   * {@link Hash} provides numerous useful static methods to make the
-   * {@link RubyHash} easy to use.
+   * {@link Hash} provides numerous useful static methods to make the {@link RubyHash} easy to use.
    * 
    * @author Wei-Ming Wu
    *
@@ -190,10 +175,8 @@ public final class Ruby {
     /**
      * Creates an empty {@link RubyHash}.
      * 
-     * @param <K>
-     *          the type of the key elements
-     * @param <V>
-     *          the type of the value elements
+     * @param <K> the type of the key elements
+     * @param <V> the type of the value elements
      * @return new {@link RubyHash}
      */
     public static <K, V> RubyHash<K, V> create() {
@@ -203,11 +186,9 @@ public final class Ruby {
     /**
      * Creates a {@link RubyHash} which wraps the given Map.
      * 
-     * @param map
-     *          any Map
+     * @param map any Map
      * @return {@link RubyHash}
-     * @throws NullPointerException
-     *           if map is null
+     * @throws NullPointerException if map is null
      */
     public static <K, V> RubyHash<K, V> of(LinkedHashMap<K, V> map) {
       return RubyHash.of(map);
@@ -216,11 +197,9 @@ public final class Ruby {
     /**
      * Creates a {@link RubyHash} which copies the elements of given Map.
      * 
-     * @param map
-     *          any Map
+     * @param map any Map
      * @return {@link RubyHash}
-     * @throws NullPointerException
-     *           if map is null
+     * @throws NullPointerException if map is null
      */
     public static <K, V> RubyHash<K, V> copyOf(Map<K, V> map) {
       return RubyHash.copyOf(map);
@@ -229,12 +208,9 @@ public final class Ruby {
     /**
      * Turns a List of Entries into a {@link RubyHash}.
      * 
-     * @param <K>
-     *          the type of the key elements
-     * @param <V>
-     *          the type of the value elements
-     * @param entries
-     *          an Iterable of Entries
+     * @param <K> the type of the key elements
+     * @param <V> the type of the value elements
+     * @param entries an Iterable of Entries
      * @return {@link RubyHash}
      */
     public static <K, V> RubyHash<K, V> create(
@@ -247,14 +223,10 @@ public final class Ruby {
     /**
      * Creates a {@link RubyHash} by given key-value pair.
      * 
-     * @param <K>
-     *          the type of the key elements
-     * @param <V>
-     *          the type of the value elements
-     * @param key
-     *          of entry
-     * @param value
-     *          of entry
+     * @param <K> the type of the key elements
+     * @param <V> the type of the value elements
+     * @param key of entry
+     * @param value of entry
      * @return {@link RubyHash}
      */
     public static <K, V> RubyHash<K, V> of(K key, V value) {
@@ -266,18 +238,12 @@ public final class Ruby {
     /**
      * Creates a {@link RubyHash} by given key-value pairs.
      * 
-     * @param <K>
-     *          the type of the key elements
-     * @param <V>
-     *          the type of the value elements
-     * @param key1
-     *          of entry 1
-     * @param value1
-     *          of entry 1
-     * @param key2
-     *          of entry 2
-     * @param value2
-     *          of entry 2
+     * @param <K> the type of the key elements
+     * @param <V> the type of the value elements
+     * @param key1 of entry 1
+     * @param value1 of entry 1
+     * @param key2 of entry 2
+     * @param value2 of entry 2
      * @return {@link RubyHash}
      */
     public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2) {
@@ -290,26 +256,17 @@ public final class Ruby {
     /**
      * Creates a {@link RubyHash} by given key-value pairs.
      * 
-     * @param <K>
-     *          the type of the key elements
-     * @param <V>
-     *          the type of the value elements
-     * @param key1
-     *          of entry 1
-     * @param value1
-     *          of entry 1
-     * @param key2
-     *          of entry 2
-     * @param value2
-     *          of entry 2
-     * @param key3
-     *          of entry 3
-     * @param value3
-     *          of entry 3
+     * @param <K> the type of the key elements
+     * @param <V> the type of the value elements
+     * @param key1 of entry 1
+     * @param value1 of entry 1
+     * @param key2 of entry 2
+     * @param value2 of entry 2
+     * @param key3 of entry 3
+     * @param value3 of entry 3
      * @return {@link RubyHash}
      */
-    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2,
-        K key3, V value3) {
+    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2, K key3, V value3) {
       RubyHash<K, V> rh = new RubyHash<>();
       rh.put(key1, value1);
       rh.put(key2, value2);
@@ -320,30 +277,20 @@ public final class Ruby {
     /**
      * Creates a {@link RubyHash} by given key-value pairs.
      * 
-     * @param <K>
-     *          the type of the key elements
-     * @param <V>
-     *          the type of the value elements
-     * @param key1
-     *          of entry 1
-     * @param value1
-     *          of entry 1
-     * @param key2
-     *          of entry 2
-     * @param value2
-     *          of entry 2
-     * @param key3
-     *          of entry 3
-     * @param value3
-     *          of entry 3
-     * @param key4
-     *          of entry 4
-     * @param value4
-     *          of entry 4
+     * @param <K> the type of the key elements
+     * @param <V> the type of the value elements
+     * @param key1 of entry 1
+     * @param value1 of entry 1
+     * @param key2 of entry 2
+     * @param value2 of entry 2
+     * @param key3 of entry 3
+     * @param value3 of entry 3
+     * @param key4 of entry 4
+     * @param value4 of entry 4
      * @return {@link RubyHash}
      */
-    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2,
-        K key3, V value3, K key4, V value4) {
+    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2, K key3, V value3,
+        K key4, V value4) {
       RubyHash<K, V> rh = new RubyHash<>();
       rh.put(key1, value1);
       rh.put(key2, value2);
@@ -355,34 +302,22 @@ public final class Ruby {
     /**
      * Creates a {@link RubyHash} by given key-value pairs.
      * 
-     * @param <K>
-     *          the type of the key elements
-     * @param <V>
-     *          the type of the value elements
-     * @param key1
-     *          of entry 1
-     * @param value1
-     *          of entry 1
-     * @param key2
-     *          of entry 2
-     * @param value2
-     *          of entry 2
-     * @param key3
-     *          of entry 3
-     * @param value3
-     *          of entry 3
-     * @param key4
-     *          of entry 4
-     * @param value4
-     *          of entry 4
-     * @param key5
-     *          of entry 5
-     * @param value5
-     *          of entry 5
+     * @param <K> the type of the key elements
+     * @param <V> the type of the value elements
+     * @param key1 of entry 1
+     * @param value1 of entry 1
+     * @param key2 of entry 2
+     * @param value2 of entry 2
+     * @param key3 of entry 3
+     * @param value3 of entry 3
+     * @param key4 of entry 4
+     * @param value4 of entry 4
+     * @param key5 of entry 5
+     * @param value5 of entry 5
      * @return {@link RubyHash}
      */
-    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2,
-        K key3, V value3, K key4, V value4, K key5, V value5) {
+    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2, K key3, V value3,
+        K key4, V value4, K key5, V value5) {
       RubyHash<K, V> rh = new RubyHash<>();
       rh.put(key1, value1);
       rh.put(key2, value2);
@@ -395,39 +330,24 @@ public final class Ruby {
     /**
      * Creates a {@link RubyHash} by given key-value pairs.
      * 
-     * @param <K>
-     *          the type of the key elements
-     * @param <V>
-     *          the type of the value elements
-     * @param key1
-     *          of entry 1
-     * @param value1
-     *          of entry 1
-     * @param key2
-     *          of entry 2
-     * @param value2
-     *          of entry 2
-     * @param key3
-     *          of entry 3
-     * @param value3
-     *          of entry 3
-     * @param key4
-     *          of entry 4
-     * @param value4
-     *          of entry 4
-     * @param key5
-     *          of entry 5
-     * @param value5
-     *          of entry 5
-     * @param key6
-     *          of entry 6
-     * @param value6
-     *          of entry 6
+     * @param <K> the type of the key elements
+     * @param <V> the type of the value elements
+     * @param key1 of entry 1
+     * @param value1 of entry 1
+     * @param key2 of entry 2
+     * @param value2 of entry 2
+     * @param key3 of entry 3
+     * @param value3 of entry 3
+     * @param key4 of entry 4
+     * @param value4 of entry 4
+     * @param key5 of entry 5
+     * @param value5 of entry 5
+     * @param key6 of entry 6
+     * @param value6 of entry 6
      * @return {@link RubyHash}
      */
-    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2,
-        K key3, V value3, K key4, V value4, K key5, V value5, K key6,
-        V value6) {
+    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2, K key3, V value3,
+        K key4, V value4, K key5, V value5, K key6, V value6) {
       RubyHash<K, V> rh = new RubyHash<>();
       rh.put(key1, value1);
       rh.put(key2, value2);
@@ -441,43 +361,26 @@ public final class Ruby {
     /**
      * Creates a {@link RubyHash} by given key-value pairs.
      * 
-     * @param <K>
-     *          the type of the key elements
-     * @param <V>
-     *          the type of the value elements
-     * @param key1
-     *          of entry 1
-     * @param value1
-     *          of entry 1
-     * @param key2
-     *          of entry 2
-     * @param value2
-     *          of entry 2
-     * @param key3
-     *          of entry 3
-     * @param value3
-     *          of entry 3
-     * @param key4
-     *          of entry 4
-     * @param value4
-     *          of entry 4
-     * @param key5
-     *          of entry 5
-     * @param value5
-     *          of entry 5
-     * @param key6
-     *          of entry 6
-     * @param value6
-     *          of entry 6
-     * @param key7
-     *          of entry 7
-     * @param value7
-     *          of entry 7
+     * @param <K> the type of the key elements
+     * @param <V> the type of the value elements
+     * @param key1 of entry 1
+     * @param value1 of entry 1
+     * @param key2 of entry 2
+     * @param value2 of entry 2
+     * @param key3 of entry 3
+     * @param value3 of entry 3
+     * @param key4 of entry 4
+     * @param value4 of entry 4
+     * @param key5 of entry 5
+     * @param value5 of entry 5
+     * @param key6 of entry 6
+     * @param value6 of entry 6
+     * @param key7 of entry 7
+     * @param value7 of entry 7
      * @return {@link RubyHash}
      */
-    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2,
-        K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
-        K key7, V value7) {
+    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2, K key3, V value3,
+        K key4, V value4, K key5, V value5, K key6, V value6, K key7, V value7) {
       RubyHash<K, V> rh = new RubyHash<>();
       rh.put(key1, value1);
       rh.put(key2, value2);
@@ -492,47 +395,28 @@ public final class Ruby {
     /**
      * Creates a {@link RubyHash} by given key-value pairs.
      * 
-     * @param <K>
-     *          the type of the key elements
-     * @param <V>
-     *          the type of the value elements
-     * @param key1
-     *          of entry 1
-     * @param value1
-     *          of entry 1
-     * @param key2
-     *          of entry 2
-     * @param value2
-     *          of entry 2
-     * @param key3
-     *          of entry 3
-     * @param value3
-     *          of entry 3
-     * @param key4
-     *          of entry 4
-     * @param value4
-     *          of entry 4
-     * @param key5
-     *          of entry 5
-     * @param value5
-     *          of entry 5
-     * @param key6
-     *          of entry 6
-     * @param value6
-     *          of entry 6
-     * @param key7
-     *          of entry 7
-     * @param value7
-     *          of entry 7
-     * @param key8
-     *          of entry 8
-     * @param value8
-     *          of entry 8
+     * @param <K> the type of the key elements
+     * @param <V> the type of the value elements
+     * @param key1 of entry 1
+     * @param value1 of entry 1
+     * @param key2 of entry 2
+     * @param value2 of entry 2
+     * @param key3 of entry 3
+     * @param value3 of entry 3
+     * @param key4 of entry 4
+     * @param value4 of entry 4
+     * @param key5 of entry 5
+     * @param value5 of entry 5
+     * @param key6 of entry 6
+     * @param value6 of entry 6
+     * @param key7 of entry 7
+     * @param value7 of entry 7
+     * @param key8 of entry 8
+     * @param value8 of entry 8
      * @return {@link RubyHash}
      */
-    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2,
-        K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
-        K key7, V value7, K key8, V value8) {
+    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2, K key3, V value3,
+        K key4, V value4, K key5, V value5, K key6, V value6, K key7, V value7, K key8, V value8) {
       RubyHash<K, V> rh = new RubyHash<>();
       rh.put(key1, value1);
       rh.put(key2, value2);
@@ -548,51 +432,31 @@ public final class Ruby {
     /**
      * Creates a {@link RubyHash} by given key-value pairs.
      * 
-     * @param <K>
-     *          the type of the key elements
-     * @param <V>
-     *          the type of the value elements
-     * @param key1
-     *          of entry 1
-     * @param value1
-     *          of entry 1
-     * @param key2
-     *          of entry 2
-     * @param value2
-     *          of entry 2
-     * @param key3
-     *          of entry 3
-     * @param value3
-     *          of entry 3
-     * @param key4
-     *          of entry 4
-     * @param value4
-     *          of entry 4
-     * @param key5
-     *          of entry 5
-     * @param value5
-     *          of entry 5
-     * @param key6
-     *          of entry 6
-     * @param value6
-     *          of entry 6
-     * @param key7
-     *          of entry 7
-     * @param value7
-     *          of entry 7
-     * @param key8
-     *          of entry 8
-     * @param value8
-     *          of entry 8
-     * @param key9
-     *          of entry 9
-     * @param value9
-     *          of entry 9
+     * @param <K> the type of the key elements
+     * @param <V> the type of the value elements
+     * @param key1 of entry 1
+     * @param value1 of entry 1
+     * @param key2 of entry 2
+     * @param value2 of entry 2
+     * @param key3 of entry 3
+     * @param value3 of entry 3
+     * @param key4 of entry 4
+     * @param value4 of entry 4
+     * @param key5 of entry 5
+     * @param value5 of entry 5
+     * @param key6 of entry 6
+     * @param value6 of entry 6
+     * @param key7 of entry 7
+     * @param value7 of entry 7
+     * @param key8 of entry 8
+     * @param value8 of entry 8
+     * @param key9 of entry 9
+     * @param value9 of entry 9
      * @return {@link RubyHash}
      */
-    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2,
-        K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
-        K key7, V value7, K key8, V value8, K key9, V value9) {
+    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2, K key3, V value3,
+        K key4, V value4, K key5, V value5, K key6, V value6, K key7, V value7, K key8, V value8,
+        K key9, V value9) {
       RubyHash<K, V> rh = new RubyHash<>();
       rh.put(key1, value1);
       rh.put(key2, value2);
@@ -609,56 +473,33 @@ public final class Ruby {
     /**
      * Creates a {@link RubyHash} by given key-value pairs.
      * 
-     * @param <K>
-     *          the type of the key elements
-     * @param <V>
-     *          the type of the value elements
-     * @param key1
-     *          of entry 1
-     * @param value1
-     *          of entry 1
-     * @param key2
-     *          of entry 2
-     * @param value2
-     *          of entry 2
-     * @param key3
-     *          of entry 3
-     * @param value3
-     *          of entry 3
-     * @param key4
-     *          of entry 4
-     * @param value4
-     *          of entry 4
-     * @param key5
-     *          of entry 5
-     * @param value5
-     *          of entry 5
-     * @param key6
-     *          of entry 6
-     * @param value6
-     *          of entry 6
-     * @param key7
-     *          of entry 7
-     * @param value7
-     *          of entry 7
-     * @param key8
-     *          of entry 8
-     * @param value8
-     *          of entry 8
-     * @param key9
-     *          of entry 9
-     * @param value9
-     *          of entry 9
-     * @param key10
-     *          of entry 10
-     * @param value10
-     *          of entry 10
+     * @param <K> the type of the key elements
+     * @param <V> the type of the value elements
+     * @param key1 of entry 1
+     * @param value1 of entry 1
+     * @param key2 of entry 2
+     * @param value2 of entry 2
+     * @param key3 of entry 3
+     * @param value3 of entry 3
+     * @param key4 of entry 4
+     * @param value4 of entry 4
+     * @param key5 of entry 5
+     * @param value5 of entry 5
+     * @param key6 of entry 6
+     * @param value6 of entry 6
+     * @param key7 of entry 7
+     * @param value7 of entry 7
+     * @param key8 of entry 8
+     * @param value8 of entry 8
+     * @param key9 of entry 9
+     * @param value9 of entry 9
+     * @param key10 of entry 10
+     * @param value10 of entry 10
      * @return {@link RubyHash}
      */
-    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2,
-        K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
-        K key7, V value7, K key8, V value8, K key9, V value9, K key10,
-        V value10) {
+    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2, K key3, V value3,
+        K key4, V value4, K key5, V value5, K key6, V value6, K key7, V value7, K key8, V value8,
+        K key9, V value9, K key10, V value10) {
       RubyHash<K, V> rh = new RubyHash<>();
       rh.put(key1, value1);
       rh.put(key2, value2);
@@ -676,60 +517,35 @@ public final class Ruby {
     /**
      * Creates a {@link RubyHash} by given key-value pairs.
      * 
-     * @param <K>
-     *          the type of the key elements
-     * @param <V>
-     *          the type of the value elements
-     * @param key1
-     *          of entry 1
-     * @param value1
-     *          of entry 1
-     * @param key2
-     *          of entry 2
-     * @param value2
-     *          of entry 2
-     * @param key3
-     *          of entry 3
-     * @param value3
-     *          of entry 3
-     * @param key4
-     *          of entry 4
-     * @param value4
-     *          of entry 4
-     * @param key5
-     *          of entry 5
-     * @param value5
-     *          of entry 5
-     * @param key6
-     *          of entry 6
-     * @param value6
-     *          of entry 6
-     * @param key7
-     *          of entry 7
-     * @param value7
-     *          of entry 7
-     * @param key8
-     *          of entry 8
-     * @param value8
-     *          of entry 8
-     * @param key9
-     *          of entry 9
-     * @param value9
-     *          of entry 9
-     * @param key10
-     *          of entry 10
-     * @param value10
-     *          of entry 10
-     * @param key11
-     *          of entry 11
-     * @param value11
-     *          of entry 11
+     * @param <K> the type of the key elements
+     * @param <V> the type of the value elements
+     * @param key1 of entry 1
+     * @param value1 of entry 1
+     * @param key2 of entry 2
+     * @param value2 of entry 2
+     * @param key3 of entry 3
+     * @param value3 of entry 3
+     * @param key4 of entry 4
+     * @param value4 of entry 4
+     * @param key5 of entry 5
+     * @param value5 of entry 5
+     * @param key6 of entry 6
+     * @param value6 of entry 6
+     * @param key7 of entry 7
+     * @param value7 of entry 7
+     * @param key8 of entry 8
+     * @param value8 of entry 8
+     * @param key9 of entry 9
+     * @param value9 of entry 9
+     * @param key10 of entry 10
+     * @param value10 of entry 10
+     * @param key11 of entry 11
+     * @param value11 of entry 11
      * @return {@link RubyHash}
      */
-    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2,
-        K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
-        K key7, V value7, K key8, V value8, K key9, V value9, K key10,
-        V value10, K key11, V value11) {
+    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2, K key3, V value3,
+        K key4, V value4, K key5, V value5, K key6, V value6, K key7, V value7, K key8, V value8,
+        K key9, V value9, K key10, V value10, K key11, V value11) {
       RubyHash<K, V> rh = new RubyHash<>();
       rh.put(key1, value1);
       rh.put(key2, value2);
@@ -748,64 +564,37 @@ public final class Ruby {
     /**
      * Creates a {@link RubyHash} by given key-value pairs.
      * 
-     * @param <K>
-     *          the type of the key elements
-     * @param <V>
-     *          the type of the value elements
-     * @param key1
-     *          of entry 1
-     * @param value1
-     *          of entry 1
-     * @param key2
-     *          of entry 2
-     * @param value2
-     *          of entry 2
-     * @param key3
-     *          of entry 3
-     * @param value3
-     *          of entry 3
-     * @param key4
-     *          of entry 4
-     * @param value4
-     *          of entry 4
-     * @param key5
-     *          of entry 5
-     * @param value5
-     *          of entry 5
-     * @param key6
-     *          of entry 6
-     * @param value6
-     *          of entry 6
-     * @param key7
-     *          of entry 7
-     * @param value7
-     *          of entry 7
-     * @param key8
-     *          of entry 8
-     * @param value8
-     *          of entry 8
-     * @param key9
-     *          of entry 9
-     * @param value9
-     *          of entry 9
-     * @param key10
-     *          of entry 10
-     * @param value10
-     *          of entry 10
-     * @param key11
-     *          of entry 11
-     * @param value11
-     *          of entry 11
-     * @param key12
-     *          of entry 12
-     * @param value12
-     *          of entry 12
+     * @param <K> the type of the key elements
+     * @param <V> the type of the value elements
+     * @param key1 of entry 1
+     * @param value1 of entry 1
+     * @param key2 of entry 2
+     * @param value2 of entry 2
+     * @param key3 of entry 3
+     * @param value3 of entry 3
+     * @param key4 of entry 4
+     * @param value4 of entry 4
+     * @param key5 of entry 5
+     * @param value5 of entry 5
+     * @param key6 of entry 6
+     * @param value6 of entry 6
+     * @param key7 of entry 7
+     * @param value7 of entry 7
+     * @param key8 of entry 8
+     * @param value8 of entry 8
+     * @param key9 of entry 9
+     * @param value9 of entry 9
+     * @param key10 of entry 10
+     * @param value10 of entry 10
+     * @param key11 of entry 11
+     * @param value11 of entry 11
+     * @param key12 of entry 12
+     * @param value12 of entry 12
      * @return {@link RubyHash}
      */
-    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2,
-        K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
-        K key7, V value7, K key8, V value8, K key9, V value9, K key10,
-        V value10, K key11, V value11, K key12, V value12) {
+    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2, K key3, V value3,
+        K key4, V value4, K key5, V value5, K key6, V value6, K key7, V value7, K key8, V value8,
+        K key9, V value9, K key10, V value10, K key11, V value11, K key12, V value12) {
       RubyHash<K, V> rh = new RubyHash<>();
       rh.put(key1, value1);
       rh.put(key2, value2);
@@ -825,68 +614,40 @@ public final class Ruby {
     /**
      * Creates a {@link RubyHash} by given key-value pairs.
      * 
-     * @param <K>
-     *          the type of the key elements
-     * @param <V>
-     *          the type of the value elements
-     * @param key1
-     *          of entry 1
-     * @param value1
-     *          of entry 1
-     * @param key2
-     *          of entry 2
-     * @param value2
-     *          of entry 2
-     * @param key3
-     *          of entry 3
-     * @param value3
-     *          of entry 3
-     * @param key4
-     *          of entry 4
-     * @param value4
-     *          of entry 4
-     * @param key5
-     *          of entry 5
-     * @param value5
-     *          of entry 5
-     * @param key6
-     *          of entry 6
-     * @param value6
-     *          of entry 6
-     * @param key7
-     *          of entry 7
-     * @param value7
-     *          of entry 7
-     * @param key8
-     *          of entry 8
-     * @param value8
-     *          of entry 8
-     * @param key9
-     *          of entry 9
-     * @param value9
-     *          of entry 9
-     * @param key10
-     *          of entry 10
-     * @param value10
-     *          of entry 10
-     * @param key11
-     *          of entry 11
-     * @param value11
-     *          of entry 11
-     * @param key12
-     *          of entry 12
-     * @param value12
-     *          of entry 12
-     * @param key13
-     *          of entry 13
-     * @param value13
-     *          of entry 13
+     * @param <K> the type of the key elements
+     * @param <V> the type of the value elements
+     * @param key1 of entry 1
+     * @param value1 of entry 1
+     * @param key2 of entry 2
+     * @param value2 of entry 2
+     * @param key3 of entry 3
+     * @param value3 of entry 3
+     * @param key4 of entry 4
+     * @param value4 of entry 4
+     * @param key5 of entry 5
+     * @param value5 of entry 5
+     * @param key6 of entry 6
+     * @param value6 of entry 6
+     * @param key7 of entry 7
+     * @param value7 of entry 7
+     * @param key8 of entry 8
+     * @param value8 of entry 8
+     * @param key9 of entry 9
+     * @param value9 of entry 9
+     * @param key10 of entry 10
+     * @param value10 of entry 10
+     * @param key11 of entry 11
+     * @param value11 of entry 11
+     * @param key12 of entry 12
+     * @param value12 of entry 12
+     * @param key13 of entry 13
+     * @param value13 of entry 13
      * @return {@link RubyHash}
      */
-    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2,
-        K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
-        K key7, V value7, K key8, V value8, K key9, V value9, K key10,
-        V value10, K key11, V value11, K key12, V value12, K key13, V value13) {
+    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2, K key3, V value3,
+        K key4, V value4, K key5, V value5, K key6, V value6, K key7, V value7, K key8, V value8,
+        K key9, V value9, K key10, V value10, K key11, V value11, K key12, V value12, K key13,
+        V value13) {
       RubyHash<K, V> rh = new RubyHash<>();
       rh.put(key1, value1);
       rh.put(key2, value2);
@@ -907,73 +668,42 @@ public final class Ruby {
     /**
      * Creates a {@link RubyHash} by given key-value pairs.
      * 
-     * @param <K>
-     *          the type of the key elements
-     * @param <V>
-     *          the type of the value elements
-     * @param key1
-     *          of entry 1
-     * @param value1
-     *          of entry 1
-     * @param key2
-     *          of entry 2
-     * @param value2
-     *          of entry 2
-     * @param key3
-     *          of entry 3
-     * @param value3
-     *          of entry 3
-     * @param key4
-     *          of entry 4
-     * @param value4
-     *          of entry 4
-     * @param key5
-     *          of entry 5
-     * @param value5
-     *          of entry 5
-     * @param key6
-     *          of entry 6
-     * @param value6
-     *          of entry 6
-     * @param key7
-     *          of entry 7
-     * @param value7
-     *          of entry 7
-     * @param key8
-     *          of entry 8
-     * @param value8
-     *          of entry 8
-     * @param key9
-     *          of entry 9
-     * @param value9
-     *          of entry 9
-     * @param key10
-     *          of entry 10
-     * @param value10
-     *          of entry 10
-     * @param key11
-     *          of entry 11
-     * @param value11
-     *          of entry 11
-     * @param key12
-     *          of entry 12
-     * @param value12
-     *          of entry 12
-     * @param key13
-     *          of entry 13
-     * @param value13
-     *          of entry 13
-     * @param key14
-     *          of entry 14
-     * @param value14
-     *          of entry 14
+     * @param <K> the type of the key elements
+     * @param <V> the type of the value elements
+     * @param key1 of entry 1
+     * @param value1 of entry 1
+     * @param key2 of entry 2
+     * @param value2 of entry 2
+     * @param key3 of entry 3
+     * @param value3 of entry 3
+     * @param key4 of entry 4
+     * @param value4 of entry 4
+     * @param key5 of entry 5
+     * @param value5 of entry 5
+     * @param key6 of entry 6
+     * @param value6 of entry 6
+     * @param key7 of entry 7
+     * @param value7 of entry 7
+     * @param key8 of entry 8
+     * @param value8 of entry 8
+     * @param key9 of entry 9
+     * @param value9 of entry 9
+     * @param key10 of entry 10
+     * @param value10 of entry 10
+     * @param key11 of entry 11
+     * @param value11 of entry 11
+     * @param key12 of entry 12
+     * @param value12 of entry 12
+     * @param key13 of entry 13
+     * @param value13 of entry 13
+     * @param key14 of entry 14
+     * @param value14 of entry 14
      * @return {@link RubyHash}
      */
-    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2,
-        K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
-        K key7, V value7, K key8, V value8, K key9, V value9, K key10,
-        V value10, K key11, V value11, K key12, V value12, K key13, V value13,
-        K key14, V value14) {
+    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2, K key3, V value3,
+        K key4, V value4, K key5, V value5, K key6, V value6, K key7, V value7, K key8, V value8,
+        K key9, V value9, K key10, V value10, K key11, V value11, K key12, V value12, K key13,
+        V value13, K key14, V value14) {
       RubyHash<K, V> rh = new RubyHash<>();
       rh.put(key1, value1);
       rh.put(key2, value2);
@@ -995,77 +725,44 @@ public final class Ruby {
     /**
      * Creates a {@link RubyHash} by given key-value pairs.
      * 
-     * @param <K>
-     *          the type of the key elements
-     * @param <V>
-     *          the type of the value elements
-     * @param key1
-     *          of entry 1
-     * @param value1
-     *          of entry 1
-     * @param key2
-     *          of entry 2
-     * @param value2
-     *          of entry 2
-     * @param key3
-     *          of entry 3
-     * @param value3
-     *          of entry 3
-     * @param key4
-     *          of entry 4
-     * @param value4
-     *          of entry 4
-     * @param key5
-     *          of entry 5
-     * @param value5
-     *          of entry 5
-     * @param key6
-     *          of entry 6
-     * @param value6
-     *          of entry 6
-     * @param key7
-     *          of entry 7
-     * @param value7
-     *          of entry 7
-     * @param key8
-     *          of entry 8
-     * @param value8
-     *          of entry 8
-     * @param key9
-     *          of entry 9
-     * @param value9
-     *          of entry 9
-     * @param key10
-     *          of entry 10
-     * @param value10
-     *          of entry 10
-     * @param key11
-     *          of entry 11
-     * @param value11
-     *          of entry 11
-     * @param key12
-     *          of entry 12
-     * @param value12
-     *          of entry 12
-     * @param key13
-     *          of entry 13
-     * @param value13
-     *          of entry 13
-     * @param key14
-     *          of entry 14
-     * @param value14
-     *          of entry 14
-     * @param key15
-     *          of entry 15
-     * @param value15
-     *          of entry 15
+     * @param <K> the type of the key elements
+     * @param <V> the type of the value elements
+     * @param key1 of entry 1
+     * @param value1 of entry 1
+     * @param key2 of entry 2
+     * @param value2 of entry 2
+     * @param key3 of entry 3
+     * @param value3 of entry 3
+     * @param key4 of entry 4
+     * @param value4 of entry 4
+     * @param key5 of entry 5
+     * @param value5 of entry 5
+     * @param key6 of entry 6
+     * @param value6 of entry 6
+     * @param key7 of entry 7
+     * @param value7 of entry 7
+     * @param key8 of entry 8
+     * @param value8 of entry 8
+     * @param key9 of entry 9
+     * @param value9 of entry 9
+     * @param key10 of entry 10
+     * @param value10 of entry 10
+     * @param key11 of entry 11
+     * @param value11 of entry 11
+     * @param key12 of entry 12
+     * @param value12 of entry 12
+     * @param key13 of entry 13
+     * @param value13 of entry 13
+     * @param key14 of entry 14
+     * @param value14 of entry 14
+     * @param key15 of entry 15
+     * @param value15 of entry 15
      * @return {@link RubyHash}
      */
-    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2,
-        K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
-        K key7, V value7, K key8, V value8, K key9, V value9, K key10,
-        V value10, K key11, V value11, K key12, V value12, K key13, V value13,
-        K key14, V value14, K key15, V value15) {
+    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2, K key3, V value3,
+        K key4, V value4, K key5, V value5, K key6, V value6, K key7, V value7, K key8, V value8,
+        K key9, V value9, K key10, V value10, K key11, V value11, K key12, V value12, K key13,
+        V value13, K key14, V value14, K key15, V value15) {
       RubyHash<K, V> rh = new RubyHash<>();
       rh.put(key1, value1);
       rh.put(key2, value2);
@@ -1088,81 +785,46 @@ public final class Ruby {
     /**
      * Creates a {@link RubyHash} by given key-value pairs.
      * 
-     * @param <K>
-     *          the type of the key elements
-     * @param <V>
-     *          the type of the value elements
-     * @param key1
-     *          of entry 1
-     * @param value1
-     *          of entry 1
-     * @param key2
-     *          of entry 2
-     * @param value2
-     *          of entry 2
-     * @param key3
-     *          of entry 3
-     * @param value3
-     *          of entry 3
-     * @param key4
-     *          of entry 4
-     * @param value4
-     *          of entry 4
-     * @param key5
-     *          of entry 5
-     * @param value5
-     *          of entry 5
-     * @param key6
-     *          of entry 6
-     * @param value6
-     *          of entry 6
-     * @param key7
-     *          of entry 7
-     * @param value7
-     *          of entry 7
-     * @param key8
-     *          of entry 8
-     * @param value8
-     *          of entry 8
-     * @param key9
-     *          of entry 9
-     * @param value9
-     *          of entry 9
-     * @param key10
-     *          of entry 10
-     * @param value10
-     *          of entry 10
-     * @param key11
-     *          of entry 11
-     * @param value11
-     *          of entry 11
-     * @param key12
-     *          of entry 12
-     * @param value12
-     *          of entry 12
-     * @param key13
-     *          of entry 13
-     * @param value13
-     *          of entry 13
-     * @param key14
-     *          of entry 14
-     * @param value14
-     *          of entry 14
-     * @param key15
-     *          of entry 15
-     * @param value15
-     *          of entry 15
-     * @param key16
-     *          of entry 16
-     * @param value16
-     *          of entry 16
+     * @param <K> the type of the key elements
+     * @param <V> the type of the value elements
+     * @param key1 of entry 1
+     * @param value1 of entry 1
+     * @param key2 of entry 2
+     * @param value2 of entry 2
+     * @param key3 of entry 3
+     * @param value3 of entry 3
+     * @param key4 of entry 4
+     * @param value4 of entry 4
+     * @param key5 of entry 5
+     * @param value5 of entry 5
+     * @param key6 of entry 6
+     * @param value6 of entry 6
+     * @param key7 of entry 7
+     * @param value7 of entry 7
+     * @param key8 of entry 8
+     * @param value8 of entry 8
+     * @param key9 of entry 9
+     * @param value9 of entry 9
+     * @param key10 of entry 10
+     * @param value10 of entry 10
+     * @param key11 of entry 11
+     * @param value11 of entry 11
+     * @param key12 of entry 12
+     * @param value12 of entry 12
+     * @param key13 of entry 13
+     * @param value13 of entry 13
+     * @param key14 of entry 14
+     * @param value14 of entry 14
+     * @param key15 of entry 15
+     * @param value15 of entry 15
+     * @param key16 of entry 16
+     * @param value16 of entry 16
      * @return {@link RubyHash}
      */
-    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2,
-        K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
-        K key7, V value7, K key8, V value8, K key9, V value9, K key10,
-        V value10, K key11, V value11, K key12, V value12, K key13, V value13,
-        K key14, V value14, K key15, V value15, K key16, V value16) {
+    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2, K key3, V value3,
+        K key4, V value4, K key5, V value5, K key6, V value6, K key7, V value7, K key8, V value8,
+        K key9, V value9, K key10, V value10, K key11, V value11, K key12, V value12, K key13,
+        V value13, K key14, V value14, K key15, V value15, K key16, V value16) {
       RubyHash<K, V> rh = new RubyHash<>();
       rh.put(key1, value1);
       rh.put(key2, value2);
@@ -1186,86 +848,48 @@ public final class Ruby {
     /**
      * Creates a {@link RubyHash} by given key-value pairs.
      * 
-     * @param <K>
-     *          the type of the key elements
-     * @param <V>
-     *          the type of the value elements
-     * @param key1
-     *          of entry 1
-     * @param value1
-     *          of entry 1
-     * @param key2
-     *          of entry 2
-     * @param value2
-     *          of entry 2
-     * @param key3
-     *          of entry 3
-     * @param value3
-     *          of entry 3
-     * @param key4
-     *          of entry 4
-     * @param value4
-     *          of entry 4
-     * @param key5
-     *          of entry 5
-     * @param value5
-     *          of entry 5
-     * @param key6
-     *          of entry 6
-     * @param value6
-     *          of entry 6
-     * @param key7
-     *          of entry 7
-     * @param value7
-     *          of entry 7
-     * @param key8
-     *          of entry 8
-     * @param value8
-     *          of entry 8
-     * @param key9
-     *          of entry 9
-     * @param value9
-     *          of entry 9
-     * @param key10
-     *          of entry 10
-     * @param value10
-     *          of entry 10
-     * @param key11
-     *          of entry 11
-     * @param value11
-     *          of entry 11
-     * @param key12
-     *          of entry 12
-     * @param value12
-     *          of entry 12
-     * @param key13
-     *          of entry 13
-     * @param value13
-     *          of entry 13
-     * @param key14
-     *          of entry 14
-     * @param value14
-     *          of entry 14
-     * @param key15
-     *          of entry 15
-     * @param value15
-     *          of entry 15
-     * @param key16
-     *          of entry 16
-     * @param value16
-     *          of entry 16
-     * @param key17
-     *          of entry 17
-     * @param value17
-     *          of entry 17
+     * @param <K> the type of the key elements
+     * @param <V> the type of the value elements
+     * @param key1 of entry 1
+     * @param value1 of entry 1
+     * @param key2 of entry 2
+     * @param value2 of entry 2
+     * @param key3 of entry 3
+     * @param value3 of entry 3
+     * @param key4 of entry 4
+     * @param value4 of entry 4
+     * @param key5 of entry 5
+     * @param value5 of entry 5
+     * @param key6 of entry 6
+     * @param value6 of entry 6
+     * @param key7 of entry 7
+     * @param value7 of entry 7
+     * @param key8 of entry 8
+     * @param value8 of entry 8
+     * @param key9 of entry 9
+     * @param value9 of entry 9
+     * @param key10 of entry 10
+     * @param value10 of entry 10
+     * @param key11 of entry 11
+     * @param value11 of entry 11
+     * @param key12 of entry 12
+     * @param value12 of entry 12
+     * @param key13 of entry 13
+     * @param value13 of entry 13
+     * @param key14 of entry 14
+     * @param value14 of entry 14
+     * @param key15 of entry 15
+     * @param value15 of entry 15
+     * @param key16 of entry 16
+     * @param value16 of entry 16
+     * @param key17 of entry 17
+     * @param value17 of entry 17
      * @return {@link RubyHash}
      */
-    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2,
-        K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
-        K key7, V value7, K key8, V value8, K key9, V value9, K key10,
-        V value10, K key11, V value11, K key12, V value12, K key13, V value13,
-        K key14, V value14, K key15, V value15, K key16, V value16, K key17,
-        V value17) {
+    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2, K key3, V value3,
+        K key4, V value4, K key5, V value5, K key6, V value6, K key7, V value7, K key8, V value8,
+        K key9, V value9, K key10, V value10, K key11, V value11, K key12, V value12, K key13,
+        V value13, K key14, V value14, K key15, V value15, K key16, V value16, K key17, V value17) {
       RubyHash<K, V> rh = new RubyHash<>();
       rh.put(key1, value1);
       rh.put(key2, value2);
@@ -1290,90 +914,51 @@ public final class Ruby {
     /**
      * Creates a {@link RubyHash} by given key-value pairs.
      * 
-     * @param <K>
-     *          the type of the key elements
-     * @param <V>
-     *          the type of the value elements
-     * @param key1
-     *          of entry 1
-     * @param value1
-     *          of entry 1
-     * @param key2
-     *          of entry 2
-     * @param value2
-     *          of entry 2
-     * @param key3
-     *          of entry 3
-     * @param value3
-     *          of entry 3
-     * @param key4
-     *          of entry 4
-     * @param value4
-     *          of entry 4
-     * @param key5
-     *          of entry 5
-     * @param value5
-     *          of entry 5
-     * @param key6
-     *          of entry 6
-     * @param value6
-     *          of entry 6
-     * @param key7
-     *          of entry 7
-     * @param value7
-     *          of entry 7
-     * @param key8
-     *          of entry 8
-     * @param value8
-     *          of entry 8
-     * @param key9
-     *          of entry 9
-     * @param value9
-     *          of entry 9
-     * @param key10
-     *          of entry 10
-     * @param value10
-     *          of entry 10
-     * @param key11
-     *          of entry 11
-     * @param value11
-     *          of entry 11
-     * @param key12
-     *          of entry 12
-     * @param value12
-     *          of entry 12
-     * @param key13
-     *          of entry 13
-     * @param value13
-     *          of entry 13
-     * @param key14
-     *          of entry 14
-     * @param value14
-     *          of entry 14
-     * @param key15
-     *          of entry 15
-     * @param value15
-     *          of entry 15
-     * @param key16
-     *          of entry 16
-     * @param value16
-     *          of entry 16
-     * @param key17
-     *          of entry 17
-     * @param value17
-     *          of entry 17
-     * @param key18
-     *          of entry 18
-     * @param value18
-     *          of entry 18
+     * @param <K> the type of the key elements
+     * @param <V> the type of the value elements
+     * @param key1 of entry 1
+     * @param value1 of entry 1
+     * @param key2 of entry 2
+     * @param value2 of entry 2
+     * @param key3 of entry 3
+     * @param value3 of entry 3
+     * @param key4 of entry 4
+     * @param value4 of entry 4
+     * @param key5 of entry 5
+     * @param value5 of entry 5
+     * @param key6 of entry 6
+     * @param value6 of entry 6
+     * @param key7 of entry 7
+     * @param value7 of entry 7
+     * @param key8 of entry 8
+     * @param value8 of entry 8
+     * @param key9 of entry 9
+     * @param value9 of entry 9
+     * @param key10 of entry 10
+     * @param value10 of entry 10
+     * @param key11 of entry 11
+     * @param value11 of entry 11
+     * @param key12 of entry 12
+     * @param value12 of entry 12
+     * @param key13 of entry 13
+     * @param value13 of entry 13
+     * @param key14 of entry 14
+     * @param value14 of entry 14
+     * @param key15 of entry 15
+     * @param value15 of entry 15
+     * @param key16 of entry 16
+     * @param value16 of entry 16
+     * @param key17 of entry 17
+     * @param value17 of entry 17
+     * @param key18 of entry 18
+     * @param value18 of entry 18
      * @return {@link RubyHash}
      */
-    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2,
-        K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
-        K key7, V value7, K key8, V value8, K key9, V value9, K key10,
-        V value10, K key11, V value11, K key12, V value12, K key13, V value13,
-        K key14, V value14, K key15, V value15, K key16, V value16, K key17,
-        V value17, K key18, V value18) {
+    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2, K key3, V value3,
+        K key4, V value4, K key5, V value5, K key6, V value6, K key7, V value7, K key8, V value8,
+        K key9, V value9, K key10, V value10, K key11, V value11, K key12, V value12, K key13,
+        V value13, K key14, V value14, K key15, V value15, K key16, V value16, K key17, V value17,
+        K key18, V value18) {
       RubyHash<K, V> rh = new RubyHash<>();
       rh.put(key1, value1);
       rh.put(key2, value2);
@@ -1399,94 +984,53 @@ public final class Ruby {
     /**
      * Creates a {@link RubyHash} by given key-value pairs.
      * 
-     * @param <K>
-     *          the type of the key elements
-     * @param <V>
-     *          the type of the value elements
-     * @param key1
-     *          of entry 1
-     * @param value1
-     *          of entry 1
-     * @param key2
-     *          of entry 2
-     * @param value2
-     *          of entry 2
-     * @param key3
-     *          of entry 3
-     * @param value3
-     *          of entry 3
-     * @param key4
-     *          of entry 4
-     * @param value4
-     *          of entry 4
-     * @param key5
-     *          of entry 5
-     * @param value5
-     *          of entry 5
-     * @param key6
-     *          of entry 6
-     * @param value6
-     *          of entry 6
-     * @param key7
-     *          of entry 7
-     * @param value7
-     *          of entry 7
-     * @param key8
-     *          of entry 8
-     * @param value8
-     *          of entry 8
-     * @param key9
-     *          of entry 9
-     * @param value9
-     *          of entry 9
-     * @param key10
-     *          of entry 10
-     * @param value10
-     *          of entry 10
-     * @param key11
-     *          of entry 11
-     * @param value11
-     *          of entry 11
-     * @param key12
-     *          of entry 12
-     * @param value12
-     *          of entry 12
-     * @param key13
-     *          of entry 13
-     * @param value13
-     *          of entry 13
-     * @param key14
-     *          of entry 14
-     * @param value14
-     *          of entry 14
-     * @param key15
-     *          of entry 15
-     * @param value15
-     *          of entry 15
-     * @param key16
-     *          of entry 16
-     * @param value16
-     *          of entry 16
-     * @param key17
-     *          of entry 17
-     * @param value17
-     *          of entry 17
-     * @param key18
-     *          of entry 18
-     * @param value18
-     *          of entry 18
-     * @param key19
-     *          of entry 19
-     * @param value19
-     *          of entry 19
+     * @param <K> the type of the key elements
+     * @param <V> the type of the value elements
+     * @param key1 of entry 1
+     * @param value1 of entry 1
+     * @param key2 of entry 2
+     * @param value2 of entry 2
+     * @param key3 of entry 3
+     * @param value3 of entry 3
+     * @param key4 of entry 4
+     * @param value4 of entry 4
+     * @param key5 of entry 5
+     * @param value5 of entry 5
+     * @param key6 of entry 6
+     * @param value6 of entry 6
+     * @param key7 of entry 7
+     * @param value7 of entry 7
+     * @param key8 of entry 8
+     * @param value8 of entry 8
+     * @param key9 of entry 9
+     * @param value9 of entry 9
+     * @param key10 of entry 10
+     * @param value10 of entry 10
+     * @param key11 of entry 11
+     * @param value11 of entry 11
+     * @param key12 of entry 12
+     * @param value12 of entry 12
+     * @param key13 of entry 13
+     * @param value13 of entry 13
+     * @param key14 of entry 14
+     * @param value14 of entry 14
+     * @param key15 of entry 15
+     * @param value15 of entry 15
+     * @param key16 of entry 16
+     * @param value16 of entry 16
+     * @param key17 of entry 17
+     * @param value17 of entry 17
+     * @param key18 of entry 18
+     * @param value18 of entry 18
+     * @param key19 of entry 19
+     * @param value19 of entry 19
      * @return {@link RubyHash}
      */
-    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2,
-        K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
-        K key7, V value7, K key8, V value8, K key9, V value9, K key10,
-        V value10, K key11, V value11, K key12, V value12, K key13, V value13,
-        K key14, V value14, K key15, V value15, K key16, V value16, K key17,
-        V value17, K key18, V value18, K key19, V value19) {
+    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2, K key3, V value3,
+        K key4, V value4, K key5, V value5, K key6, V value6, K key7, V value7, K key8, V value8,
+        K key9, V value9, K key10, V value10, K key11, V value11, K key12, V value12, K key13,
+        V value13, K key14, V value14, K key15, V value15, K key16, V value16, K key17, V value17,
+        K key18, V value18, K key19, V value19) {
       RubyHash<K, V> rh = new RubyHash<>();
       rh.put(key1, value1);
       rh.put(key2, value2);
@@ -1513,98 +1057,55 @@ public final class Ruby {
     /**
      * Creates a {@link RubyHash} by given key-value pairs.
      * 
-     * @param <K>
-     *          the type of the key elements
-     * @param <V>
-     *          the type of the value elements
-     * @param key1
-     *          of entry 1
-     * @param value1
-     *          of entry 1
-     * @param key2
-     *          of entry 2
-     * @param value2
-     *          of entry 2
-     * @param key3
-     *          of entry 3
-     * @param value3
-     *          of entry 3
-     * @param key4
-     *          of entry 4
-     * @param value4
-     *          of entry 4
-     * @param key5
-     *          of entry 5
-     * @param value5
-     *          of entry 5
-     * @param key6
-     *          of entry 6
-     * @param value6
-     *          of entry 6
-     * @param key7
-     *          of entry 7
-     * @param value7
-     *          of entry 7
-     * @param key8
-     *          of entry 8
-     * @param value8
-     *          of entry 8
-     * @param key9
-     *          of entry 9
-     * @param value9
-     *          of entry 9
-     * @param key10
-     *          of entry 10
-     * @param value10
-     *          of entry 10
-     * @param key11
-     *          of entry 11
-     * @param value11
-     *          of entry 11
-     * @param key12
-     *          of entry 12
-     * @param value12
-     *          of entry 12
-     * @param key13
-     *          of entry 13
-     * @param value13
-     *          of entry 13
-     * @param key14
-     *          of entry 14
-     * @param value14
-     *          of entry 14
-     * @param key15
-     *          of entry 15
-     * @param value15
-     *          of entry 15
-     * @param key16
-     *          of entry 16
-     * @param value16
-     *          of entry 16
-     * @param key17
-     *          of entry 17
-     * @param value17
-     *          of entry 17
-     * @param key18
-     *          of entry 18
-     * @param value18
-     *          of entry 18
-     * @param key19
-     *          of entry 19
-     * @param value19
-     *          of entry 19
-     * @param key20
-     *          of entry 20
-     * @param value20
-     *          of entry 20
+     * @param <K> the type of the key elements
+     * @param <V> the type of the value elements
+     * @param key1 of entry 1
+     * @param value1 of entry 1
+     * @param key2 of entry 2
+     * @param value2 of entry 2
+     * @param key3 of entry 3
+     * @param value3 of entry 3
+     * @param key4 of entry 4
+     * @param value4 of entry 4
+     * @param key5 of entry 5
+     * @param value5 of entry 5
+     * @param key6 of entry 6
+     * @param value6 of entry 6
+     * @param key7 of entry 7
+     * @param value7 of entry 7
+     * @param key8 of entry 8
+     * @param value8 of entry 8
+     * @param key9 of entry 9
+     * @param value9 of entry 9
+     * @param key10 of entry 10
+     * @param value10 of entry 10
+     * @param key11 of entry 11
+     * @param value11 of entry 11
+     * @param key12 of entry 12
+     * @param value12 of entry 12
+     * @param key13 of entry 13
+     * @param value13 of entry 13
+     * @param key14 of entry 14
+     * @param value14 of entry 14
+     * @param key15 of entry 15
+     * @param value15 of entry 15
+     * @param key16 of entry 16
+     * @param value16 of entry 16
+     * @param key17 of entry 17
+     * @param value17 of entry 17
+     * @param key18 of entry 18
+     * @param value18 of entry 18
+     * @param key19 of entry 19
+     * @param value19 of entry 19
+     * @param key20 of entry 20
+     * @param value20 of entry 20
      * @return {@link RubyHash}
      */
-    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2,
-        K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
-        K key7, V value7, K key8, V value8, K key9, V value9, K key10,
-        V value10, K key11, V value11, K key12, V value12, K key13, V value13,
-        K key14, V value14, K key15, V value15, K key16, V value16, K key17,
-        V value17, K key18, V value18, K key19, V value19, K key20, V value20) {
+    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2, K key3, V value3,
+        K key4, V value4, K key5, V value5, K key6, V value6, K key7, V value7, K key8, V value8,
+        K key9, V value9, K key10, V value10, K key11, V value11, K key12, V value12, K key13,
+        V value13, K key14, V value14, K key15, V value15, K key16, V value16, K key17, V value17,
+        K key18, V value18, K key19, V value19, K key20, V value20) {
       RubyHash<K, V> rh = new RubyHash<>();
       rh.put(key1, value1);
       rh.put(key2, value2);
@@ -1632,103 +1133,57 @@ public final class Ruby {
     /**
      * Creates a {@link RubyHash} by given key-value pairs.
      * 
-     * @param <K>
-     *          the type of the key elements
-     * @param <V>
-     *          the type of the value elements
-     * @param key1
-     *          of entry 1
-     * @param value1
-     *          of entry 1
-     * @param key2
-     *          of entry 2
-     * @param value2
-     *          of entry 2
-     * @param key3
-     *          of entry 3
-     * @param value3
-     *          of entry 3
-     * @param key4
-     *          of entry 4
-     * @param value4
-     *          of entry 4
-     * @param key5
-     *          of entry 5
-     * @param value5
-     *          of entry 5
-     * @param key6
-     *          of entry 6
-     * @param value6
-     *          of entry 6
-     * @param key7
-     *          of entry 7
-     * @param value7
-     *          of entry 7
-     * @param key8
-     *          of entry 8
-     * @param value8
-     *          of entry 8
-     * @param key9
-     *          of entry 9
-     * @param value9
-     *          of entry 9
-     * @param key10
-     *          of entry 10
-     * @param value10
-     *          of entry 10
-     * @param key11
-     *          of entry 11
-     * @param value11
-     *          of entry 11
-     * @param key12
-     *          of entry 12
-     * @param value12
-     *          of entry 12
-     * @param key13
-     *          of entry 13
-     * @param value13
-     *          of entry 13
-     * @param key14
-     *          of entry 14
-     * @param value14
-     *          of entry 14
-     * @param key15
-     *          of entry 15
-     * @param value15
-     *          of entry 15
-     * @param key16
-     *          of entry 16
-     * @param value16
-     *          of entry 16
-     * @param key17
-     *          of entry 17
-     * @param value17
-     *          of entry 17
-     * @param key18
-     *          of entry 18
-     * @param value18
-     *          of entry 18
-     * @param key19
-     *          of entry 19
-     * @param value19
-     *          of entry 19
-     * @param key20
-     *          of entry 20
-     * @param value20
-     *          of entry 20
-     * @param key21
-     *          of entry 21
-     * @param value21
-     *          of entry 21
+     * @param <K> the type of the key elements
+     * @param <V> the type of the value elements
+     * @param key1 of entry 1
+     * @param value1 of entry 1
+     * @param key2 of entry 2
+     * @param value2 of entry 2
+     * @param key3 of entry 3
+     * @param value3 of entry 3
+     * @param key4 of entry 4
+     * @param value4 of entry 4
+     * @param key5 of entry 5
+     * @param value5 of entry 5
+     * @param key6 of entry 6
+     * @param value6 of entry 6
+     * @param key7 of entry 7
+     * @param value7 of entry 7
+     * @param key8 of entry 8
+     * @param value8 of entry 8
+     * @param key9 of entry 9
+     * @param value9 of entry 9
+     * @param key10 of entry 10
+     * @param value10 of entry 10
+     * @param key11 of entry 11
+     * @param value11 of entry 11
+     * @param key12 of entry 12
+     * @param value12 of entry 12
+     * @param key13 of entry 13
+     * @param value13 of entry 13
+     * @param key14 of entry 14
+     * @param value14 of entry 14
+     * @param key15 of entry 15
+     * @param value15 of entry 15
+     * @param key16 of entry 16
+     * @param value16 of entry 16
+     * @param key17 of entry 17
+     * @param value17 of entry 17
+     * @param key18 of entry 18
+     * @param value18 of entry 18
+     * @param key19 of entry 19
+     * @param value19 of entry 19
+     * @param key20 of entry 20
+     * @param value20 of entry 20
+     * @param key21 of entry 21
+     * @param value21 of entry 21
      * @return {@link RubyHash}
      */
-    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2,
-        K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
-        K key7, V value7, K key8, V value8, K key9, V value9, K key10,
-        V value10, K key11, V value11, K key12, V value12, K key13, V value13,
-        K key14, V value14, K key15, V value15, K key16, V value16, K key17,
-        V value17, K key18, V value18, K key19, V value19, K key20, V value20,
-        K key21, V value21) {
+    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2, K key3, V value3,
+        K key4, V value4, K key5, V value5, K key6, V value6, K key7, V value7, K key8, V value8,
+        K key9, V value9, K key10, V value10, K key11, V value11, K key12, V value12, K key13,
+        V value13, K key14, V value14, K key15, V value15, K key16, V value16, K key17, V value17,
+        K key18, V value18, K key19, V value19, K key20, V value20, K key21, V value21) {
       RubyHash<K, V> rh = new RubyHash<>();
       rh.put(key1, value1);
       rh.put(key2, value2);
@@ -1757,107 +1212,60 @@ public final class Ruby {
     /**
      * Creates a {@link RubyHash} by given key-value pairs.
      * 
-     * @param <K>
-     *          the type of the key elements
-     * @param <V>
-     *          the type of the value elements
-     * @param key1
-     *          of entry 1
-     * @param value1
-     *          of entry 1
-     * @param key2
-     *          of entry 2
-     * @param value2
-     *          of entry 2
-     * @param key3
-     *          of entry 3
-     * @param value3
-     *          of entry 3
-     * @param key4
-     *          of entry 4
-     * @param value4
-     *          of entry 4
-     * @param key5
-     *          of entry 5
-     * @param value5
-     *          of entry 5
-     * @param key6
-     *          of entry 6
-     * @param value6
-     *          of entry 6
-     * @param key7
-     *          of entry 7
-     * @param value7
-     *          of entry 7
-     * @param key8
-     *          of entry 8
-     * @param value8
-     *          of entry 8
-     * @param key9
-     *          of entry 9
-     * @param value9
-     *          of entry 9
-     * @param key10
-     *          of entry 10
-     * @param value10
-     *          of entry 10
-     * @param key11
-     *          of entry 11
-     * @param value11
-     *          of entry 11
-     * @param key12
-     *          of entry 12
-     * @param value12
-     *          of entry 12
-     * @param key13
-     *          of entry 13
-     * @param value13
-     *          of entry 13
-     * @param key14
-     *          of entry 14
-     * @param value14
-     *          of entry 14
-     * @param key15
-     *          of entry 15
-     * @param value15
-     *          of entry 15
-     * @param key16
-     *          of entry 16
-     * @param value16
-     *          of entry 16
-     * @param key17
-     *          of entry 17
-     * @param value17
-     *          of entry 17
-     * @param key18
-     *          of entry 18
-     * @param value18
-     *          of entry 18
-     * @param key19
-     *          of entry 19
-     * @param value19
-     *          of entry 19
-     * @param key20
-     *          of entry 20
-     * @param value20
-     *          of entry 20
-     * @param key21
-     *          of entry 21
-     * @param value21
-     *          of entry 21
-     * @param key22
-     *          of entry 22
-     * @param value22
-     *          of entry 22
+     * @param <K> the type of the key elements
+     * @param <V> the type of the value elements
+     * @param key1 of entry 1
+     * @param value1 of entry 1
+     * @param key2 of entry 2
+     * @param value2 of entry 2
+     * @param key3 of entry 3
+     * @param value3 of entry 3
+     * @param key4 of entry 4
+     * @param value4 of entry 4
+     * @param key5 of entry 5
+     * @param value5 of entry 5
+     * @param key6 of entry 6
+     * @param value6 of entry 6
+     * @param key7 of entry 7
+     * @param value7 of entry 7
+     * @param key8 of entry 8
+     * @param value8 of entry 8
+     * @param key9 of entry 9
+     * @param value9 of entry 9
+     * @param key10 of entry 10
+     * @param value10 of entry 10
+     * @param key11 of entry 11
+     * @param value11 of entry 11
+     * @param key12 of entry 12
+     * @param value12 of entry 12
+     * @param key13 of entry 13
+     * @param value13 of entry 13
+     * @param key14 of entry 14
+     * @param value14 of entry 14
+     * @param key15 of entry 15
+     * @param value15 of entry 15
+     * @param key16 of entry 16
+     * @param value16 of entry 16
+     * @param key17 of entry 17
+     * @param value17 of entry 17
+     * @param key18 of entry 18
+     * @param value18 of entry 18
+     * @param key19 of entry 19
+     * @param value19 of entry 19
+     * @param key20 of entry 20
+     * @param value20 of entry 20
+     * @param key21 of entry 21
+     * @param value21 of entry 21
+     * @param key22 of entry 22
+     * @param value22 of entry 22
      * @return {@link RubyHash}
      */
-    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2,
-        K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
-        K key7, V value7, K key8, V value8, K key9, V value9, K key10,
-        V value10, K key11, V value11, K key12, V value12, K key13, V value13,
-        K key14, V value14, K key15, V value15, K key16, V value16, K key17,
-        V value17, K key18, V value18, K key19, V value19, K key20, V value20,
-        K key21, V value21, K key22, V value22) {
+    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2, K key3, V value3,
+        K key4, V value4, K key5, V value5, K key6, V value6, K key7, V value7, K key8, V value8,
+        K key9, V value9, K key10, V value10, K key11, V value11, K key12, V value12, K key13,
+        V value13, K key14, V value14, K key15, V value15, K key16, V value16, K key17, V value17,
+        K key18, V value18, K key19, V value19, K key20, V value20, K key21, V value21, K key22,
+        V value22) {
       RubyHash<K, V> rh = new RubyHash<>();
       rh.put(key1, value1);
       rh.put(key2, value2);
@@ -1887,111 +1295,62 @@ public final class Ruby {
     /**
      * Creates a {@link RubyHash} by given key-value pairs.
      * 
-     * @param <K>
-     *          the type of the key elements
-     * @param <V>
-     *          the type of the value elements
-     * @param key1
-     *          of entry 1
-     * @param value1
-     *          of entry 1
-     * @param key2
-     *          of entry 2
-     * @param value2
-     *          of entry 2
-     * @param key3
-     *          of entry 3
-     * @param value3
-     *          of entry 3
-     * @param key4
-     *          of entry 4
-     * @param value4
-     *          of entry 4
-     * @param key5
-     *          of entry 5
-     * @param value5
-     *          of entry 5
-     * @param key6
-     *          of entry 6
-     * @param value6
-     *          of entry 6
-     * @param key7
-     *          of entry 7
-     * @param value7
-     *          of entry 7
-     * @param key8
-     *          of entry 8
-     * @param value8
-     *          of entry 8
-     * @param key9
-     *          of entry 9
-     * @param value9
-     *          of entry 9
-     * @param key10
-     *          of entry 10
-     * @param value10
-     *          of entry 10
-     * @param key11
-     *          of entry 11
-     * @param value11
-     *          of entry 11
-     * @param key12
-     *          of entry 12
-     * @param value12
-     *          of entry 12
-     * @param key13
-     *          of entry 13
-     * @param value13
-     *          of entry 13
-     * @param key14
-     *          of entry 14
-     * @param value14
-     *          of entry 14
-     * @param key15
-     *          of entry 15
-     * @param value15
-     *          of entry 15
-     * @param key16
-     *          of entry 16
-     * @param value16
-     *          of entry 16
-     * @param key17
-     *          of entry 17
-     * @param value17
-     *          of entry 17
-     * @param key18
-     *          of entry 18
-     * @param value18
-     *          of entry 18
-     * @param key19
-     *          of entry 19
-     * @param value19
-     *          of entry 19
-     * @param key20
-     *          of entry 20
-     * @param value20
-     *          of entry 20
-     * @param key21
-     *          of entry 21
-     * @param value21
-     *          of entry 21
-     * @param key22
-     *          of entry 22
-     * @param value22
-     *          of entry 22
-     * @param key23
-     *          of entry 23
-     * @param value23
-     *          of entry 23
+     * @param <K> the type of the key elements
+     * @param <V> the type of the value elements
+     * @param key1 of entry 1
+     * @param value1 of entry 1
+     * @param key2 of entry 2
+     * @param value2 of entry 2
+     * @param key3 of entry 3
+     * @param value3 of entry 3
+     * @param key4 of entry 4
+     * @param value4 of entry 4
+     * @param key5 of entry 5
+     * @param value5 of entry 5
+     * @param key6 of entry 6
+     * @param value6 of entry 6
+     * @param key7 of entry 7
+     * @param value7 of entry 7
+     * @param key8 of entry 8
+     * @param value8 of entry 8
+     * @param key9 of entry 9
+     * @param value9 of entry 9
+     * @param key10 of entry 10
+     * @param value10 of entry 10
+     * @param key11 of entry 11
+     * @param value11 of entry 11
+     * @param key12 of entry 12
+     * @param value12 of entry 12
+     * @param key13 of entry 13
+     * @param value13 of entry 13
+     * @param key14 of entry 14
+     * @param value14 of entry 14
+     * @param key15 of entry 15
+     * @param value15 of entry 15
+     * @param key16 of entry 16
+     * @param value16 of entry 16
+     * @param key17 of entry 17
+     * @param value17 of entry 17
+     * @param key18 of entry 18
+     * @param value18 of entry 18
+     * @param key19 of entry 19
+     * @param value19 of entry 19
+     * @param key20 of entry 20
+     * @param value20 of entry 20
+     * @param key21 of entry 21
+     * @param value21 of entry 21
+     * @param key22 of entry 22
+     * @param value22 of entry 22
+     * @param key23 of entry 23
+     * @param value23 of entry 23
      * @return {@link RubyHash}
      */
-    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2,
-        K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
-        K key7, V value7, K key8, V value8, K key9, V value9, K key10,
-        V value10, K key11, V value11, K key12, V value12, K key13, V value13,
-        K key14, V value14, K key15, V value15, K key16, V value16, K key17,
-        V value17, K key18, V value18, K key19, V value19, K key20, V value20,
-        K key21, V value21, K key22, V value22, K key23, V value23) {
+    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2, K key3, V value3,
+        K key4, V value4, K key5, V value5, K key6, V value6, K key7, V value7, K key8, V value8,
+        K key9, V value9, K key10, V value10, K key11, V value11, K key12, V value12, K key13,
+        V value13, K key14, V value14, K key15, V value15, K key16, V value16, K key17, V value17,
+        K key18, V value18, K key19, V value19, K key20, V value20, K key21, V value21, K key22,
+        V value22, K key23, V value23) {
       RubyHash<K, V> rh = new RubyHash<>();
       rh.put(key1, value1);
       rh.put(key2, value2);
@@ -2022,116 +1381,64 @@ public final class Ruby {
     /**
      * Creates a {@link RubyHash} by given key-value pairs.
      * 
-     * @param <K>
-     *          the type of the key elements
-     * @param <V>
-     *          the type of the value elements
-     * @param key1
-     *          of entry 1
-     * @param value1
-     *          of entry 1
-     * @param key2
-     *          of entry 2
-     * @param value2
-     *          of entry 2
-     * @param key3
-     *          of entry 3
-     * @param value3
-     *          of entry 3
-     * @param key4
-     *          of entry 4
-     * @param value4
-     *          of entry 4
-     * @param key5
-     *          of entry 5
-     * @param value5
-     *          of entry 5
-     * @param key6
-     *          of entry 6
-     * @param value6
-     *          of entry 6
-     * @param key7
-     *          of entry 7
-     * @param value7
-     *          of entry 7
-     * @param key8
-     *          of entry 8
-     * @param value8
-     *          of entry 8
-     * @param key9
-     *          of entry 9
-     * @param value9
-     *          of entry 9
-     * @param key10
-     *          of entry 10
-     * @param value10
-     *          of entry 10
-     * @param key11
-     *          of entry 11
-     * @param value11
-     *          of entry 11
-     * @param key12
-     *          of entry 12
-     * @param value12
-     *          of entry 12
-     * @param key13
-     *          of entry 13
-     * @param value13
-     *          of entry 13
-     * @param key14
-     *          of entry 14
-     * @param value14
-     *          of entry 14
-     * @param key15
-     *          of entry 15
-     * @param value15
-     *          of entry 15
-     * @param key16
-     *          of entry 16
-     * @param value16
-     *          of entry 16
-     * @param key17
-     *          of entry 17
-     * @param value17
-     *          of entry 17
-     * @param key18
-     *          of entry 18
-     * @param value18
-     *          of entry 18
-     * @param key19
-     *          of entry 19
-     * @param value19
-     *          of entry 19
-     * @param key20
-     *          of entry 20
-     * @param value20
-     *          of entry 20
-     * @param key21
-     *          of entry 21
-     * @param value21
-     *          of entry 21
-     * @param key22
-     *          of entry 22
-     * @param value22
-     *          of entry 22
-     * @param key23
-     *          of entry 23
-     * @param value23
-     *          of entry 23
-     * @param key24
-     *          of entry 24
-     * @param value24
-     *          of entry 24
+     * @param <K> the type of the key elements
+     * @param <V> the type of the value elements
+     * @param key1 of entry 1
+     * @param value1 of entry 1
+     * @param key2 of entry 2
+     * @param value2 of entry 2
+     * @param key3 of entry 3
+     * @param value3 of entry 3
+     * @param key4 of entry 4
+     * @param value4 of entry 4
+     * @param key5 of entry 5
+     * @param value5 of entry 5
+     * @param key6 of entry 6
+     * @param value6 of entry 6
+     * @param key7 of entry 7
+     * @param value7 of entry 7
+     * @param key8 of entry 8
+     * @param value8 of entry 8
+     * @param key9 of entry 9
+     * @param value9 of entry 9
+     * @param key10 of entry 10
+     * @param value10 of entry 10
+     * @param key11 of entry 11
+     * @param value11 of entry 11
+     * @param key12 of entry 12
+     * @param value12 of entry 12
+     * @param key13 of entry 13
+     * @param value13 of entry 13
+     * @param key14 of entry 14
+     * @param value14 of entry 14
+     * @param key15 of entry 15
+     * @param value15 of entry 15
+     * @param key16 of entry 16
+     * @param value16 of entry 16
+     * @param key17 of entry 17
+     * @param value17 of entry 17
+     * @param key18 of entry 18
+     * @param value18 of entry 18
+     * @param key19 of entry 19
+     * @param value19 of entry 19
+     * @param key20 of entry 20
+     * @param value20 of entry 20
+     * @param key21 of entry 21
+     * @param value21 of entry 21
+     * @param key22 of entry 22
+     * @param value22 of entry 22
+     * @param key23 of entry 23
+     * @param value23 of entry 23
+     * @param key24 of entry 24
+     * @param value24 of entry 24
      * @return {@link RubyHash}
      */
-    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2,
-        K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
-        K key7, V value7, K key8, V value8, K key9, V value9, K key10,
-        V value10, K key11, V value11, K key12, V value12, K key13, V value13,
-        K key14, V value14, K key15, V value15, K key16, V value16, K key17,
-        V value17, K key18, V value18, K key19, V value19, K key20, V value20,
-        K key21, V value21, K key22, V value22, K key23, V value23, K key24,
-        V value24) {
+    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2, K key3, V value3,
+        K key4, V value4, K key5, V value5, K key6, V value6, K key7, V value7, K key8, V value8,
+        K key9, V value9, K key10, V value10, K key11, V value11, K key12, V value12, K key13,
+        V value13, K key14, V value14, K key15, V value15, K key16, V value16, K key17, V value17,
+        K key18, V value18, K key19, V value19, K key20, V value20, K key21, V value21, K key22,
+        V value22, K key23, V value23, K key24, V value24) {
       RubyHash<K, V> rh = new RubyHash<>();
       rh.put(key1, value1);
       rh.put(key2, value2);
@@ -2163,120 +1470,66 @@ public final class Ruby {
     /**
      * Creates a {@link RubyHash} by given key-value pairs.
      * 
-     * @param <K>
-     *          the type of the key elements
-     * @param <V>
-     *          the type of the value elements
-     * @param key1
-     *          of entry 1
-     * @param value1
-     *          of entry 1
-     * @param key2
-     *          of entry 2
-     * @param value2
-     *          of entry 2
-     * @param key3
-     *          of entry 3
-     * @param value3
-     *          of entry 3
-     * @param key4
-     *          of entry 4
-     * @param value4
-     *          of entry 4
-     * @param key5
-     *          of entry 5
-     * @param value5
-     *          of entry 5
-     * @param key6
-     *          of entry 6
-     * @param value6
-     *          of entry 6
-     * @param key7
-     *          of entry 7
-     * @param value7
-     *          of entry 7
-     * @param key8
-     *          of entry 8
-     * @param value8
-     *          of entry 8
-     * @param key9
-     *          of entry 9
-     * @param value9
-     *          of entry 9
-     * @param key10
-     *          of entry 10
-     * @param value10
-     *          of entry 10
-     * @param key11
-     *          of entry 11
-     * @param value11
-     *          of entry 11
-     * @param key12
-     *          of entry 12
-     * @param value12
-     *          of entry 12
-     * @param key13
-     *          of entry 13
-     * @param value13
-     *          of entry 13
-     * @param key14
-     *          of entry 14
-     * @param value14
-     *          of entry 14
-     * @param key15
-     *          of entry 15
-     * @param value15
-     *          of entry 15
-     * @param key16
-     *          of entry 16
-     * @param value16
-     *          of entry 16
-     * @param key17
-     *          of entry 17
-     * @param value17
-     *          of entry 17
-     * @param key18
-     *          of entry 18
-     * @param value18
-     *          of entry 18
-     * @param key19
-     *          of entry 19
-     * @param value19
-     *          of entry 19
-     * @param key20
-     *          of entry 20
-     * @param value20
-     *          of entry 20
-     * @param key21
-     *          of entry 21
-     * @param value21
-     *          of entry 21
-     * @param key22
-     *          of entry 22
-     * @param value22
-     *          of entry 22
-     * @param key23
-     *          of entry 23
-     * @param value23
-     *          of entry 23
-     * @param key24
-     *          of entry 24
-     * @param value24
-     *          of entry 24
-     * @param key25
-     *          of entry 25
-     * @param value25
-     *          of entry 25
+     * @param <K> the type of the key elements
+     * @param <V> the type of the value elements
+     * @param key1 of entry 1
+     * @param value1 of entry 1
+     * @param key2 of entry 2
+     * @param value2 of entry 2
+     * @param key3 of entry 3
+     * @param value3 of entry 3
+     * @param key4 of entry 4
+     * @param value4 of entry 4
+     * @param key5 of entry 5
+     * @param value5 of entry 5
+     * @param key6 of entry 6
+     * @param value6 of entry 6
+     * @param key7 of entry 7
+     * @param value7 of entry 7
+     * @param key8 of entry 8
+     * @param value8 of entry 8
+     * @param key9 of entry 9
+     * @param value9 of entry 9
+     * @param key10 of entry 10
+     * @param value10 of entry 10
+     * @param key11 of entry 11
+     * @param value11 of entry 11
+     * @param key12 of entry 12
+     * @param value12 of entry 12
+     * @param key13 of entry 13
+     * @param value13 of entry 13
+     * @param key14 of entry 14
+     * @param value14 of entry 14
+     * @param key15 of entry 15
+     * @param value15 of entry 15
+     * @param key16 of entry 16
+     * @param value16 of entry 16
+     * @param key17 of entry 17
+     * @param value17 of entry 17
+     * @param key18 of entry 18
+     * @param value18 of entry 18
+     * @param key19 of entry 19
+     * @param value19 of entry 19
+     * @param key20 of entry 20
+     * @param value20 of entry 20
+     * @param key21 of entry 21
+     * @param value21 of entry 21
+     * @param key22 of entry 22
+     * @param value22 of entry 22
+     * @param key23 of entry 23
+     * @param value23 of entry 23
+     * @param key24 of entry 24
+     * @param value24 of entry 24
+     * @param key25 of entry 25
+     * @param value25 of entry 25
      * @return {@link RubyHash}
      */
-    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2,
-        K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
-        K key7, V value7, K key8, V value8, K key9, V value9, K key10,
-        V value10, K key11, V value11, K key12, V value12, K key13, V value13,
-        K key14, V value14, K key15, V value15, K key16, V value16, K key17,
-        V value17, K key18, V value18, K key19, V value19, K key20, V value20,
-        K key21, V value21, K key22, V value22, K key23, V value23, K key24,
-        V value24, K key25, V value25) {
+    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2, K key3, V value3,
+        K key4, V value4, K key5, V value5, K key6, V value6, K key7, V value7, K key8, V value8,
+        K key9, V value9, K key10, V value10, K key11, V value11, K key12, V value12, K key13,
+        V value13, K key14, V value14, K key15, V value15, K key16, V value16, K key17, V value17,
+        K key18, V value18, K key19, V value19, K key20, V value20, K key21, V value21, K key22,
+        V value22, K key23, V value23, K key24, V value24, K key25, V value25) {
       RubyHash<K, V> rh = new RubyHash<>();
       rh.put(key1, value1);
       rh.put(key2, value2);
@@ -2309,124 +1562,68 @@ public final class Ruby {
     /**
      * Creates a {@link RubyHash} by given key-value pairs.
      * 
-     * @param <K>
-     *          the type of the key elements
-     * @param <V>
-     *          the type of the value elements
-     * @param key1
-     *          of entry 1
-     * @param value1
-     *          of entry 1
-     * @param key2
-     *          of entry 2
-     * @param value2
-     *          of entry 2
-     * @param key3
-     *          of entry 3
-     * @param value3
-     *          of entry 3
-     * @param key4
-     *          of entry 4
-     * @param value4
-     *          of entry 4
-     * @param key5
-     *          of entry 5
-     * @param value5
-     *          of entry 5
-     * @param key6
-     *          of entry 6
-     * @param value6
-     *          of entry 6
-     * @param key7
-     *          of entry 7
-     * @param value7
-     *          of entry 7
-     * @param key8
-     *          of entry 8
-     * @param value8
-     *          of entry 8
-     * @param key9
-     *          of entry 9
-     * @param value9
-     *          of entry 9
-     * @param key10
-     *          of entry 10
-     * @param value10
-     *          of entry 10
-     * @param key11
-     *          of entry 11
-     * @param value11
-     *          of entry 11
-     * @param key12
-     *          of entry 12
-     * @param value12
-     *          of entry 12
-     * @param key13
-     *          of entry 13
-     * @param value13
-     *          of entry 13
-     * @param key14
-     *          of entry 14
-     * @param value14
-     *          of entry 14
-     * @param key15
-     *          of entry 15
-     * @param value15
-     *          of entry 15
-     * @param key16
-     *          of entry 16
-     * @param value16
-     *          of entry 16
-     * @param key17
-     *          of entry 17
-     * @param value17
-     *          of entry 17
-     * @param key18
-     *          of entry 18
-     * @param value18
-     *          of entry 18
-     * @param key19
-     *          of entry 19
-     * @param value19
-     *          of entry 19
-     * @param key20
-     *          of entry 20
-     * @param value20
-     *          of entry 20
-     * @param key21
-     *          of entry 21
-     * @param value21
-     *          of entry 21
-     * @param key22
-     *          of entry 22
-     * @param value22
-     *          of entry 22
-     * @param key23
-     *          of entry 23
-     * @param value23
-     *          of entry 23
-     * @param key24
-     *          of entry 24
-     * @param value24
-     *          of entry 24
-     * @param key25
-     *          of entry 25
-     * @param value25
-     *          of entry 25
-     * @param key26
-     *          of entry 26
-     * @param value26
-     *          of entry 26
+     * @param <K> the type of the key elements
+     * @param <V> the type of the value elements
+     * @param key1 of entry 1
+     * @param value1 of entry 1
+     * @param key2 of entry 2
+     * @param value2 of entry 2
+     * @param key3 of entry 3
+     * @param value3 of entry 3
+     * @param key4 of entry 4
+     * @param value4 of entry 4
+     * @param key5 of entry 5
+     * @param value5 of entry 5
+     * @param key6 of entry 6
+     * @param value6 of entry 6
+     * @param key7 of entry 7
+     * @param value7 of entry 7
+     * @param key8 of entry 8
+     * @param value8 of entry 8
+     * @param key9 of entry 9
+     * @param value9 of entry 9
+     * @param key10 of entry 10
+     * @param value10 of entry 10
+     * @param key11 of entry 11
+     * @param value11 of entry 11
+     * @param key12 of entry 12
+     * @param value12 of entry 12
+     * @param key13 of entry 13
+     * @param value13 of entry 13
+     * @param key14 of entry 14
+     * @param value14 of entry 14
+     * @param key15 of entry 15
+     * @param value15 of entry 15
+     * @param key16 of entry 16
+     * @param value16 of entry 16
+     * @param key17 of entry 17
+     * @param value17 of entry 17
+     * @param key18 of entry 18
+     * @param value18 of entry 18
+     * @param key19 of entry 19
+     * @param value19 of entry 19
+     * @param key20 of entry 20
+     * @param value20 of entry 20
+     * @param key21 of entry 21
+     * @param value21 of entry 21
+     * @param key22 of entry 22
+     * @param value22 of entry 22
+     * @param key23 of entry 23
+     * @param value23 of entry 23
+     * @param key24 of entry 24
+     * @param value24 of entry 24
+     * @param key25 of entry 25
+     * @param value25 of entry 25
+     * @param key26 of entry 26
+     * @param value26 of entry 26
      * @return {@link RubyHash}
      */
-    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2,
-        K key3, V value3, K key4, V value4, K key5, V value5, K key6, V value6,
-        K key7, V value7, K key8, V value8, K key9, V value9, K key10,
-        V value10, K key11, V value11, K key12, V value12, K key13, V value13,
-        K key14, V value14, K key15, V value15, K key16, V value16, K key17,
-        V value17, K key18, V value18, K key19, V value19, K key20, V value20,
-        K key21, V value21, K key22, V value22, K key23, V value23, K key24,
-        V value24, K key25, V value25, K key26, V value26) {
+    public static <K, V> RubyHash<K, V> of(K key1, V value1, K key2, V value2, K key3, V value3,
+        K key4, V value4, K key5, V value5, K key6, V value6, K key7, V value7, K key8, V value8,
+        K key9, V value9, K key10, V value10, K key11, V value11, K key12, V value12, K key13,
+        V value13, K key14, V value14, K key15, V value15, K key16, V value16, K key17, V value17,
+        K key18, V value18, K key19, V value19, K key20, V value20, K key21, V value21, K key22,
+        V value22, K key23, V value23, K key24, V value24, K key25, V value25, K key26, V value26) {
       RubyHash<K, V> rh = new RubyHash<>();
       rh.put(key1, value1);
       rh.put(key2, value2);
@@ -2461,8 +1658,8 @@ public final class Ruby {
 
   /**
    * 
-   * {@link Entry} provides numerous useful static methods to make the
-   * {@link ComparableEntry} easy to use.
+   * {@link Entry} provides numerous useful static methods to make the {@link ComparableEntry} easy
+   * to use.
    * 
    * @author Wei-Ming Wu
    *
@@ -2474,14 +1671,10 @@ public final class Ruby {
     /**
      * Creates a hash pair by the {@link ComparableEntry}.
      * 
-     * @param <K>
-     *          the type of the key
-     * @param <V>
-     *          the type of the value
-     * @param key
-     *          of entry
-     * @param value
-     *          of entry
+     * @param <K> the type of the key
+     * @param <V> the type of the value
+     * @param key of entry
+     * @param value of entry
      * @return Entry
      */
     public static <K, V> java.util.Map.Entry<K, V> of(K key, V value) {
@@ -2492,8 +1685,7 @@ public final class Ruby {
 
   /**
    * 
-   * {@link Set} provides numerous useful static methods to make the
-   * {@link RubySet} easy to use.
+   * {@link Set} provides numerous useful static methods to make the {@link RubySet} easy to use.
    * 
    * @author Wei-Ming Wu
    *
@@ -2514,8 +1706,7 @@ public final class Ruby {
     /**
      * Creates a {@link RubySet} which wraps the given LinkedHashSet.
      * 
-     * @param set
-     *          any LinkedHashSet
+     * @param set any LinkedHashSet
      * @return {@link RubySet}
      */
     public static <E> RubySet<E> of(LinkedHashSet<E> set) {
@@ -2525,10 +1716,8 @@ public final class Ruby {
     /**
      * Creates a {@link RubySet} by given elements.
      * 
-     * @param first
-     *          the first element
-     * @param others
-     *          the other elements
+     * @param first the first element
+     * @param others the other elements
      * @return {@link RubySet}
      */
     @SafeVarargs
@@ -2542,8 +1731,7 @@ public final class Ruby {
     /**
      * Creates a {@link RubySet} which copies the elements of given Iterable.
      * 
-     * @param iter
-     *          any Iterable
+     * @param iter any Iterable
      * @return {@link RubySet}
      */
     public static <E> RubySet<E> copyOf(Iterable<E> iter) {
@@ -2553,8 +1741,7 @@ public final class Ruby {
     /**
      * Creates a {@link RubySet} which copies the elements of given Iterator.
      * 
-     * @param iter
-     *          any Iterator
+     * @param iter any Iterator
      * @return {@link RubySet}
      */
     public static <E> RubySet<E> copyOf(Iterator<E> iter) {
@@ -2566,8 +1753,7 @@ public final class Ruby {
     /**
      * Creates a {@link RubySet} by given elements.
      * 
-     * @param elements
-     *          an array
+     * @param elements an array
      * @return new {@link RubySet}
      */
     public static <E> RubySet<E> copyOf(E[] elements) {
@@ -2578,8 +1764,8 @@ public final class Ruby {
 
   /**
    * 
-   * {@link Enumerator} provides numerous useful static methods to make the
-   * {@link RubyEnumerator} easy to use.
+   * {@link Enumerator} provides numerous useful static methods to make the {@link RubyEnumerator}
+   * easy to use.
    * 
    * @author Wei-Ming Wu
    *
@@ -2634,8 +1820,8 @@ public final class Ruby {
 
   /**
    * 
-   * {@link String} provides numerous useful static methods to make the
-   * {@link RubyString} easy to use.
+   * {@link String} provides numerous useful static methods to make the {@link RubyString} easy to
+   * use.
    * 
    * @author Wei-Ming Wu
    *
@@ -2656,8 +1842,7 @@ public final class Ruby {
     /**
      * Creates a {@link RubyString} by given Object.
      * 
-     * @param o
-     *          any object
+     * @param o any object
      * @return {@link RubyString}
      */
     public static RubyString of(java.lang.Object o) {
@@ -2668,8 +1853,8 @@ public final class Ruby {
 
   /**
    * 
-   * {@link Range} provides numerous useful static methods to make the
-   * {@link RubyRange} easy to use.
+   * {@link Range} provides numerous useful static methods to make the {@link RubyRange} easy to
+   * use.
    * 
    * @author Wei-Ming Wu
    *
@@ -2681,67 +1866,52 @@ public final class Ruby {
     /**
      * Creates a {@link RubyRange} by given strings.
      * 
-     * @param start
-     *          of the range
-     * @param end
-     *          of the range
+     * @param start of the range
+     * @param end of the range
      * @return {@link RubyRange}
      */
-    public static RubyRange<java.lang.String> of(java.lang.String start,
-        java.lang.String end) {
-      return new RubyRange<>(StringSuccessor.getInstance(), start, end,
-          Interval.CLOSED);
+    public static RubyRange<java.lang.String> of(java.lang.String start, java.lang.String end) {
+      return new RubyRange<>(StringSuccessor.getInstance(), start, end, Interval.CLOSED);
     }
 
     /**
      * Creates a {@link RubyRange} by given chars.
      * 
-     * @param start
-     *          of the range
-     * @param end
-     *          of the range
+     * @param start of the range
+     * @param end of the range
      * @return {@link RubyRange}
      */
     public static RubyRange<Character> of(char start, char end) {
-      return new RubyRange<>(CharacterSuccessor.getInstance(), start, end,
-          Interval.CLOSED);
+      return new RubyRange<>(CharacterSuccessor.getInstance(), start, end, Interval.CLOSED);
     }
 
     /**
      * Creates a {@link RubyRange} by given integers.
      * 
-     * @param start
-     *          of the range
-     * @param end
-     *          of the range
+     * @param start of the range
+     * @param end of the range
      * @return {@link RubyRange}
      */
     public static RubyRange<Integer> of(int start, int end) {
-      return new RubyRange<>(IntegerSuccessor.getInstance(), start, end,
-          Interval.CLOSED);
+      return new RubyRange<>(IntegerSuccessor.getInstance(), start, end, Interval.CLOSED);
     }
 
     /**
      * Creates a {@link RubyRange} by given longs.
      * 
-     * @param start
-     *          of the range
-     * @param end
-     *          of the range
+     * @param start of the range
+     * @param end of the range
      * @return {@link RubyRange}
      */
     public static RubyRange<Long> of(long start, long end) {
-      return new RubyRange<>(LongSuccessor.getInstance(), start, end,
-          Interval.CLOSED);
+      return new RubyRange<>(LongSuccessor.getInstance(), start, end, Interval.CLOSED);
     }
 
     /**
      * Creates a {@link RubyRange} by given doubles.
      * 
-     * @param start
-     *          of the range
-     * @param end
-     *          of the range
+     * @param start of the range
+     * @param end of the range
      * @return {@link RubyRange}
      */
     public static RubyRange<Double> of(double start, double end) {
@@ -2749,92 +1919,72 @@ public final class Ruby {
       java.lang.String endStr = java.lang.String.valueOf(end);
       int startPrecision = startStr.length() - startStr.lastIndexOf('.') - 1;
       int endPrecision = endStr.length() - endStr.lastIndexOf('.') - 1;
-      return new RubyRange<>(
-          new DoubleSuccessor(Math.max(startPrecision, endPrecision)), start,
+      return new RubyRange<>(new DoubleSuccessor(Math.max(startPrecision, endPrecision)), start,
           end, Interval.CLOSED);
     }
 
     /**
      * Creates a {@link RubyRange} by given Dates.
      * 
-     * @param start
-     *          of the range
-     * @param end
-     *          of the range
+     * @param start of the range
+     * @param end of the range
      * @return {@link RubyRange}
      */
-    public static RubyRange<java.util.Date> of(java.util.Date start,
-        java.util.Date end) {
-      return new RubyRange<>(DateSuccessor.getInstance(), start, end,
-          Interval.CLOSED);
+    public static RubyRange<java.util.Date> of(java.util.Date start, java.util.Date end) {
+      return new RubyRange<>(DateSuccessor.getInstance(), start, end, Interval.CLOSED);
     }
 
     /**
      * Creates a {@link RubyRange} by given {@link LocalDateTime}s.
      * 
-     * @param start
-     *          of the range
-     * @param end
-     *          of the range
+     * @param start of the range
+     * @param end of the range
      * @return {@link RubyRange}
      */
-    public static RubyRange<LocalDateTime> of(LocalDateTime start,
-        LocalDateTime end) {
-      return new RubyRange<>(LocalDateTimeSuccessor.getInstance(), start, end,
-          Interval.CLOSED);
+    public static RubyRange<LocalDateTime> of(LocalDateTime start, LocalDateTime end) {
+      return new RubyRange<>(LocalDateTimeSuccessor.getInstance(), start, end, Interval.CLOSED);
     }
 
     /**
      * Creates a {@link RubyRange} by given {@link LocalDate}s.
      * 
-     * @param start
-     *          of the range
-     * @param end
-     *          of the range
+     * @param start of the range
+     * @param end of the range
      * @return {@link RubyRange}
      */
     public static RubyRange<LocalDate> of(LocalDate start, LocalDate end) {
-      return new RubyRange<>(new TemporalSuccessor<>(ChronoUnit.DAYS), start,
-          end, Interval.CLOSED);
+      return new RubyRange<>(new TemporalSuccessor<>(ChronoUnit.DAYS), start, end, Interval.CLOSED);
     }
 
     /**
      * Creates a {@link RubyRange} by given {@link YearMonth}s.
      * 
-     * @param start
-     *          of the range
-     * @param end
-     *          of the range
+     * @param start of the range
+     * @param end of the range
      * @return {@link RubyRange}
      */
     public static RubyRange<YearMonth> of(YearMonth start, YearMonth end) {
-      return new RubyRange<>(new TemporalSuccessor<>(ChronoUnit.MONTHS), start,
-          end, Interval.CLOSED);
+      return new RubyRange<>(new TemporalSuccessor<>(ChronoUnit.MONTHS), start, end,
+          Interval.CLOSED);
     }
 
     /**
      * Creates a {@link RubyRange} by given {@link Temporal}s.
      * 
-     * @param start
-     *          of the range
-     * @param end
-     *          of the range
-     * @param chronoUnit
-     *          used to generate successive item of a {@link Temporal}
+     * @param start of the range
+     * @param end of the range
+     * @param chronoUnit used to generate successive item of a {@link Temporal}
      * @return {@link RubyRange}
      */
-    public static <T extends Temporal> RubyRange<T> of(T start, T end,
-        ChronoUnit chronoUnit) {
-      return new RubyRange<>(new TemporalSuccessor<T>(chronoUnit), start, end,
-          Interval.CLOSED);
+    public static <T extends Temporal> RubyRange<T> of(T start, T end, ChronoUnit chronoUnit) {
+      return new RubyRange<>(new TemporalSuccessor<T>(chronoUnit), start, end, Interval.CLOSED);
     }
 
   }
 
   /**
    * 
-   * {@link Date} provides numerous useful static methods to make the
-   * {@link RubyDate} easy to use.
+   * {@link Date} provides numerous useful static methods to make the {@link RubyDate} easy to use.
    * 
    * @author Wei-Ming Wu
    *
@@ -2848,8 +1998,7 @@ public final class Ruby {
     /**
      * Creates a {@link RubyDate} by given Date.
      * 
-     * @param date
-     *          a Date
+     * @param date a Date
      * @return {@link RubyDate}
      */
     public static RubyDate of(java.util.Date date) {
@@ -2859,8 +2008,7 @@ public final class Ruby {
     /**
      * Creates a {@link RubyDate} by given year.
      * 
-     * @param year
-     *          of a date
+     * @param year of a date
      * @return {@link RubyDate}
      */
     public static RubyDate of(int year) {
@@ -2878,10 +2026,8 @@ public final class Ruby {
     /**
      * Creates a {@link RubyDate} by given year and month.
      * 
-     * @param year
-     *          of a date
-     * @param month
-     *          of a date
+     * @param year of a date
+     * @param month of a date
      * @return {@link RubyDate}
      */
     public static RubyDate of(int year, int month) {
@@ -2899,12 +2045,9 @@ public final class Ruby {
     /**
      * Creates a {@link RubyDate} by given year, month and day.
      * 
-     * @param year
-     *          of a date
-     * @param month
-     *          of a date
-     * @param day
-     *          of a date
+     * @param year of a date
+     * @param month of a date
+     * @param day of a date
      * @return {@link RubyDate}
      */
     public static RubyDate of(int year, int month, int day) {
@@ -2922,14 +2065,10 @@ public final class Ruby {
     /**
      * Creates a {@link RubyDate} by given year, month, day and hour.
      * 
-     * @param year
-     *          of a date
-     * @param month
-     *          of a date
-     * @param day
-     *          of a date
-     * @param hour
-     *          of a date
+     * @param year of a date
+     * @param month of a date
+     * @param day of a date
+     * @param hour of a date
      * @return {@link RubyDate}
      */
     public static RubyDate of(int year, int month, int day, int hour) {
@@ -2947,16 +2086,11 @@ public final class Ruby {
     /**
      * Creates a {@link RubyDate} by given year, month, day, hour and minute.
      * 
-     * @param year
-     *          of a date
-     * @param month
-     *          of a date
-     * @param day
-     *          of a date
-     * @param hour
-     *          of a date
-     * @param min
-     *          of a date
+     * @param year of a date
+     * @param month of a date
+     * @param day of a date
+     * @param hour of a date
+     * @param min of a date
      * @return {@link RubyDate}
      */
     public static RubyDate of(int year, int month, int day, int hour, int min) {
@@ -2972,25 +2106,17 @@ public final class Ruby {
     }
 
     /**
-     * Creates a {@link RubyDate} by given year, month, day, hour, minute and
-     * second.
+     * Creates a {@link RubyDate} by given year, month, day, hour, minute and second.
      * 
-     * @param year
-     *          of a date
-     * @param month
-     *          of a date
-     * @param day
-     *          of a date
-     * @param hour
-     *          of a date
-     * @param min
-     *          of a date
-     * @param sec
-     *          of a date
+     * @param year of a date
+     * @param month of a date
+     * @param day of a date
+     * @param hour of a date
+     * @param min of a date
+     * @param sec of a date
      * @return {@link RubyDate}
      */
-    public static RubyDate of(int year, int month, int day, int hour, int min,
-        int sec) {
+    public static RubyDate of(int year, int month, int day, int hour, int min, int sec) {
       Calendar c = Calendar.getInstance();
       c.set(Calendar.YEAR, year);
       c.set(Calendar.MONTH, month - 1);
@@ -3003,27 +2129,19 @@ public final class Ruby {
     }
 
     /**
-     * Creates a {@link RubyDate} by given year, month, day, hour, minute,
-     * second and millisecond.
+     * Creates a {@link RubyDate} by given year, month, day, hour, minute, second and millisecond.
      * 
-     * @param year
-     *          of a date
-     * @param month
-     *          of a date
-     * @param day
-     *          of a date
-     * @param hour
-     *          of a date
-     * @param min
-     *          of a date
-     * @param sec
-     *          of a date
-     * @param millisec
-     *          of a date
+     * @param year of a date
+     * @param month of a date
+     * @param day of a date
+     * @param hour of a date
+     * @param min of a date
+     * @param sec of a date
+     * @param millisec of a date
      * @return {@link RubyDate}
      */
-    public static RubyDate of(int year, int month, int day, int hour, int min,
-        int sec, int millisec) {
+    public static RubyDate of(int year, int month, int day, int hour, int min, int sec,
+        int millisec) {
       Calendar c = Calendar.getInstance();
       c.set(Calendar.YEAR, year);
       c.set(Calendar.MONTH, month - 1);
@@ -3039,8 +2157,7 @@ public final class Ruby {
 
   /**
    * 
-   * {@link IO} provides numerous useful static methods to make the
-   * {@link RubyIO} easy to use.
+   * {@link IO} provides numerous useful static methods to make the {@link RubyIO} easy to use.
    * 
    * @author Wei-Ming Wu
    *
@@ -3054,11 +2171,9 @@ public final class Ruby {
     /**
      * Creates a {@link RubyIO} by given File with read-only mode.
      * 
-     * @param file
-     *          any File
+     * @param file any File
      * @return {@link RubyIO}
-     * @throws IOException
-     *           while file cannot be accessed
+     * @throws IOException while file cannot be accessed
      */
     public static RubyIO of(java.io.File file) throws IOException {
       return new RubyIO(file, Mode.R);
@@ -3067,13 +2182,10 @@ public final class Ruby {
     /**
      * Creates a {@link RubyIO} by given File and {@link Mode}.
      * 
-     * @param file
-     *          any File
-     * @param mode
-     *          a {@link Mode}
+     * @param file any File
+     * @param mode a {@link Mode}
      * @return {@link RubyIO}
-     * @throws IOException
-     *           while file cannot be accessed
+     * @throws IOException while file cannot be accessed
      */
     public static RubyIO of(java.io.File file, Mode mode) throws IOException {
       return new RubyIO(file, mode);
@@ -3083,48 +2195,38 @@ public final class Ruby {
 
   /**
    * 
-   * {@link File} provides numerous useful static methods to make the
-   * {@link RubyFile} easy to use.
+   * {@link File} provides numerous useful static methods to make the {@link RubyFile} easy to use.
    * 
    * @author Wei-Ming Wu
    *
    */
   public static final class File extends RubyFile {
 
-    private File(java.io.File file, Mode mode)
-        throws FileNotFoundException, IOException {
+    private File(java.io.File file, Mode mode) throws FileNotFoundException, IOException {
       super(file, mode);
     }
 
     /**
      * Creates a {@link RubyFile} by given File with read-only mode.
      * 
-     * @param file
-     *          any File
+     * @param file any File
      * @return {@link RubyFile}
-     * @throws FileNotFoundException
-     *           while file cannot be found
-     * @throws IOException
-     *           while file cannot be accessed
+     * @throws FileNotFoundException while file cannot be found
+     * @throws IOException while file cannot be accessed
      */
-    public static RubyFile of(java.io.File file)
-        throws FileNotFoundException, IOException {
+    public static RubyFile of(java.io.File file) throws FileNotFoundException, IOException {
       return new RubyFile(file, Mode.R);
     }
 
     /**
      * Creates a {@link RubyFile} by given File with read-only mode.
      * 
-     * @param file
-     *          any File
+     * @param file any File
      * @return {@link RubyFile}
-     * @param mode
-     *          a {@link Mode}
+     * @param mode a {@link Mode}
      * @return {@link RubyFile}
-     * @throws FileNotFoundException
-     *           while file cannot be found
-     * @throws IOException
-     *           while file cannot be accessed
+     * @throws FileNotFoundException while file cannot be found
+     * @throws IOException while file cannot be accessed
      */
     public static RubyFile of(java.io.File file, Mode mode)
         throws FileNotFoundException, IOException {
@@ -3135,8 +2237,7 @@ public final class Ruby {
 
   /**
    * 
-   * {@link Dir} provides numerous useful static methods to make the
-   * {@link RubyDir} easy to use.
+   * {@link Dir} provides numerous useful static methods to make the {@link RubyDir} easy to use.
    * 
    * @author Wei-Ming Wu
    *
@@ -3150,8 +2251,7 @@ public final class Ruby {
     /**
      * Creates a {@link RubyDir} by given File.
      * 
-     * @param dir
-     *          a File
+     * @param dir a File
      * @return {@link RubyDir}
      */
     public static RubyDir of(java.io.File dir) {
@@ -3162,8 +2262,8 @@ public final class Ruby {
 
   /**
    * 
-   * {@link Literals} provides numerous useful static methods to make the
-   * {@link RubyLiterals} easy to use.
+   * {@link Literals} provides numerous useful static methods to make the {@link RubyLiterals} easy
+   * to use.
    * 
    * @author Wei-Ming Wu
    *
@@ -3176,8 +2276,8 @@ public final class Ruby {
 
   /**
    * 
-   * {@link Kernel} provides numerous useful static methods to make the
-   * {@link RubyKernel} easy to use.
+   * {@link Kernel} provides numerous useful static methods to make the {@link RubyKernel} easy to
+   * use.
    * 
    * @author Wei-Ming Wu
    *
@@ -3190,8 +2290,8 @@ public final class Ruby {
 
   /**
    * 
-   * {@link Object} provides numerous useful static methods to make the
-   * {@link RubyObject} easy to use.
+   * {@link Object} provides numerous useful static methods to make the {@link RubyObject} easy to
+   * use.
    * 
    * @author Wei-Ming Wu
    *

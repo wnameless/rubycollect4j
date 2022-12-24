@@ -2,16 +2,14 @@
  *
  * Copyright 2013 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -30,13 +28,11 @@ import java.util.function.Predicate;
 
 /**
  * 
- * {@link RubySet} implements all methods refer to the Set class of Ruby
- * language.
+ * {@link RubySet} implements all methods refer to the Set class of Ruby language.
  * <p>
  * {@link RubySet} is also a Java Set and a {@link RubyBase.Enumerable}.
  *
- * @param <E>
- *          the type of the elements
+ * @param <E> the type of the elements
  * 
  * @author Wei-Ming Wu
  * 
@@ -52,11 +48,9 @@ public final class RubySet<E>
   /**
    * Returns a {@link RubySet} which wraps the given LinkedHashSet.
    * 
-   * @param set
-   *          any LinkedHashSet
+   * @param set any LinkedHashSet
    * @return {@link RubySet}
-   * @throws NullPointerException
-   *           if set is null
+   * @throws NullPointerException if set is null
    */
   public static <E> RubySet<E> of(LinkedHashSet<E> set) {
     return new RubySet<>(set);
@@ -65,11 +59,9 @@ public final class RubySet<E>
   /**
    * Returns a {@link RubySet} which copies the elements of given Iterable.
    * 
-   * @param elements
-   *          any Iterable
+   * @param elements any Iterable
    * @return {@link RubySet}
-   * @throws NullPointerException
-   *           if elements is null
+   * @throws NullPointerException if elements is null
    */
   public static <E> RubySet<E> copyOf(Iterable<E> elements) {
     return new RubySet<>(elements);
@@ -83,13 +75,11 @@ public final class RubySet<E>
   }
 
   /**
-   * Creates a {@link RubySet} by given LinkedHashSet. It's a wrapper
-   * implementation. No defensive copy has been made.
+   * Creates a {@link RubySet} by given LinkedHashSet. It's a wrapper implementation. No defensive
+   * copy has been made.
    * 
-   * @param set
-   *          any LinkedHashSet
-   * @throws NullPointerException
-   *           if set is null
+   * @param set any LinkedHashSet
+   * @throws NullPointerException if set is null
    */
   public RubySet(LinkedHashSet<E> set) {
     Objects.requireNonNull(set);
@@ -100,10 +90,8 @@ public final class RubySet<E>
   /**
    * Creates a {@link RubySet} by given Set.
    * 
-   * @param iter
-   *          any Iterable
-   * @throws NullPointerException
-   *           if iter is null
+   * @param iter any Iterable
+   * @throws NullPointerException if iter is null
    */
   public RubySet(Iterable<E> iter) {
     Objects.requireNonNull(iter);
@@ -113,11 +101,10 @@ public final class RubySet<E>
   }
 
   /**
-   * Adds the given object to the set and returns self. If the object is already
-   * in the set, returns null.
+   * Adds the given object to the set and returns self. If the object is already in the set, returns
+   * null.
    * 
-   * @param e
-   *          an element
+   * @param e an element
    * @return this {@link RubySet} or null
    */
   public RubySet<E> addʔ(E e) {
@@ -125,15 +112,13 @@ public final class RubySet<E>
   }
 
   /**
-   * Classifies the set by the return value of the given block and returns a
-   * {@link RubyHash} of {S value =&gt; RubySet&lt;E&gt;} pairs.
+   * Classifies the set by the return value of the given block and returns a {@link RubyHash} of {S
+   * value =&gt; RubySet&lt;E&gt;} pairs.
    * 
-   * @param block
-   *          to transform elements
+   * @param block to transform elements
    * @return {@link RubyHash}
    */
-  public <S> RubyHash<S, RubySet<E>> classify(
-      Function<? super E, ? extends S> block) {
+  public <S> RubyHash<S, RubySet<E>> classify(Function<? super E, ? extends S> block) {
     RubyHash<S, RubySet<E>> hash = Ruby.Hash.create();
     set.forEach(e -> {
       S s = block.apply(e);
@@ -147,8 +132,7 @@ public final class RubySet<E>
   /**
    * Replaces the elements with ones returned by {@link #collect(Function)}.
    * 
-   * @param block
-   *          to transform elements
+   * @param block to transform elements
    * @return this {@link RubySet}
    */
   public RubySet<E> collectǃ(Function<? super E, ? extends E> block) {
@@ -162,8 +146,7 @@ public final class RubySet<E>
   /**
    * Deletes the given object from the set and returns self.
    * 
-   * @param e
-   *          an element
+   * @param e an element
    * @return this {@link RubySet}
    */
   public RubySet<E> delete(E e) {
@@ -172,11 +155,10 @@ public final class RubySet<E>
   }
 
   /**
-   * Deletes the given object from the set and returns self. If the object is
-   * not in the set, returns null.
+   * Deletes the given object from the set and returns self. If the object is not in the set,
+   * returns null.
    * 
-   * @param e
-   *          an element
+   * @param e an element
    * @return this {@link RubySet} or null
    */
   public RubySet<E> deleteʔ(E e) {
@@ -184,11 +166,9 @@ public final class RubySet<E>
   }
 
   /**
-   * Deletes every element of the set for which block evaluates to true, and
-   * returns self.
+   * Deletes every element of the set for which block evaluates to true, and returns self.
    * 
-   * @param block
-   *          to filter elements
+   * @param block to filter elements
    * @return this {@link RubySet}
    */
   public RubySet<E> deleteIf(Predicate<? super E> block) {
@@ -200,11 +180,10 @@ public final class RubySet<E>
   }
 
   /**
-   * Returns a new set built by duplicating the set, removing every element that
-   * appears in the given Iterable.
+   * Returns a new set built by duplicating the set, removing every element that appears in the
+   * given Iterable.
    * 
-   * @param iter
-   *          an Iterable
+   * @param iter an Iterable
    * @return new {@link RubySet}
    */
   public RubySet<E> difference(Iterable<E> iter) {
@@ -216,10 +195,8 @@ public final class RubySet<E>
   /**
    * Returns true if the set and the given Iterable have no element in common.
    * 
-   * @param iter
-   *          an Iterable
-   * @return true if the set and the given Iterable have no element in common,
-   *         false otherwise
+   * @param iter an Iterable
+   * @return true if the set and the given Iterable have no element in common, false otherwise
    */
   public boolean disjointʔ(Iterable<E> iter) {
     for (E e : iter) {
@@ -229,15 +206,12 @@ public final class RubySet<E>
   }
 
   /**
-   * Divides the set into a set of subsets according to the commonality defined
-   * by the given block.
+   * Divides the set into a set of subsets according to the commonality defined by the given block.
    * 
-   * @param block
-   *          to transform elements
+   * @param block to transform elements
    * @return new {@link RubySet} of {@link RubySet}s
    */
-  public <S> RubySet<RubySet<E>> divide(
-      Function<? super E, ? extends S> block) {
+  public <S> RubySet<RubySet<E>> divide(Function<? super E, ? extends S> block) {
     RubyHash<S, RubySet<E>> hash = classify(block);
     return RubySet.copyOf(hash.values());
   }
@@ -263,12 +237,10 @@ public final class RubySet<E>
   }
 
   /**
-   * Returns a new set containing elements exclusive between the set and the
-   * given Iterable. (set.exclusive(iter)) is equivalent to
-   * (set.union(iter).subtract(set.intersection(iter))).
+   * Returns a new set containing elements exclusive between the set and the given Iterable.
+   * (set.exclusive(iter)) is equivalent to (set.union(iter).subtract(set.intersection(iter))).
    * 
-   * @param iter
-   *          an Iterable
+   * @param iter an Iterable
    * @return new {@link RubySet}
    */
   public RubySet<E> exclusive(Iterable<E> iter) {
@@ -276,8 +248,7 @@ public final class RubySet<E>
   }
 
   /**
-   * Returns a new set that is a copy of the set, flattening each containing set
-   * recursively.
+   * Returns a new set that is a copy of the set, flattening each containing set recursively.
    * 
    * @return new {@link RubySet}
    */
@@ -336,11 +307,10 @@ public final class RubySet<E>
   }
 
   /**
-   * Returns true if the set and the given Iterable have at least one element in
-   * common.
+   * Returns true if the set and the given Iterable have at least one element in common.
    * 
-   * @return true if the set and the given Iterable have at least one element in
-   *         common, false otherwise
+   * @return true if the set and the given Iterable have at least one element in common, false
+   *         otherwise
    */
   public boolean intersectʔ(Iterable<E> iter) {
     for (E e : iter) {
@@ -350,11 +320,9 @@ public final class RubySet<E>
   }
 
   /**
-   * Returns a new set containing elements common to the set and the given
-   * Iterable.
+   * Returns a new set containing elements common to the set and the given Iterable.
    * 
-   * @param iter
-   *          an Iterable
+   * @param iter an Iterable
    * @return new {@link RubySet}
    */
   public RubySet<E> intersection(Iterable<E> iter) {
@@ -366,11 +334,9 @@ public final class RubySet<E>
   }
 
   /**
-   * Deletes every element of the set for which block evaluates to false, and
-   * returns self.
+   * Deletes every element of the set for which block evaluates to false, and returns self.
    * 
-   * @param block
-   *          to filter elements
+   * @param block to filter elements
    * @return this {@link RubySet}
    */
   public RubySet<E> keepIf(Predicate<? super E> block) {
@@ -393,8 +359,7 @@ public final class RubySet<E>
   /**
    * Equivalent to {@link #collectǃ(Function)}.
    * 
-   * @param block
-   *          to transform elements
+   * @param block to transform elements
    * @return this {@link RubySet}
    */
   public RubySet<E> mapǃ(Function<? super E, ? extends E> block) {
@@ -404,8 +369,7 @@ public final class RubySet<E>
   /**
    * Merges the elements of the given Iterable to the set and returns self.
    * 
-   * @param iter
-   *          an Iterable
+   * @param iter an Iterable
    * @return this {@link RubySet}
    */
   public RubySet<E> merge(Iterable<E> iter) {
@@ -416,10 +380,8 @@ public final class RubySet<E>
   /**
    * Returns true if the set is a proper subset of the given set.
    * 
-   * @param set
-   *          any Set
-   * @return true if the set is a proper subset of the given set, false
-   *         otherwise
+   * @param set any Set
+   * @return true if the set is a proper subset of the given set, false otherwise
    */
   public boolean properSubsetʔ(Set<E> set) {
     if (size() <= set.size()) return false;
@@ -433,10 +395,8 @@ public final class RubySet<E>
   /**
    * Returns true if the set is a proper superset of the given set.
    * 
-   * @param set
-   *          any Set
-   * @return true if the set is a proper superset of the given set, false
-   *         otherwise
+   * @param set any Set
+   * @return true if the set is a proper superset of the given set, false otherwise
    */
   public boolean properSupersetʔ(Set<E> set) {
     if (set.size() <= size()) return false;
@@ -448,11 +408,9 @@ public final class RubySet<E>
   }
 
   /**
-   * Equivalent to {@link #deleteIf(Predicate)}, but returns null if no changes
-   * were made.
+   * Equivalent to {@link #deleteIf(Predicate)}, but returns null if no changes were made.
    * 
-   * @param block
-   *          to transform elements
+   * @param block to transform elements
    * @return this {@link RubySet} or null
    */
   public RubySet<E> rejectǃ(Predicate<? super E> block) {
@@ -462,11 +420,9 @@ public final class RubySet<E>
   }
 
   /**
-   * Replaces the contents of the set with the contents of the given Iterable
-   * and returns self.
+   * Replaces the contents of the set with the contents of the given Iterable and returns self.
    * 
-   * @param iter
-   *          an Iterable
+   * @param iter an Iterable
    * @return this {@link RubySet}
    */
   public RubySet<E> replace(Iterable<E> iter) {
@@ -476,11 +432,9 @@ public final class RubySet<E>
   }
 
   /**
-   * Equivalent to {@link #keepIf(Predicate)}, but returns null if no changes
-   * were made.
+   * Equivalent to {@link #keepIf(Predicate)}, but returns null if no changes were made.
    * 
-   * @param block
-   *          to transform elements
+   * @param block to transform elements
    * @return this {@link RubySet} or null
    */
   public RubySet<E> selectǃ(Predicate<? super E> block) {
@@ -492,8 +446,7 @@ public final class RubySet<E>
   /**
    * Returns true if the set is a subset of the given set.
    * 
-   * @param set
-   *          any Set
+   * @param set any Set
    * @return true if the set is a subset of the given set, false otherwise
    */
   public boolean subsetʔ(Set<E> set) {
@@ -508,8 +461,7 @@ public final class RubySet<E>
   /**
    * Deletes every element that appears in the given Iterable and returns self.
    * 
-   * @param iter
-   *          an Iterable
+   * @param iter an Iterable
    * @return this {@link RubySet}
    */
   public RubySet<E> subtract(Iterable<E> iter) {
@@ -520,8 +472,7 @@ public final class RubySet<E>
   /**
    * Returns true if the set is a superset of the given set.
    * 
-   * @param set
-   *          any Set
+   * @param set any Set
    * @return true if the set is a superset of the given set, false otherwise
    */
   public boolean supersetʔ(Set<E> set) {
@@ -544,11 +495,9 @@ public final class RubySet<E>
   }
 
   /**
-   * Returns a new set built by merging the set and the elements of the given
-   * Iterable.
+   * Returns a new set built by merging the set and the elements of the given Iterable.
    * 
-   * @param iter
-   *          an Iterable
+   * @param iter an Iterable
    * @return new {@link RubySet}
    */
   public RubySet<E> union(Iterable<E> iter) {

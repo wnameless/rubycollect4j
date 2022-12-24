@@ -2,16 +2,14 @@
  *
  * Copyright 2013 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -69,8 +67,8 @@ public class RubyDateTest {
     c.set(Calendar.YEAR, 1990);
     c.set(Calendar.MONTH, 5);
     c.set(Calendar.DAY_OF_MONTH, 6);
-    assertEquals(c.getTime(), rd.change(
-        rh(DateField.YEAR, 1990, DateField.MONTH, 6, DateField.DAY, 6)));
+    assertEquals(c.getTime(),
+        rd.change(rh(DateField.YEAR, 1990, DateField.MONTH, 6, DateField.DAY, 6)));
   }
 
   @Test
@@ -204,8 +202,7 @@ public class RubyDateTest {
 
   @Test
   public void testAllQuarter() {
-    assertEquals(range(rd.beginningOfQuarter(), rd.endOfQuarter()),
-        rd.allQuarter());
+    assertEquals(range(rd.beginningOfQuarter(), rd.endOfQuarter()), rd.allQuarter());
   }
 
   @Test
@@ -216,8 +213,7 @@ public class RubyDateTest {
   @Test
   public void testUpto() {
     rd = Ruby.Date.today();
-    assertEquals(range(rd, rd.add(7).days()).toA(),
-        rd.upto(Ruby.Date.today().nextWeek()).toA());
+    assertEquals(range(rd, rd.add(7).days()).toA(), rd.upto(Ruby.Date.today().nextWeek()).toA());
   }
 
   @Test
@@ -246,8 +242,7 @@ public class RubyDateTest {
   @Test
   public void testStep() {
     rd = Ruby.Date.today();
-    assertEquals(range(rd, rd.add(7).days()).toA(),
-        rd.step(Ruby.Date.today().nextWeek()).toA());
+    assertEquals(range(rd, rd.add(7).days()).toA(), rd.step(Ruby.Date.today().nextWeek()).toA());
   }
 
   @Test
@@ -264,9 +259,8 @@ public class RubyDateTest {
     assertEquals(range(rd, rd.add(7).days()).step(2).toA(),
         rd.step(Ruby.Date.today().nextWeek(), 2).toA());
     rd = Ruby.Date.today();
-    assertEquals(range(rd.minus(28).days(), rd).step(2).toA().reverse(), rd
-        .step(Ruby.Date.today().prevWeek().prevWeek().prevWeek().prevWeek(), -2)
-        .toA());
+    assertEquals(range(rd.minus(28).days(), rd).step(2).toA().reverse(),
+        rd.step(Ruby.Date.today().prevWeek().prevWeek().prevWeek().prevWeek(), -2).toA());
   }
 
   @Test
@@ -372,8 +366,7 @@ public class RubyDateTest {
 
   @Test
   public void testCurrent() {
-    assertTrue(
-        Math.abs(new Date().getTime() - RubyDate.current().getTime()) <= 10L);
+    assertTrue(Math.abs(new Date().getTime() - RubyDate.current().getTime()) <= 10L);
   }
 
   @Test
@@ -451,8 +444,7 @@ public class RubyDateTest {
 
   @Test
   public void testEndOfMonth() {
-    c.set(Calendar.DAY_OF_MONTH,
-        Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
+    c.set(Calendar.DAY_OF_MONTH, Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
     c.set(Calendar.HOUR_OF_DAY, 23);
     c.set(Calendar.MINUTE, 59);
     c.set(Calendar.SECOND, 59);
@@ -464,38 +456,28 @@ public class RubyDateTest {
 
   @Test
   public void testBeginningOfQuarter() {
-    assertEquals(Ruby.Date.of(2014, 1, 1),
-        Ruby.Date.of(2014, 2, 2).beginningOfQuarter());
-    assertEquals(Ruby.Date.of(2014, 4, 1),
-        Ruby.Date.of(2014, 5, 2).beginningOfQuarter());
-    assertEquals(Ruby.Date.of(2014, 7, 1),
-        Ruby.Date.of(2014, 8, 2).beginningOfQuarter());
-    assertEquals(Ruby.Date.of(2014, 10, 1),
-        Ruby.Date.of(2014, 11, 2).beginningOfQuarter());
+    assertEquals(Ruby.Date.of(2014, 1, 1), Ruby.Date.of(2014, 2, 2).beginningOfQuarter());
+    assertEquals(Ruby.Date.of(2014, 4, 1), Ruby.Date.of(2014, 5, 2).beginningOfQuarter());
+    assertEquals(Ruby.Date.of(2014, 7, 1), Ruby.Date.of(2014, 8, 2).beginningOfQuarter());
+    assertEquals(Ruby.Date.of(2014, 10, 1), Ruby.Date.of(2014, 11, 2).beginningOfQuarter());
   }
 
   @Test
   public void testEndOfQuarter() {
-    assertEquals(Ruby.Date.of(2014, 3, 31).endOfDay(),
-        Ruby.Date.of(2014, 2, 2).endOfQuarter());
-    assertEquals(Ruby.Date.of(2014, 6, 30).endOfDay(),
-        Ruby.Date.of(2014, 5, 2).endOfQuarter());
-    assertEquals(Ruby.Date.of(2014, 9, 30).endOfDay(),
-        Ruby.Date.of(2014, 8, 2).endOfQuarter());
-    assertEquals(Ruby.Date.of(2014, 12, 31).endOfDay(),
-        Ruby.Date.of(2014, 11, 2).endOfQuarter());
+    assertEquals(Ruby.Date.of(2014, 3, 31).endOfDay(), Ruby.Date.of(2014, 2, 2).endOfQuarter());
+    assertEquals(Ruby.Date.of(2014, 6, 30).endOfDay(), Ruby.Date.of(2014, 5, 2).endOfQuarter());
+    assertEquals(Ruby.Date.of(2014, 9, 30).endOfDay(), Ruby.Date.of(2014, 8, 2).endOfQuarter());
+    assertEquals(Ruby.Date.of(2014, 12, 31).endOfDay(), Ruby.Date.of(2014, 11, 2).endOfQuarter());
   }
 
   @Test
   public void testBeginningOfYear() {
-    assertEquals(Ruby.Date.of(2014, 1, 1),
-        Ruby.Date.of(2014, 7, 7).beginningOfYear());
+    assertEquals(Ruby.Date.of(2014, 1, 1), Ruby.Date.of(2014, 7, 7).beginningOfYear());
   }
 
   @Test
   public void testEndOfYear() {
-    assertEquals(Ruby.Date.of(2014, 12, 31).endOfDay(),
-        Ruby.Date.of(2014, 7, 7).endOfYear());
+    assertEquals(Ruby.Date.of(2014, 12, 31).endOfDay(), Ruby.Date.of(2014, 7, 7).endOfYear());
   }
 
   @Test

@@ -2,16 +2,14 @@
  *
  * Copyright 2016 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -47,8 +45,8 @@ import net.sf.rubycollect4j.iter.SliceWhenIterable;
 
 /**
  * 
- * {@link RubyIterables} is simply a utility class. It provides the Ruby style
- * way to manipulate any Iterable.
+ * {@link RubyIterables} is simply a utility class. It provides the Ruby style way to manipulate any
+ * Iterable.
  * 
  * @author Wei-Ming Wu
  *
@@ -105,8 +103,7 @@ public final class RubyIterables {
    * @see net.sf.rubycollect4j.RubyEnumerable#collect(Function)
    */
   @SuppressWarnings("unchecked")
-  public static <E, S> List<S> collect(Iterable<E> in,
-      Function<? super E, ? extends S> block) {
+  public static <E, S> List<S> collect(Iterable<E> in, Function<? super E, ? extends S> block) {
     return (List<S>) Ruby.LazyEnumerator.of(in).collect(block).toA();
   }
 
@@ -156,8 +153,7 @@ public final class RubyIterables {
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#cycle(int, Consumer)
    */
-  public static <E> void cycle(Iterable<E> in, int n,
-      Consumer<? super E> block) {
+  public static <E> void cycle(Iterable<E> in, int n, Consumer<? super E> block) {
     Ruby.LazyEnumerator.of(in).cycle(n, block);
   }
 
@@ -178,16 +174,14 @@ public final class RubyIterables {
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#dropWhile(Predicate)
    */
-  public static <E> List<E> dropWhile(Iterable<E> in,
-      Predicate<? super E> block) {
+  public static <E> List<E> dropWhile(Iterable<E> in, Predicate<? super E> block) {
     return Ruby.LazyEnumerator.of(in).dropWhile(block).toA();
   }
 
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#each(Consumer)
    */
-  public static <E> Iterable<E> each(Iterable<E> in,
-      Consumer<? super E> block) {
+  public static <E> Iterable<E> each(Iterable<E> in, Consumer<? super E> block) {
     Ruby.Enumerator.of(in).each(block);
     return in;
   }
@@ -195,24 +189,21 @@ public final class RubyIterables {
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#eachCons(int)
    */
-  public static <E> Iterable<? extends List<E>> eachCons(Iterable<E> in,
-      int n) {
+  public static <E> Iterable<? extends List<E>> eachCons(Iterable<E> in, int n) {
     return new EachConsIterable<>(in, n);
   }
 
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#eachCons(int, Consumer)
    */
-  public static <E> void eachCons(Iterable<E> in, int n,
-      Consumer<? super RubyArray<E>> block) {
+  public static <E> void eachCons(Iterable<E> in, int n, Consumer<? super RubyArray<E>> block) {
     Ruby.LazyEnumerator.of(in).eachCons(n, block);
   }
 
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#eachEntry(Consumer)
    */
-  public static <E> Iterable<E> eachEntry(Iterable<E> in,
-      Consumer<? super E> block) {
+  public static <E> Iterable<E> eachEntry(Iterable<E> in, Consumer<? super E> block) {
     for (E item : in) {
       block.accept(item);
     }
@@ -222,24 +213,21 @@ public final class RubyIterables {
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#eachSlice(int)
    */
-  public static <E> Iterable<? extends List<E>> eachSlice(Iterable<E> in,
-      int n) {
+  public static <E> Iterable<? extends List<E>> eachSlice(Iterable<E> in, int n) {
     return Ruby.Enumerator.of(new EachSliceIterable<>(in, n));
   }
 
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#eachSlice(int, Consumer)
    */
-  public static <E> void eachSlice(Iterable<E> in, int n,
-      Consumer<? super RubyArray<E>> block) {
+  public static <E> void eachSlice(Iterable<E> in, int n, Consumer<? super RubyArray<E>> block) {
     Ruby.LazyEnumerator.of(in).eachSlice(n, block);
   }
 
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#eachWithIndex()
    */
-  public static <E> Iterable<? extends Entry<E, Integer>> eachWithIndex(
-      Iterable<E> in) {
+  public static <E> Iterable<? extends Entry<E, Integer>> eachWithIndex(Iterable<E> in) {
     return new EachWithIndexIterable<>(in);
   }
 
@@ -255,14 +243,12 @@ public final class RubyIterables {
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#eachWithObject(Object)
    */
-  public static <E, O> Iterable<Entry<E, O>> eachWithObject(Iterable<E> in,
-      O obj) {
+  public static <E, O> Iterable<Entry<E, O>> eachWithObject(Iterable<E> in, O obj) {
     return new EachWithObjectIterable<>(in, obj);
   }
 
   /**
-   * @see net.sf.rubycollect4j.RubyEnumerable#eachWithObject(Object,
-   *      WithObjectBlock)
+   * @see net.sf.rubycollect4j.RubyEnumerable#eachWithObject(Object, WithObjectBlock)
    */
   public static <E, O> O eachWithObject(Iterable<E> in, O obj,
       BiConsumer<? super E, ? super O> block) {
@@ -286,16 +272,14 @@ public final class RubyIterables {
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#find(Predicate)
    */
-  public static <E> List<E> findAll(Iterable<E> in,
-      Predicate<? super E> block) {
+  public static <E> List<E> findAll(Iterable<E> in, Predicate<? super E> block) {
     return Ruby.LazyEnumerator.of(in).findAll(block).toA();
   }
 
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#findIndex(Predicate)
    */
-  public static <E> Integer findIndex(Iterable<E> in,
-      Predicate<? super E> block) {
+  public static <E> Integer findIndex(Iterable<E> in, Predicate<? super E> block) {
     return Ruby.LazyEnumerator.of(in).findIndex(block);
   }
 
@@ -385,8 +369,7 @@ public final class RubyIterables {
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#inject(Object, WithInitBlock)
    */
-  public static <I, E> I inject(Iterable<E> in, I init,
-      BiFunction<I, ? super E, I> block) {
+  public static <I, E> I inject(Iterable<E> in, I init, BiFunction<I, ? super E, I> block) {
     return Ruby.LazyEnumerator.of(in).inject(init, block);
   }
 
@@ -401,8 +384,7 @@ public final class RubyIterables {
    * @see net.sf.rubycollect4j.RubyEnumerable#map(Function)
    */
   @SuppressWarnings("unchecked")
-  public static <S, E> List<S> map(Iterable<E> in,
-      Function<? super E, ? extends S> block) {
+  public static <S, E> List<S> map(Iterable<E> in, Function<? super E, ? extends S> block) {
     return (List<S>) Ruby.LazyEnumerator.of(in).map(block).toA();
   }
 
@@ -423,8 +405,7 @@ public final class RubyIterables {
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#maxBy(Function)
    */
-  public static <S, E> E maxBy(Iterable<E> in,
-      Function<? super E, ? extends S> block) {
+  public static <S, E> E maxBy(Iterable<E> in, Function<? super E, ? extends S> block) {
     return Ruby.LazyEnumerator.of(in).maxBy(block);
   }
 
@@ -460,8 +441,7 @@ public final class RubyIterables {
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#minBy(Function)
    */
-  public static <S, E> E minBy(Iterable<E> in,
-      Function<? super E, ? extends S> block) {
+  public static <S, E> E minBy(Iterable<E> in, Function<? super E, ? extends S> block) {
     return Ruby.LazyEnumerator.of(in).minBy(block);
   }
 
@@ -490,16 +470,15 @@ public final class RubyIterables {
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#minmaxBy(Function)
    */
-  public static <S, E> List<E> minmaxBy(Iterable<E> in,
-      Function<? super E, ? extends S> block) {
+  public static <S, E> List<E> minmaxBy(Iterable<E> in, Function<? super E, ? extends S> block) {
     return Ruby.LazyEnumerator.of(in).minmaxBy(block);
   }
 
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#minmaxBy(Comparator, Function)
    */
-  public static <S, E> List<E> minmaxBy(Iterable<E> in,
-      Comparator<? super S> comp, Function<? super E, ? extends S> block) {
+  public static <S, E> List<E> minmaxBy(Iterable<E> in, Comparator<? super S> comp,
+      Function<? super E, ? extends S> block) {
     return Ruby.LazyEnumerator.of(in).minmaxBy(comp, block);
   }
 
@@ -534,8 +513,7 @@ public final class RubyIterables {
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#partition(Predicate)
    */
-  public static <E> List<? extends List<E>> partition(Iterable<E> in,
-      Predicate<? super E> block) {
+  public static <E> List<? extends List<E>> partition(Iterable<E> in, Predicate<? super E> block) {
     return Ruby.LazyEnumerator.of(in).partition(block);
   }
 
@@ -549,8 +527,7 @@ public final class RubyIterables {
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#reduce(Object, WithInitBlock)
    */
-  public static <I, E> I reduce(Iterable<E> in, I init,
-      BiFunction<I, ? super E, I> block) {
+  public static <I, E> I reduce(Iterable<E> in, I init, BiFunction<I, ? super E, I> block) {
     return Ruby.LazyEnumerator.of(in).reduce(init, block);
   }
 
@@ -571,8 +548,7 @@ public final class RubyIterables {
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#reverseEach(Consumer)
    */
-  public static <E> Iterable<E> reverseEach(Iterable<E> in,
-      Consumer<? super E> block) {
+  public static <E> Iterable<E> reverseEach(Iterable<E> in, Consumer<? super E> block) {
     for (E item : reverseEach(in)) {
       block.accept(item);
     }
@@ -597,10 +573,8 @@ public final class RubyIterables {
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#sliceAfter(String)
    */
-  public static <E> Iterable<? extends List<E>> sliceAfter(Iterable<E> in,
-      String regex) {
-    return Ruby.Enumerator
-        .of(new SliceAfterIterable<>(in, Pattern.compile(regex)));
+  public static <E> Iterable<? extends List<E>> sliceAfter(Iterable<E> in, String regex) {
+    return Ruby.Enumerator.of(new SliceAfterIterable<>(in, Pattern.compile(regex)));
   }
 
   /**
@@ -614,10 +588,8 @@ public final class RubyIterables {
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#sliceBefore(String)
    */
-  public static <E> Iterable<? extends List<E>> sliceBefore(Iterable<E> in,
-      String regex) {
-    return Ruby.Enumerator
-        .of(new SliceBeforeIterable<>(in, Pattern.compile(regex)));
+  public static <E> Iterable<? extends List<E>> sliceBefore(Iterable<E> in, String regex) {
+    return Ruby.Enumerator.of(new SliceBeforeIterable<>(in, Pattern.compile(regex)));
   }
 
   /**
@@ -638,26 +610,23 @@ public final class RubyIterables {
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#sortBy(Function)
    */
-  public static <S, E> List<E> sortBy(Iterable<E> in,
-      Function<? super E, ? extends S> block) {
+  public static <S, E> List<E> sortBy(Iterable<E> in, Function<? super E, ? extends S> block) {
     return Ruby.LazyEnumerator.of(in).sortBy(block);
   }
 
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#sortBy(Comparator, Function)
    */
-  public static <S, E> List<E> sortBy(Iterable<E> in,
-      Comparator<? super S> comp, Function<? super E, ? extends S> block) {
+  public static <S, E> List<E> sortBy(Iterable<E> in, Comparator<? super S> comp,
+      Function<? super E, ? extends S> block) {
     return Ruby.LazyEnumerator.of(in).sortBy(comp, block);
   }
 
   /**
-   * @see net.sf.rubycollect4j.RubyEnumerable#sortBy(Comparator, Comparator,
-   *      Function)
+   * @see net.sf.rubycollect4j.RubyEnumerable#sortBy(Comparator, Comparator, Function)
    */
-  public static <S, E> List<E> sortBy(Iterable<E> in,
-      Comparator<? super E> comp1, Comparator<? super S> comp2,
-      Function<? super E, ? extends S> block) {
+  public static <S, E> List<E> sortBy(Iterable<E> in, Comparator<? super E> comp1,
+      Comparator<? super S> comp2, Function<? super E, ? extends S> block) {
     return Ruby.LazyEnumerator.of(in).sortBy(comp1, comp2, block);
   }
 
@@ -701,8 +670,7 @@ public final class RubyIterables {
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#takeWhile(Predicate)
    */
-  public static <E> List<E> takeWhile(Iterable<E> in,
-      Predicate<? super E> block) {
+  public static <E> List<E> takeWhile(Iterable<E> in, Predicate<? super E> block) {
     return Ruby.LazyEnumerator.of(in).takeWhile(block).toA();
   }
 
@@ -716,16 +684,14 @@ public final class RubyIterables {
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#toH(Function)
    */
-  public static <E, K, V> RubyHash<K, V> toH(Iterable<E> in,
-      Function<E, Entry<K, V>> block) {
+  public static <E, K, V> RubyHash<K, V> toH(Iterable<E> in, Function<E, Entry<K, V>> block) {
     return Ruby.LazyEnumerator.of(in).toH(block);
   }
 
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#toH(BiFunction)
    */
-  public static <E, K, V> RubyHash<K, V> toH(Iterable<E> in,
-      BiFunction<E, E, Entry<K, V>> block) {
+  public static <E, K, V> RubyHash<K, V> toH(Iterable<E> in, BiFunction<E, E, Entry<K, V>> block) {
     return Ruby.LazyEnumerator.of(in).toH(block);
   }
 
@@ -740,8 +706,7 @@ public final class RubyIterables {
   /**
    * @see net.sf.rubycollect4j.RubyEnumerable#zip(List, Consumer)
    */
-  public static <E> void zip(Iterable<E> in,
-      List<? extends Iterable<? extends E>> others,
+  public static <E> void zip(Iterable<E> in, List<? extends Iterable<? extends E>> others,
       Consumer<? super RubyArray<E>> block) {
     Ruby.LazyEnumerator.of(in).zip(others, block);
   }

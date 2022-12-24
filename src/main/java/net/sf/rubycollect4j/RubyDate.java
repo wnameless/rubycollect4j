@@ -2,16 +2,14 @@
  *
  * Copyright 2013 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -28,8 +26,8 @@ import net.sf.rubycollect4j.succ.DateReverseSuccessor;
 
 /**
  * 
- * {@link RubyDate} simply extends Java Date and adds few useful methods which
- * are inspired by Ruby on Rails.
+ * {@link RubyDate} simply extends Java Date and adds few useful methods which are inspired by Ruby
+ * on Rails.
  * 
  * @author Wei-Ming Wu
  * 
@@ -91,10 +89,8 @@ public class RubyDate extends Date {
   /**
    * Creates a {@link RubyDate} of given Date.
    * 
-   * @param date
-   *          a Date
-   * @throws NullPointerException
-   *           if date is null
+   * @param date a Date
+   * @throws NullPointerException if date is null
    */
   public RubyDate(Date date) {
     Objects.requireNonNull(date);
@@ -103,11 +99,10 @@ public class RubyDate extends Date {
   }
 
   /**
-   * Returns a new {@link RubyDate} where one or more of the elements have been
-   * changed according to the options parameter.
+   * Returns a new {@link RubyDate} where one or more of the elements have been changed according to
+   * the options parameter.
    * 
-   * @param options
-   *          used to describe the coming change of this {@link RubyDate}
+   * @param options used to describe the coming change of this {@link RubyDate}
    * @return new {@link RubyDate}
    */
   public RubyDate change(Map<DateField, Integer> options) {
@@ -132,8 +127,7 @@ public class RubyDate extends Date {
   /**
    * Increases an interval of time to a date by the {@link DateShifter}.
    * 
-   * @param interval
-   *          of time to be shifted
+   * @param interval of time to be shifted
    * @return {@link DateShifter}
    */
   public DateShifter add(int interval) {
@@ -143,8 +137,7 @@ public class RubyDate extends Date {
   /**
    * Decreases an interval of time to a date by the {@link DateShifter}.
    * 
-   * @param interval
-   *          of time to be shifted
+   * @param interval of time to be shifted
    * @return {@link DateShifter}
    */
   public DateShifter minus(int interval) {
@@ -317,11 +310,9 @@ public class RubyDate extends Date {
   }
 
   /**
-   * Creates a {@link RubyEnumerator} from this {@link RubyDate} to the given
-   * max {@link Date}.
+   * Creates a {@link RubyEnumerator} from this {@link RubyDate} to the given max {@link Date}.
    * 
-   * @param max
-   *          a {@link Date}
+   * @param max a {@link Date}
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<Date> upto(Date max) {
@@ -331,10 +322,8 @@ public class RubyDate extends Date {
   /**
    * Iterates from this {@link RubyDate} to the given max {@link Date}.
    * 
-   * @param max
-   *          a {@link Date}
-   * @param block
-   *          to yield each date
+   * @param max a {@link Date}
+   * @param block to yield each date
    * @return this {@link RubyDate}
    */
   public RubyDate upto(Date max, Consumer<? super Date> block) {
@@ -343,11 +332,9 @@ public class RubyDate extends Date {
   }
 
   /**
-   * Creates a {@link RubyEnumerator} from this {@link RubyDate} to the given
-   * min {@link Date}.
+   * Creates a {@link RubyEnumerator} from this {@link RubyDate} to the given min {@link Date}.
    * 
-   * @param min
-   *          a {@link Date}
+   * @param min a {@link Date}
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<Date> downto(Date min) {
@@ -357,10 +344,8 @@ public class RubyDate extends Date {
   /**
    * Iterates from this {@link RubyDate} to the given min {@link Date}.
    * 
-   * @param min
-   *          a {@link Date}
-   * @param block
-   *          to yield each date
+   * @param min a {@link Date}
+   * @param block to yield each date
    * @return this {@link RubyDate}
    */
   public RubyDate downto(Date min, Consumer<? super Date> block) {
@@ -369,11 +354,9 @@ public class RubyDate extends Date {
   }
 
   /**
-   * Creates a {@link RubyEnumerator} from this {@link RubyDate} to the given
-   * limit {@link Date}.
+   * Creates a {@link RubyEnumerator} from this {@link RubyDate} to the given limit {@link Date}.
    * 
-   * @param limit
-   *          a {@link Date}
+   * @param limit a {@link Date}
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<Date> step(Date limit) {
@@ -383,10 +366,8 @@ public class RubyDate extends Date {
   /**
    * Iterates from this {@link RubyDate} to the given limit {@link Date}.
    * 
-   * @param limit
-   *          a {@link Date}
-   * @param block
-   *          to yield each date
+   * @param limit a {@link Date}
+   * @param block to yield each date
    * @return this {@link RubyDate}
    */
   public RubyDate step(Date limit, Consumer<? super Date> block) {
@@ -395,34 +376,29 @@ public class RubyDate extends Date {
   }
 
   /**
-   * Creates a {@link RubyEnumerator} from this {@link RubyDate} to the given
-   * limit {@link Date} by stepping certain number of dates.
+   * Creates a {@link RubyEnumerator} from this {@link RubyDate} to the given limit {@link Date} by
+   * stepping certain number of dates.
    * 
-   * @param limit
-   *          a {@link Date}
-   * @param step
-   *          number of dates to step
+   * @param limit a {@link Date}
+   * @param step number of dates to step
    * @return {@link RubyEnumerator}
    */
   public RubyEnumerator<Date> step(Date limit, int step) {
     if (step > 0) {
       return Ruby.Range.of(this, limit).step(step).each();
     } else {
-      return new RubyRange<>(DateReverseSuccessor.getInstance(), this, limit,
-          Interval.CLOSED).step(-step).each();
+      return new RubyRange<>(DateReverseSuccessor.getInstance(), this, limit, Interval.CLOSED)
+          .step(-step).each();
     }
   }
 
   /**
-   * Iterates from this {@link RubyDate} to the given limit {@link Date} by
-   * stepping certain number of dates.
+   * Iterates from this {@link RubyDate} to the given limit {@link Date} by stepping certain number
+   * of dates.
    * 
-   * @param limit
-   *          a {@link Date}
-   * @param step
-   *          number of dates to step
-   * @param block
-   *          to yield each date
+   * @param limit a {@link Date}
+   * @param step number of dates to step
+   * @param block to yield each date
    * @return this {@link RubyDate}
    */
   public RubyDate step(Date limit, int step, Consumer<? super Date> block) {
@@ -521,8 +497,8 @@ public class RubyDate extends Date {
   }
 
   /**
-   * Returns a new {@link RubyDate} with time set to the beginning of day based
-   * on this {@link RubyDate}.
+   * Returns a new {@link RubyDate} with time set to the beginning of day based on this
+   * {@link RubyDate}.
    * 
    * @return new {@link RubyDate}
    */
@@ -537,8 +513,7 @@ public class RubyDate extends Date {
   }
 
   /**
-   * Returns a new {@link RubyDate} with time set to the end of day based on
-   * this {@link RubyDate}.
+   * Returns a new {@link RubyDate} with time set to the end of day based on this {@link RubyDate}.
    * 
    * @return new {@link RubyDate}
    */
@@ -553,8 +528,8 @@ public class RubyDate extends Date {
   }
 
   /**
-   * Returns a new {@link RubyDate} with time set to the beginning of week based
-   * on this {@link RubyDate}. The beginning of week is Sunday.
+   * Returns a new {@link RubyDate} with time set to the beginning of week based on this
+   * {@link RubyDate}. The beginning of week is Sunday.
    * 
    * @return new {@link RubyDate}
    */
@@ -570,8 +545,8 @@ public class RubyDate extends Date {
   }
 
   /**
-   * Returns a new {@link RubyDate} with time set to the end of week based on
-   * this {@link RubyDate}. The end of week is Saturday.
+   * Returns a new {@link RubyDate} with time set to the end of week based on this {@link RubyDate}.
+   * The end of week is Saturday.
    * 
    * @return new {@link RubyDate}
    */
@@ -580,8 +555,8 @@ public class RubyDate extends Date {
   }
 
   /**
-   * Returns a new {@link RubyDate} with time set to the beginning of month
-   * based on this {@link RubyDate}.
+   * Returns a new {@link RubyDate} with time set to the beginning of month based on this
+   * {@link RubyDate}.
    * 
    * @return new {@link RubyDate}
    */
@@ -590,16 +565,15 @@ public class RubyDate extends Date {
   }
 
   /**
-   * Returns a new {@link RubyDate} with time set to the end of month based on
-   * this {@link RubyDate}.
+   * Returns a new {@link RubyDate} with time set to the end of month based on this
+   * {@link RubyDate}.
    * 
    * @return new {@link RubyDate}
    */
   public RubyDate endOfMonth() {
     Calendar c = Calendar.getInstance();
     c.setTime(this);
-    c.set(Calendar.DAY_OF_MONTH,
-        Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
+    c.set(Calendar.DAY_OF_MONTH, Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
     c.set(Calendar.HOUR_OF_DAY, 23);
     c.set(Calendar.MINUTE, 59);
     c.set(Calendar.SECOND, 59);
@@ -608,8 +582,8 @@ public class RubyDate extends Date {
   }
 
   /**
-   * Returns a new {@link RubyDate} representing the start of the quarter (1st
-   * of january, april, july, october).
+   * Returns a new {@link RubyDate} representing the start of the quarter (1st of january, april,
+   * july, october).
    * 
    * @return new {@link RubyDate}
    */
@@ -618,27 +592,23 @@ public class RubyDate extends Date {
       case 1:
       case 2:
       case 3:
-        return change(Ruby.Hash.of(DateField.MONTH, 1, DateField.DAY, 1))
-            .beginningOfDay();
+        return change(Ruby.Hash.of(DateField.MONTH, 1, DateField.DAY, 1)).beginningOfDay();
       case 4:
       case 5:
       case 6:
-        return change(Ruby.Hash.of(DateField.MONTH, 4, DateField.DAY, 1))
-            .beginningOfDay();
+        return change(Ruby.Hash.of(DateField.MONTH, 4, DateField.DAY, 1)).beginningOfDay();
       case 7:
       case 8:
       case 9:
-        return change(Ruby.Hash.of(DateField.MONTH, 7, DateField.DAY, 1))
-            .beginningOfDay();
+        return change(Ruby.Hash.of(DateField.MONTH, 7, DateField.DAY, 1)).beginningOfDay();
       default:
-        return change(Ruby.Hash.of(DateField.MONTH, 10, DateField.DAY, 1))
-            .beginningOfDay();
+        return change(Ruby.Hash.of(DateField.MONTH, 10, DateField.DAY, 1)).beginningOfDay();
     }
   }
 
   /**
-   * Returns a new {@link RubyDate} representing the end of the quarter (last
-   * day of march, june, september, december).
+   * Returns a new {@link RubyDate} representing the end of the quarter (last day of march, june,
+   * september, december).
    * 
    * @return new {@link RubyDate}
    */
@@ -647,21 +617,17 @@ public class RubyDate extends Date {
       case 1:
       case 2:
       case 3:
-        return change(Ruby.Hash.of(DateField.MONTH, 3, DateField.DAY, 31))
-            .endOfDay();
+        return change(Ruby.Hash.of(DateField.MONTH, 3, DateField.DAY, 31)).endOfDay();
       case 4:
       case 5:
       case 6:
-        return change(Ruby.Hash.of(DateField.MONTH, 6, DateField.DAY, 30))
-            .endOfDay();
+        return change(Ruby.Hash.of(DateField.MONTH, 6, DateField.DAY, 30)).endOfDay();
       case 7:
       case 8:
       case 9:
-        return change(Ruby.Hash.of(DateField.MONTH, 9, DateField.DAY, 30))
-            .endOfDay();
+        return change(Ruby.Hash.of(DateField.MONTH, 9, DateField.DAY, 30)).endOfDay();
       default:
-        return change(Ruby.Hash.of(DateField.MONTH, 12, DateField.DAY, 31))
-            .endOfDay();
+        return change(Ruby.Hash.of(DateField.MONTH, 12, DateField.DAY, 31)).endOfDay();
     }
   }
 
@@ -671,8 +637,7 @@ public class RubyDate extends Date {
    * @return new {@link RubyDate}
    */
   public RubyDate beginningOfYear() {
-    return change(Ruby.Hash.of(DateField.MONTH, 1, DateField.DAY, 1))
-        .beginningOfDay();
+    return change(Ruby.Hash.of(DateField.MONTH, 1, DateField.DAY, 1)).beginningOfDay();
   }
 
   /**
@@ -681,8 +646,7 @@ public class RubyDate extends Date {
    * @return new {@link RubyDate}
    */
   public RubyDate endOfYear() {
-    return change(Ruby.Hash.of(DateField.MONTH, 12, DateField.DAY, 31))
-        .endOfDay();
+    return change(Ruby.Hash.of(DateField.MONTH, 12, DateField.DAY, 31)).endOfDay();
   }
 
   /**
@@ -783,8 +747,7 @@ public class RubyDate extends Date {
   /**
    * Checks if this {@link RubyDate} represents a future time.
    * 
-   * @return true if this {@link RubyDate} represents a future time, false
-   *         otherwise
+   * @return true if this {@link RubyDate} represents a future time, false otherwise
    */
   public boolean futureʔ() {
     return new RubyDate().compareTo(this) < 0;
@@ -793,8 +756,7 @@ public class RubyDate extends Date {
   /**
    * Checks if this {@link RubyDate} represents a past time.
    * 
-   * @return true if this {@link RubyDate} represents a past time, false
-   *         otherwise
+   * @return true if this {@link RubyDate} represents a past time, false otherwise
    */
   public boolean pastʔ() {
     return new RubyDate().compareTo(this) > 0;
@@ -820,8 +782,8 @@ public class RubyDate extends Date {
 
   /**
    * 
-   * {@link DateShifter} shifts a Date by an interval of time and creates a new
-   * {@link RubyDate} from it.
+   * {@link DateShifter} shifts a Date by an interval of time and creates a new {@link RubyDate}
+   * from it.
    * 
    */
   public final class DateShifter {
@@ -832,10 +794,8 @@ public class RubyDate extends Date {
     /**
      * Returns a {@link DateShifter}.
      * 
-     * @param date
-     *          a Date
-     * @param interval
-     *          of time to be shifted
+     * @param date a Date
+     * @param interval of time to be shifted
      */
     public DateShifter(Date date, int interval) {
       this.date = date;

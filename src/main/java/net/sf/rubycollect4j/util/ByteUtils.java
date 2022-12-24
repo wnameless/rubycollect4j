@@ -2,16 +2,14 @@
  *
  * Copyright 2013 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -36,24 +34,22 @@ import net.sf.rubycollect4j.RubyArray;
 
 /**
  * 
- * {@link ByteUtils} provides functions to manipulate bytes or to convert
- * variety Objects into bytes.
+ * {@link ByteUtils} provides functions to manipulate bytes or to convert variety Objects into
+ * bytes.
  * 
  * @author Wei-Ming Wu
  * 
  */
 public final class ByteUtils {
 
-  private static final Logger logger =
-      Logger.getLogger(ByteUtils.class.getName());
+  private static final Logger logger = Logger.getLogger(ByteUtils.class.getName());
 
   private ByteUtils() {};
 
   /**
    * Converts a byte array to a {@link RubyArray} of Byte.
    * 
-   * @param bytes
-   *          a byte array
+   * @param bytes a byte array
    * @return {@link RubyArray} of Byte
    */
   public static RubyArray<Byte> toList(byte[] bytes) {
@@ -67,8 +63,7 @@ public final class ByteUtils {
   /**
    * Converts a Collection of Number to a byte array.
    * 
-   * @param bytes
-   *          a Collection of Number
+   * @param bytes a Collection of Number
    * @return byte array
    */
   public static byte[] toArray(Collection<? extends Number> bytes) {
@@ -83,10 +78,8 @@ public final class ByteUtils {
   /**
    * Modifies the length of a byte array by padding zero bytes to the right.
    * 
-   * @param bytes
-   *          a byte array
-   * @param width
-   *          of the new byte array
+   * @param bytes a byte array
+   * @param width of the new byte array
    * @return new byte array
    */
   public static byte[] ljust(byte[] bytes, int width) {
@@ -102,10 +95,8 @@ public final class ByteUtils {
   /**
    * Modifies the length of a byte array by padding zero bytes to the left.
    * 
-   * @param bytes
-   *          a byte array
-   * @param width
-   *          of the new byte array
+   * @param bytes a byte array
+   * @param width of the new byte array
    * @return new byte array
    */
   public static byte[] rjust(byte[] bytes, int width) {
@@ -121,8 +112,7 @@ public final class ByteUtils {
   /**
    * Reverses a byte array in place.
    * 
-   * @param bytes
-   *          to be reversed
+   * @param bytes to be reversed
    */
   public static void reverse(byte[] bytes) {
     for (int i = 0; i < bytes.length / 2; i++) {
@@ -135,19 +125,17 @@ public final class ByteUtils {
   /**
    * Converts a byte into a byte array.
    * 
-   * @param b
-   *          a byte
+   * @param b a byte
    * @return byte array
    */
   public static byte[] toByteArray(byte b) {
-    return new byte[] { b };
+    return new byte[] {b};
   }
 
   /**
    * Converts a short into a byte array by big-endian byte order.
    * 
-   * @param s
-   *          a short
+   * @param s a short
    * @return byte array
    */
   public static byte[] toByteArray(short s) {
@@ -157,10 +145,8 @@ public final class ByteUtils {
   /**
    * Converts a short into a byte array.
    * 
-   * @param s
-   *          a short
-   * @param bo
-   *          a ByteOrder
+   * @param s a short
+   * @param bo a ByteOrder
    * @return byte array
    */
   public static byte[] toByteArray(short s, ByteOrder bo) {
@@ -170,8 +156,7 @@ public final class ByteUtils {
   /**
    * Converts an int into a byte array by big-endian byte order.
    * 
-   * @param i
-   *          an int
+   * @param i an int
    * @return byte array
    */
   public static byte[] toByteArray(int i) {
@@ -181,10 +166,8 @@ public final class ByteUtils {
   /**
    * Converts an int into a byte array.
    * 
-   * @param i
-   *          an int
-   * @param bo
-   *          a ByteOrder
+   * @param i an int
+   * @param bo a ByteOrder
    * @return byte array
    */
   public static byte[] toByteArray(int i, ByteOrder bo) {
@@ -194,8 +177,7 @@ public final class ByteUtils {
   /**
    * Converts a long into a byte array by big-endian byte order.
    * 
-   * @param l
-   *          a long
+   * @param l a long
    * @return byte array
    */
   public static byte[] toByteArray(long l) {
@@ -205,10 +187,8 @@ public final class ByteUtils {
   /**
    * Converts a long into a byte array.
    * 
-   * @param l
-   *          a long
-   * @param bo
-   *          a ByteOrder
+   * @param l a long
+   * @param bo a ByteOrder
    * @return byte array
    */
   public static byte[] toByteArray(long l, ByteOrder bo) {
@@ -218,8 +198,7 @@ public final class ByteUtils {
   /**
    * Converts a float into a byte array by big-endian byte order.
    * 
-   * @param f
-   *          a float
+   * @param f a float
    * @return byte array
    */
   public static byte[] toByteArray(float f) {
@@ -229,10 +208,8 @@ public final class ByteUtils {
   /**
    * Converts a float into a byte array.
    * 
-   * @param f
-   *          a float
-   * @param bo
-   *          a ByteOrder
+   * @param f a float
+   * @param bo a ByteOrder
    * @return byte array
    */
   public static byte[] toByteArray(float f, ByteOrder bo) {
@@ -242,8 +219,7 @@ public final class ByteUtils {
   /**
    * Converts a double into a byte array by big-endian byte order.
    * 
-   * @param d
-   *          a double
+   * @param d a double
    * @return byte array
    */
   public static byte[] toByteArray(double d) {
@@ -253,10 +229,8 @@ public final class ByteUtils {
   /**
    * Converts a double into a byte array.
    * 
-   * @param d
-   *          a double
-   * @param bo
-   *          a ByteOrder
+   * @param d a double
+   * @param bo a ByteOrder
    * @return byte array
    */
   public static byte[] toByteArray(double d, ByteOrder bo) {
@@ -266,8 +240,7 @@ public final class ByteUtils {
   /**
    * Converts a boolean into a byte array.
    * 
-   * @param b
-   *          a boolean
+   * @param b a boolean
    * @return byte array
    */
   public static byte[] toByteArray(boolean b) {
@@ -277,8 +250,7 @@ public final class ByteUtils {
   /**
    * Converts a char into a byte array by big-endian byte order.
    * 
-   * @param c
-   *          a char
+   * @param c a char
    * @return byte array
    */
   public static byte[] toByteArray(char c) {
@@ -288,10 +260,8 @@ public final class ByteUtils {
   /**
    * Converts a char into a byte array.
    * 
-   * @param c
-   *          a char
-   * @param bo
-   *          a ByteOrder
+   * @param c a char
+   * @param bo a ByteOrder
    * @return byte array
    */
   public static byte[] toByteArray(char c, ByteOrder bo) {
@@ -301,8 +271,7 @@ public final class ByteUtils {
   /**
    * Converts a String into a byte array.
    * 
-   * @param s
-   *          a String
+   * @param s a String
    * @return byte array
    */
   public static byte[] toByteArray(String s) {
@@ -310,14 +279,12 @@ public final class ByteUtils {
   }
 
   /**
-   * Converts an Object into a byte array by big-endian byte order. ByteOrder
-   * only affects on Java Number. If this Object is not a Java primitive wrapper
-   * Object, a reflection will be performed to search any method which returns a
-   * byte[] and call it directly. Under this circumstance, the ByteOrder won't
-   * take effect too.
+   * Converts an Object into a byte array by big-endian byte order. ByteOrder only affects on Java
+   * Number. If this Object is not a Java primitive wrapper Object, a reflection will be performed
+   * to search any method which returns a byte[] and call it directly. Under this circumstance, the
+   * ByteOrder won't take effect too.
    * 
-   * @param o
-   *          any Object
+   * @param o any Object
    * @return byte array
    */
   public static byte[] toByteArray(Object o) {
@@ -325,33 +292,24 @@ public final class ByteUtils {
   }
 
   /**
-   * Converts an Object into a byte array. ByteOrder only affects on Java
-   * Number. If this Object is not a Java primitive wrapper Object, a reflection
-   * will be performed to search any method which returns a byte[] and call it
-   * directly. Under this circumstance, the ByteOrder won't take effect too.
+   * Converts an Object into a byte array. ByteOrder only affects on Java Number. If this Object is
+   * not a Java primitive wrapper Object, a reflection will be performed to search any method which
+   * returns a byte[] and call it directly. Under this circumstance, the ByteOrder won't take effect
+   * too.
    * 
-   * @param o
-   *          an Object
-   * @param bo
-   *          a ByteOrder
+   * @param o an Object
+   * @param bo a ByteOrder
    * @return byte array
-   * @throws TypeConstraintException
-   *           if the Object can't be converted into bytes
+   * @throws TypeConstraintException if the Object can't be converted into bytes
    */
   public static byte[] toByteArray(Object o, ByteOrder bo) {
-    if (o instanceof Byte) return new byte[] { (Byte) o };
-    if (o instanceof Short)
-      return ByteBuffer.allocate(2).order(bo).putShort((Short) o).array();
-    if (o instanceof Integer)
-      return ByteBuffer.allocate(4).order(bo).putInt((Integer) o).array();
-    if (o instanceof Long)
-      return ByteBuffer.allocate(8).order(bo).putLong((Long) o).array();
-    if (o instanceof Float)
-      return ByteBuffer.allocate(4).order(bo).putFloat((Float) o).array();
-    if (o instanceof Double)
-      return ByteBuffer.allocate(8).order(bo).putDouble((Double) o).array();
-    if (o instanceof Boolean)
-      return (Boolean) o ? new byte[] { '\1' } : new byte[] { '\0' };
+    if (o instanceof Byte) return new byte[] {(Byte) o};
+    if (o instanceof Short) return ByteBuffer.allocate(2).order(bo).putShort((Short) o).array();
+    if (o instanceof Integer) return ByteBuffer.allocate(4).order(bo).putInt((Integer) o).array();
+    if (o instanceof Long) return ByteBuffer.allocate(8).order(bo).putLong((Long) o).array();
+    if (o instanceof Float) return ByteBuffer.allocate(4).order(bo).putFloat((Float) o).array();
+    if (o instanceof Double) return ByteBuffer.allocate(8).order(bo).putDouble((Double) o).array();
+    if (o instanceof Boolean) return (Boolean) o ? new byte[] {'\1'} : new byte[] {'\0'};
     if (o instanceof Character)
       return ByteBuffer.allocate(2).order(bo).putChar((Character) o).array();
 
@@ -359,9 +317,7 @@ public final class ByteUtils {
       Class<?> c = o.getClass();
       Method mothod = null;
       for (Method m : c.getMethods()) {
-        if (m.getReturnType() == byte[].class
-            && m.getParameterTypes().length == 0)
-          mothod = m;
+        if (m.getReturnType() == byte[].class && m.getParameterTypes().length == 0) mothod = m;
       }
       return (byte[]) mothod.invoke(o);
     } catch (Exception e) {
@@ -374,23 +330,19 @@ public final class ByteUtils {
   /**
    * Encodes a byte to ASCII-8Bit String character.
    * 
-   * @param b
-   *          any byte
+   * @param b any byte
    * @return ISO-8859-1 String character
    */
   public static String toASCII8Bit(byte b) {
-    return new String(new byte[] { b }, Charset.forName("ISO-8859-1"));
+    return new String(new byte[] {b}, Charset.forName("ISO-8859-1"));
   }
 
   /**
    * Converts a byte array into an ASCII String.
    * 
-   * @param bytes
-   *          used to be converted
-   * @param n
-   *          length of ASCII String
-   * @param bo
-   *          a ByteOrder
+   * @param bytes used to be converted
+   * @param n length of ASCII String
+   * @param bo a ByteOrder
    * @return ASCII String
    */
   public static String toExtendedASCIIs(byte[] bytes, int n, ByteOrder bo) {
@@ -423,17 +375,14 @@ public final class ByteUtils {
   /**
    * Converts a byte array into an UTF String.
    * 
-   * @param bytes
-   *          used to be converted
+   * @param bytes used to be converted
    * @return UTF String
-   * @throws IllegalArgumentException
-   *           if codePoint is less than 0 or greater than 0X10FFFF
+   * @throws IllegalArgumentException if codePoint is less than 0 or greater than 0X10FFFF
    */
   public static String toUTF(byte[] bytes) {
     int codePoint = ByteBuffer.wrap(bytes).getInt();
     if (codePoint < 0 || codePoint > 0X10FFFF)
-      throw new IllegalArgumentException(
-          "RangeError: pack(U): value out of range");
+      throw new IllegalArgumentException("RangeError: pack(U): value out of range");
 
     return String.valueOf((char) codePoint);
   }
@@ -441,8 +390,7 @@ public final class ByteUtils {
   /**
    * Converts byte array to a binary String by MSB order.
    * 
-   * @param bytes
-   *          a byte array
+   * @param bytes a byte array
    * @return binary String
    */
   public static String toBinaryString(byte[] bytes) {
@@ -452,17 +400,14 @@ public final class ByteUtils {
   /**
    * Converts a byte array to a binary String.
    * 
-   * @param bytes
-   *          a byte array
-   * @param isMSB
-   *          true if MSB, false if LSB
+   * @param bytes a byte array
+   * @param isMSB true if MSB, false if LSB
    * @return binary String
    */
   public static String toBinaryString(byte[] bytes, boolean isMSB) {
     StringBuilder sb = new StringBuilder();
     for (byte b : bytes) {
-      String binary = String.format("%8s", Integer.toBinaryString(b & 0xFF))
-          .replace(' ', '0');
+      String binary = String.format("%8s", Integer.toBinaryString(b & 0xFF)).replace(' ', '0');
       if (isMSB)
         sb.append(binary);
       else
@@ -474,8 +419,7 @@ public final class ByteUtils {
   /**
    * Converts a byte array to a hex String by HNF order.
    * 
-   * @param bytes
-   *          a byte array
+   * @param bytes a byte array
    * @return hex String
    */
   public static String toHexString(byte[] bytes) {
@@ -485,17 +429,14 @@ public final class ByteUtils {
   /**
    * Converts a byte array to a hex String.
    * 
-   * @param bytes
-   *          a byte array
-   * @param isHNF
-   *          true if HNF(high nibble first), false if LNF(low nibble first)
+   * @param bytes a byte array
+   * @param isHNF true if HNF(high nibble first), false if LNF(low nibble first)
    * @return hex String
    */
   public static String toHexString(byte[] bytes, boolean isHNF) {
     StringBuilder sb = new StringBuilder();
     for (byte b : bytes) {
-      String hex =
-          String.format("%2s", Integer.toHexString(b & 0xFF)).replace(' ', '0');
+      String hex = String.format("%2s", Integer.toHexString(b & 0xFF)).replace(' ', '0');
       if (isHNF)
         sb.append(hex);
       else
@@ -507,32 +448,25 @@ public final class ByteUtils {
   /**
    * Converts a binary string into byte array.
    * 
-   * @param binaryStr
-   *          a binary string
+   * @param binaryStr a binary string
    * @return byte array
-   * @throws IllegalArgumentException
-   *           if binary string is invalid
+   * @throws IllegalArgumentException if binary string is invalid
    */
   public static byte[] fromBinaryString(String binaryStr) {
-    if (!binaryStr.matches("^[01]*$"))
-      throw new IllegalArgumentException("Invalid binary string");
+    if (!binaryStr.matches("^[01]*$")) throw new IllegalArgumentException("Invalid binary string");
     if (binaryStr.isEmpty()) return new byte[0];
 
     int complementary = binaryStr.length() % 8;
-    if (complementary != 0)
-      binaryStr += Ruby.Array.of("0").multiply(8 - complementary).join();
-    return rjust(new BigInteger(binaryStr, 2).toByteArray(),
-        binaryStr.length() / 8);
+    if (complementary != 0) binaryStr += Ruby.Array.of("0").multiply(8 - complementary).join();
+    return rjust(new BigInteger(binaryStr, 2).toByteArray(), binaryStr.length() / 8);
   }
 
   /**
    * Converts a hexadecimal string into byte array.
    * 
-   * @param hexStr
-   *          a hexadecimal string
+   * @param hexStr a hexadecimal string
    * @return byte array
-   * @throws IllegalArgumentException
-   *           if hexadecimal string is invalid
+   * @throws IllegalArgumentException if hexadecimal string is invalid
    */
   public static byte[] fromHexString(String hexStr) {
     if (!hexStr.matches("^[0-9A-Fa-f]*$"))

@@ -2,16 +2,14 @@
  *
  * Copyright 2013 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -28,15 +26,14 @@ import net.sf.rubycollect4j.succ.Successive;
 
 /**
  * 
- * {@link RubyRange} is inspired by the Range class of Ruby. It does not exactly
- * follow the implementation of Ruby, especially on the range of alphanumeric
- * strings. All objects can use the {@link RubyRange} to create a range of
- * interval. As long as it provides the corresponding Successive object.
+ * {@link RubyRange} is inspired by the Range class of Ruby. It does not exactly follow the
+ * implementation of Ruby, especially on the range of alphanumeric strings. All objects can use the
+ * {@link RubyRange} to create a range of interval. As long as it provides the corresponding
+ * Successive object.
  * <p>
  * {@link RubyRange} is also a {@link RubyBase.Enumerable}.
  * 
- * @param <E>
- *          the type of elements
+ * @param <E> the type of elements
  * 
  * @author Wei-Ming Wu
  * 
@@ -60,21 +57,14 @@ public final class RubyRange<E> implements RubyEnumerable<E>, Serializable {
   /**
    * Creates a {@link RubyRange} of given elements.
    * 
-   * @param successive
-   *          a Successive object to provide the successor of elements
-   * @param startPoint
-   *          where the range begins
-   * @param endPoint
-   *          where the range ends
-   * @param interval
-   *          an {@link Interval}
-   * @throws NullPointerException
-   *           if successive or interval is null
-   * @throws IllegalArgumentException
-   *           if startPoint or endPoint is null
+   * @param successive a Successive object to provide the successor of elements
+   * @param startPoint where the range begins
+   * @param endPoint where the range ends
+   * @param interval an {@link Interval}
+   * @throws NullPointerException if successive or interval is null
+   * @throws IllegalArgumentException if startPoint or endPoint is null
    */
-  public RubyRange(Successive<E> successive, E startPoint, E endPoint,
-      Interval interval) {
+  public RubyRange(Successive<E> successive, E startPoint, E endPoint, Interval interval) {
     Objects.requireNonNull(successive);
     Objects.requireNonNull(interval);
     if (startPoint == null || endPoint == null)
@@ -88,8 +78,7 @@ public final class RubyRange<E> implements RubyEnumerable<E>, Serializable {
   }
 
   /**
-   * Creates a {@link RubyRange} with closed interval of the same start and end
-   * points.
+   * Creates a {@link RubyRange} with closed interval of the same start and end points.
    * 
    * @return new {@link RubyRange}
    */
@@ -98,19 +87,16 @@ public final class RubyRange<E> implements RubyEnumerable<E>, Serializable {
   }
 
   /**
-   * Returns a {@link RubyRange} with closed-open interval of the same start and
-   * end points.
+   * Returns a {@link RubyRange} with closed-open interval of the same start and end points.
    * 
    * @return new {@link RubyRange}
    */
   public RubyRange<E> closedOpen() {
-    return new RubyRange<>(successive, startPoint, endPoint,
-        Interval.CLOSED_OPEN);
+    return new RubyRange<>(successive, startPoint, endPoint, Interval.CLOSED_OPEN);
   }
 
   /**
-   * Returns a {@link RubyRange} with open interval of the same start and end
-   * points.
+   * Returns a {@link RubyRange} with open interval of the same start and end points.
    * 
    * @return new {@link RubyRange}
    */
@@ -119,14 +105,12 @@ public final class RubyRange<E> implements RubyEnumerable<E>, Serializable {
   }
 
   /**
-   * Returns a {@link RubyRange} with open-closed interval of the same start and
-   * end points.
+   * Returns a {@link RubyRange} with open-closed interval of the same start and end points.
    * 
    * @return new {@link RubyRange}
    */
   public RubyRange<E> openClosed() {
-    return new RubyRange<>(successive, startPoint, endPoint,
-        Interval.OPEN_CLOSED);
+    return new RubyRange<>(successive, startPoint, endPoint, Interval.OPEN_CLOSED);
   }
 
   /**
@@ -141,24 +125,19 @@ public final class RubyRange<E> implements RubyEnumerable<E>, Serializable {
   /**
    * Check if an item is within this {@link RubyRange}.
    * 
-   * @param item
-   *          to be checked
+   * @param item to be checked
    * @return true if item is within this range, false otherwise
    */
   public boolean coverʔ(E item) {
     switch (interval) {
       case CLOSED_OPEN:
-        return successive.compare(startPoint, item) <= 0
-            && successive.compare(endPoint, item) > 0;
+        return successive.compare(startPoint, item) <= 0 && successive.compare(endPoint, item) > 0;
       case OPEN_CLOSED:
-        return successive.compare(startPoint, item) < 0
-            && successive.compare(endPoint, item) >= 0;
+        return successive.compare(startPoint, item) < 0 && successive.compare(endPoint, item) >= 0;
       case OPEN:
-        return successive.compare(startPoint, item) < 0
-            && successive.compare(endPoint, item) > 0;
+        return successive.compare(startPoint, item) < 0 && successive.compare(endPoint, item) > 0;
       default: // CLOSED
-        return successive.compare(startPoint, item) <= 0
-            && successive.compare(endPoint, item) >= 0;
+        return successive.compare(startPoint, item) <= 0 && successive.compare(endPoint, item) >= 0;
     }
   }
 
@@ -185,8 +164,7 @@ public final class RubyRange<E> implements RubyEnumerable<E>, Serializable {
   /**
    * Equivalent to {@link #equals(Object)}.
    * 
-   * @param o
-   *          any Object
+   * @param o any Object
    * @return true if 2 objects are equal, false otherwise
    */
   public boolean eqlʔ(Object o) {
@@ -228,8 +206,7 @@ public final class RubyRange<E> implements RubyEnumerable<E>, Serializable {
   /**
    * Returns the last n elements of this {@link RubyRange}.
    * 
-   * @param n
-   *          number of elements
+   * @param n number of elements
    * @return a {@link RubyArray}
    */
   public RubyArray<E> last(int n) {
@@ -253,8 +230,7 @@ public final class RubyRange<E> implements RubyEnumerable<E>, Serializable {
   /**
    * Creates a {@link RubyEnumerator} by all nth elements of the range.
    * 
-   * @param n
-   *          interval to step
+   * @param n interval to step
    * @return a {@link RubyEnumerator}
    */
   public RubyEnumerator<E> step(int n) {
@@ -262,13 +238,10 @@ public final class RubyRange<E> implements RubyEnumerable<E>, Serializable {
   }
 
   /**
-   * Iterates over this {@link RubyRange} and yields each nth element to the
-   * block.
+   * Iterates over this {@link RubyRange} and yields each nth element to the block.
    * 
-   * @param n
-   *          interval to step
-   * @param block
-   *          to yield each element
+   * @param n interval to step
+   * @param block to yield each element
    * @return this {@link RubyRange}
    */
   public RubyRange<E> step(int n, Consumer<? super E> block) {
@@ -297,9 +270,8 @@ public final class RubyRange<E> implements RubyEnumerable<E>, Serializable {
     if (o instanceof RubyRange) {
       @SuppressWarnings("rawtypes")
       RubyRange rr = (RubyRange) o;
-      return successive.equals(rr.successive)
-          && startPoint.equals(rr.startPoint) && endPoint.equals(rr.endPoint)
-          && interval.equals(rr.interval);
+      return successive.equals(rr.successive) && startPoint.equals(rr.startPoint)
+          && endPoint.equals(rr.endPoint) && interval.equals(rr.interval);
     }
     return false;
   }
@@ -316,8 +288,8 @@ public final class RubyRange<E> implements RubyEnumerable<E>, Serializable {
 
   @Override
   public String toString() {
-    return "RubyRange{startPoint=" + startPoint + ", endPoint=" + endPoint
-        + ", interval=" + interval + "}";
+    return "RubyRange{startPoint=" + startPoint + ", endPoint=" + endPoint + ", interval="
+        + interval + "}";
   }
 
 }

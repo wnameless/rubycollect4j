@@ -2,16 +2,14 @@
  *
  * Copyright 2016 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -123,8 +121,7 @@ public class RubyStringsTest {
 
   @Test
   public void testCenterWithPadstr() {
-    assertEquals("1231231hello12312312",
-        RubyStrings.center("hello", 20, "123"));
+    assertEquals("1231231hello12312312", RubyStrings.center("hello", 20, "123"));
     assertEquals("12312312311231231231", RubyStrings.center("", 20, "123"));
   }
 
@@ -220,7 +217,8 @@ public class RubyStringsTest {
       digest = MessageDigest.getInstance("SHA-256");
       digest.update(encrypt.getBytes("UTF-8"), 0, encrypt.length());
       md5 = new BigInteger(1, digest.digest()).toString(16);
-    } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {}
+    } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+    }
     assertEquals(md5, RubyStrings.crypt(rs, "secret"));
   }
 
@@ -259,10 +257,8 @@ public class RubyStringsTest {
 
   @Test
   public void testEachBytes() {
-    assertEquals(
-        ra((byte) 'a', (byte) 'b', (byte) 'c', (byte) '\n', "我".getBytes()[0],
-            "我".getBytes()[1], "我".getBytes()[2]),
-        RubyIterables.toA(RubyStrings.eachByte("abc\n我")));
+    assertEquals(ra((byte) 'a', (byte) 'b', (byte) 'c', (byte) '\n', "我".getBytes()[0],
+        "我".getBytes()[1], "我".getBytes()[2]), RubyIterables.toA(RubyStrings.eachByte("abc\n我")));
   }
 
   @Test
@@ -274,8 +270,7 @@ public class RubyStringsTest {
 
   @Test
   public void testEachChars() {
-    assertEquals(ra("a", "b", "c", "\n", "我"),
-        RubyIterables.toA(RubyStrings.eachChar("abc\n我")));
+    assertEquals(ra("a", "b", "c", "\n", "我"), RubyIterables.toA(RubyStrings.eachChar("abc\n我")));
   }
 
   @Test
@@ -287,8 +282,7 @@ public class RubyStringsTest {
 
   @Test
   public void testEachCodepoint() {
-    assertEquals(ra(97, 98, 99, 25105),
-        RubyIterables.toA(RubyStrings.eachCodepoint("abc我")));
+    assertEquals(ra(97, 98, 99, 25105), RubyIterables.toA(RubyStrings.eachCodepoint("abc我")));
   }
 
   @Test
@@ -300,8 +294,7 @@ public class RubyStringsTest {
 
   @Test
   public void testEachLine() {
-    assertEquals(ra("a", "\r", "bc"),
-        RubyIterables.toA(RubyStrings.eachLine("a\n\r\nbc\n")));
+    assertEquals(ra("a", "\r", "bc"), RubyIterables.toA(RubyStrings.eachLine("a\n\r\nbc\n")));
   }
 
   @Test
@@ -314,8 +307,7 @@ public class RubyStringsTest {
 
   @Test
   public void testEachLineWithSeparator() {
-    assertEquals(ra("a\n", "\nbc\n"),
-        RubyIterables.toA(RubyStrings.eachLine("a\n\r\nbc\n", "\r")));
+    assertEquals(ra("a\n", "\nbc\n"), RubyIterables.toA(RubyStrings.eachLine("a\n\r\nbc\n", "\r")));
   }
 
   @Test
@@ -429,8 +421,7 @@ public class RubyStringsTest {
 
   @Test
   public void testGsubWithMap() {
-    assertEquals("0ab88c99",
-        RubyStrings.gsub("0ab4c56", "\\d+", rh("4", "88", "56", "99")));
+    assertEquals("0ab88c99", RubyStrings.gsub("0ab4c56", "\\d+", rh("4", "88", "56", "99")));
     assertEquals(rs, RubyStrings.gsub(rs, "\\d+", (Map<String, ?>) null));
     // assertNotSame(rs, RubyStrings.gsub(rs, "\\d+", (Map<String, ?>) null));
   }
@@ -444,8 +435,7 @@ public class RubyStringsTest {
 
   @Test
   public void testGsubWithBlock() {
-    assertEquals("ab40c560",
-        RubyStrings.gsub("ab4c56", "\\d+", item -> item + "0"));
+    assertEquals("ab40c560", RubyStrings.gsub("ab4c56", "\\d+", item -> item + "0"));
   }
 
   @Test
@@ -457,8 +447,7 @@ public class RubyStringsTest {
 
   @Test
   public void testGsubWithoutReplacement() {
-    assertEquals(ra("4", "56"),
-        RubyIterables.toA(RubyStrings.gsub("ab4c56", "\\d+")));
+    assertEquals(ra("4", "56"), RubyIterables.toA(RubyStrings.gsub("ab4c56", "\\d+")));
   }
 
   @Test
@@ -592,8 +581,7 @@ public class RubyStringsTest {
 
   @Test
   public void testLjustWithPadstr() {
-    assertEquals("hello123412341234123",
-        RubyStrings.ljust("hello", 20, "1234"));
+    assertEquals("hello123412341234123", RubyStrings.ljust("hello", 20, "1234"));
   }
 
   @Test
@@ -786,8 +774,7 @@ public class RubyStringsTest {
   @Test
   public void testRjustWithPadstr() {
     assertEquals("hello", RubyStrings.rjust("hello", -1, "1234"));
-    assertEquals("123412341234123hello",
-        RubyStrings.rjust("hello", 20, "1234"));
+    assertEquals("123412341234123hello", RubyStrings.rjust("hello", 20, "1234"));
   }
 
   @Test
@@ -805,10 +792,8 @@ public class RubyStringsTest {
 
   @Test
   public void testRpartitionWithPattern() {
-    assertEquals(ra("he", "ll", "o"),
-        RubyStrings.rpartition("hello", qr(".l")));
-    assertEquals(ra("", "", "hello"),
-        RubyStrings.rpartition("hello", qr(".x")));
+    assertEquals(ra("he", "ll", "o"), RubyStrings.rpartition("hello", qr(".l")));
+    assertEquals(ra("", "", "hello"), RubyStrings.rpartition("hello", qr(".x")));
   }
 
   @Test
@@ -827,8 +812,7 @@ public class RubyStringsTest {
   @Test
   public void testScan() {
     assertEquals(ra("cruel", "world"), RubyStrings.scan("cruel world", "\\w+"));
-    assertEquals(ra("cru", "el ", "wor"),
-        RubyStrings.scan("cruel world", "..."));
+    assertEquals(ra("cru", "el ", "wor"), RubyStrings.scan("cruel world", "..."));
   }
 
   @Test
@@ -859,8 +843,7 @@ public class RubyStringsTest {
         RubyStrings.scanGroups("cruel world", "(...)"));
     assertEquals(ra(ra("cr", "ue"), ra("l ", "wo")),
         RubyStrings.scanGroups("cruel world", "(..)(..)"));
-    assertEquals(ra(ra("cru"), ra("el "), ra("wor")),
-        RubyStrings.scanGroups("cruel world", "..."));
+    assertEquals(ra(ra("cru"), ra("el "), ra("wor")), RubyStrings.scanGroups("cruel world", "..."));
   }
 
   @Test
@@ -874,8 +857,7 @@ public class RubyStringsTest {
   public void testScanGroupsWithBlock() {
     final RubyArray<String> strs = newRubyArray();
     rs = "cruel world";
-    assertSame(rs,
-        RubyStrings.scanGroups(rs, "(...)", item -> strs.concat(item)));
+    assertSame(rs, RubyStrings.scanGroups(rs, "(...)", item -> strs.concat(item)));
     assertEquals(ra("cru", "el ", "wor"), strs);
   }
 
@@ -895,8 +877,7 @@ public class RubyStringsTest {
   @Test
   public void testScrubWithReplacement() {
     assertEquals("abcあ!", RubyStrings.scrub("abc\u3042\0", "!"));
-    assertEquals(rs("abc\u3042\0").scrub().toS(),
-        RubyStrings.scrub("abc\u3042\0", (String) null));
+    assertEquals(rs("abc\u3042\0").scrub().toS(), RubyStrings.scrub("abc\u3042\0", (String) null));
   }
 
   @Test
@@ -964,56 +945,37 @@ public class RubyStringsTest {
 
   @Test
   public void testSplitWithDelimiter() {
-    assertEquals(ra("a", "bc", "def"),
-        RubyStrings.split("  a   bc   def ", " "));
-    assertEquals(ra("a", "bc", "def"),
-        RubyStrings.split("  a   bc   def ", (String) null));
-    assertEquals(ra("", "a", " bc", " def "),
-        RubyStrings.split("  a   bc   def ", "  "));
+    assertEquals(ra("a", "bc", "def"), RubyStrings.split("  a   bc   def ", " "));
+    assertEquals(ra("a", "bc", "def"), RubyStrings.split("  a   bc   def ", (String) null));
+    assertEquals(ra("", "a", " bc", " def "), RubyStrings.split("  a   bc   def ", "  "));
   }
 
   @Test
   public void testSplitWithDelimiterAndLimit() {
-    assertEquals(ra("a", "bc", "def"),
-        RubyStrings.split("  a   bc   def ", " ", 0));
-    assertEquals(ra("a", "bc", "def"),
-        rs("  a   bc   def ").split((String) null, 0));
-    assertEquals(ra("a", "bc", "def"),
-        RubyStrings.split("  a   bc   def ", " ", -1));
-    assertEquals(ra("  a   bc   def "),
-        RubyStrings.split("  a   bc   def ", " ", 1));
-    assertEquals(ra("a", "bc   def "),
-        RubyStrings.split("  a   bc   def ", " ", 2));
-    assertEquals(ra("", "a   bc   def "),
-        RubyStrings.split("  a   bc   def ", "  ", 2));
-    assertEquals(ra("", "a", " bc", " def "),
-        RubyStrings.split("  a   bc   def ", "  ", 0));
+    assertEquals(ra("a", "bc", "def"), RubyStrings.split("  a   bc   def ", " ", 0));
+    assertEquals(ra("a", "bc", "def"), rs("  a   bc   def ").split((String) null, 0));
+    assertEquals(ra("a", "bc", "def"), RubyStrings.split("  a   bc   def ", " ", -1));
+    assertEquals(ra("  a   bc   def "), RubyStrings.split("  a   bc   def ", " ", 1));
+    assertEquals(ra("a", "bc   def "), RubyStrings.split("  a   bc   def ", " ", 2));
+    assertEquals(ra("", "a   bc   def "), RubyStrings.split("  a   bc   def ", "  ", 2));
+    assertEquals(ra("", "a", " bc", " def "), RubyStrings.split("  a   bc   def ", "  ", 0));
   }
 
   @Test
   public void testSplitWithPatternAndDelimiter() {
-    assertEquals(ra("", "a", "bc", "def"),
-        RubyStrings.split("  a   bc   def ", qr(" +")));
-    assertEquals(ra("a", "bc", "def"),
-        RubyStrings.split("  a   bc   def ", (Pattern) null));
-    assertEquals(ra("", "a", "bc", "def"),
-        RubyStrings.split("  a   bc   def ", qr(" +")));
+    assertEquals(ra("", "a", "bc", "def"), RubyStrings.split("  a   bc   def ", qr(" +")));
+    assertEquals(ra("a", "bc", "def"), RubyStrings.split("  a   bc   def ", (Pattern) null));
+    assertEquals(ra("", "a", "bc", "def"), RubyStrings.split("  a   bc   def ", qr(" +")));
   }
 
   @Test
   public void testSplitWithPatternAndDelimiterAndLimit() {
-    assertEquals(ra("", "a", "bc", "def"),
-        RubyStrings.split("  a   bc   def ", qr(" +"), 0));
-    assertEquals(ra("a", "bc", "def"),
-        RubyStrings.split("  a   bc   def ", (Pattern) null, 0));
-    assertEquals(ra("", "a", "bc", "def"),
-        RubyStrings.split("  a   bc   def ", qr(" +"), -1));
-    assertEquals(ra("  a   bc   def "),
-        RubyStrings.split("  a   bc   def ", qr(" +"), 1));
-    assertEquals(ra("", "a   bc   def "),
-        RubyStrings.split("  a   bc   def ", qr(" +"), 2));
-    assertEquals(ra("", "a   bc   def "),
-        RubyStrings.split("  a   bc   def ", qr(" {2,2}"), 2));
+    assertEquals(ra("", "a", "bc", "def"), RubyStrings.split("  a   bc   def ", qr(" +"), 0));
+    assertEquals(ra("a", "bc", "def"), RubyStrings.split("  a   bc   def ", (Pattern) null, 0));
+    assertEquals(ra("", "a", "bc", "def"), RubyStrings.split("  a   bc   def ", qr(" +"), -1));
+    assertEquals(ra("  a   bc   def "), RubyStrings.split("  a   bc   def ", qr(" +"), 1));
+    assertEquals(ra("", "a   bc   def "), RubyStrings.split("  a   bc   def ", qr(" +"), 2));
+    assertEquals(ra("", "a   bc   def "), RubyStrings.split("  a   bc   def ", qr(" {2,2}"), 2));
     assertEquals(ra("", "a", " bc", " def "),
         RubyStrings.split("  a   bc   def ", qr(" {2,2}"), 0));
   }
@@ -1026,8 +988,7 @@ public class RubyStringsTest {
   @Test
   public void testSqueezeWithCharSet() {
     assertEquals(" now is the", RubyStrings.squeeze("  now   is  the", " "));
-    assertEquals("puters shot balls",
-        RubyStrings.squeeze("putters shoot balls", "m-z"));
+    assertEquals("puters shot balls", RubyStrings.squeeze("putters shoot balls", "m-z"));
   }
 
   @Test
@@ -1082,8 +1043,7 @@ public class RubyStringsTest {
     assertEquals("h0llo", RubyStrings.sub("hello", "[aeiou]", rh("e", 0)));
     assertEquals("hello", RubyStrings.sub("hello", "[aeiou]", rh("a", 1)));
     assertEquals("hello", RubyStrings.sub("hello", "x", rh("a", 1)));
-    assertEquals("hello",
-        RubyStrings.sub("hello", "e", new HashMap<String, Object>()));
+    assertEquals("hello", RubyStrings.sub("hello", "e", new HashMap<String, Object>()));
   }
 
   @Test
@@ -1151,14 +1111,11 @@ public class RubyStringsTest {
     assertEquals((Integer) 0, (Integer) RubyStrings.toI("hello"));
     assertEquals((Integer) 101, (Integer) RubyStrings.toI(" + 1100101", 2));
     assertEquals((Integer) 294977, (Integer) RubyStrings.toI("1100101", 8));
-    assertEquals((Integer) rs("1100101").toI(8),
-        (Integer) RubyStrings.toI("11001019", 8));
-    assertEquals((Integer) rs("11001").toI(8),
-        (Integer) RubyStrings.toI("110019", 8));
+    assertEquals((Integer) rs("1100101").toI(8), (Integer) RubyStrings.toI("11001019", 8));
+    assertEquals((Integer) rs("11001").toI(8), (Integer) RubyStrings.toI("110019", 8));
     assertEquals((Integer) 1100101, (Integer) RubyStrings.toI("1100101", 10));
     assertEquals((Integer) 17826049, (Integer) RubyStrings.toI("1100101", 16));
-    assertEquals((Integer) rs("1100101F").toI(16),
-        (Integer) RubyStrings.toI("1100101fg", 16));
+    assertEquals((Integer) rs("1100101F").toI(16), (Integer) RubyStrings.toI("1100101fg", 16));
   }
 
   @Test
@@ -1248,12 +1205,9 @@ public class RubyStringsTest {
 
   @Test
   public void testUnpack() {
-    assertEquals(ra("abc", "abc "),
-        RubyStrings.unpack("abc \0\0abc \0\0", "A6Z6"));
-    assertEquals(ra("abc", " \000\000"),
-        RubyStrings.unpack("abc \0\0", "a3a3"));
-    assertEquals(ra("abc ", "abc "),
-        RubyStrings.unpack("abc \0abc \0", "Z*Z*"));
+    assertEquals(ra("abc", "abc "), RubyStrings.unpack("abc \0\0abc \0\0", "A6Z6"));
+    assertEquals(ra("abc", " \000\000"), RubyStrings.unpack("abc \0\0", "a3a3"));
+    assertEquals(ra("abc ", "abc "), RubyStrings.unpack("abc \0abc \0", "Z*Z*"));
     assertEquals(ra("10000110", "01100001"), RubyStrings.unpack("aa", "b8B8"));
     assertEquals(ra("16", "61", (byte) 97), RubyStrings.unpack("aaa", "h2H2c"));
   }
@@ -1272,11 +1226,9 @@ public class RubyStringsTest {
 
   @Test
   public void testUpto() {
-    assertEquals(ra("9", "10", "11"),
-        RubyIterables.toA(RubyStrings.upto("9", "11")));
+    assertEquals(ra("9", "10", "11"), RubyIterables.toA(RubyStrings.upto("9", "11")));
     assertEquals(ra(), RubyIterables.toA(RubyStrings.upto("25", "5")));
-    assertEquals(ra("07", "08", "09", "10", "11"),
-        RubyIterables.toA(RubyStrings.upto("07", "11")));
+    assertEquals(ra("07", "08", "09", "10", "11"), RubyIterables.toA(RubyStrings.upto("07", "11")));
   }
 
   @Test
@@ -1288,10 +1240,8 @@ public class RubyStringsTest {
 
   @Test
   public void testUptoWithExclusive() {
-    assertEquals(ra("9", "10", "11"),
-        RubyIterables.toA(RubyStrings.upto("9", "11", false)));
-    assertEquals(ra("9", "10"),
-        RubyIterables.toA(RubyStrings.upto("9", "11", true)));
+    assertEquals(ra("9", "10", "11"), RubyIterables.toA(RubyStrings.upto("9", "11", false)));
+    assertEquals(ra("9", "10"), RubyIterables.toA(RubyStrings.upto("9", "11", true)));
   }
 
   @Test

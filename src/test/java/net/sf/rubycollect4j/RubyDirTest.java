@@ -2,16 +2,14 @@
  *
  * Copyright 2013 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -72,8 +70,7 @@ public class RubyDirTest {
 
   @Test
   public void testEntries() {
-    assertEquals(ra(".", "..", "a", "b"),
-        RubyDir.entries(BASE_DIR + "entries_test"));
+    assertEquals(ra(".", "..", "a", "b"), RubyDir.entries(BASE_DIR + "entries_test"));
   }
 
   @Test
@@ -84,50 +81,40 @@ public class RubyDirTest {
 
   @Test
   public void testForeach() {
-    assertEquals(RubyEnumerator.class,
-        RubyDir.foreach(BASE_DIR + "entries_test").getClass());
-    assertEquals(ra(".", "..", "a", "b"),
-        RubyDir.foreach(BASE_DIR + "entries_test").toA());
+    assertEquals(RubyEnumerator.class, RubyDir.foreach(BASE_DIR + "entries_test").getClass());
+    assertEquals(ra(".", "..", "a", "b"), RubyDir.foreach(BASE_DIR + "entries_test").toA());
   }
 
   @Test
   public void testGlob() {
     assertEquals(ra(), RubyDir.glob(""));
-    assertEquals(
-        ra("folder2-1", "file2-1", "folder2-1" + File.separator + "file2-1-1",
-            "folder2-1" + File.separator + "file2-1-2",
-            "folder2-1" + File.separator + "file2-1-3").sort(),
+    assertEquals(ra("folder2-1", "file2-1", "folder2-1" + File.separator + "file2-1-1",
+        "folder2-1" + File.separator + "file2-1-2", "folder2-1" + File.separator + "file2-1-3")
+            .sort(),
         RubyDir.glob(GLOB_DIR + "folder2/**/*").sort());
-    assertEquals(ra("folder1", "folder2", "rbc4j").sort(),
-        RubyDir.glob(GLOB_DIR + "*").sort());
-    assertEquals(ra("folder1", "folder2", "rbc4j").sort(),
-        RubyDir.glob(GLOB_DIR + "**").sort());
-    assertEquals(
-        ra("folder1" + File.separator, "folder2" + File.separator).sort(),
+    assertEquals(ra("folder1", "folder2", "rbc4j").sort(), RubyDir.glob(GLOB_DIR + "*").sort());
+    assertEquals(ra("folder1", "folder2", "rbc4j").sort(), RubyDir.glob(GLOB_DIR + "**").sort());
+    assertEquals(ra("folder1" + File.separator, "folder2" + File.separator).sort(),
         RubyDir.glob(GLOB_DIR + "*/").sort());
     assertEquals(
-        ra("folder1" + File.separator,
-            "folder1" + File.separator + "folder1-1" + File.separator,
-            "folder1" + File.separator + "folder1-2" + File.separator,
-            "folder2" + File.separator,
+        ra("folder1" + File.separator, "folder1" + File.separator + "folder1-1" + File.separator,
+            "folder1" + File.separator + "folder1-2" + File.separator, "folder2" + File.separator,
             "folder2" + File.separator + "folder2-1" + File.separator).sort(),
         RubyDir.glob(GLOB_DIR + "**/").sort());
-    assertEquals(ra("file1-1", "file1-2", "file1-3", "file1-4", "folder1-1",
-        "folder1-2"), RubyDir.glob(GLOB_DIR + "folder1/*").sort());
-    assertEquals(ra(
-        "folder1" + File.separator + "folder1-1" + File.separator + "file1-1-1",
-        "folder1" + File.separator + "folder1-2" + File.separator + "file1-2-1")
-            .sort(),
+    assertEquals(ra("file1-1", "file1-2", "file1-3", "file1-4", "folder1-1", "folder1-2"),
+        RubyDir.glob(GLOB_DIR + "folder1/*").sort());
+    assertEquals(
+        ra("folder1" + File.separator + "folder1-1" + File.separator + "file1-1-1",
+            "folder1" + File.separator + "folder1-2" + File.separator + "file1-2-1").sort(),
         RubyDir.glob(GLOB_DIR + "**/*1-*-1*").sort());
     assertEquals(19, RubyDir.glob(GLOB_DIR + "**/*").count());
     assertEquals(ra("file1-2", "file1-3", "folder1-2").sort(),
         RubyDir.glob(GLOB_DIR + "folder1/*[2,3]").sort());
     assertEquals(ra(GLOB_DIR + "rbc4j"),
         RubyDir.glob("**/*c4j").select(item -> item.startsWith("src")));
-    assertEquals(ra(
-        "folder1" + File.separator + "folder1-1" + File.separator + "file1-1-1",
-        "folder1" + File.separator + "folder1-2" + File.separator + "file1-2-1")
-            .sort(),
+    assertEquals(
+        ra("folder1" + File.separator + "folder1-1" + File.separator + "file1-1-1",
+            "folder1" + File.separator + "folder1-2" + File.separator + "file1-2-1").sort(),
         RubyDir.glob(GLOB_DIR + "**/{file1-?-1,file1-2-1}").sort());
   }
 
@@ -166,15 +153,13 @@ public class RubyDirTest {
   @Test
   public void testEachWithBlock() {
     final RubyArray<String> entries = ra();
-    RubyDir.open(BASE_DIR + "glob_test/folder2")
-        .each(item -> entries.push(item));
+    RubyDir.open(BASE_DIR + "glob_test/folder2").each(item -> entries.push(item));
     assertEquals(ra(".", "..", "folder2-1", "file2-1").sort(), entries);
   }
 
   @Test
   public void testPath() {
-    assertEquals(normalizePath(BASE_DIR),
-        RubyDir.open(BASE_DIR).path() + File.separator);
+    assertEquals(normalizePath(BASE_DIR), RubyDir.open(BASE_DIR).path() + File.separator);
   }
 
   @Test
@@ -249,8 +234,7 @@ public class RubyDirTest {
   @Test
   public void testToString() {
     assertEquals(
-        normalizePath("RubyDir{path="
-            + BASE_DIR.substring(0, BASE_DIR.length() - 1) + "}"),
+        normalizePath("RubyDir{path=" + BASE_DIR.substring(0, BASE_DIR.length() - 1) + "}"),
         RubyDir.open(BASE_DIR).toString());
   }
 

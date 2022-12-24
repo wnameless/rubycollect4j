@@ -2,16 +2,14 @@
  *
  * Copyright 2013 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -22,11 +20,10 @@ import java.util.List;
 
 /**
  * 
- * {@link StringSuccessor} generates a successor of any given String. It's a
- * singleton object. If given String included alphanumeric characters, it will
- * generate successors based on those alphanumeric characters instead of the
- * whole String. If given String is numeric only, its will generate successors
- * based on those numeric values.
+ * {@link StringSuccessor} generates a successor of any given String. It's a singleton object. If
+ * given String included alphanumeric characters, it will generate successors based on those
+ * alphanumeric characters instead of the whole String. If given String is numeric only, its will
+ * generate successors based on those numeric values.
  * 
  * @author Wei-Ming Wu
  * 
@@ -137,8 +134,7 @@ public final class StringSuccessor implements Successive<String> {
     List<List<Character>> parts = new ArrayList<>();
     List<Character> chars = new ArrayList<>();
     for (char c : curr.toCharArray()) {
-      if (chars.isEmpty()
-          || isAlphanumeric(chars.get(chars.size() - 1)) == isAlphanumeric(c)) {
+      if (chars.isEmpty() || isAlphanumeric(chars.get(chars.size() - 1)) == isAlphanumeric(c)) {
         chars.add(c);
       } else {
         parts.add(chars);

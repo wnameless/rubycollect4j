@@ -2,16 +2,14 @@
  *
  * Copyright 2013 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -282,8 +280,7 @@ public class RubyHashTest {
   @Test
   public void testFetchValues() {
     assertEquals(Ruby.Array.of(2, 4, 6), rh.fetchValues(1, 3, 5));
-    assertEquals(Ruby.Array.of(2, 4, 6),
-        rh.fetchValues(Arrays.asList(1, 3, 5)));
+    assertEquals(Ruby.Array.of(2, 4, 6), rh.fetchValues(Arrays.asList(1, 3, 5)));
   }
 
   @Test
@@ -383,8 +380,8 @@ public class RubyHashTest {
 
   @Test
   public void testMergeWithBlock() {
-    assertEquals(rh(1, 3, 3, 4, 5, 6, 0, 1), rh.merge(rh(0, 1, 1, 3, 3, 2),
-        (key, oldval, newval) -> Math.max(oldval, newval)));
+    assertEquals(rh(1, 3, 3, 4, 5, 6, 0, 1),
+        rh.merge(rh(0, 1, 1, 3, 3, 2), (key, oldval, newval) -> Math.max(oldval, newval)));
   }
 
   @Test
@@ -395,8 +392,8 @@ public class RubyHashTest {
 
   @Test
   public void testMergeǃWithBlock() {
-    assertEquals(rh(1, 3, 3, 4, 5, 6, 0, 1), rh.mergeǃ(rh(0, 1, 1, 3, 3, 2),
-        (key, oldval, newval) -> Math.max(oldval, newval)));
+    assertEquals(rh(1, 3, 3, 4, 5, 6, 0, 1),
+        rh.mergeǃ(rh(0, 1, 1, 3, 3, 2), (key, oldval, newval) -> Math.max(oldval, newval)));
     assertEquals(rh(1, 3, 3, 4, 5, 6, 0, 1), rh);
   }
 
@@ -456,8 +453,7 @@ public class RubyHashTest {
   @Test
   public void testToH() {
     assertEquals(rh, rh.toH(e -> e));
-    assertEquals(rh(hp(1, 2), hp(3, 4), hp(5, 6), null),
-        rh.toH((e1, e2) -> hp(e1, e2)));
+    assertEquals(rh(hp(1, 2), hp(3, 4), hp(5, 6), null), rh.toH((e1, e2) -> hp(e1, e2)));
   }
 
   @Test
@@ -503,8 +499,8 @@ public class RubyHashTest {
 
   @Test
   public void testUpdateWithBlock() {
-    assertEquals(rh(1, 3, 3, 4, 5, 6, 0, 1), rh.update(rh(0, 1, 1, 3, 3, 2),
-        (key, oldval, newval) -> Math.max(oldval, newval)));
+    assertEquals(rh(1, 3, 3, 4, 5, 6, 0, 1),
+        rh.update(rh(0, 1, 1, 3, 3, 2), (key, oldval, newval) -> Math.max(oldval, newval)));
     assertEquals(rh(1, 3, 3, 4, 5, 6, 0, 1), rh);
   }
 
@@ -517,8 +513,7 @@ public class RubyHashTest {
   @Test
   public void testValuesAt() {
     assertEquals(ra(2, 6, 4, 2, null), rh.valuesAt(1, 5, 3, 1, 7));
-    assertEquals(ra(2, 6, 4, 2, null),
-        rh.valuesAt(Arrays.asList(1, 5, 3, 1, 7)));
+    assertEquals(ra(2, 6, 4, 2, null), rh.valuesAt(Arrays.asList(1, 5, 3, 1, 7)));
   }
 
   @Test
@@ -546,17 +541,15 @@ public class RubyHashTest {
 
   @Test
   public void testChunk() {
-    assertEquals(
-        ra(hp(3L, ra(hp(1, 2))), hp(7L, ra(hp(3, 4))), hp(11L, ra(hp(5, 6)))),
-        rh.chunk((BiFunction<Integer, Integer, Long>) (key, value) -> Long
-            .valueOf(key + value)).toA());
+    assertEquals(ra(hp(3L, ra(hp(1, 2))), hp(7L, ra(hp(3, 4))), hp(11L, ra(hp(5, 6)))),
+        rh.chunk((BiFunction<Integer, Integer, Long>) (key, value) -> Long.valueOf(key + value))
+            .toA());
   }
 
   @Test
   public void testCollect() {
     assertEquals(ra(3L, 7L, 11L),
-        rh.collect((BiFunction<Integer, Integer, Long>) (key, value) -> Long
-            .valueOf(key + value)));
+        rh.collect((BiFunction<Integer, Integer, Long>) (key, value) -> Long.valueOf(key + value)));
   }
 
   @Test
@@ -568,8 +561,7 @@ public class RubyHashTest {
 
   @Test
   public void testCount() {
-    assertEquals(1,
-        rh.count((BiPredicate<Integer, Integer>) (key, value) -> key == 1));
+    assertEquals(1, rh.count((BiPredicate<Integer, Integer>) (key, value) -> key == 1));
   }
 
   @Test
@@ -598,28 +590,25 @@ public class RubyHashTest {
 
   @Test
   public void testDetect() {
-    assertEquals(hp(3, 4),
-        rh.detect((BiPredicate<Integer, Integer>) (key, value) -> value == 4));
+    assertEquals(hp(3, 4), rh.detect((BiPredicate<Integer, Integer>) (key, value) -> value == 4));
   }
 
   @Test
   public void testDropWhile() {
-    assertEquals(ra(hp(3, 4), hp(5, 6)), rh.dropWhile(
-        (BiPredicate<Integer, Integer>) (key, value) -> key + value <= 4));
+    assertEquals(ra(hp(3, 4), hp(5, 6)),
+        rh.dropWhile((BiPredicate<Integer, Integer>) (key, value) -> key + value <= 4));
   }
 
   @Test
   public void testEachEntry() {
     final RubyArray<Integer> ints = ra();
-    rh.eachEntry(
-        (BiConsumer<Integer, Integer>) (key, value) -> ints.push(value));
+    rh.eachEntry((BiConsumer<Integer, Integer>) (key, value) -> ints.push(value));
     assertEquals(ra(2, 4, 6), ints);
   }
 
   @Test
   public void testFind() {
-    assertEquals(hp(3, 4),
-        rh.find((BiPredicate<Integer, Integer>) (key, value) -> value == 4));
+    assertEquals(hp(3, 4), rh.find((BiPredicate<Integer, Integer>) (key, value) -> value == 4));
   }
 
   @Test
@@ -638,77 +627,65 @@ public class RubyHashTest {
 
   @Test
   public void testFlatMap() {
-    assertEquals(ra(3L, 7L, 11L),
-        rh.flatMap((BiFunction<Integer, Integer, RubyArray<Long>>) (key,
-            value) -> ra(Long.valueOf(key + value))).toA());
+    assertEquals(ra(3L, 7L, 11L), rh.flatMap((BiFunction<Integer, Integer, RubyArray<Long>>) (key,
+        value) -> ra(Long.valueOf(key + value))).toA());
   }
 
   @Test
   public void testGrep() {
-    assertEquals(ra(7L), rh.grep("4", (BiFunction<Integer, Integer, Long>) (key,
-        value) -> Long.valueOf(key + value)));
+    assertEquals(ra(7L), rh.grep("4",
+        (BiFunction<Integer, Integer, Long>) (key, value) -> Long.valueOf(key + value)));
   }
 
   @Test
   public void testGroupBy() {
     assertEquals(rh(true, ra(hp(1, 2), hp(3, 4)), false, ra(hp(5, 6))),
-        rh.groupBy((BiFunction<Integer, Integer, Boolean>) (key,
-            value) -> key + value < 10));
+        rh.groupBy((BiFunction<Integer, Integer, Boolean>) (key, value) -> key + value < 10));
   }
 
   @Test
   public void testMap() {
     assertEquals(ra(3L, 7L, 11L),
-        rh.map((BiFunction<Integer, Integer, Long>) (key, value) -> Long
-            .valueOf(key + value)));
+        rh.map((BiFunction<Integer, Integer, Long>) (key, value) -> Long.valueOf(key + value)));
   }
 
   @Test
   public void testMaxByWithComparator() {
     assertEquals(hp(3, 4),
-        rh(1, 6, 2, 5, 3, 4).maxBy(
-            (Comparator<Long>) (o1, o2) -> (int) (o2 - o1),
-            (BiFunction<Integer, Integer, Long>) (key, value) -> Long
-                .valueOf(value - key)));
+        rh(1, 6, 2, 5, 3, 4).maxBy((Comparator<Long>) (o1, o2) -> (int) (o2 - o1),
+            (BiFunction<Integer, Integer, Long>) (key, value) -> Long.valueOf(value - key)));
   }
 
   @Test
   public void testMaxBy() {
-    assertEquals(hp(1, 6),
-        rh(1, 6, 2, 5, 3, 4).maxBy((BiFunction<Integer, Integer, Long>) (key,
-            value) -> Long.valueOf(value - key)));
+    assertEquals(hp(1, 6), rh(1, 6, 2, 5, 3, 4)
+        .maxBy((BiFunction<Integer, Integer, Long>) (key, value) -> Long.valueOf(value - key)));
   }
 
   @Test
   public void testMinByWithComparator() {
     assertEquals(hp(1, 6),
-        rh(1, 6, 2, 5, 3, 4).minBy(
-            (Comparator<Long>) (o1, o2) -> (int) (o2 - o1),
-            (BiFunction<Integer, Integer, Long>) (key, value) -> Long
-                .valueOf(value - key)));
+        rh(1, 6, 2, 5, 3, 4).minBy((Comparator<Long>) (o1, o2) -> (int) (o2 - o1),
+            (BiFunction<Integer, Integer, Long>) (key, value) -> Long.valueOf(value - key)));
   }
 
   @Test
   public void testMinBy() {
-    assertEquals(hp(3, 4),
-        rh(1, 6, 2, 5, 3, 4).minBy((BiFunction<Integer, Integer, Long>) (key,
-            value) -> Long.valueOf(value - key)));
+    assertEquals(hp(3, 4), rh(1, 6, 2, 5, 3, 4)
+        .minBy((BiFunction<Integer, Integer, Long>) (key, value) -> Long.valueOf(value - key)));
   }
 
   @Test
   public void testMinmaxByWithComparator() {
     assertEquals(ra(hp(1, 6), hp(3, 4)),
-        rh(1, 6, 2, 5, 3, 4).minmaxBy(
-            (Comparator<Long>) (o1, o2) -> (int) (o2 - o1),
-            (BiFunction<Integer, Integer, Long>) (key, value) -> Long
-                .valueOf(value - key)));
+        rh(1, 6, 2, 5, 3, 4).minmaxBy((Comparator<Long>) (o1, o2) -> (int) (o2 - o1),
+            (BiFunction<Integer, Integer, Long>) (key, value) -> Long.valueOf(value - key)));
   }
 
   @Test
   public void testMinmaxBy() {
-    assertEquals(ra(hp(3, 4), hp(1, 6)),
-        rh(1, 6, 2, 5, 3, 4).minmaxBy((BiFunction<Integer, Integer, Long>) (key,
-            value) -> Long.valueOf(value - key)));
+    assertEquals(ra(hp(3, 4), hp(1, 6)), rh(1, 6, 2, 5, 3, 4)
+        .minmaxBy((BiFunction<Integer, Integer, Long>) (key, value) -> Long.valueOf(value - key)));
   }
 
   @Test
@@ -721,8 +698,7 @@ public class RubyHashTest {
 
   @Test
   public void testOneʔ() {
-    assertFalse(
-        rh.oneʔ((BiPredicate<Integer, Integer>) (key, value) -> value > 3));
+    assertFalse(rh.oneʔ((BiPredicate<Integer, Integer>) (key, value) -> value > 3));
   }
 
   @Test
@@ -740,8 +716,7 @@ public class RubyHashTest {
   @Test
   public void testReverseEach() {
     final RubyArray<Integer> ints = ra();
-    rh.reverseEach(
-        (BiConsumer<Integer, Integer>) (key, value) -> ints.push(key));
+    rh.reverseEach((BiConsumer<Integer, Integer>) (key, value) -> ints.push(key));
     assertEquals(ra(5, 3, 1), ints);
   }
 
@@ -754,24 +729,20 @@ public class RubyHashTest {
   @Test
   public void testSliceBefore() {
     assertEquals(ra(ra(hp(1, 2), hp(3, 4)), ra(hp(5, 6))),
-        rh.sliceBefore((BiPredicate<Integer, Integer>) (key, value) -> key > 4)
-            .toA());
+        rh.sliceBefore((BiPredicate<Integer, Integer>) (key, value) -> key > 4).toA());
   }
 
   @Test
   public void testSortByWithComparator() {
     assertEquals(ra(hp(3, 4), hp(2, 5), hp(1, 6)),
-        rh(1, 6, 2, 5, 3, 4).sortBy(
-            (Comparator<Long>) (o1, o2) -> (int) (o2 - o1),
-            (BiFunction<Integer, Integer, Long>) (key, value) -> Long
-                .valueOf(key)));
+        rh(1, 6, 2, 5, 3, 4).sortBy((Comparator<Long>) (o1, o2) -> (int) (o2 - o1),
+            (BiFunction<Integer, Integer, Long>) (key, value) -> Long.valueOf(key)));
   }
 
   @Test
   public void testSortByBy() {
-    assertEquals(ra(hp(1, 6), hp(2, 5), hp(3, 4)),
-        rh(1, 6, 2, 5, 3, 4).sortBy((BiFunction<Integer, Integer, Long>) (key,
-            value) -> Long.valueOf(key)));
+    assertEquals(ra(hp(1, 6), hp(2, 5), hp(3, 4)), rh(1, 6, 2, 5, 3, 4)
+        .sortBy((BiFunction<Integer, Integer, Long>) (key, value) -> Long.valueOf(key)));
   }
 
   @Test

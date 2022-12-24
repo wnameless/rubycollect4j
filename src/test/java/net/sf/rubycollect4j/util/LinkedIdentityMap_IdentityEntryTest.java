@@ -2,16 +2,14 @@
  *
  * Copyright 2013 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -67,27 +65,23 @@ public class LinkedIdentityMap_IdentityEntryTest {
 
   @Test
   public void testEquals() {
-    assertTrue(entry
-        .equals(new IdentityEntry<String, Integer>(key, Integer.valueOf(1))));
+    assertTrue(entry.equals(new IdentityEntry<String, Integer>(key, Integer.valueOf(1))));
     assertFalse(entry.equals(new IdentityEntry<String, Integer>(key, null)));
     assertTrue(entry.equals(hp(new String("a"), value)));
     assertFalse(entry.equals(null));
     entry.setValue(null);
     assertTrue(entry.equals(new IdentityEntry<String, Integer>(key, null)));
-    assertFalse(entry
-        .equals(new IdentityEntry<String, Integer>(key, Integer.valueOf(1))));
+    assertFalse(entry.equals(new IdentityEntry<String, Integer>(key, Integer.valueOf(1))));
     assertFalse(entry.equals(new IdentityEntry<String, Integer>(null, null)));
   }
 
   @Test
   public void testHashCode() {
-    assertEquals(
-        new IdentityEntry<String, Integer>(new String("a"), value).hashCode(),
+    assertEquals(new IdentityEntry<String, Integer>(new String("a"), value).hashCode(),
         entry.hashCode());
     assertEquals(hp(new String("a"), value).hashCode(), entry.hashCode());
     assertNotEquals(
-        new IdentityEntry<String, Integer>(new String("a"), Integer.valueOf(2))
-            .hashCode(),
+        new IdentityEntry<String, Integer>(new String("a"), Integer.valueOf(2)).hashCode(),
         entry.hashCode());
   }
 

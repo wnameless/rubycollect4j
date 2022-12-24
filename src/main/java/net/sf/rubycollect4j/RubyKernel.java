@@ -2,16 +2,14 @@
  *
  * Copyright 2013 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -25,8 +23,8 @@ import java.util.Map;
 
 /**
  * 
- * {@link RubyKernel} mimics the useful Ruby p method by wrapping the Java
- * System.out.println method.
+ * {@link RubyKernel} mimics the useful Ruby p method by wrapping the Java System.out.println
+ * method.
  * 
  * @author Wei-Ming Wu
  * 
@@ -48,8 +46,7 @@ public class RubyKernel {
   /**
    * Prints a human-readable representation of given Object.
    * 
-   * @param o
-   *          any Object
+   * @param o any Object
    * @return the Object
    */
   public static <T> T p(T o) {
@@ -59,10 +56,8 @@ public class RubyKernel {
   /**
    * Prints a human-readable representation of given Objects.
    * 
-   * @param first
-   *          first Object
-   * @param others
-   *          other Object
+   * @param first first Object
+   * @param others other Object
    * @return a {@link RubyArray} of given Objects
    */
   @SafeVarargs

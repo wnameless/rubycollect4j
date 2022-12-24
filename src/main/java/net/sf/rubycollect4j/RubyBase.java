@@ -1,18 +1,16 @@
 /*
  *
-
+ * 
  * Copyright 2013 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -28,12 +26,10 @@ import java.util.function.Predicate;
 
 /**
  * 
- * {@link RubyBase} contains the general interfaces of RubyCollect4J
- * implementations.
+ * {@link RubyBase} contains the general interfaces of RubyCollect4J implementations.
  * <P>
- * For example, {@link RubyArray}, {@link RubyHash}, {@link RubySet},
- * {@link RubyEnumerator} and {@link RubyString} can all be treated as
- * {@link RubyBase.Enumerable}.
+ * For example, {@link RubyArray}, {@link RubyHash}, {@link RubySet}, {@link RubyEnumerator} and
+ * {@link RubyString} can all be treated as {@link RubyBase.Enumerable}.
  *
  * @author Wei-Ming Wu
  *
@@ -44,14 +40,11 @@ final class RubyBase {
 
   /**
    * 
-   * {@link RubyBase.Enumerable} includes all methods refer to the Enumerable
-   * module of Ruby.
+   * {@link RubyBase.Enumerable} includes all methods refer to the Enumerable module of Ruby.
    *
-   * @param <E>
-   *          the type of the elements
+   * @param <E> the type of the elements
    */
-  interface Enumerable<E>
-      extends RubyContract.Enumerable<E, RubyBase.Enumerator<?>, RubyArray<?>> {
+  interface Enumerable<E> extends RubyContract.Enumerable<E, RubyBase.Enumerator<?>, RubyArray<?>> {
 
     /**
      * {@inheritDoc}
@@ -59,8 +52,7 @@ final class RubyBase {
      * @return {@link RubyBase.Enumerator}
      */
     @Override
-    <S> RubyBase.Enumerator<Entry<S, RubyArray<E>>> chunk(
-        Function<? super E, ? extends S> block);
+    <S> RubyBase.Enumerator<Entry<S, RubyArray<E>>> chunk(Function<? super E, ? extends S> block);
 
     /**
      * {@inheritDoc}
@@ -68,8 +60,7 @@ final class RubyBase {
      * @return {@link RubyBase.Enumerator}
      */
     @Override
-    RubyBase.Enumerator<RubyArray<E>> chunkWhile(
-        BiPredicate<? super E, ? super E> block);
+    RubyBase.Enumerator<RubyArray<E>> chunkWhile(BiPredicate<? super E, ? super E> block);
 
     /**
      * {@inheritDoc}
@@ -101,8 +92,7 @@ final class RubyBase {
      * @return {@link RubyArray}
      */
     @Override
-    <S> RubyArray<S> collectConcat(
-        Function<? super E, ? extends List<? extends S>> block);
+    <S> RubyArray<S> collectConcat(Function<? super E, ? extends List<? extends S>> block);
 
     /**
      * {@inheritDoc}
@@ -273,8 +263,7 @@ final class RubyBase {
      * @return {@link RubyArray}
      */
     @Override
-    <S> RubyArray<S> flatMap(
-        Function<? super E, ? extends List<? extends S>> block);
+    <S> RubyArray<S> flatMap(Function<? super E, ? extends List<? extends S>> block);
 
     /**
      * {@inheritDoc}
@@ -306,8 +295,7 @@ final class RubyBase {
      * @return {@link RubyArray}
      */
     @Override
-    <S> RubyArray<S> grepV(String regex,
-        Function<? super E, ? extends S> block);
+    <S> RubyArray<S> grepV(String regex, Function<? super E, ? extends S> block);
 
     /**
      * {@inheritDoc}
@@ -451,8 +439,7 @@ final class RubyBase {
      * @return {@link RubyBase.Enumerator}
      */
     @Override
-    RubyBase.Enumerator<RubyArray<E>> sliceWhen(
-        BiPredicate<? super E, ? super E> block);
+    RubyBase.Enumerator<RubyArray<E>> sliceWhen(BiPredicate<? super E, ? super E> block);
 
     /**
      * {@inheritDoc}
@@ -498,14 +485,12 @@ final class RubyBase {
 
   /**
    * 
-   * {@link RubyBase.Enumerator} includes all methods refer to the Enumerator
-   * class of Ruby.
+   * {@link RubyBase.Enumerator} includes all methods refer to the Enumerator class of Ruby.
    *
-   * @param <E>
-   *          the type of the elements
+   * @param <E> the type of the elements
    */
-  interface Enumerator<E> extends Enumerable<E>,
-      RubyContract.Enumerator<E, RubyBase.Enumerator<?>, RubyArray<?>> {
+  interface Enumerator<E>
+      extends Enumerable<E>, RubyContract.Enumerator<E, RubyBase.Enumerator<?>, RubyArray<?>> {
 
     /**
      * {@inheritDoc}
@@ -519,14 +504,12 @@ final class RubyBase {
 
   /**
    * 
-   * {@link RubyBase.LazyEnumerator} includes all methods refer to the
-   * LazyEnumerator class of Ruby.
+   * {@link RubyBase.LazyEnumerator} includes all methods refer to the LazyEnumerator class of Ruby.
    *
-   * @param <E>
-   *          the type of the elements
+   * @param <E> the type of the elements
    */
-  interface LazyEnumerator<E> extends
-      RubyContract.Enumerator<E, RubyBase.LazyEnumerator<?>, RubyBase.LazyEnumerator<?>> {
+  interface LazyEnumerator<E>
+      extends RubyContract.Enumerator<E, RubyBase.LazyEnumerator<?>, RubyBase.LazyEnumerator<?>> {
 
     /**
      * {@inheritDoc}
@@ -551,8 +534,7 @@ final class RubyBase {
      * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    <S> RubyBase.LazyEnumerator<S> collect(
-        Function<? super E, ? extends S> block);
+    <S> RubyBase.LazyEnumerator<S> collect(Function<? super E, ? extends S> block);
 
     /**
      * {@inheritDoc}
@@ -681,8 +663,7 @@ final class RubyBase {
      * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    RubyBase.LazyEnumerator<E> eachWithIndex(
-        BiConsumer<? super E, Integer> block);
+    RubyBase.LazyEnumerator<E> eachWithIndex(BiConsumer<? super E, Integer> block);
 
     /**
      * {@inheritDoc}
@@ -738,8 +719,7 @@ final class RubyBase {
      * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    <S> RubyBase.LazyEnumerator<S> flatMap(
-        Function<? super E, ? extends List<? extends S>> block);
+    <S> RubyBase.LazyEnumerator<S> flatMap(Function<? super E, ? extends List<? extends S>> block);
 
     /**
      * {@inheritDoc}
@@ -755,8 +735,7 @@ final class RubyBase {
      * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    <S> RubyBase.LazyEnumerator<S> grep(String regex,
-        Function<? super E, ? extends S> block);
+    <S> RubyBase.LazyEnumerator<S> grep(String regex, Function<? super E, ? extends S> block);
 
     /**
      * {@inheritDoc}
@@ -868,8 +847,7 @@ final class RubyBase {
      * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    RubyBase.LazyEnumerator<RubyArray<E>> sliceBefore(
-        Predicate<? super E> block);
+    RubyBase.LazyEnumerator<RubyArray<E>> sliceBefore(Predicate<? super E> block);
 
     /**
      * {@inheritDoc}
@@ -917,8 +895,7 @@ final class RubyBase {
      * @return {@link RubyBase.LazyEnumerator}
      */
     @Override
-    RubyBase.LazyEnumerator<RubyArray<E>> zip(
-        List<? extends Iterable<? extends E>> others);
+    RubyBase.LazyEnumerator<RubyArray<E>> zip(List<? extends Iterable<? extends E>> others);
 
     /**
      * {@inheritDoc}

@@ -2,16 +2,14 @@
  *
  * Copyright 2016 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -113,23 +111,17 @@ public class RubyIterablesTest {
     RubyArray<Entry<Boolean, RubyArray<Integer>>> chunk =
         (RubyArray<Entry<Boolean, RubyArray<Integer>>>) RubyIterables
             .toA(RubyIterables.chunk(iter, item -> item % 2 == 0));
-    assertEquals(hp(false, newRubyArray(1)).toString(),
-        chunk.get(0).toString());
-    assertEquals(hp(true, newRubyArray(2, 2)).toString(),
-        chunk.get(1).toString());
-    assertEquals(hp(false, newRubyArray(3)).toString(),
-        chunk.get(2).toString());
+    assertEquals(hp(false, newRubyArray(1)).toString(), chunk.get(0).toString());
+    assertEquals(hp(true, newRubyArray(2, 2)).toString(), chunk.get(1).toString());
+    assertEquals(hp(false, newRubyArray(3)).toString(), chunk.get(2).toString());
     assertEquals(3, chunk.size());
   }
 
   @Test
   public void testChunkWhile() {
-    Iterable<Integer> re =
-        Arrays.asList(1, 2, 4, 9, 10, 11, 12, 15, 16, 19, 20, 21);
-    assertEquals(
-        ra(ra(1, 2), ra(4), ra(9, 10, 11, 12), ra(15, 16), ra(19, 20, 21)),
-        RubyIterables.toA(
-            RubyIterables.chunkWhile(re, (key, value) -> key + 1 == value)));
+    Iterable<Integer> re = Arrays.asList(1, 2, 4, 9, 10, 11, 12, 15, 16, 19, 20, 21);
+    assertEquals(ra(ra(1, 2), ra(4), ra(9, 10, 11, 12), ra(15, 16), ra(19, 20, 21)),
+        RubyIterables.toA(RubyIterables.chunkWhile(re, (key, value) -> key + 1 == value)));
   }
 
   @Test
@@ -137,15 +129,13 @@ public class RubyIterablesTest {
     Iterable<String> iter = Arrays.asList("aa", "bb", "bc", "cd");
     Iterable<Entry<Character, RubyArray<String>>> chunk =
         RubyIterables.chunk(iter, item -> item.charAt(0));
-    assertEquals(
-        ra(hp('a', ra("aa")), hp('b', ra("bb", "bc")), hp('c', ra("cd"))),
+    assertEquals(ra(hp('a', ra("aa")), hp('b', ra("bb", "bc")), hp('c', ra("cd"))),
         RubyIterables.toA(chunk));
   }
 
   @Test
   public void testCollectWithBlock() {
-    assertEquals(ra(1.0, 2.0, 3.0, 4.0),
-        RubyIterables.collect(iter, item -> Double.valueOf(item)));
+    assertEquals(ra(1.0, 2.0, 3.0, 4.0), RubyIterables.collect(iter, item -> Double.valueOf(item)));
   }
 
   @Test
@@ -264,8 +254,7 @@ public class RubyIterablesTest {
     final RubyArray<Integer> ints = ra();
     RubyIterables.eachEntry(iter, item -> ints.add(item * 2));
     assertEquals(ra(2, 4, 6, 8), ints);
-    assertTrue(
-        RubyIterables.eachEntry(iter, item -> {}) instanceof RubyEnumerable);
+    assertTrue(RubyIterables.eachEntry(iter, item -> {}) instanceof RubyEnumerable);
   }
 
   @Test
@@ -298,8 +287,7 @@ public class RubyIterablesTest {
 
   @Test
   public void testEachWithIndex() {
-    RubyArray<? extends Entry<Integer, Integer>> ra =
-        ra(hp(1, 0), hp(2, 1), hp(3, 2), hp(4, 3));
+    RubyArray<? extends Entry<Integer, Integer>> ra = ra(hp(1, 0), hp(2, 1), hp(3, 2), hp(4, 3));
     assertEquals(ra, RubyIterables.toA(RubyIterables.eachWithIndex(iter)));
   }
 
@@ -316,15 +304,14 @@ public class RubyIterablesTest {
     Long obj = 0L;
     RubyArray<? extends Entry<Integer, Long>> ra =
         ra(hp(1, obj), hp(2, obj), hp(3, obj), hp(4, obj));
-    assertEquals(ra,
-        RubyIterables.toA(RubyIterables.eachWithObject(iter, obj)));
+    assertEquals(ra, RubyIterables.toA(RubyIterables.eachWithObject(iter, obj)));
   }
 
   @Test
   public void testEachWithObjectWithBlock() {
-    Long[] obj = new Long[] { 0L };
-    assertEquals(new Long[] { 10L }[0], RubyIterables.eachWithObject(iter, obj,
-        (item, obj1) -> obj1[0] += item)[0]);
+    Long[] obj = new Long[] {0L};
+    assertEquals(new Long[] {10L}[0],
+        RubyIterables.eachWithObject(iter, obj, (item, obj1) -> obj1[0] += item)[0]);
   }
 
   @Test
@@ -358,8 +345,7 @@ public class RubyIterablesTest {
     assertEquals(Integer.valueOf(2), RubyIterables.findIndex(iter, 3));
     assertNull(RubyIterables.findIndex(iter, 0));
     iter = Arrays.asList(1, null, 3);
-    assertEquals(Integer.valueOf(1),
-        RubyIterables.findIndex(iter, (Integer) null));
+    assertEquals(Integer.valueOf(1), RubyIterables.findIndex(iter, (Integer) null));
   }
 
   @Test
@@ -385,8 +371,7 @@ public class RubyIterablesTest {
 
   @Test
   public void testFlatMapWithBlock() {
-    assertEquals(ra(1L, 2L, 3L, 4L),
-        RubyIterables.flatMap(iter, item -> ra(Long.valueOf(item))));
+    assertEquals(ra(1L, 2L, 3L, 4L), RubyIterables.flatMap(iter, item -> ra(Long.valueOf(item))));
   }
 
   @Test
@@ -396,8 +381,7 @@ public class RubyIterablesTest {
 
   @Test
   public void testGrepWithBlock() {
-    assertEquals(ra("2", "4"),
-        RubyIterables.grep(iter, "[24]", item -> item.toString()));
+    assertEquals(ra("2", "4"), RubyIterables.grep(iter, "[24]", item -> item.toString()));
   }
 
   @Test
@@ -407,8 +391,7 @@ public class RubyIterablesTest {
 
   @Test
   public void testGrepVWithBlock() {
-    assertEquals(ra("1", "3"),
-        RubyIterables.grepV(iter, "[24]", item -> item.toString()));
+    assertEquals(ra("1", "3"), RubyIterables.grepV(iter, "[24]", item -> item.toString()));
   }
 
   @Test
@@ -433,8 +416,8 @@ public class RubyIterablesTest {
 
   @Test
   public void testInjectWithInitAndBlock() {
-    assertEquals(Long.valueOf(20), RubyIterables.inject(iter, Long.valueOf(10),
-        (init, item) -> init + item));
+    assertEquals(Long.valueOf(20),
+        RubyIterables.inject(iter, Long.valueOf(10), (init, item) -> init + item));
   }
 
   @Test
@@ -444,8 +427,7 @@ public class RubyIterablesTest {
 
   @Test
   public void testMapWithBlock() {
-    assertEquals(ra(1L, 2L, 3L, 4L),
-        RubyIterables.map(iter, item -> Long.valueOf(item)));
+    assertEquals(ra(1L, 2L, 3L, 4L), RubyIterables.map(iter, item -> Long.valueOf(item)));
   }
 
   @Test
@@ -459,8 +441,7 @@ public class RubyIterablesTest {
   @Test
   public void testMaxWithComparator() {
     iter = ra(3, 4, 1, 2);
-    assertEquals(Integer.valueOf(1),
-        RubyIterables.max(iter, (arg0, arg1) -> arg1 - arg0));
+    assertEquals(Integer.valueOf(1), RubyIterables.max(iter, (arg0, arg1) -> arg1 - arg0));
     iter = new ArrayList<Integer>();
     assertNull(RubyIterables.max(iter, null));
   }
@@ -468,8 +449,7 @@ public class RubyIterablesTest {
   @Test
   public void testMaxByWithComparatorAndBlock() {
     Iterable<String> iter = Arrays.asList("aaaa", "cc", "bbb", "d");
-    assertEquals("d",
-        RubyIterables.maxBy(iter, (o1, o2) -> o2 - o1, item -> item.length()));
+    assertEquals("d", RubyIterables.maxBy(iter, (o1, o2) -> o2 - o1, item -> item.length()));
     iter = new ArrayList<String>();
     Comparator<Integer> comp = null;
     assertNull(RubyIterables.maxBy(iter, comp, null));
@@ -500,8 +480,7 @@ public class RubyIterablesTest {
   @Test
   public void testMinWithComparator() {
     iter = ra(3, 4, 1, 2);
-    assertEquals(Integer.valueOf(4),
-        RubyIterables.min(iter, (arg0, arg1) -> arg1 - arg0));
+    assertEquals(Integer.valueOf(4), RubyIterables.min(iter, (arg0, arg1) -> arg1 - arg0));
     iter = new ArrayList<Integer>();
     assertNull(RubyIterables.min(iter, null));
   }
@@ -509,8 +488,7 @@ public class RubyIterablesTest {
   @Test
   public void testMinByWithComparatorAndBlock() {
     Iterable<String> iter = Arrays.asList("cc", "aaaa", "bbb", "d");
-    assertEquals("aaaa",
-        RubyIterables.minBy(iter, (o1, o2) -> o2 - o1, item -> item.length()));
+    assertEquals("aaaa", RubyIterables.minBy(iter, (o1, o2) -> o2 - o1, item -> item.length()));
     iter = new ArrayList<String>();
     Comparator<Integer> comp = null;
     assertNull(RubyIterables.minBy(iter, comp, null));
@@ -548,21 +526,19 @@ public class RubyIterablesTest {
   @Test
   public void testMinmaxByWithComparatorAndBlock() {
     Iterable<String> iter = Arrays.asList("bbb", "aaaa", "d", "cc");
-    assertEquals(ra("aaaa", "d"), RubyIterables.minmaxBy(iter,
-        (o1, o2) -> o2 - o1, item -> item.length()));
+    assertEquals(ra("aaaa", "d"),
+        RubyIterables.minmaxBy(iter, (o1, o2) -> o2 - o1, item -> item.length()));
     iter = new ArrayList<String>();
     Comparator<Integer> comp = null;
     assertEquals(ra(null, null), RubyIterables.minmaxBy(iter, comp, null));
     iter = ra(null, null, null);
-    assertEquals(ra(null, null),
-        RubyIterables.minmaxBy(iter, comp, item -> null));
+    assertEquals(ra(null, null), RubyIterables.minmaxBy(iter, comp, item -> null));
   }
 
   @Test
   public void testMinmaxByWithBlock() {
     Iterable<String> iter = Arrays.asList("bbb", "aaaa", "d", "cc");
-    assertEquals(ra("d", "aaaa"),
-        RubyIterables.minmaxBy(iter, item -> item.length()));
+    assertEquals(ra("d", "aaaa"), RubyIterables.minmaxBy(iter, item -> item.length()));
     iter = new ArrayList<String>();
     assertEquals(ra(null, null), RubyIterables.minmaxBy(iter, null));
   }
@@ -615,20 +591,18 @@ public class RubyIterablesTest {
 
   @Test
   public void testPartitionWithBlock() {
-    assertEquals(ra(ra(1, 3), ra(2, 4)),
-        RubyIterables.partition(iter, item -> item % 2 == 1));
+    assertEquals(ra(ra(1, 3), ra(2, 4)), RubyIterables.partition(iter, item -> item % 2 == 1));
   }
 
   @Test
   public void testReduceWithBlock() {
-    assertEquals(Integer.valueOf(10),
-        RubyIterables.reduce(iter, (memo, item) -> memo + item));
+    assertEquals(Integer.valueOf(10), RubyIterables.reduce(iter, (memo, item) -> memo + item));
   }
 
   @Test
   public void testReduceWithInitAndBlock() {
-    assertEquals(Long.valueOf(20), RubyIterables.reduce(iter, Long.valueOf(10),
-        (init, item) -> init + item));
+    assertEquals(Long.valueOf(20),
+        RubyIterables.reduce(iter, Long.valueOf(10), (init, item) -> init + item));
   }
 
   @Test
@@ -638,8 +612,7 @@ public class RubyIterablesTest {
 
   @Test
   public void testReverseEach() {
-    assertEquals(ra(4, 3, 2, 1),
-        RubyIterables.toA(RubyIterables.reverseEach(iter)));
+    assertEquals(ra(4, 3, 2, 1), RubyIterables.toA(RubyIterables.reverseEach(iter)));
     assertEquals(ra(1, 2, 3, 4).toA(), RubyIterables.toA(iter));
   }
 
@@ -659,29 +632,28 @@ public class RubyIterablesTest {
   @Test
   public void testSliceAfterWithBlock() {
     iter = Arrays.asList(1, 3, 3, 4);
-    assertEquals(ra(ra(1), ra(3), ra(3), ra(4)), RubyIterables
-        .toA(RubyIterables.sliceAfter(iter, item -> item % 2 == 1)));
+    assertEquals(ra(ra(1), ra(3), ra(3), ra(4)),
+        RubyIterables.toA(RubyIterables.sliceAfter(iter, item -> item % 2 == 1)));
   }
 
   @Test
   public void testSliceWhen() {
     iter = newRubyEnumerator(Arrays.asList(1, 3, 3, 4));
-    assertEquals(ra(ra(1, 3, 3), ra(4)), RubyIterables.toA(
-        RubyIterables.sliceWhen(iter, (item1, item2) -> item1 + 1 == item2)));
+    assertEquals(ra(ra(1, 3, 3), ra(4)),
+        RubyIterables.toA(RubyIterables.sliceWhen(iter, (item1, item2) -> item1 + 1 == item2)));
   }
 
   @Test
   public void testSliceAfterWithRegex() {
     iter = Arrays.asList(1, 2, 3, 3);
-    assertEquals(ra(ra(1, 2, 3), ra(3)),
-        RubyIterables.toA(RubyIterables.sliceAfter(iter, "3")));
+    assertEquals(ra(ra(1, 2, 3), ra(3)), RubyIterables.toA(RubyIterables.sliceAfter(iter, "3")));
   }
 
   @Test
   public void testSliceBeforeWithBlock() {
     iter = newRubyEnumerator(Arrays.asList(1, 3, 3, 4));
-    assertEquals(ra(ra(1), ra(3), ra(3, 4)), RubyIterables
-        .toA(RubyIterables.sliceBefore(iter, item -> item % 2 == 1)));
+    assertEquals(ra(ra(1), ra(3), ra(3, 4)),
+        RubyIterables.toA(RubyIterables.sliceBefore(iter, item -> item % 2 == 1)));
   }
 
   @Test
@@ -695,10 +667,8 @@ public class RubyIterablesTest {
   public void testSort() {
     iter = newRubyEnumerator(Arrays.asList(4, 1, 2, 3, 3));
     assertEquals(ra(1, 2, 3, 3, 4), RubyIterables.sort(iter));
-    assertEquals(ra("abc", "b", "cd"),
-        RubyIterables.sort(Arrays.asList("b", "cd", "abc")));
-    assertEquals(ra(null, null, null),
-        RubyIterables.sort(ra(null, null, null)));
+    assertEquals(ra("abc", "b", "cd"), RubyIterables.sort(Arrays.asList("b", "cd", "abc")));
+    assertEquals(ra(null, null, null), RubyIterables.sort(ra(null, null, null)));
     iter = Arrays.asList(1);
     assertEquals(ra(1), RubyIterables.sort(iter));
   }
@@ -713,9 +683,8 @@ public class RubyIterablesTest {
   @Test
   public void testSortByWith2ComparatorsAndBlock() {
     Iterable<String> re = Arrays.asList("aaaa", "bbb", "cc", "d", "e");
-    assertEquals(ra("aaaa", "bbb", "cc", "e", "d"),
-        RubyIterables.sortBy(re, (o1, o2) -> o2.compareTo(o1),
-            (o1, o2) -> o2 - o1, item -> item.length()));
+    assertEquals(ra("aaaa", "bbb", "cc", "e", "d"), RubyIterables.sortBy(re,
+        (o1, o2) -> o2.compareTo(o1), (o1, o2) -> o2 - o1, item -> item.length()));
   }
 
   @Test
@@ -742,8 +711,7 @@ public class RubyIterablesTest {
   @Test
   public void testSumWithBlock() {
     Iterable<Double> in = Arrays.asList(1.1, 2.1, 3.1, 4.1);
-    assertEquals(new BigDecimal("20.8"),
-        RubyIterables.sum(in, n -> n.doubleValue() * 2));
+    assertEquals(new BigDecimal("20.8"), RubyIterables.sum(in, n -> n.doubleValue() * 2));
   }
 
   @Test
@@ -755,8 +723,7 @@ public class RubyIterablesTest {
   @Test
   public void testSumWithInitAndBlock() {
     Iterable<Double> in = Arrays.asList(1.1, 2.1, 3.1, 4.1);
-    assertEquals(new BigDecimal("21.8"),
-        RubyIterables.sum(in, 1L, n -> n.doubleValue() * 2));
+    assertEquals(new BigDecimal("21.8"), RubyIterables.sum(in, 1L, n -> n.doubleValue() * 2));
   }
 
   @Test
@@ -788,8 +755,8 @@ public class RubyIterablesTest {
 
   @Test
   public void testToH() {
-    assertEquals(rh(1, 2, 3, 4), RubyIterables.toH(ra(ra(1, 2), ra(3, 4)),
-        ary -> hp(ary.get(0), ary.get(1))));
+    assertEquals(rh(1, 2, 3, 4),
+        RubyIterables.toH(ra(ra(1, 2), ra(3, 4)), ary -> hp(ary.get(0), ary.get(1))));
     assertEquals(Ruby.Hash.of(ra(1, 2), ra(3, 4)),
         RubyIterables.toH(ra(ra(1, 2), ra(3, 4)), (e1, e2) -> hp(e1, e2)));
   }
@@ -797,8 +764,7 @@ public class RubyIterablesTest {
   @Test
   public void testZip() {
     iter = Arrays.asList(1, 2, 3);
-    assertEquals(ra(ra(1, 4), ra(2, 5), ra(3, null)),
-        RubyIterables.zip(iter, ra(ra(4, 5))));
+    assertEquals(ra(ra(1, 4), ra(2, 5), ra(3, null)), RubyIterables.zip(iter, ra(ra(4, 5))));
     assertEquals(ra(ra(1, 4, 7), ra(2, 5, 8), ra(3, 6, 9)),
         RubyIterables.zip(iter, ra(ra(4, 5, 6), ra(7, 8, 9))));
   }

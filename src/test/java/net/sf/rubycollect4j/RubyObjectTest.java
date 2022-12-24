@@ -2,16 +2,14 @@
  *
  * Copyright 2013 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -51,8 +49,7 @@ public class RubyObjectTest {
     RubyObject.send(tester, "setFloats", Float.MAX_VALUE, (float) 0x00);
     RubyObject.send(tester, "setDoubles", Double.MAX_VALUE, (double) 0x00);
     RubyObject.send(tester, "setBooleans", Boolean.TRUE, false);
-    RubyObject.send(tester, "setCharacters", Character.valueOf(' '),
-        (char) 0x00);
+    RubyObject.send(tester, "setCharacters", Character.valueOf(' '), (char) 0x00);
   }
 
   @Test
@@ -81,53 +78,57 @@ public class RubyObjectTest {
     try {
       RubyObject.send(tester, "setBytes", "", "");
       fail();
-    } catch (IllegalArgumentException e) {}
+    } catch (IllegalArgumentException e) {
+    }
     try {
       RubyObject.send(tester, "setShorts", "", "");
       fail();
-    } catch (IllegalArgumentException e) {}
+    } catch (IllegalArgumentException e) {
+    }
     try {
       RubyObject.send(tester, "setIntegers", "", "");
       fail();
-    } catch (IllegalArgumentException e) {}
+    } catch (IllegalArgumentException e) {
+    }
     try {
       RubyObject.send(tester, "setLongs", "", "");
       fail();
-    } catch (IllegalArgumentException e) {}
+    } catch (IllegalArgumentException e) {
+    }
     try {
       RubyObject.send(tester, "setFloats", "", "");
       fail();
-    } catch (IllegalArgumentException e) {}
+    } catch (IllegalArgumentException e) {
+    }
     try {
       RubyObject.send(tester, "setDoubles", "", "");
       fail();
-    } catch (IllegalArgumentException e) {}
+    } catch (IllegalArgumentException e) {
+    }
     try {
       RubyObject.send(tester, "setBooleans", "", "");
       fail();
-    } catch (IllegalArgumentException e) {}
+    } catch (IllegalArgumentException e) {
+    }
     try {
       RubyObject.send(tester, "setCharacters", "", "");
       fail();
-    } catch (IllegalArgumentException e) {}
+    } catch (IllegalArgumentException e) {
+    }
   }
 
   @Test
   public void testSendWithPrimitiveAndObjectByte() {
     assertEquals("byteMethod", RubyObject.send(tester, "byteMethod", (byte) 1));
     assertEquals("ByteMethod", RubyObject.send(tester, "ByteMethod", (byte) 1));
-    assertEquals("ByteMethod",
-        RubyObject.send(tester, "ByteMethod", Byte.valueOf((byte) 1)));
+    assertEquals("ByteMethod", RubyObject.send(tester, "ByteMethod", Byte.valueOf((byte) 1)));
   }
 
   @Test
   public void testSendWithPrimitiveAndObjectShort() {
-    assertEquals("shortMethod",
-        RubyObject.send(tester, "shortMethod", (short) 1));
-    assertEquals("ShortMethod",
-        RubyObject.send(tester, "ShortMethod", (short) 1));
-    assertEquals("ShortMethod",
-        RubyObject.send(tester, "ShortMethod", Short.valueOf((byte) 1)));
+    assertEquals("shortMethod", RubyObject.send(tester, "shortMethod", (short) 1));
+    assertEquals("ShortMethod", RubyObject.send(tester, "ShortMethod", (short) 1));
+    assertEquals("ShortMethod", RubyObject.send(tester, "ShortMethod", Short.valueOf((byte) 1)));
   }
 
   @Test
@@ -142,45 +143,34 @@ public class RubyObjectTest {
   public void testSendWithPrimitiveAndObjectLong() {
     assertEquals("longMethod", RubyObject.send(tester, "longMethod", (long) 1));
     assertEquals("LongMethod", RubyObject.send(tester, "LongMethod", (long) 1));
-    assertEquals("LongMethod",
-        RubyObject.send(tester, "LongMethod", Long.valueOf((byte) 1)));
+    assertEquals("LongMethod", RubyObject.send(tester, "LongMethod", Long.valueOf((byte) 1)));
   }
 
   @Test
   public void testSendWithPrimitiveAndObjectFloat() {
-    assertEquals("floatMethod",
-        RubyObject.send(tester, "floatMethod", (float) 1));
-    assertEquals("FloatMethod",
-        RubyObject.send(tester, "FloatMethod", (float) 1));
-    assertEquals("FloatMethod",
-        RubyObject.send(tester, "FloatMethod", Float.valueOf((byte) 1)));
+    assertEquals("floatMethod", RubyObject.send(tester, "floatMethod", (float) 1));
+    assertEquals("FloatMethod", RubyObject.send(tester, "FloatMethod", (float) 1));
+    assertEquals("FloatMethod", RubyObject.send(tester, "FloatMethod", Float.valueOf((byte) 1)));
   }
 
   @Test
   public void testSendWithPrimitiveAndObjectDouble() {
-    assertEquals("doubleMethod",
-        RubyObject.send(tester, "doubleMethod", (double) 1));
-    assertEquals("DoubleMethod",
-        RubyObject.send(tester, "DoubleMethod", (double) 1));
-    assertEquals("DoubleMethod",
-        RubyObject.send(tester, "DoubleMethod", Double.valueOf((byte) 1)));
+    assertEquals("doubleMethod", RubyObject.send(tester, "doubleMethod", (double) 1));
+    assertEquals("DoubleMethod", RubyObject.send(tester, "DoubleMethod", (double) 1));
+    assertEquals("DoubleMethod", RubyObject.send(tester, "DoubleMethod", Double.valueOf((byte) 1)));
   }
 
   @Test
   public void testSendWithPrimitiveAndObjectBoolean() {
-    assertEquals("booleanMethod",
-        RubyObject.send(tester, "booleanMethod", false));
-    assertEquals("BooleanMethod",
-        RubyObject.send(tester, "BooleanMethod", false));
-    assertEquals("BooleanMethod",
-        RubyObject.send(tester, "BooleanMethod", Boolean.FALSE));
+    assertEquals("booleanMethod", RubyObject.send(tester, "booleanMethod", false));
+    assertEquals("BooleanMethod", RubyObject.send(tester, "BooleanMethod", false));
+    assertEquals("BooleanMethod", RubyObject.send(tester, "BooleanMethod", Boolean.FALSE));
   }
 
   @Test
   public void testSendWithPrimitiveAndObjectCharacter() {
     assertEquals("charMethod", RubyObject.send(tester, "charMethod", (char) 1));
-    assertEquals("CharacterMethod",
-        RubyObject.send(tester, "CharacterMethod", (char) 1));
+    assertEquals("CharacterMethod", RubyObject.send(tester, "CharacterMethod", (char) 1));
     assertEquals("CharacterMethod",
         RubyObject.send(tester, "CharacterMethod", Character.valueOf('a')));
   }

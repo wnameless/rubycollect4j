@@ -2,16 +2,14 @@
  *
  * Copyright 2013 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -29,8 +27,7 @@ import net.sf.rubycollect4j.util.RegexUtils;
 
 /**
  * 
- * {@link RubyDir} implements parts of the methods refer to the Dir class of
- * Ruby.
+ * {@link RubyDir} implements parts of the methods refer to the Dir class of Ruby.
  * 
  * @author Wei-Ming Wu
  * 
@@ -44,11 +41,9 @@ public class RubyDir implements RubyEnumerable<String> {
   /**
    * Creates a {@link RubyDir} by given path.
    * 
-   * @param path
-   *          of a file
+   * @param path of a file
    * @return {@link RubyDir}
-   * @throws IllegalArgumentException
-   *           if no such file or directory
+   * @throws IllegalArgumentException if no such file or directory
    */
   public static RubyDir open(String path) {
     File dir = new File(path);
@@ -57,10 +52,8 @@ public class RubyDir implements RubyEnumerable<String> {
 
   public RubyDir(File directory) {
     Objects.requireNonNull(directory);
-    if (!directory.exists() || !directory.isDirectory())
-      throw new IllegalArgumentException(
-          "Errno::ENOENT: No such file or directory - "
-              + directory.getAbsolutePath());
+    if (!directory.exists() || !directory.isDirectory()) throw new IllegalArgumentException(
+        "Errno::ENOENT: No such file or directory - " + directory.getAbsolutePath());
 
     this.directory = directory;
     entries = entries(directory.getPath());
@@ -69,8 +62,7 @@ public class RubyDir implements RubyEnumerable<String> {
   /**
    * Deletes a directory.
    * 
-   * @param path
-   *          of a file
+   * @param path of a file
    * @return true if the directory is deleted,false otherwise
    */
   public static boolean delete(String path) {
@@ -80,8 +72,7 @@ public class RubyDir implements RubyEnumerable<String> {
   /**
    * Checks if the directory is an empty directory.
    * 
-   * @param path
-   *          of a file
+   * @param path of a file
    * @return true if file existed and is an empty directory, otherwise false
    */
   public static boolean emptyʔ(String path) {
@@ -93,21 +84,19 @@ public class RubyDir implements RubyEnumerable<String> {
   /**
    * Puts entries of a folder into a {@link RubyArray}.
    * 
-   * @param path
-   *          of a file
+   * @param path of a file
    * @return {@link RubyArray}
    */
   public static RubyArray<String> entries(String path) {
     File file = new File(path);
-    return Ruby.Array.copyOf(file.listFiles()).sort()
-        .map(item -> item.getName()).unshift("..").unshift(".");
+    return Ruby.Array.copyOf(file.listFiles()).sort().map(item -> item.getName()).unshift("..")
+        .unshift(".");
   }
 
   /**
    * Checks if the file is a directory.
    * 
-   * @param path
-   *          of a file
+   * @param path of a file
    * @return true if the file is a directory, false otherwise
    */
   public static boolean existʔ(String path) {
@@ -117,8 +106,7 @@ public class RubyDir implements RubyEnumerable<String> {
   /**
    * Creates a {@link RubyEnumerator} of entries of the given path.
    * 
-   * @param path
-   *          of a file
+   * @param path of a file
    * @return {@link RubyEnumerator}
    */
   public static RubyEnumerator<String> foreach(String path) {
@@ -134,8 +122,7 @@ public class RubyDir implements RubyEnumerable<String> {
    * {@literal [set]} Matches any one character in set.<br>
    * &#123;opt1,opt2&#125; Matches any word in options.
    * 
-   * @param pattern
-   *          of target files
+   * @param pattern of target files
    * @return {@link RubyArray}
    */
   public static RubyArray<String> glob(String pattern) {
@@ -159,8 +146,7 @@ public class RubyDir implements RubyEnumerable<String> {
     pattern = RegexUtils.convertGlobToRegex(pattern);
 
     RubyArray<String> paths = Ruby.Array.create();
-    RubyArray<File> files =
-        Ruby.Array.of(traverseFolder(new File(rootPath), recursive));
+    RubyArray<File> files = Ruby.Array.of(traverseFolder(new File(rootPath), recursive));
     for (File f : files) {
       String path = convertWindowsPathToLinuxPath(f.getPath());
       String fPath = f.isDirectory() ? f.getPath() + "/" : f.getPath();
@@ -228,8 +214,7 @@ public class RubyDir implements RubyEnumerable<String> {
   /**
    * Creates a directory.
    * 
-   * @param path
-   *          of a file
+   * @param path of a file
    * @return true if the directory is created, false otherwise
    */
   public static boolean mkdir(String path) {
@@ -260,8 +245,7 @@ public class RubyDir implements RubyEnumerable<String> {
   /**
    * Yields each entry to the given block.
    * 
-   * @param block
-   *          to yield entries
+   * @param block to yield entries
    * @return this {@link RubyDir}
    */
   @Override
@@ -291,8 +275,7 @@ public class RubyDir implements RubyEnumerable<String> {
   /**
    * Sets the current position of entries.
    * 
-   * @param position
-   *          the current index of entries to be set
+   * @param position the current index of entries to be set
    * @return the current position of entries
    */
   public int pos(int position) {
@@ -324,8 +307,7 @@ public class RubyDir implements RubyEnumerable<String> {
   /**
    * Returns a {@link RubyDir} that entries is set to the given position.
    * 
-   * @param position
-   *          to be searched
+   * @param position to be searched
    * @return {@link RubyDir} that entries is set to the given position
    */
   public RubyDir seek(int position) {

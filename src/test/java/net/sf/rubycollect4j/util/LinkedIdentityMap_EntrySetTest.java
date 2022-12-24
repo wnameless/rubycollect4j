@@ -2,16 +2,14 @@
  *
  * Copyright 2013 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -120,12 +118,9 @@ public class LinkedIdentityMap_EntrySetTest {
   @Test
   public void testToArrayWithGeneric() {
     assertEquals(3, entrySet.toArray().length);
-    assertSame(key1,
-        ((Entry<?, ?>) entrySet.toArray(new Entry[3])[0]).getKey());
-    assertSame(key2,
-        ((Entry<?, ?>) entrySet.toArray(new Entry[3])[1]).getKey());
-    assertSame(key3,
-        ((Entry<?, ?>) entrySet.toArray(new Entry[3])[2]).getKey());
+    assertSame(key1, ((Entry<?, ?>) entrySet.toArray(new Entry[3])[0]).getKey());
+    assertSame(key2, ((Entry<?, ?>) entrySet.toArray(new Entry[3])[1]).getKey());
+    assertSame(key3, ((Entry<?, ?>) entrySet.toArray(new Entry[3])[2]).getKey());
   }
 
   @Test
@@ -155,8 +150,7 @@ public class LinkedIdentityMap_EntrySetTest {
   @Test
   public void testContainsAll() {
     assertTrue(entrySet.containsAll(Arrays.asList(hp(key1, 1), hp(key2, 2))));
-    assertFalse(entrySet
-        .containsAll(Arrays.asList(hp(key1, 1), hp(new String("a"), 2))));
+    assertFalse(entrySet.containsAll(Arrays.asList(hp(key1, 1), hp(new String("a"), 2))));
   }
 
   @Test
@@ -168,8 +162,7 @@ public class LinkedIdentityMap_EntrySetTest {
 
   @Test
   public void testRetainAll() {
-    assertTrue(
-        entrySet.retainAll(Arrays.asList(hp(key1, 1), hp(key2, 2), null)));
+    assertTrue(entrySet.retainAll(Arrays.asList(hp(key1, 1), hp(key2, 2), null)));
     assertEquals(2, list.size());
     assertSame(key1, list.get(0));
     assertSame(key2, list.get(1));

@@ -2,16 +2,14 @@
  *
  * Copyright 2013 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -58,8 +56,7 @@ public class RubySetTest {
 
   @Test
   public void testOf() {
-    LinkedHashSet<Integer> ints =
-        new LinkedHashSet<Integer>(Arrays.asList(1, 2, 3));
+    LinkedHashSet<Integer> ints = new LinkedHashSet<Integer>(Arrays.asList(1, 2, 3));
     rs = RubySet.of(ints);
     ints.remove(1);
     assertEquals(ints, rs);
@@ -74,8 +71,7 @@ public class RubySetTest {
 
   @Test
   public void testCopyOf() {
-    LinkedHashSet<Integer> ints =
-        new LinkedHashSet<Integer>(Arrays.asList(1, 2, 3));
+    LinkedHashSet<Integer> ints = new LinkedHashSet<Integer>(Arrays.asList(1, 2, 3));
     rs = RubySet.copyOf(ints);
     ints.remove(1);
     assertEquals(new LinkedHashSet<Integer>(Arrays.asList(1, 2, 3)), rs);
@@ -92,8 +88,7 @@ public class RubySetTest {
   public void testConstructor() {
     assertTrue(rs instanceof RubySet);
     assertTrue(new RubySet<Integer>() instanceof RubySet);
-    assertTrue(
-        new RubySet<Integer>(new LinkedHashSet<Integer>()) instanceof RubySet);
+    assertTrue(new RubySet<Integer>(new LinkedHashSet<Integer>()) instanceof RubySet);
   }
 
   @Test
@@ -121,8 +116,7 @@ public class RubySetTest {
   public void testClassify() {
     RubyHash<Boolean, RubySet<Integer>> classes =
         newRubySet(1, 2, 3, 4, 5, 6, 7, 7).classify(item -> item % 2 == 0);
-    assertEquals(rh(false, newRubySet(1, 3, 5, 7), true, newRubySet(2, 4, 6)),
-        classes);
+    assertEquals(rh(false, newRubySet(1, 3, 5, 7), true, newRubySet(2, 4, 6)), classes);
   }
 
   @Test
@@ -163,8 +157,7 @@ public class RubySetTest {
 
   @Test
   public void testDivide() {
-    assertEquals(newRubySet(newRubySet(1, 3), newRubySet(2)),
-        rs.divide(item -> item % 2 == 0));
+    assertEquals(newRubySet(newRubySet(1, 3), newRubySet(2)), rs.divide(item -> item % 2 == 0));
   }
 
   @Test
@@ -188,8 +181,7 @@ public class RubySetTest {
   @Test
   public void testFlatten() {
     assertEquals(newRubySet(1, 2, 3, 4, 5),
-        newRubySet(newRubySet(1, 2, newRubySet(3)), 4,
-            newRubySet(newRubySet(5))).flatten());
+        newRubySet(newRubySet(1, 2, newRubySet(3)), 4, newRubySet(newRubySet(5))).flatten());
   }
 
   @Test
@@ -368,12 +360,12 @@ public class RubySetTest {
 
   @Test
   public void testToArray() {
-    assertArrayEquals(new Object[] { 1, 2, 3 }, rs.toArray());
+    assertArrayEquals(new Object[] {1, 2, 3}, rs.toArray());
   }
 
   @Test
   public void testToArrayWithArgument() {
-    assertArrayEquals(new Integer[] { 1, 2, 3 }, rs.toArray(new Integer[3]));
+    assertArrayEquals(new Integer[] {1, 2, 3}, rs.toArray(new Integer[3]));
   }
 
   @Test
@@ -396,10 +388,8 @@ public class RubySetTest {
 
   @Test
   public void testHashCode() {
-    assertEquals(new HashSet<Integer>(Arrays.asList(1, 2, 3)).hashCode(),
-        rs.hashCode());
-    assertNotEquals(new HashSet<Integer>(Arrays.asList(2, 3, 4)).hashCode(),
-        rs.hashCode());
+    assertEquals(new HashSet<Integer>(Arrays.asList(1, 2, 3)).hashCode(), rs.hashCode());
+    assertNotEquals(new HashSet<Integer>(Arrays.asList(2, 3, 4)).hashCode(), rs.hashCode());
   }
 
   @Test
@@ -409,8 +399,8 @@ public class RubySetTest {
 
   @Test
   public void testCompareTo() {
-    assertEquals(ra(1, 2, 3).compareTo(ra(-1, 3, 4)), newRubySet(1, 2, 3)
-        .compareTo(new LinkedHashSet<Integer>(Arrays.asList(2, -1, 4))));
+    assertEquals(ra(1, 2, 3).compareTo(ra(-1, 3, 4)),
+        newRubySet(1, 2, 3).compareTo(new LinkedHashSet<Integer>(Arrays.asList(2, -1, 4))));
   }
 
 }

@@ -2,16 +2,14 @@
  *
  * Copyright 2013 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -27,9 +25,9 @@ import net.sf.rubycollect4j.RubyString;
 
 /**
  * 
- * {@link ASCII8BitUTF} traverse a String byte by byte. It uses ACII8Bit to
- * encode String characters which have codepoints between 0-255 into single byte
- * and remains other String characters as UTF8 encoding.<br>
+ * {@link ASCII8BitUTF} traverse a String byte by byte. It uses ACII8Bit to encode String characters
+ * which have codepoints between 0-255 into single byte and remains other String characters as UTF8
+ * encoding.<br>
  * <br>
  * It is designed for {@link RubyString#unpack} to use.
  *
@@ -48,8 +46,7 @@ public final class ASCII8BitUTF implements CharSequence {
   /**
    * Returns a {@link ASCII8BitUTF}.
    * 
-   * @param str
-   *          any String
+   * @param str any String
    */
   public ASCII8BitUTF(String str) {
     Objects.requireNonNull(str);
@@ -83,8 +80,7 @@ public final class ASCII8BitUTF implements CharSequence {
     if (ch == null) return Ruby.Array.create();
 
     if (ch.codePointAt(0) < 256)
-      return ByteUtils.toList(
-          ByteBuffer.allocate(2).putShort((short) ch.codePointAt(0)).array())
+      return ByteUtils.toList(ByteBuffer.allocate(2).putShort((short) ch.codePointAt(0)).array())
           .last(1);
     else
       return ByteUtils.toList(ch.getBytes());
@@ -123,8 +119,7 @@ public final class ASCII8BitUTF implements CharSequence {
    * @return true if there are remaining characters, false otherwise
    */
   public boolean hasNextChar() {
-    return (currentChar != null
-        && currentChar.getBytes().length == currentBytes.size())
+    return (currentChar != null && currentChar.getBytes().length == currentBytes.size())
         || chars.anyʔ();
   }
 
@@ -141,8 +136,7 @@ public final class ASCII8BitUTF implements CharSequence {
    * Returns next character.
    * 
    * @return character as String
-   * @throws IllegalStateException
-   *           if no more character is left
+   * @throws IllegalStateException if no more character is left
    */
   public String nextChar() {
     if (!hasNextChar()) throw new IllegalStateException("No more character");
@@ -162,8 +156,7 @@ public final class ASCII8BitUTF implements CharSequence {
   /**
    * Returns next n as maximum chars.
    * 
-   * @param n
-   *          maximum number of chars
+   * @param n maximum number of chars
    * @return String
    */
   public String nextChar(int n) {
@@ -179,8 +172,7 @@ public final class ASCII8BitUTF implements CharSequence {
    * Returns next byte.
    * 
    * @return byte
-   * @throws IllegalStateException
-   *           if no more byte is left
+   * @throws IllegalStateException if no more byte is left
    */
   public byte nextByte() {
     if (currentBytes.anyʔ()) {
@@ -197,8 +189,7 @@ public final class ASCII8BitUTF implements CharSequence {
   /**
    * Returns next n as maximum bytes.
    * 
-   * @param n
-   *          maximum number of bytes
+   * @param n maximum number of bytes
    * @return byte array
    */
   public byte[] nextByte(int n) {

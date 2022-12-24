@@ -2,16 +2,14 @@
  *
  * Copyright 2013 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -183,8 +181,7 @@ public class RubyArrayTest {
     assertEquals(ra(ra(1), ra(2), ra(3), ra(4)), ra.combination(1).toA());
     assertEquals(ra(ra(1, 2), ra(1, 3), ra(1, 4), ra(2, 3), ra(2, 4), ra(3, 4)),
         ra.combination(2).toA());
-    assertEquals(ra(ra(1, 2, 3), ra(1, 2, 4), ra(1, 3, 4), ra(2, 3, 4)),
-        ra.combination(3).toA());
+    assertEquals(ra(ra(1, 2, 3), ra(1, 2, 4), ra(1, 3, 4), ra(2, 3, 4)), ra.combination(3).toA());
     assertEquals(ra(ra(1, 2, 3, 4)), ra.combination(4).toA());
   }
 
@@ -326,7 +323,8 @@ public class RubyArrayTest {
       try {
         ra.fetch(4);
         fail();
-      } catch (IndexOutOfBoundsException e) {}
+      } catch (IndexOutOfBoundsException e) {
+      }
       ra.fetch(-5);
     });
   }
@@ -421,8 +419,7 @@ public class RubyArrayTest {
     assertEquals(ra(0, 2, 3, 4), ra.fill(-7, 1, index -> index));
     assertEquals(ra(0, 2, 3, 4), ra);
     ra = ra(1, 2, 3, 4);
-    assertEquals(ra(1, 2, 3, 4, null, null, 6, 7),
-        ra.fill(6, 2, index -> index));
+    assertEquals(ra(1, 2, 3, 4, null, null, 6, 7), ra.fill(6, 2, index -> index));
     assertEquals(ra(1, 2, 3, 4, null, null, 6, 7), ra);
     ra = ra(1, 2, 3, 4);
     assertEquals(ra(0, 1, 2, 3, 4, 5, 6), ra.fill(0, 7, index -> index));
@@ -433,8 +430,7 @@ public class RubyArrayTest {
   public void testFlatten() {
     RubyArray<RubyArray<Integer>> layer2 = ra(ra(1), ra(2, 3), ra(4, 5, 6));
     assertEquals(ra(1, 2, 3, 4, 5, 6), layer2.flatten());
-    RubyArray<RubyArray<RubyArray<Integer>>> layer3 =
-        ra(ra(ra(1), ra(2, 3)), ra(ra(4, 5, 6)));
+    RubyArray<RubyArray<RubyArray<Integer>>> layer3 = ra(ra(ra(1), ra(2, 3)), ra(ra(4, 5, 6)));
     assertEquals(ra(1, 2, 3, 4, 5, 6), layer3.flatten());
     RubyArray<RubyArray<Integer>> ints = ra();
     RubyArray<RubyArray<RubyArray<Integer>>> layer3WithNull =
@@ -619,8 +615,8 @@ public class RubyArrayTest {
   public void testPermutaion() {
     ra = ra(1, 2, 3);
     assertEquals(RubyEnumerator.class, ra.permutation().getClass());
-    assertEquals(ra(ra(1, 2, 3), ra(1, 3, 2), ra(2, 1, 3), ra(2, 3, 1),
-        ra(3, 1, 2), ra(3, 2, 1)), ra.permutation().toA());
+    assertEquals(ra(ra(1, 2, 3), ra(1, 3, 2), ra(2, 1, 3), ra(2, 3, 1), ra(3, 1, 2), ra(3, 2, 1)),
+        ra.permutation().toA());
   }
 
   @Test
@@ -632,8 +628,8 @@ public class RubyArrayTest {
     assertEquals(ra(ra(1), ra(2), ra(3)), ra.permutation(1).toA());
     assertEquals(ra(ra(1, 2), ra(1, 3), ra(2, 1), ra(2, 3), ra(3, 1), ra(3, 2)),
         ra.permutation(2).toA());
-    assertEquals(ra(ra(1, 2, 3), ra(1, 3, 2), ra(2, 1, 3), ra(2, 3, 1),
-        ra(3, 1, 2), ra(3, 2, 1)), ra.permutation(3).toA());
+    assertEquals(ra(ra(1, 2, 3), ra(1, 3, 2), ra(2, 1, 3), ra(2, 3, 1), ra(3, 1, 2), ra(3, 2, 1)),
+        ra.permutation(3).toA());
     assertEquals(ra(), ra.permutation(4).toA());
   }
 
@@ -650,8 +646,7 @@ public class RubyArrayTest {
     ra = ra(1, 2, 3);
     final RubyArray<Integer> ints = ra();
     assertEquals(ra, ra.permutation(item -> ints.concat(item)));
-    assertEquals(ra(1, 2, 3, 1, 3, 2, 2, 1, 3, 2, 3, 1, 3, 1, 2, 3, 2, 1),
-        ints);
+    assertEquals(ra(1, 2, 3, 1, 3, 2, 2, 1, 3, 2, 3, 1, 3, 1, 2, 3, 2, 1), ints);
   }
 
   @Test
@@ -689,8 +684,7 @@ public class RubyArrayTest {
     ra = ra(1, 2);
     assertEquals(ra(), ra().product());
     assertEquals(ra(ra(1), ra(2)), ra.product());
-    assertEquals(ra(ra(1, 3), ra(1, 4), ra(2, 3), ra(2, 4)),
-        ra.product(ra(3, 4)));
+    assertEquals(ra(ra(1, 3), ra(1, 4), ra(2, 3), ra(2, 4)), ra.product(ra(3, 4)));
     assertEquals(ra(ra(1, 3, 5), ra(1, 4, 5), ra(2, 3, 5), ra(2, 4, 5)),
         ra.product(ra(3, 4), ra(5)));
     assertEquals(ra(ra(1, 3, 5), ra(1, 4, 5), ra(2, 3, 5), ra(2, 4, 5)),
@@ -725,8 +719,7 @@ public class RubyArrayTest {
 
   @Test
   public void testRassoc() {
-    RubyArray<? extends List<Integer>> ra =
-        ra(ra(1, 2), ra(3, 4), ra(4, 4), ra(6, 7));
+    RubyArray<? extends List<Integer>> ra = ra(ra(1, 2), ra(3, 4), ra(4, 4), ra(6, 7));
     assertEquals(ra(3, 4), ra.rassoc(4));
     assertNull(ra.rassoc(6));
     List<Integer> ints = new ArrayList<Integer>();
@@ -758,8 +751,7 @@ public class RubyArrayTest {
     assertEquals(ra(), ra.repeatedCombination(-1).toA());
     assertEquals(ra(ra()), ra.repeatedCombination(0).toA());
     assertEquals(ra(ra(1), ra(2)), ra.repeatedCombination(1).toA());
-    assertEquals(ra(ra(1, 1), ra(1, 2), ra(2, 2)),
-        ra.repeatedCombination(2).toA());
+    assertEquals(ra(ra(1, 1), ra(1, 2), ra(2, 2)), ra.repeatedCombination(2).toA());
     assertEquals(ra(ra(1, 1, 1), ra(1, 1, 2), ra(1, 2, 2), ra(2, 2, 2)),
         ra.repeatedCombination(3).toA());
   }
@@ -779,12 +771,9 @@ public class RubyArrayTest {
     assertEquals(ra(), ra.repeatedPermutation(-1).toA());
     assertEquals(ra(ra()), ra.repeatedPermutation(0).toA());
     assertEquals(ra(ra(1), ra(2)), ra.repeatedPermutation(1).toA());
-    assertEquals(ra(ra(1, 1), ra(1, 2), ra(2, 1), ra(2, 2)),
-        ra.repeatedPermutation(2).toA());
-    assertEquals(
-        ra(ra(1, 1, 1), ra(1, 1, 2), ra(1, 2, 1), ra(1, 2, 2), ra(2, 1, 1),
-            ra(2, 1, 2), ra(2, 2, 1), ra(2, 2, 2)),
-        ra.repeatedPermutation(3).toA());
+    assertEquals(ra(ra(1, 1), ra(1, 2), ra(2, 1), ra(2, 2)), ra.repeatedPermutation(2).toA());
+    assertEquals(ra(ra(1, 1, 1), ra(1, 1, 2), ra(1, 2, 1), ra(1, 2, 2), ra(2, 1, 1), ra(2, 1, 2),
+        ra(2, 2, 1), ra(2, 2, 2)), ra.repeatedPermutation(3).toA());
   }
 
   @Test
@@ -1022,8 +1011,7 @@ public class RubyArrayTest {
   @Test
   public void testSortByǃWithComparatorAndBlock() {
     RubyArray<String> ra = ra("aaaa", "bbb", "ff", "cc", "d");
-    assertEquals(ra("aaaa", "bbb", "ff", "cc", "d"),
-        ra.sortByǃ(comp, item -> item.length()));
+    assertEquals(ra("aaaa", "bbb", "ff", "cc", "d"), ra.sortByǃ(comp, item -> item.length()));
     assertEquals(ra("aaaa", "bbb", "ff", "cc", "d"), ra);
   }
 
@@ -1038,8 +1026,7 @@ public class RubyArrayTest {
   @Test
   public void testSortByǃWithBlock() {
     RubyArray<String> ra = ra("aaaa", "bbb", "ff", "cc", "d");
-    assertEquals(ra("d", "ff", "cc", "bbb", "aaaa"),
-        ra.sortByǃ(item -> item.length()));
+    assertEquals(ra("d", "ff", "cc", "bbb", "aaaa"), ra.sortByǃ(item -> item.length()));
     assertEquals(ra("d", "ff", "cc", "bbb", "aaaa"), ra);
   }
 
@@ -1133,8 +1120,7 @@ public class RubyArrayTest {
   @Test
   public void testValuesAt() {
     assertEquals(ra(4, 1, null, null), ra.valuesAt(-1, 0, 5, -6));
-    assertEquals(ra(4, 1, null, null),
-        ra.valuesAt(Arrays.asList(-1, 0, 5, -6)));
+    assertEquals(ra(4, 1, null, null), ra.valuesAt(Arrays.asList(-1, 0, 5, -6)));
   }
 
   @Test
@@ -1333,8 +1319,7 @@ public class RubyArrayTest {
   public void testEquals() {
     List<Integer> ints = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
     ra = RubyArray.copyOf(ints);
-    assertEquals(ints.equals(Arrays.asList(1, 2, 3, 4)),
-        ra.equals(Arrays.asList(1, 2, 3, 4)));
+    assertEquals(ints.equals(Arrays.asList(1, 2, 3, 4)), ra.equals(Arrays.asList(1, 2, 3, 4)));
   }
 
   @Test
@@ -1353,10 +1338,8 @@ public class RubyArrayTest {
 
   @Test
   public void testCompareTo() {
-    assertEquals(
-        ra(ra(), ra(), ra(1), ra(1), ra(1, 1), ra(1, 1), ra(2, 3), ra(4, 5)),
-        ra(ra(4, 5), ra(1), ra(), ra(1, 1), ra(), ra(1), ra(1, 1), ra(2, 3))
-            .sort());
+    assertEquals(ra(ra(), ra(), ra(1), ra(1), ra(1, 1), ra(1, 1), ra(2, 3), ra(4, 5)),
+        ra(ra(4, 5), ra(1), ra(), ra(1, 1), ra(), ra(1), ra(1, 1), ra(2, 3)).sort());
   }
 
   @Test

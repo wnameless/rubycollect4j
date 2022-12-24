@@ -26,11 +26,11 @@ import java.util.Queue;
 
 /**
  * 
- * The major difference between a {@link WholeLineReader} and a
- * {@link BufferedReader} is that {@link WholeLineReader} read lines with its
- * line-termination characters, such as a line feed ({@code
- * '\n'}), a carriage return ({@code '\r'}), or a carriage return followed by a
- * linefeed ({@code "\r\n"}).
+ * The major difference between a {@link WholeLineReader} and a {@link BufferedReader} is that
+ * {@link WholeLineReader} read lines with its line-termination characters, such as a line feed
+ * ({@code
+ * '\n'}), a carriage return ({@code '\r'}), or a carriage return followed by a linefeed
+ * ({@code "\r\n"}).
  * 
  * @author Wei-Ming Wu
  *
@@ -47,8 +47,8 @@ public final class WholeLineReader implements Closeable {
   private boolean peekReturn = false;
 
   /**
-   * Creates a {@link WholeLineReader} that will read lines with its
-   * line-termination characters from the given {@code Readable}.
+   * Creates a {@link WholeLineReader} that will read lines with its line-termination characters
+   * from the given {@code Readable}.
    */
   public WholeLineReader(Readable readable) {
     Objects.requireNonNull(readable);
@@ -58,21 +58,19 @@ public final class WholeLineReader implements Closeable {
   }
 
   /**
-   * Reads a line of text. A line is considered to be terminated by any one of a
-   * line feed ('\n'), a carriage return ('\r'), a carriage return followed
-   * immediately by a line feed, or by reaching the end-of-file (EOF).
+   * Reads a line of text. A line is considered to be terminated by any one of a line feed ('\n'), a
+   * carriage return ('\r'), a carriage return followed immediately by a line feed, or by reaching
+   * the end-of-file (EOF).
    *
-   * @return A String containing the contents of the line, including any
-   *         line-termination characters, or null if the end of the stream has
-   *         been reached without reading any characters
-   * @throws IOException
-   *           If an I/O error occurs
+   * @return A String containing the contents of the line, including any line-termination
+   *         characters, or null if the end of the stream has been reached without reading any
+   *         characters
+   * @throws IOException If an I/O error occurs
    */
   public String readLine() throws IOException {
     while (lines.peek() == null) {
       charBuff.clear();
-      int read = (reader != null) ? reader.read(buff, 0, buff.length)
-          : readable.read(charBuff);
+      int read = (reader != null) ? reader.read(buff, 0, buff.length) : readable.read(charBuff);
       if (read == -1) {
         finish();
         break;
@@ -122,8 +120,7 @@ public final class WholeLineReader implements Closeable {
   }
 
   private boolean finishLine(boolean peekNewline) {
-    String separator =
-        peekReturn ? (peekNewline ? "\r\n" : "\r") : (peekNewline ? "\n" : "");
+    String separator = peekReturn ? (peekNewline ? "\r\n" : "\r") : (peekNewline ? "\n" : "");
     lines.add(line.toString() + separator);
     line = new StringBuilder();
     peekReturn = false;

@@ -2,16 +2,14 @@
  *
  * Copyright 2013 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -34,8 +32,7 @@ public class RangeIterableTest {
 
   @BeforeEach
   public void setUp() throws Exception {
-    iter = new RangeIterable<Integer>(IntegerSuccessor.getInstance(), 1, 3,
-        Interval.CLOSED);
+    iter = new RangeIterable<Integer>(IntegerSuccessor.getInstance(), 1, 3, Interval.CLOSED);
   }
 
   @Test
@@ -53,16 +50,14 @@ public class RangeIterableTest {
   @Test
   public void testConstructorException2() {
     assertThrows(NullPointerException.class, () -> {
-      new RangeIterable<Integer>(IntegerSuccessor.getInstance(), null, 3,
-          Interval.CLOSED);
+      new RangeIterable<Integer>(IntegerSuccessor.getInstance(), null, 3, Interval.CLOSED);
     });
   }
 
   @Test
   public void testConstructorException3() {
     assertThrows(NullPointerException.class, () -> {
-      new RangeIterable<Integer>(IntegerSuccessor.getInstance(), 1, null,
-          Interval.CLOSED);
+      new RangeIterable<Integer>(IntegerSuccessor.getInstance(), 1, null, Interval.CLOSED);
     });
   }
 
@@ -85,22 +80,19 @@ public class RangeIterableTest {
 
   @Test
   public void testClosedOpen() {
-    iter = new RangeIterable<Integer>(IntegerSuccessor.getInstance(), 1, 3,
-        Interval.CLOSED_OPEN);
+    iter = new RangeIterable<Integer>(IntegerSuccessor.getInstance(), 1, 3, Interval.CLOSED_OPEN);
     assertEquals(Ruby.Array.of(1, 2), Ruby.Enumerator.of(iter).toA());
   }
 
   @Test
   public void testOpen() {
-    iter = new RangeIterable<Integer>(IntegerSuccessor.getInstance(), 1, 3,
-        Interval.OPEN);
+    iter = new RangeIterable<Integer>(IntegerSuccessor.getInstance(), 1, 3, Interval.OPEN);
     assertEquals(Ruby.Array.of(2), Ruby.Enumerator.of(iter).toA());
   }
 
   @Test
   public void testOpenClosed() {
-    iter = new RangeIterable<Integer>(IntegerSuccessor.getInstance(), 1, 3,
-        Interval.OPEN_CLOSED);
+    iter = new RangeIterable<Integer>(IntegerSuccessor.getInstance(), 1, 3, Interval.OPEN_CLOSED);
     assertEquals(Ruby.Array.of(2, 3), Ruby.Enumerator.of(iter).toA());
   }
 

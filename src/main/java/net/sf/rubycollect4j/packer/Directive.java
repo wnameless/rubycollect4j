@@ -2,16 +2,14 @@
  *
  * Copyright 2013 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -34,8 +32,7 @@ import net.sf.rubycollect4j.util.ByteUtils;
 
 /**
  * 
- * {@link Directive} defines available directives for
- * {@link RubyArray#pack(String)}.
+ * {@link Directive} defines available directives for {@link RubyArray#pack(String)}.
  * 
  * @author Wei-Ming Wu
  * 
@@ -58,8 +55,7 @@ public enum Directive {
   sb(false),
 
   /**
-   * 16-bit short, little-endian. It should be used as s&lt; in a template
-   * string.
+   * 16-bit short, little-endian. It should be used as s&lt; in a template string.
    */
   sl(false),
 
@@ -89,8 +85,7 @@ public enum Directive {
   qb(false),
 
   /**
-   * 64-bit long, little-endian. It should be used as q&lt; in a template
-   * string.
+   * 64-bit long, little-endian. It should be used as q&lt; in a template string.
    */
   ql(false),
 
@@ -174,10 +169,9 @@ public enum Directive {
    */
   h(false);
 
-  public static final Map<String, Directive> lookup = Ruby.Hash.create(
-      (List<Entry<String, Directive>>) Ruby.Array.copyOf(Directive.values())
-          .map(item -> Ruby.Entry.of(item.toString(), item)))
-      .freeze();
+  public static final Map<String, Directive> lookup =
+      Ruby.Hash.create((List<Entry<String, Directive>>) Ruby.Array.copyOf(Directive.values())
+          .map(item -> Ruby.Entry.of(item.toString(), item))).freeze();
 
   private final boolean widthAdjustable;
 
@@ -197,8 +191,7 @@ public enum Directive {
   /**
    * Packs a List of Byte into a binary String.
    * 
-   * @param bytes
-   *          a List of Byte
+   * @param bytes a List of Byte
    * @return binary String represented in hex or ASCII format
    */
   public String pack(List<Byte> bytes) {
@@ -212,8 +205,7 @@ public enum Directive {
   /**
    * Packs an array of byte into a binary String.
    * 
-   * @param bytes
-   *          an array of byte
+   * @param bytes an array of byte
    * @return binary String represented in hex or ASCII format
    */
   public String pack(byte[] bytes) {
@@ -278,8 +270,8 @@ public enum Directive {
       case b:
         byte[] msb = new byte[bytes.length];
         for (int i = 0; i < msb.length; i++) {
-          msb[i] = (byte) Integer.parseInt(
-              ByteUtils.toBinaryString(new byte[] { bytes[i] }, false), 2);
+          msb[i] =
+              (byte) Integer.parseInt(ByteUtils.toBinaryString(new byte[] {bytes[i]}, false), 2);
         }
         return new String(msb, Charset.forName("ISO-8859-1"));
       case H:
@@ -287,8 +279,7 @@ public enum Directive {
       case h:
         byte[] lnf = new byte[bytes.length];
         for (int i = 0; i < lnf.length; i++) {
-          lnf[i] = (byte) Integer.parseInt(
-              ByteUtils.toHexString(new byte[] { bytes[i] }, false), 16);
+          lnf[i] = (byte) Integer.parseInt(ByteUtils.toHexString(new byte[] {bytes[i]}, false), 16);
         }
         return new String(lnf, Charset.forName("ISO-8859-1"));
     }
@@ -297,8 +288,7 @@ public enum Directive {
   /**
    * Unpacks a List of Byte into an Object.
    * 
-   * @param bytes
-   *          a List of Byte
+   * @param bytes a List of Byte
    * @return Object
    */
   public Object unpack(List<Byte> bytes) {
@@ -312,8 +302,7 @@ public enum Directive {
   /**
    * Unpacks an array of byte into an Object.
    * 
-   * @param bytes
-   *          an array of byte
+   * @param bytes an array of byte
    * @return Object
    */
   public Object unpack(byte[] bytes) {
@@ -368,11 +357,10 @@ public enum Directive {
   }
 
   /**
-   * Casts an Object to corresponding Byte, Short, Integer or Long if the Object
-   * is a Number, Boolean or Character.
+   * Casts an Object to corresponding Byte, Short, Integer or Long if the Object is a Number,
+   * Boolean or Character.
    * 
-   * @param o
-   *          any Object
+   * @param o any Object
    * @return cast Object
    */
   public Object cast(Object o) {
@@ -427,14 +415,13 @@ public enum Directive {
   /**
    * Verifies a template string.
    * 
-   * @param template
-   *          a template string
+   * @param template a template string
    * @return true if template is valid, otherwise false
    */
   public static boolean verify(String template) {
     return Pattern
-        .compile("((" + Ruby.Array.copyOf(Directive.values())
-            .map(item -> item.toString()).join("|") + ")(([1-9]\\d*)?\\*?)?)+")
+        .compile("((" + Ruby.Array.copyOf(Directive.values()).map(item -> item.toString()).join("|")
+            + ")(([1-9]\\d*)?\\*?)?)+")
         .matcher(template).matches();
   }
 

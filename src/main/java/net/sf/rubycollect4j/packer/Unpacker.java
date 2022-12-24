@@ -2,16 +2,14 @@
  *
  * Copyright 2013 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -48,8 +46,7 @@ import net.sf.rubycollect4j.util.ASCII8BitUTF;
 
 /**
  * 
- * {@link Unpacker} is designed to implement the
- * {@link RubyString#unpack(String)}.
+ * {@link Unpacker} is designed to implement the {@link RubyString#unpack(String)}.
  * 
  * @author Wei-Ming Wu
  * 
@@ -59,23 +56,20 @@ public final class Unpacker {
   private static final int ж = Integer.MAX_VALUE;
   private static final Byte NUL = Byte.valueOf((byte) '\0');
   private static final RubyHash<Directive, Integer> NUMBER_LENGTH_IN_BYTE =
-      Ruby.Hash.of(s, 2, sb, 2, sl, 2, l, 4, lb, 4, ll, 4, F, 4, f, 4, e, 4, g,
-          4, q, 8, qb, 8, ql, 8, D, 8, d, 8, E, 8, G, 8).freeze();
+      Ruby.Hash.of(s, 2, sb, 2, sl, 2, l, 4, lb, 4, ll, 4, F, 4, f, 4, e, 4, g, 4, q, 8, qb, 8, ql,
+          8, D, 8, d, 8, E, 8, G, 8).freeze();
 
   private Unpacker() {}
 
   /**
    * Unpacks a String into a {@link RubyArray} of String.
    * 
-   * @param format
-   *          a String made by Directive
-   * @param str
-   *          target for unpacking
+   * @param format a String made by Directive
+   * @param str target for unpacking
    * @return {@link RubyArray}
    */
   public static RubyArray<Object> unpack(String format, String str) {
-    if (!Directive.verify(format))
-      throw new IllegalArgumentException("Invalid template string");
+    if (!Directive.verify(format)) throw new IllegalArgumentException("Invalid template string");
 
     ASCII8BitUTF a8u = new ASCII8BitUTF(str);
     RubyArray<Object> objs = Ruby.Array.create();
@@ -161,11 +155,9 @@ public final class Unpacker {
               count--;
             } else if (a8u.hasNextByte()) {
               if (d == B || d == b)
-                unpackRS = Ruby.String
-                    .of(toBinaryString(new byte[] { a8u.nextByte() }, d == B));
+                unpackRS = Ruby.String.of(toBinaryString(new byte[] {a8u.nextByte()}, d == B));
               else
-                unpackRS = Ruby.String
-                    .of(toHexString(new byte[] { a8u.nextByte() }, d == H));
+                unpackRS = Ruby.String.of(toHexString(new byte[] {a8u.nextByte()}, d == H));
 
               unpackRA.add(unpackRS.sliceǃ(0).toS());
               count--;

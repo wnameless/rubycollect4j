@@ -2,16 +2,14 @@
  *
  * Copyright 2013 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -37,9 +35,9 @@ public class DirectiveTest {
 
   @BeforeEach
   public void setUp() throws Exception {
-    ABC = new byte[] { (byte) 65, (byte) 66, (byte) 67 };
-    ABCDEFGH = new byte[] { (byte) 65, (byte) 66, (byte) 67, (byte) 68,
-        (byte) 69, (byte) 70, (byte) 71, (byte) 72 };
+    ABC = new byte[] {(byte) 65, (byte) 66, (byte) 67};
+    ABCDEFGH = new byte[] {(byte) 65, (byte) 66, (byte) 67, (byte) 68, (byte) 69, (byte) 70,
+        (byte) 71, (byte) 72};
   }
 
   private byte[] int4407873() {
@@ -60,8 +58,7 @@ public class DirectiveTest {
 
   @Test
   public void testPackWithList() {
-    assertEquals(IS_BIG_ENDIAN ? "C" : "A",
-        Directive.c.pack(ByteUtils.toList(ABC)));
+    assertEquals(IS_BIG_ENDIAN ? "C" : "A", Directive.c.pack(ByteUtils.toList(ABC)));
   }
 
   @Test
@@ -76,15 +73,12 @@ public class DirectiveTest {
     assertEquals("\0CBA", Directive.lb.pack(int4407873()));
     assertEquals("ABC\0", Directive.ll.pack(int4407873()));
 
-    assertEquals(IS_BIG_ENDIAN ? "\0\0\0\0\0ABC" : "ABC\0\0\0\0\0",
-        Directive.q.pack(ABC));
+    assertEquals(IS_BIG_ENDIAN ? "\0\0\0\0\0ABC" : "ABC\0\0\0\0\0", Directive.q.pack(ABC));
     assertEquals("\0\0\0\0\0CBA", Directive.qb.pack(int4407873()));
     assertEquals("ABC\0\0\0\0\0", Directive.ql.pack(int4407873()));
 
-    assertEquals(IS_BIG_ENDIAN ? "\0\0\0\0\0ABC" : "ABC\0\0\0\0\0",
-        Directive.D.pack(ABC));
-    assertEquals(IS_BIG_ENDIAN ? "\0\0\0\0\0ABC" : "ABC\0\0\0\0\0",
-        Directive.d.pack(ABC));
+    assertEquals(IS_BIG_ENDIAN ? "\0\0\0\0\0ABC" : "ABC\0\0\0\0\0", Directive.D.pack(ABC));
+    assertEquals(IS_BIG_ENDIAN ? "\0\0\0\0\0ABC" : "ABC\0\0\0\0\0", Directive.d.pack(ABC));
     assertEquals("ABC\0\0\0\0\0", Directive.E.pack(int4407873()));
     assertEquals("\0\0\0\0\0CBA", Directive.G.pack(int4407873()));
 
@@ -93,8 +87,7 @@ public class DirectiveTest {
     assertEquals("ABC\0", Directive.e.pack(int4407873()));
     assertEquals("\0CBA", Directive.g.pack(int4407873()));
 
-    assertEquals("〹",
-        Directive.U.pack(ByteUtils.toByteArray(12345, nativeOrder())));
+    assertEquals("〹", Directive.U.pack(ByteUtils.toByteArray(12345, nativeOrder())));
     assertEquals("ABC", Directive.A.pack(ABC));
     assertEquals("ABC", Directive.a.pack(ABC));
     assertEquals("ABC", Directive.Z.pack(ABC));
@@ -133,10 +126,8 @@ public class DirectiveTest {
     assertEquals(781.0352f, Directive.f.unpack(ABCDEFGH));
     assertEquals(781.0352f, Directive.e.unpack(ABCDEFGH));
     assertEquals(12.141422f, Directive.g.unpack(ABCDEFGH));
-    assertEquals("111001101000100010010001",
-        Directive.B.unpack("我".getBytes()));
-    assertEquals("011001110001000110001001",
-        Directive.b.unpack("我".getBytes()));
+    assertEquals("111001101000100010010001", Directive.B.unpack("我".getBytes()));
+    assertEquals("011001110001000110001001", Directive.b.unpack("我".getBytes()));
     assertEquals("e68891", Directive.H.unpack("我".getBytes()));
     assertEquals("6e8819", Directive.h.unpack("我".getBytes()));
   }

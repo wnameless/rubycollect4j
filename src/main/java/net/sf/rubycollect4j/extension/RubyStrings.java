@@ -2,16 +2,14 @@
  *
  * Copyright 2016 Wei-Ming Wu
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  *
  */
@@ -30,8 +28,8 @@ import net.sf.rubycollect4j.RubyString;
 
 /**
  * 
- * {@link RubyStrings} is simply a utility class. It provides the Ruby style way
- * to manipulate any CharSequence.
+ * {@link RubyStrings} is simply a utility class. It provides the Ruby style way to manipulate any
+ * CharSequence.
  * 
  * @author Wei-Ming Wu
  *
@@ -227,8 +225,7 @@ public final class RubyStrings {
   /**
    * @see net.sf.rubycollect4j.RubyString#eachChar(Consumer)
    */
-  public static String eachChar(CharSequence in,
-      Consumer<? super String> block) {
+  public static String eachChar(CharSequence in, Consumer<? super String> block) {
     return Ruby.String.of(in).eachChar(block).toS();
   }
 
@@ -242,8 +239,7 @@ public final class RubyStrings {
   /**
    * @see net.sf.rubycollect4j.RubyString#eachCodepoint(Consumer)
    */
-  public static String eachCodepoint(CharSequence in,
-      Consumer<? super Integer> block) {
+  public static String eachCodepoint(CharSequence in, Consumer<? super Integer> block) {
     return Ruby.String.of(in).eachCodepoint(block).toS();
   }
 
@@ -257,8 +253,7 @@ public final class RubyStrings {
   /**
    * @see net.sf.rubycollect4j.RubyString#eachLine(Consumer)
    */
-  public static String eachLine(CharSequence in,
-      Consumer<? super String> block) {
+  public static String eachLine(CharSequence in, Consumer<? super String> block) {
     return Ruby.String.of(in).eachLine(block).toS();
   }
 
@@ -272,8 +267,7 @@ public final class RubyStrings {
   /**
    * @see net.sf.rubycollect4j.RubyString#eachLine(String, Consumer)
    */
-  public static String eachLine(CharSequence in, String separator,
-      Consumer<? super String> block) {
+  public static String eachLine(CharSequence in, String separator, Consumer<? super String> block) {
     return Ruby.String.of(in).eachLine(separator, block).toS();
   }
 
@@ -294,16 +288,14 @@ public final class RubyStrings {
   /**
    * @see net.sf.rubycollect4j.RubyString#encode(String, String)
    */
-  public static String encode(CharSequence in, String dstEncoding,
-      String srcEncoding) {
+  public static String encode(CharSequence in, String dstEncoding, String srcEncoding) {
     return Ruby.String.of(in).encode(dstEncoding, srcEncoding).toS();
   }
 
   /**
    * @see net.sf.rubycollect4j.RubyString#endWithʔ(String, String...)
    */
-  public static boolean endWithʔ(CharSequence in, String suffix,
-      String... otherSuffix) {
+  public static boolean endWithʔ(CharSequence in, String suffix, String... otherSuffix) {
     return Ruby.String.of(in).endWithʔ(suffix, otherSuffix);
   }
 
@@ -577,16 +569,14 @@ public final class RubyStrings {
   /**
    * @see net.sf.rubycollect4j.RubyString#scan(String, Consumer)
    */
-  public static String scan(CharSequence in, String regex,
-      Consumer<? super String> block) {
+  public static String scan(CharSequence in, String regex, Consumer<? super String> block) {
     return Ruby.String.of(in).scan(regex, block).toS();
   }
 
   /**
    * @see net.sf.rubycollect4j.RubyString#scanGroups(String)
    */
-  public static List<? extends List<String>> scanGroups(CharSequence in,
-      String regex) {
+  public static List<? extends List<String>> scanGroups(CharSequence in, String regex) {
     return Ruby.String.of(in).scanGroups(regex);
   }
 
@@ -693,16 +683,14 @@ public final class RubyStrings {
   /**
    * @see net.sf.rubycollect4j.RubyString#split(Pattern, int)
    */
-  public static List<String> split(CharSequence in, Pattern pattern,
-      int limit) {
+  public static List<String> split(CharSequence in, Pattern pattern, int limit) {
     return Ruby.String.of(in).split(pattern, limit);
   }
 
   /**
    * @see net.sf.rubycollect4j.RubyString#split(String, int)
    */
-  public static List<String> split(CharSequence in, String delimiter,
-      int limit) {
+  public static List<String> split(CharSequence in, String delimiter, int limit) {
     return Ruby.String.of(in).split(delimiter, limit);
   }
 
@@ -723,8 +711,7 @@ public final class RubyStrings {
   /**
    * @see net.sf.rubycollect4j.RubyString#startWithʔ(String, String...)
    */
-  public static boolean startWithʔ(CharSequence in, String prefix,
-      String... otherPrefix) {
+  public static boolean startWithʔ(CharSequence in, String prefix, String... otherPrefix) {
     return Ruby.String.of(in).startWithʔ(prefix, otherPrefix);
   }
 
@@ -858,16 +845,14 @@ public final class RubyStrings {
   /**
    * @see net.sf.rubycollect4j.RubyString#upto(String, Consumer)
    */
-  public static String upto(CharSequence in, String otherStr,
-      Consumer<? super String> block) {
+  public static String upto(CharSequence in, String otherStr, Consumer<? super String> block) {
     return Ruby.String.of(in).upto(otherStr, block).toS();
   }
 
   /**
    * @see net.sf.rubycollect4j.RubyString#upto(String, boolean)
    */
-  public static Iterable<String> upto(CharSequence in, String otherStr,
-      boolean exclusive) {
+  public static Iterable<String> upto(CharSequence in, String otherStr, boolean exclusive) {
     return Ruby.String.of(in).upto(otherStr, exclusive);
   }
 
