@@ -367,3 +367,14 @@ Version 2.1.2
 + Add Ruby.Range.of(YearMonth, YearMonth)
 
 + Add toSet() API to Ruby.Enumerable
+
+
+Version 3.0.0
+
++ Add RubyArray#filter
+
++ Add RubyArray#filter(Predicate)
+
++ Add RubyArray#difference(Collection)
+
++ Add RubyArray#prepend(Object, Object...)
