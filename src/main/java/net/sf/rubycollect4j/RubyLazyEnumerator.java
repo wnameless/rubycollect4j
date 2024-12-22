@@ -451,6 +451,26 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
    * @return {@link RubyLazyEnumerator}
    */
   @Override
+  public RubyLazyEnumerator<E> filter() {
+    return findAll();
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @return {@link RubyLazyEnumerator}
+   */
+  @Override
+  public RubyLazyEnumerator<E> filter(Predicate<? super E> block) {
+    return findAll(block);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @return {@link RubyLazyEnumerator}
+   */
+  @Override
   public RubyLazyEnumerator<E> find() {
     return detect();
   }

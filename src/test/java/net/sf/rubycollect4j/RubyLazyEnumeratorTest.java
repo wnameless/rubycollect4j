@@ -361,6 +361,19 @@ public class RubyLazyEnumeratorTest {
   }
 
   @Test
+  public void testFilter() {
+    assertSame(lre, lre.filter());
+    assertEquals(ra(1, 2, 3, 4), lre.filter().toA());
+  }
+
+  @Test
+  public void testFilterWithBlock() {
+    Predicate<Integer> block = item -> item == 3;
+    assertTrue(lre.filter(block) instanceof RubyLazyEnumerator);
+    assertEquals(ra(3), lre.filter(block).toA());
+  }
+
+  @Test
   public void testFind() {
     assertSame(lre, lre.find());
     assertEquals(ra(1, 2, 3, 4), lre.find().toA());

@@ -223,6 +223,22 @@ final class RubyBase {
      * @return {@link RubyBase.Enumerator}
      */
     @Override
+    RubyBase.Enumerator<E> filter();
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @return {@link RubyArray}
+     */
+    @Override
+    RubyArray<E> filter(Predicate<? super E> block);
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @return {@link RubyBase.Enumerator}
+     */
+    @Override
     RubyBase.Enumerator<E> find();
 
     /**

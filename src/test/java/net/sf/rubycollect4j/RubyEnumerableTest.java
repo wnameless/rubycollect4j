@@ -353,6 +353,17 @@ public class RubyEnumerableTest {
   }
 
   @Test
+  public void testFilter() {
+    assertEquals(RubyEnumerator.class, re.filter().getClass());
+    assertEquals(ra(1, 2, 3, 4), re.filter().toA());
+  }
+
+  @Test
+  public void testFilterWithBlock() {
+    assertEquals(ra(3, 4), re.filter(item -> item >= 3));
+  }
+
+  @Test
   public void testFind() {
     assertEquals(RubyEnumerator.class, re.find().getClass());
     assertEquals(ra(1, 2, 3, 4), re.find().toA());

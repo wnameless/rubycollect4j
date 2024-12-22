@@ -324,6 +324,21 @@ final class RubyContract {
     RubyArray<E> entries();
 
     /**
+     * Returns an enumerator of elements.
+     * 
+     * @return {@link Enumerator}
+     */
+    N filter();
+
+    /**
+     * Equivalent to {@link #findAll(Predicate)}
+     * 
+     * @param block to filter elements
+     * @return {@link Enumerable}
+     */
+    Z filter(Predicate<? super E> block);
+
+    /**
      * Equivalent to {@link #detect()}.
      * 
      * @return {@link Enumerator}
