@@ -11,26 +11,22 @@ It also implements parts of Ruby Dir, File and Date methods.
 
 For further information, please visit http://ruby-doc.org website.
 
-Install v2.0.0+(Java 1.8 required):<br/>
-After v2.1.0, Java 9 Module supported but the minimal Java version is still Java 8.
+# Maven Repo
 ``` xml
 <dependency>
   <groupId>net.sf.rubycollect4j</groupId>
   <artifactId>rubycollect4j</artifactId>
-  <version>2.1.2</version>
+  <version>${newestVersion}</version>
+  <!-- Newest version shows in the maven-central badge above -->
 </dependency>
 ```
+| Java required | Since version | Java Module supported
+| --- | --- | --- |
+| 11  | 3.x.x | Y |
+| 1.8 | 2.x.x | Y(2.1.x)|
+| 1.6 | 1.x.x | N |
 
-Install v1.9.0(Java 1.6+):
-``` xml
-<dependency>
-  <groupId>net.sf.rubycollect4j</groupId>
-  <artifactId>rubycollect4j</artifactId>
-  <version>1.9.0</version>
-</dependency>
-```
-
-Java 8 with rubycollect4j v2.0.0+:
+## Quick Demo
 ```java
 // Sorts the characters by its frequency based on the word 'Mississippi' case-insensitively.
 RubyString word = Ruby.String.of("Mississippi"); // Equivalent to new RubyString("Mississippi")
@@ -40,27 +36,10 @@ Ruby.Kernel.p(result);
 // Output: "mpis"
 ```
 
-Java 6 with rubycollect4j v1.9.x:
-```java
-// Finds 2 words which get the least and the most unique letters in upper case.
-RubyArray<String> words =
-  RubyFile.foreach("/usr/share/dict/web2") // Dictionary of Mac OS
-    .minmaxBy(new TransformBlock<String, Integer>() {
-      public Integer yield(String item) {
-        return new RubyString(item).toA().uniq().count();
-      }
-    }).mapǃ("toUpperCase");
-
-p(words);
-// Output: [A, BLEPHAROCONJUNCTIVITIS]
-```
-
-## Examples for v2.0.x:
-
-Since v2.0.0, Java 8 is required.
+## Introducing v2.x.x
 
 Class Ruby has been introduced.<br/>
-It provides a super convenient way to access the numerous features of RubyCollect4J.<br/>
+It provides a convenient approach to access the numerous features of RubyCollect4J.<br/>
 All static classes and methods under Ruby class are well documented, feel free to try them by yourself.
 
 Demo Ruby:
