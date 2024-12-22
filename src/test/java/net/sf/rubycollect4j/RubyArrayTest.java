@@ -670,6 +670,12 @@ public class RubyArrayTest {
     });
   }
 
+  @Test
+  public void testPrepend() {
+    assertEquals(ra(0, 1, 2, 3, 4), ra.prepend(0));
+    assertEquals(ra(-2, -1, 0, 1, 2, 3, 4), ra.prepend(-2, -1));
+  }
+
   @SuppressWarnings("unchecked")
   @Test
   public void testProduct() {

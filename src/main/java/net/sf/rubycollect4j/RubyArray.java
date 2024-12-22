@@ -925,6 +925,14 @@ public final class RubyArray<E>
   }
 
   /**
+   * @see RubyArray#unshift(Object, Object...)
+   */
+  @SafeVarargs
+  public final RubyArray<E> prepend(E item, E... others) {
+    return unshift(item, others);
+  }
+
+  /**
    * Generates the production of self with other Lists.
    * 
    * @param others Lists
