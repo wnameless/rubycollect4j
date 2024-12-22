@@ -5,3 +5,4 @@
 .settings/*
 /doc
 .README.md.html
+/.vscode
