@@ -46,6 +46,7 @@
   </distributionManagement>
 
   <properties>
+    <maven.compiler.release>17</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
@@ -53,7 +54,7 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
-      <version>5.6.2</version>
+      <version>5.11.4</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -62,11 +63,11 @@
     <plugins>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.22.2</version>
+        <version>3.5.2</version>
       </plugin>
       <plugin>
         <artifactId>maven-failsafe-plugin</artifactId>
-        <version>2.22.2</version>
+        <version>3.5.2</version>
       </plugin>
       <plugin>
         <groupId>org.jacoco</groupId>
@@ -91,42 +92,12 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.1</version>
-        <executions>
-          <execution>
-            <id>default-compile</id>
-            <configuration>
-              <!-- compile everything to ensure module-info contains right entries -->
-              <release>11</release>
-            </configuration>
-          </execution>
-          <execution>
-            <id>base-compile</id>
-            <goals>
-              <goal>compile</goal>
-            </goals>
-            <!-- recompile everything for target VM except the module-info.java -->
-            <configuration>
-              <excludes>
-                <exclude>module-info.java</exclude>
-              </excludes>
-            </configuration>
-          </execution>
-        </executions>
-        <!-- defaults for compile and testCompile -->
-        <configuration>
-          <!-- Only required when JAVA_HOME isn't at least Java 9 and when haven't configured the
-          maven-toolchains-plugin -->
-          <jdkToolchain>
-            <version>9</version>
-          </jdkToolchain>
-          <release>8</release>
-        </configuration>
+        <version>3.13.0</version>
       </plugin>
       <plugin>
         <groupId>org.sonatype.plugins</groupId>
         <artifactId>nexus-staging-maven-plugin</artifactId>
-        <version>1.6.8</version>
+        <version>1.7.0</version>
         <extensions>true</extensions>
         <configuration>
           <serverId>ossrh</serverId>
@@ -147,7 +118,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
-        <version>3.2.1</version>
+        <version>3.3.1</version>
         <executions>
           <execution>
             <id>attach-sources</id>
@@ -160,7 +131,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>3.2.0</version>
+        <version>3.11.2</version>
         <configuration>
           <failOnError>false</failOnError>
         </configuration>
@@ -176,7 +147,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-gpg-plugin</artifactId>
-        <version>1.6</version>
+        <version>3.2.7</version>
         <executions>
           <execution>
             <id>sign-artifacts</id>
@@ -188,18 +159,6 @@
         </executions>
         <configuration>
           <executable>gpg</executable>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>cobertura-maven-plugin</artifactId>
-        <version>2.7</version>
-        <configuration>
-          <formats>
-            <format>html</format>
-            <format>xml</format>
-          </formats>
-          <check />
         </configuration>
       </plugin>
     </plugins>
