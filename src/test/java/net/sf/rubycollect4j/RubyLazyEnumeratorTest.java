@@ -928,6 +928,18 @@ public class RubyLazyEnumeratorTest {
   }
 
   @Test
+  public void testTally() {
+    lre = new RubyLazyEnumerator<Integer>(ra(0, 1, 2, 2, 3, 3, 3, 2, 1));
+    RubyHash<Integer, Integer> tally = lre.tally();
+    assertTrue(tally instanceof RubyHash);
+    assertEquals(1, tally.get(0));
+    assertEquals(2, tally.get(1));
+    assertEquals(3, tally.get(2));
+    assertEquals(3, tally.get(3));
+    assertEquals(null, tally.get(4));
+  }
+
+  @Test
   public void testToA() {
     assertEquals(ra(1, 2, 3, 4), lre.toA());
   }

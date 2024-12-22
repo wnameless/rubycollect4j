@@ -1100,6 +1100,15 @@ public final class RubyLazyEnumerator<E> implements RubyBase.LazyEnumerator<E> {
   }
 
   @Override
+  public RubyHash<E, Integer> tally() {
+    RubyHash<E, Integer> tally = Ruby.Hash.create();
+    for (E item : iter) {
+      tally.put(item, tally.getOrDefault(item, 0) + 1);
+    }
+    return tally;
+  }
+
+  @Override
   public RubyArray<E> toA() {
     return Ruby.Array.copyOf(iter);
   }

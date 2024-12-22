@@ -932,6 +932,14 @@ final class RubyContract {
     Z takeWhile(Predicate<? super E> block);
 
     /**
+     * Counts the occurrences of each element and returns a {@link RubyHash} of elements as keys and
+     * the counting results as values.
+     * 
+     * @return {@link RubyHash}
+     */
+    RubyHash<E, Integer> tally();
+
+    /**
      * Puts all elements into a {@link RubyArray}.
      * 
      * @return {@link RubyArray}

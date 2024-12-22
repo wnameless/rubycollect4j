@@ -871,6 +871,11 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
     return Ruby.Enumerator.of(rubyArray);
   }
 
+  @Override
+  default RubyHash<E, Integer> tally() {
+    return Ruby.LazyEnumerator.of(this).tally();
+  }
+
   /**
    * {@inheritDoc}
    * 
