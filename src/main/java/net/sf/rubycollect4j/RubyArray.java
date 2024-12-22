@@ -1026,6 +1026,21 @@ public final class RubyArray<E>
   }
 
   /**
+   * Puts all different elements into a new {@link RubyArray}.
+   * 
+   * @param other a Collection
+   * @return new {@link RubyArray}
+   */
+  public RubyArray<E> difference(Collection<? extends E> other) {
+    Set<E> thatSet = new HashSet<>(other);
+    RubyArray<E> rubyArray = Ruby.Array.create();
+    for (E item : this) {
+      if (!thatSet.contains(item)) rubyArray.add(item);
+    }
+    return rubyArray;
+  }
+
+  /**
    * Generates all repeated combinations of this {@link RubyArray}.
    * 
    * @param n length of each repeated combination

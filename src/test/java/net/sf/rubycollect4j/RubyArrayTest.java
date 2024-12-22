@@ -257,6 +257,11 @@ public class RubyArrayTest {
   }
 
   @Test
+  public void testDifference() {
+    assertEquals(ra(1, 2, 2), ra(1, 2, 2, 3, 4).difference(ra(4, 3)));
+  }
+
+  @Test
   public void testEach() {
     assertEquals(RubyEnumerator.class, ra.each().getClass());
     assertEquals(ra(1, 2, 3, 4), ra.each().toA());
