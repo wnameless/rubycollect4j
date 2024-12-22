@@ -363,6 +363,27 @@ public interface RubyEnumerable<E> extends RubyBase.Enumerable<E> {
    * @return {@link RubyEnumerator}
    */
   @Override
+  default RubyEnumerator<E> filterMap() {
+    return findAll();
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @return {@link RubyArray}
+   */
+  @Override
+  default RubyArray<E> filterMap(Function<? super E, ? extends E> block,
+      Predicate<? super E> predicate) {
+    return Ruby.LazyEnumerator.of(this).filterMap(block, predicate).toA();
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @return {@link RubyEnumerator}
+   */
+  @Override
   default RubyEnumerator<E> find() {
     return detect();
   }

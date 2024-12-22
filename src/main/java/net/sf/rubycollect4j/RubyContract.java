@@ -339,6 +339,22 @@ final class RubyContract {
     Z filter(Predicate<? super E> block);
 
     /**
+     * Returns an enumerator of elements.
+     * 
+     * @return {@link Enumerator}
+     */
+    N filterMap();
+
+    /**
+     * Finds elements which match the predicate and transforms these elements by the block.
+     * 
+     * @param block to transform elements
+     * @param predicate to filter elements
+     * @return {@link Enumerable}
+     */
+    Z filterMap(Function<? super E, ? extends E> block, Predicate<? super E> predicate);
+
+    /**
      * Equivalent to {@link #detect()}.
      * 
      * @return {@link Enumerator}

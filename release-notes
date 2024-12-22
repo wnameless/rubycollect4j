@@ -382,3 +382,5 @@ Version 3.0.0
 + Add RubyArray#prepend(Object, Object...)
 
 + Add RubyHash#transformKeys and RubyHash#transformKeysǃ
+
++ Add RubyEnumerable#filterMap and RubyLazyEnumerator#tally#filterMap
