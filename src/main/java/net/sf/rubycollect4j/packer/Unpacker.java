@@ -15,29 +15,8 @@
  */
 package net.sf.rubycollect4j.packer;
 
-import static net.sf.rubycollect4j.packer.Directive.B;
-import static net.sf.rubycollect4j.packer.Directive.D;
-import static net.sf.rubycollect4j.packer.Directive.E;
-import static net.sf.rubycollect4j.packer.Directive.F;
-import static net.sf.rubycollect4j.packer.Directive.G;
-import static net.sf.rubycollect4j.packer.Directive.H;
-import static net.sf.rubycollect4j.packer.Directive.b;
-import static net.sf.rubycollect4j.packer.Directive.d;
-import static net.sf.rubycollect4j.packer.Directive.e;
-import static net.sf.rubycollect4j.packer.Directive.f;
-import static net.sf.rubycollect4j.packer.Directive.g;
-import static net.sf.rubycollect4j.packer.Directive.l;
-import static net.sf.rubycollect4j.packer.Directive.lb;
-import static net.sf.rubycollect4j.packer.Directive.ll;
-import static net.sf.rubycollect4j.packer.Directive.q;
-import static net.sf.rubycollect4j.packer.Directive.qb;
-import static net.sf.rubycollect4j.packer.Directive.ql;
-import static net.sf.rubycollect4j.packer.Directive.s;
-import static net.sf.rubycollect4j.packer.Directive.sb;
-import static net.sf.rubycollect4j.packer.Directive.sl;
-import static net.sf.rubycollect4j.util.ByteUtils.toBinaryString;
-import static net.sf.rubycollect4j.util.ByteUtils.toHexString;
-
+import static net.sf.rubycollect4j.packer.Directive.*;
+import static net.sf.rubycollect4j.util.ByteUtils.*;
 import net.sf.rubycollect4j.Ruby;
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.RubyHash;

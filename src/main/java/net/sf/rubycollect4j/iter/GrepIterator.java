@@ -17,7 +17,6 @@ package net.sf.rubycollect4j.iter;
 
 import java.util.Iterator;
 import java.util.regex.Pattern;
-
 import net.sf.rubycollect4j.util.PeekingIterator;
 
 /**

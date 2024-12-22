@@ -15,10 +15,8 @@
  */
 package net.sf.rubycollect4j;
 
-import static net.sf.rubycollect4j.RubyCollections.ra;
-import static net.sf.rubycollect4j.RubyCollections.rs;
+import static net.sf.rubycollect4j.RubyCollections.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.Test;
 
 public class RubyStringUnpackWithRubyArrayPackTest {

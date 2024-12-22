@@ -15,17 +15,13 @@
  */
 package net.sf.rubycollect4j.packer;
 
-import static java.nio.ByteOrder.BIG_ENDIAN;
-import static java.nio.ByteOrder.LITTLE_ENDIAN;
-import static java.nio.ByteOrder.nativeOrder;
-
+import static java.nio.ByteOrder.*;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
-
 import net.sf.rubycollect4j.Ruby;
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.util.ByteUtils;

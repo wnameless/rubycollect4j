@@ -16,7 +16,6 @@
 package net.sf.rubycollect4j;
 
 import static net.sf.rubycollect4j.RubyIO.Mode.R;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -30,7 +29,6 @@ import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import net.sf.rubycollect4j.iter.EachLineIterable;
 
 /**

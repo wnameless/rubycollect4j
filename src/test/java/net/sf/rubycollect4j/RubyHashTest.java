@@ -15,19 +15,8 @@
  */
 package net.sf.rubycollect4j;
 
-import static net.sf.rubycollect4j.RubyCollections.hp;
-import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
-import static net.sf.rubycollect4j.RubyCollections.ra;
-import static net.sf.rubycollect4j.RubyCollections.rh;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotSame;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import static net.sf.rubycollect4j.RubyCollections.*;
+import static org.junit.jupiter.api.Assertions.*;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -38,10 +27,8 @@ import java.util.NoSuchElementException;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import net.sf.rubycollect4j.util.ComparableEntry;
 
 public class RubyHashTest {

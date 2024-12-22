@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
-
 import net.sf.rubycollect4j.Ruby;
 import net.sf.rubycollect4j.RubyArray;
 

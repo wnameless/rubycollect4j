@@ -22,7 +22,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
-
 import net.sf.rubycollect4j.util.RegexUtils;
 
 /**

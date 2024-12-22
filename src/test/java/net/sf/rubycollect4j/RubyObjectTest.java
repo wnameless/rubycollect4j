@@ -15,19 +15,11 @@
  */
 package net.sf.rubycollect4j;
 
-import static net.sf.rubycollect4j.RubyCollections.ra;
-import static net.sf.rubycollect4j.RubyCollections.rh;
-import static net.sf.rubycollect4j.RubyObject.isBlank;
-import static net.sf.rubycollect4j.RubyObject.isPresent;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-
+import static net.sf.rubycollect4j.RubyCollections.*;
+import static net.sf.rubycollect4j.RubyObject.*;
+import static org.junit.jupiter.api.Assertions.*;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -78,43 +70,35 @@ public class RubyObjectTest {
     try {
       RubyObject.send(tester, "setBytes", "", "");
       fail();
-    } catch (IllegalArgumentException e) {
-    }
+    } catch (IllegalArgumentException e) {}
     try {
       RubyObject.send(tester, "setShorts", "", "");
       fail();
-    } catch (IllegalArgumentException e) {
-    }
+    } catch (IllegalArgumentException e) {}
     try {
       RubyObject.send(tester, "setIntegers", "", "");
       fail();
-    } catch (IllegalArgumentException e) {
-    }
+    } catch (IllegalArgumentException e) {}
     try {
       RubyObject.send(tester, "setLongs", "", "");
       fail();
-    } catch (IllegalArgumentException e) {
-    }
+    } catch (IllegalArgumentException e) {}
     try {
       RubyObject.send(tester, "setFloats", "", "");
       fail();
-    } catch (IllegalArgumentException e) {
-    }
+    } catch (IllegalArgumentException e) {}
     try {
       RubyObject.send(tester, "setDoubles", "", "");
       fail();
-    } catch (IllegalArgumentException e) {
-    }
+    } catch (IllegalArgumentException e) {}
     try {
       RubyObject.send(tester, "setBooleans", "", "");
       fail();
-    } catch (IllegalArgumentException e) {
-    }
+    } catch (IllegalArgumentException e) {}
     try {
       RubyObject.send(tester, "setCharacters", "", "");
       fail();
-    } catch (IllegalArgumentException e) {
-    }
+    } catch (IllegalArgumentException e) {}
   }
 
   @Test

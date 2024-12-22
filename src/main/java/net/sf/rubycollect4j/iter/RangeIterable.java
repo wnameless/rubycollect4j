@@ -16,7 +16,6 @@
 package net.sf.rubycollect4j.iter;
 
 import java.util.Iterator;
-
 import net.sf.rubycollect4j.RubyRange.Interval;
 import net.sf.rubycollect4j.succ.Successive;
 

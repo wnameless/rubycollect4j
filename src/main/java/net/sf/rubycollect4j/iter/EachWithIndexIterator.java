@@ -18,7 +18,6 @@ package net.sf.rubycollect4j.iter;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Objects;
-
 import net.sf.rubycollect4j.util.ComparableEntry;
 
 /**

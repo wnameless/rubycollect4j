@@ -16,7 +16,6 @@
 package net.sf.rubycollect4j;
 
 import static net.sf.rubycollect4j.RubyIO.Mode.R;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -30,7 +29,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import net.sf.rubycollect4j.util.RegexUtils;
 
 /**

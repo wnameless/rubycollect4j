@@ -15,11 +15,8 @@
  */
 package net.sf.rubycollect4j.succ;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
-
+import static org.junit.jupiter.api.Assertions.*;
 import java.time.LocalDateTime;
-
 import org.junit.jupiter.api.Test;
 
 public class LocalDateTimeSuccessorTest {

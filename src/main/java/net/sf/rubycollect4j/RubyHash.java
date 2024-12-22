@@ -33,7 +33,6 @@ import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
-
 import net.sf.rubycollect4j.function.TriFunction;
 import net.sf.rubycollect4j.iter.ComparableEntryIterator;
 import net.sf.rubycollect4j.util.ComparableEntry;

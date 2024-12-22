@@ -15,25 +15,14 @@
  */
 package net.sf.rubycollect4j;
 
-import static net.sf.rubycollect4j.RubyCollections.newRubySet;
-import static net.sf.rubycollect4j.RubyCollections.ra;
-import static net.sf.rubycollect4j.RubyCollections.rh;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import static net.sf.rubycollect4j.RubyCollections.*;
+import static org.junit.jupiter.api.Assertions.*;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.function.Predicate;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

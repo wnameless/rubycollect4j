@@ -32,7 +32,6 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
-
 import net.sf.rubycollect4j.iter.CombinationIterable;
 import net.sf.rubycollect4j.iter.EachIndexIterable;
 import net.sf.rubycollect4j.iter.PermutationIterable;

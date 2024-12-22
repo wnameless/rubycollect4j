@@ -15,17 +15,8 @@
  */
 package net.sf.rubycollect4j.extension;
 
-import static net.sf.rubycollect4j.RubyCollections.hp;
-import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
-import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
-import static net.sf.rubycollect4j.RubyCollections.ra;
-import static net.sf.rubycollect4j.RubyCollections.rh;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import static net.sf.rubycollect4j.RubyCollections.*;
+import static org.junit.jupiter.api.Assertions.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
@@ -38,10 +29,8 @@ import java.util.Map.Entry;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import net.sf.rubycollect4j.Ruby;
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.RubyEnumerable;

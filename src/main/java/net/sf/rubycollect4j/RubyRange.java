@@ -19,7 +19,6 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.function.Consumer;
-
 import net.sf.rubycollect4j.iter.RangeIterable;
 import net.sf.rubycollect4j.iter.StepIterable;
 import net.sf.rubycollect4j.succ.Successive;

@@ -16,7 +16,6 @@
 package net.sf.rubycollect4j.iter;
 
 import java.util.Iterator;
-
 import net.sf.rubycollect4j.Ruby;
 import net.sf.rubycollect4j.RubyArray;
 

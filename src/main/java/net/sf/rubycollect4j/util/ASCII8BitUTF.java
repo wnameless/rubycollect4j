@@ -18,7 +18,6 @@ package net.sf.rubycollect4j.util;
 import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.Objects;
-
 import net.sf.rubycollect4j.Ruby;
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.RubyString;

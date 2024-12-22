@@ -16,7 +16,6 @@
 package net.sf.rubycollect4j;
 
 import static java.lang.System.out;
-
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;

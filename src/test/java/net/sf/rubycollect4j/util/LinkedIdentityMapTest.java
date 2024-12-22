@@ -15,21 +15,12 @@
  */
 package net.sf.rubycollect4j.util;
 
-import static net.sf.rubycollect4j.RubyCollections.hp;
-import static net.sf.rubycollect4j.RubyCollections.ra;
-import static net.sf.rubycollect4j.RubyCollections.rh;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import static net.sf.rubycollect4j.RubyCollections.*;
+import static org.junit.jupiter.api.Assertions.*;
 import java.util.IdentityHashMap;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import net.sf.rubycollect4j.RubyArray;
 
 public class LinkedIdentityMapTest {

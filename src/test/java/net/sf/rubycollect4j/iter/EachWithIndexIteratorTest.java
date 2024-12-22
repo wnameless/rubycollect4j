@@ -15,18 +15,11 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static net.sf.rubycollect4j.RubyCollections.hp;
-import static net.sf.rubycollect4j.RubyCollections.ra;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import static net.sf.rubycollect4j.RubyCollections.*;
+import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import net.sf.rubycollect4j.util.ComparableEntry;
 
 public class EachWithIndexIteratorTest {

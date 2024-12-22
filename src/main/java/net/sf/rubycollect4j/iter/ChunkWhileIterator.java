@@ -17,7 +17,6 @@ package net.sf.rubycollect4j.iter;
 
 import java.util.Iterator;
 import java.util.function.BiPredicate;
-
 import net.sf.rubycollect4j.Ruby;
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.util.PeekingIterator;

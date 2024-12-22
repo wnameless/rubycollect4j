@@ -17,12 +17,10 @@ package net.sf.rubycollect4j.packer;
 
 import static java.nio.ByteOrder.nativeOrder;
 import static net.sf.rubycollect4j.util.ByteUtils.toByteArray;
-
 import java.nio.ByteOrder;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
-
 import net.sf.rubycollect4j.Ruby;
 import net.sf.rubycollect4j.RubyArray;
 import net.sf.rubycollect4j.RubyString;

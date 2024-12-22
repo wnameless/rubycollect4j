@@ -15,15 +15,11 @@
  */
 package net.sf.rubycollect4j.util;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
+import static org.junit.jupiter.api.Assertions.*;
 import java.io.IOException;
 import java.io.StringReader;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import net.sf.rubycollect4j.Ruby;
 
 public class WholeLineReaderTest {

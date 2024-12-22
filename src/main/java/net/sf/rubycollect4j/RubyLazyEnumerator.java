@@ -31,7 +31,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
-
 import net.sf.rubycollect4j.iter.ChunkIterable;
 import net.sf.rubycollect4j.iter.ChunkWhileIterable;
 import net.sf.rubycollect4j.iter.CycleIterable;

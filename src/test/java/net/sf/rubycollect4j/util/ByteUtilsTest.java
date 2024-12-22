@@ -15,24 +15,16 @@
  */
 package net.sf.rubycollect4j.util;
 
-import static java.nio.ByteOrder.BIG_ENDIAN;
-import static java.nio.ByteOrder.LITTLE_ENDIAN;
-import static java.nio.ByteOrder.nativeOrder;
+import static java.nio.ByteOrder.*;
 import static net.sf.rubycollect4j.RubyCollections.ra;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import static org.junit.jupiter.api.Assertions.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
-
 import net.sf.rubycollect4j.RubyArray;
 
 public class ByteUtilsTest {

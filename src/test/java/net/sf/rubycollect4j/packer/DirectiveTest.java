@@ -15,15 +15,10 @@
  */
 package net.sf.rubycollect4j.packer;
 
-import static java.nio.ByteOrder.BIG_ENDIAN;
-import static java.nio.ByteOrder.nativeOrder;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import static java.nio.ByteOrder.*;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import net.sf.rubycollect4j.util.ByteUtils;
 
 public class DirectiveTest {

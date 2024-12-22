@@ -15,11 +15,8 @@
  */
 package net.sf.rubycollect4j;
 
-import static java.lang.Character.MAX_RADIX;
-import static java.lang.Character.MIN_RADIX;
-import static net.sf.rubycollect4j.RubyObject.isBlank;
-import static net.sf.rubycollect4j.RubyObject.isPresent;
-
+import static java.lang.Character.*;
+import static net.sf.rubycollect4j.RubyObject.*;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
@@ -36,7 +33,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import net.sf.rubycollect4j.packer.Unpacker;
 import net.sf.rubycollect4j.succ.StringSuccessor;
 import net.sf.rubycollect4j.util.ByteUtils;
@@ -427,8 +423,7 @@ public final class RubyString implements CharSequence, Comparable<CharSequence>,
       MessageDigest digest = MessageDigest.getInstance("SHA-256");
       digest.update(encrypt.getBytes("UTF-8"), 0, encrypt.length());
       sha = new BigInteger(1, digest.digest()).toString(16);
-    } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-    }
+    } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {}
     return Ruby.String.of(sha);
   }
 

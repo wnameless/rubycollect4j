@@ -18,7 +18,6 @@ package net.sf.rubycollect4j;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.function.Consumer;
-
 import net.sf.rubycollect4j.util.PeekingIterator;
 
 /**

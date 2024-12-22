@@ -15,19 +15,9 @@
  */
 package net.sf.rubycollect4j;
 
-import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
-import static net.sf.rubycollect4j.RubyCollections.ra;
-import static net.sf.rubycollect4j.RubyCollections.rh;
-import static net.sf.rubycollect4j.RubyCollections.rs;
+import static net.sf.rubycollect4j.RubyCollections.*;
 import static net.sf.rubycollect4j.RubyLiterals.qr;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotSame;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import static org.junit.jupiter.api.Assertions.*;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
@@ -40,10 +30,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import net.sf.rubycollect4j.succ.StringSuccessor;
 
 public class RubyStringTest {
@@ -288,8 +276,7 @@ public class RubyStringTest {
       digest = MessageDigest.getInstance("SHA-256");
       digest.update(encrypt.getBytes("UTF-8"), 0, encrypt.length());
       md5 = new BigInteger(1, digest.digest()).toString(16);
-    } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-    }
+    } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {}
     assertEquals(md5, rs.crypt("secret").toS());
   }
 

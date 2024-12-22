@@ -15,12 +15,9 @@
  */
 package net.sf.rubycollect4j.succ;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
+import static org.junit.jupiter.api.Assertions.*;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-
 import org.junit.jupiter.api.Test;
 
 public class TemporalSuccessorTest {

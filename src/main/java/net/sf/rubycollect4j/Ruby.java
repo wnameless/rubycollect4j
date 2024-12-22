@@ -29,7 +29,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-
 import net.sf.rubycollect4j.RubyRange.Interval;
 import net.sf.rubycollect4j.succ.CharacterSuccessor;
 import net.sf.rubycollect4j.succ.DateSuccessor;

@@ -978,7 +978,7 @@ final class RubyContract {
    * @param <Z> the type to define if some methods are lazy or eager loading
    */
   interface Enumerator<E, N extends Enumerator<?, ?, ?>, Z extends Enumerable<?, ?, ?>>
-      extends Enumerable<E, N, Z>, Iterable<E>, Iterator<E> {
+      extends Enumerable<E, N, Z>, Iterator<E> {
 
     /**
      * Rewinds this Iterator to the beginning.

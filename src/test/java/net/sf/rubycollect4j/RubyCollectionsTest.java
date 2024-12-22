@@ -15,21 +15,8 @@
  */
 package net.sf.rubycollect4j;
 
-import static net.sf.rubycollect4j.RubyCollections.Hash;
-import static net.sf.rubycollect4j.RubyCollections.hp;
-import static net.sf.rubycollect4j.RubyCollections.newRubyArray;
-import static net.sf.rubycollect4j.RubyCollections.newRubyEnumerator;
-import static net.sf.rubycollect4j.RubyCollections.newRubyHash;
-import static net.sf.rubycollect4j.RubyCollections.newRubyLazyEnumerator;
-import static net.sf.rubycollect4j.RubyCollections.newRubySet;
-import static net.sf.rubycollect4j.RubyCollections.ra;
-import static net.sf.rubycollect4j.RubyCollections.range;
-import static net.sf.rubycollect4j.RubyCollections.rh;
-import static net.sf.rubycollect4j.RubyCollections.rs;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import static net.sf.rubycollect4j.RubyCollections.*;
+import static org.junit.jupiter.api.Assertions.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.time.LocalDateTime;
@@ -41,9 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-
 import org.junit.jupiter.api.Test;
-
 import net.sf.rubycollect4j.util.ComparableEntry;
 
 public class RubyCollectionsTest {

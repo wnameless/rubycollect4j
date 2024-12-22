@@ -15,16 +15,10 @@
  */
 package net.sf.rubycollect4j.iter;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import static org.junit.jupiter.api.Assertions.*;
 import java.util.NoSuchElementException;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import net.sf.rubycollect4j.Ruby;
 import net.sf.rubycollect4j.RubyRange.Interval;
 import net.sf.rubycollect4j.succ.IntegerSuccessor;
