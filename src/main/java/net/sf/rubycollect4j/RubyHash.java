@@ -705,6 +705,133 @@ public final class RubyHash<K, V> implements RubyEnumerable<Entry<K, V>>, Map<K,
   }
 
   /**
+   * Returns a {@link RubyEnumerator} of keys of this {@link RubyHash}.
+   * 
+   * @return {@link RubyEnumerator}
+   */
+  public RubyEnumerator<K> transformKeys() {
+    return Ruby.Enumerator.of(map.keySet());
+  }
+
+  /**
+   * Transforms every key with the results of running block.
+   * 
+   * @param block to transform keys
+   * @return new {@link RubyHash}
+   */
+  public RubyHash<K, V> transformKeys(Function<? super K, ? extends K> block) {
+    RubyHash<K, V> rubyHash = Ruby.Hash.create();
+    map.entrySet().forEach(entry -> {
+      rubyHash.put(block.apply(entry.getKey()), entry.getValue());
+    });
+    return rubyHash;
+  }
+
+  /**
+   * Transforms every key with the given key map.
+   * 
+   * @param keyMap to convert keys
+   * @return new {@link RubyHash}
+   */
+  public RubyHash<K, V> transformKeys(Map<? super K, ? extends K> keyMap) {
+    RubyHash<K, V> rubyHash = Ruby.Hash.create();
+    map.entrySet().forEach(entry -> {
+      if (keyMap.containsKey(entry.getKey())) {
+        rubyHash.put(keyMap.get(entry.getKey()), entry.getValue());
+      } else {
+        rubyHash.put(entry.getKey(), entry.getValue());
+      }
+    });
+    return rubyHash;
+  }
+
+  /**
+   * Transforms every key with the given key map. Transforms remaining keys with the results of
+   * running block, if key is not found in the given key map.
+   * 
+   * @param keyMap to convert keys
+   * @param block to transform keys when key is not present in given key map
+   * @return new {@link RubyHash}
+   */
+  public RubyHash<K, V> transformKeys(Map<? super K, ? extends K> keyMap,
+      Function<? super K, ? extends K> block) {
+    RubyHash<K, V> rubyHash = Ruby.Hash.create();
+    map.entrySet().forEach(entry -> {
+      if (keyMap.containsKey(entry.getKey())) {
+        rubyHash.put(keyMap.get(entry.getKey()), entry.getValue());
+      } else {
+        rubyHash.put(block.apply(entry.getKey()), entry.getValue());
+      }
+    });
+    return rubyHash;
+  }
+
+  /**
+   * Returns a {@link RubyEnumerator} of keys of this {@link RubyHash}.
+   * 
+   * @return {@link RubyEnumerator}
+   */
+  public RubyEnumerator<K> transformKeysǃ() {
+    return Ruby.Enumerator.of(map.keySet());
+  }
+
+  /**
+   * Transforms every key with the results of running block.
+   * 
+   * @param block to transform keys
+   * @return this {@link RubyHash}
+   */
+  public RubyHash<K, V> transformKeysǃ(Function<? super K, ? extends K> block) {
+    LinkedHashMap<K, V> transformedMap = new LinkedHashMap<>();
+    map.entrySet().forEach(entry -> {
+      transformedMap.put(block.apply(entry.getKey()), entry.getValue());
+    });
+    map = transformedMap;
+    return this;
+  }
+
+  /**
+   * Transforms every key with the given key map.
+   * 
+   * @param keyMap to convert keys
+   * @return this {@link RubyHash}
+   */
+  public RubyHash<K, V> transformKeysǃ(Map<? super K, ? extends K> keyMap) {
+    LinkedHashMap<K, V> transformedMap = new LinkedHashMap<>();
+    map.entrySet().forEach(entry -> {
+      if (keyMap.containsKey(entry.getKey())) {
+        transformedMap.put(keyMap.get(entry.getKey()), entry.getValue());
+      } else {
+        transformedMap.put(entry.getKey(), entry.getValue());
+      }
+    });
+    map = transformedMap;
+    return this;
+  }
+
+  /**
+   * Transforms every key with the given key map. Transforms remaining keys with the results of
+   * running block, if key is not found in the given key map.
+   * 
+   * @param keyMap to convert keys
+   * @param block to transform keys when key is not present in given key map
+   * @return this {@link RubyHash}
+   */
+  public RubyHash<K, V> transformKeysǃ(Map<? super K, ? extends K> keyMap,
+      Function<? super K, ? extends K> block) {
+    LinkedHashMap<K, V> transformedMap = new LinkedHashMap<>();
+    map.entrySet().forEach(entry -> {
+      if (keyMap.containsKey(entry.getKey())) {
+        transformedMap.put(keyMap.get(entry.getKey()), entry.getValue());
+      } else {
+        transformedMap.put(block.apply(entry.getKey()), entry.getValue());
+      }
+    });
+    map = transformedMap;
+    return this;
+  }
+
+  /**
    * Returns a {@link RubyEnumerator} of values of this {@link RubyHash}.
    * 
    * @return {@link RubyEnumerator}

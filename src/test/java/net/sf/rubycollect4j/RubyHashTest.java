@@ -465,6 +465,30 @@ public class RubyHashTest {
   }
 
   @Test
+  public void testTransformKeys() {
+    assertEquals(ra(1, 3, 5), rh.transformKeys().toA());
+    assertEquals(rh(1, 2, 9, 4, 5, 6), rh.transformKeys(rh(1, 1, 3, 9)));
+    assertNotSame(rh(1, 2, 9, 4, 5, 6), rh.transformKeys(rh(1, 1, 3, 9)));
+    assertEquals(rh(1, 2, 9, 4, 25, 6), rh.transformKeys(v -> v * v));
+    assertNotSame(rh(1, 2, 9, 4, 25, 6), rh.transformKeys(v -> v * v));
+    assertEquals(rh(1, 2, 9, 4, 25, 6), rh.transformKeys(rh(5, 25), k -> k * k));
+    assertNotSame(rh(1, 2, 9, 4, 25, 6), rh.transformKeys(rh(5, 25), k -> k * k));
+  }
+
+  @Test
+  public void testTransformKeysǃ() {
+    assertEquals(ra(1, 3, 5), rh.transformKeysǃ().toA());
+    assertEquals(rh(1, 2, 9, 4, 5, 6), rh.transformKeysǃ(rh(1, 1, 3, 9)));
+    assertSame(rh, rh.transformKeysǃ(rh(1, 1, 3, 9)));
+    rh = rh(1, 2, 3, 4, 5, 6);
+    assertEquals(rh(1, 2, 9, 4, 25, 6), rh.transformKeysǃ(v -> v * v));
+    assertSame(rh, rh.transformKeysǃ(v -> v * v));
+    rh = rh(1, 2, 3, 4, 5, 6);
+    assertEquals(rh(1, 2, 9, 4, 25, 6), rh.transformKeysǃ(rh(5, 25), k -> k * k));
+    assertSame(rh, rh.transformKeysǃ(rh(5, 25), k -> k * k));
+  }
+
+  @Test
   public void testTransformValues() {
     assertEquals(ra(2, 4, 6), rh.transformValues().toA());
     assertEquals(rh(1, 4, 3, 16, 5, 36), rh.transformValues(v -> v * v));

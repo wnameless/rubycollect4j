@@ -378,3 +378,5 @@ Version 3.0.0
 + Add RubyArray#difference(Collection)
 
 + Add RubyArray#prepend(Object, Object...)
+
++ Add RubyHash#transformKeys and RubyHash#transformKeysǃ
